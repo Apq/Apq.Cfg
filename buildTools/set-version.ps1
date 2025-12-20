@@ -6,7 +6,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$PropsFile = Join-Path $ScriptDir 'Directory.Build.props'
+$RootDir = Split-Path -Parent $ScriptDir
+$PropsFile = Join-Path $RootDir 'Directory.Build.props'
 
 function Write-ColorText {
     param([string]$Text, [string]$Color = 'White')
@@ -155,24 +156,14 @@ try {
 
     # 询问是否生成新版本包
     $doPack = Read-Confirm '是否生成新版本包? (Y/n，默认为 Y): ' $true
-    $doPush = $false
 
     if ($doPack) {
-        # 立即询问是否发布
-        $doPush = Read-Confirm '生成成功后是否发布到 NuGet? (Y/n，默认为 Y): ' $true
-
         Write-Host ''
         Write-ColorText '开始生成新版本包...' 'Cyan'
         Write-Host ''
 
         $PackScript = Join-Path $ScriptDir 'pack-release.ps1'
         & $PackScript
-
-        if ($LASTEXITCODE -eq 0 -and $doPush) {
-            Write-Host ''
-            $PushScript = Join-Path $ScriptDir 'push-nuget.ps1'
-            & $PushScript -SkipConfirm
-        }
     } else {
         Write-ColorText '下一步操作:' 'Yellow'
         Write-ColorText '  1. 运行 pack-release.bat 生成新版本包' 'Gray'

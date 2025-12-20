@@ -3,6 +3,7 @@
 
 $ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RootDir = Split-Path -Parent $ScriptDir
 
 function Write-ColorText {
     param([string]$Text, [string]$Color = 'White')
@@ -55,7 +56,7 @@ $excludePatterns = @(
 Write-ColorText '正在检查过期的依赖包...' 'Cyan'
 Write-Host ''
 
-$outdatedOutput = & dotnet list "$ScriptDir\Apq.Cfg.sln" package --outdated --format json 2>$null
+$outdatedOutput = & dotnet list "$RootDir\Apq.Cfg.sln" package --outdated --format json 2>$null
 if ($LASTEXITCODE -ne 0) {
     Write-ColorText '错误: 无法检查过期包' 'Red'
     exit 1
@@ -154,7 +155,7 @@ foreach ($pkg in $packagesToUpdate.Values) {
 
     foreach ($projectName in $pkg.Projects) {
         # 查找项目文件
-        $projectPath = Get-ChildItem -Path $ScriptDir -Filter $projectName -Recurse -Directory | Select-Object -First 1
+        $projectPath = Get-ChildItem -Path $RootDir -Filter $projectName -Recurse -Directory | Select-Object -First 1
         if ($projectPath) {
             $csprojFile = Join-Path $projectPath.FullName ($projectName -replace '\.csproj$', '.csproj')
             if (-not (Test-Path $csprojFile)) {
@@ -194,7 +195,7 @@ if (Read-Confirm '是否验证构建? (Y/n，默认为 Y): ' $true) {
     Write-ColorText '正在构建解决方案...' 'Cyan'
     Write-Host ''
 
-    & dotnet build "$ScriptDir\Apq.Cfg.sln" -c Release --verbosity minimal
+    & dotnet build "$RootDir\Apq.Cfg.sln" -c Release --verbosity minimal
 
     if ($LASTEXITCODE -eq 0) {
         Write-Host ''

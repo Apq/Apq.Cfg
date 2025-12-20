@@ -6,8 +6,9 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$PropsFile = Join-Path $ScriptDir 'Directory.Build.props'
-$DefaultOutputDir = Join-Path $ScriptDir 'nupkgs'
+$RootDir = Split-Path -Parent $ScriptDir
+$PropsFile = Join-Path $RootDir 'Directory.Build.props'
+$DefaultOutputDir = Join-Path $RootDir 'nupkgs'
 
 function Write-ColorText {
     param([string]$Text, [string]$Color = 'White')
@@ -94,7 +95,7 @@ Write-Host ''
 # 构建打包参数
 $packArgs = @(
     'pack'
-    $ScriptDir
+    $RootDir
     '-c', 'Release'
     '-o', $OutputDir
 )
