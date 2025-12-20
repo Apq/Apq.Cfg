@@ -1,0 +1,213 @@
+namespace Apq.Cfg.Tests;
+
+/// <summary>
+/// JSON 配置源测试
+/// </summary>
+public class JsonCfgTests : IDisposable
+{
+    private readonly string _testDir;
+
+    public JsonCfgTests()
+    {
+        _testDir = Path.Combine(Path.GetTempPath(), $"ApqCfgTests_{Guid.NewGuid():N}");
+        Directory.CreateDirectory(_testDir);
+    }
+
+    public void Dispose()
+    {
+        if (Directory.Exists(_testDir))
+        {
+            Directory.Delete(_testDir, true);
+        }
+    }
+
+    [Fact]
+    public void Get_SimpleValue_ReturnsCorrectValue()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "AppName": "TestApp",
+                "Version": "1.0.0"
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal("TestApp", cfg.Get("AppName"));
+        Assert.Equal("1.0.0", cfg.Get("Version"));
+    }
+
+    [Fact]
+    public void Get_NestedValue_ReturnsCorrectValue()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "localhost",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal("localhost", cfg.Get("Database:Host"));
+        Assert.Equal("5432", cfg.Get("Database:Port"));
+    }
+
+    [Fact]
+    public void Get_TypedValue_ReturnsCorrectType()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Settings": {
+                    "MaxRetries": 3,
+                    "Enabled": true,
+                    "Timeout": 30.5
+                }
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal(3, cfg.Get<int>("Settings:MaxRetries"));
+        Assert.True(cfg.Get<bool>("Settings:Enabled"));
+        Assert.Equal(30.5, cfg.Get<double>("Settings:Timeout"));
+    }
+
+    [Fact]
+    public void Exists_ExistingKey_ReturnsTrue()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.True(cfg.Exists("Key"));
+        Assert.False(cfg.Exists("NonExistent"));
+    }
+
+    [Fact]
+    public async Task Set_AndSave_PersistsValue()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Original": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act
+        cfg.Set("NewKey", "NewValue");
+        await cfg.SaveAsync();
+
+        // Assert - 重新读取验证
+        using var cfg2 = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        Assert.Equal("NewValue", cfg2.Get("NewKey"));
+        Assert.Equal("Value", cfg2.Get("Original"));
+    }
+
+    [Fact]
+    public async Task Remove_AndSave_RemovesKey()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"ToRemove": "Value", "ToKeep": "Value2"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act
+        cfg.Remove("ToRemove");
+        await cfg.SaveAsync();
+
+        // Assert
+        using var cfg2 = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // 验证删除后值为 null 或空字符串
+        var removedValue = cfg2.Get("ToRemove");
+        Assert.True(string.IsNullOrEmpty(removedValue), $"Expected null or empty, but got: '{removedValue}'");
+        Assert.Equal("Value2", cfg2.Get("ToKeep"));
+    }
+
+    [Fact]
+    public void MultiLevel_HigherLevelOverrides()
+    {
+        // Arrange
+        var basePath = Path.Combine(_testDir, "base.json");
+        var overridePath = Path.Combine(_testDir, "override.json");
+
+        File.WriteAllText(basePath, """
+            {
+                "Setting1": "BaseValue1",
+                "Setting2": "BaseValue2"
+            }
+            """);
+
+        File.WriteAllText(overridePath, """
+            {
+                "Setting1": "OverrideValue1"
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(basePath, level: 0, writeable: false)
+            .AddJson(overridePath, level: 1, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal("OverrideValue1", cfg.Get("Setting1")); // 被覆盖
+        Assert.Equal("BaseValue2", cfg.Get("Setting2")); // 保持原值
+    }
+
+    [Fact]
+    public void ToMicrosoftConfiguration_ReturnsValidConfiguration()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "App": {
+                    "Name": "TestApp"
+                }
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act
+        var msConfig = cfg.ToMicrosoftConfiguration();
+
+        // Assert
+        Assert.NotNull(msConfig);
+        Assert.Equal("TestApp", msConfig["App:Name"]);
+    }
+}

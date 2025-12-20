@@ -1,0 +1,37 @@
+<Project>
+  <!-- 继承上级 Directory.Build.props -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!-- Apq.Cfg 特定的 NuGet 包元数据 -->
+  <PropertyGroup>
+    <Description>统一配置管理库，支持多种配置源</Description>
+    <PackageTags>configuration;config;json;yaml;toml;ini;xml;redis;database</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <!-- NuGet 包公共元数据 -->
+  <PropertyGroup>
+    <Version>0.0.1-beta3</Version>
+    <Authors>Apq</Authors>
+    <Company>Apq</Company>
+    <Copyright>Copyright © Apq $([System.DateTime]::Now.Year)</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- 启用包生成 -->
+    <IsPackable>true</IsPackable>
+
+    <!-- 源码链接支持 -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- 定义版本变量 -->
+  <PropertyGroup>
+    <MicrosoftExtensionsVersion Condition="'$(TargetFramework)' == 'net6.0'">6.0.0</MicrosoftExtensionsVersion>
+    <MicrosoftExtensionsVersion Condition="'$(TargetFramework)' == 'net7.0'">7.0.0</MicrosoftExtensionsVersion>
+    <MicrosoftExtensionsVersion Condition="'$(TargetFramework)' == 'net8.0'">8.0.0</MicrosoftExtensionsVersion>
+    <MicrosoftExtensionsVersion Condition="'$(TargetFramework)' == 'net9.0'">9.0.0</MicrosoftExtensionsVersion>
+  </PropertyGroup>
+</Project>

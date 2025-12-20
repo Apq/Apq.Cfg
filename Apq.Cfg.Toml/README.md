@@ -1,0 +1,69 @@
+# Apq.Cfg.Toml
+
+TOML 文件配置源扩展包。
+
+## 依赖
+
+- Apq.Cfg
+- Tomlyn 0.19.0
+
+## 用法
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Toml;
+
+var cfg = new CfgBuilder()
+    .AddToml("config.toml", level: 0, writeable: true)
+    .Build();
+```
+
+## 方法签名
+
+```csharp
+public static CfgBuilder AddToml(
+    this CfgBuilder builder,
+    string path,
+    int level,
+    bool writeable = false,
+    bool optional = true,
+    bool reloadOnChange = true,
+    bool isPrimaryWriter = false)
+```
+
+## 参数说明
+
+| 参数 | 说明 |
+|------|------|
+| `path` | TOML 文件路径 |
+| `level` | 配置层级，数值越大优先级越高 |
+| `writeable` | 是否可写 |
+| `optional` | 文件不存在时是否忽略 |
+| `reloadOnChange` | 文件变更时是否自动重载 |
+| `isPrimaryWriter` | 是否为默认写入目标 |
+
+## TOML 格式示例
+
+```toml
+AppName = "MyApp"
+
+[Database]
+ConnectionString = "Server=localhost;Database=mydb"
+Timeout = 30
+
+[Logging]
+Level = "Information"
+```
+
+配置键映射：
+- `AppName` -> `"AppName"`
+- `[Database].ConnectionString` -> `"Database:ConnectionString"`
+- `[Logging].Level` -> `"Logging:Level"`
+
+## 许可证
+
+MIT License
+
+## 作者
+
+- 邮箱：amwpfiqvy@163.com
