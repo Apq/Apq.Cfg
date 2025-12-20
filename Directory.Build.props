@@ -1,7 +1,24 @@
 <Project>
-  <!-- 继承上级 Directory.Build.props -->
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <!-- 支持 .NET 6 及以上所有版本 -->
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
 
+    <!-- 公共设置 -->
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+
+    <!-- 生成文档 -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <!-- 抑制 XML 注释警告 -->
+    <NoWarn>$(NoWarn);CS1591;CS1570;CS1574</NoWarn>
+
+    <!-- 抑制 TFM 不支持警告 -->
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+  </PropertyGroup>
+  
   <!-- Apq.Cfg 特定的 NuGet 包元数据 -->
   <PropertyGroup>
     <Description>统一配置管理库，支持多种配置源</Description>
