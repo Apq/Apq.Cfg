@@ -7,36 +7,23 @@ triggers:
     tags:
       include:
         - ^v\d+\.\d+\.\d+(-[\w.]+)?$
+variables:
+  global:
+    - NUGET_API_KEY
 stages:
-  - name: stage-9bbf6d59
-    displayName: 打包
+  - name: stage-1549ccd4
+    displayName: 打包并发布
     strategy: naturally
     trigger: auto
     executor: []
     steps:
-      - step: build@dotnet
-        name: pack_nuget
-        displayName: 打包Nuget包_6.0
-        dotnetVersion: '6.0'
-        commands:
-          - '# input your command here'
-          - dotnet restore
-          - dotnet publish -c Release -o out
-        artifacts:
-          - name: BUILD_ARTIFACT
-            path:
-              - ./out
-        caches:
-          - ~/.nuget/packages
+      - step: execute@docker
+        name: execute_by_docker
+        displayName: 打包并发布到NuGet
+        certificate: ''
+        image: mcr.m.daocloud.io/dotnet/sdk:9.0
+        command:
+          - 'dotnet restore && dotnet pack Apq.Cfg/Apq.Cfg.csproj -c Release -o ./nupkgs && dotnet pack Apq.Cfg.Ini/Apq.Cfg.Ini.csproj -c Release -o ./nupkgs && dotnet pack Apq.Cfg.Xml/Apq.Cfg.Xml.csproj -c Release -o ./nupkgs && dotnet pack Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj -c Release -o ./nupkgs && dotnet pack Apq.Cfg.Toml/Apq.Cfg.Toml.csproj -c Release -o ./nupkgs && dotnet pack Apq.Cfg.Redis/Apq.Cfg.Redis.csproj -c Release -o ./nupkgs && dotnet pack Apq.Cfg.Database/Apq.Cfg.Database.csproj -c Release -o ./nupkgs && for pkg in ./nupkgs/*.nupkg; do dotnet nuget push "$pkg" -s https://api.nuget.org/v3/index.json -k ${NUGET_API_KEY} --skip-duplicate; done'
         notify: []
         strategy:
           retry: '0'
-      - step: publish@general_artifacts
-        name: publish_general_artifacts
-        displayName: 上传制品
-        dependArtifact: BUILD_ARTIFACT
-        artifactName: output
-        notify: []
-        strategy:
-          retry: '0'
-        dependsOn: pack_nuget
