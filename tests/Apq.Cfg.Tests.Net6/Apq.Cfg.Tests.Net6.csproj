@@ -33,13 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
-    <ProjectReference Include="..\Apq.Cfg.Ini\Apq.Cfg.Ini.csproj" />
-    <ProjectReference Include="..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
-    <ProjectReference Include="..\Apq.Cfg.Yaml\Apq.Cfg.Yaml.csproj" />
-    <ProjectReference Include="..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
-    <ProjectReference Include="..\Apq.Cfg.Redis\Apq.Cfg.Redis.csproj" />
-    <ProjectReference Include="..\Apq.Cfg.Database\Apq.Cfg.Database.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg\Apq.Cfg.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Ini\Apq.Cfg.Ini.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Yaml\Apq.Cfg.Yaml.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Redis\Apq.Cfg.Redis.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Database\Apq.Cfg.Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,11 +13,18 @@ Apq.Cfg/
 ├── Apq.Cfg.Toml/            # TOML 文件扩展
 ├── Apq.Cfg.Redis/           # Redis 扩展
 ├── Apq.Cfg.Database/        # 数据库扩展
-├── Apq.Cfg.Tests.Shared/    # 共享测试代码
-├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
-├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
-├── Apq.Cfg.Tests.Net9/      # .NET 9 测试项目
-└── Samples/                 # 示例项目
+├── Samples/                 # 示例项目
+│   └── Apq.Cfg.Samples/
+├── tests/                   # 单元测试
+│   ├── Apq.Cfg.Tests.Shared/    # 共享测试代码
+│   ├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
+│   ├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
+│   └── Apq.Cfg.Tests.Net9/      # .NET 9 测试项目
+└── benchmarks/              # 性能测试
+    ├── Apq.Cfg.Benchmarks.Shared/   # 共享性能测试代码
+    ├── Apq.Cfg.Benchmarks.Net6/     # .NET 6 性能测试
+    ├── Apq.Cfg.Benchmarks.Net8/     # .NET 8 性能测试
+    └── Apq.Cfg.Benchmarks.Net9/     # .NET 9 性能测试
 ```
 
 ## 特性
@@ -26,6 +33,7 @@ Apq.Cfg/
 - 智能编码检测与统一 UTF-8 写入
 - 多层级配置合并
 - 可写配置与热重载
+- 线程安全（支持多线程并发读写）
 - Microsoft.Extensions.Configuration 兼容
 
 ## 支持的框架
@@ -54,8 +62,15 @@ await cfg.SaveAsync();
 ## 构建与测试
 
 ```bash
+# 构建
 dotnet build
+
+# 运行单元测试
 dotnet test
+
+# 运行性能测试（需要管理员权限以获得准确结果）
+cd benchmarks/Apq.Cfg.Benchmarks.Net9
+dotnet run -c Release
 ```
 
 ## 测试覆盖情况
@@ -118,9 +133,9 @@ dotnet test
 
 | 框架 | 测试数量 | 状态 | 测试日期 |
 |------|----------|------|----------|
-| .NET 6.0 | 54 | ✅ 全部通过 | 2025-12-22 |
-| .NET 8.0 | 54 | ✅ 全部通过 | 2025-12-22 |
-| .NET 9.0 | 54 | ✅ 全部通过 | 2025-12-22 |
+| .NET 6.0 | 54 | ✅ 全部通过 | 2025-12-23 |
+| .NET 8.0 | 54 | ✅ 全部通过 | 2025-12-23 |
+| .NET 9.0 | 54 | ✅ 全部通过 | 2025-12-23 |
 
 ## 许可证
 

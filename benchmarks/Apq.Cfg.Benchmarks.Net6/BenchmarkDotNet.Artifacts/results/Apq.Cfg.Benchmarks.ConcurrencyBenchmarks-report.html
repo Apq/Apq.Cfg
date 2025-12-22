@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Apq.Cfg.Benchmarks.ConcurrencyBenchmarks-20251222-230340</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26200.7462)
+Unknown processor
+.NET SDK 9.0.308
+  [Host]     : .NET 6.0.36 (6.0.3624.51421), X64 RyuJIT AVX2
+  DefaultJob : .NET 6.0.36 (6.0.3624.51421), X64 RyuJIT AVX2
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method                 </th><th>ThreadCount</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Gen0</th><th>Gen1</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>ConcurrentExists</td><td>1</td><td>4.485 &mu;s</td><td>0.0539 &mu;s</td><td>0.0504 &mu;s</td><td>4.483 &mu;s</td><td>0.63</td><td>0.01</td><td>1</td><td>0.0076</td><td>-</td><td>264 B</td><td>0.008</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>1</td><td>7.123 &mu;s</td><td>0.0767 &mu;s</td><td>0.0680 &mu;s</td><td>7.130 &mu;s</td><td>1.00</td><td>0.01</td><td>2</td><td>0.6790</td><td>-</td><td>33865 B</td><td>1.000</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>1</td><td>7.383 &mu;s</td><td>0.1438 &mu;s</td><td>0.1345 &mu;s</td><td>7.369 &mu;s</td><td>1.04</td><td>0.02</td><td>2</td><td>0.6790</td><td>-</td><td>34018 B</td><td>1.005</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>1</td><td>13.091 &mu;s</td><td>0.2464 &mu;s</td><td>0.5034 &mu;s</td><td>12.939 &mu;s</td><td>1.84</td><td>0.07</td><td>3</td><td>0.6714</td><td>-</td><td>33917 B</td><td>1.002</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>1</td><td>21.483 &mu;s</td><td>0.8206 &mu;s</td><td>2.4066 &mu;s</td><td>22.179 &mu;s</td><td>3.02</td><td>0.34</td><td>4</td><td>0.3662</td><td>-</td><td>19440 B</td><td>0.574</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>4</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>ConcurrentExists</td><td>4</td><td>9.583 &mu;s</td><td>0.1812 &mu;s</td><td>0.1607 &mu;s</td><td>9.526 &mu;s</td><td>0.45</td><td>0.02</td><td>1</td><td>0.0153</td><td>-</td><td>701 B</td><td>0.005</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>4</td><td>21.110 &mu;s</td><td>0.4175 &mu;s</td><td>0.7201 &mu;s</td><td>21.068 &mu;s</td><td>1.00</td><td>0.05</td><td>2</td><td>2.6855</td><td>-</td><td>135117 B</td><td>1.000</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>4</td><td>24.654 &mu;s</td><td>0.4923 &mu;s</td><td>1.0805 &mu;s</td><td>24.378 &mu;s</td><td>1.17</td><td>0.06</td><td>3</td><td>2.6855</td><td>-</td><td>135368 B</td><td>1.002</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>4</td><td>27.694 &mu;s</td><td>0.5538 &mu;s</td><td>0.5180 &mu;s</td><td>27.794 &mu;s</td><td>1.31</td><td>0.05</td><td>4</td><td>2.1667</td><td>0.0610</td><td>106288 B</td><td>0.787</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>8</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>8</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>ConcurrentExists</td><td>8</td><td>14.692 &mu;s</td><td>0.1873 &mu;s</td><td>0.1661 &mu;s</td><td>14.733 &mu;s</td><td>0.50</td><td>0.02</td><td>1</td><td>0.0305</td><td>-</td><td>1276 B</td><td>0.005</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>8</td><td>29.689 &mu;s</td><td>0.5841 &mu;s</td><td>1.2699 &mu;s</td><td>29.603 &mu;s</td><td>1.00</td><td>0.06</td><td>2</td><td>5.4016</td><td>0.0305</td><td>270096 B</td><td>1.000</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>8</td><td>29.830 &mu;s</td><td>0.5959 &mu;s</td><td>1.1763 &mu;s</td><td>29.618 &mu;s</td><td>1.01</td><td>0.06</td><td>2</td><td>5.4016</td><td>0.0305</td><td>270471 B</td><td>1.001</td>
+</tr></tbody></table>
+</body>
+</html>

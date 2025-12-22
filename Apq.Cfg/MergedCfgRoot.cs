@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Apq.Cfg.Sources;
 using Microsoft.Extensions.Configuration;
 
@@ -8,21 +9,21 @@ namespace Apq.Cfg;
 /// </summary>
 internal sealed class MergedCfgRoot : ICfgRoot
 {
-    private readonly Dictionary<int, (List<ICfgSource> Sources, IWritableCfgSource? Primary, Dictionary<string, string?> Pending)> _levelData;
+    private readonly ConcurrentDictionary<int, (List<ICfgSource> Sources, IWritableCfgSource? Primary, ConcurrentDictionary<string, string?> Pending)> _levelData;
     private volatile bool _disposed;
     private readonly IConfigurationRoot _merged;
 
     public MergedCfgRoot(IEnumerable<ICfgSource> sources)
     {
         var sortedSources = sources.OrderBy(s => s.Level).ThenBy(s => s.IsPrimaryWriter ? 1 : 0).ToList();
-        _levelData = new Dictionary<int, (List<ICfgSource>, IWritableCfgSource?, Dictionary<string, string?>)>();
+        _levelData = new ConcurrentDictionary<int, (List<ICfgSource>, IWritableCfgSource?, ConcurrentDictionary<string, string?>)>();
 
         foreach (var group in sortedSources.GroupBy(s => s.Level))
         {
             var list = group.ToList();
             var primary = list.LastOrDefault(s => s.IsPrimaryWriter && s is IWritableCfgSource) as IWritableCfgSource
                           ?? list.LastOrDefault(s => s.IsWriteable && s is IWritableCfgSource) as IWritableCfgSource;
-            _levelData[group.Key] = (list, primary, new Dictionary<string, string?>());
+            _levelData[group.Key] = (list, primary, new ConcurrentDictionary<string, string?>());
         }
 
         _merged = BuildMergedConfiguration();
@@ -71,14 +72,23 @@ internal sealed class MergedCfgRoot : ICfgRoot
     public async Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default)
     {
         var level = targetLevel ?? _levelData.Keys.DefaultIfEmpty().Max();
-        if (!_levelData.TryGetValue(level, out var data) || data.Pending.Count == 0)
+        if (!_levelData.TryGetValue(level, out var data) || data.Pending.IsEmpty)
             return;
 
         if (data.Primary == null)
             throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
 
-        var changes = new Dictionary<string, string?>(data.Pending);
-        data.Pending.Clear();
+        // 原子地获取并移除所有待保存的更改
+        var changes = new Dictionary<string, string?>();
+        foreach (var key in data.Pending.Keys.ToArray())
+        {
+            if (data.Pending.TryRemove(key, out var value))
+                changes[key] = value;
+        }
+
+        if (changes.Count == 0)
+            return;
+
         await data.Primary.ApplyChangesAsync(changes, cancellationToken).ConfigureAwait(false);
 
         // 保存后更新内存中的配置
