@@ -93,4 +93,52 @@ public class IniCfgTests : IDisposable
         Assert.Equal("NewValue", cfg2.Get("App:NewKey"));
         Assert.Equal("Value", cfg2.Get("App:Original"));
     }
+
+    [Fact]
+    public void Exists_ExistingKey_ReturnsTrue()
+    {
+        // Arrange
+        var iniPath = Path.Combine(_testDir, "config.ini");
+        File.WriteAllText(iniPath, """
+            [Section]
+            Key=Value
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddIni(iniPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.True(cfg.Exists("Section:Key"));
+        Assert.False(cfg.Exists("NonExistent"));
+    }
+
+    [Fact]
+    public async Task Remove_AndSave_RemovesKey()
+    {
+        // Arrange
+        var iniPath = Path.Combine(_testDir, "config.ini");
+        File.WriteAllText(iniPath, """
+            [App]
+            ToRemove=Value
+            ToKeep=Value2
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddIni(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act
+        cfg.Remove("App:ToRemove");
+        await cfg.SaveAsync();
+
+        // Assert
+        using var cfg2 = new CfgBuilder()
+            .AddIni(iniPath, level: 0, writeable: false)
+            .Build();
+
+        var removedValue = cfg2.Get("App:ToRemove");
+        Assert.True(string.IsNullOrEmpty(removedValue));
+        Assert.Equal("Value2", cfg2.Get("App:ToKeep"));
+    }
 }

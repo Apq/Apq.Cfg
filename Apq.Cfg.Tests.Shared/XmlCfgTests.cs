@@ -105,4 +105,56 @@ public class XmlCfgTests : IDisposable
         Assert.Equal("NewValue", cfg2.Get("App:NewKey"));
         Assert.Equal("Value", cfg2.Get("App:Original"));
     }
+
+    [Fact]
+    public void Exists_ExistingKey_ReturnsTrue()
+    {
+        // Arrange
+        var xmlPath = Path.Combine(_testDir, "config.xml");
+        File.WriteAllText(xmlPath, """
+            <?xml version="1.0" encoding="utf-8"?>
+            <configuration>
+                <Key>Value</Key>
+            </configuration>
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddXml(xmlPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.True(cfg.Exists("Key"));
+        Assert.False(cfg.Exists("NonExistent"));
+    }
+
+    [Fact]
+    public async Task Remove_AndSave_RemovesKey()
+    {
+        // Arrange
+        var xmlPath = Path.Combine(_testDir, "config.xml");
+        File.WriteAllText(xmlPath, """
+            <?xml version="1.0" encoding="utf-8"?>
+            <configuration>
+                <ToRemove>Value</ToRemove>
+                <ToKeep>Value2</ToKeep>
+            </configuration>
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddXml(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act
+        cfg.Remove("ToRemove");
+        await cfg.SaveAsync();
+
+        // Assert
+        using var cfg2 = new CfgBuilder()
+            .AddXml(xmlPath, level: 0, writeable: false)
+            .Build();
+
+        var removedValue = cfg2.Get("ToRemove");
+        Assert.True(string.IsNullOrEmpty(removedValue));
+        Assert.Equal("Value2", cfg2.Get("ToKeep"));
+    }
 }
