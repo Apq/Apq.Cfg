@@ -28,11 +28,29 @@ internal sealed class MergedCfgRoot : ICfgRoot
         _merged = BuildMergedConfiguration();
     }
 
-    public string? Get(string key) => _merged[key];
+    public string? Get(string key)
+    {
+        // 先检查所有层级的 Pending（从高到低）
+        foreach (var level in _levelData.Keys.OrderByDescending(k => k))
+        {
+            if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                return pendingValue;
+        }
+        return _merged[key];
+    }
 
     public T? Get<T>(string key) => _merged.GetValue<T>(key);
 
-    public bool Exists(string key) => _merged[key] != null;
+    public bool Exists(string key)
+    {
+        // 先检查所有层级的 Pending
+        foreach (var level in _levelData.Keys)
+        {
+            if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                return pendingValue != null;
+        }
+        return _merged[key] != null;
+    }
 
     public void Remove(string key, int? targetLevel = null)
     {
@@ -62,6 +80,10 @@ internal sealed class MergedCfgRoot : ICfgRoot
         var changes = new Dictionary<string, string?>(data.Pending);
         data.Pending.Clear();
         await data.Primary.ApplyChangesAsync(changes, cancellationToken).ConfigureAwait(false);
+
+        // 保存后更新内存中的配置
+        foreach (var (key, value) in changes)
+            _merged[key] = value;
     }
 
     public IConfigurationRoot ToMicrosoftConfiguration() => _merged;

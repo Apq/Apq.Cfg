@@ -59,12 +59,17 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
             {
                 var pattern = string.IsNullOrEmpty(_options.KeyPrefix) ? "*" : _options.KeyPrefix + "*";
                 var pageSize = Math.Clamp(_options.ScanPageSize, MinScanPageSize, MaxScanPageSize);
+                var prefixLen = _options.KeyPrefix?.Length ?? 0;
                 foreach (var key in server.Keys(db.Database, pattern, pageSize))
                 {
                     var val = db.StringGet(key);
                     var keyStr = key.ToString();
                     if (!string.IsNullOrEmpty(keyStr))
-                        data.Add(new KeyValuePair<string, string?>(keyStr, val.HasValue ? val.ToString() : null));
+                    {
+                        // 去掉前缀，还原为原始配置 key
+                        var configKey = prefixLen > 0 ? keyStr.Substring(prefixLen) : keyStr;
+                        data.Add(new KeyValuePair<string, string?>(configKey, val.HasValue ? val.ToString() : null));
+                    }
                 }
             }
         }
