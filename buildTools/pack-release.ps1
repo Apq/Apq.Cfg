@@ -92,6 +92,17 @@ Write-Host ''
 Write-ColorText '开始打包...' 'Cyan'
 Write-Host ''
 
+# 删除当前版本的旧包（避免 NuGet 缓存冲突）
+$oldPackages = Get-ChildItem -Path $OutputDir -Filter "Apq.Cfg*.$currentVersion.*pkg" -ErrorAction SilentlyContinue
+if ($oldPackages.Count -gt 0) {
+    Write-ColorText "清理当前版本 ($currentVersion) 的旧包..." 'Gray'
+    foreach ($pkg in $oldPackages) {
+        Remove-Item $pkg.FullName -Force
+        Write-ColorText "  已删除: $($pkg.Name)" 'DarkGray'
+    }
+    Write-Host ''
+}
+
 # 构建打包参数
 $packArgs = @(
     'pack'
