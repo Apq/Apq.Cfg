@@ -31,16 +31,18 @@
     <VersionsDir>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'versions'))</VersionsDir>
   </PropertyGroup>
 
-  <!-- 内联任务：获取最高版本号 -->
+  <!-- 内联任务：获取最高版本号及其文件路径 -->
   <UsingTask TaskName="GetMaxVersion" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <VersionFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
       <MaxVersion ParameterType="System.String" Output="true" />
+      <MaxVersionFile ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System.Text.RegularExpressions" />
       <Code Type="Fragment" Language="cs"><![CDATA[
         MaxVersion = "1.0.0";
+        MaxVersionFile = "";
         Version maxVer = new Version(0, 0, 0);
         if (VersionFiles != null) {
             foreach (var file in VersionFiles) {
@@ -50,9 +52,29 @@
                     if (ver > maxVer) {
                         maxVer = ver;
                         MaxVersion = match.Groups[1].Value;
+                        MaxVersionFile = file.GetMetadata("FullPath");
                     }
                 }
             }
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <!-- 内联任务：检查文件内容长度 -->
+  <UsingTask TaskName="CheckFileLength" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <FilePath ParameterType="System.String" Required="true" />
+      <MinLength ParameterType="System.Int32" Required="true" />
+      <IsLongEnough ParameterType="System.Boolean" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        IsLongEnough = false;
+        if (!string.IsNullOrEmpty(FilePath) && File.Exists(FilePath)) {
+            var content = File.ReadAllText(FilePath);
+            IsLongEnough = content.Length >= MinLength;
         }
       ]]></Code>
     </Task>
@@ -66,6 +88,7 @@
 
     <GetMaxVersion VersionFiles="@(VersionFiles)">
       <Output TaskParameter="MaxVersion" PropertyName="DetectedVersion" />
+      <Output TaskParameter="MaxVersionFile" PropertyName="DetectedVersionFile" />
     </GetMaxVersion>
 
     <PropertyGroup>
@@ -73,6 +96,33 @@
     </PropertyGroup>
 
     <Message Text="检测到版本: $(DetectedVersion)" Importance="high" />
+  </Target>
+
+  <!-- 动态选择 README 文件：优先使用版本文件，内容不足5字符时回退到项目 README -->
+  <Target Name="SelectReadmeFile" BeforeTargets="_GetPackageFiles" DependsOnTargets="DetectVersionFromFiles">
+    <!-- 检查版本文件内容长度 -->
+    <CheckFileLength FilePath="$(DetectedVersionFile)" MinLength="5">
+      <Output TaskParameter="IsLongEnough" PropertyName="UseVersionFileAsReadme" />
+    </CheckFileLength>
+
+    <!-- 如果版本文件内容足够长，使用版本文件 -->
+    <ItemGroup Condition="'$(UseVersionFileAsReadme)' == 'true'">
+      <_PackageFiles Include="$(DetectedVersionFile)">
+        <PackagePath>README.md</PackagePath>
+        <BuildAction>None</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+
+    <!-- 否则使用项目目录下的 README.md -->
+    <ItemGroup Condition="'$(UseVersionFileAsReadme)' != 'true'">
+      <_PackageFiles Include="README.md">
+        <PackagePath>README.md</PackagePath>
+        <BuildAction>None</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+
+    <Message Text="README 来源: $(DetectedVersionFile) (版本文件)" Importance="high" Condition="'$(UseVersionFileAsReadme)' == 'true'" />
+    <Message Text="README 来源: README.md (项目目录)" Importance="high" Condition="'$(UseVersionFileAsReadme)' != 'true'" />
   </Target>
 
   <!-- NuGet 包公共元数据 -->

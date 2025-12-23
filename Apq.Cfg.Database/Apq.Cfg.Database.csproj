@@ -13,8 +13,4 @@
         <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <None Include="README.md" Pack="true" PackagePath="\"/>
-    </ItemGroup>
-
 </Project>
