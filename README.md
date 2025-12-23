@@ -20,11 +20,10 @@ Apq.Cfg/
 │   ├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
 │   ├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
 │   └── Apq.Cfg.Tests.Net9/      # .NET 9 测试项目
-└── benchmarks/              # 性能测试
-    ├── Apq.Cfg.Benchmarks.Shared/   # 共享性能测试代码
-    ├── Apq.Cfg.Benchmarks.Net6/     # .NET 6 性能测试
-    ├── Apq.Cfg.Benchmarks.Net8/     # .NET 8 性能测试
-    └── Apq.Cfg.Benchmarks.Net9/     # .NET 9 性能测试
+├── benchmarks/              # 性能测试
+│   └── Apq.Cfg.Benchmarks/      # 性能测试项目（多目标框架）
+├── buildTools/              # 构建工具脚本
+└── nupkgs/                  # NuGet 包输出目录
 ```
 
 ## 特性
@@ -69,7 +68,7 @@ dotnet build
 dotnet test
 
 # 运行性能测试（需要管理员权限以获得准确结果）
-cd benchmarks/Apq.Cfg.Benchmarks.Net9
+cd benchmarks/Apq.Cfg.Benchmarks
 dotnet run -c Release
 ```
 
