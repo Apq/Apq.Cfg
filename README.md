@@ -23,6 +23,7 @@ Apq.Cfg/
 ├── benchmarks/              # 性能测试
 │   └── Apq.Cfg.Benchmarks/      # 性能测试项目（多目标框架）
 ├── buildTools/              # 构建工具脚本
+├── versions/                # 版本文件目录
 └── nupkgs/                  # NuGet 包输出目录
 ```
 

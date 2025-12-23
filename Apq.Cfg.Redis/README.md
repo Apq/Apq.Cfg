@@ -39,7 +39,7 @@ public static CfgBuilder AddRedis(
 |------|------|--------|------|
 | `ConnectionString` | `string?` | - | Redis 连接字符串 |
 | `KeyPrefix` | `string?` | - | 键前缀，用于过滤配置键 |
-| `Database` | `int?` | -1 | Redis 数据库索引 |
+| `Database` | `int?` | null | Redis 数据库索引 |
 | `Channel` | `string?` | - | 发布/订阅通道，配置变更时发送通知 |
 | `ConnectTimeoutMs` | `int` | 5000 | 连接超时（毫秒） |
 | `OperationTimeoutMs` | `int` | 5000 | 操作超时（毫秒） |
