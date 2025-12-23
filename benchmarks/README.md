@@ -64,33 +64,33 @@ benchmarks/
 # 重要：必须使用 -- --filter * 指定测试，否则会进入交互模式等待输入
 
 # .NET 6
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net6 -- --filter *
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net6 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks.Net6/BenchmarkDotNet.Artifacts
 
 # .NET 8
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net8 -- --filter *
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net8 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks.Net8/BenchmarkDotNet.Artifacts
 
 # .NET 9
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 ```
 
 ### 运行特定测试
 
 ```bash
 # 运行特定测试类（以 .NET 9 为例，其他版本替换项目名即可）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *ReadWriteBenchmarks*
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *LargeFileBenchmarks*
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *ConcurrencyBenchmarks*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *ReadWriteBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *LargeFileBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *ConcurrencyBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 运行特定测试方法
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Json_Get*
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Ini_Load*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Json_Get* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Ini_Load* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 运行特定类别
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Get*
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Set*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Get* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Set* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 组合多个过滤器
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Json* --filter *Ini*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *Json* --filter *Ini* --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 ```
 
 > **注意**：`--` 是必须的，它将后面的参数传递给 BenchmarkDotNet 而不是 dotnet 命令。
@@ -99,33 +99,33 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *
 
 ```bash
 # 快速测试（减少迭代次数，用于验证功能是否正常）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *ReadWriteBenchmarks* --job short
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter *ReadWriteBenchmarks* --job short --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 运行所有测试的快速版本
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --job short
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --job short --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 列出所有可用测试（不实际运行）
 dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --list flat
 
 # 导出为不同格式
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --exporters markdown
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --exporters html
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --exporters csv
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --exporters markdown --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --exporters html --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --exporters csv --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 ```
 
 ### 高级选项
 
 ```bash
 # 指定运行时
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net6 -f net6.0 -- --filter *
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net8 -f net8.0 -- --filter *
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -f net9.0 -- --filter *
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net6 -f net6.0 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks.Net6/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net8 -f net8.0 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks.Net8/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -f net9.0 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 内存诊断（默认已启用）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --memory
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --memory --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 
 # 显示详细信息
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --info
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks.Net9 -- --filter * --info --artifacts benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts
 ```
 
 ## 并行运行多个测试（CPU 亲和性隔离）
@@ -194,10 +194,12 @@ Start-Process -FilePath "dotnet" -ArgumentList "run -c Release -- --filter *" -W
 
 ## 测试结果
 
-运行完成后，结果保存在 `BenchmarkDotNet.Artifacts/results/` 目录：
+运行完成后，结果保存在各项目目录下的 `BenchmarkDotNet.Artifacts/results/` 目录：
 
 ```
-BenchmarkDotNet.Artifacts/results/
+benchmarks/Apq.Cfg.Benchmarks.Net6/BenchmarkDotNet.Artifacts/results/
+benchmarks/Apq.Cfg.Benchmarks.Net8/BenchmarkDotNet.Artifacts/results/
+benchmarks/Apq.Cfg.Benchmarks.Net9/BenchmarkDotNet.Artifacts/results/
 ├── *-report.csv          # CSV 格式数据
 ├── *-report.html         # HTML 可视化报告
 └── *-report-github.md    # GitHub Markdown 格式
