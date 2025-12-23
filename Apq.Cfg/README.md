@@ -228,18 +228,15 @@ export APQ_CFG_ENCODING_CONFIDENCE=0.7
 
 ## 热重载
 
-文件配置源支持自动监听文件变更并重新加载：
+文件配置源支持自动监听文件变更并重新加载配置：
 
 ```csharp
 var cfg = new CfgBuilder()
     .AddJson("appsettings.json", level: 0, reloadOnChange: true)
     .Build();
 
-// 订阅配置变更事件
-cfg.OnReload += (sender, args) =>
-{
-    Console.WriteLine("配置已重新加载");
-};
+// 配置文件变更后会自动重新加载
+// 后续读取 cfg.Get() 将获取到最新的配置值
 ```
 
 ## 核心类型
@@ -324,6 +321,8 @@ builder.AddSource(new MyCustomCfgSource(...));
 | 包名 | 用途 |
 | ---- | ---- |
 | Microsoft.Extensions.Configuration | 配置基础设施 |
+| Microsoft.Extensions.Configuration.Abstractions | 配置抽象接口 |
+| Microsoft.Extensions.Configuration.Binder | 配置绑定功能 |
 | Microsoft.Extensions.Configuration.Json | JSON 配置支持 |
 | Microsoft.Extensions.Configuration.EnvironmentVariables | 环境变量支持 |
 | [UTF.Unknown](https://github.com/CharsetDetector/UTF-unknown) | 文件编码自动检测 |
