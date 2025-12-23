@@ -5,7 +5,7 @@
 ## 依赖
 
 - Apq.Cfg
-- SqlSugarCore 5.1.4.187
+- SqlSugarCore 5.1.4.210
 
 ## 支持的数据库
 

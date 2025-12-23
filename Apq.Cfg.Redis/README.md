@@ -5,7 +5,7 @@ Redis 配置源扩展包。
 ## 依赖
 
 - Apq.Cfg
-- StackExchange.Redis 2.9.25
+- StackExchange.Redis 2.10.1
 
 ## 用法
 

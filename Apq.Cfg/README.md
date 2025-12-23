@@ -153,11 +153,12 @@ using Apq.Cfg.Database;
 var cfg = new CfgBuilder()
     .AddDatabase(options =>
     {
+        options.Provider = "MySql"; // SqlServer/MySql/PostgreSql/Oracle/SQLite
         options.ConnectionString = "Server=localhost;Database=config;...";
-        options.TableName = "AppConfig";
+        options.Table = "AppConfig";
         options.KeyColumn = "Key";
         options.ValueColumn = "Value";
-    }, level: 0, writeable: true)
+    }, level: 0, isPrimaryWriter: true)
     .Build();
 ```
 

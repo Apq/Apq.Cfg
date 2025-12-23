@@ -5,7 +5,7 @@ XML 文件配置源扩展包。
 ## 依赖
 
 - Apq.Cfg
-- Microsoft.Extensions.Configuration.Xml 9.0.9
+- Microsoft.Extensions.Configuration.Xml（版本随目标框架：net6.0→6.0.0, net7.0→7.0.0, net8.0→8.0.0, net9.0→9.0.0）
 
 ## 用法
 
