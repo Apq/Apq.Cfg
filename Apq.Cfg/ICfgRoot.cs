@@ -1,3 +1,4 @@
+using Apq.Cfg.Changes;
 using Microsoft.Extensions.Configuration;
 
 namespace Apq.Cfg;
@@ -18,5 +19,19 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
 
     // 转换方法
+    /// <summary>
+    /// 转换为 Microsoft Configuration（静态快照）
+    /// </summary>
     IConfigurationRoot ToMicrosoftConfiguration();
+
+    /// <summary>
+    /// 转换为支持动态重载的 Microsoft Configuration
+    /// </summary>
+    /// <param name="options">动态重载选项，为 null 时使用默认选项</param>
+    IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options);
+
+    /// <summary>
+    /// 获取配置变更的可观察序列
+    /// </summary>
+    IObservable<ConfigChangeEvent> ConfigChanges { get; }
 }
