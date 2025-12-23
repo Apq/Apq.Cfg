@@ -15,7 +15,7 @@ function Write-ColorText {
     Write-Host $Text -ForegroundColor $Color
 }
 
-# 读取 Y/N 确认，按Q立即退出
+# 读取 Y/N 确认，按Q立即退出，回车默认Y
 function Read-Confirm {
     param([string]$Prompt)
     Write-Host $Prompt -NoNewline
@@ -26,7 +26,7 @@ function Read-Confirm {
             Write-ColorText '已退出' 'Yellow'
             exit 0
         }
-        if ($key.Character -eq 'y' -or $key.Character -eq 'Y') {
+        if ($key.Character -eq 'y' -or $key.Character -eq 'Y' -or $key.VirtualKeyCode -eq 13) {
             Write-Host 'Y'
             return $true
         }
@@ -57,16 +57,18 @@ if (-not (Test-Path $VersionsDir)) {
     exit 1
 }
 
-$versionFiles = Get-ChildItem -Path $VersionsDir -Filter 'v*.*.*.md' -ErrorAction SilentlyContinue
-$versions = $versionFiles | Where-Object { $_.BaseName -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object {
+$versionFiles = @(Get-ChildItem -Path $VersionsDir -Filter 'v*.md' -ErrorAction SilentlyContinue)
+$versions = @($versionFiles | Where-Object { $_.BaseName -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object {
+    $fullVersion = $_.BaseName -replace '^v', ''
+    $baseVersion = $_.BaseName -replace '^v(\d+\.\d+\.\d+).*', '$1'
     [PSCustomObject]@{
-        Name = $_.BaseName
-        Version = [version]($_.BaseName -replace '^v(\d+\.\d+\.\d+).*', '$1')
+        Name = $fullVersion
+        Version = [version]$baseVersion
     }
-} | Sort-Object Version -Descending
+} | Sort-Object Version -Descending)
 
-if ($versions -and $versions.Count -gt 0) {
-    $currentVersion = $versions[0].Name -replace '^v(\d+\.\d+\.\d+).*', '$1'
+if ($versions.Count -gt 0) {
+    $currentVersion = $versions[0].Name
     Write-ColorText "当前版本: $currentVersion" 'Yellow'
 } else {
     Write-ColorText '错误: 无法从 versions 目录获取版本号' 'Red'
@@ -92,7 +94,7 @@ Write-Host ''
 Write-ColorText "输出目录: $OutputDir" 'Gray'
 Write-Host ''
 
-if (-not (Read-Confirm '确认开始打包? (Y/N): ')) {
+if (-not (Read-Confirm '确认开始打包? ([Y]/N): ')) {
     Write-ColorText '已取消' 'Yellow'
     exit 0
 }
