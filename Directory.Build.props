@@ -26,28 +26,53 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
-  <!-- 从 versions 目录自动获取版本号 -->
+  <!-- 从 versions 目录自动获取版本号（纯 MSBuild，跨平台兼容） -->
   <PropertyGroup>
     <VersionsDir>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'versions'))</VersionsDir>
-    <VersionPattern>v(\d+)\.(\d+)\.(\d+)</VersionPattern>
-    <DetectedVersion>1.0.0</DetectedVersion>
   </PropertyGroup>
 
+  <!-- 内联任务：获取最高版本号 -->
+  <UsingTask TaskName="GetMaxVersion" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <VersionFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <MaxVersion ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        MaxVersion = "1.0.0";
+        Version maxVer = new Version(0, 0, 0);
+        if (VersionFiles != null) {
+            foreach (var file in VersionFiles) {
+                var match = Regex.Match(file.GetMetadata("Filename"), @"^v(\d+\.\d+\.\d+)");
+                if (match.Success) {
+                    var ver = new Version(match.Groups[1].Value);
+                    if (ver > maxVer) {
+                        maxVer = ver;
+                        MaxVersion = match.Groups[1].Value;
+                    }
+                }
+            }
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <!-- 扫描版本文件并提取最高版本 -->
   <Target Name="DetectVersionFromFiles" BeforeTargets="GetAssemblyVersion;GenerateNuspec;Pack;Build">
     <ItemGroup>
-      <VersionFiles Include="$(VersionsDir)\v*.md" />
+      <VersionFiles Include="$(VersionsDir)/v*.md" />
     </ItemGroup>
+
+    <GetMaxVersion VersionFiles="@(VersionFiles)">
+      <Output TaskParameter="MaxVersion" PropertyName="DetectedVersion" />
+    </GetMaxVersion>
+
     <PropertyGroup>
-      <_VersionFileList>@(VersionFiles->'%(Filename)', ',')</_VersionFileList>
-    </PropertyGroup>
-    <Exec Command="powershell -NoProfile -Command &quot;$files = '$(_VersionFileList)' -split ','; $versions = $files | Where-Object { $_ -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object { [PSCustomObject]@{Name=$_ -replace '^v',''; V=[version]($_ -replace '^v(\d+\.\d+\.\d+).*','$1')} } | Sort-Object V -Descending; if($versions) { $versions[0].Name } else { '1.0.0' }&quot;"
-          ConsoleToMsBuild="true"
-          Condition="'$(_VersionFileList)' != ''">
-      <Output TaskParameter="ConsoleOutput" PropertyName="DetectedVersion" />
-    </Exec>
-    <PropertyGroup Condition="'$(DetectedVersion)' != ''">
       <Version>$(DetectedVersion)</Version>
     </PropertyGroup>
+
+    <Message Text="检测到版本: $(DetectedVersion)" Importance="high" />
   </Target>
 
   <!-- NuGet 包公共元数据 -->
