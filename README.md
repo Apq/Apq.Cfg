@@ -33,8 +33,10 @@ Apq.Cfg/
 - 智能编码检测与统一 UTF-8 写入
 - 多层级配置合并
 - 可写配置与热重载
+- **动态配置重载**（支持文件变更自动检测、防抖、增量更新）
 - 线程安全（支持多线程并发读写）
 - Microsoft.Extensions.Configuration 兼容
+- Reactive Extensions (Rx) 支持配置变更订阅
 
 ## 支持的框架
 
@@ -59,6 +61,51 @@ cfg.Set("App:LastRun", DateTime.Now.ToString());
 await cfg.SaveAsync();
 ```
 
+### 动态配置重载
+
+支持配置文件变更时自动更新，无需重启应用：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Changes;
+using Microsoft.Extensions.Primitives;
+
+// 构建配置（启用 reloadOnChange）
+var cfg = new CfgBuilder()
+    .AddJson("appsettings.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("appsettings.local.json", level: 1, writeable: true, reloadOnChange: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .Build();
+
+// 获取支持动态重载的 Microsoft Configuration
+var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
+{
+    DebounceMs = 100,           // 防抖时间窗口（毫秒）
+    EnableDynamicReload = true  // 启用动态重载
+});
+
+// 方式1：使用 IChangeToken 监听变更
+ChangeToken.OnChange(
+    () => msConfig.GetReloadToken(),
+    () => Console.WriteLine("配置已更新"));
+
+// 方式2：使用 Rx 订阅配置变更事件
+cfg.ConfigChanges.Subscribe(e =>
+{
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"[{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
+    }
+});
+```
+
+#### 动态重载特性
+
+- **防抖处理**：批量文件保存时，多次快速变化合并为一次处理
+- **增量更新**：只重新加载发生变化的配置源，而非全部重载
+- **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
+- **多源支持**：支持多个配置源同时存在的场景
+
 ## 构建与测试
 
 ```bash
@@ -75,7 +122,7 @@ dotnet run -c Release
 
 ## 测试覆盖情况
 
-### 测试统计（共 54 个测试）
+### 测试统计（共 63 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -89,6 +136,7 @@ dotnet run -c Release
 | DatabaseCfgTests | 5 | 数据库配置源测试 |
 | CfgRootExtensionsTests | 4 | 扩展方法测试 |
 | CfgBuilderAdvancedTests | 6 | 高级功能测试 |
+| DynamicReloadTests | 9 | 动态配置重载测试 |
 
 ### 公开 API 覆盖矩阵
 
@@ -105,6 +153,8 @@ dotnet run -c Release
 | `SaveAsync()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `SaveAsync(targetLevel)` | ✅ | - | - | - | - | - | - | - |
 | `ToMicrosoftConfiguration()` | ✅ | - | - | - | - | - | - | - |
+| `ToMicrosoftConfiguration(options)` | ✅ | - | - | - | - | - | - | - |
+| `ConfigChanges` | ✅ | - | - | - | - | - | - | - |
 | **CfgBuilder** |
 | `AddJson()` | ✅ | - | - | - | - | - | - | - |
 | `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - |
@@ -133,9 +183,9 @@ dotnet run -c Release
 
 | 框架 | 测试数量 | 状态 | 测试日期 |
 |------|----------|------|----------|
-| .NET 6.0 | 54 | ✅ 全部通过 | 2025-12-23 |
-| .NET 8.0 | 54 | ✅ 全部通过 | 2025-12-23 |
-| .NET 9.0 | 54 | ✅ 全部通过 | 2025-12-23 |
+| .NET 6.0 | 63 | ✅ 全部通过 | 2025-12-24 |
+| .NET 8.0 | 63 | ✅ 全部通过 | 2025-12-24 |
+| .NET 9.0 | 63 | ✅ 全部通过 | 2025-12-24 |
 
 ## 性能测试结果
 

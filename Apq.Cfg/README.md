@@ -10,6 +10,15 @@ Apq.Cfg/
 ├── MergedCfgRoot.cs         # 合并配置根实现
 ├── CfgBuilder.cs            # 配置构建器
 ├── CfgRootExtensions.cs     # 扩展方法
+├── Changes/                 # 配置变更相关
+│   ├── ChangeType.cs        # 变更类型枚举
+│   ├── ConfigChange.cs      # 配置变更记录
+│   ├── ConfigChangeEvent.cs # 配置变更事件
+│   └── DynamicReloadOptions.cs  # 动态重载选项
+├── Internal/                # 内部实现
+│   ├── ChangeCoordinator.cs         # 变更协调器
+│   ├── MergedConfigurationProvider.cs   # 合并配置提供者
+│   └── MergedConfigurationSource.cs     # 合并配置源
 └── Sources/                 # 配置源
     ├── ICfgSource.cs        # 配置源接口
     ├── JsonFileCfgSource.cs # JSON 文件配置源
@@ -27,6 +36,8 @@ Apq.Cfg/
 - **多层级配置**：支持配置源优先级，高层级覆盖低层级
 - **可写配置**：支持配置修改并持久化到指定配置源
 - **热重载**：文件配置源支持变更自动重载
+- **动态配置重载**：支持文件变更自动检测、防抖、增量更新
+- **Reactive Extensions (Rx) 支持**：通过 `ConfigChanges` 订阅配置变更事件
 - **Microsoft.Extensions.Configuration 兼容**：可无缝转换为标准配置接口
 
 ## 支持的框架
@@ -54,8 +65,8 @@ dotnet add package Apq.Cfg.Database
 ## 扩展包
 
 | 项目 | 说明 | 依赖 |
-| ---- | ---- | ---- |
-| `Apq.Cfg` | 核心库，包含 JSON 和环境变量支持 | UTF.Unknown |
+| ---- | ---- |  ---- |
+| `Apq.Cfg` | 核心库，包含 JSON 和环境变量支持 | UTF.Unknown, System.Reactive |
 | `Apq.Cfg.Ini` | INI 文件扩展 | Microsoft.Extensions.Configuration.Ini |
 | `Apq.Cfg.Xml` | XML 文件扩展 | Microsoft.Extensions.Configuration.Xml |
 | `Apq.Cfg.Yaml` | YAML 文件扩展 | YamlDotNet |
@@ -91,8 +102,15 @@ if (cfg.Exists("Feature:Enabled"))
 cfg.Set("App:LastRun", DateTime.Now.ToString());
 await cfg.SaveAsync();
 
-// 转换为 Microsoft.Extensions.Configuration
+// 转换为 Microsoft.Extensions.Configuration（静态快照）
 IConfigurationRoot msConfig = cfg.ToMicrosoftConfiguration();
+
+// 转换为支持动态重载的 Microsoft Configuration
+IConfigurationRoot dynamicConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
+{
+    DebounceMs = 100,           // 防抖时间窗口（毫秒）
+    EnableDynamicReload = true  // 启用动态重载
+});
 ```
 
 ### 使用扩展包
@@ -240,6 +258,51 @@ var cfg = new CfgBuilder()
 // 后续读取 cfg.Get() 将获取到最新的配置值
 ```
 
+## 动态配置重载
+
+支持配置文件变更时自动更新，无需重启应用。提供防抖、增量更新和层级覆盖感知功能：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Changes;
+using Microsoft.Extensions.Primitives;
+
+// 构建配置（启用 reloadOnChange）
+var cfg = new CfgBuilder()
+    .AddJson("appsettings.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("appsettings.local.json", level: 1, writeable: true, reloadOnChange: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .Build();
+
+// 获取支持动态重载的 Microsoft Configuration
+var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
+{
+    DebounceMs = 100,           // 防抖时间窗口（毫秒）
+    EnableDynamicReload = true  // 启用动态重载
+});
+
+// 方式1：使用 IChangeToken 监听变更
+ChangeToken.OnChange(
+    () => msConfig.GetReloadToken(),
+    () => Console.WriteLine("配置已更新"));
+
+// 方式2：使用 Rx 订阅配置变更事件
+cfg.ConfigChanges.Subscribe(e =>
+{
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"[{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
+    }
+});
+```
+
+### 动态重载特性
+
+- **防抖处理**：批量文件保存时，多次快速变化合并为一次处理
+- **增量更新**：只重新加载发生变化的配置源，而非全部重载
+- **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
+- **多源支持**：支持多个配置源同时存在的场景
+
 ## 核心类型
 
 ### ICfgRoot
@@ -259,8 +322,14 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
 
-    // 转换
+    // 转换（静态快照）
     IConfigurationRoot ToMicrosoftConfiguration();
+
+    // 转换（支持动态重载）
+    IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options);
+
+    // 配置变更事件（Rx 可观察序列）
+    IObservable<ConfigChangeEvent> ConfigChanges { get; }
 }
 ```
 
@@ -327,6 +396,7 @@ builder.AddSource(new MyCustomCfgSource(...));
 | Microsoft.Extensions.Configuration.Json | JSON 配置支持 |
 | Microsoft.Extensions.Configuration.EnvironmentVariables | 环境变量支持 |
 | [UTF.Unknown](https://github.com/CharsetDetector/UTF-unknown) | 文件编码自动检测 |
+| [System.Reactive](https://github.com/dotnet/reactive) | Reactive Extensions 支持配置变更订阅 |
 
 ## 许可证
 
