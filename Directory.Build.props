@@ -26,9 +26,33 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <!-- 从 versions 目录自动获取版本号 -->
+  <PropertyGroup>
+    <VersionsDir>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'versions'))</VersionsDir>
+    <VersionPattern>v(\d+)\.(\d+)\.(\d+)</VersionPattern>
+    <DetectedVersion>1.0.0</DetectedVersion>
+  </PropertyGroup>
+
+  <Target Name="DetectVersionFromFiles" BeforeTargets="GetAssemblyVersion;GenerateNuspec;Pack;Build">
+    <ItemGroup>
+      <VersionFiles Include="$(VersionsDir)\v*.*.*.md" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_VersionFileList>@(VersionFiles->'%(Filename)', ',')</_VersionFileList>
+    </PropertyGroup>
+    <Exec Command="powershell -NoProfile -Command &quot;$files = '$(_VersionFileList)' -split ','; $versions = $files | Where-Object { $_ -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object { [PSCustomObject]@{Name=$_; V=[version]($_ -replace '^v(\d+\.\d+\.\d+).*','$1')} } | Sort-Object V -Descending; if($versions) { $versions[0].Name -replace '^v(\d+\.\d+\.\d+).*','$1' } else { '1.0.0' }&quot;"
+          ConsoleToMsBuild="true"
+          Condition="'$(_VersionFileList)' != ''">
+      <Output TaskParameter="ConsoleOutput" PropertyName="DetectedVersion" />
+    </Exec>
+    <PropertyGroup Condition="'$(DetectedVersion)' != ''">
+      <Version>$(DetectedVersion)</Version>
+    </PropertyGroup>
+  </Target>
+
   <!-- NuGet 包公共元数据 -->
   <PropertyGroup>
-    <Version>1.0.0</Version>
+    <Version>$(DetectedVersion)</Version>
     <Authors>Apq</Authors>
     <Company>Apq</Company>
     <Copyright>Copyright © Apq $([System.DateTime]::Now.Year)</Copyright>

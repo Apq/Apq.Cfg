@@ -49,13 +49,28 @@ if (-not (Test-Path $PropsFile)) {
     exit 1
 }
 
-# 读取当前版本
-$fileContent = Get-Content $PropsFile -Raw -Encoding UTF8
-if ($fileContent -match '<Version>([^<]+)</Version>') {
-    $currentVersion = $Matches[1]
+# 从 versions 目录获取版本号（与 Directory.Build.props 保持一致）
+$VersionsDir = Join-Path $RootDir 'versions'
+if (-not (Test-Path $VersionsDir)) {
+    Write-ColorText '错误: 找不到 versions 目录' 'Red'
+    Write-ColorText "路径: $VersionsDir" 'Red'
+    exit 1
+}
+
+$versionFiles = Get-ChildItem -Path $VersionsDir -Filter 'v*.*.*.md' -ErrorAction SilentlyContinue
+$versions = $versionFiles | Where-Object { $_.BaseName -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object {
+    [PSCustomObject]@{
+        Name = $_.BaseName
+        Version = [version]($_.BaseName -replace '^v(\d+\.\d+\.\d+).*', '$1')
+    }
+} | Sort-Object Version -Descending
+
+if ($versions -and $versions.Count -gt 0) {
+    $currentVersion = $versions[0].Name -replace '^v(\d+\.\d+\.\d+).*', '$1'
     Write-ColorText "当前版本: $currentVersion" 'Yellow'
 } else {
-    Write-ColorText '错误: 无法读取当前版本号' 'Red'
+    Write-ColorText '错误: 无法从 versions 目录获取版本号' 'Red'
+    Write-ColorText '请确保 versions 目录中存在 v*.*.*.md 格式的版本文件' 'Red'
     exit 1
 }
 

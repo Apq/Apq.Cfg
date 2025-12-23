@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Apq.Cfg.Benchmarks.ConcurrencyBenchmarks-20251223-145650</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26200.7462)
+Unknown processor
+.NET SDK 9.0.308
+  [Host]     : .NET 9.0.11 (9.0.1125.51716), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  Job-XWHYYA : .NET 9.0.11 (9.0.1125.51716), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  Job-OTNOSO : .NET 8.0.22 (8.0.2225.52707), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  Job-GRHDSK : .NET 6.0.36 (6.0.3624.51421), X64 RyuJIT AVX2
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method                 </th><th>Runtime</th><th>ThreadCount</th><th>Mean </th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Gen0</th><th>Gen1</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 9.0</td><td>1</td><td>37.38 &mu;s</td><td>0.425 &mu;s</td><td>0.397 &mu;s</td><td>37.30 &mu;s</td><td>0.72</td><td>0.01</td><td>1</td><td>0.7324</td><td>-</td><td>35.59 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 9.0</td><td>1</td><td>38.09 &mu;s</td><td>0.614 &mu;s</td><td>0.513 &mu;s</td><td>38.06 &mu;s</td><td>0.74</td><td>0.01</td><td>1</td><td>0.7324</td><td>-</td><td>35.44 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 9.0</td><td>1</td><td>39.08 &mu;s</td><td>0.417 &mu;s</td><td>0.348 &mu;s</td><td>39.11 &mu;s</td><td>0.75</td><td>0.01</td><td>1</td><td>0.4883</td><td>-</td><td>23.67 KB</td><td>0.57</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 8.0</td><td>1</td><td>42.40 &mu;s</td><td>0.271 &mu;s</td><td>0.254 &mu;s</td><td>42.42 &mu;s</td><td>0.82</td><td>0.01</td><td>2</td><td>0.4883</td><td>-</td><td>23.67 KB</td><td>0.57</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 8.0</td><td>1</td><td>45.83 &mu;s</td><td>0.497 &mu;s</td><td>0.441 &mu;s</td><td>45.90 &mu;s</td><td>0.88</td><td>0.02</td><td>3</td><td>0.7935</td><td>-</td><td>38.56 KB</td><td>0.93</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 6.0</td><td>1</td><td>45.96 &mu;s</td><td>0.329 &mu;s</td><td>0.257 &mu;s</td><td>45.99 &mu;s</td><td>0.89</td><td>0.01</td><td>3</td><td>0.5493</td><td>-</td><td>27.58 KB</td><td>0.66</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 8.0</td><td>1</td><td>46.73 &mu;s</td><td>0.802 &mu;s</td><td>0.711 &mu;s</td><td>46.61 &mu;s</td><td>0.90</td><td>0.02</td><td>3</td><td>0.7935</td><td>-</td><td>38.71 KB</td><td>0.93</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 6.0</td><td>1</td><td>51.83 &mu;s</td><td>0.865 &mu;s</td><td>0.809 &mu;s</td><td>51.61 &mu;s</td><td>1.00</td><td>0.02</td><td>4</td><td>0.7935</td><td>-</td><td>41.69 KB</td><td>1.00</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 6.0</td><td>1</td><td>53.80 &mu;s</td><td>0.955 &mu;s</td><td>0.893 &mu;s</td><td>53.64 &mu;s</td><td>1.04</td><td>0.02</td><td>4</td><td>0.8545</td><td>-</td><td>41.84 KB</td><td>1.00</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 8.0</td><td>1</td><td>64.00 &mu;s</td><td>0.759 &mu;s</td><td>0.710 &mu;s</td><td>63.94 &mu;s</td><td>1.23</td><td>0.02</td><td>5</td><td>0.3662</td><td>-</td><td>17.47 KB</td><td>0.42</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 9.0</td><td>1</td><td>66.44 &mu;s</td><td>0.714 &mu;s</td><td>0.668 &mu;s</td><td>66.52 &mu;s</td><td>1.28</td><td>0.02</td><td>5</td><td>0.8545</td><td>-</td><td>44.06 KB</td><td>1.06</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 8.0</td><td>1</td><td>67.78 &mu;s</td><td>0.941 &mu;s</td><td>0.881 &mu;s</td><td>67.44 &mu;s</td><td>1.31</td><td>0.03</td><td>5</td><td>0.9766</td><td>-</td><td>47.19 KB</td><td>1.13</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 9.0</td><td>1</td><td>72.06 &mu;s</td><td>1.420 &mu;s</td><td>1.459 &mu;s</td><td>71.68 &mu;s</td><td>1.39</td><td>0.03</td><td>6</td><td>0.3662</td><td>-</td><td>17.47 KB</td><td>0.42</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 6.0</td><td>1</td><td>75.86 &mu;s</td><td>1.487 &mu;s</td><td>1.934 &mu;s</td><td>75.72 &mu;s</td><td>1.46</td><td>0.04</td><td>6</td><td>1.0986</td><td>-</td><td>54.22 KB</td><td>1.30</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 6.0</td><td>1</td><td>78.13 &mu;s</td><td>1.968 &mu;s</td><td>5.802 &mu;s</td><td>80.75 &mu;s</td><td>1.51</td><td>0.11</td><td>6</td><td>0.4883</td><td>-</td><td>25.28 KB</td><td>0.61</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 6.0</td><td>4</td><td>196.15 &mu;s</td><td>3.891 &mu;s</td><td>9.247 &mu;s</td><td>195.85 &mu;s</td><td>0.97</td><td>0.07</td><td>1</td><td>2.1973</td><td>-</td><td>109.89 KB</td><td>0.66</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 6.0</td><td>4</td><td>198.02 &mu;s</td><td>3.930 &mu;s</td><td>8.789 &mu;s</td><td>196.67 &mu;s</td><td>0.98</td><td>0.07</td><td>1</td><td>3.4180</td><td>-</td><td>166.57 KB</td><td>1.00</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 6.0</td><td>4</td><td>202.85 &mu;s</td><td>4.054 &mu;s</td><td>11.166 &mu;s</td><td>202.63 &mu;s</td><td>1.00</td><td>0.08</td><td>1</td><td>3.4180</td><td>-</td><td>166.33 KB</td><td>1.00</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 8.0</td><td>4</td><td>215.08 &mu;s</td><td>6.343 &mu;s</td><td>18.702 &mu;s</td><td>216.32 &mu;s</td><td>1.06</td><td>0.11</td><td>1</td><td>3.1738</td><td>-</td><td>154.07 KB</td><td>0.93</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 9.0</td><td>4</td><td>216.08 &mu;s</td><td>6.376 &mu;s</td><td>18.799 &mu;s</td><td>217.90 &mu;s</td><td>1.07</td><td>0.11</td><td>1</td><td>2.9297</td><td>-</td><td>141.33 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 8.0</td><td>4</td><td>218.88 &mu;s</td><td>4.365 &mu;s</td><td>6.923 &mu;s</td><td>217.94 &mu;s</td><td>1.08</td><td>0.07</td><td>1</td><td>1.9531</td><td>-</td><td>94.27 KB</td><td>0.57</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 8.0</td><td>4</td><td>221.75 &mu;s</td><td>4.383 &mu;s</td><td>9.150 &mu;s</td><td>219.11 &mu;s</td><td>1.10</td><td>0.07</td><td>1</td><td>3.1738</td><td>-</td><td>153.83 KB</td><td>0.92</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 9.0</td><td>4</td><td>233.81 &mu;s</td><td>4.639 &mu;s</td><td>9.786 &mu;s</td><td>232.45 &mu;s</td><td>1.16</td><td>0.08</td><td>1</td><td>1.9531</td><td>-</td><td>94.27 KB</td><td>0.57</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 9.0</td><td>4</td><td>240.04 &mu;s</td><td>7.212 &mu;s</td><td>21.152 &mu;s</td><td>237.31 &mu;s</td><td>1.19</td><td>0.12</td><td>1</td><td>2.9297</td><td>-</td><td>141.57 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 9.0</td><td>4</td><td>318.65 &mu;s</td><td>9.182 &mu;s</td><td>26.929 &mu;s</td><td>313.85 &mu;s</td><td>1.58</td><td>0.16</td><td>2</td><td>2.9297</td><td>-</td><td>135.05 KB</td><td>0.81</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 8.0</td><td>4</td><td>319.34 &mu;s</td><td>9.578 &mu;s</td><td>28.242 &mu;s</td><td>325.06 &mu;s</td><td>1.58</td><td>0.16</td><td>2</td><td>2.9297</td><td>-</td><td>141.3 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 9.0</td><td>4</td><td>394.26 &mu;s</td><td>12.334 &mu;s</td><td>36.174 &mu;s</td><td>394.01 &mu;s</td><td>1.95</td><td>0.21</td><td>3</td><td>1.4648</td><td>-</td><td>69.45 KB</td><td>0.42</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 6.0</td><td>4</td><td>400.76 &mu;s</td><td>17.893 &mu;s</td><td>52.757 &mu;s</td><td>401.23 &mu;s</td><td>1.98</td><td>0.28</td><td>3</td><td>3.4180</td><td>-</td><td>163.17 KB</td><td>0.98</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 8.0</td><td>4</td><td>403.91 &mu;s</td><td>10.006 &mu;s</td><td>29.187 &mu;s</td><td>399.40 &mu;s</td><td>2.00</td><td>0.18</td><td>3</td><td>1.4648</td><td>-</td><td>69.45 KB</td><td>0.42</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 6.0</td><td>4</td><td>519.65 &mu;s</td><td>20.075 &mu;s</td><td>59.192 &mu;s</td><td>527.44 &mu;s</td><td>2.57</td><td>0.32</td><td>4</td><td>1.9531</td><td>-</td><td>100.7 KB</td><td>0.61</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 8.0</td><td>8</td><td>399.25 &mu;s</td><td>7.938 &mu;s</td><td>14.714 &mu;s</td><td>399.55 &mu;s</td><td>0.90</td><td>0.06</td><td>1</td><td>5.8594</td><td>-</td><td>307.52 KB</td><td>0.92</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 6.0</td><td>8</td><td>421.98 &mu;s</td><td>8.150 &mu;s</td><td>11.156 &mu;s</td><td>421.63 &mu;s</td><td>0.95</td><td>0.06</td><td>2</td><td>4.8828</td><td>0.4883</td><td>219.65 KB</td><td>0.66</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 9.0</td><td>8</td><td>438.68 &mu;s</td><td>8.664 &mu;s</td><td>16.059 &mu;s</td><td>436.31 &mu;s</td><td>0.99</td><td>0.07</td><td>2</td><td>3.9063</td><td>-</td><td>188.39 KB</td><td>0.57</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 6.0</td><td>8</td><td>445.81 &mu;s</td><td>9.113 &mu;s</td><td>26.582 &mu;s</td><td>442.98 &mu;s</td><td>1.00</td><td>0.08</td><td>2</td><td>5.8594</td><td>-</td><td>332.52 KB</td><td>1.00</td>
+</tr><tr><td>ConcurrentWrite_DifferentKeys</td><td>.NET 8.0</td><td>8</td><td>451.72 &mu;s</td><td>8.002 &mu;s</td><td>7.485 &mu;s</td><td>451.53 &mu;s</td><td>1.02</td><td>0.06</td><td>2</td><td>3.9063</td><td>-</td><td>188.39 KB</td><td>0.57</td>
+</tr><tr><td>ConcurrentRead_SameKey</td><td>.NET 9.0</td><td>8</td><td>454.89 &mu;s</td><td>9.079 &mu;s</td><td>25.157 &mu;s</td><td>446.09 &mu;s</td><td>1.02</td><td>0.08</td><td>2</td><td>5.8594</td><td>-</td><td>282.52 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 8.0</td><td>8</td><td>464.90 &mu;s</td><td>9.239 &mu;s</td><td>25.908 &mu;s</td><td>466.12 &mu;s</td><td>1.05</td><td>0.08</td><td>2</td><td>6.3477</td><td>-</td><td>307.88 KB</td><td>0.93</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 9.0</td><td>8</td><td>512.97 &mu;s</td><td>27.026 &mu;s</td><td>79.687 &mu;s</td><td>521.97 &mu;s</td><td>1.15</td><td>0.19</td><td>3</td><td>5.8594</td><td>-</td><td>282.88 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentRead_DifferentKeys</td><td>.NET 6.0</td><td>8</td><td>564.67 &mu;s</td><td>11.209 &mu;s</td><td>30.304 &mu;s</td><td>559.74 &mu;s</td><td>1.27</td><td>0.10</td><td>3</td><td>5.8594</td><td>-</td><td>332.88 KB</td><td>1.00</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 9.0</td><td>8</td><td>645.10 &mu;s</td><td>12.829 &mu;s</td><td>28.429 &mu;s</td><td>643.08 &mu;s</td><td>1.45</td><td>0.11</td><td>4</td><td>4.8828</td><td>-</td><td>269.96 KB</td><td>0.81</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 8.0</td><td>8</td><td>778.88 &mu;s</td><td>15.965 &mu;s</td><td>46.823 &mu;s</td><td>775.76 &mu;s</td><td>1.75</td><td>0.15</td><td>5</td><td>4.8828</td><td>-</td><td>282.45 KB</td><td>0.85</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 6.0</td><td>8</td><td>884.68 &mu;s</td><td>35.116 &mu;s</td><td>101.877 &mu;s</td><td>860.52 &mu;s</td><td>1.99</td><td>0.26</td><td>6</td><td>3.9063</td><td>-</td><td>201.27 KB</td><td>0.61</td>
+</tr><tr><td>ConcurrentMixed_ReadWrite</td><td>.NET 6.0</td><td>8</td><td>895.64 &mu;s</td><td>23.906 &mu;s</td><td>70.113 &mu;s</td><td>901.38 &mu;s</td><td>2.02</td><td>0.20</td><td>6</td><td>6.8359</td><td>-</td><td>326.21 KB</td><td>0.98</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 9.0</td><td>8</td><td>924.46 &mu;s</td><td>25.908 &mu;s</td><td>76.391 &mu;s</td><td>904.73 &mu;s</td><td>2.08</td><td>0.21</td><td>6</td><td>2.9297</td><td>-</td><td>138.77 KB</td><td>0.42</td>
+</tr><tr><td>ConcurrentExists</td><td>.NET 8.0</td><td>8</td><td>1,030.20 &mu;s</td><td>35.829 &mu;s</td><td>103.375 &mu;s</td><td>1,057.72 &mu;s</td><td>2.32</td><td>0.27</td><td>7</td><td>3.9063</td><td>-</td><td>138.77 KB</td><td>0.42</td>
+</tr></tbody></table>
+</body>
+</html>

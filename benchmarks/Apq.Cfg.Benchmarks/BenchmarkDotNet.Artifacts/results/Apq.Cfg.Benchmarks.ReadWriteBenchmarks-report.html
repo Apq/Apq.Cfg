@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Apq.Cfg.Benchmarks.ReadWriteBenchmarks-20251223-191315</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26200.7462)
+Unknown processor
+.NET SDK 9.0.308
+  [Host]     : .NET 9.0.11 (9.0.1125.51716), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  Job-XWHYYA : .NET 9.0.11 (9.0.1125.51716), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  Job-OTNOSO : .NET 8.0.22 (8.0.2225.52707), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  Job-GRHDSK : .NET 6.0.36 (6.0.3624.51421), X64 RyuJIT AVX2
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>Json_GetInt</td><td>.NET 9.0</td><td>79.99 ns</td><td>1.628 ns</td><td>4.319 ns</td><td>78.65 ns</td><td>0.22</td><td>0.01</td><td>1</td><td>0.0012</td><td>64 B</td><td>0.15</td>
+</tr><tr><td>Xml_GetInt</td><td>.NET 9.0</td><td>82.55 ns</td><td>2.219 ns</td><td>6.296 ns</td><td>81.06 ns</td><td>0.22</td><td>0.02</td><td>1</td><td>0.0012</td><td>64 B</td><td>0.15</td>
+</tr><tr><td>Toml_GetInt</td><td>.NET 9.0</td><td>83.31 ns</td><td>2.178 ns</td><td>6.179 ns</td><td>81.63 ns</td><td>0.23</td><td>0.02</td><td>1</td><td>0.0012</td><td>64 B</td><td>0.15</td>
+</tr><tr><td>Yaml_GetInt</td><td>.NET 9.0</td><td>83.58 ns</td><td>1.920 ns</td><td>5.478 ns</td><td>82.16 ns</td><td>0.23</td><td>0.02</td><td>1</td><td>0.0012</td><td>64 B</td><td>0.15</td>
+</tr><tr><td>Ini_GetInt</td><td>.NET 9.0</td><td>84.47 ns</td><td>2.694 ns</td><td>7.900 ns</td><td>81.62 ns</td><td>0.23</td><td>0.02</td><td>1</td><td>0.0012</td><td>64 B</td><td>0.15</td>
+</tr><tr><td>Yaml_GetInt</td><td>.NET 8.0</td><td>86.71 ns</td><td>1.758 ns</td><td>3.511 ns</td><td>86.53 ns</td><td>0.24</td><td>0.01</td><td>1</td><td>0.0017</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Xml_GetInt</td><td>.NET 8.0</td><td>87.62 ns</td><td>1.771 ns</td><td>4.695 ns</td><td>86.80 ns</td><td>0.24</td><td>0.02</td><td>1</td><td>0.0017</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Toml_GetInt</td><td>.NET 8.0</td><td>87.65 ns</td><td>1.888 ns</td><td>5.388 ns</td><td>86.77 ns</td><td>0.24</td><td>0.02</td><td>1</td><td>0.0017</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Ini_GetInt</td><td>.NET 8.0</td><td>89.23 ns</td><td>1.787 ns</td><td>4.862 ns</td><td>88.01 ns</td><td>0.24</td><td>0.02</td><td>1</td><td>0.0017</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Json_GetInt</td><td>.NET 8.0</td><td>90.21 ns</td><td>2.212 ns</td><td>6.274 ns</td><td>88.69 ns</td><td>0.25</td><td>0.02</td><td>1</td><td>0.0017</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Ini_GetInt</td><td>.NET 6.0</td><td>140.27 ns</td><td>4.380 ns</td><td>12.427 ns</td><td>137.44 ns</td><td>0.38</td><td>0.04</td><td>2</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Json_GetInt</td><td>.NET 6.0</td><td>142.46 ns</td><td>4.188 ns</td><td>11.949 ns</td><td>139.28 ns</td><td>0.39</td><td>0.04</td><td>2</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Yaml_GetInt</td><td>.NET 6.0</td><td>143.26 ns</td><td>3.984 ns</td><td>11.171 ns</td><td>140.61 ns</td><td>0.39</td><td>0.03</td><td>2</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Xml_GetInt</td><td>.NET 6.0</td><td>143.43 ns</td><td>4.945 ns</td><td>14.108 ns</td><td>139.26 ns</td><td>0.39</td><td>0.04</td><td>2</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Toml_GetInt</td><td>.NET 6.0</td><td>143.70 ns</td><td>4.403 ns</td><td>12.490 ns</td><td>139.79 ns</td><td>0.39</td><td>0.04</td><td>2</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Ini_Exists</td><td>.NET 8.0</td><td>287.80 ns</td><td>4.789 ns</td><td>3.739 ns</td><td>287.56 ns</td><td>0.78</td><td>0.03</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Xml_Exists</td><td>.NET 8.0</td><td>287.85 ns</td><td>5.484 ns</td><td>4.861 ns</td><td>287.56 ns</td><td>0.78</td><td>0.03</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Xml_Exists</td><td>.NET 9.0</td><td>287.88 ns</td><td>5.198 ns</td><td>4.340 ns</td><td>286.20 ns</td><td>0.78</td><td>0.03</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Toml_Exists</td><td>.NET 9.0</td><td>291.55 ns</td><td>5.727 ns</td><td>8.916 ns</td><td>289.14 ns</td><td>0.79</td><td>0.04</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Yaml_Exists</td><td>.NET 9.0</td><td>291.84 ns</td><td>5.313 ns</td><td>5.906 ns</td><td>290.49 ns</td><td>0.79</td><td>0.03</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Json_Exists</td><td>.NET 8.0</td><td>292.80 ns</td><td>5.788 ns</td><td>8.114 ns</td><td>291.49 ns</td><td>0.80</td><td>0.04</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Yaml_Exists</td><td>.NET 8.0</td><td>292.98 ns</td><td>5.724 ns</td><td>8.210 ns</td><td>289.82 ns</td><td>0.80</td><td>0.04</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Toml_Exists</td><td>.NET 8.0</td><td>294.64 ns</td><td>5.913 ns</td><td>8.667 ns</td><td>292.29 ns</td><td>0.80</td><td>0.04</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Ini_Exists</td><td>.NET 9.0</td><td>294.72 ns</td><td>5.647 ns</td><td>6.503 ns</td><td>292.91 ns</td><td>0.80</td><td>0.04</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Json_Exists</td><td>.NET 9.0</td><td>294.92 ns</td><td>5.779 ns</td><td>6.879 ns</td><td>293.45 ns</td><td>0.80</td><td>0.04</td><td>3</td><td>0.0014</td><td>88 B</td><td>0.21</td>
+</tr><tr><td>Toml_Set</td><td>.NET 8.0</td><td>302.89 ns</td><td>4.926 ns</td><td>5.271 ns</td><td>303.36 ns</td><td>0.82</td><td>0.03</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Toml_Set</td><td>.NET 9.0</td><td>304.23 ns</td><td>5.484 ns</td><td>4.579 ns</td><td>304.37 ns</td><td>0.83</td><td>0.03</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Xml_Set</td><td>.NET 8.0</td><td>304.48 ns</td><td>6.042 ns</td><td>8.270 ns</td><td>304.03 ns</td><td>0.83</td><td>0.04</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Yaml_Set</td><td>.NET 8.0</td><td>304.97 ns</td><td>6.024 ns</td><td>7.171 ns</td><td>303.30 ns</td><td>0.83</td><td>0.04</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Ini_Set</td><td>.NET 8.0</td><td>306.28 ns</td><td>5.809 ns</td><td>5.149 ns</td><td>307.44 ns</td><td>0.83</td><td>0.03</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Yaml_Set</td><td>.NET 9.0</td><td>307.51 ns</td><td>4.506 ns</td><td>3.763 ns</td><td>307.85 ns</td><td>0.84</td><td>0.03</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Xml_Set</td><td>.NET 9.0</td><td>310.61 ns</td><td>6.161 ns</td><td>6.848 ns</td><td>309.84 ns</td><td>0.84</td><td>0.04</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Json_Set</td><td>.NET 9.0</td><td>310.69 ns</td><td>5.746 ns</td><td>6.617 ns</td><td>310.05 ns</td><td>0.84</td><td>0.04</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Json_Set</td><td>.NET 8.0</td><td>311.04 ns</td><td>5.328 ns</td><td>4.723 ns</td><td>309.97 ns</td><td>0.85</td><td>0.04</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Ini_Set</td><td>.NET 9.0</td><td>312.42 ns</td><td>6.166 ns</td><td>8.232 ns</td><td>310.86 ns</td><td>0.85</td><td>0.04</td><td>3</td><td>0.0024</td><td>136 B</td><td>0.32</td>
+</tr><tr><td>Ini_Exists</td><td>.NET 6.0</td><td>318.43 ns</td><td>6.213 ns</td><td>6.905 ns</td><td>319.39 ns</td><td>0.87</td><td>0.04</td><td>3</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Json_Get</td><td>.NET 8.0</td><td>323.66 ns</td><td>5.620 ns</td><td>8.060 ns</td><td>322.34 ns</td><td>0.88</td><td>0.04</td><td>3</td><td>0.0076</td><td>392 B</td><td>0.92</td>
+</tr><tr><td>Xml_Exists</td><td>.NET 6.0</td><td>324.14 ns</td><td>6.391 ns</td><td>11.845 ns</td><td>320.31 ns</td><td>0.88</td><td>0.05</td><td>3</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Yaml_Exists</td><td>.NET 6.0</td><td>325.34 ns</td><td>6.523 ns</td><td>12.568 ns</td><td>322.19 ns</td><td>0.88</td><td>0.05</td><td>3</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Toml_Exists</td><td>.NET 6.0</td><td>325.65 ns</td><td>6.458 ns</td><td>12.898 ns</td><td>319.19 ns</td><td>0.88</td><td>0.05</td><td>3</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Yaml_Get</td><td>.NET 9.0</td><td>328.16 ns</td><td>4.256 ns</td><td>3.554 ns</td><td>327.09 ns</td><td>0.89</td><td>0.04</td><td>3</td><td>0.0072</td><td>360 B</td><td>0.85</td>
+</tr><tr><td>Toml_Get</td><td>.NET 8.0</td><td>328.47 ns</td><td>6.354 ns</td><td>6.799 ns</td><td>328.05 ns</td><td>0.89</td><td>0.04</td><td>3</td><td>0.0076</td><td>392 B</td><td>0.92</td>
+</tr><tr><td>Toml_Get</td><td>.NET 9.0</td><td>328.89 ns</td><td>6.585 ns</td><td>5.499 ns</td><td>328.32 ns</td><td>0.89</td><td>0.04</td><td>3</td><td>0.0072</td><td>360 B</td><td>0.85</td>
+</tr><tr><td>Json_Exists</td><td>.NET 6.0</td><td>329.56 ns</td><td>6.605 ns</td><td>15.570 ns</td><td>324.79 ns</td><td>0.90</td><td>0.05</td><td>3</td><td>0.0024</td><td>128 B</td><td>0.30</td>
+</tr><tr><td>Ini_Get</td><td>.NET 9.0</td><td>330.27 ns</td><td>6.639 ns</td><td>8.633 ns</td><td>329.09 ns</td><td>0.90</td><td>0.04</td><td>3</td><td>0.0072</td><td>360 B</td><td>0.85</td>
+</tr><tr><td>Xml_Get</td><td>.NET 8.0</td><td>331.17 ns</td><td>6.018 ns</td><td>8.436 ns</td><td>330.11 ns</td><td>0.90</td><td>0.04</td><td>3</td><td>0.0076</td><td>392 B</td><td>0.92</td>
+</tr><tr><td>Json_Get</td><td>.NET 9.0</td><td>331.20 ns</td><td>6.564 ns</td><td>12.167 ns</td><td>329.27 ns</td><td>0.90</td><td>0.05</td><td>3</td><td>0.0072</td><td>360 B</td><td>0.85</td>
+</tr><tr><td>Ini_Get</td><td>.NET 8.0</td><td>331.79 ns</td><td>6.593 ns</td><td>9.664 ns</td><td>331.20 ns</td><td>0.90</td><td>0.04</td><td>3</td><td>0.0076</td><td>392 B</td><td>0.92</td>
+</tr><tr><td>Xml_Get</td><td>.NET 9.0</td><td>333.07 ns</td><td>6.686 ns</td><td>10.605 ns</td><td>329.90 ns</td><td>0.90</td><td>0.05</td><td>3</td><td>0.0072</td><td>360 B</td><td>0.85</td>
+</tr><tr><td>Yaml_Get</td><td>.NET 8.0</td><td>333.61 ns</td><td>6.710 ns</td><td>12.099 ns</td><td>330.61 ns</td><td>0.91</td><td>0.05</td><td>3</td><td>0.0076</td><td>392 B</td><td>0.92</td>
+</tr><tr><td>Ini_Set</td><td>.NET 6.0</td><td>337.79 ns</td><td>6.760 ns</td><td>7.514 ns</td><td>338.58 ns</td><td>0.92</td><td>0.04</td><td>3</td><td>0.0033</td><td>176 B</td><td>0.42</td>
+</tr><tr><td>Json_Set</td><td>.NET 6.0</td><td>339.24 ns</td><td>6.029 ns</td><td>8.837 ns</td><td>337.15 ns</td><td>0.92</td><td>0.04</td><td>3</td><td>0.0033</td><td>176 B</td><td>0.42</td>
+</tr><tr><td>Toml_Set</td><td>.NET 6.0</td><td>349.37 ns</td><td>4.681 ns</td><td>3.654 ns</td><td>349.44 ns</td><td>0.95</td><td>0.04</td><td>3</td><td>0.0033</td><td>176 B</td><td>0.42</td>
+</tr><tr><td>Yaml_Set</td><td>.NET 6.0</td><td>349.99 ns</td><td>5.424 ns</td><td>4.530 ns</td><td>350.09 ns</td><td>0.95</td><td>0.04</td><td>3</td><td>0.0033</td><td>176 B</td><td>0.42</td>
+</tr><tr><td>Xml_Set</td><td>.NET 6.0</td><td>355.62 ns</td><td>6.033 ns</td><td>5.643 ns</td><td>356.84 ns</td><td>0.97</td><td>0.04</td><td>3</td><td>0.0033</td><td>176 B</td><td>0.42</td>
+</tr><tr><td>Xml_Get</td><td>.NET 6.0</td><td>364.90 ns</td><td>6.772 ns</td><td>10.342 ns</td><td>365.18 ns</td><td>0.99</td><td>0.05</td><td>3</td><td>0.0081</td><td>424 B</td><td>1.00</td>
+</tr><tr><td>Json_Get</td><td>.NET 6.0</td><td>368.61 ns</td><td>7.315 ns</td><td>14.776 ns</td><td>365.75 ns</td><td>1.00</td><td>0.06</td><td>3</td><td>0.0081</td><td>424 B</td><td>1.00</td>
+</tr><tr><td>Toml_Get</td><td>.NET 6.0</td><td>369.82 ns</td><td>7.181 ns</td><td>17.066 ns</td><td>365.34 ns</td><td>1.00</td><td>0.06</td><td>3</td><td>0.0081</td><td>424 B</td><td>1.00</td>
+</tr><tr><td>Ini_Get</td><td>.NET 6.0</td><td>376.93 ns</td><td>5.971 ns</td><td>6.389 ns</td><td>376.91 ns</td><td>1.02</td><td>0.04</td><td>3</td><td>0.0081</td><td>424 B</td><td>1.00</td>
+</tr><tr><td>Yaml_Get</td><td>.NET 6.0</td><td>379.94 ns</td><td>7.573 ns</td><td>20.082 ns</td><td>375.64 ns</td><td>1.03</td><td>0.07</td><td>3</td><td>0.0081</td><td>424 B</td><td>1.00</td>
+</tr></tbody></table>
+</body>
+</html>
