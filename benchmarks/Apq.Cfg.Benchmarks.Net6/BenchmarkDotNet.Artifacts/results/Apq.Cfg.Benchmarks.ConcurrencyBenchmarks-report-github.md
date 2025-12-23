@@ -8,27 +8,22 @@ Unknown processor
 
 
 ```
-| Method                        | ThreadCount | Mean      | Error     | StdDev    | Median    | Ratio | RatioSD | Rank | Gen0   | Gen1   | Allocated | Alloc Ratio |
-|------------------------------ |------------ |----------:|----------:|----------:|----------:|------:|--------:|-----:|-------:|-------:|----------:|------------:|
-| ConcurrentExists              | 1           |  4.485 μs | 0.0539 μs | 0.0504 μs |  4.483 μs |  0.63 |    0.01 |    1 | 0.0076 |      - |     264 B |       0.008 |
-| ConcurrentRead_SameKey        | 1           |  7.123 μs | 0.0767 μs | 0.0680 μs |  7.130 μs |  1.00 |    0.01 |    2 | 0.6790 |      - |   33865 B |       1.000 |
-| ConcurrentRead_DifferentKeys  | 1           |  7.383 μs | 0.1438 μs | 0.1345 μs |  7.369 μs |  1.04 |    0.02 |    2 | 0.6790 |      - |   34018 B |       1.005 |
-| ConcurrentMixed_ReadWrite     | 1           | 13.091 μs | 0.2464 μs | 0.5034 μs | 12.939 μs |  1.84 |    0.07 |    3 | 0.6714 |      - |   33917 B |       1.002 |
-| ConcurrentWrite_DifferentKeys | 1           | 21.483 μs | 0.8206 μs | 2.4066 μs | 22.179 μs |  3.02 |    0.34 |    4 | 0.3662 |      - |   19440 B |       0.574 |
-|                               |             |           |           |           |           |       |         |      |        |        |           |             |
-| ConcurrentWrite_DifferentKeys | 4           |        NA |        NA |        NA |        NA |     ? |       ? |    ? |     NA |     NA |        NA |           ? |
-| ConcurrentExists              | 4           |  9.583 μs | 0.1812 μs | 0.1607 μs |  9.526 μs |  0.45 |    0.02 |    1 | 0.0153 |      - |     701 B |       0.005 |
-| ConcurrentRead_SameKey        | 4           | 21.110 μs | 0.4175 μs | 0.7201 μs | 21.068 μs |  1.00 |    0.05 |    2 | 2.6855 |      - |  135117 B |       1.000 |
-| ConcurrentRead_DifferentKeys  | 4           | 24.654 μs | 0.4923 μs | 1.0805 μs | 24.378 μs |  1.17 |    0.06 |    3 | 2.6855 |      - |  135368 B |       1.002 |
-| ConcurrentMixed_ReadWrite     | 4           | 27.694 μs | 0.5538 μs | 0.5180 μs | 27.794 μs |  1.31 |    0.05 |    4 | 2.1667 | 0.0610 |  106288 B |       0.787 |
-|                               |             |           |           |           |           |       |         |      |        |        |           |             |
-| ConcurrentMixed_ReadWrite     | 8           |        NA |        NA |        NA |        NA |     ? |       ? |    ? |     NA |     NA |        NA |           ? |
-| ConcurrentWrite_DifferentKeys | 8           |        NA |        NA |        NA |        NA |     ? |       ? |    ? |     NA |     NA |        NA |           ? |
-| ConcurrentExists              | 8           | 14.692 μs | 0.1873 μs | 0.1661 μs | 14.733 μs |  0.50 |    0.02 |    1 | 0.0305 |      - |    1276 B |       0.005 |
-| ConcurrentRead_SameKey        | 8           | 29.689 μs | 0.5841 μs | 1.2699 μs | 29.603 μs |  1.00 |    0.06 |    2 | 5.4016 | 0.0305 |  270096 B |       1.000 |
-| ConcurrentRead_DifferentKeys  | 8           | 29.830 μs | 0.5959 μs | 1.1763 μs | 29.618 μs |  1.01 |    0.06 |    2 | 5.4016 | 0.0305 |  270471 B |       1.001 |
-
-Benchmarks with issues:
-  ConcurrencyBenchmarks.ConcurrentWrite_DifferentKeys: DefaultJob [ThreadCount=4]
-  ConcurrencyBenchmarks.ConcurrentMixed_ReadWrite: DefaultJob [ThreadCount=8]
-  ConcurrencyBenchmarks.ConcurrentWrite_DifferentKeys: DefaultJob [ThreadCount=8]
+| Method                        | ThreadCount | Mean      | Error     | StdDev    | Ratio | RatioSD | Rank | Gen0   | Gen1   | Allocated | Alloc Ratio |
+|------------------------------ |------------ |----------:|----------:|----------:|------:|--------:|-----:|-------:|-------:|----------:|------------:|
+| ConcurrentRead_DifferentKeys  | 1           |  40.34 μs |  0.262 μs |  0.219 μs |  0.99 |    0.01 |    1 | 0.7935 |      - |  41.84 KB |        1.00 |
+| ConcurrentRead_SameKey        | 1           |  40.56 μs |  0.407 μs |  0.381 μs |  1.00 |    0.01 |    1 | 0.7935 |      - |  41.69 KB |        1.00 |
+| ConcurrentWrite_DifferentKeys | 1           |  43.09 μs |  0.186 μs |  0.165 μs |  1.06 |    0.01 |    2 | 0.5493 |      - |  27.58 KB |        0.66 |
+| ConcurrentExists              | 1           |  65.26 μs |  0.271 μs |  0.254 μs |  1.61 |    0.02 |    3 | 0.4883 |      - |  25.28 KB |        0.61 |
+| ConcurrentMixed_ReadWrite     | 1           |  68.90 μs |  0.384 μs |  0.359 μs |  1.70 |    0.02 |    4 | 1.0986 |      - |  54.22 KB |        1.30 |
+|                               |             |           |           |           |       |         |      |        |        |           |             |
+| ConcurrentRead_SameKey        | 4           | 151.47 μs |  2.449 μs |  2.291 μs |  1.00 |    0.02 |    1 | 3.1738 |      - | 166.33 KB |        1.00 |
+| ConcurrentRead_DifferentKeys  | 4           | 154.17 μs |  1.627 μs |  1.442 μs |  1.02 |    0.02 |    1 | 3.1738 |      - | 166.57 KB |        1.00 |
+| ConcurrentWrite_DifferentKeys | 4           | 162.41 μs |  3.032 μs |  2.836 μs |  1.07 |    0.02 |    2 | 2.1973 |      - | 109.89 KB |        0.66 |
+| ConcurrentMixed_ReadWrite     | 4           | 236.35 μs |  2.292 μs |  2.144 μs |  1.56 |    0.03 |    3 | 3.1738 |      - | 163.17 KB |        0.98 |
+| ConcurrentExists              | 4           | 282.79 μs |  3.633 μs |  3.221 μs |  1.87 |    0.03 |    4 | 1.9531 |      - |  100.7 KB |        0.61 |
+|                               |             |           |           |           |       |         |      |        |        |           |             |
+| ConcurrentRead_SameKey        | 8           | 326.42 μs |  6.266 μs |  7.216 μs |  1.00 |    0.03 |    1 | 6.3477 |      - | 332.52 KB |        1.00 |
+| ConcurrentRead_DifferentKeys  | 8           | 331.57 μs |  6.428 μs |  6.878 μs |  1.02 |    0.03 |    1 | 6.3477 |      - | 332.88 KB |        1.00 |
+| ConcurrentWrite_DifferentKeys | 8           | 347.59 μs |  5.008 μs |  4.684 μs |  1.07 |    0.03 |    1 | 4.3945 | 0.4883 | 219.64 KB |        0.66 |
+| ConcurrentMixed_ReadWrite     | 8           | 517.00 μs | 10.236 μs | 16.529 μs |  1.58 |    0.06 |    2 | 5.8594 |      - |  326.2 KB |        0.98 |
+| ConcurrentExists              | 8           | 618.13 μs | 12.311 μs | 13.173 μs |  1.89 |    0.06 |    3 | 3.9063 |      - | 201.27 KB |        0.61 |
