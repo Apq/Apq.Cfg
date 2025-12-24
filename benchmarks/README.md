@@ -1,6 +1,10 @@
 # Apq.Cfg 性能基准测试
 
+[![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+
 本目录包含 Apq.Cfg 配置库的性能基准测试，使用 [BenchmarkDotNet](https://benchmarkdotnet.org/) 框架。
+
+**仓库地址**：https://gitee.com/apq/Apq.Cfg
 
 ## 项目结构
 

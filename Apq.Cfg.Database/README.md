@@ -1,6 +1,10 @@
 # Apq.Cfg.Database
 
+[![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+
 数据库配置源扩展包，支持多种数据库。
+
+**仓库地址**：https://gitee.com/apq/Apq.Cfg
 
 ## 依赖
 
@@ -121,3 +125,7 @@ MIT License
 ## 作者
 
 - 邮箱：amwpfiqvy@163.com
+
+## 仓库
+
+- Gitee：https://gitee.com/apq/Apq.Cfg

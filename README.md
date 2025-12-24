@@ -1,6 +1,10 @@
 # Apq.Cfg
 
+[![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+
 统一配置管理系统，支持多种配置格式和多层级配置合并。
+
+**仓库地址**：https://gitee.com/apq/Apq.Cfg
 
 ## 项目结构
 
@@ -351,3 +355,7 @@ MIT License
 ## 作者
 
 - 邮箱：amwpfiqvy@163.com
+
+## 仓库
+
+- Gitee：https://gitee.com/apq/Apq.Cfg
