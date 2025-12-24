@@ -16,7 +16,7 @@ public class MultiSourceBenchmarks : IDisposable
     private readonly string _testDir;
     private ICfgRoot _cfg = null!;
 
-    [Params(1, 3, 5)]
+    [Params(3)]
     public int SourceCount { get; set; }
 
     public MultiSourceBenchmarks()

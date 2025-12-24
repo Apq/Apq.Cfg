@@ -26,7 +26,7 @@ public class SaveBenchmarks : IDisposable
     private string _yamlPath = null!;
     private string _tomlPath = null!;
 
-    [Params(10, 100)]
+    [Params(50)]
     public int ChangeCount { get; set; }
 
     public SaveBenchmarks()
