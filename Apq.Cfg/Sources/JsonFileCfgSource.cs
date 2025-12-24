@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Apq.Cfg.Sources.File;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
@@ -11,6 +12,9 @@ namespace Apq.Cfg.Sources;
 /// </summary>
 internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 {
+    // 缓存 JsonSerializerOptions，避免每次序列化都创建新实例
+    private static readonly JsonSerializerOptions s_writeOptions = new() { WriteIndented = true };
+
     public JsonFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
         bool isPrimaryWriter)
         : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
@@ -38,25 +42,30 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 
         EnsureDirectoryFor(_path);
 
-        var text = string.Empty;
+        JsonNode? root = null;
         if (System.IO.File.Exists(_path))
         {
             var readEncoding = DetectEncoding(_path);
-            text = await System.IO.File.ReadAllTextAsync(_path, readEncoding, cancellationToken).ConfigureAwait(false);
+            var text = await System.IO.File.ReadAllTextAsync(_path, readEncoding, cancellationToken).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                root = JsonNode.Parse(text);
+            }
         }
 
-        var root = string.IsNullOrWhiteSpace(text)
-            ? new Dictionary<string, object?>()
-            : JsonSerializer.Deserialize<Dictionary<string, object?>>(text) ?? new Dictionary<string, object?>();
+        root ??= new JsonObject();
+
+        if (root is not JsonObject rootObj)
+            throw new InvalidOperationException("JSON 根节点必须是对象");
 
         foreach (var (key, value) in changes)
-            SetByColonKey(root, key, value);
+            SetByColonKey(rootObj, key, value);
 
-        var jsonString = JsonSerializer.Serialize(root, new JsonSerializerOptions { WriteIndented = true });
+        var jsonString = root.ToJsonString(s_writeOptions);
         await System.IO.File.WriteAllTextAsync(_path, jsonString, WriteEncoding, cancellationToken).ConfigureAwait(false);
     }
 
-    private static void SetByColonKey(Dictionary<string, object?> root, string key, string? value)
+    private static void SetByColonKey(JsonObject root, string key, string? value)
     {
         var parts = key.Split(':', StringSplitOptions.RemoveEmptyEntries);
         var current = root;
@@ -65,16 +74,21 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
             var part = parts[i];
             if (i == parts.Length - 1)
             {
-                current[part] = value;
+                // 最后一个部分，设置值
+                if (value == null)
+                    current.Remove(part);
+                else
+                    current[part] = JsonValue.Create(value);
             }
             else
             {
-                if (!current.TryGetValue(part, out var next) || next is not Dictionary<string, object?> dict)
+                // 中间部分，确保是对象
+                if (!current.TryGetPropertyValue(part, out var next) || next is not JsonObject nextObj)
                 {
-                    dict = new Dictionary<string, object?>();
-                    current[part] = dict;
+                    nextObj = new JsonObject();
+                    current[part] = nextObj;
                 }
-                current = dict;
+                current = nextObj;
             }
         }
     }

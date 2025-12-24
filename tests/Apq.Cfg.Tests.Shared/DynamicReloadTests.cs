@@ -193,13 +193,7 @@ public class DynamicReloadTests : IDisposable
     public void ConfigChange_ToString_FormatsCorrectly()
     {
         // Arrange
-        var change = new ConfigChange
-        {
-            Key = "TestKey",
-            OldValue = "OldVal",
-            NewValue = "NewVal",
-            Type = ChangeType.Modified
-        };
+        var change = new ConfigChange("TestKey", "OldVal", "NewVal", ChangeType.Modified);
 
         // Act
         var str = change.ToString();
@@ -215,13 +209,7 @@ public class DynamicReloadTests : IDisposable
     public void ConfigChange_NullValues_FormatsCorrectly()
     {
         // Arrange
-        var change = new ConfigChange
-        {
-            Key = "TestKey",
-            OldValue = null,
-            NewValue = "NewVal",
-            Type = ChangeType.Added
-        };
+        var change = new ConfigChange("TestKey", null, "NewVal", ChangeType.Added);
 
         // Act
         var str = change.ToString();

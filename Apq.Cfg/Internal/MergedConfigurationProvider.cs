@@ -11,7 +11,9 @@ internal sealed class MergedConfigurationProvider : ConfigurationProvider, IDisp
 {
     private readonly ChangeCoordinator _coordinator;
     private CancellationTokenSource _reloadTokenSource;
-    private volatile bool _disposed;
+    private readonly object _tokenLock = new(); // 用于保护 token 操作
+    private readonly object _dataLock = new(); // 用于保护 Data 操作
+    private int _disposed; // 改为 int 以支持 Interlocked
 
     /// <summary>
     /// 当配置变更时触发
@@ -30,58 +32,70 @@ internal sealed class MergedConfigurationProvider : ConfigurationProvider, IDisp
     public override void Load()
     {
         // 从协调器获取快照数据
-        Data.Clear();
-        foreach (var (key, value) in _coordinator.GetSnapshot())
+        lock (_dataLock)
         {
-            if (value != null)
-                Data[key] = value;
+            Data.Clear();
+            foreach (var (key, value) in _coordinator.GetSnapshot())
+            {
+                if (value != null)
+                    Data[key] = value;
+            }
         }
     }
 
     private void OnCoordinatorChanges(IReadOnlyDictionary<string, ConfigChange> changes)
     {
-        if (_disposed) return;
+        if (Volatile.Read(ref _disposed) != 0) return;
 
         // 应用变更到 Data
-        foreach (var (key, change) in changes)
+        lock (_dataLock)
         {
-            if (change.Type == ChangeType.Removed)
-                Data.Remove(key);
-            else
-                Data[key] = change.NewValue!;
+            foreach (var (key, change) in changes)
+            {
+                if (change.Type == ChangeType.Removed)
+                    Data.Remove(key);
+                else
+                    Data[key] = change.NewValue!;
+            }
         }
 
         // 触发 reload token
         TriggerReload();
 
         // 触发事件
-        OnConfigChanged?.Invoke(new ConfigChangeEvent
-        {
-            Changes = changes,
-            Timestamp = DateTimeOffset.Now
-        });
+        OnConfigChanged?.Invoke(new ConfigChangeEvent(changes));
     }
 
     private void TriggerReload()
     {
-        var oldSource = Interlocked.Exchange(
-            ref _reloadTokenSource,
-            new CancellationTokenSource());
+        CancellationTokenSource oldSource;
+        lock (_tokenLock)
+        {
+            oldSource = _reloadTokenSource;
+            _reloadTokenSource = new CancellationTokenSource();
+        }
         oldSource.Cancel();
         oldSource.Dispose();
     }
 
     public new IChangeToken GetReloadToken()
     {
-        return new CancellationChangeToken(_reloadTokenSource.Token);
+        lock (_tokenLock)
+        {
+            return new CancellationChangeToken(_reloadTokenSource.Token);
+        }
     }
 
     public void Dispose()
     {
-        if (_disposed) return;
-        _disposed = true;
+        // 使用 Interlocked 确保原子性
+        if (Interlocked.CompareExchange(ref _disposed, 1, 0) != 0)
+            return;
 
         _coordinator.OnMergedChanges -= OnCoordinatorChanges;
-        _reloadTokenSource.Dispose();
+        lock (_tokenLock)
+        {
+            _reloadTokenSource.Dispose();
+        }
     }
 }

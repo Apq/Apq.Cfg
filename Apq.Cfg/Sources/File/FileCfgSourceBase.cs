@@ -8,18 +8,24 @@ namespace Apq.Cfg.Sources.File;
 /// <summary>
 /// 文件配置源基类，提供编码检测和统一写入编码
 /// </summary>
-public abstract class FileCfgSourceBase : ICfgSource
+public abstract class FileCfgSourceBase : ICfgSource, IDisposable
 {
     /// <summary>
     /// 写入时统一使用的编码：UTF-8 无 BOM
     /// </summary>
     public static readonly Encoding WriteEncoding = new UTF8Encoding(false);
 
+    private static float _encodingConfidenceThreshold = GetDefaultThreshold();
+
     /// <summary>
     /// 编码检测置信度阈值（0.0-1.0），可在运行时修改。
     /// 可通过环境变量 APQ_CFG_ENCODING_CONFIDENCE 设置默认值。
     /// </summary>
-    public static float EncodingConfidenceThreshold { get; set; } = GetDefaultThreshold();
+    public static float EncodingConfidenceThreshold
+    {
+        get => Volatile.Read(ref _encodingConfidenceThreshold);
+        set => Volatile.Write(ref _encodingConfidenceThreshold, Math.Clamp(value, 0f, 1f));
+    }
 
     private static float GetDefaultThreshold()
     {
@@ -36,6 +42,8 @@ public abstract class FileCfgSourceBase : ICfgSource
     protected readonly bool _optional;
     protected readonly string _path;
     protected readonly bool _reloadOnChange;
+    private PhysicalFileProvider? _fileProvider; // 跟踪创建的 FileProvider 以便释放
+    private int _disposed;
 
     protected FileCfgSourceBase(string path, int level, bool writeable, bool optional, bool reloadOnChange,
         bool isPrimaryWriter)
@@ -54,10 +62,15 @@ public abstract class FileCfgSourceBase : ICfgSource
 
     public abstract IConfigurationSource BuildSource();
 
-    protected static (PhysicalFileProvider Provider, string FileName) CreatePhysicalFileProvider(string path)
+    /// <summary>
+    /// 创建 PhysicalFileProvider 并跟踪以便后续释放
+    /// </summary>
+    protected (PhysicalFileProvider Provider, string FileName) CreatePhysicalFileProvider(string path)
     {
         var dir = Path.GetDirectoryName(Path.GetFullPath(path)) ?? Directory.GetCurrentDirectory();
-        return (new PhysicalFileProvider(dir), Path.GetFileName(path));
+        var provider = new PhysicalFileProvider(dir);
+        _fileProvider = provider; // 跟踪以便释放
+        return (provider, Path.GetFileName(path));
     }
 
     protected static void EnsureDirectoryFor(string path)
@@ -91,5 +104,14 @@ public abstract class FileCfgSourceBase : ICfgSource
         catch { }
 
         return Encoding.UTF8;
+    }
+
+    public void Dispose()
+    {
+        if (Interlocked.CompareExchange(ref _disposed, 1, 0) != 0)
+            return;
+
+        _fileProvider?.Dispose();
+        _fileProvider = null;
     }
 }
