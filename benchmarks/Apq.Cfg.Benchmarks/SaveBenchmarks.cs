@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -11,9 +10,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 持久化性能基准测试
 /// 测试 SaveAsync 在不同数据量下的性能
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class SaveBenchmarks : IDisposable
 {
     private readonly string _testDir;

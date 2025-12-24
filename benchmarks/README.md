@@ -168,93 +168,48 @@ benchmarks/
 
 ## 运行基准测试
 
-> **说明**：以下所有命令均在**项目根目录**执行，测试结果保存在测试项目目录下。
+> **说明**：以下所有命令均在**项目根目录**执行。
 
-### 基本运行
-
-```bash
-# 运行所有基准测试（Release 模式必须）
-# 重要：多目标框架项目必须使用 -f 指定框架
-
-# 使用 .NET 9 运行
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-
-# 使用 .NET 8 运行
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net8.0 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-
-# 使用 .NET 6 运行
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net6.0 -- --filter * --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-```
-
-### 多版本对比测试
-
-BenchmarkDotNet 支持在一次运行中对比多个 .NET 版本的性能：
+### 运行所有测试（推荐）
 
 ```bash
-# 同时测试 .NET 6、8、9 的性能对比
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --runtimes net6.0 net8.0 net9.0 --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
+# 运行所有基准测试（自动对比 .NET 6/8/9，约 10 分钟）
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0
 ```
+
+测试结果自动保存到带时间戳的目录：`benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts/{时间戳}/`
 
 ### 运行特定测试
 
 ```bash
 # 运行特定测试类
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *ReadWriteBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *LargeFileBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *ConcurrencyBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *SaveBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *RemoveBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *MultiSourceBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *KeyPathBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *TypeConversionBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *CacheBenchmarks* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *ReadWriteBenchmarks*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *CacheBenchmarks*
 
 # 运行特定测试方法
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json_Get* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *HotPath* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json_Get*
 
-# 组合多个过滤器
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json* --filter *Ini* --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
+# 列出所有可用测试（不实际运行）
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --list flat
 ```
 
 > **注意**：`--` 是必须的，它将后面的参数传递给 BenchmarkDotNet 而不是 dotnet 命令。
 
-### 常用参数
-
-```bash
-# 快速测试（减少迭代次数，用于验证功能是否正常）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --job short --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-
-# 列出所有可用测试（不实际运行）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --list flat
-
-# 导出为不同格式
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --exporters markdown --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --exporters html --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --exporters csv --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-```
-
-### 高级选项
-
-```bash
-# 内存诊断（默认已启用）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --memory --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-
-# 显示详细信息
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter * --info --artifacts benchmarks/Apq.Cfg.Benchmarks/BenchmarkDotNet.Artifacts
-```
-
 ## 测试结果
 
-运行完成后，结果默认保存在 `BenchmarkDotNet.Artifacts/results/` 目录：
+每次测试结果保存在带时间戳的独立目录中，便于历史对比：
 
 ```
 benchmarks/Apq.Cfg.Benchmarks/
 └── BenchmarkDotNet.Artifacts/
-    └── results/
-        ├── *-report.csv          # CSV 格式数据
-        ├── *-report.html         # HTML 可视化报告
-        └── *-report-github.md    # GitHub Markdown 格式
+    ├── 2024-12-24_143052/      # 时间戳目录
+    │   └── results/
+    │       ├── *-report.csv
+    │       ├── *-report.html
+    │       └── *-report-github.md
+    ├── 2024-12-24_150123/
+    │   └── ...
+    └── ...
 ```
 
 ### 结果解读

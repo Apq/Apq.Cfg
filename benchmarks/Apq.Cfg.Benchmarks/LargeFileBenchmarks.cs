@@ -1,7 +1,6 @@
 using System.Text;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -13,9 +12,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 大文件加载性能基准测试
 /// 测试不同配置源加载大量配置项的性能
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class LargeFileBenchmarks : IDisposable
 {
     private readonly string _testDir;

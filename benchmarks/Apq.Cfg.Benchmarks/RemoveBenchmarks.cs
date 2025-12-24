@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -11,9 +10,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 删除操作性能基准测试
 /// 测试 Remove 操作在不同场景下的性能
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class RemoveBenchmarks : IDisposable
 {
     private readonly string _testDir;

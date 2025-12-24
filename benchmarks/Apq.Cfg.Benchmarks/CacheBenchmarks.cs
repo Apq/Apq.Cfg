@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -7,9 +6,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 缓存效果性能基准测试
 /// 测试热路径重复读取、缓存命中/未命中等场景
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class CacheBenchmarks : IDisposable
 {
     private readonly string _testDir;

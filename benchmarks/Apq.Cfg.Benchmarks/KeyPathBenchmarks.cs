@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -7,9 +6,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 键路径深度性能基准测试
 /// 测试不同深度的键路径解析性能
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class KeyPathBenchmarks : IDisposable
 {
     private readonly string _testDir;

@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -11,9 +10,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 多源合并性能基准测试
 /// 测试多个配置源叠加时的查询性能
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class MultiSourceBenchmarks : IDisposable
 {
     private readonly string _testDir;

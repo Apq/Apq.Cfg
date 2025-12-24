@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -11,9 +10,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 读写性能基准测试
 /// 测试不同配置源的 Get/Set/Exists 操作性能
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class ReadWriteBenchmarks : IDisposable
 {
     private readonly string _testDir;

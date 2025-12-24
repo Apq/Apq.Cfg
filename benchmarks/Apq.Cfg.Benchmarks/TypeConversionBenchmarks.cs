@@ -1,5 +1,4 @@
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Order;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -7,9 +6,7 @@ namespace Apq.Cfg.Benchmarks;
 /// 类型转换性能基准测试
 /// 测试 Get&lt;T&gt; 不同类型转换的性能开销
 /// </summary>
-[MemoryDiagnoser]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-[RankColumn]
+[Config(typeof(BenchmarkConfig))]
 public class TypeConversionBenchmarks : IDisposable
 {
     private readonly string _testDir;
