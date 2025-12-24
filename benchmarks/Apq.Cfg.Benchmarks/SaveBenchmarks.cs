@@ -29,7 +29,7 @@ public class SaveBenchmarks : IDisposable
     private string _yamlPath = null!;
     private string _tomlPath = null!;
 
-    [Params(10, 50, 100, 500)]
+    [Params(10, 100)]
     public int ChangeCount { get; set; }
 
     public SaveBenchmarks()

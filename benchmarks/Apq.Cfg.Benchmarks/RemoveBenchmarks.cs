@@ -29,7 +29,7 @@ public class RemoveBenchmarks : IDisposable
     private string _yamlPath = null!;
     private string _tomlPath = null!;
 
-    [Params(10, 50, 100)]
+    [Params(10, 50)]
     public int KeyCount { get; set; }
 
     public RemoveBenchmarks()

@@ -15,7 +15,7 @@ public class KeyPathBenchmarks : IDisposable
     private readonly string _testDir;
     private ICfgRoot _cfg = null!;
 
-    [Params(1, 3, 5, 10, 20)]
+    [Params(1, 5, 10)]
     public int PathDepth { get; set; }
 
     private string _deepKey = null!;

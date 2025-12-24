@@ -20,10 +20,10 @@ public class ConcurrencyBenchmarks : IDisposable
     private ICfgRoot _cfg = null!;
     private string _configPath = null!;
 
-    [Params(1, 4, 8, 16)]
+    [Params(1, 4, 8)]
     public int ThreadCount { get; set; }
 
-    [Params("Json", "Ini", "Xml", "Yaml", "Toml")]
+    [Params("Json", "Ini")]
     public string SourceType { get; set; } = "Json";
 
     public ConcurrencyBenchmarks()

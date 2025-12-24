@@ -20,7 +20,7 @@ public class LargeFileBenchmarks : IDisposable
 {
     private readonly string _testDir;
 
-    [Params(100, 1000, 5000, 10000, 50000)]
+    [Params(100, 1000, 5000)]
     public int ItemCount { get; set; }
 
     private string _jsonPath = null!;
