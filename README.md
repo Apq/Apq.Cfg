@@ -122,11 +122,11 @@ dotnet run -c Release
 
 ## 测试覆盖情况
 
-### 测试统计（共 63 个测试）
+### 测试统计（共 175 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
-| JsonCfgTests | 8 | JSON 配置源测试 |
+| JsonCfgTests | 15 | JSON 配置源测试 |
 | EnvVarsCfgTests | 4 | 环境变量配置源测试 |
 | IniCfgTests | 5 | INI 文件配置源测试 |
 | XmlCfgTests | 5 | XML 文件配置源测试 |
@@ -135,8 +135,13 @@ dotnet run -c Release
 | RedisCfgTests | 5 | Redis 配置源测试 |
 | DatabaseCfgTests | 5 | 数据库配置源测试 |
 | CfgRootExtensionsTests | 4 | 扩展方法测试 |
-| CfgBuilderAdvancedTests | 6 | 高级功能测试 |
-| DynamicReloadTests | 9 | 动态配置重载测试 |
+| CfgBuilderAdvancedTests | 14 | 高级功能测试 |
+| DynamicReloadTests | 12 | 动态配置重载测试 |
+| EncodingDetectionTests | 14 | 编码检测测试 |
+| ConcurrencyTests | 10 | 并发安全测试 |
+| BoundaryConditionTests | 32 | 边界条件测试 |
+| ExceptionHandlingTests | 20 | 异常处理测试 |
+| ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
 
 ### 公开 API 覆盖矩阵
 
@@ -155,6 +160,7 @@ dotnet run -c Release
 | `ToMicrosoftConfiguration()` | ✅ | - | - | - | - | - | - | - |
 | `ToMicrosoftConfiguration(options)` | ✅ | - | - | - | - | - | - | - |
 | `ConfigChanges` | ✅ | - | - | - | - | - | - | - |
+| `Dispose/DisposeAsync` | ✅ | - | - | - | - | - | - | - |
 | **CfgBuilder** |
 | `AddJson()` | ✅ | - | - | - | - | - | - | - |
 | `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - |
@@ -163,6 +169,10 @@ dotnet run -c Release
 | **CfgRootExtensions** |
 | `TryGet<T>()` | ✅ | - | - | - | - | - | - | - |
 | `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - |
+| **FileCfgSourceBase** |
+| `WriteEncoding` | ✅ | - | - | - | - | - | - | - |
+| `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - |
+| `DetectEncoding()` | ✅ | - | - | - | - | - | - | - |
 | **扩展包** |
 | `AddIni()` | - | - | ✅ | - | - | - | - | - |
 | `AddXml()` | - | - | - | ✅ | - | - | - | - |
@@ -175,6 +185,19 @@ dotnet run -c Release
 
 > 说明：`-` 表示该配置源不支持此功能（如环境变量只读）或该功能只需测试一次
 
+### 测试场景覆盖
+
+| 场景类别 | 测试文件 | 测试数量 |
+|----------|----------|----------|
+| 基本读写 | JsonCfgTests, 各格式测试 | 47 |
+| 类型转换 | JsonCfgTests | 15 |
+| 编码检测 | EncodingDetectionTests | 14 |
+| 并发安全 | ConcurrencyTests | 10 |
+| 边界条件 | BoundaryConditionTests | 32 |
+| 异常处理 | ExceptionHandlingTests | 20 |
+| 动态重载 | DynamicReloadTests | 12 |
+| 变更订阅 | ConfigChangesSubscriptionTests | 28 |
+
 ### 测试覆盖率
 
 **100%** - 所有公开 API 均已覆盖测试
@@ -183,9 +206,9 @@ dotnet run -c Release
 
 | 框架 | 测试数量 | 状态 | 测试日期 |
 |------|----------|------|----------|
-| .NET 6.0 | 63 | ✅ 全部通过 | 2025-12-24 |
-| .NET 8.0 | 63 | ✅ 全部通过 | 2025-12-24 |
-| .NET 9.0 | 63 | ✅ 全部通过 | 2025-12-24 |
+| .NET 6.0 | 175 | ✅ 全部通过 | 2025-12-24 |
+| .NET 8.0 | 175 | ✅ 全部通过 | 2025-12-24 |
+| .NET 9.0 | 175 | ✅ 全部通过 | 2025-12-24 |
 
 ## 性能测试结果
 
