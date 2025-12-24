@@ -36,23 +36,39 @@
     <ParameterGroup>
       <VersionFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
       <MaxVersion ParameterType="System.String" Output="true" />
+      <MaxVersionCore ParameterType="System.String" Output="true" />
+      <MaxVersionRevision ParameterType="System.String" Output="true" />
       <MaxVersionFile ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System.Text.RegularExpressions" />
       <Code Type="Fragment" Language="cs"><![CDATA[
         MaxVersion = "1.0.0";
+        MaxVersionCore = "1.0.0";
+        MaxVersionRevision = "0";
         MaxVersionFile = "";
         Version maxVer = new Version(0, 0, 0);
+        string maxPrerelease = "";
         if (VersionFiles != null) {
             foreach (var file in VersionFiles) {
-                var match = Regex.Match(file.GetMetadata("Filename"), @"^v(\d+\.\d+\.\d+)");
+                // 匹配完整版本号，包括预发布标签（如 v1.0.2-beta1）
+                var match = Regex.Match(file.GetMetadata("Filename"), @"^v(\d+\.\d+\.\d+)(-[\w.]+)?");
                 if (match.Success) {
-                    var ver = new Version(match.Groups[1].Value);
-                    if (ver > maxVer) {
+                    var coreVersion = match.Groups[1].Value;
+                    var prerelease = match.Groups[2].Success ? match.Groups[2].Value : "";
+                    var ver = new Version(coreVersion);
+                    // 比较：先比核心版本，再比预发布标签（空字符串 > 预发布标签，即正式版 > beta）
+                    bool isNewer = ver > maxVer ||
+                        (ver == maxVer && string.Compare(prerelease, maxPrerelease, StringComparison.Ordinal) > 0);
+                    if (isNewer) {
                         maxVer = ver;
-                        MaxVersion = match.Groups[1].Value;
+                        maxPrerelease = prerelease;
+                        MaxVersionCore = coreVersion;
+                        MaxVersion = coreVersion + prerelease;
                         MaxVersionFile = file.GetMetadata("FullPath");
+                        // 从预发布标签提取数字作为修订号（如 -beta2 -> 2, -rc.3 -> 3）
+                        var revMatch = Regex.Match(prerelease, @"(\d+)$");
+                        MaxVersionRevision = revMatch.Success ? revMatch.Groups[1].Value : "0";
                     }
                 }
             }
@@ -88,11 +104,18 @@
 
     <GetMaxVersion VersionFiles="@(VersionFiles)">
       <Output TaskParameter="MaxVersion" PropertyName="DetectedVersion" />
+      <Output TaskParameter="MaxVersionCore" PropertyName="DetectedVersionCore" />
+      <Output TaskParameter="MaxVersionRevision" PropertyName="DetectedVersionRevision" />
       <Output TaskParameter="MaxVersionFile" PropertyName="DetectedVersionFile" />
     </GetMaxVersion>
 
     <PropertyGroup>
+      <!-- Version/PackageVersion 使用完整版本（含预发布标签） -->
       <Version>$(DetectedVersion)</Version>
+      <PackageVersion>$(DetectedVersion)</PackageVersion>
+      <!-- AssemblyVersion/FileVersion 使用数字版本，第四位为预发布序号 -->
+      <AssemblyVersion>$(DetectedVersionCore).$(DetectedVersionRevision)</AssemblyVersion>
+      <FileVersion>$(DetectedVersionCore).$(DetectedVersionRevision)</FileVersion>
     </PropertyGroup>
 
     <Message Text="检测到版本: $(DetectedVersion)" Importance="high" />
@@ -127,7 +150,6 @@
 
   <!-- NuGet 包公共元数据 -->
   <PropertyGroup>
-    <Version>$(DetectedVersion)</Version>
     <Authors>Apq</Authors>
     <Company>Apq</Company>
     <Copyright>Copyright © Apq $([System.DateTime]::Now.Year)</Copyright>
