@@ -218,4 +218,61 @@ public class DynamicReloadTests : IDisposable
         Assert.Contains("Added", str);
         Assert.Contains("(null)", str);
     }
+
+    [Fact]
+    public void ConfigChangeEvent_Timestamp_IsSet()
+    {
+        // Arrange
+        var before = DateTimeOffset.Now;
+        var changes = new Dictionary<string, ConfigChange>
+        {
+            ["Key"] = new ConfigChange("Key", "Old", "New", ChangeType.Modified)
+        };
+
+        // Act
+        var evt = new ConfigChangeEvent(changes);
+        var after = DateTimeOffset.Now;
+
+        // Assert
+        Assert.NotNull(evt.Changes);
+        Assert.Single(evt.Changes);
+        Assert.True(evt.Timestamp >= before && evt.Timestamp <= after);
+    }
+
+    [Fact]
+    public void ConfigChangeEvent_WithExplicitTimestamp_UsesProvidedValue()
+    {
+        // Arrange
+        var explicitTime = new DateTimeOffset(2024, 1, 1, 12, 0, 0, TimeSpan.Zero);
+        var changes = new Dictionary<string, ConfigChange>
+        {
+            ["Key"] = new ConfigChange("Key", null, "Value", ChangeType.Added)
+        };
+
+        // Act
+        var evt = new ConfigChangeEvent(changes, explicitTime);
+
+        // Assert
+        Assert.Equal(explicitTime, evt.Timestamp);
+    }
+
+    [Fact]
+    public void ConfigChange_AllChangeTypes_Work()
+    {
+        // Arrange & Act & Assert
+        var added = new ConfigChange("Key", null, "New", ChangeType.Added);
+        Assert.Equal(ChangeType.Added, added.Type);
+        Assert.Null(added.OldValue);
+        Assert.Equal("New", added.NewValue);
+
+        var modified = new ConfigChange("Key", "Old", "New", ChangeType.Modified);
+        Assert.Equal(ChangeType.Modified, modified.Type);
+        Assert.Equal("Old", modified.OldValue);
+        Assert.Equal("New", modified.NewValue);
+
+        var removed = new ConfigChange("Key", "Old", null, ChangeType.Removed);
+        Assert.Equal(ChangeType.Removed, removed.Type);
+        Assert.Equal("Old", removed.OldValue);
+        Assert.Null(removed.NewValue);
+    }
 }

@@ -210,4 +210,114 @@ public class JsonCfgTests : IDisposable
         Assert.NotNull(msConfig);
         Assert.Equal("TestApp", msConfig["App:Name"]);
     }
+
+    [Fact]
+    public void Get_LongValue_ReturnsCorrectType()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"BigNumber": 9223372036854775807}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal(9223372036854775807L, cfg.Get<long>("BigNumber"));
+    }
+
+    [Fact]
+    public void Get_DecimalValue_ReturnsCorrectType()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Price": 123.456}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal(123.456m, cfg.Get<decimal>("Price"));
+    }
+
+    public enum TestLogLevel { Debug, Info, Warning, Error }
+
+    [Fact]
+    public void Get_EnumValue_ReturnsCorrectType()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"LogLevel": "Warning"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal(TestLogLevel.Warning, cfg.Get<TestLogLevel>("LogLevel"));
+    }
+
+    [Fact]
+    public void Get_EnumValue_CaseInsensitive()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"LogLevel": "warning"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal(TestLogLevel.Warning, cfg.Get<TestLogLevel>("LogLevel"));
+    }
+
+    [Fact]
+    public void Get_InvalidValue_ThrowsException()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"NotANumber": "abc"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert - 无效值应抛出异常（Microsoft.Extensions.Configuration 的行为）
+        Assert.Throws<InvalidOperationException>(() => cfg.Get<int>("NotANumber"));
+    }
+
+    [Fact]
+    public void Get_NonExistentKey_ReturnsDefault()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Null(cfg.Get("NonExistent"));
+        Assert.Equal(default, cfg.Get<int>("NonExistent"));
+        Assert.Null(cfg.Get<string>("NonExistent"));
+    }
+
+    [Fact]
+    public void Get_NullableInt_ReturnsCorrectValue()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"NullableInt": 42}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act & Assert
+        Assert.Equal(42, cfg.Get<int?>("NullableInt"));
+        Assert.Null(cfg.Get<int?>("NonExistent"));
+    }
 }

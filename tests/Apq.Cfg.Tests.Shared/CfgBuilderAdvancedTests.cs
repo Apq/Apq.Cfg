@@ -1,3 +1,5 @@
+using Apq.Cfg.Changes;
+
 namespace Apq.Cfg.Tests;
 
 /// <summary>
@@ -168,5 +170,146 @@ public class CfgBuilderAdvancedTests : IDisposable
 
         // Assert - 通过 Get 验证值已设置（在 Pending 中）
         Assert.Equal("NewValue", cfg.Get("NewKey"));
+    }
+
+    [Fact]
+    public async Task DisposeAsync_ReleasesResources()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .Build();
+
+        // Act - 使用 DisposeAsync 释放资源
+        await cfg.DisposeAsync();
+
+        // Assert - 再次调用 DisposeAsync 不应抛出异常（幂等性）
+        await cfg.DisposeAsync();
+    }
+
+    [Fact]
+    public async Task DisposeAsync_AfterDispose_IsIdempotent()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act - 先同步释放，再异步释放
+        cfg.Dispose();
+        await cfg.DisposeAsync();
+
+        // Assert - 不应抛出异常
+    }
+
+    [Fact]
+    public void Set_WithoutWritableSource_ThrowsException()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false) // 不可写
+            .Build();
+
+        // Act & Assert
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Set("NewKey", "NewValue"));
+        Assert.Contains("没有可写的配置源", ex.Message);
+    }
+
+    [Fact]
+    public void Remove_WithoutWritableSource_ThrowsException()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false) // 不可写
+            .Build();
+
+        // Act & Assert
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Remove("Key"));
+        Assert.Contains("没有可写的配置源", ex.Message);
+    }
+
+    [Fact]
+    public void Set_WithInvalidTargetLevel_ThrowsException()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act & Assert - 指定不存在的层级
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Set("NewKey", "NewValue", targetLevel: 999));
+        Assert.Contains("没有可写的配置源", ex.Message);
+    }
+
+    [Fact]
+    public async Task SaveAsync_WithEmptyPending_DoesNothing()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+        var originalContent = File.ReadAllText(jsonPath);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act - 不设置任何值，直接保存
+        await cfg.SaveAsync();
+
+        // Assert - 文件内容不应改变
+        var newContent = File.ReadAllText(jsonPath);
+        Assert.Equal(originalContent, newContent);
+    }
+
+    [Fact]
+    public async Task SaveAsync_WithInvalidTargetLevel_DoesNothing()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // Act - 指定不存在的层级，不应抛出异常
+        await cfg.SaveAsync(targetLevel: 999);
+
+        // Assert - 不应抛出异常，静默返回
+    }
+
+    [Fact]
+    public void AddSource_CustomSource_Works()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        var jsonPath2 = Path.Combine(_testDir, "config2.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value1"}""");
+        File.WriteAllText(jsonPath2, """{"Key2": "Value2"}""");
+
+        // Act - 使用 AddJson 添加多个源验证 AddSource 间接工作
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJson(jsonPath2, level: 1, writeable: false)
+            .Build();
+
+        // Assert
+        Assert.Equal("Value1", cfg.Get("Key"));
+        Assert.Equal("Value2", cfg.Get("Key2"));
     }
 }
