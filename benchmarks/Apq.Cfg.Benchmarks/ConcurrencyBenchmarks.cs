@@ -1,5 +1,9 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using Apq.Cfg.Ini;
+using Apq.Cfg.Xml;
+using Apq.Cfg.Yaml;
+using Apq.Cfg.Toml;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -14,10 +18,13 @@ public class ConcurrencyBenchmarks : IDisposable
 {
     private readonly string _testDir;
     private ICfgRoot _cfg = null!;
-    private string _jsonPath = null!;
+    private string _configPath = null!;
 
-    [Params(1, 4, 8)]
+    [Params(1, 4, 8, 16)]
     public int ThreadCount { get; set; }
+
+    [Params("Json", "Ini", "Xml", "Yaml", "Toml")]
+    public string SourceType { get; set; } = "Json";
 
     public ConcurrencyBenchmarks()
     {
@@ -28,34 +35,185 @@ public class ConcurrencyBenchmarks : IDisposable
     [GlobalSetup]
     public void Setup()
     {
-        _jsonPath = Path.Combine(_testDir, "config.json");
-        File.WriteAllText(_jsonPath, """
-            {
-                "Database": {
-                    "Host": "localhost",
-                    "Port": 5432,
-                    "Name": "testdb"
-                },
-                "App": {
-                    "Name": "BenchmarkApp",
-                    "Version": "1.0.0"
-                },
-                "Settings": {
-                    "Key1": "Value1",
-                    "Key2": "Value2",
-                    "Key3": "Value3",
-                    "Key4": "Value4",
-                    "Key5": "Value5",
-                    "Key6": "Value6",
-                    "Key7": "Value7",
-                    "Key8": "Value8"
-                }
-            }
-            """);
+        _configPath = Path.Combine(_testDir, $"config.{SourceType.ToLower()}");
 
-        _cfg = new CfgBuilder()
-            .AddJson(_jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
-            .Build();
+        switch (SourceType)
+        {
+            case "Json":
+                File.WriteAllText(_configPath, """
+                    {
+                        "Database": {
+                            "Host": "localhost",
+                            "Port": 5432,
+                            "Name": "testdb"
+                        },
+                        "App": {
+                            "Name": "BenchmarkApp",
+                            "Version": "1.0.0"
+                        },
+                        "Settings": {
+                            "Key1": "Value1",
+                            "Key2": "Value2",
+                            "Key3": "Value3",
+                            "Key4": "Value4",
+                            "Key5": "Value5",
+                            "Key6": "Value6",
+                            "Key7": "Value7",
+                            "Key8": "Value8",
+                            "Key9": "Value9",
+                            "Key10": "Value10",
+                            "Key11": "Value11",
+                            "Key12": "Value12",
+                            "Key13": "Value13",
+                            "Key14": "Value14",
+                            "Key15": "Value15",
+                            "Key16": "Value16"
+                        }
+                    }
+                    """);
+                _cfg = new CfgBuilder()
+                    .AddJson(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .Build();
+                break;
+
+            case "Ini":
+                File.WriteAllText(_configPath, """
+                    [Database]
+                    Host=localhost
+                    Port=5432
+                    Name=testdb
+
+                    [App]
+                    Name=BenchmarkApp
+                    Version=1.0.0
+
+                    [Settings]
+                    Key1=Value1
+                    Key2=Value2
+                    Key3=Value3
+                    Key4=Value4
+                    Key5=Value5
+                    Key6=Value6
+                    Key7=Value7
+                    Key8=Value8
+                    Key9=Value9
+                    Key10=Value10
+                    Key11=Value11
+                    Key12=Value12
+                    Key13=Value13
+                    Key14=Value14
+                    Key15=Value15
+                    Key16=Value16
+                    """);
+                _cfg = new CfgBuilder()
+                    .AddIni(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .Build();
+                break;
+
+            case "Xml":
+                File.WriteAllText(_configPath, """
+                    <?xml version="1.0" encoding="utf-8"?>
+                    <configuration>
+                        <Database>
+                            <Host>localhost</Host>
+                            <Port>5432</Port>
+                            <Name>testdb</Name>
+                        </Database>
+                        <App>
+                            <Name>BenchmarkApp</Name>
+                            <Version>1.0.0</Version>
+                        </App>
+                        <Settings>
+                            <Key1>Value1</Key1>
+                            <Key2>Value2</Key2>
+                            <Key3>Value3</Key3>
+                            <Key4>Value4</Key4>
+                            <Key5>Value5</Key5>
+                            <Key6>Value6</Key6>
+                            <Key7>Value7</Key7>
+                            <Key8>Value8</Key8>
+                            <Key9>Value9</Key9>
+                            <Key10>Value10</Key10>
+                            <Key11>Value11</Key11>
+                            <Key12>Value12</Key12>
+                            <Key13>Value13</Key13>
+                            <Key14>Value14</Key14>
+                            <Key15>Value15</Key15>
+                            <Key16>Value16</Key16>
+                        </Settings>
+                    </configuration>
+                    """);
+                _cfg = new CfgBuilder()
+                    .AddXml(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .Build();
+                break;
+
+            case "Yaml":
+                File.WriteAllText(_configPath, """
+                    Database:
+                      Host: localhost
+                      Port: 5432
+                      Name: testdb
+                    App:
+                      Name: BenchmarkApp
+                      Version: 1.0.0
+                    Settings:
+                      Key1: Value1
+                      Key2: Value2
+                      Key3: Value3
+                      Key4: Value4
+                      Key5: Value5
+                      Key6: Value6
+                      Key7: Value7
+                      Key8: Value8
+                      Key9: Value9
+                      Key10: Value10
+                      Key11: Value11
+                      Key12: Value12
+                      Key13: Value13
+                      Key14: Value14
+                      Key15: Value15
+                      Key16: Value16
+                    """);
+                _cfg = new CfgBuilder()
+                    .AddYaml(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .Build();
+                break;
+
+            case "Toml":
+                File.WriteAllText(_configPath, """
+                    [Database]
+                    Host = "localhost"
+                    Port = 5432
+                    Name = "testdb"
+
+                    [App]
+                    Name = "BenchmarkApp"
+                    Version = "1.0.0"
+
+                    [Settings]
+                    Key1 = "Value1"
+                    Key2 = "Value2"
+                    Key3 = "Value3"
+                    Key4 = "Value4"
+                    Key5 = "Value5"
+                    Key6 = "Value6"
+                    Key7 = "Value7"
+                    Key8 = "Value8"
+                    Key9 = "Value9"
+                    Key10 = "Value10"
+                    Key11 = "Value11"
+                    Key12 = "Value12"
+                    Key13 = "Value13"
+                    Key14 = "Value14"
+                    Key15 = "Value15"
+                    Key16 = "Value16"
+                    """);
+                _cfg = new CfgBuilder()
+                    .AddToml(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .Build();
+                break;
+        }
     }
 
     [GlobalCleanup]
@@ -103,7 +261,9 @@ public class ConcurrencyBenchmarks : IDisposable
     public void ConcurrentRead_DifferentKeys()
     {
         var keys = new[] { "Settings:Key1", "Settings:Key2", "Settings:Key3", "Settings:Key4",
-                          "Settings:Key5", "Settings:Key6", "Settings:Key7", "Settings:Key8" };
+                          "Settings:Key5", "Settings:Key6", "Settings:Key7", "Settings:Key8",
+                          "Settings:Key9", "Settings:Key10", "Settings:Key11", "Settings:Key12",
+                          "Settings:Key13", "Settings:Key14", "Settings:Key15", "Settings:Key16" };
         var tasks = new Task[ThreadCount];
         for (int i = 0; i < ThreadCount; i++)
         {
@@ -188,6 +348,28 @@ public class ConcurrencyBenchmarks : IDisposable
                 {
                     _ = _cfg.Exists("Database:Host");
                     _ = _cfg.Exists("NonExistent:Key");
+                }
+            });
+        }
+        Task.WaitAll(tasks);
+    }
+
+    /// <summary>
+    /// 多线程并发写入同一个键（竞争场景）
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("ConcurrentWrite")]
+    public void ConcurrentWrite_SameKey()
+    {
+        var tasks = new Task[ThreadCount];
+        for (int i = 0; i < ThreadCount; i++)
+        {
+            var threadId = i;
+            tasks[i] = Task.Run(() =>
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    _cfg.Set("Temp:SharedKey", $"Thread{threadId}_Value{j}");
                 }
             });
         }

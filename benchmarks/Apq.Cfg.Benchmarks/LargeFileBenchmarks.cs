@@ -20,7 +20,7 @@ public class LargeFileBenchmarks : IDisposable
 {
     private readonly string _testDir;
 
-    [Params(100, 1000, 5000)]
+    [Params(100, 1000, 5000, 10000, 50000)]
     public int ItemCount { get; set; }
 
     private string _jsonPath = null!;
@@ -167,52 +167,47 @@ public class LargeFileBenchmarks : IDisposable
 
     [Benchmark(Baseline = true)]
     [BenchmarkCategory("Load")]
-    public ICfgRoot Json_Load()
+    public void Json_Load()
     {
-        var cfg = new CfgBuilder()
+        using var cfg = new CfgBuilder()
             .AddJson(_jsonPath, level: 0, writeable: false)
             .Build();
-        return cfg;
     }
 
     [Benchmark]
     [BenchmarkCategory("Load")]
-    public ICfgRoot Ini_Load()
+    public void Ini_Load()
     {
-        var cfg = new CfgBuilder()
+        using var cfg = new CfgBuilder()
             .AddIni(_iniPath, level: 0, writeable: false)
             .Build();
-        return cfg;
     }
 
     [Benchmark]
     [BenchmarkCategory("Load")]
-    public ICfgRoot Xml_Load()
+    public void Xml_Load()
     {
-        var cfg = new CfgBuilder()
+        using var cfg = new CfgBuilder()
             .AddXml(_xmlPath, level: 0, writeable: false)
             .Build();
-        return cfg;
     }
 
     [Benchmark]
     [BenchmarkCategory("Load")]
-    public ICfgRoot Yaml_Load()
+    public void Yaml_Load()
     {
-        var cfg = new CfgBuilder()
+        using var cfg = new CfgBuilder()
             .AddYaml(_yamlPath, level: 0, writeable: false)
             .Build();
-        return cfg;
     }
 
     [Benchmark]
     [BenchmarkCategory("Load")]
-    public ICfgRoot Toml_Load()
+    public void Toml_Load()
     {
-        var cfg = new CfgBuilder()
+        using var cfg = new CfgBuilder()
             .AddToml(_tomlPath, level: 0, writeable: false)
             .Build();
-        return cfg;
     }
 
     #endregion
