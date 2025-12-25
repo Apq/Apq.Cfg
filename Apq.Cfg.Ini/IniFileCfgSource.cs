@@ -1,4 +1,3 @@
-using System.Text;
 using Apq.Cfg.Sources;
 using Apq.Cfg.Sources.File;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +40,7 @@ internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 
         if (File.Exists(_path))
         {
-            var readEncoding = DetectEncoding(_path) ?? Encoding.UTF8;
+            var readEncoding = DetectEncoding(_path) ?? System.Text.Encoding.UTF8;
             var lines = await File.ReadAllLinesAsync(_path, readEncoding, cancellationToken).ConfigureAwait(false);
 
             foreach (var line in lines)
@@ -97,7 +96,7 @@ internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                 sections[section][key] = value;
         }
 
-        var sb = new StringBuilder();
+        var sb = new System.Text.StringBuilder();
 
         if (sections.TryGetValue("", out var rootKeys) && rootKeys.Count > 0)
         {

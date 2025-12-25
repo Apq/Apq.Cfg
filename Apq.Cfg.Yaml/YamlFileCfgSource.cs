@@ -1,4 +1,3 @@
-using System.Text;
 using Apq.Cfg.Sources;
 using Apq.Cfg.Sources.File;
 using Microsoft.Extensions.Configuration;
@@ -98,7 +97,7 @@ internal sealed class YamlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         public override void Load(Stream stream)
         {
             var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
-            using var reader = new StreamReader(stream, Encoding.UTF8, true);
+            using var reader = new StreamReader(stream, System.Text.Encoding.UTF8, true);
             var yaml = new YamlStream();
             yaml.Load(reader);
             if (yaml.Documents.Count == 0)

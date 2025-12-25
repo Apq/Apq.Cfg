@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Apq.Cfg.EncodingSupport;
 using Apq.Cfg.Sources.File;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
@@ -16,8 +17,8 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     private static readonly JsonSerializerOptions s_writeOptions = new() { WriteIndented = true };
 
     public JsonFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter)
-        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+        bool isPrimaryWriter, EncodingOptions? encodingOptions = null)
+        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encodingOptions)
     {
     }
 
@@ -45,7 +46,8 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         JsonNode? root = null;
         if (System.IO.File.Exists(_path))
         {
-            var readEncoding = DetectEncoding(_path);
+            // 使用增强的编码检测
+            var readEncoding = DetectEncodingEnhanced(_path);
             var text = await System.IO.File.ReadAllTextAsync(_path, readEncoding, cancellationToken).ConfigureAwait(false);
             if (!string.IsNullOrWhiteSpace(text))
             {
@@ -62,7 +64,9 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
             SetByColonKey(rootObj, key, value);
 
         var jsonString = root.ToJsonString(s_writeOptions);
-        await System.IO.File.WriteAllTextAsync(_path, jsonString, WriteEncoding, cancellationToken).ConfigureAwait(false);
+        // 使用配置的写入编码
+        var writeEncoding = GetWriteEncoding();
+        await System.IO.File.WriteAllTextAsync(_path, jsonString, writeEncoding, cancellationToken).ConfigureAwait(false);
     }
 
     private static void SetByColonKey(JsonObject root, string key, string? value)
