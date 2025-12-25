@@ -25,7 +25,7 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 274 个测试）
+## 测试统计（共 282 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -48,7 +48,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | CfgSectionTests | 13 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
 | ServiceCollectionExtensionsTests | 21 | 依赖注入扩展测试（IOptions/IOptionsMonitor/IOptionsSnapshot/嵌套对象/集合绑定）|
 | EncodingTests | 22 | 编码映射测试 |
-| PerformanceOptimizationTests | 22 | 性能优化测试（GetMany/SetMany/缓存）|
+| PerformanceOptimizationTests | 30 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
 | ObjectBinderTests | 31 | 对象绑定测试（类型转换/嵌套对象/集合/字典）|
 
 ## 公开 API 覆盖矩阵
@@ -61,6 +61,8 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `Exists(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `GetMany(keys)` | ✅ | - | - | - | - | - | - | - |
 | `GetMany<T>(keys)` | ✅ | - | - | - | - | - | - | - |
+| `GetMany(keys, callback)` | ✅ | - | - | - | - | - | - | - |
+| `GetMany<T>(keys, callback)` | ✅ | - | - | - | - | - | - | - |
 | `Set(key, value)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `SetMany(values)` | ✅ | - | - | - | - | - | - | - |
 | `Set(key, value, targetLevel)` | ✅ | - | - | - | - | - | - | - |
@@ -133,7 +135,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 变更订阅 | ConfigChangesSubscriptionTests | 28 |
 | 配置节访问 | CfgSectionTests | 13 |
 | 依赖注入 | ServiceCollectionExtensionsTests | 21 |
-| 批量操作 | PerformanceOptimizationTests | 22 |
+| 批量操作 | PerformanceOptimizationTests | 30 |
 | 对象绑定 | ObjectBinderTests | 31 |
 
 ## 性能基准测试

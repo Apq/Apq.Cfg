@@ -19,6 +19,7 @@
 - **动态配置重载**：支持文件变更自动检测、防抖、增量更新
 - **配置节**：支持按路径获取配置子节（`GetSection`），简化嵌套配置访问
 - **批量操作**：`GetMany`、`SetMany` 减少锁竞争，提升并发性能
+  - 支持高性能回调方式（零堆分配）
 - **依赖注入集成**：提供 `AddApqCfg` 和 `ConfigureApqCfg<T>` 扩展方法
 - **线程安全**：支持多线程并发读写
 - **Microsoft.Extensions.Configuration 兼容**：可无缝转换为标准配置接口
@@ -55,6 +56,39 @@ foreach (var key in dbSection.GetChildKeys())
 
 // 修改配置
 cfg.Set("App:LastRun", DateTime.Now.ToString());
+await cfg.SaveAsync();
+```
+
+### 批量操作
+
+支持两种批量获取方式：
+
+```csharp
+// 方式1：返回字典（简单易用）
+var values = cfg.GetMany(new[] { "Key1", "Key2", "Key3" });
+foreach (var kv in values)
+{
+    Console.WriteLine($"{kv.Key}: {kv.Value}");
+}
+
+// 方式2：回调方式（高性能，零堆分配）
+cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
+{
+    Console.WriteLine($"{key}: {value}");
+});
+
+// 带类型转换的批量获取
+cfg.GetMany<int>(new[] { "Port1", "Port2" }, (key, value) =>
+{
+    Console.WriteLine($"{key}: {value}");
+});
+
+// 批量设置
+cfg.SetMany(new Dictionary<string, string?>
+{
+    ["Key1"] = "Value1",
+    ["Key2"] = "Value2"
+});
 await cfg.SaveAsync();
 ```
 
@@ -178,13 +212,13 @@ dotnet run -c Release
 
 ### 单元测试通过情况
 
-**最后运行时间**: 2025-12-25
+**最后运行时间**: 2025-12-26
 
 | 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
 |------|------|------|------|------|------|
-| .NET 6.0 | 274 | 0 | 0 | 274 | ✅ 通过 |
-| .NET 8.0 | 274 | 0 | 0 | 274 | ✅ 通过 |
-| .NET 9.0 | 274 | 0 | 0 | 274 | ✅ 通过 |
+| .NET 6.0 | 282 | 0 | 0 | 282 | ✅ 通过 |
+| .NET 8.0 | 282 | 0 | 0 | 282 | ✅ 通过 |
+| .NET 9.0 | 282 | 0 | 0 | 282 | ✅ 通过 |
 
 > 详细测试覆盖情况见 [tests/README.md](tests/README.md)
 

@@ -152,7 +152,7 @@ public class PerformanceOptimizationTests : IDisposable
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
-        File.WriteAllText(jsonPath, """{}""");
+        File.WriteAllText(jsonPath, "{}");
 
         using var cfg = new CfgBuilder()
             .AddJson(jsonPath, level: 0, writeable: true)
@@ -172,6 +172,228 @@ public class PerformanceOptimizationTests : IDisposable
         Assert.Contains("Value1", content);
         Assert.Contains("Key2", content);
         Assert.Contains("Value2", content);
+    }
+
+    // ========== GetMany 回调方式测试（高性能 API）==========
+
+    [Fact]
+    public void GetMany_Callback_InvokesForEachKey()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Key1": "Value1",
+                "Key2": "Value2",
+                "Key3": "Value3"
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        var results = new Dictionary<string, string?>();
+
+        // Act
+        cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
+        {
+            results[key] = value;
+        });
+
+        // Assert
+        Assert.Equal(3, results.Count);
+        Assert.Equal("Value1", results["Key1"]);
+        Assert.Equal("Value2", results["Key2"]);
+        Assert.Equal("Value3", results["Key3"]);
+    }
+
+    [Fact]
+    public void GetMany_Callback_ReturnsNullForMissingKeys()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key1": "Value1"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        var results = new Dictionary<string, string?>();
+
+        // Act
+        cfg.GetMany(new[] { "Key1", "NonExistent" }, (key, value) =>
+        {
+            results[key] = value;
+        });
+
+        // Assert
+        Assert.Equal(2, results.Count);
+        Assert.Equal("Value1", results["Key1"]);
+        Assert.Null(results["NonExistent"]);
+    }
+
+    [Fact]
+    public void GetMany_Callback_IncludesPendingChanges()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key1": "Original"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        cfg.Set("Key1", "Modified");
+        cfg.Set("Key2", "NewValue");
+
+        var results = new Dictionary<string, string?>();
+
+        // Act
+        cfg.GetMany(new[] { "Key1", "Key2" }, (key, value) =>
+        {
+            results[key] = value;
+        });
+
+        // Assert
+        Assert.Equal("Modified", results["Key1"]);
+        Assert.Equal("NewValue", results["Key2"]);
+    }
+
+    [Fact]
+    public void GetMany_Callback_PreservesKeyOrder()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "A": "1",
+                "B": "2",
+                "C": "3"
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        var orderedKeys = new List<string>();
+
+        // Act
+        cfg.GetMany(new[] { "C", "A", "B" }, (key, value) =>
+        {
+            orderedKeys.Add(key);
+        });
+
+        // Assert - 回调顺序应与输入顺序一致
+        Assert.Equal(new[] { "C", "A", "B" }, orderedKeys);
+    }
+
+    [Fact]
+    public void GetMany_Generic_Callback_ConvertsTypes()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Int1": "42",
+                "Int2": "100",
+                "Int3": "999"
+            }
+            """);
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        var results = new Dictionary<string, int?>();
+
+        // Act
+        cfg.GetMany<int>(new[] { "Int1", "Int2", "Int3" }, (key, value) =>
+        {
+            results[key] = value;
+        });
+
+        // Assert
+        Assert.Equal(3, results.Count);
+        Assert.Equal(42, results["Int1"]);
+        Assert.Equal(100, results["Int2"]);
+        Assert.Equal(999, results["Int3"]);
+    }
+
+    [Fact]
+    public void GetMany_Generic_Callback_ReturnsDefaultForMissingKeys()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Int1": "42"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        var results = new Dictionary<string, int?>();
+
+        // Act
+        cfg.GetMany<int>(new[] { "Int1", "NonExistent" }, (key, value) =>
+        {
+            results[key] = value;
+        });
+
+        // Assert
+        Assert.Equal(2, results.Count);
+        Assert.Equal(42, results["Int1"]);
+        Assert.Equal(default(int), results["NonExistent"]);
+    }
+
+    [Fact]
+    public void GetMany_Generic_Callback_IncludesPendingChanges()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Int1": "10"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        cfg.Set("Int1", "20");
+        cfg.Set("Int2", "30");
+
+        var results = new Dictionary<string, int?>();
+
+        // Act
+        cfg.GetMany<int>(new[] { "Int1", "Int2" }, (key, value) =>
+        {
+            results[key] = value;
+        });
+
+        // Assert
+        Assert.Equal(20, results["Int1"]);
+        Assert.Equal(30, results["Int2"]);
+    }
+
+    [Fact]
+    public void GetMany_Callback_WithEmptyKeys_DoesNotInvokeCallback()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key1": "Value1"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true)
+            .Build();
+
+        var callCount = 0;
+
+        // Act
+        cfg.GetMany(Array.Empty<string>(), (key, value) =>
+        {
+            callCount++;
+        });
+
+        // Assert
+        Assert.Equal(0, callCount);
     }
 
     // ========== KeyPathParser 测试 ==========
