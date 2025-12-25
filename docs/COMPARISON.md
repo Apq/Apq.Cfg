@@ -301,9 +301,9 @@ var snapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<Databas
 
 | 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
 |------|------|------|------|------|------|
-| .NET 6.0 | 263 | 0 | 0 | 263 | ✅ 通过 |
-| .NET 8.0 | 263 | 0 | 0 | 263 | ✅ 通过 |
-| .NET 9.0 | 263 | 0 | 0 | 263 | ✅ 通过 |
+| .NET 6.0 | 274 | 0 | 0 | 274 | ✅ 通过 |
+| .NET 8.0 | 274 | 0 | 0 | 274 | ✅ 通过 |
+| .NET 9.0 | 274 | 0 | 0 | 274 | ✅ 通过 |
 
 ### 性能测试
 
@@ -333,7 +333,7 @@ var snapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<Databas
 | **功能完整性** | ⭐⭐⭐⭐⭐ | 格式支持全面，特性丰富，API 设计合理 |
 | **性能** | ⭐⭐⭐⭐⭐ | 纳秒级读取，零内存分配，优化到位 |
 | **代码质量** | ⭐⭐⭐⭐⭐ | 线程安全，内存优化，异常处理完善 |
-| **测试覆盖** | ⭐⭐⭐⭐⭐ | 263 测试，多框架验证，性能基准完整 |
+| **测试覆盖** | ⭐⭐⭐⭐⭐ | 274 测试，多框架验证，性能基准完整 |
 | **DI 集成** | ⭐⭐⭐⭐⭐ | IOptions/IOptionsMonitor/IOptionsSnapshot 完整支持 |
 | **文档** | ⭐⭐⭐⭐ | README 完整，示例丰富，API 文档清晰 |
 | **生态/社区** | ⭐⭐ | 新项目，尚无社区 |

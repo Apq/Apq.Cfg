@@ -25,7 +25,7 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 253 个测试）
+## 测试统计（共 274 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -46,9 +46,10 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | ExceptionHandlingTests | 18 | 异常处理测试 |
 | ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
 | CfgSectionTests | 13 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
-| ServiceCollectionExtensionsTests | 11 | 依赖注入扩展测试 |
+| ServiceCollectionExtensionsTests | 21 | 依赖注入扩展测试（IOptions/IOptionsMonitor/IOptionsSnapshot/嵌套对象/集合绑定）|
 | EncodingTests | 22 | 编码映射测试 |
 | PerformanceOptimizationTests | 22 | 性能优化测试（GetMany/SetMany/缓存）|
+| ObjectBinderTests | 31 | 对象绑定测试（类型转换/嵌套对象/集合/字典）|
 
 ## 公开 API 覆盖矩阵
 
@@ -99,7 +100,19 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `AddDatabase()` | - | - | - | - | - | - | - | ✅ |
 | **依赖注入扩展** |
 | `AddApqCfg()` | ✅ | - | - | - | - | - | - | - |
+| `AddApqCfg<T>()` | ✅ | - | - | - | - | - | - | - |
 | `ConfigureApqCfg<T>()` | ✅ | - | - | - | - | - | - | - |
+| `ConfigureApqCfg<T>(onChange)` | ✅ | - | - | - | - | - | - | - |
+| `IOptions<T>` | ✅ | - | - | - | - | - | - | - |
+| `IOptionsMonitor<T>` | ✅ | - | - | - | - | - | - | - |
+| `IOptionsSnapshot<T>` | ✅ | - | - | - | - | - | - | - |
+| **对象绑定** |
+| 简单类型绑定 | ✅ | - | - | - | - | - | - | - |
+| 嵌套对象绑定 | ✅ | - | - | - | - | - | - | - |
+| 数组绑定 | ✅ | - | - | - | - | - | - | - |
+| 列表绑定 | ✅ | - | - | - | - | - | - | - |
+| 字典绑定 | ✅ | - | - | - | - | - | - | - |
+| 枚举绑定 | ✅ | - | - | - | - | - | - | - |
 | **多层级覆盖** |
 | 高层级覆盖低层级 | ✅ | ✅ | - | - | - | - | ✅ | ✅ |
 
@@ -119,8 +132,9 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 动态重载 | DynamicReloadTests | 22 |
 | 变更订阅 | ConfigChangesSubscriptionTests | 28 |
 | 配置节访问 | CfgSectionTests | 13 |
-| 依赖注入 | ServiceCollectionExtensionsTests | 11 |
+| 依赖注入 | ServiceCollectionExtensionsTests | 21 |
 | 批量操作 | PerformanceOptimizationTests | 22 |
+| 对象绑定 | ObjectBinderTests | 31 |
 
 ## 性能基准测试
 

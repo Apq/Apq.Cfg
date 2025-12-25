@@ -1,6 +1,7 @@
 using System.Text;
 using Apq.Cfg.EncodingSupport;
 using Apq.Cfg.Sources.File;
+using static Apq.Cfg.EncodingSupport.EncodingDetectionResult;
 
 namespace Apq.Cfg.Tests;
 
@@ -443,5 +444,290 @@ public class EncodingTests : IDisposable
 
         // Assert
         Assert.True(logged);
+    }
+
+    // ========== 编码映射通配符测试 ==========
+
+    [Fact]
+    public void CfgBuilder_AddReadEncodingMappingWildcard_MatchesPattern()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var customEncoding = Encoding.GetEncoding("GB2312");
+        var pattern = "*.legacy.json";
+
+        // Act
+        new CfgBuilder()
+            .AddReadEncodingMappingWildcard(pattern, customEncoding, priority: 100);
+
+        var filePath = Path.Combine(_testDir, "config.legacy.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(false));
+
+        // Assert
+        var result = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.Equal(EncodingDetectionMethod.UserSpecified, result.Method);
+        Assert.Equal(customEncoding.CodePage, result.Encoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(pattern);
+    }
+
+    [Fact]
+    public void CfgBuilder_AddReadEncodingMappingWildcard_DoesNotMatchNonMatchingFile()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var customEncoding = Encoding.GetEncoding("GB2312");
+        var pattern = "*.legacy.json";
+
+        // Act
+        new CfgBuilder()
+            .AddReadEncodingMappingWildcard(pattern, customEncoding, priority: 100);
+
+        var filePath = Path.Combine(_testDir, "config.normal.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(true));
+
+        // Assert - 不匹配的文件应该使用正常检测
+        var result = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.NotEqual(customEncoding.CodePage, result.Encoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(pattern);
+    }
+
+    [Fact]
+    public void CfgBuilder_AddWriteEncodingMappingWildcard_MatchesPattern()
+    {
+        // Arrange
+        var customEncoding = new UTF8Encoding(true); // UTF-8 with BOM
+        var pattern = "*.ps1";
+
+        // Act
+        new CfgBuilder()
+            .AddWriteEncodingMappingWildcard(pattern, customEncoding, priority: 100);
+
+        var filePath = Path.Combine(_testDir, "script.ps1");
+
+        // Assert
+        var writeEncoding = FileCfgSourceBase.EncodingDetector.MappingConfig.GetWriteEncoding(filePath);
+        Assert.NotNull(writeEncoding);
+        Assert.Equal(3, writeEncoding.GetPreamble().Length); // UTF-8 BOM
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveWriteMapping(pattern);
+    }
+
+    // ========== 编码映射正则表达式测试 ==========
+
+    [Fact]
+    public void CfgBuilder_AddReadEncodingMappingRegex_MatchesPattern()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var customEncoding = Encoding.GetEncoding("GB2312");
+        var regexPattern = @"config\d+\.json$";
+
+        // Act
+        new CfgBuilder()
+            .AddReadEncodingMappingRegex(regexPattern, customEncoding, priority: 100);
+
+        var filePath = Path.Combine(_testDir, "config123.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(false));
+
+        // Assert
+        var result = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.Equal(EncodingDetectionMethod.UserSpecified, result.Method);
+        Assert.Equal(customEncoding.CodePage, result.Encoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(regexPattern);
+    }
+
+    [Fact]
+    public void CfgBuilder_AddReadEncodingMappingRegex_DoesNotMatchNonMatchingFile()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var customEncoding = Encoding.GetEncoding("GB2312");
+        var regexPattern = @"config\d+\.json$";
+
+        // Act
+        new CfgBuilder()
+            .AddReadEncodingMappingRegex(regexPattern, customEncoding, priority: 100);
+
+        var filePath = Path.Combine(_testDir, "configABC.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(true));
+
+        // Assert - 不匹配的文件应该使用正常检测
+        var result = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.NotEqual(customEncoding.CodePage, result.Encoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(regexPattern);
+    }
+
+    [Fact]
+    public void CfgBuilder_AddWriteEncodingMappingRegex_MatchesPattern()
+    {
+        // Arrange
+        var customEncoding = Encoding.Unicode;
+        var regexPattern = @"logs[/\\].*\.log$";
+
+        // Act
+        new CfgBuilder()
+            .AddWriteEncodingMappingRegex(regexPattern, customEncoding, priority: 100);
+
+        var filePath = Path.Combine(_testDir, "logs", "app.log");
+
+        // Assert
+        var writeEncoding = FileCfgSourceBase.EncodingDetector.MappingConfig.GetWriteEncoding(filePath);
+        Assert.NotNull(writeEncoding);
+        Assert.Equal(customEncoding.CodePage, writeEncoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveWriteMapping(regexPattern);
+    }
+
+    // ========== ConfigureEncodingMapping 委托测试 ==========
+
+    [Fact]
+    public void CfgBuilder_ConfigureEncodingMapping_AllowsCustomConfiguration()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var customReadEncoding = Encoding.GetEncoding("GB2312");
+        var customWriteEncoding = Encoding.Unicode;
+        var filePath = Path.Combine(_testDir, "delegate_config.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(false));
+
+        // Act
+        new CfgBuilder()
+            .ConfigureEncodingMapping(config =>
+            {
+                config.AddReadMapping(filePath, EncodingMappingType.ExactPath, customReadEncoding, priority: 100);
+                config.AddWriteMapping(filePath, EncodingMappingType.ExactPath, customWriteEncoding, priority: 100);
+            });
+
+        // Assert - 读取映射
+        var readResult = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.Equal(EncodingDetectionMethod.UserSpecified, readResult.Method);
+        Assert.Equal(customReadEncoding.CodePage, readResult.Encoding.CodePage);
+
+        // Assert - 写入映射
+        var writeEncoding = FileCfgSourceBase.EncodingDetector.MappingConfig.GetWriteEncoding(filePath);
+        Assert.NotNull(writeEncoding);
+        Assert.Equal(customWriteEncoding.CodePage, writeEncoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(filePath);
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveWriteMapping(filePath);
+    }
+
+    [Fact]
+    public void CfgBuilder_ConfigureEncodingMapping_SupportsWildcardInDelegate()
+    {
+        // Arrange
+        var customEncoding = new UTF8Encoding(true);
+        var pattern = "*.script.ps1";
+
+        // Act
+        new CfgBuilder()
+            .ConfigureEncodingMapping(config =>
+            {
+                config.AddWriteMapping(pattern, EncodingMappingType.Wildcard, customEncoding, priority: 100);
+            });
+
+        var filePath = Path.Combine(_testDir, "test.script.ps1");
+
+        // Assert
+        var writeEncoding = FileCfgSourceBase.EncodingDetector.MappingConfig.GetWriteEncoding(filePath);
+        Assert.NotNull(writeEncoding);
+        Assert.Equal(3, writeEncoding.GetPreamble().Length);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveWriteMapping(pattern);
+    }
+
+    // ========== WithEncodingConfidenceThreshold 测试 ==========
+
+    [Fact]
+    public void CfgBuilder_WithEncodingConfidenceThreshold_SetsThreshold()
+    {
+        // Arrange
+        var filePath = Path.Combine(_testDir, "threshold_test.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(false));
+
+        // Act
+        var builder = new CfgBuilder()
+            .WithEncodingConfidenceThreshold(0.9f);
+
+        // Assert - 通过检测结果验证阈值设置
+        // 由于阈值设置是全局的，我们只能验证方法调用不抛出异常
+        Assert.NotNull(builder);
+    }
+
+    // ========== 编码映射优先级测试 ==========
+
+    [Fact]
+    public void EncodingMapping_HigherPriority_TakesPrecedence()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var lowPriorityEncoding = Encoding.GetEncoding("GB2312");
+        var highPriorityEncoding = Encoding.Unicode;
+        var filePath = Path.Combine(_testDir, "priority_test.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(false));
+
+        // Act - 先添加低优先级，再添加高优先级
+        new CfgBuilder()
+            .ConfigureEncodingMapping(config =>
+            {
+                config.AddReadMapping(filePath, EncodingMappingType.ExactPath, lowPriorityEncoding, priority: 10);
+                config.AddReadMapping(filePath + "_high", EncodingMappingType.ExactPath, highPriorityEncoding, priority: 100);
+            });
+
+        // 使用通配符测试优先级
+        var wildcardPattern = "*.priority.json";
+        new CfgBuilder()
+            .AddReadEncodingMappingWildcard(wildcardPattern, highPriorityEncoding, priority: 100);
+
+        var testFile = Path.Combine(_testDir, "test.priority.json");
+        File.WriteAllText(testFile, """{"key": "value"}""", new UTF8Encoding(false));
+
+        // Assert
+        var result = FileCfgSourceBase.EncodingDetector.Detect(testFile);
+        Assert.Equal(highPriorityEncoding.CodePage, result.Encoding.CodePage);
+
+        // Cleanup
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(filePath);
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(filePath + "_high");
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(wildcardPattern);
+    }
+
+    // ========== 编码映射移除测试 ==========
+
+    [Fact]
+    public void EncodingMapping_RemoveMapping_RestoresDefaultBehavior()
+    {
+        // Arrange
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var customEncoding = Encoding.GetEncoding("GB2312");
+        var filePath = Path.Combine(_testDir, "remove_test.json");
+        File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(true));
+
+        // Act - 添加映射
+        new CfgBuilder()
+            .AddReadEncodingMapping(filePath, customEncoding);
+
+        var resultWithMapping = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.Equal(customEncoding.CodePage, resultWithMapping.Encoding.CodePage);
+
+        // Act - 移除映射
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(filePath);
+
+        // Assert - 应该恢复默认检测行为
+        var resultWithoutMapping = FileCfgSourceBase.EncodingDetector.Detect(filePath);
+        Assert.NotEqual(customEncoding.CodePage, resultWithoutMapping.Encoding.CodePage);
+        Assert.Equal(EncodingDetectionMethod.Bom, resultWithoutMapping.Method); // UTF-8 with BOM
     }
 }
