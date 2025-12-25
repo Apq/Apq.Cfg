@@ -279,3 +279,5 @@ benchmarks/Apq.Cfg.Benchmarks/
 4. **多次运行** - BenchmarkDotNet 会自动预热和多次迭代
 5. **结果对比** - 使用 `--runtimes` 参数可在一次运行中对比多个版本
 6. **参数组合** - 部分测试有多个参数，会产生大量组合，可使用 `--filter` 缩小范围
+
+> 详细性能测试结果见 [BENCHMARK_RESULTS.md](BENCHMARK_RESULTS.md)
