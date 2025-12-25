@@ -30,7 +30,12 @@ benchmarks/
     ├── TypeConversionBenchmarks.cs       # 类型转换测试（含扩展方法）
     ├── CacheBenchmarks.cs                # 缓存效果测试
     ├── GetSectionBenchmarks.cs           # 配置节访问测试
-    └── MicrosoftConfigBenchmarks.cs      # Microsoft Configuration 转换测试
+    ├── MicrosoftConfigBenchmarks.cs      # Microsoft Configuration 转换测试
+    │
+    ├── # 新增功能测试
+    ├── EncodingBenchmarks.cs             # 编码检测性能测试
+    ├── ObjectBinderBenchmarks.cs         # 对象绑定性能测试
+    └── DependencyInjectionBenchmarks.cs  # 依赖注入集成性能测试
 ```
 
 ## 运行基准测试
@@ -241,13 +246,52 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 | ReadComparison | Read_ViaApqCfg vs Read_ViaMsConfig, BatchRead_ViaApqCfg vs BatchRead_ViaMsConfig |
 | ConfigChanges | Subscribe_ConfigChanges, Subscribe_AndTriggerChange, MultipleSubscribers |
 
+### 13. EncodingBenchmarks - 编码检测性能测试
+
+测试编码检测和映射的性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| BOM 检测 | Detect_UTF8_WithBOM, Detect_UTF16LE_WithBOM |
+| 无 BOM 检测 | Detect_UTF8_NoBOM, Detect_GB2312 |
+| 缓存效果 | Detect_Cached_1000, Detect_Uncached_100 |
+| 大文件 | Detect_LargeFile |
+| 编码映射 | Mapping_ExactPath_Lookup, Mapping_Wildcard_Lookup |
+| 混合场景 | Detect_MixedEncodings_10 |
+
+### 14. ObjectBinderBenchmarks - 对象绑定性能测试
+
+测试 ObjectBinder 绑定不同类型对象的性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| 简单类型 | Bind_SimpleTypes, Bind_SimpleTypes_100 |
+| 嵌套对象 | Bind_NestedObject, Bind_NestedObject_100 |
+| 数组/列表 | Bind_Array, Bind_Array_100 |
+| 字典 | Bind_Dictionary, Bind_Dictionary_100 |
+| 复杂对象 | Bind_ComplexObject, Bind_ComplexObject_100 |
+
+### 15. DependencyInjectionBenchmarks - 依赖注入集成性能测试
+
+测试 DI 集成的注册和解析性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| 注册 | AddApqCfg_Register, AddApqCfg_WithOptions_Register |
+| ConfigureApqCfg | ConfigureApqCfg_Single, ConfigureApqCfg_Multiple |
+| IOptions | Resolve_IOptions, Resolve_IOptions_100 |
+| IOptionsMonitor | Resolve_IOptionsMonitor, Resolve_IOptionsMonitor_100 |
+| IOptionsSnapshot | Resolve_IOptionsSnapshot, Resolve_IOptionsSnapshot_100 |
+| ICfgRoot | Resolve_ICfgRoot, Resolve_ICfgRoot_ThenGet |
+| 复杂对象 | Resolve_ComplexOptions, Resolve_MultipleOptions |
+
 ## 测试配置说明
 
 本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
-- **预计耗时**：全部测试约 **15 分钟**完成
-- **测试覆盖**：约 150 个测试方法 × 3 个运行时 = 450 个测试点
+- **预计耗时**：全部测试约 **20 分钟**完成
+- **测试覆盖**：约 200 个测试方法 × 3 个运行时 = 600 个测试点
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ## 测试结果
@@ -281,20 +325,23 @@ benchmarks/Apq.Cfg.Benchmarks/
 
 ## 测试覆盖矩阵
 
-| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges |
-|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|
-| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - |
-| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - |
-| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - |
-| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - |
-| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - |
-| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - |
-| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - |
-| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - |
-| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - |
-| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - |
-| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - |
-| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ |
+| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges | 编码检测 | 对象绑定 | DI |
+|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|----------|----------|-----|
+| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
+| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - |
+| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
+| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
+| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
+| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
+| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - |
+| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - | - | - | - |
+| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - |
+| EncodingBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
+| ObjectBinderBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - |
+| DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
 
 ## 注意事项
 
