@@ -47,6 +47,29 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     IReadOnlyDictionary<string, T?> GetMany<T>(IEnumerable<string> keys);
 
     /// <summary>
+    /// 高性能批量获取：通过回调方式返回结果，零堆分配
+    /// </summary>
+    /// <param name="keys">要获取的键集合</param>
+    /// <param name="onValue">每个键值对的回调处理函数</param>
+    /// <remarks>
+    /// 此方法避免了 Dictionary 分配开销，适合高频调用场景。
+    /// 回调会按键的顺序依次调用。
+    /// </remarks>
+    void GetMany(IEnumerable<string> keys, Action<string, string?> onValue);
+
+    /// <summary>
+    /// 高性能批量获取：通过回调方式返回结果并转换类型，零堆分配
+    /// </summary>
+    /// <typeparam name="T">目标类型</typeparam>
+    /// <param name="keys">要获取的键集合</param>
+    /// <param name="onValue">每个键值对的回调处理函数</param>
+    /// <remarks>
+    /// 此方法避免了 Dictionary 分配开销，适合高频调用场景。
+    /// 回调会按键的顺序依次调用。
+    /// </remarks>
+    void GetMany<T>(IEnumerable<string> keys, Action<string, T?> onValue);
+
+    /// <summary>
     /// 批量设置多个配置值，减少锁竞争
     /// </summary>
     /// <param name="values">要设置的键值对</param>

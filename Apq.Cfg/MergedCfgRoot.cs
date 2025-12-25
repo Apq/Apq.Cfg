@@ -231,6 +231,67 @@ internal sealed class MergedCfgRoot : ICfgRoot
         return result;
     }
 
+    public void GetMany(IEnumerable<string> keys, Action<string, string?> onValue)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        foreach (var key in keys)
+        {
+            string? value = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    value = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                value = _merged[key];
+            }
+
+            onValue(key, value);
+        }
+    }
+
+    public void GetMany<T>(IEnumerable<string> keys, Action<string, T?> onValue)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        foreach (var key in keys)
+        {
+            string? rawValue = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    rawValue = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                rawValue = _merged[key];
+            }
+
+            T? value = rawValue == null ? default : ValueConverter.Convert<T>(rawValue);
+            onValue(key, value);
+        }
+    }
+
     public async Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default)
     {
         var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));

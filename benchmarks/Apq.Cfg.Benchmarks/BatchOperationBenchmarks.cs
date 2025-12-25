@@ -143,6 +143,40 @@ public class BatchOperationBenchmarks : IDisposable
 
     #endregion
 
+    #region GetMany 回调方式（高性能）
+
+    /// <summary>
+    /// 使用 GetMany 回调方式批量获取 10 个键（零分配）
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("GetManyCallback")]
+    public void GetMany_Callback_10Keys()
+    {
+        _cfg.GetMany(_keys10, (key, value) => { _ = value; });
+    }
+
+    /// <summary>
+    /// 使用 GetMany 回调方式批量获取 50 个键（零分配）
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("GetManyCallback")]
+    public void GetMany_Callback_50Keys()
+    {
+        _cfg.GetMany(_keys50, (key, value) => { _ = value; });
+    }
+
+    /// <summary>
+    /// 使用 GetMany 回调方式批量获取 100 个键（零分配）
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("GetManyCallback")]
+    public void GetMany_Callback_100Keys()
+    {
+        _cfg.GetMany(_keys100, (key, value) => { _ = value; });
+    }
+
+    #endregion
+
     #region GetMany<T> 类型转换批量获取
 
     /// <summary>
