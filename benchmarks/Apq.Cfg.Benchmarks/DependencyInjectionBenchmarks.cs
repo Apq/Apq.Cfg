@@ -13,7 +13,7 @@ public class DependencyInjectionBenchmarks
 {
     private string _testDir = null!;
     private string _jsonPath = null!;
-    private ServiceProvider _provider = null!;
+    private IServiceProvider _provider = null!;
 
     [GlobalSetup]
     public void Setup()
@@ -64,7 +64,7 @@ public class DependencyInjectionBenchmarks
     [GlobalCleanup]
     public void Cleanup()
     {
-        _provider?.Dispose();
+        (_provider as IDisposable)?.Dispose();
         if (Directory.Exists(_testDir))
         {
             try { Directory.Delete(_testDir, true); }
@@ -75,44 +75,44 @@ public class DependencyInjectionBenchmarks
     // ========== AddApqCfg 注册性能 ==========
 
     [Benchmark(Description = "AddApqCfg_Register")]
-    public ServiceProvider AddApqCfg_Register()
+    public IServiceProvider AddApqCfg_Register()
     {
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
             .AddJson(_jsonPath, level: 0, writeable: false));
         var provider = services.BuildServiceProvider();
-        provider.Dispose();
+        (provider as IDisposable)?.Dispose();
         return provider;
     }
 
     [Benchmark(Description = "AddApqCfg_WithOptions_Register")]
-    public ServiceProvider AddApqCfg_WithOptions_Register()
+    public IServiceProvider AddApqCfg_WithOptions_Register()
     {
         var services = new ServiceCollection();
         services.AddApqCfg<DatabaseOptions>(
             cfg => cfg.AddJson(_jsonPath, level: 0, writeable: false),
             sectionKey: "Database");
         var provider = services.BuildServiceProvider();
-        provider.Dispose();
+        (provider as IDisposable)?.Dispose();
         return provider;
     }
 
     // ========== ConfigureApqCfg 注册性能 ==========
 
     [Benchmark(Description = "ConfigureApqCfg_Single")]
-    public ServiceProvider ConfigureApqCfg_Single()
+    public IServiceProvider ConfigureApqCfg_Single()
     {
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
             .AddJson(_jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
         var provider = services.BuildServiceProvider();
-        provider.Dispose();
+        (provider as IDisposable)?.Dispose();
         return provider;
     }
 
     [Benchmark(Description = "ConfigureApqCfg_Multiple")]
-    public ServiceProvider ConfigureApqCfg_Multiple()
+    public IServiceProvider ConfigureApqCfg_Multiple()
     {
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
@@ -121,7 +121,7 @@ public class DependencyInjectionBenchmarks
         services.ConfigureApqCfg<LoggingOptions>("Logging");
         services.ConfigureApqCfg<AppOptions>("App");
         var provider = services.BuildServiceProvider();
-        provider.Dispose();
+        (provider as IDisposable)?.Dispose();
         return provider;
     }
 
