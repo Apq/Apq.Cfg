@@ -279,23 +279,23 @@ public class GetSectionBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("GetChildKeys")]
-    public IEnumerable<string> Json_GetChildKeys() => _jsonCfg.GetChildKeys();
+    public string[] Json_GetChildKeys() => _jsonCfg.GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("GetChildKeys")]
-    public IEnumerable<string> Ini_GetChildKeys() => _iniCfg.GetChildKeys();
+    public string[] Ini_GetChildKeys() => _iniCfg.GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("GetChildKeys")]
-    public IEnumerable<string> Xml_GetChildKeys() => _xmlCfg.GetChildKeys();
+    public string[] Xml_GetChildKeys() => _xmlCfg.GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("GetChildKeys")]
-    public IEnumerable<string> Yaml_GetChildKeys() => _yamlCfg.GetChildKeys();
+    public string[] Yaml_GetChildKeys() => _yamlCfg.GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("GetChildKeys")]
-    public IEnumerable<string> Toml_GetChildKeys() => _tomlCfg.GetChildKeys();
+    public string[] Toml_GetChildKeys() => _tomlCfg.GetChildKeys().ToArray();
 
     #endregion
 
@@ -303,23 +303,23 @@ public class GetSectionBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("SectionGetChildKeys")]
-    public IEnumerable<string> Json_Section_GetChildKeys() => _jsonCfg.GetSection("Database").GetChildKeys();
+    public string[] Json_Section_GetChildKeys() => _jsonCfg.GetSection("Database").GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("SectionGetChildKeys")]
-    public IEnumerable<string> Ini_Section_GetChildKeys() => _iniCfg.GetSection("Database").GetChildKeys();
+    public string[] Ini_Section_GetChildKeys() => _iniCfg.GetSection("Database").GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("SectionGetChildKeys")]
-    public IEnumerable<string> Xml_Section_GetChildKeys() => _xmlCfg.GetSection("Database").GetChildKeys();
+    public string[] Xml_Section_GetChildKeys() => _xmlCfg.GetSection("Database").GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("SectionGetChildKeys")]
-    public IEnumerable<string> Yaml_Section_GetChildKeys() => _yamlCfg.GetSection("Database").GetChildKeys();
+    public string[] Yaml_Section_GetChildKeys() => _yamlCfg.GetSection("Database").GetChildKeys().ToArray();
 
     [Benchmark]
     [BenchmarkCategory("SectionGetChildKeys")]
-    public IEnumerable<string> Toml_Section_GetChildKeys() => _tomlCfg.GetSection("Database").GetChildKeys();
+    public string[] Toml_Section_GetChildKeys() => _tomlCfg.GetSection("Database").GetChildKeys().ToArray();
 
     #endregion
 

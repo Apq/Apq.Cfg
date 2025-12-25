@@ -33,6 +33,44 @@ benchmarks/
     └── MicrosoftConfigBenchmarks.cs      # Microsoft Configuration 转换测试
 ```
 
+## 运行基准测试
+
+> **说明**：以下所有命令均在**项目根目录**执行。
+
+### 基本运行
+
+```bash
+# 运行所有基准测试（Release 模式必须）
+# 使用 .NET 9 作为宿主运行，自动测试 .NET 6/8/9 三个版本
+# 结果自动保存到带时间戳的子目录
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *
+```
+
+### 运行特定测试
+
+```bash
+# 运行特定测试类
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *ReadWriteBenchmarks*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *CacheBenchmarks*
+
+# 运行特定测试方法
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json_Get*
+
+# 组合多个过滤器
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json* --filter *Ini*
+```
+
+> **注意**：`--` 是必须的，它将后面的参数传递给 BenchmarkDotNet 而不是 dotnet 命令。
+
+### 其他选项
+
+```bash
+# 列出所有可用测试（不实际运行）
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --list flat
+```
+
+> **说明**：导出格式（Markdown、HTML、CSV）已在 `BenchmarkConfig` 中配置，无需手动指定。
+
 ## 基准测试类说明
 
 ### 1. ReadWriteBenchmarks - 读写性能测试
@@ -203,11 +241,7 @@ benchmarks/
 | ReadComparison | Read_ViaApqCfg vs Read_ViaMsConfig, BatchRead_ViaApqCfg vs BatchRead_ViaMsConfig |
 | ConfigChanges | Subscribe_ConfigChanges, Subscribe_AndTriggerChange, MultipleSubscribers |
 
-## 运行基准测试
-
-> **说明**：以下所有命令均在**项目根目录**执行。
-
-### 测试配置说明
+## 测试配置说明
 
 本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
 
@@ -215,40 +249,6 @@ benchmarks/
 - **预计耗时**：全部测试约 **15 分钟**完成
 - **测试覆盖**：约 150 个测试方法 × 3 个运行时 = 450 个测试点
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
-
-### 基本运行
-
-```bash
-# 运行所有基准测试（Release 模式必须）
-# 使用 .NET 9 作为宿主运行，自动测试 .NET 6/8/9 三个版本
-# 结果自动保存到带时间戳的子目录
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *
-```
-
-### 运行特定测试
-
-```bash
-# 运行特定测试类
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *ReadWriteBenchmarks*
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *CacheBenchmarks*
-
-# 运行特定测试方法
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json_Get*
-
-# 组合多个过滤器
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json* --filter *Ini*
-```
-
-> **注意**：`--` 是必须的，它将后面的参数传递给 BenchmarkDotNet 而不是 dotnet 命令。
-
-### 其他选项
-
-```bash
-# 列出所有可用测试（不实际运行）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --list flat
-```
-
-> **说明**：导出格式（Markdown、HTML、CSV）已在 `BenchmarkConfig` 中配置，无需手动指定。
 
 ## 测试结果
 
