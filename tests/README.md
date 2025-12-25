@@ -25,7 +25,7 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 199 个测试）
+## 测试统计（共 253 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -37,17 +37,18 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | TomlCfgTests | 6 | TOML 文件配置源测试 |
 | RedisCfgTests | 5 | Redis 配置源测试 |
 | DatabaseCfgTests | 5 | 数据库配置源测试 |
-| CfgRootExtensionsTests | 4 | 扩展方法测试 |
+| CfgRootExtensionsTests | 4 | 扩展方法测试（TryGet/GetRequired）|
 | CfgBuilderAdvancedTests | 14 | 高级功能测试 |
-| DynamicReloadTests | 12 | 动态配置重载测试 |
+| DynamicReloadTests | 22 | 动态配置重载测试 |
 | EncodingDetectionTests | 14 | 编码检测测试 |
-| ConcurrencyTests | 10 | 并发安全测试 |
-| BoundaryConditionTests | 32 | 边界条件测试 |
-| ExceptionHandlingTests | 20 | 异常处理测试 |
+| ConcurrencyTests | 9 | 并发安全测试 |
+| BoundaryConditionTests | 25 | 边界条件测试 |
+| ExceptionHandlingTests | 18 | 异常处理测试 |
 | ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
-| CfgSectionTests | 14 | 配置节（GetSection/GetChildKeys）测试 |
-| ServiceCollectionExtensionsTests | 10 | 依赖注入扩展测试 |
-| EncodingTests | 14 | 编码映射测试 |
+| CfgSectionTests | 13 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
+| ServiceCollectionExtensionsTests | 11 | 依赖注入扩展测试 |
+| EncodingTests | 22 | 编码映射测试 |
+| PerformanceOptimizationTests | 22 | 性能优化测试（GetMany/SetMany/缓存）|
 
 ## 公开 API 覆盖矩阵
 
@@ -85,6 +86,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | **CfgRootExtensions** |
 | `TryGet<T>()` | ✅ | - | - | - | - | - | - | - |
 | `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - |
+| `GetOrDefault<T>()` | ✅ | - | - | - | - | - | - | - |
 | **FileCfgSourceBase** |
 | `EncodingDetector` | ✅ | - | - | - | - | - | - | - |
 | `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - |
@@ -110,14 +112,40 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 基本读写 | JsonCfgTests, 各格式测试 | 47 |
 | 类型转换 | JsonCfgTests | 15 |
 | 编码检测 | EncodingDetectionTests | 14 |
-| 编码映射 | EncodingTests | 14 |
-| 并发安全 | ConcurrencyTests | 10 |
-| 边界条件 | BoundaryConditionTests | 32 |
-| 异常处理 | ExceptionHandlingTests | 20 |
-| 动态重载 | DynamicReloadTests | 12 |
+| 编码映射 | EncodingTests | 22 |
+| 并发安全 | ConcurrencyTests | 9 |
+| 边界条件 | BoundaryConditionTests | 25 |
+| 异常处理 | ExceptionHandlingTests | 18 |
+| 动态重载 | DynamicReloadTests | 22 |
 | 变更订阅 | ConfigChangesSubscriptionTests | 28 |
-| 配置节访问 | CfgSectionTests | 14 |
-| 依赖注入 | ServiceCollectionExtensionsTests | 10 |
+| 配置节访问 | CfgSectionTests | 13 |
+| 依赖注入 | ServiceCollectionExtensionsTests | 11 |
+| 批量操作 | PerformanceOptimizationTests | 22 |
+
+## 性能基准测试
+
+性能基准测试位于 `benchmarks/Apq.Cfg.Benchmarks/` 目录，使用 BenchmarkDotNet 框架。
+
+| 基准测试文件 | 说明 |
+|--------------|------|
+| ReadWriteBenchmarks | 不同配置源的 Get/Set/Exists 性能对比 |
+| CacheBenchmarks | 缓存效果测试（热路径、缓存命中/未命中）|
+| TypeConversionBenchmarks | 类型转换性能测试 |
+| ConcurrencyBenchmarks | 并发读写性能测试 |
+| GetSectionBenchmarks | GetSection/GetChildKeys 性能测试 |
+| SaveBenchmarks | SaveAsync 持久化性能测试 |
+| RemoveBenchmarks | Remove 操作性能测试 |
+| MultiSourceBenchmarks | 多配置源合并性能测试 |
+| LargeFileBenchmarks | 大文件配置性能测试 |
+| KeyPathBenchmarks | 键路径解析性能测试 |
+| BatchOperationBenchmarks | GetMany/SetMany 批量操作性能测试 |
+
+运行性能测试：
+
+```bash
+cd benchmarks/Apq.Cfg.Benchmarks
+dotnet run -c Release
+```
 
 ## 测试覆盖率
 
