@@ -1,6 +1,7 @@
-using Apq.Cfg.Internal;
+using Apq.Cfg.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Apq.Cfg;
 
@@ -69,7 +70,7 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 配置强类型选项（从 ICfgRoot 绑定）
+    /// 配置强类型选项（从 ICfgRoot 绑定），支持嵌套对象和集合
     /// </summary>
     /// <typeparam name="TOptions">配置选项类型</typeparam>
     /// <param name="services">服务集合</param>
@@ -80,45 +81,54 @@ public static class ServiceCollectionExtensions
         string sectionKey)
         where TOptions : class, new()
     {
+        // 注册 IOptions<TOptions>
         services.AddOptions<TOptions>()
             .Configure<ICfgRoot>((options, cfg) =>
             {
                 var section = cfg.GetSection(sectionKey);
-                BindSection(section, options);
+                ObjectBinder.BindSection(section, options);
             });
+
+        // 注册 IOptionsMonitor<TOptions>（支持配置变更自动更新）
+        services.TryAddSingleton<IOptionsMonitor<TOptions>>(sp =>
+        {
+            var cfgRoot = sp.GetRequiredService<ICfgRoot>();
+            return new ApqCfgOptionsMonitor<TOptions>(cfgRoot, sectionKey);
+        });
+
+        // 注册 IOptionsSnapshot<TOptions>（每次请求重新绑定）
+        services.TryAddScoped<IOptionsSnapshot<TOptions>>(sp =>
+        {
+            var cfgRoot = sp.GetRequiredService<ICfgRoot>();
+            return new ApqCfgOptionsSnapshot<TOptions>(cfgRoot, sectionKey);
+        });
 
         return services;
     }
 
     /// <summary>
-    /// 将配置节绑定到对象
+    /// 配置强类型选项并启用配置变更监听
     /// </summary>
-    private static void BindSection<T>(ICfgSection section, T target) where T : class
+    /// <typeparam name="TOptions">配置选项类型</typeparam>
+    /// <param name="services">服务集合</param>
+    /// <param name="sectionKey">配置节键名</param>
+    /// <param name="onChange">配置变更回调</param>
+    /// <returns>服务集合</returns>
+    public static IServiceCollection ConfigureApqCfg<TOptions>(
+        this IServiceCollection services,
+        string sectionKey,
+        Action<TOptions> onChange)
+        where TOptions : class, new()
     {
-        if (target == null) return;
+        services.ConfigureApqCfg<TOptions>(sectionKey);
 
-        var type = typeof(T);
-        var properties = type.GetProperties()
-            .Where(p => p.CanWrite && p.GetIndexParameters().Length == 0);
-
-        foreach (var prop in properties)
+        // 注册变更监听器
+        services.AddSingleton<IDisposable>(sp =>
         {
-            var value = section.Get(prop.Name);
-            if (value != null)
-            {
-                try
-                {
-                    var convertedValue = ValueConverter.ConvertToType(value, prop.PropertyType);
-                    if (convertedValue != null)
-                    {
-                        prop.SetValue(target, convertedValue);
-                    }
-                }
-                catch
-                {
-                    // 忽略转换失败
-                }
-            }
-        }
+            var monitor = sp.GetRequiredService<IOptionsMonitor<TOptions>>();
+            return monitor.OnChange((options, _) => onChange(options))!;
+        });
+
+        return services;
     }
 }

@@ -64,7 +64,7 @@ public class EncodingTests : IDisposable
         // Assert
         Assert.IsType<UTF8Encoding>(encoding);
         var utf8 = (UTF8Encoding)encoding;
-        Assert.Equal(0, utf8.GetPreamble().Length); // 无 BOM
+        Assert.Empty(utf8.GetPreamble()); // 无 BOM
     }
 
     [Fact]

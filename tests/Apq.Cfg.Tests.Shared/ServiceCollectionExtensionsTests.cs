@@ -337,6 +337,409 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
     #endregion
 
+    #region IOptionsMonitor 测试
+
+    [Fact]
+    public void ConfigureApqCfg_RegistersIOptionsMonitor()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "localhost",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
+        services.ConfigureApqCfg<DatabaseOptions>("Database");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var monitor = provider.GetService<IOptionsMonitor<DatabaseOptions>>();
+
+        // Assert
+        Assert.NotNull(monitor);
+        Assert.Equal("localhost", monitor.CurrentValue.Host);
+        Assert.Equal(5432, monitor.CurrentValue.Port);
+    }
+
+    [Fact]
+    public async Task IOptionsMonitor_NotifiesOnChange()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "localhost",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
+        services.ConfigureApqCfg<DatabaseOptions>("Database");
+
+        var provider = services.BuildServiceProvider();
+        var monitor = provider.GetRequiredService<IOptionsMonitor<DatabaseOptions>>();
+        var cfgRoot = provider.GetRequiredService<ICfgRoot>();
+
+        var changeNotified = false;
+        string? newHost = null;
+
+        monitor.OnChange((options, _) =>
+        {
+            changeNotified = true;
+            newHost = options.Host;
+        });
+
+        // Act - 直接修改文件触发变更（而不是通过 Set 方法）
+        // 因为 ConfigChanges 是通过文件监视器触发的
+        await Task.Delay(100); // 等待文件监视器初始化
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "newhost.local",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        // 等待变更通知（文件监视器 + 防抖）
+        await Task.Delay(500);
+
+        // Assert
+        Assert.True(changeNotified);
+        Assert.Equal("newhost.local", newHost);
+        Assert.Equal("newhost.local", monitor.CurrentValue.Host);
+    }
+
+    #endregion
+
+    #region IOptionsSnapshot 测试
+
+    [Fact]
+    public void ConfigureApqCfg_RegistersIOptionsSnapshot()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "localhost",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<DatabaseOptions>("Database");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act - IOptionsSnapshot 是 Scoped，需要创建 scope
+        using var scope = provider.CreateScope();
+        var snapshot = scope.ServiceProvider.GetService<IOptionsSnapshot<DatabaseOptions>>();
+
+        // Assert
+        Assert.NotNull(snapshot);
+        Assert.Equal("localhost", snapshot.Value.Host);
+        Assert.Equal(5432, snapshot.Value.Port);
+    }
+
+    #endregion
+
+    #region 嵌套对象绑定测试
+
+    [Fact]
+    public void ConfigureApqCfg_BindsNestedObjects()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "App": {
+                    "Name": "TestApp",
+                    "Database": {
+                        "Host": "db.local",
+                        "Port": 3306
+                    },
+                    "Cache": {
+                        "Host": "redis.local",
+                        "Port": 6379
+                    }
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<AppWithNestedOptions>("App");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var options = provider.GetRequiredService<IOptions<AppWithNestedOptions>>().Value;
+
+        // Assert
+        Assert.Equal("TestApp", options.Name);
+        Assert.NotNull(options.Database);
+        Assert.Equal("db.local", options.Database.Host);
+        Assert.Equal(3306, options.Database.Port);
+        Assert.NotNull(options.Cache);
+        Assert.Equal("redis.local", options.Cache.Host);
+        Assert.Equal(6379, options.Cache.Port);
+    }
+
+    [Fact]
+    public void ConfigureApqCfg_BindsDeeplyNestedObjects()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Root": {
+                    "Level1": {
+                        "Level2": {
+                            "Value": "DeepValue"
+                        }
+                    }
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<DeepNestedOptions>("Root");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var options = provider.GetRequiredService<IOptions<DeepNestedOptions>>().Value;
+
+        // Assert
+        Assert.NotNull(options.Level1);
+        Assert.NotNull(options.Level1.Level2);
+        Assert.Equal("DeepValue", options.Level1.Level2.Value);
+    }
+
+    #endregion
+
+    #region 集合绑定测试
+
+    [Fact]
+    public void ConfigureApqCfg_BindsStringArray()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Config": {
+                    "Tags": {
+                        "0": "tag1",
+                        "1": "tag2",
+                        "2": "tag3"
+                    }
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<ArrayOptions>("Config");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var options = provider.GetRequiredService<IOptions<ArrayOptions>>().Value;
+
+        // Assert
+        Assert.NotNull(options.Tags);
+        Assert.Collection(options.Tags,
+            item => Assert.Equal("tag1", item),
+            item => Assert.Equal("tag2", item),
+            item => Assert.Equal("tag3", item));
+    }
+
+    [Fact]
+    public void ConfigureApqCfg_BindsIntList()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Config": {
+                    "Ports": {
+                        "0": 80,
+                        "1": 443,
+                        "2": 8080
+                    }
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<ListOptions>("Config");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var options = provider.GetRequiredService<IOptions<ListOptions>>().Value;
+
+        // Assert
+        Assert.NotNull(options.Ports);
+        Assert.Collection(options.Ports,
+            item => Assert.Equal(80, item),
+            item => Assert.Equal(443, item),
+            item => Assert.Equal(8080, item));
+    }
+
+    [Fact]
+    public void ConfigureApqCfg_BindsDictionary()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Config": {
+                    "Settings": {
+                        "Key1": "Value1",
+                        "Key2": "Value2"
+                    }
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<DictionaryOptions>("Config");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var options = provider.GetRequiredService<IOptions<DictionaryOptions>>().Value;
+
+        // Assert
+        Assert.NotNull(options.Settings);
+        Assert.Collection(options.Settings.OrderBy(x => x.Key),
+            item => { Assert.Equal("Key1", item.Key); Assert.Equal("Value1", item.Value); },
+            item => { Assert.Equal("Key2", item.Key); Assert.Equal("Value2", item.Value); });
+    }
+
+    [Fact]
+    public void ConfigureApqCfg_BindsComplexObjectList()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Config": {
+                    "Endpoints": {
+                        "0": {
+                            "Host": "api1.local",
+                            "Port": 8001
+                        },
+                        "1": {
+                            "Host": "api2.local",
+                            "Port": 8002
+                        }
+                    }
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: false));
+        services.ConfigureApqCfg<ComplexListOptions>("Config");
+
+        var provider = services.BuildServiceProvider();
+
+        // Act
+        var options = provider.GetRequiredService<IOptions<ComplexListOptions>>().Value;
+
+        // Assert
+        Assert.NotNull(options.Endpoints);
+        Assert.Collection(options.Endpoints,
+            item => { Assert.Equal("api1.local", item.Host); Assert.Equal(8001, item.Port); },
+            item => { Assert.Equal("api2.local", item.Host); Assert.Equal(8002, item.Port); });
+    }
+
+    #endregion
+
+    #region ConfigureApqCfg 带变更回调测试
+
+    [Fact]
+    public async Task ConfigureApqCfg_WithOnChange_InvokesCallback()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config-callback.json");
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "localhost",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        var services = new ServiceCollection();
+        services.AddApqCfg(cfg => cfg
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
+
+        var callbackInvoked = false;
+        string? newHost = null;
+
+        services.ConfigureApqCfg<DatabaseOptions>("Database", options =>
+        {
+            callbackInvoked = true;
+            newHost = options.Host;
+        });
+
+        var provider = services.BuildServiceProvider();
+
+        // 触发 IOptionsMonitor 的创建和回调注册
+        var monitor = provider.GetRequiredService<IOptionsMonitor<DatabaseOptions>>();
+        // 解析 IDisposable 服务以确保回调被注册
+        var disposables = provider.GetServices<IDisposable>().ToList();
+
+        // Act - 直接修改文件触发变更
+        await Task.Delay(200); // 等待文件监视器初始化
+        File.WriteAllText(jsonPath, """
+            {
+                "Database": {
+                    "Host": "callback.local",
+                    "Port": 5432
+                }
+            }
+            """);
+
+        // 等待变更通知（文件监视器 + 防抖 + 处理）
+        await Task.Delay(800);
+
+        // Assert
+        Assert.True(callbackInvoked);
+        Assert.Equal("callback.local", newHost);
+    }
+
+    #endregion
+
     #region 测试用选项类
 
     public class DatabaseOptions
@@ -381,6 +784,62 @@ public class ServiceCollectionExtensionsTests : IDisposable
     public class LoggingOptions
     {
         public LogLevel Level { get; set; }
+    }
+
+    // 嵌套对象测试用类
+    public class AppWithNestedOptions
+    {
+        public string? Name { get; set; }
+        public DatabaseOptions? Database { get; set; }
+        public CacheOptions? Cache { get; set; }
+    }
+
+    public class CacheOptions
+    {
+        public string? Host { get; set; }
+        public int Port { get; set; }
+    }
+
+    public class DeepNestedOptions
+    {
+        public Level1Options? Level1 { get; set; }
+    }
+
+    public class Level1Options
+    {
+        public Level2Options? Level2 { get; set; }
+    }
+
+    public class Level2Options
+    {
+        public string? Value { get; set; }
+    }
+
+    // 集合测试用类
+    public class ArrayOptions
+    {
+        public string[]? Tags { get; set; }
+    }
+
+    public class ListOptions
+    {
+        public List<int>? Ports { get; set; }
+    }
+
+    public class DictionaryOptions
+    {
+        public Dictionary<string, string>? Settings { get; set; }
+    }
+
+    public class ComplexListOptions
+    {
+        public List<EndpointOptions>? Endpoints { get; set; }
+    }
+
+    public class EndpointOptions
+    {
+        public string? Host { get; set; }
+        public int Port { get; set; }
     }
 
     #endregion

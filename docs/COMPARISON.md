@@ -97,6 +97,10 @@
 | 批量操作 | ✅ | ❌ | ✅ | ✅ | ✅ |
 | 类型转换 | ✅ | ✅ | ✅ | ✅ | ❌ |
 | DI 集成 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| IOptionsMonitor<T> | ✅ | ✅ | ✅ | ✅ | ❌ |
+| IOptionsSnapshot<T> | ✅ | ✅ | ✅ | ✅ | ❌ |
+| 嵌套对象绑定 | ✅ | ✅ | ✅ | ✅ | ❌ |
+| 集合/数组绑定 | ✅ | ✅ | ✅ | ✅ | ❌ |
 | **分布式特性** |
 | 分布式一致性 | ❌ | ❌ | ✅ | ✅ | ✅ |
 | 管理界面 | ❌ | ❌ | ✅ | ✅ | ✅ |
@@ -116,6 +120,10 @@
 | **编码处理** | ✅ 自动检测 + 映射 | ❌ 需手动处理 |
 | **批量操作** | ✅ GetMany/SetMany | ❌ 需循环调用 |
 | **格式支持** | ✅ 内置 5 种格式 | ⚠️ 需安装多个扩展包 |
+| **IOptionsMonitor<T>** | ✅ 支持 | ✅ 支持 |
+| **IOptionsSnapshot<T>** | ✅ 支持 | ✅ 支持 |
+| **嵌套对象绑定** | ✅ 递归绑定 | ✅ 递归绑定 |
+| **集合/数组绑定** | ✅ 支持 | ✅ 支持 |
 | **学习成本** | ⚠️ 新 API | ✅ 官方标准 |
 | **生态** | ⚠️ 新项目 | ✅ 完善 |
 
@@ -245,7 +253,7 @@ var cfg = new CfgBuilder()
 - 类型转换特化处理避免反射
 - `Interlocked` 原子操作保证线程安全
 
-### 5. 依赖注入集成 ⭐⭐⭐⭐
+### 5. 依赖注入集成 ⭐⭐⭐⭐⭐
 
 ```csharp
 var services = new ServiceCollection();
@@ -254,7 +262,7 @@ var services = new ServiceCollection();
 services.AddApqCfg(cfg => cfg
     .AddJson("config.json", writeable: true, isPrimaryWriter: true));
 
-// 绑定强类型配置
+// 绑定强类型配置（支持嵌套对象和集合）
 services.ConfigureApqCfg<DatabaseOptions>("Database");
 services.ConfigureApqCfg<LoggingOptions>("Logging");
 
@@ -262,8 +270,26 @@ services.ConfigureApqCfg<LoggingOptions>("Logging");
 var provider = services.BuildServiceProvider();
 var cfgRoot = provider.GetRequiredService<ICfgRoot>();
 var msConfig = provider.GetRequiredService<IConfigurationRoot>();
+
+// IOptions<T> - 单例，启动时绑定
 var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+
+// IOptionsMonitor<T> - 单例，配置变更时自动更新
+var monitor = provider.GetRequiredService<IOptionsMonitor<DatabaseOptions>>();
+monitor.OnChange((options, _) => Console.WriteLine($"配置已更新: {options.Host}"));
+
+// IOptionsSnapshot<T> - Scoped，每次请求重新绑定
+using var scope = provider.CreateScope();
+var snapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<DatabaseOptions>>();
 ```
+
+**支持的绑定类型**：
+- 简单类型（int, string, bool, DateTime, Guid, Enum 等）
+- 嵌套对象（递归绑定）
+- 数组（`T[]`）
+- 列表（`List<T>`, `IList<T>`, `ICollection<T>`, `IEnumerable<T>`）
+- 字典（`Dictionary<TKey, TValue>`, `IDictionary<TKey, TValue>`）
+- 集合（`HashSet<T>`, `ISet<T>`）
 
 ---
 
@@ -275,9 +301,9 @@ var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
 | 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
 |------|------|------|------|------|------|
-| .NET 6.0 | 253 | 0 | 0 | 253 | ✅ 通过 |
-| .NET 8.0 | 253 | 0 | 0 | 253 | ✅ 通过 |
-| .NET 9.0 | 253 | 0 | 0 | 253 | ✅ 通过 |
+| .NET 6.0 | 263 | 0 | 0 | 263 | ✅ 通过 |
+| .NET 8.0 | 263 | 0 | 0 | 263 | ✅ 通过 |
+| .NET 9.0 | 263 | 0 | 0 | 263 | ✅ 通过 |
 
 ### 性能测试
 
@@ -307,7 +333,8 @@ var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 | **功能完整性** | ⭐⭐⭐⭐⭐ | 格式支持全面，特性丰富，API 设计合理 |
 | **性能** | ⭐⭐⭐⭐⭐ | 纳秒级读取，零内存分配，优化到位 |
 | **代码质量** | ⭐⭐⭐⭐⭐ | 线程安全，内存优化，异常处理完善 |
-| **测试覆盖** | ⭐⭐⭐⭐⭐ | 253 测试，多框架验证，性能基准完整 |
+| **测试覆盖** | ⭐⭐⭐⭐⭐ | 263 测试，多框架验证，性能基准完整 |
+| **DI 集成** | ⭐⭐⭐⭐⭐ | IOptions/IOptionsMonitor/IOptionsSnapshot 完整支持 |
 | **文档** | ⭐⭐⭐⭐ | README 完整，示例丰富，API 文档清晰 |
 | **生态/社区** | ⭐⭐ | 新项目，尚无社区 |
 
