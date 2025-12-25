@@ -25,7 +25,7 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 282 个测试）
+## 测试统计（共 290 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -47,9 +47,9 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
 | CfgSectionTests | 13 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
 | ServiceCollectionExtensionsTests | 21 | 依赖注入扩展测试（IOptions/IOptionsMonitor/IOptionsSnapshot/嵌套对象/集合绑定）|
-| EncodingTests | 22 | 编码映射测试 |
+| EncodingTests | 33 | 编码映射测试 |
 | PerformanceOptimizationTests | 30 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
-| ObjectBinderTests | 31 | 对象绑定测试（类型转换/嵌套对象/集合/字典）|
+| SourceGeneratorTests | 8 | 源生成器测试（[CfgSection] 特性/BindFrom/BindTo）|
 
 ## 公开 API 覆盖矩阵
 
@@ -108,7 +108,10 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `IOptions<T>` | ✅ | - | - | - | - | - | - | - |
 | `IOptionsMonitor<T>` | ✅ | - | - | - | - | - | - | - |
 | `IOptionsSnapshot<T>` | ✅ | - | - | - | - | - | - | - |
-| **对象绑定** |
+| **源生成器** |
+| `[CfgSection]` 特性 | ✅ | - | - | - | - | - | - | - |
+| `BindFrom()` | ✅ | - | - | - | - | - | - | - |
+| `BindTo()` | ✅ | - | - | - | - | - | - | - |
 | 简单类型绑定 | ✅ | - | - | - | - | - | - | - |
 | 嵌套对象绑定 | ✅ | - | - | - | - | - | - | - |
 | 数组绑定 | ✅ | - | - | - | - | - | - | - |
@@ -127,7 +130,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 基本读写 | JsonCfgTests, 各格式测试 | 47 |
 | 类型转换 | JsonCfgTests | 15 |
 | 编码检测 | EncodingDetectionTests | 14 |
-| 编码映射 | EncodingTests | 22 |
+| 编码映射 | EncodingTests | 33 |
 | 并发安全 | ConcurrencyTests | 9 |
 | 边界条件 | BoundaryConditionTests | 25 |
 | 异常处理 | ExceptionHandlingTests | 18 |
@@ -136,7 +139,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 配置节访问 | CfgSectionTests | 13 |
 | 依赖注入 | ServiceCollectionExtensionsTests | 21 |
 | 批量操作 | PerformanceOptimizationTests | 30 |
-| 对象绑定 | ObjectBinderTests | 31 |
+| 源生成器 | SourceGeneratorTests | 8 |
 
 ## 性能基准测试
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Apq.Cfg.Internal;
 
@@ -7,6 +8,14 @@ namespace Apq.Cfg.DependencyInjection;
 /// <summary>
 /// 对象绑定器，支持嵌套对象和集合绑定
 /// </summary>
+/// <remarks>
+/// 此类使用反射进行配置绑定，不支持 Native AOT。
+/// 对于 AOT 场景，请使用 Apq.Cfg.SourceGenerator 包中的 [CfgSection] 特性。
+/// </remarks>
+[RequiresUnreferencedCode("ObjectBinder uses reflection for configuration binding. Use Apq.Cfg.SourceGenerator with [CfgSection] attribute for AOT compatibility.")]
+#if NET7_0_OR_GREATER
+[RequiresDynamicCode("ObjectBinder uses MakeGenericType and Activator.CreateInstance. Use Apq.Cfg.SourceGenerator with [CfgSection] attribute for AOT compatibility.")]
+#endif
 internal static class ObjectBinder
 {
     /// <summary>

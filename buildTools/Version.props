@@ -1,0 +1,116 @@
+<Project>
+  <!--
+    共享的版本检测逻辑
+    此文件被根目录和 SourceGenerator 的 Directory.Build.props 导入
+  -->
+
+  <!-- VersionsDir 由导入此文件的 props 文件预先设置 -->
+
+  <!-- 内联任务：获取最高版本号及其文件路径 -->
+  <UsingTask TaskName="GetMaxVersion" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <VersionFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <MaxVersion ParameterType="System.String" Output="true" />
+      <MaxVersionCore ParameterType="System.String" Output="true" />
+      <MaxVersionRevision ParameterType="System.String" Output="true" />
+      <MaxVersionFile ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        MaxVersion = "1.0.0";
+        MaxVersionCore = "1.0.0";
+        MaxVersionRevision = "0";
+        MaxVersionFile = "";
+        Version maxVer = new Version(0, 0, 0);
+        string maxPrerelease = "";
+        if (VersionFiles != null) {
+            foreach (var file in VersionFiles) {
+                // 匹配完整版本号，包括预发布标签（如 v1.0.2-beta1）
+                var match = Regex.Match(file.GetMetadata("Filename"), @"^v(\d+\.\d+\.\d+)(-[\w.]+)?");
+                if (match.Success) {
+                    var coreVersion = match.Groups[1].Value;
+                    var prerelease = match.Groups[2].Success ? match.Groups[2].Value : "";
+                    var ver = new Version(coreVersion);
+                    // 比较：先比核心版本，再比预发布标签（空字符串 > 预发布标签，即正式版 > beta）
+                    bool isNewer = ver > maxVer ||
+                        (ver == maxVer && string.Compare(prerelease, maxPrerelease, StringComparison.Ordinal) > 0);
+                    if (isNewer) {
+                        maxVer = ver;
+                        maxPrerelease = prerelease;
+                        MaxVersionCore = coreVersion;
+                        MaxVersion = coreVersion + prerelease;
+                        MaxVersionFile = file.GetMetadata("FullPath");
+                        // 从预发布标签提取数字作为修订号（如 -beta2 -> 2, -rc.3 -> 3）
+                        var revMatch = Regex.Match(prerelease, @"(\d+)$");
+                        MaxVersionRevision = revMatch.Success ? revMatch.Groups[1].Value : "0";
+                    }
+                }
+            }
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <!-- 内联任务：检查文件内容长度 -->
+  <UsingTask TaskName="CheckFileLength" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <FilePath ParameterType="System.String" Required="true" />
+      <MinLength ParameterType="System.Int32" Required="true" />
+      <IsLongEnough ParameterType="System.Boolean" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        IsLongEnough = false;
+        if (!string.IsNullOrEmpty(FilePath) && File.Exists(FilePath)) {
+            var content = File.ReadAllText(FilePath);
+            IsLongEnough = content.Length >= MinLength;
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <!-- 扫描版本文件并提取最高版本 -->
+  <Target Name="DetectVersionFromFiles" BeforeTargets="GetAssemblyVersion;GenerateNuspec;Pack;Build">
+    <ItemGroup>
+      <VersionFiles Include="$(VersionsDir)/v*.md" />
+    </ItemGroup>
+
+    <GetMaxVersion VersionFiles="@(VersionFiles)">
+      <Output TaskParameter="MaxVersion" PropertyName="DetectedVersion" />
+      <Output TaskParameter="MaxVersionCore" PropertyName="DetectedVersionCore" />
+      <Output TaskParameter="MaxVersionRevision" PropertyName="DetectedVersionRevision" />
+      <Output TaskParameter="MaxVersionFile" PropertyName="DetectedVersionFile" />
+    </GetMaxVersion>
+
+    <PropertyGroup>
+      <!-- Version/PackageVersion 使用完整版本（含预发布标签） -->
+      <Version>$(DetectedVersion)</Version>
+      <PackageVersion>$(DetectedVersion)</PackageVersion>
+      <!-- AssemblyVersion/FileVersion 使用数字版本，第四位为预发布序号 -->
+      <AssemblyVersion>$(DetectedVersionCore).$(DetectedVersionRevision)</AssemblyVersion>
+      <FileVersion>$(DetectedVersionCore).$(DetectedVersionRevision)</FileVersion>
+    </PropertyGroup>
+
+    <Message Text="检测到版本: $(DetectedVersion)" Importance="high" />
+  </Target>
+
+  <!-- NuGet 包公共元数据 -->
+  <PropertyGroup>
+    <Authors>Apq</Authors>
+    <Company>Apq</Company>
+    <Copyright>Copyright © Apq $([System.DateTime]::Now.Year)</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- 启用包生成 -->
+    <IsPackable>true</IsPackable>
+
+    <!-- 源码链接支持 -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+</Project>

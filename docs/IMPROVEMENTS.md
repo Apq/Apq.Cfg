@@ -79,7 +79,7 @@ var history = cfg.GetChangeHistory();
 | **对象池** | 使用 `ArrayPool<T>` 替代 `ThreadStatic`，更好的内存复用 | 待实现 |
 | **批量操作 API** | 添加 `GetMany(keys)` / `SetMany(dict)` 减少锁竞争 | ✅ 已实现 |
 | **冷热数据分离** | 高频访问的 key 使用更快的数据结构（如 FrozenDictionary .NET 8+） | ✅ 已实现 |
-| **Source Generator** | 使用源生成器在编译时生成强类型配置类，零反射 | 待实现 |
+| **Source Generator** | 使用源生成器在编译时生成强类型配置类，零反射 | ✅ 已实现 |
 
 ```csharp
 // 示例：批量操作
@@ -91,7 +91,21 @@ public partial class DatabaseConfig
 {
     public string ConnectionString { get; set; }
     public int Timeout { get; set; }
+    public PoolSettings Pool { get; set; }  // 嵌套对象
+    public List<string> AllowedHosts { get; set; }  // 集合
 }
+
+[CfgSection]  // 自动推断为 "Pool"
+public partial class PoolSettings
+{
+    public int MinSize { get; set; }
+    public int MaxSize { get; set; }
+}
+
+// 使用方式（零反射）
+var dbConfig = DatabaseConfig.BindFrom(cfg.GetSection("Database"));
+// 或使用生成的扩展方法
+var dbConfig = cfg.GetDatabaseConfig();
 ```
 
 ---
@@ -157,7 +171,7 @@ public partial class DatabaseConfig
 
 ### 阶段四：高级特性
 
-- [ ] Source Generator 强类型配置
+- [x] Source Generator 强类型配置 ✅ 2025-12-26
 - [ ] 配置验证框架
 - [x] 变更历史记录 ✅ 2025-12-25
 
@@ -177,6 +191,15 @@ public partial class DatabaseConfig
 - [x] 批量操作 API（GetMany/SetMany）
 - [x] FrozenDictionary 支持（FastCollections，.NET 8+）
 
+### 已完成的 Source Generator（2025-12-26）
+
+- [x] CfgSectionAttribute 特性标记
+- [x] 编译时代码生成（零反射）
+- [x] 支持简单类型、嵌套对象、数组、List、Dictionary、HashSet
+- [x] 自动生成 ICfgRoot 扩展方法
+- [x] 完全兼容 Native AOT
+
 ---
 
 *分析日期：2025-12-25*
+*更新日期：2025-12-26*

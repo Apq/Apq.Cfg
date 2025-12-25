@@ -29,12 +29,25 @@
 
 .NET 6.0 / 7.0 / 8.0 / 9.0
 
+## NuGet 包
+
+| 包名 | 说明 |
+|------|------|
+| [Apq.Cfg](https://www.nuget.org/packages/Apq.Cfg) | 核心库，包含 JSON 支持 |
+| [Apq.Cfg.Ini](https://www.nuget.org/packages/Apq.Cfg.Ini) | INI 格式支持 |
+| [Apq.Cfg.Xml](https://www.nuget.org/packages/Apq.Cfg.Xml) | XML 格式支持 |
+| [Apq.Cfg.Yaml](https://www.nuget.org/packages/Apq.Cfg.Yaml) | YAML 格式支持 |
+| [Apq.Cfg.Toml](https://www.nuget.org/packages/Apq.Cfg.Toml) | TOML 格式支持 |
+| [Apq.Cfg.Redis](https://www.nuget.org/packages/Apq.Cfg.Redis) | Redis 配置源 |
+| [Apq.Cfg.Database](https://www.nuget.org/packages/Apq.Cfg.Database) | 数据库配置源 |
+| [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT |
+
 ## 快速开始
 
 ```csharp
 using Apq.Cfg;
 
-var cfg = new CfgBuilder()
+var cfg = CfgBuilder.Create()
     .AddJson("config.json", level: 0, writeable: false)
     .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
@@ -102,7 +115,7 @@ using Apq.Cfg.Changes;
 using Microsoft.Extensions.Primitives;
 
 // 构建配置（启用 reloadOnChange）
-var cfg = new CfgBuilder()
+var cfg = CfgBuilder.Create()
     .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
     .AddJson("config.local.json", level: 1, writeable: true, reloadOnChange: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
@@ -149,7 +162,7 @@ cfg.ConfigChanges.Subscribe(e =>
 - **编码映射**：支持完整路径、通配符、正则表达式三种匹配方式
 
 ```csharp
-var cfg = new CfgBuilder()
+var cfg = CfgBuilder.Create()
     // 为特定文件指定读取编码
     .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
     // 为 PowerShell 脚本指定写入编码（UTF-8 BOM）
@@ -196,6 +209,59 @@ public class DatabaseOptions
 }
 ```
 
+### 源生成器（Native AOT 支持）
+
+使用 `Apq.Cfg.SourceGenerator` 包可以在编译时生成零反射的配置绑定代码，完全支持 Native AOT：
+
+```bash
+dotnet add package Apq.Cfg.SourceGenerator
+```
+
+定义配置类时使用 `[CfgSection]` 特性标记，类必须是 `partial` 的：
+
+```csharp
+using Apq.Cfg;
+
+[CfgSection("AppSettings")]
+public partial class AppConfig
+{
+    public string? Name { get; set; }
+    public int Port { get; set; }
+    public DatabaseConfig? Database { get; set; }
+}
+
+[CfgSection]
+public partial class DatabaseConfig
+{
+    public string? ConnectionString { get; set; }
+    public int Timeout { get; set; } = 30;
+}
+```
+
+源生成器会自动生成 `BindFrom` 和 `BindTo` 静态方法：
+
+```csharp
+// 构建配置
+var cfgRoot = CfgBuilder.Create()
+    .AddJson("config.json")
+    .AddIni("config.ini")
+    .Build();
+
+// 使用源生成器绑定配置（零反射）
+var appConfig = AppConfig.BindFrom(cfgRoot.GetSection("AppSettings"));
+
+Console.WriteLine($"App: {appConfig.Name}");
+Console.WriteLine($"Port: {appConfig.Port}");
+Console.WriteLine($"Database: {appConfig.Database?.ConnectionString}");
+```
+
+源生成器支持的类型：
+- **简单类型**：`string`、`int`、`long`、`bool`、`double`、`decimal`、`DateTime`、`Guid`、枚举等
+- **集合类型**：`T[]`、`List<T>`、`HashSet<T>`、`Dictionary<TKey, TValue>`
+- **复杂类型**：嵌套的配置类（需要同样标记 `[CfgSection]`）
+
+> 详细文档见 [Apq.Cfg.SourceGenerator/README.md](Apq.Cfg.SourceGenerator/README.md)
+
 ## 构建与测试
 
 ```bash
@@ -216,9 +282,9 @@ dotnet run -c Release
 
 | 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
 |------|------|------|------|------|------|
-| .NET 6.0 | 282 | 0 | 0 | 282 | ✅ 通过 |
-| .NET 8.0 | 282 | 0 | 0 | 282 | ✅ 通过 |
-| .NET 9.0 | 282 | 0 | 0 | 282 | ✅ 通过 |
+| .NET 6.0 | 290 | 0 | 0 | 290 | ✅ 通过 |
+| .NET 8.0 | 290 | 0 | 0 | 290 | ✅ 通过 |
+| .NET 9.0 | 290 | 0 | 0 | 290 | ✅ 通过 |
 
 > 详细测试覆盖情况见 [tests/README.md](tests/README.md)
 

@@ -30,6 +30,7 @@
     <ProjectReference Include="..\..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Yaml\Apq.Cfg.Yaml.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>

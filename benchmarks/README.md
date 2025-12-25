@@ -34,7 +34,8 @@ benchmarks/
     │
     ├── # 新增功能测试
     ├── EncodingBenchmarks.cs             # 编码检测性能测试
-    ├── ObjectBinderBenchmarks.cs         # 对象绑定性能测试
+    ├── ObjectBinderBenchmarks.cs         # 对象绑定性能测试（反射）
+    ├── SourceGeneratorBenchmarks.cs      # 源生成器绑定性能测试（零反射）
     └── DependencyInjectionBenchmarks.cs  # 依赖注入集成性能测试
 ```
 
@@ -259,9 +260,9 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 | 编码映射 | Mapping_ExactPath_Lookup, Mapping_Wildcard_Lookup |
 | 混合场景 | Detect_MixedEncodings_10 |
 
-### 14. ObjectBinderBenchmarks - 对象绑定性能测试
+### 14. ObjectBinderBenchmarks - 对象绑定性能测试（反射）
 
-测试 ObjectBinder 绑定不同类型对象的性能：
+测试 ObjectBinder（基于反射）绑定不同类型对象的性能：
 
 | 测试类别 | 测试方法 |
 |----------|----------|
@@ -271,7 +272,27 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 | 字典 | Bind_Dictionary, Bind_Dictionary_100 |
 | 复杂对象 | Bind_ComplexObject, Bind_ComplexObject_100 |
 
-### 15. DependencyInjectionBenchmarks - 依赖注入集成性能测试
+### 15. SourceGeneratorBenchmarks - 源生成器绑定性能测试（零反射）
+
+对比源生成器（编译时生成代码，零反射）与 ObjectBinder（运行时反射）的性能差异：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| 简单类型 | SourceGen_SimpleTypes vs Reflection_SimpleTypes |
+| 简单类型批量 | SourceGen_SimpleTypes_100 vs Reflection_SimpleTypes_100 |
+| 嵌套对象 | SourceGen_NestedObject vs Reflection_NestedObject |
+| 嵌套对象批量 | SourceGen_NestedObject_100 vs Reflection_NestedObject_100 |
+| 数组/列表 | SourceGen_Array vs Reflection_Array |
+| 数组/列表批量 | SourceGen_Array_100 vs Reflection_Array_100 |
+| 字典 | SourceGen_Dictionary vs Reflection_Dictionary |
+| 字典批量 | SourceGen_Dictionary_100 vs Reflection_Dictionary_100 |
+| 复杂对象 | SourceGen_ComplexObject vs Reflection_ComplexObject |
+| 复杂对象批量 | SourceGen_ComplexObject_100 vs Reflection_ComplexObject_100 |
+| BindTo | SourceGen_BindTo vs Reflection_BindTo |
+
+> **预期结果**：源生成器绑定应比反射绑定快 2-5 倍，且内存分配更少。
+
+### 16. DependencyInjectionBenchmarks - 依赖注入集成性能测试
 
 测试 DI 集成的注册和解析性能：
 
@@ -290,8 +311,8 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
-- **预计耗时**：全部测试约 **20 分钟**完成
-- **测试覆盖**：约 200 个测试方法 × 3 个运行时 = 600 个测试点
+- **预计耗时**：全部测试约 **25 分钟**完成
+- **测试覆盖**：约 220 个测试方法 × 3 个运行时 = 660 个测试点
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ## 测试结果
@@ -325,23 +346,24 @@ benchmarks/Apq.Cfg.Benchmarks/
 
 ## 测试覆盖矩阵
 
-| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges | 编码检测 | 对象绑定 | DI |
-|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|----------|----------|-----|
-| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
-| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - |
-| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
-| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
-| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - |
-| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
-| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
-| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
-| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
-| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - |
-| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - | - | - | - |
-| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - |
-| EncodingBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
-| ObjectBinderBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - |
-| DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
+| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges | 编码检测 | 对象绑定 | 源生成器 | DI |
+|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|----------|----------|----------|-----|
+| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
+| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - |
+| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
+| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
+| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
+| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
+| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
+| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
+| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - | - | - | - | - |
+| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - | - |
+| EncodingBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - | - |
+| ObjectBinderBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
+| SourceGeneratorBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - |
+| DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
 
 ## 注意事项
 

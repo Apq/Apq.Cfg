@@ -7,6 +7,9 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- 保留生成的源代码以便调试 -->
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +44,7 @@
     <ProjectReference Include="..\..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Redis\Apq.Cfg.Redis.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Database\Apq.Cfg.Database.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

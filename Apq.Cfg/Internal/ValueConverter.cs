@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Apq.Cfg.Internal;
@@ -129,6 +130,11 @@ internal static class ValueConverter
     /// <param name="value">字符串值</param>
     /// <param name="targetType">目标类型</param>
     /// <returns>转换后的值，转换失败返回 null</returns>
+    /// <remarks>
+    /// 此方法使用 Enum.Parse 和 Convert.ChangeType，在 AOT 场景下可能不兼容。
+    /// 对于 AOT 场景，请使用 Apq.Cfg.SourceGenerator 包中的 [CfgSection] 特性。
+    /// </remarks>
+    [RequiresUnreferencedCode("ConvertToType uses Enum.Parse and Convert.ChangeType which may not work in AOT scenarios.")]
     public static object? ConvertToType(string value, Type targetType)
     {
         if (targetType == typeof(string))
