@@ -6,31 +6,6 @@
 
 **仓库地址**：https://gitee.com/apq/Apq.Cfg
 
-## 项目结构
-
-```text
-Apq.Cfg/
-├── Apq.Cfg/                 # 核心库（JSON + 环境变量）
-├── Apq.Cfg.Ini/             # INI 文件扩展
-├── Apq.Cfg.Xml/             # XML 文件扩展
-├── Apq.Cfg.Yaml/            # YAML 文件扩展
-├── Apq.Cfg.Toml/            # TOML 文件扩展
-├── Apq.Cfg.Redis/           # Redis 扩展
-├── Apq.Cfg.Database/        # 数据库扩展
-├── Samples/                 # 示例项目
-│   └── Apq.Cfg.Samples/
-├── tests/                   # 单元测试
-│   ├── Apq.Cfg.Tests.Shared/    # 共享测试代码
-│   ├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
-│   ├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
-│   └── Apq.Cfg.Tests.Net9/      # .NET 9 测试项目
-├── benchmarks/              # 性能测试
-│   └── Apq.Cfg.Benchmarks/      # 性能测试项目（多目标框架）
-├── buildTools/              # 构建工具脚本
-├── versions/                # 版本文件目录
-└── nupkgs/                  # NuGet 包输出目录
-```
-
 ## 特性
 
 - 多格式支持（JSON、INI、XML、YAML、TOML、Redis、数据库）
@@ -123,6 +98,24 @@ cfg.ConfigChanges.Subscribe(e =>
 - **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
 - **多源支持**：支持多个配置源同时存在的场景
 
+### 编码处理
+
+所有文件配置源（JSON、INI、XML、YAML、TOML）均支持智能编码处理：
+
+- **读取时自动检测**：BOM 优先，UTF.Unknown 库辅助检测，支持 UTF-8、GBK、GB2312 等常见编码
+- **写入时统一 UTF-8**：默认使用 UTF-8 无 BOM 写入，PowerShell 脚本自动使用 UTF-8 BOM
+- **编码映射**：支持为特定文件或文件模式指定读取/写入编码
+
+```csharp
+var cfg = new CfgBuilder()
+    // 为特定文件指定读取编码
+    .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
+    // 为 PowerShell 脚本指定写入编码（UTF-8 BOM）
+    .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
+    .AddJson("config.json", level: 0, writeable: true)
+    .Build();
+```
+
 ### 依赖注入集成
 
 支持与 Microsoft.Extensions.DependencyInjection 无缝集成：
@@ -204,7 +197,10 @@ dotnet run -c Release
 | `Get(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `Get<T>(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - |
 | `Exists(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `GetMany(keys)` | ✅ | - | - | - | - | - | - | - |
+| `GetMany<T>(keys)` | ✅ | - | - | - | - | - | - | - |
 | `Set(key, value)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `SetMany(values)` | ✅ | - | - | - | - | - | - | - |
 | `Set(key, value, targetLevel)` | ✅ | - | - | - | - | - | - | - |
 | `Remove(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `Remove(key, targetLevel)` | ✅ | - | - | - | - | - | - | - |
@@ -219,15 +215,19 @@ dotnet run -c Release
 | **CfgBuilder** |
 | `AddJson()` | ✅ | - | - | - | - | - | - | - |
 | `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - |
+| `AddSource()` | ✅ | - | - | - | - | - | - | - |
 | `WithEncodingConfidenceThreshold()` | ✅ | - | - | - | - | - | - | - |
+| `AddReadEncodingMapping()` | ✅ | - | - | - | - | - | - | - |
+| `AddWriteEncodingMapping()` | ✅ | - | - | - | - | - | - | - |
+| `ConfigureEncodingMapping()` | ✅ | - | - | - | - | - | - | - |
+| `WithEncodingDetectionLogging()` | ✅ | - | - | - | - | - | - | - |
 | `Build()` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **CfgRootExtensions** |
 | `TryGet<T>()` | ✅ | - | - | - | - | - | - | - |
 | `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - |
 | **FileCfgSourceBase** |
-| `WriteEncoding` | ✅ | - | - | - | - | - | - | - |
+| `EncodingDetector` | ✅ | - | - | - | - | - | - | - |
 | `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - |
-| `DetectEncoding()` | ✅ | - | - | - | - | - | - | - |
 | **扩展包** |
 | `AddIni()` | - | - | ✅ | - | - | - | - | - |
 | `AddXml()` | - | - | - | ✅ | - | - | - | - |
@@ -407,6 +407,63 @@ dotnet run -c Release
 | 与现有系统集成 | Xml | 兼容性好 |
 
 > 性能测试运行方法见 [benchmarks/README.md](benchmarks/README.md)
+
+## 项目结构
+
+```text
+Apq.Cfg/
+├── Apq.Cfg/                     # 核心库（JSON + 环境变量）
+│   ├── ICfgRoot.cs              # 配置根接口
+│   ├── MergedCfgRoot.cs         # 合并配置根实现
+│   ├── CfgBuilder.cs            # 配置构建器
+│   ├── ICfgSection.cs           # 配置节接口
+│   ├── CfgSection.cs            # 配置节实现
+│   ├── CfgRootExtensions.cs     # 扩展方法
+│   ├── ServiceCollectionExtensions.cs  # DI 扩展
+│   ├── Changes/                 # 配置变更相关
+│   │   ├── ChangeType.cs
+│   │   ├── ConfigChange.cs
+│   │   ├── ConfigChangeEvent.cs
+│   │   ├── DynamicReloadOptions.cs
+│   │   ├── ReloadStrategy.cs
+│   │   └── ReloadErrorEvent.cs
+│   ├── EncodingSupport/         # 编码支持
+│   │   ├── EncodingDetector.cs      # 编码检测器
+│   │   ├── EncodingDetectionResult.cs
+│   │   ├── EncodingMapping.cs       # 编码映射规则
+│   │   └── EncodingOptions.cs       # 编码选项配置
+│   ├── Internal/                # 内部实现
+│   │   ├── ChangeCoordinator.cs
+│   │   ├── MergedConfigurationProvider.cs
+│   │   ├── MergedConfigurationSource.cs
+│   │   ├── ValueConverter.cs
+│   │   ├── ValueCache.cs
+│   │   ├── KeyPathParser.cs
+│   │   └── FastCollections.cs
+│   └── Sources/                 # 配置源
+│       ├── ICfgSource.cs
+│       ├── JsonFileCfgSource.cs
+│       ├── File/
+│       │   └── FileCfgSourceBase.cs
+│       └── Environment/
+│           └── EnvVarsCfgSource.cs
+├── Apq.Cfg.Ini/                 # INI 文件扩展
+├── Apq.Cfg.Xml/                 # XML 文件扩展
+├── Apq.Cfg.Yaml/                # YAML 文件扩展
+├── Apq.Cfg.Toml/                # TOML 文件扩展
+├── Apq.Cfg.Redis/               # Redis 扩展
+├── Apq.Cfg.Database/            # 数据库扩展
+├── Samples/                     # 示例项目
+├── tests/                       # 单元测试
+│   ├── Apq.Cfg.Tests.Shared/        # 共享测试代码
+│   ├── Apq.Cfg.Tests.Net6/          # .NET 6 测试
+│   ├── Apq.Cfg.Tests.Net8/          # .NET 8 测试
+│   └── Apq.Cfg.Tests.Net9/          # .NET 9 测试
+├── benchmarks/                  # 性能测试
+├── buildTools/                  # 构建工具脚本
+├── versions/                    # 版本文件目录
+└── nupkgs/                      # NuGet 包输出目录
+```
 
 ## 许可证
 
