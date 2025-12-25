@@ -8,16 +8,21 @@
 
 ## 特性
 
-- 多格式支持（JSON、INI、XML、YAML、TOML、Redis、数据库）
-- 智能编码检测与统一 UTF-8 写入
-- 多层级配置合并
-- 可写配置与热重载
-- **动态配置重载**（支持文件变更自动检测、防抖、增量更新）
-- **配置节（GetSection）**：支持按路径获取配置子节，简化嵌套配置访问
+- **多格式支持**：JSON、INI、XML、YAML、TOML、Redis、数据库
+- **智能编码处理**：
+  - 读取时自动检测（BOM 优先，UTF.Unknown 库辅助，支持缓存）
+  - 写入时统一 UTF-8 无 BOM（PowerShell 脚本自动使用 UTF-8 BOM）
+  - 支持完整路径、通配符、正则表达式三种编码映射方式
+- **多层级配置合并**：高层级覆盖低层级
+- **可写配置**：支持配置修改并持久化到指定配置源
+- **热重载**：文件配置源支持变更自动重载
+- **动态配置重载**：支持文件变更自动检测、防抖、增量更新
+- **配置节**：支持按路径获取配置子节（`GetSection`），简化嵌套配置访问
+- **批量操作**：`GetMany`、`SetMany` 减少锁竞争，提升并发性能
 - **依赖注入集成**：提供 `AddApqCfg` 和 `ConfigureApqCfg<T>` 扩展方法
-- 线程安全（支持多线程并发读写）
-- Microsoft.Extensions.Configuration 兼容
-- Reactive Extensions (Rx) 支持配置变更订阅
+- **线程安全**：支持多线程并发读写
+- **Microsoft.Extensions.Configuration 兼容**：可无缝转换为标准配置接口
+- **Rx 支持**：通过 `ConfigChanges` 订阅配置变更事件
 
 ## 支持的框架
 
@@ -102,9 +107,12 @@ cfg.ConfigChanges.Subscribe(e =>
 
 所有文件配置源（JSON、INI、XML、YAML、TOML）均支持智能编码处理：
 
-- **读取时自动检测**：BOM 优先，UTF.Unknown 库辅助检测，支持 UTF-8、GBK、GB2312 等常见编码
-- **写入时统一 UTF-8**：默认使用 UTF-8 无 BOM 写入，PowerShell 脚本自动使用 UTF-8 BOM
-- **编码映射**：支持为特定文件或文件模式指定读取/写入编码
+- **读取时自动检测**：
+  - BOM 优先检测（UTF-8、UTF-16 LE/BE、UTF-32 LE/BE）
+  - UTF.Unknown 库辅助检测，支持 GBK、GB2312 等常见编码
+  - 检测结果自动缓存，文件修改后自动失效
+- **写入时统一 UTF-8**：默认使用 UTF-8 无 BOM，PowerShell 脚本（*.ps1、*.psm1、*.psd1）自动使用 UTF-8 BOM
+- **编码映射**：支持完整路径、通配符、正则表达式三种匹配方式
 
 ```csharp
 var cfg = new CfgBuilder()
@@ -112,6 +120,10 @@ var cfg = new CfgBuilder()
     .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
     // 为 PowerShell 脚本指定写入编码（UTF-8 BOM）
     .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
+    // 设置编码检测置信度阈值（默认 0.6）
+    .WithEncodingConfidenceThreshold(0.7f)
+    // 启用编码检测日志
+    .WithEncodingDetectionLogging(result => Console.WriteLine($"检测到编码: {result}"))
     .AddJson("config.json", level: 0, writeable: true)
     .Build();
 ```
@@ -164,111 +176,15 @@ cd benchmarks/Apq.Cfg.Benchmarks
 dotnet run -c Release
 ```
 
-## 测试覆盖情况
+### 单元测试通过情况
 
-### 测试统计（共 199 个测试）
+| 框架 | 测试数量 | 状态 |
+|------|----------|------|
+| .NET 6.0 | 199 | ✅ 全部通过 |
+| .NET 8.0 | 199 | ✅ 全部通过 |
+| .NET 9.0 | 199 | ✅ 全部通过 |
 
-| 测试类 | 测试数量 | 说明 |
-|--------|----------|------|
-| JsonCfgTests | 15 | JSON 配置源测试 |
-| EnvVarsCfgTests | 4 | 环境变量配置源测试 |
-| IniCfgTests | 5 | INI 文件配置源测试 |
-| XmlCfgTests | 5 | XML 文件配置源测试 |
-| YamlCfgTests | 6 | YAML 文件配置源测试 |
-| TomlCfgTests | 6 | TOML 文件配置源测试 |
-| RedisCfgTests | 5 | Redis 配置源测试 |
-| DatabaseCfgTests | 5 | 数据库配置源测试 |
-| CfgRootExtensionsTests | 4 | 扩展方法测试 |
-| CfgBuilderAdvancedTests | 14 | 高级功能测试 |
-| DynamicReloadTests | 12 | 动态配置重载测试 |
-| EncodingDetectionTests | 14 | 编码检测测试 |
-| ConcurrencyTests | 10 | 并发安全测试 |
-| BoundaryConditionTests | 32 | 边界条件测试 |
-| ExceptionHandlingTests | 20 | 异常处理测试 |
-| ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
-| CfgSectionTests | 14 | 配置节（GetSection/GetChildKeys）测试 |
-| ServiceCollectionExtensionsTests | 10 | 依赖注入扩展测试 |
-
-### 公开 API 覆盖矩阵
-
-| API | Json | Env | Ini | Xml | Yaml | Toml | Redis | DB |
-|-----|:----:|:---:|:---:|:---:|:----:|:----:|:-----:|:--:|
-| **ICfgRoot** |
-| `Get(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `Get<T>(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - |
-| `Exists(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `GetMany(keys)` | ✅ | - | - | - | - | - | - | - |
-| `GetMany<T>(keys)` | ✅ | - | - | - | - | - | - | - |
-| `Set(key, value)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `SetMany(values)` | ✅ | - | - | - | - | - | - | - |
-| `Set(key, value, targetLevel)` | ✅ | - | - | - | - | - | - | - |
-| `Remove(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `Remove(key, targetLevel)` | ✅ | - | - | - | - | - | - | - |
-| `SaveAsync()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `SaveAsync(targetLevel)` | ✅ | - | - | - | - | - | - | - |
-| `ToMicrosoftConfiguration()` | ✅ | - | - | - | - | - | - | - |
-| `ToMicrosoftConfiguration(options)` | ✅ | - | - | - | - | - | - | - |
-| `ConfigChanges` | ✅ | - | - | - | - | - | - | - |
-| `GetSection(path)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - |
-| `GetChildKeys()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - |
-| `Dispose/DisposeAsync` | ✅ | - | - | - | - | - | - | - |
-| **CfgBuilder** |
-| `AddJson()` | ✅ | - | - | - | - | - | - | - |
-| `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - |
-| `AddSource()` | ✅ | - | - | - | - | - | - | - |
-| `WithEncodingConfidenceThreshold()` | ✅ | - | - | - | - | - | - | - |
-| `AddReadEncodingMapping()` | ✅ | - | - | - | - | - | - | - |
-| `AddWriteEncodingMapping()` | ✅ | - | - | - | - | - | - | - |
-| `ConfigureEncodingMapping()` | ✅ | - | - | - | - | - | - | - |
-| `WithEncodingDetectionLogging()` | ✅ | - | - | - | - | - | - | - |
-| `Build()` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **CfgRootExtensions** |
-| `TryGet<T>()` | ✅ | - | - | - | - | - | - | - |
-| `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - |
-| **FileCfgSourceBase** |
-| `EncodingDetector` | ✅ | - | - | - | - | - | - | - |
-| `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - |
-| **扩展包** |
-| `AddIni()` | - | - | ✅ | - | - | - | - | - |
-| `AddXml()` | - | - | - | ✅ | - | - | - | - |
-| `AddYaml()` | - | - | - | - | ✅ | - | - | - |
-| `AddToml()` | - | - | - | - | - | ✅ | - | - |
-| `AddRedis()` | - | - | - | - | - | - | ✅ | - |
-| `AddDatabase()` | - | - | - | - | - | - | - | ✅ |
-| **依赖注入扩展** |
-| `AddApqCfg()` | ✅ | - | - | - | - | - | - | - |
-| `ConfigureApqCfg<T>()` | ✅ | - | - | - | - | - | - | - |
-| **多层级覆盖** |
-| 高层级覆盖低层级 | ✅ | ✅ | - | - | - | - | ✅ | ✅ |
-
-> 说明：`-` 表示该配置源不支持此功能（如环境变量只读）或该功能只需测试一次
-
-### 测试场景覆盖
-
-| 场景类别 | 测试文件 | 测试数量 |
-|----------|----------|----------|
-| 基本读写 | JsonCfgTests, 各格式测试 | 47 |
-| 类型转换 | JsonCfgTests | 15 |
-| 编码检测 | EncodingDetectionTests | 14 |
-| 并发安全 | ConcurrencyTests | 10 |
-| 边界条件 | BoundaryConditionTests | 32 |
-| 异常处理 | ExceptionHandlingTests | 20 |
-| 动态重载 | DynamicReloadTests | 12 |
-| 变更订阅 | ConfigChangesSubscriptionTests | 28 |
-| 配置节访问 | CfgSectionTests | 14 |
-| 依赖注入 | ServiceCollectionExtensionsTests | 10 |
-
-### 测试覆盖率
-
-**100%** - 所有公开 API 均已覆盖测试
-
-### 多框架测试通过情况
-
-| 框架 | 测试数量 | 状态 | 测试日期 |
-|------|----------|------|----------|
-| .NET 6.0 | 199 | ✅ 全部通过 | 2025-12-25 |
-| .NET 8.0 | 199 | ✅ 全部通过 | 2025-12-25 |
-| .NET 9.0 | 199 | ✅ 全部通过 | 2025-12-25 |
+> 详细测试覆盖情况见 [tests/README.md](tests/README.md)
 
 ## 性能测试结果
 
@@ -407,63 +323,6 @@ dotnet run -c Release
 | 与现有系统集成 | Xml | 兼容性好 |
 
 > 性能测试运行方法见 [benchmarks/README.md](benchmarks/README.md)
-
-## 项目结构
-
-```text
-Apq.Cfg/
-├── Apq.Cfg/                     # 核心库（JSON + 环境变量）
-│   ├── ICfgRoot.cs              # 配置根接口
-│   ├── MergedCfgRoot.cs         # 合并配置根实现
-│   ├── CfgBuilder.cs            # 配置构建器
-│   ├── ICfgSection.cs           # 配置节接口
-│   ├── CfgSection.cs            # 配置节实现
-│   ├── CfgRootExtensions.cs     # 扩展方法
-│   ├── ServiceCollectionExtensions.cs  # DI 扩展
-│   ├── Changes/                 # 配置变更相关
-│   │   ├── ChangeType.cs
-│   │   ├── ConfigChange.cs
-│   │   ├── ConfigChangeEvent.cs
-│   │   ├── DynamicReloadOptions.cs
-│   │   ├── ReloadStrategy.cs
-│   │   └── ReloadErrorEvent.cs
-│   ├── EncodingSupport/         # 编码支持
-│   │   ├── EncodingDetector.cs      # 编码检测器
-│   │   ├── EncodingDetectionResult.cs
-│   │   ├── EncodingMapping.cs       # 编码映射规则
-│   │   └── EncodingOptions.cs       # 编码选项配置
-│   ├── Internal/                # 内部实现
-│   │   ├── ChangeCoordinator.cs
-│   │   ├── MergedConfigurationProvider.cs
-│   │   ├── MergedConfigurationSource.cs
-│   │   ├── ValueConverter.cs
-│   │   ├── ValueCache.cs
-│   │   ├── KeyPathParser.cs
-│   │   └── FastCollections.cs
-│   └── Sources/                 # 配置源
-│       ├── ICfgSource.cs
-│       ├── JsonFileCfgSource.cs
-│       ├── File/
-│       │   └── FileCfgSourceBase.cs
-│       └── Environment/
-│           └── EnvVarsCfgSource.cs
-├── Apq.Cfg.Ini/                 # INI 文件扩展
-├── Apq.Cfg.Xml/                 # XML 文件扩展
-├── Apq.Cfg.Yaml/                # YAML 文件扩展
-├── Apq.Cfg.Toml/                # TOML 文件扩展
-├── Apq.Cfg.Redis/               # Redis 扩展
-├── Apq.Cfg.Database/            # 数据库扩展
-├── Samples/                     # 示例项目
-├── tests/                       # 单元测试
-│   ├── Apq.Cfg.Tests.Shared/        # 共享测试代码
-│   ├── Apq.Cfg.Tests.Net6/          # .NET 6 测试
-│   ├── Apq.Cfg.Tests.Net8/          # .NET 8 测试
-│   └── Apq.Cfg.Tests.Net9/          # .NET 9 测试
-├── benchmarks/                  # 性能测试
-├── buildTools/                  # 构建工具脚本
-├── versions/                    # 版本文件目录
-└── nupkgs/                      # NuGet 包输出目录
-```
 
 ## 许可证
 
