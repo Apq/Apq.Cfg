@@ -46,8 +46,8 @@ using Apq.Cfg;
 
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 
@@ -71,8 +71,8 @@ await cfg.SaveAsync();
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)           // 基础配置（最低优先级）
-    .AddJson("appsettings.local.json", level: 1)     // 本地覆盖
+    .AddJson("config.json", level: 0)           // 基础配置（最低优先级）
+    .AddJson("config.local.json", level: 1)     // 本地覆盖
     .AddEnvironmentVariables(level: 2)               // 环境变量（最高优先级）
     .Build();
 ```
@@ -208,7 +208,7 @@ var cfg = new CfgBuilder()
 // 方式1：通过 CfgBuilder 设置（推荐）
 var cfg = new CfgBuilder()
     .WithEncodingConfidenceThreshold(0.7f)
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 方式2：直接设置静态属性
@@ -227,7 +227,7 @@ FileCfgSourceBase.EncodingConfidenceThreshold = 0.7f;
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
     .Build();
 
 // 配置文件变更后会自动重新加载
@@ -242,8 +242,8 @@ using Apq.Cfg.Changes;
 using Microsoft.Extensions.Primitives;
 
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, reloadOnChange: true)
-    .AddJson("appsettings.local.json", level: 1, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson("config.local.json", level: 1, reloadOnChange: true)
     .Build();
 
 // 获取支持动态重载的 Microsoft Configuration
@@ -284,8 +284,8 @@ var services = new ServiceCollection();
 
 // 注册 Apq.Cfg 配置
 services.AddApqCfg(cfg => cfg
-    .AddJson("appsettings.json", level: 0, writeable: false)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true));
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true));
 
 // 绑定强类型配置
 services.ConfigureApqCfg<DatabaseOptions>("Database");

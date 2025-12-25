@@ -18,7 +18,7 @@
 ```csharp
 // 示例：依赖注入支持
 services.AddApqCfg(cfg => cfg
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1)
     .WithValidation<AppSettings>());
 ```

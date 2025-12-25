@@ -34,8 +34,8 @@
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 
@@ -69,8 +69,8 @@ using Microsoft.Extensions.Primitives;
 
 // 构建配置（启用 reloadOnChange）
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false, reloadOnChange: true)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.local.json", level: 1, writeable: true, reloadOnChange: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 
@@ -141,8 +141,8 @@ var services = new ServiceCollection();
 
 // 注册 Apq.Cfg 配置
 services.AddApqCfg(cfg => cfg
-    .AddJson("appsettings.json", level: 0, writeable: false)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true));
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true));
 
 // 绑定强类型配置
 services.ConfigureApqCfg<DatabaseOptions>("Database");
