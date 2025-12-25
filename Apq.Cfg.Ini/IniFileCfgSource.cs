@@ -40,7 +40,7 @@ internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 
         if (File.Exists(_path))
         {
-            var readEncoding = DetectEncoding(_path) ?? System.Text.Encoding.UTF8;
+            var readEncoding = DetectEncodingEnhanced(_path);
             var lines = await File.ReadAllLinesAsync(_path, readEncoding, cancellationToken).ConfigureAwait(false);
 
             foreach (var line in lines)
@@ -115,6 +115,6 @@ internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                 sb.Append(kv.Key).Append('=').Append(kv.Value).AppendLine();
         }
 
-        await File.WriteAllTextAsync(_path, sb.ToString(), WriteEncoding, cancellationToken).ConfigureAwait(false);
+        await File.WriteAllTextAsync(_path, sb.ToString(), GetWriteEncoding(), cancellationToken).ConfigureAwait(false);
     }
 }

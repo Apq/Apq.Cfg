@@ -212,7 +212,7 @@ public class EncodingTests : IDisposable
         File.WriteAllText(filePath, """{"key": "value"}""", new UTF8Encoding(false));
 
         var customEncoding = Encoding.Unicode;
-        detector.SetCustomReadMapping(filePath, customEncoding);
+        detector.MappingConfig.AddReadMapping(filePath, EncodingMappingType.ExactPath, customEncoding, priority: 100);
 
         // Act
         var result = detector.Detect(filePath);
@@ -222,7 +222,7 @@ public class EncodingTests : IDisposable
         Assert.Equal(customEncoding, result.Encoding);
 
         // Cleanup
-        detector.RemoveCustomReadMapping(filePath);
+        detector.MappingConfig.RemoveReadMapping(filePath);
     }
 
     [Fact]
@@ -278,7 +278,7 @@ public class EncodingTests : IDisposable
         var ps1Path = Path.Combine(_testDir, "script.ps1");
 
         // Act
-        var encoding = detector.GetExtensionEncoding(ps1Path);
+        var encoding = detector.MappingConfig.GetWriteEncoding(ps1Path);
 
         // Assert
         Assert.NotNull(encoding);
@@ -373,7 +373,7 @@ public class EncodingTests : IDisposable
         Assert.Equal(customEncoding, result.Encoding);
 
         // Cleanup
-        FileCfgSourceBase.EncodingDetector.RemoveCustomReadMapping(filePath);
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveReadMapping(filePath);
     }
 
     [Fact]
@@ -388,12 +388,12 @@ public class EncodingTests : IDisposable
             .AddWriteEncodingMapping(filePath, customEncoding);
 
         // Assert
-        var writeEncoding = FileCfgSourceBase.EncodingDetector.GetCustomWriteEncoding(filePath);
+        var writeEncoding = FileCfgSourceBase.EncodingDetector.MappingConfig.GetWriteEncoding(filePath);
         Assert.NotNull(writeEncoding);
         Assert.Equal(customEncoding, writeEncoding);
 
         // Cleanup
-        FileCfgSourceBase.EncodingDetector.RemoveCustomWriteMapping(filePath);
+        FileCfgSourceBase.EncodingDetector.MappingConfig.RemoveWriteMapping(filePath);
     }
 
     [Fact]
@@ -409,20 +409,20 @@ public class EncodingTests : IDisposable
         var writeEncoding = Encoding.Unicode;
 
         // Act
-        detector.SetCustomReadMapping(filePath, readEncoding);
-        detector.SetCustomWriteMapping(filePath, writeEncoding);
+        detector.MappingConfig.AddReadMapping(filePath, EncodingMappingType.ExactPath, readEncoding, priority: 100);
+        detector.MappingConfig.AddWriteMapping(filePath, EncodingMappingType.ExactPath, writeEncoding, priority: 100);
 
         // Assert - 读取映射
         var detectResult = detector.Detect(filePath);
         Assert.Equal(readEncoding, detectResult.Encoding);
 
         // Assert - 写入映射
-        var customWriteEncoding = detector.GetCustomWriteEncoding(filePath);
+        var customWriteEncoding = detector.MappingConfig.GetWriteEncoding(filePath);
         Assert.Equal(writeEncoding, customWriteEncoding);
 
         // Cleanup
-        detector.RemoveCustomReadMapping(filePath);
-        detector.RemoveCustomWriteMapping(filePath);
+        detector.MappingConfig.RemoveReadMapping(filePath);
+        detector.MappingConfig.RemoveWriteMapping(filePath);
     }
 
     [Fact]

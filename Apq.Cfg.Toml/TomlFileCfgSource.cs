@@ -37,7 +37,7 @@ internal sealed class TomlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         TomlTable root;
         if (File.Exists(_path))
         {
-            var readEncoding = DetectEncoding(_path);
+            var readEncoding = DetectEncodingEnhanced(_path);
             var text = await File.ReadAllTextAsync(_path, readEncoding, cancellationToken).ConfigureAwait(false);
             root = Tomlyn.Toml.ToModel(text) ?? new TomlTable();
         }
@@ -50,7 +50,7 @@ internal sealed class TomlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
             SetTomlByColonKey(root, key, value);
 
         var output = Tomlyn.Toml.FromModel(root);
-        await File.WriteAllTextAsync(_path, output, WriteEncoding, cancellationToken).ConfigureAwait(false);
+        await File.WriteAllTextAsync(_path, output, GetWriteEncoding(), cancellationToken).ConfigureAwait(false);
     }
 
     private static void SetTomlByColonKey(TomlTable root, string key, string? value)

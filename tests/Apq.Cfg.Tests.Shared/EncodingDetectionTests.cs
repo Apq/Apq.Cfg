@@ -1,4 +1,5 @@
 using System.Text;
+using Apq.Cfg.EncodingSupport;
 using Apq.Cfg.Sources.File;
 
 namespace Apq.Cfg.Tests;
@@ -38,12 +39,12 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllText(path, """{"Key": "Value", "中文": "测试"}""", new UTF8Encoding(false));
 
         // Act
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path);
 
         // Assert
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
         // UTF-8 编码名称可能是 "utf-8" 或 "UTF-8"
-        Assert.Contains("utf", encoding.WebName, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("utf", result.Encoding.WebName, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -54,11 +55,11 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllText(path, """{"Key": "Value", "中文": "测试"}""", new UTF8Encoding(true));
 
         // Act
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path);
 
         // Assert
-        Assert.NotNull(encoding);
-        Assert.Contains("utf", encoding.WebName, StringComparison.OrdinalIgnoreCase);
+        Assert.NotNull(result.Encoding);
+        Assert.Contains("utf", result.Encoding.WebName, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -68,35 +69,36 @@ public class EncodingDetectionTests : IDisposable
         var path = Path.Combine(_testDir, "nonexistent.json");
 
         // Act
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path);
 
         // Assert
-        Assert.Equal(Encoding.UTF8, encoding);
+        Assert.Equal(Encoding.UTF8, result.Encoding);
     }
 
     [Fact]
-    public void DetectEncoding_EmptyFile_ReturnsUtf8()
+    public void DetectEncoding_EmptyFile_ReturnsEncoding()
     {
         // Arrange
         var path = Path.Combine(_testDir, "empty.json");
         File.WriteAllText(path, "");
 
         // Act
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path);
 
         // Assert
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
     }
 
     [Fact]
-    public void WriteEncoding_IsUtf8WithoutBom()
+    public void DefaultWriteEncoding_IsUtf8WithoutBom()
     {
         // Act & Assert
-        Assert.NotNull(FileCfgSourceBase.WriteEncoding);
-        Assert.Equal("utf-8", FileCfgSourceBase.WriteEncoding.WebName);
+        var encoding = EncodingDetector.DefaultWriteEncoding;
+        Assert.NotNull(encoding);
+        Assert.Equal("utf-8", encoding.WebName);
 
         // 验证是无 BOM 的 UTF-8
-        var preamble = FileCfgSourceBase.WriteEncoding.GetPreamble();
+        var preamble = encoding.GetPreamble();
         Assert.Empty(preamble);
     }
 
@@ -140,11 +142,11 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllText(path, "Simple ASCII text without special characters");
 
         // Act - 使用低阈值
-        FileCfgSourceBase.EncodingConfidenceThreshold = 0.1f;
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var options = new EncodingOptions { ConfidenceThreshold = 0.1f };
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path, options);
 
         // Assert - 应该能检测到编码
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
     }
 
     [Fact]
@@ -156,11 +158,11 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllText(path, "abc");
 
         // Act - 使用非常高的阈值
-        FileCfgSourceBase.EncodingConfidenceThreshold = 0.99f;
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var options = new EncodingOptions { ConfidenceThreshold = 0.99f };
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path, options);
 
         // Assert - 应该回退到 UTF-8
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
     }
 
     [Fact]
@@ -174,11 +176,11 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllText(path, "这是一段中文测试文本，用于测试GBK编码检测功能。", gbkEncoding);
 
         // Act
-        FileCfgSourceBase.EncodingConfidenceThreshold = 0.5f;
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var options = new EncodingOptions { ConfidenceThreshold = 0.5f };
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path, options);
 
         // Assert - 应该能检测到某种编码（可能是 GBK 或兼容编码）
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
     }
 
     [Fact]
@@ -214,10 +216,10 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllText(path, sb.ToString(), new UTF8Encoding(false));
 
         // Act
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path);
 
         // Assert - 应该能检测到编码（可能是 UTF-8 或 ASCII，因为纯 ASCII 内容）
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
     }
 
     [Fact]
@@ -229,9 +231,9 @@ public class EncodingDetectionTests : IDisposable
         File.WriteAllBytes(path, bytes);
 
         // Act - 二进制文件的编码检测
-        var encoding = FileCfgSourceBase.DetectEncoding(path);
+        var result = FileCfgSourceBase.EncodingDetector.Detect(path);
 
         // Assert - 应该返回某种编码（可能是 UTF-8 作为回退）
-        Assert.NotNull(encoding);
+        Assert.NotNull(result.Encoding);
     }
 }

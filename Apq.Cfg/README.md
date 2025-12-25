@@ -6,52 +6,23 @@
 
 **仓库地址**：https://gitee.com/apq/Apq.Cfg
 
-## 项目结构
-
-```text
-Apq.Cfg/
-├── ICfgRoot.cs              # 配置根接口
-├── MergedCfgRoot.cs         # 合并配置根实现
-├── CfgBuilder.cs            # 配置构建器
-├── CfgRootExtensions.cs     # 扩展方法
-├── Changes/                 # 配置变更相关
-│   ├── ChangeType.cs        # 变更类型枚举
-│   ├── ConfigChange.cs      # 配置变更记录
-│   ├── ConfigChangeEvent.cs # 配置变更事件
-│   └── DynamicReloadOptions.cs  # 动态重载选项
-├── Internal/                # 内部实现
-│   ├── ChangeCoordinator.cs         # 变更协调器
-│   ├── MergedConfigurationProvider.cs   # 合并配置提供者
-│   └── MergedConfigurationSource.cs     # 合并配置源
-└── Sources/                 # 配置源
-    ├── ICfgSource.cs        # 配置源接口
-    ├── JsonFileCfgSource.cs # JSON 文件配置源
-    ├── File/
-    │   └── FileCfgSourceBase.cs  # 文件配置源基类
-    └── Environment/
-        └── EnvVarsCfgSource.cs   # 环境变量配置源
-```
-
 ## 特性
 
 - **多格式支持**：JSON、INI、XML、YAML、TOML、Redis、数据库
-- **智能编码检测**：读取时自动检测文件编码（使用 UTF.Unknown 库）
-- **统一写入编码**：写入时统一使用 UTF-8 无 BOM 编码
+- **智能编码检测**：读取时自动检测文件编码（BOM 优先，UTF.Unknown 库辅助）
+- **灵活编码映射**：支持完整路径、通配符、正则表达式三种匹配方式
 - **多层级配置**：支持配置源优先级，高层级覆盖低层级
 - **可写配置**：支持配置修改并持久化到指定配置源
 - **热重载**：文件配置源支持变更自动重载
 - **动态配置重载**：支持文件变更自动检测、防抖、增量更新
-- **配置节（GetSection）**：支持按路径获取配置子节，简化嵌套配置访问
+- **配置节**：支持按路径获取配置子节，简化嵌套配置访问
 - **依赖注入集成**：提供 `AddApqCfg` 和 `ConfigureApqCfg<T>` 扩展方法
-- **Reactive Extensions (Rx) 支持**：通过 `ConfigChanges` 订阅配置变更事件
+- **Rx 支持**：通过 `ConfigChanges` 订阅配置变更事件
 - **Microsoft.Extensions.Configuration 兼容**：可无缝转换为标准配置接口
 
 ## 支持的框架
 
-- .NET 6.0
-- .NET 7.0
-- .NET 8.0
-- .NET 9.0
+- .NET 6.0 / 7.0 / 8.0 / 9.0
 
 ## 安装
 
@@ -68,21 +39,7 @@ dotnet add package Apq.Cfg.Redis
 dotnet add package Apq.Cfg.Database
 ```
 
-## 扩展包
-
-| 项目 | 说明 | 依赖 |
-| ---- | ---- |  ---- |
-| `Apq.Cfg` | 核心库，包含 JSON 和环境变量支持 | UTF.Unknown, System.Reactive |
-| `Apq.Cfg.Ini` | INI 文件扩展 | Microsoft.Extensions.Configuration.Ini |
-| `Apq.Cfg.Xml` | XML 文件扩展 | Microsoft.Extensions.Configuration.Xml |
-| `Apq.Cfg.Yaml` | YAML 文件扩展 | YamlDotNet |
-| `Apq.Cfg.Toml` | TOML 文件扩展 | Tomlyn |
-| `Apq.Cfg.Redis` | Redis 扩展 | StackExchange.Redis |
-| `Apq.Cfg.Database` | 数据库扩展 | SqlSugarCore |
-
 ## 快速开始
-
-### 基本用法
 
 ```csharp
 using Apq.Cfg;
@@ -103,98 +60,9 @@ var dbSection = cfg.GetSection("Database");
 var host = dbSection.Get("Host");
 var port = dbSection.Get<int>("Port");
 
-// 枚举配置节的子键
-foreach (var key in dbSection.GetChildKeys())
-{
-    Console.WriteLine($"{key}: {dbSection.Get(key)}");
-}
-
-// 检查配置是否存在
-if (cfg.Exists("Feature:Enabled"))
-{
-    // ...
-}
-
 // 修改配置（写入到 isPrimaryWriter 的配置源）
 cfg.Set("App:LastRun", DateTime.Now.ToString());
 await cfg.SaveAsync();
-
-// 转换为 Microsoft.Extensions.Configuration（静态快照）
-IConfigurationRoot msConfig = cfg.ToMicrosoftConfiguration();
-
-// 转换为支持动态重载的 Microsoft Configuration
-IConfigurationRoot dynamicConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
-{
-    DebounceMs = 100,           // 防抖时间窗口（毫秒）
-    EnableDynamicReload = true  // 启用动态重载
-});
-```
-
-### 使用扩展包
-
-```csharp
-using Apq.Cfg;
-using Apq.Cfg.Yaml;
-using Apq.Cfg.Redis;
-
-var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: true)
-    .AddRedis(options =>
-    {
-        options.ConnectionString = "localhost:6379";
-        options.KeyPrefix = "config:";
-    }, level: 1)
-    .Build();
-```
-
-### 使用 INI 配置
-
-```csharp
-using Apq.Cfg;
-using Apq.Cfg.Ini;
-
-var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: true)
-    .Build();
-
-// INI 格式示例：
-// [Database]
-// ConnectionString=Server=localhost;Database=mydb
-// Timeout=30
-```
-
-### 使用 TOML 配置
-
-```csharp
-using Apq.Cfg;
-using Apq.Cfg.Toml;
-
-var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0, writeable: true)
-    .Build();
-
-// TOML 格式示例：
-// [database]
-// connection_string = "Server=localhost;Database=mydb"
-// timeout = 30
-```
-
-### 使用数据库配置
-
-```csharp
-using Apq.Cfg;
-using Apq.Cfg.Database;
-
-var cfg = new CfgBuilder()
-    .AddDatabase(options =>
-    {
-        options.Provider = "MySql"; // SqlServer/MySql/PostgreSql/Oracle/SQLite
-        options.ConnectionString = "Server=localhost;Database=config;...";
-        options.Table = "AppConfig";
-        options.KeyColumn = "Key";
-        options.ValueColumn = "Value";
-    }, level: 0, isPrimaryWriter: true)
-    .Build();
 ```
 
 ## 配置层级
@@ -202,14 +70,10 @@ var cfg = new CfgBuilder()
 配置源按 `level` 参数排序，数值越大优先级越高。相同键的配置值，高层级会覆盖低层级。
 
 ```csharp
-// level 0: 基础配置（最低优先级）
-// level 1: 本地覆盖配置
-// level 2: 环境变量（最高优先级）
-
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)           // 基础配置
+    .AddJson("appsettings.json", level: 0)           // 基础配置（最低优先级）
     .AddJson("appsettings.local.json", level: 1)     // 本地覆盖
-    .AddEnvironmentVariables(level: 2)               // 环境变量优先
+    .AddEnvironmentVariables(level: 2)               // 环境变量（最高优先级）
     .Build();
 ```
 
@@ -233,14 +97,114 @@ await cfg.SaveAsync();
 
 ## 编码处理
 
-- **读取**：自动检测文件编码，支持 UTF-8、GBK、GB2312 等多种编码
-- **写入**：统一使用 UTF-8 无 BOM 编码
+### 读取编码检测
 
-可调整编码检测置信度阈值：
+读取文件时按以下顺序检测编码：
+
+1. **用户指定编码**：`EncodingOptions.ReadStrategy = Specified`
+2. **读取映射配置**：通过 `AddReadEncodingMapping` 等方法配置
+3. **缓存结果**：如果启用缓存且文件未修改
+4. **BOM 检测**：支持 UTF-8、UTF-16 LE/BE、UTF-32 LE/BE
+5. **UTF.Unknown 库检测**：置信度高于阈值时使用
+6. **回退编码**：默认 UTF-8
+
+### 写入编码
+
+写入文件时按以下顺序确定编码：
+
+1. **EncodingOptions 策略**：`Utf8NoBom`（默认）、`Utf8WithBom`、`Specified`、`Preserve`
+2. **写入映射配置**：通过 `AddWriteEncodingMapping` 等方法配置
+3. **默认编码**：UTF-8 无 BOM
+
+### 编码映射
+
+支持为特定文件或文件模式指定读取/写入编码：
 
 ```csharp
-using Apq.Cfg.Sources.File;
+using System.Text;
+using Apq.Cfg;
+using Apq.Cfg.EncodingSupport;
 
+var cfg = new CfgBuilder()
+    // 完整路径映射：特定文件使用 GB2312 读取
+    .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
+
+    // 通配符映射：所有 PS1 文件写入时使用 UTF-8 BOM
+    .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
+
+    // 正则表达式映射
+    .AddWriteEncodingMappingRegex(@"logs[/\\].*\.log$", Encoding.Unicode)
+
+    .AddJson("config.json", level: 0, writeable: true)
+    .Build();
+```
+
+#### 通配符语法
+
+| 符号   | 含义                           | 示例                              |
+| ------ | ------------------------------ | --------------------------------- |
+| `*`    | 匹配任意字符（不含路径分隔符） | `*.json` 匹配 `config.json`       |
+| `**`   | 匹配任意字符（含路径分隔符）   | `**/*.txt` 匹配 `a/b/c.txt`       |
+| `?`    | 匹配单个字符                   | `config?.json` 匹配 `config1.json` |
+
+#### 映射优先级
+
+| 匹配类型          | 默认优先级 | 说明                              |
+| ----------------- | ---------- | --------------------------------- |
+| ExactPath         | 100        | 完整路径精确匹配                  |
+| Wildcard          | 0          | 通配符匹配                        |
+| Regex             | 0          | 正则表达式匹配                    |
+| 内置 PowerShell   | -100       | `*.ps1`, `*.psm1`, `*.psd1`       |
+
+#### 高级配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .ConfigureEncodingMapping(config =>
+    {
+        // 添加多条规则
+        config.AddReadMapping("*.xml", EncodingMappingType.Wildcard,
+            Encoding.UTF8, priority: 50);
+        config.AddWriteMapping("**/*.txt", EncodingMappingType.Wildcard,
+            new UTF8Encoding(true), priority: 10);
+
+        // 清除默认规则
+        config.ClearWriteMappings();
+    })
+    .WithEncodingConfidenceThreshold(0.8f)  // 提高检测置信度阈值
+    .WithEncodingDetectionLogging(result =>  // 启用日志
+    {
+        Console.WriteLine($"检测到编码: {result}");
+    })
+    .AddJson("config.json", level: 0, writeable: true)
+    .Build();
+```
+
+#### 单文件编码选项
+
+可以为单个配置源指定编码选项：
+
+```csharp
+// 使用预定义的 PowerShell 选项（UTF-8 带 BOM）
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true,
+        encoding: EncodingOptions.PowerShell)
+    .Build();
+
+// 保持原编码
+var options = new EncodingOptions
+{
+    WriteStrategy = EncodingWriteStrategy.Preserve
+};
+
+var cfg = new CfgBuilder()
+    .AddJson("legacy.json", level: 0, writeable: true, encoding: options)
+    .Build();
+```
+
+#### 置信度阈值
+
+```csharp
 // 方式1：通过 CfgBuilder 设置（推荐）
 var cfg = new CfgBuilder()
     .WithEncodingConfidenceThreshold(0.7f)
@@ -248,19 +212,14 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 方式2：直接设置静态属性
-// 默认 0.6，范围 0.0-1.0
 FileCfgSourceBase.EncodingConfidenceThreshold = 0.7f;
+
+// 方式3：通过环境变量设置（无需修改代码）
+// Windows: set APQ_CFG_ENCODING_CONFIDENCE=0.7
+// Linux/macOS: export APQ_CFG_ENCODING_CONFIDENCE=0.7
 ```
 
-也可以通过环境变量设置默认值（无需修改代码）：
-
-```bash
-# Windows
-set APQ_CFG_ENCODING_CONFIDENCE=0.7
-
-# Linux/macOS
-export APQ_CFG_ENCODING_CONFIDENCE=0.7
-```
+详细的编码处理流程请参阅 [编码处理流程文档](../docs/编码处理流程.md)。
 
 ## 热重载
 
@@ -275,20 +234,16 @@ var cfg = new CfgBuilder()
 // 后续读取 cfg.Get() 将获取到最新的配置值
 ```
 
-## 动态配置重载
-
-支持配置文件变更时自动更新，无需重启应用。提供防抖、增量更新和层级覆盖感知功能：
+### 动态重载与变更订阅
 
 ```csharp
 using Apq.Cfg;
 using Apq.Cfg.Changes;
 using Microsoft.Extensions.Primitives;
 
-// 构建配置（启用 reloadOnChange）
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false, reloadOnChange: true)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, reloadOnChange: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddJson("appsettings.json", level: 0, reloadOnChange: true)
+    .AddJson("appsettings.local.json", level: 1, reloadOnChange: true)
     .Build();
 
 // 获取支持动态重载的 Microsoft Configuration
@@ -313,16 +268,12 @@ cfg.ConfigChanges.Subscribe(e =>
 });
 ```
 
-### 动态重载特性
-
+动态重载特性：
 - **防抖处理**：批量文件保存时，多次快速变化合并为一次处理
-- **增量更新**：只重新加载发生变化的配置源，而非全部重载
+- **增量更新**：只重新加载发生变化的配置源
 - **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
-- **多源支持**：支持多个配置源同时存在的场景
 
 ## 依赖注入集成
-
-支持与 Microsoft.Extensions.DependencyInjection 无缝集成：
 
 ```csharp
 using Apq.Cfg;
@@ -338,11 +289,8 @@ services.AddApqCfg(cfg => cfg
 
 // 绑定强类型配置
 services.ConfigureApqCfg<DatabaseOptions>("Database");
-services.ConfigureApqCfg<LoggingOptions>("Logging");
 
 var provider = services.BuildServiceProvider();
-
-// 通过 DI 获取配置
 var cfgRoot = provider.GetRequiredService<ICfgRoot>();
 var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
@@ -354,7 +302,64 @@ public class DatabaseOptions
 }
 ```
 
-## 核心类型
+## 扩展包
+
+| 项目               | 说明                           | 依赖                                          |
+| ------------------ | ------------------------------ | --------------------------------------------- |
+| `Apq.Cfg`          | 核心库，JSON 和环境变量支持    | UTF.Unknown, System.Reactive                  |
+| `Apq.Cfg.Ini`      | INI 文件扩展                   | Microsoft.Extensions.Configuration.Ini        |
+| `Apq.Cfg.Xml`      | XML 文件扩展                   | Microsoft.Extensions.Configuration.Xml        |
+| `Apq.Cfg.Yaml`     | YAML 文件扩展                  | YamlDotNet                                    |
+| `Apq.Cfg.Toml`     | TOML 文件扩展                  | Tomlyn                                        |
+| `Apq.Cfg.Redis`    | Redis 扩展                     | StackExchange.Redis                           |
+| `Apq.Cfg.Database` | 数据库扩展                     | SqlSugarCore                                  |
+
+### 使用扩展包示例
+
+```csharp
+// INI 配置
+using Apq.Cfg.Ini;
+var cfg = new CfgBuilder()
+    .AddIni("config.ini", level: 0, writeable: true)
+    .Build();
+
+// YAML 配置
+using Apq.Cfg.Yaml;
+var cfg = new CfgBuilder()
+    .AddYaml("config.yaml", level: 0, writeable: true)
+    .Build();
+
+// TOML 配置
+using Apq.Cfg.Toml;
+var cfg = new CfgBuilder()
+    .AddToml("config.toml", level: 0, writeable: true)
+    .Build();
+
+// Redis 配置
+using Apq.Cfg.Redis;
+var cfg = new CfgBuilder()
+    .AddRedis(options =>
+    {
+        options.ConnectionString = "localhost:6379";
+        options.KeyPrefix = "config:";
+    }, level: 1)
+    .Build();
+
+// 数据库配置
+using Apq.Cfg.Database;
+var cfg = new CfgBuilder()
+    .AddDatabase(options =>
+    {
+        options.Provider = "MySql"; // SqlServer/MySql/PostgreSql/Oracle/SQLite
+        options.ConnectionString = "Server=localhost;Database=config;...";
+        options.Table = "AppConfig";
+        options.KeyColumn = "Key";
+        options.ValueColumn = "Value";
+    }, level: 0, isPrimaryWriter: true)
+    .Build();
+```
+
+## API 参考
 
 ### ICfgRoot
 
@@ -377,13 +382,11 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
 
-    // 转换（静态快照）
+    // 转换
     IConfigurationRoot ToMicrosoftConfiguration();
-
-    // 转换（支持动态重载）
     IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options);
 
-    // 配置变更事件（Rx 可观察序列）
+    // 配置变更事件
     IObservable<ConfigChangeEvent> ConfigChanges { get; }
 }
 ```
@@ -408,30 +411,57 @@ public interface ICfgSection
 
 ### CfgBuilder
 
-配置构建器，用于组合多个配置源。
+配置构建器方法：
+
+| 方法                                                          | 说明                     |
+| ------------------------------------------------------------- | ------------------------ |
+| `AddJson(path, level, writeable, ...)`                        | 添加 JSON 配置源         |
+| `AddEnvironmentVariables(level, prefix)`                      | 添加环境变量配置源       |
+| `AddSource(ICfgSource)`                                       | 添加自定义配置源         |
+| `AddReadEncodingMapping(path, encoding, priority)`            | 添加读取映射（完整路径） |
+| `AddReadEncodingMappingWildcard(pattern, encoding, priority)` | 添加读取映射（通配符）   |
+| `AddReadEncodingMappingRegex(pattern, encoding, priority)`    | 添加读取映射（正则）     |
+| `AddWriteEncodingMapping(path, encoding, priority)`           | 添加写入映射（完整路径） |
+| `AddWriteEncodingMappingWildcard(pattern, encoding, priority)`| 添加写入映射（通配符）   |
+| `AddWriteEncodingMappingRegex(pattern, encoding, priority)`   | 添加写入映射（正则）     |
+| `ConfigureEncodingMapping(Action<EncodingMappingConfig>)`     | 高级编码映射配置         |
+| `WithEncodingConfidenceThreshold(float)`                      | 设置置信度阈值           |
+| `WithEncodingDetectionLogging(Action<EncodingDetectionResult>)`| 启用检测日志            |
+| `Build()`                                                     | 构建配置根实例           |
+
+### EncodingOptions
+
+编码选项配置：
 
 ```csharp
-var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true)
-    .AddEnvironmentVariables(level: 2)
-    .Build();
-```
+public sealed class EncodingOptions
+{
+    // 预定义选项
+    public static readonly EncodingOptions Default;      // 默认配置
+    public static readonly EncodingOptions PowerShell;   // PowerShell 脚本配置（UTF-8 BOM）
 
-### FileCfgSourceBase
+    // 读取策略
+    public EncodingReadStrategy ReadStrategy { get; set; }  // AutoDetect, Specified, Preserve
 
-文件配置源基类，提供编码检测和统一写入编码功能。
+    // 写入策略
+    public EncodingWriteStrategy WriteStrategy { get; set; } // Utf8NoBom, Utf8WithBom, Preserve, Specified
 
-```csharp
-// 写入编码：UTF-8 无 BOM
-public static readonly Encoding WriteEncoding = new UTF8Encoding(false);
+    // 指定的读取/写入编码
+    public Encoding? ReadEncoding { get; set; }
+    public Encoding? WriteEncoding { get; set; }
 
-// 编码检测置信度阈值（可调整，默认 0.6）
-// 也可通过环境变量 APQ_CFG_ENCODING_CONFIDENCE 设置
-public static float EncodingConfidenceThreshold { get; set; } = 0.6f;
+    // 回退编码（自动检测失败时使用），默认 UTF-8
+    public Encoding FallbackEncoding { get; set; }
 
-// 检测文件编码
-public static Encoding DetectEncoding(string path);
+    // 编码检测置信度阈值（0.0-1.0），默认 0.6
+    public float ConfidenceThreshold { get; set; }
+
+    // 是否启用编码检测缓存，默认 true
+    public bool EnableCache { get; set; }
+
+    // 是否启用编码检测日志，默认 false
+    public bool EnableLogging { get; set; }
+}
 ```
 
 ## 扩展开发
@@ -459,17 +489,48 @@ public interface IWritableCfgSource : ICfgSource
 builder.AddSource(new MyCustomCfgSource(...));
 ```
 
+## 项目结构
+
+```text
+Apq.Cfg/
+├── ICfgRoot.cs              # 配置根接口
+├── MergedCfgRoot.cs         # 合并配置根实现
+├── CfgBuilder.cs            # 配置构建器
+├── CfgRootExtensions.cs     # 扩展方法
+├── Changes/                 # 配置变更相关
+│   ├── ChangeType.cs
+│   ├── ConfigChange.cs
+│   ├── ConfigChangeEvent.cs
+│   └── DynamicReloadOptions.cs
+├── EncodingSupport/         # 编码支持
+│   ├── EncodingDetector.cs      # 编码检测器
+│   ├── EncodingDetectionResult.cs
+│   ├── EncodingMapping.cs       # 编码映射规则
+│   └── EncodingOptions.cs       # 编码选项配置
+├── Internal/                # 内部实现
+│   ├── ChangeCoordinator.cs
+│   ├── MergedConfigurationProvider.cs
+│   └── MergedConfigurationSource.cs
+└── Sources/                 # 配置源
+    ├── ICfgSource.cs
+    ├── JsonFileCfgSource.cs
+    ├── File/
+    │   └── FileCfgSourceBase.cs
+    └── Environment/
+        └── EnvVarsCfgSource.cs
+```
+
 ## 依赖项
 
-| 包名 | 用途 |
-| ---- | ---- |
-| Microsoft.Extensions.Configuration | 配置基础设施 |
-| Microsoft.Extensions.Configuration.Abstractions | 配置抽象接口 |
-| Microsoft.Extensions.Configuration.Binder | 配置绑定功能 |
-| Microsoft.Extensions.Configuration.Json | JSON 配置支持 |
-| Microsoft.Extensions.Configuration.EnvironmentVariables | 环境变量支持 |
+| 包名                                                | 用途                 |
+| --------------------------------------------------- | -------------------- |
+| Microsoft.Extensions.Configuration                  | 配置基础设施         |
+| Microsoft.Extensions.Configuration.Abstractions     | 配置抽象接口         |
+| Microsoft.Extensions.Configuration.Binder           | 配置绑定功能         |
+| Microsoft.Extensions.Configuration.Json             | JSON 配置支持        |
+| Microsoft.Extensions.Configuration.EnvironmentVariables | 环境变量支持     |
 | [UTF.Unknown](https://github.com/CharsetDetector/UTF-unknown) | 文件编码自动检测 |
-| [System.Reactive](https://github.com/dotnet/reactive) | Reactive Extensions 支持配置变更订阅 |
+| [System.Reactive](https://github.com/dotnet/reactive) | 配置变更订阅       |
 
 ## 许可证
 

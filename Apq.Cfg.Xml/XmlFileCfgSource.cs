@@ -39,7 +39,7 @@ internal sealed class XmlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         var doc = new XmlDocument();
         if (File.Exists(_path))
         {
-            var readEncoding = DetectEncoding(_path);
+            var readEncoding = DetectEncodingEnhanced(_path);
             using var sr = new StreamReader(_path, readEncoding, true);
             doc.Load(sr);
         }
@@ -55,7 +55,7 @@ internal sealed class XmlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
             SetXmlByColonKey(doc, key, value);
 
         using var ms = new MemoryStream();
-        using (var writer = XmlWriter.Create(ms, new XmlWriterSettings { Indent = true, Encoding = WriteEncoding }))
+        using (var writer = XmlWriter.Create(ms, new XmlWriterSettings { Indent = true, Encoding = GetWriteEncoding() }))
         {
             doc.Save(writer);
         }

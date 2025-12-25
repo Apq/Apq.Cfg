@@ -7,15 +7,10 @@ using UtfUnknown;
 namespace Apq.Cfg.Sources.File;
 
 /// <summary>
-/// 文件配置源基类，提供编码检测和统一写入编码
+/// 文件配置源基类，提供编码检测和写入编码功能
 /// </summary>
 public abstract class FileCfgSourceBase : ICfgSource, IDisposable
 {
-    /// <summary>
-    /// 写入时统一使用的编码：UTF-8 无 BOM（向后兼容）
-    /// </summary>
-    public static readonly System.Text.Encoding WriteEncoding = new UTF8Encoding(false);
-
     /// <summary>
     /// 全局编码检测器实例
     /// </summary>
@@ -133,19 +128,6 @@ public abstract class FileCfgSourceBase : ICfgSource, IDisposable
         // 4. 检查映射配置（包括通配符、正则等）
         var mappedEncoding = EncodingDetector.GetWriteEncoding(_path);
         return mappedEncoding;
-    }
-
-    /// <summary>
-    /// 检测文件编码（用于读取）- 向后兼容的静态方法
-    /// 使用 UTF.Unknown 库进行智能编码检测，支持各种编码格式
-    /// </summary>
-    public static System.Text.Encoding DetectEncoding(string path)
-    {
-        if (!System.IO.File.Exists(path)) return System.Text.Encoding.UTF8;
-
-        // 使用增强检测器
-        var result = EncodingDetector.Detect(path);
-        return result.Encoding;
     }
 
     public void Dispose()

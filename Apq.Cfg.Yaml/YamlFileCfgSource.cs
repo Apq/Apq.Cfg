@@ -37,7 +37,7 @@ internal sealed class YamlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         var yaml = new YamlStream();
         if (File.Exists(_path))
         {
-            var readEncoding = DetectEncoding(_path);
+            var readEncoding = DetectEncodingEnhanced(_path);
             using var sr = new StreamReader(_path, readEncoding, true);
             yaml.Load(sr);
         }
@@ -51,7 +51,7 @@ internal sealed class YamlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         foreach (var (key, val) in changes)
             SetYamlByColonKey(root, key, val);
 
-        using var writer = new StreamWriter(_path, false, WriteEncoding);
+        using var writer = new StreamWriter(_path, false, GetWriteEncoding());
         yaml.Save(writer, false);
         await writer.FlushAsync().ConfigureAwait(false);
     }
