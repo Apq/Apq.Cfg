@@ -34,9 +34,11 @@ internal sealed class MergedCfgRoot : ICfgRoot
     private int _disposed; // 改为 int 以支持 Interlocked
     private readonly IConfigurationRoot _merged;
     private readonly Subject<ConfigChangeEvent> _configChangesSubject;
+    private readonly Subject<ReloadErrorEvent> _reloadErrorSubject;
     private ChangeCoordinator? _coordinator;
     private IConfigurationRoot? _dynamicConfig;
     private readonly object _dynamicConfigLock = new();
+    private DynamicReloadOptions? _dynamicReloadOptions;
 
     // 缓存排序后的层级列表，避免每次 Get() 都排序
     private readonly int[] _levelsDescending;
@@ -49,6 +51,7 @@ internal sealed class MergedCfgRoot : ICfgRoot
         var groups = sortedSources.GroupBy(s => s.Level).ToList();
         _levelData = new Dictionary<int, LevelData>(groups.Count);
         _configChangesSubject = new Subject<ConfigChangeEvent>();
+        _reloadErrorSubject = new Subject<ReloadErrorEvent>();
 
         foreach (var group in groups)
         {
@@ -68,8 +71,16 @@ internal sealed class MergedCfgRoot : ICfgRoot
 
     public IObservable<ConfigChangeEvent> ConfigChanges => _configChangesSubject.AsObservable();
 
+    /// <summary>
+    /// 重载错误事件（Rx 可观察序列）
+    /// </summary>
+    public IObservable<ReloadErrorEvent> ReloadErrors => _reloadErrorSubject.AsObservable();
+
     public string? Get(string key)
     {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
         // 使用缓存的降序层级数组，避免每次排序
         foreach (var level in _levelsDescending)
         {
@@ -81,6 +92,9 @@ internal sealed class MergedCfgRoot : ICfgRoot
 
     public T? Get<T>(string key)
     {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
         // 先检查 Pending 中是否有待保存的值，与 Get(string) 行为一致
         foreach (var level in _levelsDescending)
         {
@@ -96,6 +110,9 @@ internal sealed class MergedCfgRoot : ICfgRoot
 
     public bool Exists(string key)
     {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
         // 使用缓存的层级数组
         foreach (var level in _levelsDescending)
         {
@@ -159,6 +176,35 @@ internal sealed class MergedCfgRoot : ICfgRoot
             _merged[key] = value;
     }
 
+    /// <summary>
+    /// 手动触发配置重载（用于 Manual 和 Lazy 策略）
+    /// </summary>
+    public void Reload()
+    {
+        _coordinator?.Reload();
+    }
+
+    /// <summary>
+    /// 检查是否有待处理的配置变更
+    /// </summary>
+    public bool HasPendingChanges => _coordinator?.HasPendingChanges ?? false;
+
+    /// <summary>
+    /// 获取配置变更历史记录
+    /// </summary>
+    public IReadOnlyList<ConfigChangeEvent> GetChangeHistory()
+    {
+        return _coordinator?.GetHistory() ?? Array.Empty<ConfigChangeEvent>();
+    }
+
+    /// <summary>
+    /// 清空配置变更历史记录
+    /// </summary>
+    public void ClearChangeHistory()
+    {
+        _coordinator?.ClearHistory();
+    }
+
     public IConfigurationRoot ToMicrosoftConfiguration() => _merged;
 
     public IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options)
@@ -172,6 +218,8 @@ internal sealed class MergedCfgRoot : ICfgRoot
         {
             if (_dynamicConfig != null)
                 return _dynamicConfig;
+
+            _dynamicReloadOptions = options;
 
             // 使用缓存的 providers 数组和层级数组，避免 LINQ 开销
             var providers = new List<(int Level, IConfigurationProvider Provider)>();
@@ -194,11 +242,15 @@ internal sealed class MergedCfgRoot : ICfgRoot
             var initialSnapshot = new Dictionary<string, string?>();
             CollectAllKeys(_merged, string.Empty, initialSnapshot);
 
-            // 创建协调器
-            _coordinator = new ChangeCoordinator(providers, options.DebounceMs, initialSnapshot);
+            // 创建协调器，传递完整选项
+            _coordinator = new ChangeCoordinator(providers, options.DebounceMs, initialSnapshot, options);
             _coordinator.OnMergedChanges += changes =>
             {
                 _configChangesSubject.OnNext(new ConfigChangeEvent(changes));
+            };
+            _coordinator.OnReloadError += errorEvent =>
+            {
+                _reloadErrorSubject.OnNext(errorEvent);
             };
 
             // 创建动态配置
@@ -237,6 +289,8 @@ internal sealed class MergedCfgRoot : ICfgRoot
         _coordinator?.Dispose();
         _configChangesSubject.OnCompleted();
         _configChangesSubject.Dispose();
+        _reloadErrorSubject.OnCompleted();
+        _reloadErrorSubject.Dispose();
 
         foreach (var levelData in _levelData.Values)
         foreach (var source in levelData.Sources)
@@ -259,6 +313,8 @@ internal sealed class MergedCfgRoot : ICfgRoot
         _coordinator?.Dispose();
         _configChangesSubject.OnCompleted();
         _configChangesSubject.Dispose();
+        _reloadErrorSubject.OnCompleted();
+        _reloadErrorSubject.Dispose();
 
         foreach (var levelData in _levelData.Values)
         foreach (var source in levelData.Sources)

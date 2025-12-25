@@ -1,4 +1,3 @@
-using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using Apq.Cfg.Changes;
@@ -24,6 +23,12 @@ internal sealed class ChangeCoordinator : IDisposable
     private readonly int _debounceMs;
     private static readonly string[] s_emptyStringArray = Array.Empty<string>(); // 缓存空数组
 
+    // 新增：配置选项
+    private readonly DynamicReloadOptions _options;
+    private readonly Queue<ConfigChangeEvent> _history; // 变更历史
+    private readonly object _historyLock = new();
+    private bool _hasPendingChanges; // Lazy 模式：标记是否有待处理变更
+
     // 对象池：复用 GetProviderKeys 中的集合
     [ThreadStatic]
     private static HashSet<string>? t_keysSet;
@@ -37,11 +42,23 @@ internal sealed class ChangeCoordinator : IDisposable
     /// </summary>
     public event Action<IReadOnlyDictionary<string, ConfigChange>>? OnMergedChanges;
 
+    /// <summary>
+    /// 当重载发生错误时触发
+    /// </summary>
+    public event Action<ReloadErrorEvent>? OnReloadError;
+
+    /// <summary>
+    /// 当合并后的配置发生变化时触发（异步版本）
+    /// </summary>
+    public event Func<IReadOnlyDictionary<string, ConfigChange>, Task>? OnMergedChangesAsync;
+
     public ChangeCoordinator(
         IEnumerable<(int Level, IConfigurationProvider Provider)> providers,
         int debounceMs = 100,
-        IReadOnlyDictionary<string, string?>? initialSnapshot = null)
+        IReadOnlyDictionary<string, string?>? initialSnapshot = null,
+        DynamicReloadOptions? options = null)
     {
+        _options = options ?? new DynamicReloadOptions();
         _debounceMs = debounceMs;
         _providers = providers.OrderBy(p => p.Level).ToList();
         _providersByLevel = _providers.ToDictionary(p => p.Level, p => p.Provider);
@@ -52,6 +69,7 @@ internal sealed class ChangeCoordinator : IDisposable
         _pendingChangeLevels = new HashSet<int>();
         _processingChangeLevels = new HashSet<int>(); // 初始化双缓冲集合
         _debounceTimer = new Timer(OnDebounceElapsed, null, Timeout.Infinite, Timeout.Infinite);
+        _history = new Queue<ConfigChangeEvent>();
 
         // 初始化快照
         if (initialSnapshot != null)
@@ -144,7 +162,60 @@ internal sealed class ChangeCoordinator : IDisposable
         lock (_lock)
         {
             _pendingChangeLevels.Add(level);
-            _debounceTimer.Change(_debounceMs, Timeout.Infinite);
+
+            // 根据重载策略决定行为
+            switch (_options.Strategy)
+            {
+                case ReloadStrategy.Eager:
+                    // 立即重载（防抖后）
+                    _debounceTimer.Change(_debounceMs, Timeout.Infinite);
+                    break;
+
+                case ReloadStrategy.Lazy:
+                    // 标记有待处理变更，访问时再处理
+                    _hasPendingChanges = true;
+                    break;
+
+                case ReloadStrategy.Manual:
+                    // 不自动处理，等待手动调用 Reload()
+                    _hasPendingChanges = true;
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 手动触发重载（用于 Manual 和 Lazy 策略）
+    /// </summary>
+    public void Reload()
+    {
+        if (Volatile.Read(ref _disposed) != 0) return;
+
+        HashSet<int> levelsToProcess;
+        lock (_lock)
+        {
+            if (_pendingChangeLevels.Count == 0) return;
+            levelsToProcess = new HashSet<int>(_pendingChangeLevels);
+            _pendingChangeLevels.Clear();
+            _hasPendingChanges = false;
+        }
+
+        ProcessPendingChangesWithErrorHandling(levelsToProcess);
+    }
+
+    /// <summary>
+    /// 检查是否有待处理的变更（用于 Lazy 策略）
+    /// </summary>
+    public bool HasPendingChanges => _hasPendingChanges;
+
+    /// <summary>
+    /// 确保配置是最新的（用于 Lazy 策略，访问前调用）
+    /// </summary>
+    public void EnsureLatest()
+    {
+        if (_options.Strategy == ReloadStrategy.Lazy && _hasPendingChanges)
+        {
+            Reload();
         }
     }
 
@@ -162,18 +233,47 @@ internal sealed class ChangeCoordinator : IDisposable
             _processingChangeLevels = levelsToProcess;
         }
 
+        ProcessPendingChangesWithErrorHandling(levelsToProcess);
+
+        // 处理完成后清空，为下次交换做准备
+        lock (_lock)
+        {
+            levelsToProcess.Clear();
+        }
+    }
+
+    private void ProcessPendingChangesWithErrorHandling(HashSet<int> changedLevels)
+    {
+        // 保存旧快照用于回滚
+        Dictionary<string, string?>? oldSnapshot = null;
+        if (_options.RollbackOnError)
+        {
+            oldSnapshot = new Dictionary<string, string?>(_mergedSnapshot);
+        }
+
         try
         {
-            ProcessPendingChanges(levelsToProcess);
+            ProcessPendingChanges(changedLevels);
         }
-        catch
+        catch (Exception ex)
         {
-            // 忽略处理异常，避免中断后续变更检测
-        }
-        finally
-        {
-            // 处理完成后清空，为下次交换做准备
-            levelsToProcess.Clear();
+            var rolledBack = false;
+
+            // 回滚到旧快照
+            if (_options.RollbackOnError && oldSnapshot != null)
+            {
+                _mergedSnapshot.Clear();
+                foreach (var (key, value) in oldSnapshot)
+                {
+                    if (value != null)
+                        _mergedSnapshot[key] = value;
+                }
+                rolledBack = true;
+            }
+
+            // 触发错误事件
+            var errorEvent = new ReloadErrorEvent(changedLevels, ex, rolledBack);
+            OnReloadError?.Invoke(errorEvent);
         }
     }
 
@@ -190,7 +290,35 @@ internal sealed class ChangeCoordinator : IDisposable
         var changes = ComputeMergedChanges(changedLevels);
 
         if (changes.Count > 0)
+        {
+            // 添加到历史记录
+            if (_options.HistorySize > 0)
+            {
+                var historyEvent = new ConfigChangeEvent(changes);
+                AddToHistory(historyEvent);
+            }
+
+            // 触发同步事件
             OnMergedChanges?.Invoke(changes);
+
+            // 触发异步事件
+            var asyncHandler = OnMergedChangesAsync;
+            if (asyncHandler != null)
+            {
+                // 在后台执行异步处理，不阻塞当前线程
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        await asyncHandler(changes).ConfigureAwait(false);
+                    }
+                    catch
+                    {
+                        // 忽略异步处理器的异常
+                    }
+                });
+            }
+        }
     }
 
     private IReadOnlyDictionary<string, ConfigChange> ComputeMergedChanges(IReadOnlySet<int> changedLevels)
@@ -216,9 +344,17 @@ internal sealed class ChangeCoordinator : IDisposable
         // 预估变更数量：通常只有少量键会变化
         var changes = new Dictionary<string, ConfigChange>(Math.Min(affectedKeys.Count, 32));
 
+        // 获取键前缀过滤器
+        var filters = _options.KeyPrefixFilters;
+        var hasFilters = filters != null && filters.Count > 0;
+
         // 2. 对每个受影响的键，重新计算最终合并值
         foreach (var key in affectedKeys)
         {
+            // 应用键前缀过滤器
+            if (hasFilters && !MatchesAnyPrefix(key, filters!))
+                continue;
+
             var oldValue = _mergedSnapshot.GetValueOrDefault(key);
             var newValue = ComputeFinalValue(key);
 
@@ -243,6 +379,16 @@ internal sealed class ChangeCoordinator : IDisposable
         }
 
         return changes;
+    }
+
+    private static bool MatchesAnyPrefix(string key, IReadOnlyList<string> prefixes)
+    {
+        foreach (var prefix in prefixes)
+        {
+            if (key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+        return false;
     }
 
     private string? ComputeFinalValue(string key)
@@ -308,6 +454,44 @@ internal sealed class ChangeCoordinator : IDisposable
     /// 获取当前合并快照（只读视图，无复制开销）
     /// </summary>
     public IReadOnlyDictionary<string, string?> GetSnapshot() => _snapshotWrapper;
+
+    /// <summary>
+    /// 获取变更历史记录
+    /// </summary>
+    public IReadOnlyList<ConfigChangeEvent> GetHistory()
+    {
+        lock (_historyLock)
+        {
+            return _history.ToArray();
+        }
+    }
+
+    /// <summary>
+    /// 清空变更历史记录
+    /// </summary>
+    public void ClearHistory()
+    {
+        lock (_historyLock)
+        {
+            _history.Clear();
+        }
+    }
+
+    private void AddToHistory(ConfigChangeEvent changeEvent)
+    {
+        if (_options.HistorySize <= 0) return;
+
+        lock (_historyLock)
+        {
+            _history.Enqueue(changeEvent);
+
+            // 保持历史记录在限制范围内
+            while (_history.Count > _options.HistorySize)
+            {
+                _history.Dequeue();
+            }
+        }
+    }
 
     public void Dispose()
     {

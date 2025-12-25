@@ -25,22 +25,47 @@ services.AddApqCfg(cfg => cfg
 
 ---
 
-## 2. 动态重载实现 ⭐⭐⭐⭐ → ⭐⭐⭐⭐⭐
+## 2. 动态重载实现 ⭐⭐⭐⭐ → ⭐⭐⭐⭐⭐ ✅ 已完成
 
-| 改进点 | 说明 |
-|--------|------|
-| **可配置的重载策略** | 支持 Eager（立即）/ Lazy（访问时）/ Manual（手动）三种模式 |
-| **变更过滤器** | 支持只监听特定 key 前缀的变更，减少不必要的通知 |
-| **变更批次 ID** | 为每次变更事件添加唯一 ID，便于追踪和日志 |
-| **重载失败回滚** | 配置源加载失败时保留旧值，而非清空 |
-| **异步事件处理** | `OnMergedChanges` 改为 `Func<..., Task>` 支持异步订阅者 |
-| **变更历史** | 可选的变更历史记录，支持查询最近 N 次变更 |
+| 改进点 | 说明 | 状态 |
+|--------|------|------|
+| **可配置的重载策略** | 支持 Eager（立即）/ Lazy（访问时）/ Manual（手动）三种模式 | ✅ 已实现 |
+| **变更过滤器** | 支持只监听特定 key 前缀的变更，减少不必要的通知 | ✅ 已实现 |
+| **变更批次 ID** | 为每次变更事件添加唯一 ID，便于追踪和日志 | ✅ 已实现 |
+| **重载失败回滚** | 配置源加载失败时保留旧值，而非清空 | ✅ 已实现 |
+| **异步事件处理** | `OnMergedChangesAsync` 支持异步订阅者 | ✅ 已实现 |
+| **变更历史** | 可选的变更历史记录，支持查询最近 N 次变更 | ✅ 已实现 |
+
+### 使用示例
 
 ```csharp
-// 示例：变更过滤器
-cfg.ConfigChanges
-   .Where(e => e.Changes.Keys.Any(k => k.StartsWith("Database:")))
-   .Subscribe(e => RefreshDbConnection());
+// 配置动态重载选项
+var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
+{
+    DebounceMs = 100,                           // 防抖时间
+    Strategy = ReloadStrategy.Eager,            // 重载策略：Eager/Lazy/Manual
+    KeyPrefixFilters = new[] { "Database:" },   // 只监听 Database: 前缀的变更
+    RollbackOnError = true,                     // 重载失败时回滚
+    HistorySize = 10                            // 保留最近 10 次变更历史
+});
+
+// 订阅变更事件（带批次 ID）
+cfg.ConfigChanges.Subscribe(e =>
+{
+    Console.WriteLine($"[{e.BatchId}] {e.Timestamp}: {e.Changes.Count} 个配置变更");
+});
+
+// 订阅重载错误事件
+cfg.ReloadErrors.Subscribe(e =>
+{
+    Console.WriteLine($"重载失败: {e.Exception.Message}, 已回滚: {e.RolledBack}");
+});
+
+// 手动重载（Manual 策略）
+cfg.Reload();
+
+// 获取变更历史
+var history = cfg.GetChangeHistory();
 ```
 
 ---
@@ -119,8 +144,8 @@ public partial class DatabaseConfig
 
 ### 阶段二：稳定性增强
 
-- [ ] 重载失败回滚机制
-- [ ] 变更批次 ID 和日志
+- [x] 重载失败回滚机制 ✅ 2025-12-25
+- [x] 变更批次 ID 和日志 ✅ 2025-12-25
 - [ ] 编码检测缓存
 
 ### 阶段三：性能提升
@@ -133,7 +158,16 @@ public partial class DatabaseConfig
 
 - [ ] Source Generator 强类型配置
 - [ ] 配置验证框架
-- [ ] 变更历史记录
+- [x] 变更历史记录 ✅ 2025-12-25
+
+### 已完成的动态重载改进（2025-12-25）
+
+- [x] 可配置的重载策略（Eager/Lazy/Manual）
+- [x] 变更过滤器（KeyPrefixFilters）
+- [x] 变更批次 ID（BatchId）
+- [x] 重载失败回滚（RollbackOnError）
+- [x] 异步事件处理（OnMergedChangesAsync）
+- [x] 变更历史记录（HistorySize）
 
 ---
 

@@ -187,6 +187,10 @@ public class DynamicReloadTests : IDisposable
         // Assert
         Assert.Equal(100, options.DebounceMs);
         Assert.True(options.EnableDynamicReload);
+        Assert.Equal(ReloadStrategy.Eager, options.Strategy);
+        Assert.Null(options.KeyPrefixFilters);
+        Assert.True(options.RollbackOnError);
+        Assert.Equal(0, options.HistorySize);
     }
 
     [Fact]
@@ -274,5 +278,161 @@ public class DynamicReloadTests : IDisposable
         Assert.Equal(ChangeType.Removed, removed.Type);
         Assert.Equal("Old", removed.OldValue);
         Assert.Null(removed.NewValue);
+    }
+
+    // ========== 新增测试：变更批次 ID ==========
+
+    [Fact]
+    public void ConfigChangeEvent_HasUniqueBatchId()
+    {
+        // Arrange
+        var changes = new Dictionary<string, ConfigChange>
+        {
+            ["Key"] = new ConfigChange("Key", "Old", "New", ChangeType.Modified)
+        };
+
+        // Act
+        var evt1 = new ConfigChangeEvent(changes);
+        var evt2 = new ConfigChangeEvent(changes);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, evt1.BatchId);
+        Assert.NotEqual(Guid.Empty, evt2.BatchId);
+        Assert.NotEqual(evt1.BatchId, evt2.BatchId);
+    }
+
+    [Fact]
+    public void ConfigChangeEvent_WithExplicitBatchId_UsesProvidedValue()
+    {
+        // Arrange
+        var explicitBatchId = Guid.NewGuid();
+        var changes = new Dictionary<string, ConfigChange>
+        {
+            ["Key"] = new ConfigChange("Key", null, "Value", ChangeType.Added)
+        };
+
+        // Act
+        var evt = new ConfigChangeEvent(changes, DateTimeOffset.Now, explicitBatchId);
+
+        // Assert
+        Assert.Equal(explicitBatchId, evt.BatchId);
+    }
+
+    // ========== 新增测试：重载策略 ==========
+
+    [Fact]
+    public void ReloadStrategy_AllValuesExist()
+    {
+        // Assert
+        Assert.Equal(0, (int)ReloadStrategy.Eager);
+        Assert.Equal(1, (int)ReloadStrategy.Lazy);
+        Assert.Equal(2, (int)ReloadStrategy.Manual);
+    }
+
+    [Fact]
+    public void DynamicReloadOptions_CanSetStrategy()
+    {
+        // Arrange & Act
+        var options = new DynamicReloadOptions
+        {
+            Strategy = ReloadStrategy.Manual
+        };
+
+        // Assert
+        Assert.Equal(ReloadStrategy.Manual, options.Strategy);
+    }
+
+    // ========== 新增测试：键前缀过滤器 ==========
+
+    [Fact]
+    public void DynamicReloadOptions_CanSetKeyPrefixFilters()
+    {
+        // Arrange & Act
+        var options = new DynamicReloadOptions
+        {
+            KeyPrefixFilters = new[] { "Database:", "Logging:" }
+        };
+
+        // Assert
+        Assert.NotNull(options.KeyPrefixFilters);
+        Assert.Equal(2, options.KeyPrefixFilters.Count);
+        Assert.Contains("Database:", options.KeyPrefixFilters);
+        Assert.Contains("Logging:", options.KeyPrefixFilters);
+    }
+
+    // ========== 新增测试：重载错误事件 ==========
+
+    [Fact]
+    public void ReloadErrorEvent_ContainsAllProperties()
+    {
+        // Arrange
+        var affectedLevels = new HashSet<int> { 0, 1 };
+        var exception = new InvalidOperationException("Test error");
+
+        // Act
+        var evt = new ReloadErrorEvent(affectedLevels, exception, rolledBack: true);
+
+        // Assert
+        Assert.NotNull(evt.AffectedLevels);
+        Assert.Equal(2, evt.AffectedLevels.Count);
+        Assert.Contains(0, evt.AffectedLevels);
+        Assert.Contains(1, evt.AffectedLevels);
+        Assert.Same(exception, evt.Exception);
+        Assert.True(evt.RolledBack);
+        Assert.True(evt.Timestamp <= DateTimeOffset.Now);
+    }
+
+    [Fact]
+    public void ReloadErrorEvent_RolledBackFalse_WhenNotRolledBack()
+    {
+        // Arrange
+        var affectedLevels = new HashSet<int> { 0 };
+        var exception = new Exception("Test");
+
+        // Act
+        var evt = new ReloadErrorEvent(affectedLevels, exception, rolledBack: false);
+
+        // Assert
+        Assert.False(evt.RolledBack);
+    }
+
+    // ========== 新增测试：变更历史 ==========
+
+    [Fact]
+    public void DynamicReloadOptions_CanSetHistorySize()
+    {
+        // Arrange & Act
+        var options = new DynamicReloadOptions
+        {
+            HistorySize = 10
+        };
+
+        // Assert
+        Assert.Equal(10, options.HistorySize);
+    }
+
+    // ========== 新增测试：回滚选项 ==========
+
+    [Fact]
+    public void DynamicReloadOptions_RollbackOnError_DefaultTrue()
+    {
+        // Arrange & Act
+        var options = new DynamicReloadOptions();
+
+        // Assert
+        Assert.True(options.RollbackOnError);
+    }
+
+    [Fact]
+    public void DynamicReloadOptions_CanDisableRollback()
+    {
+        // Arrange & Act
+        var options = new DynamicReloadOptions
+        {
+            RollbackOnError = false
+        };
+
+        // Assert
+        Assert.False(options.RollbackOnError);
     }
 }
