@@ -25,6 +25,10 @@ var cfg = new CfgBuilder()
         options.Database = 0;
     }, level: 1, isPrimaryWriter: true)
     .Build();
+
+// 读取配置
+var connStr = cfg.Get("Database:ConnectionString");
+var timeout = cfg.Get<int>("Database:Timeout");
 ```
 
 ## 方法签名

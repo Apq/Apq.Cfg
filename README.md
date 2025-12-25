@@ -38,6 +38,8 @@ Apq.Cfg/
 - 多层级配置合并
 - 可写配置与热重载
 - **动态配置重载**（支持文件变更自动检测、防抖、增量更新）
+- **配置节（GetSection）**：支持按路径获取配置子节，简化嵌套配置访问
+- **依赖注入集成**：提供 `AddApqCfg` 和 `ConfigureApqCfg<T>` 扩展方法
 - 线程安全（支持多线程并发读写）
 - Microsoft.Extensions.Configuration 兼容
 - Reactive Extensions (Rx) 支持配置变更订阅
@@ -59,6 +61,17 @@ var cfg = new CfgBuilder()
 
 // 读取配置
 var value = cfg.Get("Database:ConnectionString");
+
+// 使用配置节简化嵌套访问
+var dbSection = cfg.GetSection("Database");
+var host = dbSection.Get("Host");
+var port = dbSection.Get<int>("Port");
+
+// 枚举配置节的子键
+foreach (var key in dbSection.GetChildKeys())
+{
+    Console.WriteLine($"{key}: {dbSection.Get(key)}");
+}
 
 // 修改配置
 cfg.Set("App:LastRun", DateTime.Now.ToString());
@@ -110,6 +123,40 @@ cfg.ConfigChanges.Subscribe(e =>
 - **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
 - **多源支持**：支持多个配置源同时存在的场景
 
+### 依赖注入集成
+
+支持与 Microsoft.Extensions.DependencyInjection 无缝集成：
+
+```csharp
+using Apq.Cfg;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+var services = new ServiceCollection();
+
+// 注册 Apq.Cfg 配置
+services.AddApqCfg(cfg => cfg
+    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true));
+
+// 绑定强类型配置
+services.ConfigureApqCfg<DatabaseOptions>("Database");
+services.ConfigureApqCfg<LoggingOptions>("Logging");
+
+var provider = services.BuildServiceProvider();
+
+// 通过 DI 获取配置
+var cfgRoot = provider.GetRequiredService<ICfgRoot>();
+var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+
+public class DatabaseOptions
+{
+    public string? Host { get; set; }
+    public int Port { get; set; }
+    public string? Name { get; set; }
+}
+```
+
 ## 构建与测试
 
 ```bash
@@ -126,7 +173,7 @@ dotnet run -c Release
 
 ## 测试覆盖情况
 
-### 测试统计（共 175 个测试）
+### 测试统计（共 199 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -146,6 +193,8 @@ dotnet run -c Release
 | BoundaryConditionTests | 32 | 边界条件测试 |
 | ExceptionHandlingTests | 20 | 异常处理测试 |
 | ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
+| CfgSectionTests | 14 | 配置节（GetSection/GetChildKeys）测试 |
+| ServiceCollectionExtensionsTests | 10 | 依赖注入扩展测试 |
 
 ### 公开 API 覆盖矩阵
 
@@ -164,6 +213,8 @@ dotnet run -c Release
 | `ToMicrosoftConfiguration()` | ✅ | - | - | - | - | - | - | - |
 | `ToMicrosoftConfiguration(options)` | ✅ | - | - | - | - | - | - | - |
 | `ConfigChanges` | ✅ | - | - | - | - | - | - | - |
+| `GetSection(path)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - |
+| `GetChildKeys()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - |
 | `Dispose/DisposeAsync` | ✅ | - | - | - | - | - | - | - |
 | **CfgBuilder** |
 | `AddJson()` | ✅ | - | - | - | - | - | - | - |
@@ -184,6 +235,9 @@ dotnet run -c Release
 | `AddToml()` | - | - | - | - | - | ✅ | - | - |
 | `AddRedis()` | - | - | - | - | - | - | ✅ | - |
 | `AddDatabase()` | - | - | - | - | - | - | - | ✅ |
+| **依赖注入扩展** |
+| `AddApqCfg()` | ✅ | - | - | - | - | - | - | - |
+| `ConfigureApqCfg<T>()` | ✅ | - | - | - | - | - | - | - |
 | **多层级覆盖** |
 | 高层级覆盖低层级 | ✅ | ✅ | - | - | - | - | ✅ | ✅ |
 
@@ -201,6 +255,8 @@ dotnet run -c Release
 | 异常处理 | ExceptionHandlingTests | 20 |
 | 动态重载 | DynamicReloadTests | 12 |
 | 变更订阅 | ConfigChangesSubscriptionTests | 28 |
+| 配置节访问 | CfgSectionTests | 14 |
+| 依赖注入 | ServiceCollectionExtensionsTests | 10 |
 
 ### 测试覆盖率
 
@@ -210,9 +266,9 @@ dotnet run -c Release
 
 | 框架 | 测试数量 | 状态 | 测试日期 |
 |------|----------|------|----------|
-| .NET 6.0 | 175 | ✅ 全部通过 | 2025-12-24 |
-| .NET 8.0 | 175 | ✅ 全部通过 | 2025-12-24 |
-| .NET 9.0 | 175 | ✅ 全部通过 | 2025-12-24 |
+| .NET 6.0 | 199 | ✅ 全部通过 | 2025-12-25 |
+| .NET 8.0 | 199 | ✅ 全部通过 | 2025-12-25 |
+| .NET 9.0 | 199 | ✅ 全部通过 | 2025-12-25 |
 
 ## 性能测试结果
 

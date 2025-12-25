@@ -88,51 +88,10 @@ internal sealed class MergedCfgRoot : ICfgRoot
             {
                 if (pendingValue == null) return default;
                 // Pending 中有值但还未保存，需要手动转换
-                return ConvertValue<T>(pendingValue);
+                return ValueConverter.Convert<T>(pendingValue);
             }
         }
         return _merged.GetValue<T>(key);
-    }
-
-    private static T? ConvertValue<T>(string value)
-    {
-        // 常用类型特化处理，避免反射开销
-        if (typeof(T) == typeof(string))
-            return (T)(object)value;
-
-        if (typeof(T) == typeof(int))
-            return int.TryParse(value, out var intVal) ? (T)(object)intVal : default;
-
-        if (typeof(T) == typeof(bool))
-            return bool.TryParse(value, out var boolVal) ? (T)(object)boolVal : default;
-
-        if (typeof(T) == typeof(long))
-            return long.TryParse(value, out var longVal) ? (T)(object)longVal : default;
-
-        if (typeof(T) == typeof(double))
-            return double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var doubleVal) ? (T)(object)doubleVal : default;
-
-        if (typeof(T) == typeof(decimal))
-            return decimal.TryParse(value, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var decimalVal) ? (T)(object)decimalVal : default;
-
-        // 可空类型和其他类型走通用路径
-        var targetType = typeof(T);
-        var underlyingType = Nullable.GetUnderlyingType(targetType) ?? targetType;
-
-        if (underlyingType == typeof(string))
-            return (T)(object)value;
-
-        if (underlyingType.IsEnum)
-            return (T)Enum.Parse(underlyingType, value, ignoreCase: true);
-
-        try
-        {
-            return (T)Convert.ChangeType(value, underlyingType, System.Globalization.CultureInfo.InvariantCulture);
-        }
-        catch
-        {
-            return default;
-        }
     }
 
     public bool Exists(string key)
@@ -144,6 +103,16 @@ internal sealed class MergedCfgRoot : ICfgRoot
                 return pendingValue != null;
         }
         return _merged[key] != null;
+    }
+
+    public ICfgSection GetSection(string key)
+    {
+        return new CfgSection(this, _merged, key);
+    }
+
+    public IEnumerable<string> GetChildKeys()
+    {
+        return _merged.GetChildren().Select(c => c.Key);
     }
 
     public void Remove(string key, int? targetLevel = null)

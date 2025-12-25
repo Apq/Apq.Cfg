@@ -41,6 +41,8 @@ Apq.Cfg/
 - **可写配置**：支持配置修改并持久化到指定配置源
 - **热重载**：文件配置源支持变更自动重载
 - **动态配置重载**：支持文件变更自动检测、防抖、增量更新
+- **配置节（GetSection）**：支持按路径获取配置子节，简化嵌套配置访问
+- **依赖注入集成**：提供 `AddApqCfg` 和 `ConfigureApqCfg<T>` 扩展方法
 - **Reactive Extensions (Rx) 支持**：通过 `ConfigChanges` 订阅配置变更事件
 - **Microsoft.Extensions.Configuration 兼容**：可无缝转换为标准配置接口
 
@@ -95,6 +97,17 @@ var cfg = new CfgBuilder()
 // 读取配置
 var connectionString = cfg.Get("Database:ConnectionString");
 var timeout = cfg.Get<int>("Database:Timeout");
+
+// 使用配置节简化嵌套访问
+var dbSection = cfg.GetSection("Database");
+var host = dbSection.Get("Host");
+var port = dbSection.Get<int>("Port");
+
+// 枚举配置节的子键
+foreach (var key in dbSection.GetChildKeys())
+{
+    Console.WriteLine($"{key}: {dbSection.Get(key)}");
+}
 
 // 检查配置是否存在
 if (cfg.Exists("Feature:Enabled"))
@@ -307,6 +320,40 @@ cfg.ConfigChanges.Subscribe(e =>
 - **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
 - **多源支持**：支持多个配置源同时存在的场景
 
+## 依赖注入集成
+
+支持与 Microsoft.Extensions.DependencyInjection 无缝集成：
+
+```csharp
+using Apq.Cfg;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+var services = new ServiceCollection();
+
+// 注册 Apq.Cfg 配置
+services.AddApqCfg(cfg => cfg
+    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true));
+
+// 绑定强类型配置
+services.ConfigureApqCfg<DatabaseOptions>("Database");
+services.ConfigureApqCfg<LoggingOptions>("Logging");
+
+var provider = services.BuildServiceProvider();
+
+// 通过 DI 获取配置
+var cfgRoot = provider.GetRequiredService<ICfgRoot>();
+var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+
+public class DatabaseOptions
+{
+    public string? Host { get; set; }
+    public int Port { get; set; }
+    public string? Name { get; set; }
+}
+```
+
 ## 核心类型
 
 ### ICfgRoot
@@ -321,6 +368,10 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     T? Get<T>(string key);
     bool Exists(string key);
 
+    // 配置节
+    ICfgSection GetSection(string path);
+    IEnumerable<string> GetChildKeys();
+
     // 写入
     void Set(string key, string? value, int? targetLevel = null);
     void Remove(string key, int? targetLevel = null);
@@ -334,6 +385,24 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 
     // 配置变更事件（Rx 可观察序列）
     IObservable<ConfigChangeEvent> ConfigChanges { get; }
+}
+```
+
+### ICfgSection
+
+配置节接口，提供对配置子节的访问。
+
+```csharp
+public interface ICfgSection
+{
+    string Path { get; }
+    string? Get(string key);
+    T? Get<T>(string key);
+    bool Exists(string key);
+    void Set(string key, string? value);
+    void Remove(string key);
+    ICfgSection GetSection(string path);
+    IEnumerable<string> GetChildKeys();
 }
 ```
 

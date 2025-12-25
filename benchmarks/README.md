@@ -27,7 +27,8 @@ benchmarks/
     ├── MultiSourceBenchmarks.cs          # 多源合并测试
     ├── KeyPathBenchmarks.cs              # 键路径深度测试
     ├── TypeConversionBenchmarks.cs       # 类型转换测试
-    └── CacheBenchmarks.cs                # 缓存效果测试
+    ├── CacheBenchmarks.cs                # 缓存效果测试
+    └── GetSectionBenchmarks.cs           # 配置节访问测试
 ```
 
 ## 基准测试类说明
@@ -166,6 +167,19 @@ benchmarks/
 | WriteInvalidation | WriteAndRead_SameKey, WriteAndRead_DifferentKeys, BatchWrite_ThenBatchRead |
 | FirstAccess | FirstAccess_NewKey, SubsequentAccess_Warmed |
 
+### 10. GetSectionBenchmarks - 配置节访问测试
+
+测试 GetSection 和 GetChildKeys 操作的性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| GetSection | Json/Ini/Xml/Yaml/Toml_GetSection（基本配置节获取） |
+| GetSectionNested | Json/Ini/Xml/Yaml/Toml_GetSection_Nested（嵌套配置节获取） |
+| GetSectionThenGet | Json/Ini/Xml/Yaml/Toml_GetSection_ThenGet（配置节 + 读取组合） |
+| GetChildKeys | Json/Ini/Xml/Yaml/Toml_GetChildKeys（根级子键枚举） |
+| SectionGetChildKeys | Json/Ini/Xml/Yaml/Toml_Section_GetChildKeys（配置节子键枚举） |
+| DirectVsSection | Json_DirectGet vs Json_SectionGet（直接访问 vs 配置节访问对比） |
+
 ## 运行基准测试
 
 > **说明**：以下所有命令均在**项目根目录**执行。
@@ -244,17 +258,18 @@ benchmarks/Apq.Cfg.Benchmarks/
 
 ## 测试覆盖矩阵
 
-| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 |
-|--------|-----|-----|--------|--------|------|------|------|----------|
-| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ |
-| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - |
-| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - |
-| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - |
-| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - |
-| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ |
-| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ |
-| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ |
-| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - |
+| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection |
+|--------|-----|-----|--------|--------|------|------|------|----------|------------|
+| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - |
+| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - |
+| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - |
+| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - |
+| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - |
+| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - |
+| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - |
+| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - |
+| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - |
+| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ |
 
 ## 注意事项
 

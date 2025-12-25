@@ -20,6 +20,16 @@ using Apq.Cfg.Ini;
 var cfg = new CfgBuilder()
     .AddIni("config.ini", level: 0, writeable: true)
     .Build();
+
+// 使用配置节访问
+var dbSection = cfg.GetSection("Database");
+var connStr = dbSection.Get("ConnectionString");
+
+// 枚举子键
+foreach (var key in dbSection.GetChildKeys())
+{
+    Console.WriteLine($"{key}: {dbSection.Get(key)}");
+}
 ```
 
 ## 方法签名

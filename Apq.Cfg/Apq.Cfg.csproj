@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <RootNamespace>Apq.Cfg</RootNamespace>
-        <Description>统一配置管理核心库，支持 JSON、环境变量，多层级配置合并，智能编码检测</Description>
+        <Description>统一配置管理核心库，支持 JSON、环境变量，多层级配置合并，智能编码检测，依赖注入</Description>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +11,8 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsVersion)"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsVersion)"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsVersion)"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="$(MicrosoftExtensionsVersion)"/>
         <PackageReference Include="System.Reactive" Version="6.0.1"/>
         <PackageReference Include="UTF.Unknown" Version="2.6.0"/>
     </ItemGroup>

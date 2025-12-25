@@ -13,6 +13,18 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     T? Get<T>(string key);
     bool Exists(string key);
 
+    /// <summary>
+    /// 获取配置节
+    /// </summary>
+    /// <param name="key">节的键名（如 "Database"）</param>
+    /// <returns>配置节对象</returns>
+    ICfgSection GetSection(string key);
+
+    /// <summary>
+    /// 获取所有顶级配置键
+    /// </summary>
+    IEnumerable<string> GetChildKeys();
+
     // 写入方法
     void Set(string key, string? value, int? targetLevel = null);
     void Remove(string key, int? targetLevel = null);
