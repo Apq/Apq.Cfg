@@ -127,7 +127,7 @@ public class SourceGeneratorBenchmarks
         return SgSimpleOptions.BindFrom(_simpleSection);
     }
 
-    [Benchmark(Description = "Reflection_SimpleTypes", Baseline = true)]
+    [Benchmark(Description = "Reflection_SimpleTypes")]
     [BenchmarkCategory("Simple")]
     public ReflectionSimpleOptions Reflection_SimpleTypes()
     {
@@ -170,7 +170,7 @@ public class SourceGeneratorBenchmarks
         return SgNestedOptions.BindFrom(_nestedSection);
     }
 
-    [Benchmark(Description = "Reflection_NestedObject", Baseline = true)]
+    [Benchmark(Description = "Reflection_NestedObject")]
     [BenchmarkCategory("Nested")]
     public ReflectionNestedOptions Reflection_NestedObject()
     {
@@ -213,7 +213,7 @@ public class SourceGeneratorBenchmarks
         return SgArrayOptions.BindFrom(_arraySection);
     }
 
-    [Benchmark(Description = "Reflection_Array", Baseline = true)]
+    [Benchmark(Description = "Reflection_Array")]
     [BenchmarkCategory("Array")]
     public ReflectionArrayOptions Reflection_Array()
     {
@@ -256,7 +256,7 @@ public class SourceGeneratorBenchmarks
         return SgDictionaryOptions.BindFrom(_dictionarySection);
     }
 
-    [Benchmark(Description = "Reflection_Dictionary", Baseline = true)]
+    [Benchmark(Description = "Reflection_Dictionary")]
     [BenchmarkCategory("Dictionary")]
     public ReflectionDictionaryOptions Reflection_Dictionary()
     {
@@ -299,7 +299,7 @@ public class SourceGeneratorBenchmarks
         return SgComplexOptions.BindFrom(_complexSection);
     }
 
-    [Benchmark(Description = "Reflection_ComplexObject", Baseline = true)]
+    [Benchmark(Description = "Reflection_ComplexObject")]
     [BenchmarkCategory("Complex")]
     public ReflectionComplexOptions Reflection_ComplexObject()
     {
@@ -344,7 +344,7 @@ public class SourceGeneratorBenchmarks
         return options;
     }
 
-    [Benchmark(Description = "Reflection_BindTo", Baseline = true)]
+    [Benchmark(Description = "Reflection_BindTo")]
     [BenchmarkCategory("BindTo")]
     public ReflectionSimpleOptions Reflection_BindTo()
     {
