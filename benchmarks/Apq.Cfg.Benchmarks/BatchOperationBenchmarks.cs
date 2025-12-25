@@ -37,11 +37,11 @@ public class BatchOperationBenchmarks : IDisposable
     {
         var jsonPath = Path.Combine(_testDir, "config.json");
 
-        // 生成包含 100 个键的配置
+        // 生成包含 100 个键的配置（使用数字字符串以支持类型转换测试）
         var content = "{\n  \"Data\": {\n";
         for (int i = 0; i < 100; i++)
         {
-            content += $"    \"Key{i}\": \"Value{i}\"";
+            content += $"    \"Key{i}\": \"{i}\"";
             if (i < 99) content += ",";
             content += "\n";
         }
