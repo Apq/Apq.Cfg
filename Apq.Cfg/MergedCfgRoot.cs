@@ -148,6 +148,89 @@ internal sealed class MergedCfgRoot : ICfgRoot
         data.Pending[key] = value;
     }
 
+    public void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
+    {
+        var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
+        if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)
+            throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
+
+        foreach (var kvp in values)
+        {
+            data.Pending[kvp.Key] = kvp.Value;
+        }
+    }
+
+    public IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        var result = new Dictionary<string, string?>();
+        foreach (var key in keys)
+        {
+            string? value = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    value = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                value = _merged[key];
+            }
+
+            result[key] = value;
+        }
+        return result;
+    }
+
+    public IReadOnlyDictionary<string, T?> GetMany<T>(IEnumerable<string> keys)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        var result = new Dictionary<string, T?>();
+        foreach (var key in keys)
+        {
+            string? rawValue = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    rawValue = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                rawValue = _merged[key];
+            }
+
+            if (rawValue == null)
+            {
+                result[key] = default;
+            }
+            else
+            {
+                result[key] = ValueConverter.Convert<T>(rawValue);
+            }
+        }
+        return result;
+    }
+
     public async Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default)
     {
         var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));

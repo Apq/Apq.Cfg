@@ -30,6 +30,29 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
 
+    // 批量操作方法
+    /// <summary>
+    /// 批量获取多个配置值，减少锁竞争
+    /// </summary>
+    /// <param name="keys">要获取的键集合</param>
+    /// <returns>键值对字典</returns>
+    IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys);
+
+    /// <summary>
+    /// 批量获取多个配置值并转换为指定类型
+    /// </summary>
+    /// <typeparam name="T">目标类型</typeparam>
+    /// <param name="keys">要获取的键集合</param>
+    /// <returns>键值对字典</returns>
+    IReadOnlyDictionary<string, T?> GetMany<T>(IEnumerable<string> keys);
+
+    /// <summary>
+    /// 批量设置多个配置值，减少锁竞争
+    /// </summary>
+    /// <param name="values">要设置的键值对</param>
+    /// <param name="targetLevel">目标层级</param>
+    void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
+
     // 转换方法
     /// <summary>
     /// 转换为 Microsoft Configuration（静态快照）

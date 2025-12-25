@@ -70,16 +70,16 @@ var history = cfg.GetChangeHistory();
 
 ---
 
-## 3. 性能优化 ⭐⭐⭐⭐ → ⭐⭐⭐⭐⭐
+## 3. 性能优化 ⭐⭐⭐⭐ → ⭐⭐⭐⭐⭐ ✅ 部分完成
 
-| 改进点 | 说明 |
-|--------|------|
-| **值缓存** | 对 `Get<T>` 的类型转换结果进行缓存，避免重复解析 |
-| **Span/Memory 优化** | 键路径解析使用 `ReadOnlySpan<char>` 避免字符串分配 |
-| **对象池** | 使用 `ArrayPool<T>` 替代 `ThreadStatic`，更好的内存复用 |
-| **批量操作 API** | 添加 `GetMany(keys)` / `SetMany(dict)` 减少锁竞争 |
-| **冷热数据分离** | 高频访问的 key 使用更快的数据结构（如 FrozenDictionary .NET 8+） |
-| **Source Generator** | 使用源生成器在编译时生成强类型配置类，零反射 |
+| 改进点 | 说明 | 状态 |
+|--------|------|------|
+| **值缓存** | 对 `Get<T>` 的类型转换结果进行缓存，避免重复解析 | ✅ 已实现 |
+| **Span/Memory 优化** | 键路径解析使用 `ReadOnlySpan<char>` 避免字符串分配 | ✅ 已实现 |
+| **对象池** | 使用 `ArrayPool<T>` 替代 `ThreadStatic`，更好的内存复用 | 待实现 |
+| **批量操作 API** | 添加 `GetMany(keys)` / `SetMany(dict)` 减少锁竞争 | ✅ 已实现 |
+| **冷热数据分离** | 高频访问的 key 使用更快的数据结构（如 FrozenDictionary .NET 8+） | ✅ 已实现 |
+| **Source Generator** | 使用源生成器在编译时生成强类型配置类，零反射 | 待实现 |
 
 ```csharp
 // 示例：批量操作
@@ -150,9 +150,10 @@ public partial class DatabaseConfig
 
 ### 阶段三：性能提升
 
-- [ ] 批量操作 API
-- [ ] 值缓存机制
-- [ ] FrozenDictionary 支持（.NET 8+）
+- [x] 批量操作 API ✅ 2025-12-25
+- [x] 值缓存机制 ✅ 2025-12-25
+- [x] FrozenDictionary 支持（.NET 8+） ✅ 2025-12-25
+- [x] Span/Memory 键路径解析优化 ✅ 2025-12-25
 
 ### 阶段四：高级特性
 
@@ -168,6 +169,13 @@ public partial class DatabaseConfig
 - [x] 重载失败回滚（RollbackOnError）
 - [x] 异步事件处理（OnMergedChangesAsync）
 - [x] 变更历史记录（HistorySize）
+
+### 已完成的性能优化改进（2025-12-25）
+
+- [x] 值缓存机制（ValueCache）
+- [x] Span/Memory 键路径解析（KeyPathParser）
+- [x] 批量操作 API（GetMany/SetMany）
+- [x] FrozenDictionary 支持（FastCollections，.NET 8+）
 
 ---
 
