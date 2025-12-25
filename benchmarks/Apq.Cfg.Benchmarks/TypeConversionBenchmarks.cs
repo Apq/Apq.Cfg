@@ -316,6 +316,26 @@ public class TypeConversionBenchmarks : IDisposable
         return _cfg.GetRequired<int>("Types:Int");
     }
 
+    /// <summary>
+    /// GetOrDefault 存在键场景
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("Extensions")]
+    public int GetOrDefault_ExistingKey()
+    {
+        return _cfg.GetOrDefault("Types:Int", 0);
+    }
+
+    /// <summary>
+    /// GetOrDefault 不存在键场景
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("Extensions")]
+    public int GetOrDefault_NonExistingKey()
+    {
+        return _cfg.GetOrDefault("Types:NonExistent", 100);
+    }
+
     #endregion
 
     #region 混合类型操作

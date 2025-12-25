@@ -22,13 +22,15 @@ benchmarks/
     ├── # 操作性能测试
     ├── SaveBenchmarks.cs                 # 持久化性能测试
     ├── RemoveBenchmarks.cs               # 删除操作测试
+    ├── BatchOperationBenchmarks.cs       # 批量操作测试（GetMany/SetMany）
     │
     ├── # 高级场景测试
     ├── MultiSourceBenchmarks.cs          # 多源合并测试
     ├── KeyPathBenchmarks.cs              # 键路径深度测试
-    ├── TypeConversionBenchmarks.cs       # 类型转换测试
+    ├── TypeConversionBenchmarks.cs       # 类型转换测试（含扩展方法）
     ├── CacheBenchmarks.cs                # 缓存效果测试
-    └── GetSectionBenchmarks.cs           # 配置节访问测试
+    ├── GetSectionBenchmarks.cs           # 配置节访问测试
+    └── MicrosoftConfigBenchmarks.cs      # Microsoft Configuration 转换测试
 ```
 
 ## 基准测试类说明
@@ -151,7 +153,7 @@ benchmarks/
 | ComplexTypes | Get_Guid, Get_DateTime, Get_Enum, Get_NullableInt |
 | Batch | Get_*_Multiple（批量转换） |
 | SpecialValues | Get_LongString, Get_Unicode, Get_SpecialChars, Get_EmptyString |
-| Extensions | TryGet_Success/Failure, GetRequired_Success |
+| Extensions | TryGet_Success/Failure, GetRequired_Success, GetOrDefault_ExistingKey/NonExistingKey |
 | Mixed | Get_MixedTypes（混合类型读取） |
 
 ### 9. CacheBenchmarks - 缓存效果测试
@@ -180,6 +182,27 @@ benchmarks/
 | SectionGetChildKeys | Json/Ini/Xml/Yaml/Toml_Section_GetChildKeys（配置节子键枚举） |
 | DirectVsSection | Json_DirectGet vs Json_SectionGet（直接访问 vs 配置节访问对比） |
 
+### 11. BatchOperationBenchmarks - 批量操作测试
+
+测试 GetMany/SetMany 批量操作与单次循环操作的性能对比：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| GetMany | GetMany_10Keys/50Keys/100Keys vs Get_Loop_10Keys/50Keys/100Keys |
+| GetManyTyped | GetMany_Typed_10Keys vs Get_Typed_Loop_10Keys |
+| SetMany | SetMany_10Keys/50Keys/100Keys vs Set_Loop_10Keys/50Keys/100Keys |
+| Mixed | BatchRead_ThenBatchWrite vs LoopRead_ThenLoopWrite |
+
+### 12. MicrosoftConfigBenchmarks - Microsoft Configuration 转换测试
+
+测试 ToMicrosoftConfiguration 和 ConfigChanges 的性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| ToMsConfig | ToMicrosoftConfiguration_Static/Dynamic/Multiple |
+| ReadComparison | Read_ViaApqCfg vs Read_ViaMsConfig, BatchRead_ViaApqCfg vs BatchRead_ViaMsConfig |
+| ConfigChanges | Subscribe_ConfigChanges, Subscribe_AndTriggerChange, MultipleSubscribers |
+
 ## 运行基准测试
 
 > **说明**：以下所有命令均在**项目根目录**执行。
@@ -189,8 +212,8 @@ benchmarks/
 本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
-- **预计耗时**：全部测试约 **10 分钟**完成
-- **测试覆盖**：约 122 个测试方法 × 3 个运行时 = 366 个测试点
+- **预计耗时**：全部测试约 **15 分钟**完成
+- **测试覆盖**：约 150 个测试方法 × 3 个运行时 = 450 个测试点
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ### 基本运行
@@ -258,18 +281,20 @@ benchmarks/Apq.Cfg.Benchmarks/
 
 ## 测试覆盖矩阵
 
-| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection |
-|--------|-----|-----|--------|--------|------|------|------|----------|------------|
-| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - |
-| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - |
-| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - |
-| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - |
-| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - |
-| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - |
-| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - |
-| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - |
-| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - |
-| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ |
+| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges |
+|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|
+| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - |
+| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - |
+| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - |
+| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - |
+| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - |
+| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - |
+| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - |
+| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - |
+| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - |
+| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - |
+| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - |
+| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ |
 
 ## 注意事项
 

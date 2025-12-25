@@ -130,7 +130,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 |--------------|------|
 | ReadWriteBenchmarks | 不同配置源的 Get/Set/Exists 性能对比 |
 | CacheBenchmarks | 缓存效果测试（热路径、缓存命中/未命中）|
-| TypeConversionBenchmarks | 类型转换性能测试 |
+| TypeConversionBenchmarks | 类型转换性能测试（含 TryGet/GetRequired/GetOrDefault）|
 | ConcurrencyBenchmarks | 并发读写性能测试 |
 | GetSectionBenchmarks | GetSection/GetChildKeys 性能测试 |
 | SaveBenchmarks | SaveAsync 持久化性能测试 |
@@ -139,6 +139,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | LargeFileBenchmarks | 大文件配置性能测试 |
 | KeyPathBenchmarks | 键路径解析性能测试 |
 | BatchOperationBenchmarks | GetMany/SetMany 批量操作性能测试 |
+| MicrosoftConfigBenchmarks | ToMicrosoftConfiguration/ConfigChanges 性能测试 |
 
 运行性能测试：
 
