@@ -31,13 +31,24 @@
 # 核心库
 dotnet add package Apq.Cfg
 
-# 扩展包（按需安装）
+# 文件格式扩展（按需安装）
 dotnet add package Apq.Cfg.Ini
 dotnet add package Apq.Cfg.Xml
 dotnet add package Apq.Cfg.Yaml
 dotnet add package Apq.Cfg.Toml
+
+# 数据存储扩展
 dotnet add package Apq.Cfg.Redis
 dotnet add package Apq.Cfg.Database
+
+# 远程配置中心
+dotnet add package Apq.Cfg.Consul
+dotnet add package Apq.Cfg.Etcd
+dotnet add package Apq.Cfg.Apollo
+dotnet add package Apq.Cfg.Nacos
+
+# 源生成器（Native AOT 支持）
+dotnet add package Apq.Cfg.SourceGenerator
 ```
 
 ## 快速开始
@@ -318,6 +329,7 @@ public class DatabaseOptions
 | `Apq.Cfg.Etcd`     | Etcd 配置中心                  | dotnet-etcd                                   |
 | `Apq.Cfg.Nacos`    | Nacos 配置中心                 | 无（HTTP API）                                |
 | `Apq.Cfg.Apollo`   | Apollo 配置中心                | 无（HTTP API）                                |
+| `Apq.Cfg.SourceGenerator` | 源生成器，Native AOT 支持 | Microsoft.CodeAnalysis.CSharp                 |
 
 ### 使用扩展包示例
 
