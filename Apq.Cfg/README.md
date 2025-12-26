@@ -327,7 +327,7 @@ public class DatabaseOptions
 | `Apq.Cfg.Database` | 数据库扩展                     | SqlSugarCore                                  |
 | `Apq.Cfg.Consul`   | Consul 配置中心                | Consul                                        |
 | `Apq.Cfg.Etcd`     | Etcd 配置中心                  | dotnet-etcd                                   |
-| `Apq.Cfg.Nacos`    | Nacos 配置中心                 | 无（HTTP API）                                |
+| `Apq.Cfg.Nacos`    | Nacos 配置中心                 | nacos-sdk-csharp                              |
 | `Apq.Cfg.Apollo`   | Apollo 配置中心                | 无（HTTP API）                                |
 | `Apq.Cfg.SourceGenerator` | 源生成器，Native AOT 支持 | Microsoft.CodeAnalysis.CSharp                 |
 
