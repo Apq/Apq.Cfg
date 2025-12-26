@@ -9,21 +9,21 @@ echo "=========================================="
 echo "  Apq.Cfg CI/CD 打包发布脚本"
 echo "=========================================="
 
-# 项目列表
-PROJECTS=(
-    "Apq.Cfg/Apq.Cfg.csproj"
-    "Apq.Cfg.Ini/Apq.Cfg.Ini.csproj"
-    "Apq.Cfg.Xml/Apq.Cfg.Xml.csproj"
-    "Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj"
-    "Apq.Cfg.Toml/Apq.Cfg.Toml.csproj"
-    "Apq.Cfg.Redis/Apq.Cfg.Redis.csproj"
-    "Apq.Cfg.Database/Apq.Cfg.Database.csproj"
-    "Apq.Cfg.Consul/Apq.Cfg.Consul.csproj"
-    "Apq.Cfg.Etcd/Apq.Cfg.Etcd.csproj"
-    "Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj"
-    "Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj"
-    "Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj"
-)
+# 项目列表（POSIX 兼容写法）
+PROJECTS="
+Apq.Cfg/Apq.Cfg.csproj
+Apq.Cfg.Ini/Apq.Cfg.Ini.csproj
+Apq.Cfg.Xml/Apq.Cfg.Xml.csproj
+Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj
+Apq.Cfg.Toml/Apq.Cfg.Toml.csproj
+Apq.Cfg.Redis/Apq.Cfg.Redis.csproj
+Apq.Cfg.Database/Apq.Cfg.Database.csproj
+Apq.Cfg.Consul/Apq.Cfg.Consul.csproj
+Apq.Cfg.Etcd/Apq.Cfg.Etcd.csproj
+Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj
+Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj
+Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj
+"
 
 OUTPUT_DIR="./nupkgs"
 NUGET_SOURCE="https://api.nuget.org/v3/index.json"
@@ -42,7 +42,7 @@ echo ""
 echo "=========================================="
 echo "  步骤 1/3: 还原项目依赖"
 echo "=========================================="
-for project in "${PROJECTS[@]}"; do
+for project in $PROJECTS; do
     echo "还原: $project"
     dotnet restore "$project"
 done
@@ -52,7 +52,7 @@ echo ""
 echo "=========================================="
 echo "  步骤 2/3: 打包项目"
 echo "=========================================="
-for project in "${PROJECTS[@]}"; do
+for project in $PROJECTS; do
     echo "打包: $project"
     dotnet pack "$project" -c Release -o "$OUTPUT_DIR"
 done
