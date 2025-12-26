@@ -28,7 +28,7 @@
     <PackageTags>configuration;source-generator;roslyn;aot;codegen</PackageTags>
   </PropertyGroup>
 
-  <!-- Roslyn 依赖 -->
+  <!-- Roslyn 依赖 - 使用 4.3.0 以兼容更多编译器版本 -->
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" PrivateAssets="all" />

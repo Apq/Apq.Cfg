@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="SqlSugarCore" Version="5.1.4.210"/>
+        <PackageReference Include="SqlSugarCore" Version="5.1.4.211" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
     </ItemGroup>
 
 </Project>

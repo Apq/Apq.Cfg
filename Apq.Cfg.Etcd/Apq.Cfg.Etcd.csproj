@@ -5,12 +5,18 @@
         <Description>Apq.Cfg 的 Etcd 配置中心扩展，支持热重载</Description>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="dotnet-etcd" Version="7.2.0"/>
+    <!-- .NET 6.0/7.0 使用旧版本（8.x 不支持） -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net7.0'">
+        <PackageReference Include="dotnet-etcd" Version="7.2.0" />
+    </ItemGroup>
+
+    <!-- .NET 8.0+ 使用最新版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net9.0'">
+        <PackageReference Include="dotnet-etcd" Version="8.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
     </ItemGroup>
 
 </Project>

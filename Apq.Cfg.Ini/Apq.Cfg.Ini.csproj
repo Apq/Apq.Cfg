@@ -9,8 +9,24 @@
         <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="$(MicrosoftExtensionsVersion)"/>
+    <!-- .NET 6.0 使用 6.x 版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="6.0.0"/>
+    </ItemGroup>
+
+    <!-- .NET 7.0 使用 7.x 版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="7.0.0"/>
+    </ItemGroup>
+
+    <!-- .NET 8.0 使用 8.x 版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="8.0.0"/>
+    </ItemGroup>
+
+    <!-- .NET 9.0 使用 9.x 版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="9.0.0"/>
     </ItemGroup>
 
 </Project>

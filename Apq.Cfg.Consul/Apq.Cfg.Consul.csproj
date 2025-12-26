@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Consul" Version="1.7.14.4"/>
+        <PackageReference Include="Consul" Version="1.7.14.9" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
     </ItemGroup>
 
 </Project>
