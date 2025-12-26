@@ -15,6 +15,13 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <DevelopmentDependency>true</DevelopmentDependency>
 
+    <!-- 禁止生成符号包（源生成器通常不需要调试） -->
+    <!-- 如需调试支持，改为 true -->
+    <IncludeSymbols>false</IncludeSymbols>
+
+    <!-- 禁止依赖项组 -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+
     <!-- NuGet 包元数据 -->
     <RootNamespace>Apq.Cfg.SourceGenerator</RootNamespace>
     <Description>Apq.Cfg 源生成器，编译时生成强类型配置绑定代码，零反射</Description>
