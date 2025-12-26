@@ -3,6 +3,7 @@
     <PropertyGroup>
         <RootNamespace>Apq.Cfg.Etcd</RootNamespace>
         <Description>Apq.Cfg 的 Etcd 配置中心扩展，支持热重载</Description>
+        <PackageTags>configuration;config;etcd</PackageTags>
     </PropertyGroup>
 
     <!-- .NET 6.0/7.0 使用旧版本（8.x 不支持） -->

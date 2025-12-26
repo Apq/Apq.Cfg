@@ -3,6 +3,7 @@
     <PropertyGroup>
         <RootNamespace>Apq.Cfg.Database</RootNamespace>
         <Description>Apq.Cfg 的数据库配置源扩展，支持 SqlServer、MySQL、PostgreSQL、Oracle、SQLite</Description>
+        <PackageTags>configuration;config;database</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

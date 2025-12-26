@@ -3,6 +3,7 @@
     <PropertyGroup>
         <RootNamespace>Apq.Cfg.Ini</RootNamespace>
         <Description>Apq.Cfg 的 INI 文件配置源扩展</Description>
+        <PackageTags>configuration;config;ini</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

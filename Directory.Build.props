@@ -21,8 +21,6 @@
 
   <!-- Apq.Cfg 特定的 NuGet 包元数据 -->
   <PropertyGroup>
-    <Description>统一配置管理库，支持多种配置源</Description>
-    <PackageTags>configuration;config;json;yaml;toml;ini;xml;redis;database</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
