@@ -43,6 +43,11 @@
     <ProjectReference Include="..\..\Apq.Cfg.Redis\Apq.Cfg.Redis.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Database\Apq.Cfg.Database.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Zookeeper\Apq.Cfg.Zookeeper.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Apollo\Apq.Cfg.Apollo.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Consul\Apq.Cfg.Consul.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Etcd\Apq.Cfg.Etcd.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Nacos\Apq.Cfg.Nacos.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Vault\Apq.Cfg.Vault.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

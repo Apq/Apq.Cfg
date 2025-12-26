@@ -46,6 +46,7 @@
 | [Apq.Cfg.Nacos](https://www.nuget.org/packages/Apq.Cfg.Nacos) | Nacos 配置中心 |
 | [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo) | Apollo 配置中心 |
 | [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper) | Zookeeper 配置中心 |
+| [Apq.Cfg.Vault](https://www.nuget.org/packages/Apq.Cfg.Vault) | HashiCorp Vault 密钥管理 |
 | [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT |
 
 ## 快速开始
@@ -225,6 +226,7 @@ using Apq.Cfg.Consul;
 using Apq.Cfg.Etcd;
 using Apq.Cfg.Nacos;
 using Apq.Cfg.Apollo;
+using Apq.Cfg.Vault;
 
 // 使用 Consul 配置中心
 var cfg = CfgBuilder.Create()
@@ -294,6 +296,56 @@ var cfg5_json = CfgBuilder.Create()
     .AddZookeeperJson("localhost:2181", "/app/config.json", level: 10)
     .Build();
 
+// 使用 HashiCorp Vault 密钥管理（KV V2）
+var cfg6 = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddVaultV2(
+        address: "http://localhost:8200",
+        token: "s.1234567890abcdef",
+        enginePath: "kv",
+        path: "myapp/config",
+        level: 10,
+        enableHotReload: true
+    )
+    .Build();
+
+// 使用 Vault UserPass 认证
+var cfg6_userpass = CfgBuilder.Create()
+    .AddVaultUserPass(
+        address: "http://localhost:8200",
+        username: "myapp",
+        password: "secure-password",
+        enginePath: "kv",
+        path: "myapp/production",
+        kvVersion: 2,
+        level: 10
+    )
+    .Build();
+
+// 使用 Vault AppRole 认证
+var cfg6_approle = CfgBuilder.Create()
+    .AddVaultAppRole(
+        address: "http://localhost:8200",
+        roleId: "role-id-value",
+        roleSecret: "role-secret-value",
+        enginePath: "kv",
+        path: "myapp/staging",
+        kvVersion: 2,
+        level: 10
+    )
+    .Build();
+
+// Vault KV V1 引擎支持
+var cfg6_v1 = CfgBuilder.Create()
+    .AddVaultV1(
+        address: "http://localhost:8200",
+        token: "s.1234567890abcdef",
+        enginePath: "secret",
+        path: "myapp",
+        level: 10
+    )
+    .Build();
+
 // 订阅配置变更
 cfg.ConfigChanges.Subscribe(change => {
     Console.WriteLine($"配置变更: {change.Key} = {change.NewValue}");
@@ -309,6 +361,7 @@ cfg.ConfigChanges.Subscribe(change => {
 | **Nacos** | ✅ | JSON/YAML/Properties | ❌ | 支持命名空间、分组、多 DataId |
 | **Apollo** | ❌ | Properties | ✅ 长轮询 + 通知 | 支持多环境、集群、命名空间 |
 | **Zookeeper** | ✅ | KV/JSON | ✅ Watch API | 节点监听，支持会话管理 |
+| **Vault** | ✅ | KV (V1/V2) | ✅ 轮询 | 密钥管理，支持 Token/AppRole 认证 |
 
 ### 源生成器（Native AOT 支持）
 
@@ -423,6 +476,7 @@ Apq.Cfg.Etcd/                # Etcd 配置中心
 Apq.Cfg.Nacos/               # Nacos 配置中心
 Apq.Cfg.Apollo/              # Apollo 配置中心
 Apq.Cfg.Zookeeper/           # Zookeeper 配置中心
+Apq.Cfg.Vault/               # HashiCorp Vault 密钥管理
 Apq.Cfg.SourceGenerator/     # 源生成器（Native AOT 支持）
 tests/                       # 单元测试（290 个测试用例）
 benchmarks/                  # 性能基准测试（18 个测试类）

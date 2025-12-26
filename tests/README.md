@@ -25,7 +25,7 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 290 个测试）
+## 测试统计（共 294 个测试）
 
 | 测试类 | 测试数量 | 说明 |
 |--------|----------|------|
@@ -35,10 +35,14 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | XmlCfgTests | 5 | XML 文件配置源测试 |
 | YamlCfgTests | 6 | YAML 文件配置源测试 |
 | TomlCfgTests | 6 | TOML 文件配置源测试 |
-| RedisCfgTests | 5 | Redis 配置源测试 |
-| DatabaseCfgTests | 5 | 数据库配置源测试 |
+| RedisCfgTests | 5 | Redis 配置源测试（需要 Redis 服务）|
+| DatabaseCfgTests | 5 | 数据库配置源测试（需要数据库服务）|
+| ZookeeperCfgTests | 6 | Zookeeper 配置中心测试（需要 Zookeeper 服务）|
+| ApolloCfgTests | 6 | Apollo 配置中心测试（需要 Apollo 服务）|
 | ConsulCfgTests | 6 | Consul 配置中心测试（需要 Consul 服务）|
 | EtcdCfgTests | 6 | Etcd 配置中心测试（需要 Etcd 服务）|
+| NacosCfgTests | 6 | Nacos 配置中心测试（需要 Nacos 服务）|
+| VaultCfgTests | 8 | Vault 密钥管理测试（需要 Vault 服务）|
 | CfgRootExtensionsTests | 4 | 扩展方法测试（TryGet/GetRequired）|
 | CfgBuilderAdvancedTests | 14 | 高级功能测试 |
 | DynamicReloadTests | 22 | 动态配置重载测试 |
@@ -55,77 +59,86 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 
 ## 公开 API 覆盖矩阵
 
-| API | Json | Env | Ini | Xml | Yaml | Toml | Redis | DB | Consul | Etcd |
-|-----|:----:|:---:|:---:|:---:|:----:|:----:|:-----:|:--:|:------:|:----:|
+| API | Json | Env | Ini | Xml | Yaml | Toml | Redis | DB | Zk | Apollo | Consul | Etcd | Nacos | Vault |
+|-----|:----:|:---:|:---:|:---:|:----:|:----:|:-----:|:--:|:--:|:------:|:------:|:----:|:-----:|:-----:|
 | **ICfgRoot** |
-| `Get(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `Get<T>(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - | ✅ | ✅ |
-| `Exists(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `GetMany(keys)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `GetMany<T>(keys)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `GetMany(keys, callback)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `GetMany<T>(keys, callback)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `Set(key, value)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `SetMany(values)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `Set(key, value, targetLevel)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `Remove(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `Remove(key, targetLevel)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `SaveAsync()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `SaveAsync(targetLevel)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `ToMicrosoftConfiguration()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `ToMicrosoftConfiguration(options)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `ConfigChanges` | ✅ | - | - | - | - | - | - | - | ✅ | ✅ |
-| `GetSection(path)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - | - | - |
-| `GetChildKeys()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - | - | - |
-| `Dispose/DisposeAsync` | ✅ | - | - | - | - | - | - | - | ✅ | ✅ |
+| `Get(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Get<T>(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Exists(key)` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `GetMany(keys)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetMany<T>(keys)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetMany(keys, callback)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetMany<T>(keys, callback)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Set(key, value)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - | ✅ | ✅ | - | ✅ |
+| `SetMany(values)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Set(key, value, targetLevel)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Remove(key)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - | ✅ | ✅ | - | ✅ |
+| `Remove(key, targetLevel)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `SaveAsync()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | - | ✅ | ✅ | - | ✅ |
+| `SaveAsync(targetLevel)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ToMicrosoftConfiguration()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ToMicrosoftConfiguration(options)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ConfigChanges` | ✅ | - | - | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - |
+| `GetSection(path)` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - |
+| `GetChildKeys()` | ✅ | - | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - |
+| `Dispose/DisposeAsync` | ✅ | - | - | - | - | - | - | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **CfgBuilder** |
-| `AddJson()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - | - | - |
-| `AddSource()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `WithEncodingConfidenceThreshold()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `AddReadEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `AddWriteEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `ConfigureEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `WithEncodingDetectionLogging()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `Build()` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `AddJson()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddSource()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `WithEncodingConfidenceThreshold()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddReadEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddWriteEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ConfigureEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `WithEncodingDetectionLogging()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Build()` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **CfgRootExtensions** |
-| `TryGet<T>()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `GetOrDefault<T>()` | ✅ | - | - | - | - | - | - | - | - | - |
+| `TryGet<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetOrDefault<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **FileCfgSourceBase** |
-| `EncodingDetector` | ✅ | - | - | - | - | - | - | - | - | - |
-| `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - | - | - |
+| `EncodingDetector` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **扩展包** |
-| `AddIni()` | - | - | ✅ | - | - | - | - | - | - | - |
-| `AddXml()` | - | - | - | ✅ | - | - | - | - | - | - |
-| `AddYaml()` | - | - | - | - | ✅ | - | - | - | - | - |
-| `AddToml()` | - | - | - | - | - | ✅ | - | - | - | - |
-| `AddRedis()` | - | - | - | - | - | - | ✅ | - | - | - |
-| `AddDatabase()` | - | - | - | - | - | - | - | ✅ | - | - |
-| `AddConsul()` | - | - | - | - | - | - | - | - | ✅ | - |
-| `AddEtcd()` | - | - | - | - | - | - | - | - | - | ✅ |
+| `AddIni()` | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| `AddXml()` | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - |
+| `AddYaml()` | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
+| `AddToml()` | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
+| `AddRedis()` | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - |
+| `AddDatabase()` | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - |
+| `AddZookeeper()` | - | - | - | - | - | - | - | - | ✅ | - | - | - | - | - |
+| `AddApollo()` | - | - | - | - | - | - | - | - | - | ✅ | - | - | - | - |
+| `AddConsul()` | - | - | - | - | - | - | - | - | - | - | ✅ | - | - | - |
+| `AddEtcd()` | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
+| `AddNacos()` | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - |
+| `AddVault()` | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
+| `AddVaultV1()` | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
+| `AddVaultV2()` | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
 | **依赖注入扩展** |
-| `AddApqCfg()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `AddApqCfg<T>()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `ConfigureApqCfg<T>()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `ConfigureApqCfg<T>(onChange)` | ✅ | - | - | - | - | - | - | - | - | - |
-| `IOptions<T>` | ✅ | - | - | - | - | - | - | - | - | - |
-| `IOptionsMonitor<T>` | ✅ | - | - | - | - | - | - | - | - | - |
-| `IOptionsSnapshot<T>` | ✅ | - | - | - | - | - | - | - | - | - |
+| `AddApqCfg()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddApqCfg<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ConfigureApqCfg<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ConfigureApqCfg<T>(onChange)` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `IOptions<T>` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `IOptionsMonitor<T>` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `IOptionsSnapshot<T>` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **源生成器** |
-| `[CfgSection]` 特性 | ✅ | - | - | - | - | - | - | - | - | - |
-| `BindFrom()` | ✅ | - | - | - | - | - | - | - | - | - |
-| `BindTo()` | ✅ | - | - | - | - | - | - | - | - | - |
-| 简单类型绑定 | ✅ | - | - | - | - | - | - | - | - | - |
-| 嵌套对象绑定 | ✅ | - | - | - | - | - | - | - | - | - |
-| 数组绑定 | ✅ | - | - | - | - | - | - | - | - | - |
-| 列表绑定 | ✅ | - | - | - | - | - | - | - | - | - |
-| 字典绑定 | ✅ | - | - | - | - | - | - | - | - | - |
-| 枚举绑定 | ✅ | - | - | - | - | - | - | - | - | - |
+| `[CfgSection]` 特性 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `BindFrom()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `BindTo()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 简单类型绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 嵌套对象绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 数组绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 列表绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 字典绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| 枚举绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **多层级覆盖** |
-| 高层级覆盖低层级 | ✅ | ✅ | - | - | - | - | ✅ | ✅ | ✅ | ✅ |
+| 高层级覆盖低层级 | ✅ | ✅ | - | - | - | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-> 说明：`-` 表示该配置源不支持此功能（如环境变量只读）或该功能只需测试一次
+> 说明：
+> - `✅` 表示已有测试覆盖
+> - `-` 表示该配置源不支持此功能（如环境变量只读、Apollo/Nacos 通常只读）或该功能只需测试一次
+> - `Zk` = Zookeeper, `DB` = Database
 
 ## 测试场景覆盖
 

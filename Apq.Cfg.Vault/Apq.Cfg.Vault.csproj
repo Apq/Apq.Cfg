@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>1.0.5</Version>
+    <Authors>apq</Authors>
+    <Description>Apq.Cfg HashiCorp Vault 扩展，支持密钥管理和热重载</Description>
+    <PackageTags>configuration;vault;hashicorp;secrets;key-value</PackageTags>
+    <RepositoryUrl>https://gitee.com/apq/Apq.Cfg.git</RepositoryUrl>
+    <License>MIT</License>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="VaultSharp" Version="1.7.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+  </ItemGroup>
+
+</Project>
