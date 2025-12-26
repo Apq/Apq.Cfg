@@ -33,6 +33,11 @@ public static class TestSettings
     public static string? DatabaseProvider => _configuration["TestConnections:DatabaseProvider"];
 
     /// <summary>
+    /// Zookeeper 连接字符串
+    /// </summary>
+    public static string? ZookeeperConnectionString => _configuration["TestConnections:Zookeeper"];
+
+    /// <summary>
     /// 检查 Redis 连接是否已配置
     /// </summary>
     public static bool IsRedisConfigured => !string.IsNullOrWhiteSpace(RedisConnectionString);
@@ -43,4 +48,9 @@ public static class TestSettings
     public static bool IsDatabaseConfigured =>
         !string.IsNullOrWhiteSpace(DatabaseConnectionString) &&
         !string.IsNullOrWhiteSpace(DatabaseProvider);
+
+    /// <summary>
+    /// 检查 Zookeeper 连接是否已配置
+    /// </summary>
+    public static bool IsZookeeperConfigured => !string.IsNullOrWhiteSpace(ZookeeperConnectionString);
 }

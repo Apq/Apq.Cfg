@@ -45,6 +45,7 @@
 | [Apq.Cfg.Etcd](https://www.nuget.org/packages/Apq.Cfg.Etcd) | Etcd 配置中心 |
 | [Apq.Cfg.Nacos](https://www.nuget.org/packages/Apq.Cfg.Nacos) | Nacos 配置中心 |
 | [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo) | Apollo 配置中心 |
+| [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper) | Zookeeper 配置中心 |
 | [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT |
 
 ## 快速开始
@@ -216,7 +217,7 @@ public class DatabaseOptions
 
 ### 远程配置中心
 
-支持 Consul、Etcd、Nacos、Apollo 等远程配置中心，支持热重载：
+支持 Consul、Etcd、Nacos、Apollo、Zookeeper 等远程配置中心，支持热重载：
 
 ```csharp
 using Apq.Cfg;
@@ -272,6 +273,27 @@ var cfg4 = CfgBuilder.Create()
     }, level: 10)
     .Build();
 
+// 使用 Zookeeper 配置中心
+var cfg5 = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddZookeeper(options => {
+        options.ConnectionString = "localhost:2181";
+        options.RootPath = "/app/config";
+        options.EnableHotReload = true;  // 启用热重载
+    }, level: 10)
+    .Build();
+
+// Zookeeper 简化用法
+var cfg5_simple = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddZookeeper("localhost:2181", "/app/config", level: 10)
+    .Build();
+
+// Zookeeper JSON 模式
+var cfg5_json = CfgBuilder.Create()
+    .AddZookeeperJson("localhost:2181", "/app/config.json", level: 10)
+    .Build();
+
 // 订阅配置变更
 cfg.ConfigChanges.Subscribe(change => {
     Console.WriteLine($"配置变更: {change.Key} = {change.NewValue}");
@@ -286,6 +308,7 @@ cfg.ConfigChanges.Subscribe(change => {
 | **Etcd** | ✅ | KV/JSON | ✅ Watch API | 强一致性，支持前缀监听 |
 | **Nacos** | ✅ | JSON/YAML/Properties | ❌ | 支持命名空间、分组、多 DataId |
 | **Apollo** | ❌ | Properties | ✅ 长轮询 + 通知 | 支持多环境、集群、命名空间 |
+| **Zookeeper** | ✅ | KV/JSON | ✅ Watch API | 节点监听，支持会话管理 |
 
 ### 源生成器（Native AOT 支持）
 
@@ -366,7 +389,46 @@ dotnet run -c Release
 
 > 详细测试覆盖情况见 [tests/README.md](tests/README.md)
 
-> 详细性能测试结果见 [benchmarks/BENCHMARK_RESULTS.md](benchmarks/BENCHMARK_RESULTS.md)
+> 详细性能测试结果见 [benchmarks/性能测试对比分析_2025-12-25_223016_vs_2025-12-26_035103.md](benchmarks/性能测试对比分析_2025-12-25_223016_vs_2025-12-26_035103.md)
+
+## 性能亮点
+
+| 场景 | 性能指标 | 说明 |
+|------|----------|------|
+| **基本读写** | 17-22 ns | Get/Set 操作纳秒级响应 |
+| **类型转换** | 67-136 ns | 支持所有标准类型 |
+| **批量操作** | 零堆分配 | `GetMany(keys, callback)` 回调版本比返回字典版本快 43-50% |
+| **并发读取** | 14-19 μs (16线程) | 高并发场景性能提升 19% |
+| **缓存命中** | 1.5-1.7 μs | 缓存性能提升 12% |
+| **配置节** | 18-29 ns | GetSection 操作性能提升 10-15% |
+| **源生成器** | 2.1-2.7 μs | 比反射绑定快约 100 倍 |
+| **DI 解析** | 6-12 ns | Scoped 解析性能极佳 |
+| **编码检测** | 30-117 μs | UTF-8 加载性能提升 23% |
+| **热重载** | 防抖 + 增量 | 只重载变化的配置源 |
+
+**运行时建议**：推荐 .NET 8.0 或 .NET 9.0，性能比 .NET 6.0 提升 35-55%。
+
+## 项目结构
+
+```
+Apq.Cfg/                      # 核心库（JSON、环境变量、DI 集成）
+Apq.Cfg.Ini/                 # INI 格式支持
+Apq.Cfg.Xml/                 # XML 格式支持
+Apq.Cfg.Yaml/                # YAML 格式支持
+Apq.Cfg.Toml/                # TOML 格式支持
+Apq.Cfg.Redis/               # Redis 配置源
+Apq.Cfg.Database/            # 数据库配置源
+Apq.Cfg.Consul/              # Consul 配置中心
+Apq.Cfg.Etcd/                # Etcd 配置中心
+Apq.Cfg.Nacos/               # Nacos 配置中心
+Apq.Cfg.Apollo/              # Apollo 配置中心
+Apq.Cfg.Zookeeper/           # Zookeeper 配置中心
+Apq.Cfg.SourceGenerator/     # 源生成器（Native AOT 支持）
+tests/                       # 单元测试（290 个测试用例）
+benchmarks/                  # 性能基准测试（18 个测试类）
+docs/                        # 技术文档
+Samples/                     # 示例项目
+```
 
 ## 许可证
 
