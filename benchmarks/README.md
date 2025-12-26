@@ -36,7 +36,11 @@ benchmarks/
     ├── EncodingBenchmarks.cs             # 编码检测性能测试
     ├── ObjectBinderBenchmarks.cs         # 对象绑定性能测试（反射）
     ├── SourceGeneratorBenchmarks.cs      # 源生成器绑定性能测试（零反射）
-    └── DependencyInjectionBenchmarks.cs  # 依赖注入集成性能测试
+    ├── DependencyInjectionBenchmarks.cs  # 依赖注入集成性能测试
+    │
+    ├── # 远程配置中心测试
+    ├── ConsulBenchmarks.cs               # Consul 配置中心性能测试
+    └── EtcdBenchmarks.cs                 # Etcd 配置中心性能测试
 ```
 
 ## 运行基准测试
@@ -306,6 +310,30 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 | ICfgRoot | Resolve_ICfgRoot, Resolve_ICfgRoot_ThenGet |
 | 复杂对象 | Resolve_ComplexOptions, Resolve_MultipleOptions |
 
+### 17. ConsulBenchmarks - Consul 配置中心性能测试（需要 Consul 服务）
+
+测试 Consul 配置源的读写性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| 基本读写 | Consul_Get, Consul_Set, Consul_Exists, Consul_Remove |
+| 批量操作 | Consul_Get_Multiple, Consul_Set_Multiple |
+| 热重载 | Consul_Watch_ChangeDetection |
+
+> **注意**：需要运行 Consul 服务才能执行此测试。
+
+### 18. EtcdBenchmarks - Etcd 配置中心性能测试（需要 Etcd 服务）
+
+测试 Etcd 配置源的读写性能：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| 基本读写 | Etcd_Get, Etcd_Set, Etcd_Exists, Etcd_Remove |
+| 批量操作 | Etcd_Get_Multiple, Etcd_Set_Multiple |
+| 热重载 | Etcd_Watch_ChangeDetection |
+
+> **注意**：需要运行 Etcd 服务才能执行此测试。
+
 ## 测试配置说明
 
 本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
@@ -364,6 +392,8 @@ benchmarks/Apq.Cfg.Benchmarks/
 | ObjectBinderBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
 | SourceGeneratorBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - |
 | DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
+| ConsulBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - |
+| EtcdBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - |
 
 ## 注意事项
 

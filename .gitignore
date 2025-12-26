@@ -404,3 +404,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 NuGet_Apq_Key.txt
+nul

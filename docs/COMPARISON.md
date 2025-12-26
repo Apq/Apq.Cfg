@@ -13,6 +13,12 @@
 | **Apq.Cfg.Xml** | XML 文件扩展 |
 | **Apq.Cfg.Yaml** | YAML 文件扩展 |
 | **Apq.Cfg.Toml** | TOML 文件扩展 |
+| **Apq.Cfg.Redis** | Redis 配置源 |
+| **Apq.Cfg.Database** | 数据库配置源 |
+| **Apq.Cfg.Consul** | Consul 配置中心 |
+| **Apq.Cfg.Etcd** | Etcd 配置中心 |
+| **Apq.Cfg.Nacos** | Nacos 配置中心 |
+| **Apq.Cfg.Apollo** | Apollo 配置中心 |
 
 ### 核心 API
 
@@ -55,6 +61,7 @@
 6. **线程安全** - 使用 `ConcurrentDictionary` 和 `Interlocked` 操作
 7. **Microsoft.Extensions.Configuration 兼容** - 无缝转换为标准配置接口
 8. **依赖注入集成** - 提供 `AddApqCfg` 和 `ConfigureApqCfg<T>` 扩展方法
+9. **远程配置中心** - 支持 Consul、Etcd、Nacos、Apollo 等配置中心
 
 ---
 
@@ -101,8 +108,13 @@
 | IOptionsSnapshot<T> | ✅ | ✅ | ✅ | ✅ | ❌ |
 | 嵌套对象绑定 | ✅ | ✅ | ✅ | ✅ | ❌ |
 | 集合/数组绑定 | ✅ | ✅ | ✅ | ✅ | ❌ |
+| **远程配置中心** |
+| Consul 集成 | ✅ | ❌ | ❌ | ❌ | ✅ |
+| Etcd 集成 | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Nacos 集成 | ✅ | ❌ | ❌ | ✅ | ❌ |
+| Apollo 集成 | ✅ | ❌ | ✅ | ❌ | ❌ |
 | **分布式特性** |
-| 分布式一致性 | ❌ | ❌ | ✅ | ✅ | ✅ |
+| 分布式一致性 | ✅(通过集成) | ❌ | ✅ | ✅ | ✅ |
 | 管理界面 | ❌ | ❌ | ✅ | ✅ | ✅ |
 | 灰度发布 | ❌ | ❌ | ✅ | ✅ | ❌ |
 | 权限控制 | ❌ | ❌ | ✅ | ✅ | ✅ |
@@ -134,14 +146,15 @@
 | 维度 | Apq.Cfg | Apollo/Nacos |
 |------|---------|--------------|
 | **部署复杂度** | ✅ 零依赖，直接使用 | ❌ 需部署服务端 |
-| **分布式支持** | ❌ 本地配置 | ✅ 分布式配置中心 |
+| **分布式支持** | ✅ 通过扩展包集成 | ✅ 原生分布式配置中心 |
 | **管理界面** | ❌ 无 | ✅ Web 管理界面 |
 | **灰度发布** | ❌ 不支持 | ✅ 支持 |
 | **权限控制** | ❌ 无 | ✅ 完善 |
 | **性能** | ✅ 纳秒级读取 | ⚠️ 网络延迟 |
 | **离线可用** | ✅ 完全离线 | ⚠️ 需缓存 |
+| **统一 API** | ✅ 统一接口访问多种配置中心 | ❌ 各自独立 SDK |
 
-**评价**：Apq.Cfg 和 Apollo/Nacos 定位不同。Apq.Cfg 是轻量级本地配置库，适合单机应用或不需要分布式配置的场景。Apollo/Nacos 是企业级分布式配置中心，适合微服务架构。
+**评价**：Apq.Cfg 现在通过扩展包（Apq.Cfg.Nacos、Apq.Cfg.Apollo）支持集成 Apollo 和 Nacos 配置中心。这意味着你可以使用统一的 Apq.Cfg API 同时访问本地配置和远程配置中心，无需学习多套 SDK。
 
 ---
 
@@ -349,12 +362,13 @@ var snapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<Databas
 - 对性能有要求的高频配置读取场景
 - 需要处理多种编码的配置文件（如遗留系统迁移）
 - 需要 Rx 响应式配置变更订阅
+- 需要统一 API 访问多种远程配置中心（Consul、Etcd、Nacos、Apollo）
+- 需要本地配置与远程配置中心混合使用
 
 ❌ **不推荐使用**：
-- 需要分布式配置中心功能（推荐 Apollo/Nacos）
-- 需要配置审计、权限控制
-- 需要配置版本管理和回滚
-- 需要 Web 管理界面
+- 需要配置审计、权限控制（需配合配置中心使用）
+- 需要配置版本管理和回滚（需配合配置中心使用）
+- 需要 Web 管理界面（需配合配置中心使用）
 
 ### 与竞品定位对比
 
@@ -364,16 +378,22 @@ var snapshot = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<Databas
 MS.Extensions.Configuration (只读，标准)
         │
         ▼
-    Apq.Cfg (可写，功能丰富，本地配置)
+    Apq.Cfg (可写，功能丰富，本地 + 远程配置)
+        │
+        ├── Apq.Cfg.Consul (Consul 集成)
+        ├── Apq.Cfg.Etcd (Etcd 集成)
+        ├── Apq.Cfg.Nacos (Nacos 集成)
+        └── Apq.Cfg.Apollo (Apollo 集成)
         │
         ▼
-    Apollo / Nacos / Consul (分布式配置中心)
+    Apollo / Nacos / Consul (原生分布式配置中心)
 ```
 
-**Apq.Cfg 填补了 MS Configuration 和分布式配置中心之间的空白**：
+**Apq.Cfg 的独特定位**：
 - 比官方库更丰富的功能（可写、Rx、编码检测、批量操作）
 - 保持轻量级和高性能（纳秒级读取）
 - 无需部署额外服务，开箱即用
+- **统一 API 访问多种配置中心**：通过扩展包集成 Consul、Etcd、Nacos、Apollo
 
 ---
 
@@ -418,5 +438,5 @@ var msConfig = cfg.ToMicrosoftConfiguration();
 
 ---
 
-*分析日期：2025-12-25*
-*基于 Apq.Cfg v1.0.2*
+*分析日期：2025-12-26*
+*基于 Apq.Cfg v1.0.3*

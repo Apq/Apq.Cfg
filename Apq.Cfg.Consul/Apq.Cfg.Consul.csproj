@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Consul</RootNamespace>
+        <Description>Apq.Cfg 的 Consul 配置中心扩展，支持热重载</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Consul" Version="1.7.14.4"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+    </ItemGroup>
+
+</Project>

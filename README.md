@@ -9,6 +9,7 @@
 ## 特性
 
 - **多格式支持**：JSON、INI、XML、YAML、TOML、Redis、数据库
+- **远程配置中心**：支持 Consul、Etcd、Nacos、Apollo 等配置中心，支持热重载
 - **智能编码处理**：
   - 读取时自动检测（BOM 优先，UTF.Unknown 库辅助，支持缓存）
   - 写入时统一 UTF-8 无 BOM（PowerShell 脚本自动使用 UTF-8 BOM）
@@ -40,6 +41,10 @@
 | [Apq.Cfg.Toml](https://www.nuget.org/packages/Apq.Cfg.Toml) | TOML 格式支持 |
 | [Apq.Cfg.Redis](https://www.nuget.org/packages/Apq.Cfg.Redis) | Redis 配置源 |
 | [Apq.Cfg.Database](https://www.nuget.org/packages/Apq.Cfg.Database) | 数据库配置源 |
+| [Apq.Cfg.Consul](https://www.nuget.org/packages/Apq.Cfg.Consul) | Consul 配置中心 |
+| [Apq.Cfg.Etcd](https://www.nuget.org/packages/Apq.Cfg.Etcd) | Etcd 配置中心 |
+| [Apq.Cfg.Nacos](https://www.nuget.org/packages/Apq.Cfg.Nacos) | Nacos 配置中心 |
+| [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo) | Apollo 配置中心 |
 | [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT |
 
 ## 快速开始
@@ -208,6 +213,79 @@ public class DatabaseOptions
     public string? Name { get; set; }
 }
 ```
+
+### 远程配置中心
+
+支持 Consul、Etcd、Nacos、Apollo 等远程配置中心，支持热重载：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Consul;
+using Apq.Cfg.Etcd;
+using Apq.Cfg.Nacos;
+using Apq.Cfg.Apollo;
+
+// 使用 Consul 配置中心
+var cfg = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddConsul(options => {
+        options.Address = "http://localhost:8500";
+        options.KeyPrefix = "app/config/";
+        options.EnableHotReload = true;  // 启用热重载
+    }, level: 10)
+    .Build();
+
+// 使用 Etcd 配置中心
+var cfg2 = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddEtcd(options => {
+        options.Endpoints = new[] { "http://localhost:2379" };
+        options.KeyPrefix = "/app/config/";
+        options.EnableHotReload = true;  // 启用热重载
+    }, level: 10)
+    .Build();
+
+// 使用 Nacos 配置中心
+var cfg3 = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddNacos(options => {
+        options.ServerAddresses = "localhost:8848";
+        options.Namespace = "public";
+        options.DataId = "app-config";
+        options.Group = "DEFAULT_GROUP";
+        options.Username = "nacos";      // 可选
+        options.Password = "nacos";      // 可选
+        options.DataFormat = NacosDataFormat.Json;  // 支持 Json/Yaml/Properties
+    }, level: 10)
+    .Build();
+
+// 使用 Apollo 配置中心
+var cfg4 = CfgBuilder.Create()
+    .AddJson("config.json", level: 0)
+    .AddApollo(options => {
+        options.AppId = "my-app";
+        options.MetaServer = "http://localhost:8080";
+        options.Cluster = "default";
+        options.Namespaces = new[] { "application", "common" };
+        options.Secret = "your-secret";  // 可选，用于访问控制
+        options.EnableHotReload = true;  // 启用热重载
+    }, level: 10)
+    .Build();
+
+// 订阅配置变更
+cfg.ConfigChanges.Subscribe(change => {
+    Console.WriteLine($"配置变更: {change.Key} = {change.NewValue}");
+});
+```
+
+#### 配置中心对比
+
+| 配置中心 | 写入支持 | 数据格式 | 热重载 | 特点 |
+|---------|---------|---------|--------|------|
+| **Consul** | ✅ | KV/JSON/YAML | ✅ Blocking Query | KV 存储，支持前缀监听 |
+| **Etcd** | ✅ | KV/JSON | ✅ Watch API | 强一致性，支持前缀监听 |
+| **Nacos** | ✅ | JSON/YAML/Properties | ❌ | 支持命名空间、分组、多 DataId |
+| **Apollo** | ❌ | Properties | ✅ 长轮询 + 通知 | 支持多环境、集群、命名空间 |
 
 ### 源生成器（Native AOT 支持）
 
