@@ -7,6 +7,9 @@ triggers:
     branches:
       precise:
         - master
+    tags:
+      include:
+        - ^发布.*
     commitMessages:
       include:
         - ^发布.*
