@@ -8,7 +8,7 @@
 
 ## 特性
 
-- **多格式支持**：JSON、INI、XML、YAML、TOML、Redis、数据库
+- **多格式支持**：JSON、INI、XML、YAML、TOML、Env、Redis、数据库
 - **远程配置中心**：支持 Consul、Etcd、Nacos、Apollo 等配置中心，支持热重载
 - **智能编码处理**：
   - 读取时自动检测（BOM 优先，UTF.Unknown 库辅助，支持缓存）
@@ -39,6 +39,7 @@
 | [Apq.Cfg.Xml](https://www.nuget.org/packages/Apq.Cfg.Xml) | XML 格式支持 |
 | [Apq.Cfg.Yaml](https://www.nuget.org/packages/Apq.Cfg.Yaml) | YAML 格式支持 |
 | [Apq.Cfg.Toml](https://www.nuget.org/packages/Apq.Cfg.Toml) | TOML 格式支持 |
+| [Apq.Cfg.Env](https://www.nuget.org/packages/Apq.Cfg.Env) | .env 文件格式支持 |
 | [Apq.Cfg.Redis](https://www.nuget.org/packages/Apq.Cfg.Redis) | Redis 配置源 |
 | [Apq.Cfg.Database](https://www.nuget.org/packages/Apq.Cfg.Database) | 数据库配置源 |
 | [Apq.Cfg.Consul](https://www.nuget.org/packages/Apq.Cfg.Consul) | Consul 配置中心 |
@@ -157,9 +158,45 @@ cfg.ConfigChanges.Subscribe(e =>
 - **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
 - **多源支持**：支持多个配置源同时存在的场景
 
+### .env 文件支持
+
+支持 .env 文件格式，常用于开发环境配置：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Env;
+
+var cfg = new CfgBuilder()
+    .AddEnv(".env", level: 0, writeable: true)
+    .AddEnv(".env.local", level: 1, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 读取配置（DATABASE__HOST 自动转换为 DATABASE:HOST）
+var dbHost = cfg.Get("DATABASE:HOST");
+var dbPort = cfg.Get<int>("DATABASE:PORT");
+```
+
+.env 文件示例：
+```env
+# 应用配置
+APP_NAME=MyApp
+APP_DEBUG=true
+
+# 数据库配置（使用 __ 表示嵌套）
+DATABASE__HOST=localhost
+DATABASE__PORT=5432
+
+# 支持引号包裹的值
+MESSAGE="Hello, World!"
+MULTILINE="Line1\nLine2"
+
+# 支持 export 前缀
+export API_KEY=secret123
+```
+
 ### 编码处理
 
-所有文件配置源（JSON、INI、XML、YAML、TOML）均支持智能编码处理：
+所有文件配置源（JSON、INI、XML、YAML、TOML、Env）均支持智能编码处理：
 
 - **读取时自动检测**：
   - BOM 优先检测（UTF-8、UTF-16 LE/BE、UTF-32 LE/BE）
@@ -470,6 +507,7 @@ Apq.Cfg.Ini/                 # INI 格式支持
 Apq.Cfg.Xml/                 # XML 格式支持
 Apq.Cfg.Yaml/                # YAML 格式支持
 Apq.Cfg.Toml/                # TOML 格式支持
+Apq.Cfg.Env/                 # .env 文件格式支持
 Apq.Cfg.Redis/               # Redis 配置源
 Apq.Cfg.Database/            # 数据库配置源
 Apq.Cfg.Consul/              # Consul 配置中心
@@ -479,7 +517,7 @@ Apq.Cfg.Apollo/              # Apollo 配置中心
 Apq.Cfg.Zookeeper/           # Zookeeper 配置中心
 Apq.Cfg.Vault/               # HashiCorp Vault 密钥管理
 Apq.Cfg.SourceGenerator/     # 源生成器（Native AOT 支持）
-tests/                       # 单元测试（290 个测试用例）
+tests/                       # 单元测试（346 个测试用例）
 benchmarks/                  # 性能基准测试（18 个测试类）
 docs/                        # 技术文档
 Samples/                     # 示例项目
