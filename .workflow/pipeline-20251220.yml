@@ -4,9 +4,12 @@ displayName: 发布到NuGet
 triggers:
   trigger: auto
   push:
-    tags:
+    branches:
+      precise:
+        - master
+    commitMessages:
       include:
-        - ^v\d+\.\d+\.\d+(-[\w.]+)?$
+        - ^发布.*
 variables:
   global:
     - NUGET_API_KEY
