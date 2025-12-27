@@ -95,6 +95,7 @@ $AllProjects = @(
     'Apq.Cfg.Xml',
     'Apq.Cfg.Yaml',
     'Apq.Cfg.Toml',
+    'Apq.Cfg.Env',
     'Apq.Cfg.Redis',
     'Apq.Cfg.Database',
     'Apq.Cfg.Consul',

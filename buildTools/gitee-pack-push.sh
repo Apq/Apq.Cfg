@@ -16,12 +16,15 @@ Apq.Cfg.Ini/Apq.Cfg.Ini.csproj
 Apq.Cfg.Xml/Apq.Cfg.Xml.csproj
 Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj
 Apq.Cfg.Toml/Apq.Cfg.Toml.csproj
+Apq.Cfg.Env/Apq.Cfg.Env.csproj
 Apq.Cfg.Redis/Apq.Cfg.Redis.csproj
 Apq.Cfg.Database/Apq.Cfg.Database.csproj
 Apq.Cfg.Consul/Apq.Cfg.Consul.csproj
 Apq.Cfg.Etcd/Apq.Cfg.Etcd.csproj
 Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj
 Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj
+Apq.Cfg.Zookeeper/Apq.Cfg.Zookeeper.csproj
+Apq.Cfg.Vault/Apq.Cfg.Vault.csproj
 Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj
 "
 
