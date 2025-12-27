@@ -209,10 +209,11 @@ public enum LogLevel
 
 ## 支持的框架
 
-- .NET 6.0
-- .NET 7.0
 - .NET 8.0
 - .NET 9.0
+
+> **注意**：由于 `dotnet-etcd` 依赖 `Microsoft.Extensions.DependencyInjection >= 10.0.1`，示例项目只支持 .NET 8.0+。
+> 核心库 `Apq.Cfg` 和所有扩展库仍然支持 .NET 6.0+。
 
 ## 依赖
 
