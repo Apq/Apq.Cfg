@@ -4,15 +4,12 @@ displayName: 发布到NuGet
 triggers:
   trigger: auto
   push:
-    branches:
-      precise:
-        - master
     tags:
       include:
-        - ^发布.*
+        - ^publish.*
     commitMessages:
       include:
-        - ^publish.*
+        - ^发布.*
 variables:
   global:
     - NUGET_API_KEY
