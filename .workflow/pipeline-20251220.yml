@@ -12,7 +12,7 @@ triggers:
         - ^发布.*
     commitMessages:
       include:
-        - ^发布.*
+        - ^publish.*
 variables:
   global:
     - NUGET_API_KEY
