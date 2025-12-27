@@ -54,7 +54,7 @@
 ```csharp
 using Apq.Cfg;
 
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0, writeable: false)
     .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
@@ -122,7 +122,7 @@ using Apq.Cfg.Changes;
 using Microsoft.Extensions.Primitives;
 
 // 构建配置（启用 reloadOnChange）
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
     .AddJson("config.local.json", level: 1, writeable: true, reloadOnChange: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
@@ -169,7 +169,7 @@ cfg.ConfigChanges.Subscribe(e =>
 - **编码映射**：支持完整路径、通配符、正则表达式三种匹配方式
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     // 为特定文件指定读取编码
     .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
     // 为 PowerShell 脚本指定写入编码（UTF-8 BOM）
@@ -229,7 +229,7 @@ using Apq.Cfg.Apollo;
 using Apq.Cfg.Vault;
 
 // 使用 Consul 配置中心
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddConsul(options => {
         options.Address = "http://localhost:8500";
@@ -239,7 +239,7 @@ var cfg = CfgBuilder.Create()
     .Build();
 
 // 使用 Etcd 配置中心
-var cfg2 = CfgBuilder.Create()
+var cfg2 = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddEtcd(options => {
         options.Endpoints = new[] { "http://localhost:2379" };
@@ -249,7 +249,7 @@ var cfg2 = CfgBuilder.Create()
     .Build();
 
 // 使用 Nacos 配置中心
-var cfg3 = CfgBuilder.Create()
+var cfg3 = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddNacos(options => {
         options.ServerAddresses = "localhost:8848";
@@ -263,7 +263,7 @@ var cfg3 = CfgBuilder.Create()
     .Build();
 
 // 使用 Apollo 配置中心
-var cfg4 = CfgBuilder.Create()
+var cfg4 = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddApollo(options => {
         options.AppId = "my-app";
@@ -276,7 +276,7 @@ var cfg4 = CfgBuilder.Create()
     .Build();
 
 // 使用 Zookeeper 配置中心
-var cfg5 = CfgBuilder.Create()
+var cfg5 = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddZookeeper(options => {
         options.ConnectionString = "localhost:2181";
@@ -286,18 +286,18 @@ var cfg5 = CfgBuilder.Create()
     .Build();
 
 // Zookeeper 简化用法
-var cfg5_simple = CfgBuilder.Create()
+var cfg5_simple = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddZookeeper("localhost:2181", "/app/config", level: 10)
     .Build();
 
 // Zookeeper JSON 模式
-var cfg5_json = CfgBuilder.Create()
+var cfg5_json = new CfgBuilder()
     .AddZookeeperJson("localhost:2181", "/app/config.json", level: 10)
     .Build();
 
 // 使用 HashiCorp Vault 密钥管理（KV V2）
-var cfg6 = CfgBuilder.Create()
+var cfg6 = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddVaultV2(
         address: "http://localhost:8200",
@@ -310,7 +310,7 @@ var cfg6 = CfgBuilder.Create()
     .Build();
 
 // 使用 Vault UserPass 认证
-var cfg6_userpass = CfgBuilder.Create()
+var cfg6_userpass = new CfgBuilder()
     .AddVaultUserPass(
         address: "http://localhost:8200",
         username: "myapp",
@@ -323,7 +323,7 @@ var cfg6_userpass = CfgBuilder.Create()
     .Build();
 
 // 使用 Vault AppRole 认证
-var cfg6_approle = CfgBuilder.Create()
+var cfg6_approle = new CfgBuilder()
     .AddVaultAppRole(
         address: "http://localhost:8200",
         roleId: "role-id-value",
@@ -336,7 +336,7 @@ var cfg6_approle = CfgBuilder.Create()
     .Build();
 
 // Vault KV V1 引擎支持
-var cfg6_v1 = CfgBuilder.Create()
+var cfg6_v1 = new CfgBuilder()
     .AddVaultV1(
         address: "http://localhost:8200",
         token: "s.1234567890abcdef",
@@ -396,7 +396,7 @@ public partial class DatabaseConfig
 
 ```csharp
 // 构建配置
-var cfgRoot = CfgBuilder.Create()
+var cfgRoot = new CfgBuilder()
     .AddJson("config.json")
     .AddIni("config.ini")
     .Build();

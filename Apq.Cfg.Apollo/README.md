@@ -16,7 +16,7 @@ dotnet add package Apq.Cfg.Apollo
 using Apq.Cfg;
 using Apq.Cfg.Apollo;
 
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddApollo(options =>
     {
@@ -109,7 +109,7 @@ var connStr = cfg.Get("database:ConnectionString");
 Apollo 配置源可以与其他配置源组合使用，通过 `level` 参数控制优先级：
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)           // 基础配置
     .AddJson("config.local.json", level: 1)     // 本地覆盖
     .AddApollo(options =>                        // Apollo 远程配置（最高优先级）
@@ -134,7 +134,7 @@ await cfg.SaveAsync();  // 抛出异常
 
 ```csharp
 // 使用简化的扩展方法
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddApollo("my-app", "http://localhost:8080",
         namespaces: new[] { "application", "common" },
         level: 10)

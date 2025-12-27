@@ -16,7 +16,7 @@ dotnet add package Apq.Cfg.Nacos
 using Apq.Cfg;
 using Apq.Cfg.Nacos;
 
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddNacos(options =>
     {
@@ -135,7 +135,7 @@ App:
 Nacos 配置源可以与其他配置源组合使用，通过 `level` 参数控制优先级：
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)           // 基础配置
     .AddJson("config.local.json", level: 1)     // 本地覆盖
     .AddNacos(options =>                         // Nacos 远程配置（最高优先级）
@@ -151,7 +151,7 @@ var cfg = CfgBuilder.Create()
 Nacos 配置源支持写入操作，可以将配置修改发布到 Nacos：
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddNacos(options =>
     {
         options.ServerAddresses = "localhost:8848";
@@ -168,7 +168,7 @@ await cfg.SaveAsync();  // 发布到 Nacos
 
 ```csharp
 // 使用简化的扩展方法
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddNacos("localhost:8848", "app-config", "DEFAULT_GROUP", level: 10)
     .Build();
 ```

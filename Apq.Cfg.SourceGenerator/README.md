@@ -154,7 +154,7 @@ partial class AppConfig
 using Apq.Cfg;
 
 // 使用 CfgBuilder 创建配置根
-var cfgRoot = CfgBuilder.Create()
+var cfgRoot = new CfgBuilder()
     .AddJson("config.json")
     .AddIni("config.ini")
     .AddEnvironmentVariables("APP_")

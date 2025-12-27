@@ -18,7 +18,7 @@ dotnet add package Apq.Cfg.Zookeeper
 using Apq.Cfg;
 using Apq.Cfg.Zookeeper;
 
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddZookeeper(options => {
         options.ConnectionString = "localhost:2181";
@@ -35,7 +35,7 @@ var dbPort = cfg.Get<int>("Database:Port");
 ### 简化用法
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)
     .AddZookeeper("localhost:2181", "/app/config", level: 10)
     .Build();
@@ -45,7 +45,7 @@ var cfg = CfgBuilder.Create()
 
 ```csharp
 // 从单个节点读取 JSON 配置
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddZookeeperJson("localhost:2181", "/app/config.json", level: 10)
     .Build();
 ```
@@ -53,7 +53,7 @@ var cfg = CfgBuilder.Create()
 ### 多节点集群
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddZookeeper(options => {
         options.ConnectionString = "zk1:2181,zk2:2181,zk3:2181";
         options.RootPath = "/app/config";
@@ -65,7 +65,7 @@ var cfg = CfgBuilder.Create()
 ### 带认证
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddZookeeper(options => {
         options.ConnectionString = "localhost:2181";
         options.RootPath = "/app/config";
@@ -154,7 +154,7 @@ cfg.ConfigChanges.Subscribe(change => {
 ## 与其他配置源组合
 
 ```csharp
-var cfg = CfgBuilder.Create()
+var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0)                        // 基础配置
     .AddJson("config.local.json", level: 1, writeable: true) // 本地覆盖
     .AddEnvironmentVariables(level: 2, prefix: "APP_")       // 环境变量
