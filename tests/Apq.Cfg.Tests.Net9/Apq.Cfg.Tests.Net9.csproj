@@ -3,64 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <TargetFrameworks></TargetFrameworks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
     <!-- 保留生成的源代码以便调试 -->
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
-  <!-- .NET 8.0+ 使用最新版本测试包 -->
+  <!-- .NET 9.0 特定版本的包 -->
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="6.0.4">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Xunit.SkippableFact" Version="1.5.23" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Xunit" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\Apq.Cfg.Tests.Shared\**\*.cs" Link="%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Apq.Cfg\Apq.Cfg.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Ini\Apq.Cfg.Ini.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Yaml\Apq.Cfg.Yaml.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Redis\Apq.Cfg.Redis.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Database\Apq.Cfg.Database.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Zookeeper\Apq.Cfg.Zookeeper.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Apollo\Apq.Cfg.Apollo.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Consul\Apq.Cfg.Consul.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Etcd\Apq.Cfg.Etcd.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Nacos\Apq.Cfg.Nacos.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Vault\Apq.Cfg.Vault.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFiles\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

@@ -20,6 +20,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.SourceGenerator", "Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj", "{D1234567-ABCD-1234-ABCD-123456789012}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E1234567-1234-1234-1234-123456789ABC}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Tests.Net6", "tests\Apq.Cfg.Tests.Net6\Apq.Cfg.Tests.Net6.csproj", "{5A67AD01-A4EE-43A4-A805-F5D94FA24D27}"
 EndProject
@@ -46,6 +49,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Zookeeper", "Apq.Cfg.Zookeeper\Apq.Cfg.Zookeeper.csproj", "{1C5BB2C9-7EEA-468E-8D95-FCC6A0AF414E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Vault", "Apq.Cfg.Vault\Apq.Cfg.Vault.csproj", "{2D6CC3DA-8F9B-4F5D-9A3C-7D8E9F0A1B2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{9FA3D6BD-1EC1-3BA5-80CB-CE02773A58D5}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

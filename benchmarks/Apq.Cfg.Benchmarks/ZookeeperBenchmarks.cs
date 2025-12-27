@@ -22,7 +22,7 @@ public class ZookeeperBenchmarks
     {
         try
         {
-            _cfg = CfgBuilder.Create()
+            _cfg = new CfgBuilder()
                 .AddZookeeper(options =>
                 {
                     options.ConnectionString = ConnectionString;
