@@ -1,7 +1,9 @@
 ﻿# pack-release.ps1
+# 支持每个项目独立版本的打包脚本
 param(
     [switch]$NoBuild,
-    [string]$OutputDir
+    [string]$OutputDir,
+    [string[]]$Projects  # 可选：指定要打包的项目，不指定则打包所有
 )
 
 $ErrorActionPreference = 'Stop'
@@ -9,6 +11,7 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RootDir = Split-Path -Parent $ScriptDir
 $PropsFile = Join-Path $RootDir 'Directory.Build.props'
 $DefaultOutputDir = Join-Path $RootDir 'nupkgs'
+$VersionsDir = Join-Path $RootDir 'versions'
 
 function Write-ColorText {
     param([string]$Text, [string]$Color = 'White')
@@ -37,8 +40,38 @@ function Read-Confirm {
     }
 }
 
+# 获取项目版本（从 versions/{ProjectName}/v*.md 目录）
+function Get-ProjectVersion {
+    param([string]$ProjectName)
+    
+    $projectVersionDir = Join-Path $VersionsDir $ProjectName
+    
+    # 优先使用项目独立版本目录
+    if (Test-Path $projectVersionDir) {
+        $versionFiles = @(Get-ChildItem -Path $projectVersionDir -Filter 'v*.md' -ErrorAction SilentlyContinue)
+    } else {
+        # 回退到根版本目录
+        $versionFiles = @(Get-ChildItem -Path $VersionsDir -Filter 'v*.md' -ErrorAction SilentlyContinue)
+    }
+    
+    $versions = @($versionFiles | Where-Object { $_.BaseName -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object {
+        $fullVersion = $_.BaseName -replace '^v', ''
+        $baseVersion = $_.BaseName -replace '^v(\d+\.\d+\.\d+).*', '$1'
+        [PSCustomObject]@{
+            Name = $fullVersion
+            Version = [version]$baseVersion
+        }
+    } | Sort-Object Version -Descending)
+    
+    if ($versions.Count -gt 0) {
+        return $versions[0].Name
+    }
+    return $null
+}
+
 Write-ColorText "`n========================================" 'Cyan'
 Write-ColorText '  Apq.Cfg NuGet 包生成工具' 'Cyan'
+Write-ColorText '  支持独立版本管理' 'DarkCyan'
 Write-ColorText "========================================" 'Cyan'
 Write-ColorText '  按 Q 随时退出' 'DarkGray'
 Write-ColorText "========================================`n" 'Cyan'
@@ -49,31 +82,35 @@ if (-not (Test-Path $PropsFile)) {
     exit 1
 }
 
-# 从 versions 目录获取版本号（与 Directory.Build.props 保持一致）
-$VersionsDir = Join-Path $RootDir 'versions'
 if (-not (Test-Path $VersionsDir)) {
     Write-ColorText '错误: 找不到 versions 目录' 'Red'
     Write-ColorText "路径: $VersionsDir" 'Red'
     exit 1
 }
 
-$versionFiles = @(Get-ChildItem -Path $VersionsDir -Filter 'v*.md' -ErrorAction SilentlyContinue)
-$versions = @($versionFiles | Where-Object { $_.BaseName -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object {
-    $fullVersion = $_.BaseName -replace '^v', ''
-    $baseVersion = $_.BaseName -replace '^v(\d+\.\d+\.\d+).*', '$1'
-    [PSCustomObject]@{
-        Name = $fullVersion
-        Version = [version]$baseVersion
-    }
-} | Sort-Object Version -Descending)
+# 定义所有可打包的项目
+$AllProjects = @(
+    'Apq.Cfg',
+    'Apq.Cfg.Ini',
+    'Apq.Cfg.Xml',
+    'Apq.Cfg.Yaml',
+    'Apq.Cfg.Toml',
+    'Apq.Cfg.Redis',
+    'Apq.Cfg.Database',
+    'Apq.Cfg.Consul',
+    'Apq.Cfg.Etcd',
+    'Apq.Cfg.Nacos',
+    'Apq.Cfg.Apollo',
+    'Apq.Cfg.Zookeeper',
+    'Apq.Cfg.Vault',
+    'Apq.Cfg.SourceGenerator'
+)
 
-if ($versions.Count -gt 0) {
-    $currentVersion = $versions[0].Name
-    Write-ColorText "当前版本: $currentVersion" 'Yellow'
+# 如果指定了项目，则只打包指定的项目
+if ($Projects -and $Projects.Count -gt 0) {
+    $TargetProjects = $Projects
 } else {
-    Write-ColorText '错误: 无法从 versions 目录获取版本号' 'Red'
-    Write-ColorText '请确保 versions 目录中存在 v*.*.*.md 格式的版本文件' 'Red'
-    exit 1
+    $TargetProjects = $AllProjects
 }
 
 # 设置输出目录
@@ -82,19 +119,19 @@ if ([string]::IsNullOrWhiteSpace($OutputDir)) {
 }
 
 Write-Host ''
-Write-ColorText '将要打包的项目:' 'Cyan'
-Write-ColorText '  - Apq.Cfg' 'White'
-Write-ColorText '  - Apq.Cfg.Ini' 'White'
-Write-ColorText '  - Apq.Cfg.Xml' 'White'
-Write-ColorText '  - Apq.Cfg.Yaml' 'White'
-Write-ColorText '  - Apq.Cfg.Toml' 'White'
-Write-ColorText '  - Apq.Cfg.Redis' 'White'
-Write-ColorText '  - Apq.Cfg.Database' 'White'
-Write-ColorText '  - Apq.Cfg.Consul' 'White'
-Write-ColorText '  - Apq.Cfg.Etcd' 'White'
-Write-ColorText '  - Apq.Cfg.Apollo' 'White'
-Write-ColorText '  - Apq.Cfg.Nacos' 'White'
-Write-ColorText '  - Apq.Cfg.SourceGenerator' 'White'
+Write-ColorText '将要打包的项目及版本:' 'Cyan'
+
+$projectVersions = @{}
+foreach ($project in $TargetProjects) {
+    $version = Get-ProjectVersion -ProjectName $project
+    if ($version) {
+        $projectVersions[$project] = $version
+        Write-ColorText "  - $project @ v$version" 'White'
+    } else {
+        Write-ColorText "  - $project @ (未找到版本)" 'Yellow'
+    }
+}
+
 Write-Host ''
 Write-ColorText "输出目录: $OutputDir" 'Gray'
 Write-Host ''
@@ -114,73 +151,93 @@ Write-Host ''
 Write-ColorText '开始打包...' 'Cyan'
 Write-Host ''
 
-# 删除当前版本的旧包（避免 NuGet 缓存冲突）
-$oldPackages = Get-ChildItem -Path $OutputDir -Filter "Apq.Cfg*.$currentVersion.*pkg" -ErrorAction SilentlyContinue
-if ($oldPackages.Count -gt 0) {
-    Write-ColorText "清理当前版本 ($currentVersion) 的旧包..." 'Gray'
+$successCount = 0
+$failCount = 0
+$generatedPackages = @()
+
+foreach ($project in $TargetProjects) {
+    $version = $projectVersions[$project]
+    if (-not $version) {
+        Write-ColorText "跳过 $project (未找到版本)" 'Yellow'
+        continue
+    }
+    
+    # 查找项目文件
+    $projectPath = Join-Path $RootDir "$project/$project.csproj"
+    if (-not (Test-Path $projectPath)) {
+        Write-ColorText "跳过 $project (项目文件不存在)" 'Yellow'
+        continue
+    }
+    
+    Write-ColorText "打包 $project v$version..." 'Gray'
+    
+    # 删除当前版本的旧包
+    $oldPackages = Get-ChildItem -Path $OutputDir -Filter "$project.$version.*pkg" -ErrorAction SilentlyContinue
     foreach ($pkg in $oldPackages) {
         Remove-Item $pkg.FullName -Force
-        Write-ColorText "  已删除: $($pkg.Name)" 'DarkGray'
     }
-    Write-Host ''
-}
-
-# 构建打包参数
-$packArgs = @(
-    'pack'
-    $RootDir
-    '-c', 'Release'
-    '-o', $OutputDir
-)
-
-if ($NoBuild) {
-    $packArgs += '--no-build'
-    Write-ColorText '跳过构建 (使用 --no-build)' 'Gray'
-}
-
-try {
-    # 执行打包
-    & dotnet @packArgs
-
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host ''
-        Write-ColorText '错误: 打包失败' 'Red'
-        exit 1
+    
+    # 构建打包参数
+    $packArgs = @(
+        'pack'
+        $projectPath
+        '-c', 'Release'
+        '-o', $OutputDir
+    )
+    
+    if ($NoBuild) {
+        $packArgs += '--no-build'
     }
-
-    Write-Host ''
-    Write-ColorText '打包完成!' 'Green'
-    Write-Host ''
-
-    # 列出生成的包
-    $packages = Get-ChildItem -Path $OutputDir -Filter "*.nupkg" | Where-Object { $_.Name -match "Apq\.Cfg.*\.$([regex]::Escape($currentVersion))\.nupkg$" }
-    $symbolPackages = Get-ChildItem -Path $OutputDir -Filter "*.snupkg" | Where-Object { $_.Name -match "Apq\.Cfg.*\.$([regex]::Escape($currentVersion))\.snupkg$" }
-
-    if ($packages.Count -gt 0) {
-        Write-ColorText '生成的 NuGet 包:' 'Cyan'
-        foreach ($pkg in $packages) {
-            $size = [math]::Round($pkg.Length / 1KB, 1)
-            Write-ColorText "  $($pkg.Name) ($size KB)" 'White'
+    
+    try {
+        & dotnet @packArgs 2>&1 | Out-Null
+        
+        if ($LASTEXITCODE -eq 0) {
+            $successCount++
+            $generatedPackages += "$project.$version.nupkg"
+            Write-ColorText "  ✓ $project v$version" 'Green'
+        } else {
+            $failCount++
+            Write-ColorText "  ✗ $project 打包失败" 'Red'
         }
-        Write-Host ''
-
-        if ($symbolPackages.Count -gt 0) {
-            Write-ColorText '生成的符号包:' 'Cyan'
-            foreach ($pkg in $symbolPackages) {
-                $size = [math]::Round($pkg.Length / 1KB, 1)
-                Write-ColorText "  $($pkg.Name) ($size KB)" 'White'
-            }
-            Write-Host ''
-        }
+    } catch {
+        $failCount++
+        Write-ColorText "  ✗ $project 打包异常: $($_.Exception.Message)" 'Red'
     }
-
-    Write-ColorText '下一步操作:' 'Yellow'
-    Write-ColorText '  运行 push-nuget.bat 发布到 NuGet' 'Gray'
-    Write-Host ''
-
-} catch {
-    Write-Host ''
-    Write-ColorText '错误: 打包过程中发生异常' 'Red'
-    Write-ColorText $_.Exception.Message 'Red'
-    exit 1
 }
+
+Write-Host ''
+Write-ColorText "========================================" 'Cyan'
+Write-ColorText "打包完成!" 'Green'
+Write-ColorText "  成功: $successCount" 'Green'
+if ($failCount -gt 0) {
+    Write-ColorText "  失败: $failCount" 'Red'
+}
+Write-ColorText "========================================" 'Cyan'
+Write-Host ''
+
+# 列出生成的包
+$packages = Get-ChildItem -Path $OutputDir -Filter "Apq.Cfg*.nupkg" -ErrorAction SilentlyContinue | Sort-Object Name
+if ($packages.Count -gt 0) {
+    Write-ColorText '生成的 NuGet 包:' 'Cyan'
+    foreach ($pkg in $packages) {
+        $size = [math]::Round($pkg.Length / 1KB, 1)
+        Write-ColorText "  $($pkg.Name) ($size KB)" 'White'
+    }
+    Write-Host ''
+}
+
+$symbolPackages = Get-ChildItem -Path $OutputDir -Filter "Apq.Cfg*.snupkg" -ErrorAction SilentlyContinue | Sort-Object Name
+if ($symbolPackages.Count -gt 0) {
+    Write-ColorText '生成的符号包:' 'Cyan'
+    foreach ($pkg in $symbolPackages) {
+        $size = [math]::Round($pkg.Length / 1KB, 1)
+        Write-ColorText "  $($pkg.Name) ($size KB)" 'White'
+    }
+    Write-Host ''
+}
+
+Write-ColorText '下一步操作:' 'Yellow'
+Write-ColorText '  运行 push-nuget.bat 发布到 NuGet' 'Gray'
+Write-ColorText '  或指定项目打包: .\pack-release.ps1 -Projects Apq.Cfg,Apq.Cfg.Nacos' 'Gray'
+Write-Host ''

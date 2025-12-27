@@ -1,6 +1,7 @@
 <Project>
   <!--
     共享的版本检测逻辑
+    支持每个项目独立版本目录：versions/{ProjectName}/v*.md
     此文件被根目录和 SourceGenerator 的 Directory.Build.props 导入
   -->
 
@@ -71,9 +72,20 @@
     </Task>
   </UsingTask>
 
-  <!-- 扫描版本文件并提取最高版本 -->
+  <!-- 扫描版本文件并提取最高版本（支持项目独立版本目录） -->
   <Target Name="DetectVersionFromFiles" BeforeTargets="GetAssemblyVersion;GenerateNuspec;Pack;Build">
-    <ItemGroup>
+    <!-- 项目独立版本目录：versions/{ProjectName}/v*.md -->
+    <PropertyGroup>
+      <ProjectVersionDir>$(VersionsDir)/$(MSBuildProjectName)</ProjectVersionDir>
+    </PropertyGroup>
+
+    <!-- 优先使用项目独立版本目录 -->
+    <ItemGroup Condition="Exists('$(ProjectVersionDir)')">
+      <VersionFiles Include="$(ProjectVersionDir)/v*.md" />
+    </ItemGroup>
+
+    <!-- 如果项目独立版本目录不存在或为空，回退到根版本目录 -->
+    <ItemGroup Condition="!Exists('$(ProjectVersionDir)') OR '@(VersionFiles)' == ''">
       <VersionFiles Include="$(VersionsDir)/v*.md" />
     </ItemGroup>
 
@@ -93,7 +105,7 @@
       <FileVersion>$(DetectedVersionCore).$(DetectedVersionRevision)</FileVersion>
     </PropertyGroup>
 
-    <Message Text="检测到版本: $(DetectedVersion)" Importance="high" />
+    <Message Text="[$(MSBuildProjectName)] 检测到版本: $(DetectedVersion)" Importance="high" />
   </Target>
 
   <!-- NuGet 包公共元数据 -->
