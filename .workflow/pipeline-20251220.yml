@@ -7,9 +7,6 @@ triggers:
     tags:
       include:
         - ^publish.*
-    commitMessages:
-      include:
-        - ^发布.*
 variables:
   global:
     - NUGET_API_KEY
