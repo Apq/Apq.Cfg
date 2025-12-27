@@ -1,215 +1,245 @@
-# Apq.Cfg.Samples - 功能示例
+# Apq.Cfg.Samples
 
-本示例项目演示了 Apq.Cfg 配置库的完整功能，包含 8 个独立的示例，覆盖所有主要特性。
+Apq.Cfg 配置库的完整功能示例项目。
+
+## 项目结构
+
+```
+Apq.Cfg.Samples/
+├── Program.cs                          # 入口程序，运行所有示例
+├── Models/
+│   └── ConfigModels.cs                 # 强类型配置模型
+└── Demos/
+    ├── BasicUsageDemo.cs               # 示例 1: 基础用法
+    ├── MultiFormatDemo.cs              # 示例 2: 多格式支持
+    ├── ConfigSectionDemo.cs            # 示例 3: 配置节访问
+    ├── BatchOperationsDemo.cs          # 示例 4: 批量操作
+    ├── TypeConversionDemo.cs           # 示例 5: 类型转换
+    ├── DynamicReloadDemo.cs            # 示例 6: 动态重载
+    ├── DependencyInjectionDemo.cs      # 示例 7: 依赖注入
+    ├── EncodingMappingDemo.cs          # 示例 8: 编码映射
+    ├── RedisDemo.cs                    # 示例 9: Redis 配置源
+    ├── DatabaseDemo.cs                 # 示例 10: 数据库配置源
+    ├── ConsulDemo.cs                   # 示例 11: Consul 配置源
+    ├── EtcdDemo.cs                     # 示例 12: Etcd 配置源
+    ├── NacosDemo.cs                    # 示例 13: Nacos 配置源
+    ├── ApolloDemo.cs                   # 示例 14: Apollo 配置源
+    ├── ZookeeperDemo.cs                # 示例 15: Zookeeper 配置源
+    ├── VaultDemo.cs                    # 示例 16: HashiCorp Vault 配置源
+    └── SourceGeneratorDemo.cs          # 示例 17: 源代码生成器
+```
 
 ## 运行示例
 
 ```bash
+# 在项目根目录运行
+dotnet run --project Samples/Apq.Cfg.Samples
+
+# 或进入示例目录运行
 cd Samples/Apq.Cfg.Samples
 dotnet run
 ```
 
-## 功能覆盖
+## 示例说明
 
-| 示例 | 功能模块 | 覆盖的 API |
-|------|----------|-----------|
-| 示例 1 | 基础用法 | `CfgBuilder`, `AddJson`, `AddEnvironmentVariables`, `Get`, `Set`, `Remove`, `Exists`, `SaveAsync`, `ToMicrosoftConfiguration` |
-| 示例 2 | 多格式支持 | `AddIni`, `AddXml`, `AddYaml`, `AddToml`, 混合格式层级覆盖 |
-| 示例 3 | 配置节 | `GetSection`, `GetChildKeys`, 嵌套配置访问 |
-| 示例 4 | 批量操作 | `GetMany`, `GetMany<T>`, `SetMany` |
-| 示例 5 | 类型转换 | `Get<T>` 支持 int, long, double, decimal, bool, DateTime, Guid, Enum |
-| 示例 6 | 动态重载 | `DynamicReloadOptions`, `IChangeToken`, `ConfigChanges` (Rx) |
-| 示例 7 | 依赖注入 | `AddApqCfg`, `ConfigureApqCfg<T>`, `IOptions<T>` |
-| 示例 8 | 编码映射 | `WithEncodingConfidenceThreshold`, `WithEncodingDetectionLogging`, `AddReadEncodingMapping`, `AddWriteEncodingMappingWildcard` |
+### 示例 1: 基础用法 (BasicUsageDemo)
 
-## 示例详情
+演示 Apq.Cfg 的基本功能：
+- JSON 配置文件加载
+- 多层级配置覆盖（level 参数）
+- 环境变量配置源
+- 配置读取、写入、删除
+- 转换为 Microsoft.Extensions.Configuration
 
-### 示例 1: 基础用法 - JSON 配置与层级覆盖
+### 示例 2: 多格式支持 (MultiFormatDemo)
 
-演示核心功能：
-- 创建多层级配置（基础配置 + 本地覆盖配置 + 环境变量）
-- `level` 参数控制优先级（数值越大优先级越高）
-- `writeable` 参数控制配置源是否可写
-- `isPrimaryWriter` 指定默认写入目标
-- `targetLevel` 参数指定写入到特定层级
+演示不同配置文件格式的支持：
+- INI 格式 (`Apq.Cfg.Ini`)
+- XML 格式 (`Apq.Cfg.Xml`)
+- YAML 格式 (`Apq.Cfg.Yaml`)
+- TOML 格式 (`Apq.Cfg.Toml`)
+- 混合多种格式的层级覆盖
+
+### 示例 3: 配置节访问 (ConfigSectionDemo)
+
+演示配置节（GetSection）功能：
+- 使用 `GetSection` 简化嵌套配置访问
+- 枚举配置节的子键 (`GetChildKeys`)
+- 通过配置节修改值
+
+### 示例 4: 批量操作 (BatchOperationsDemo)
+
+演示批量读写操作：
+- `GetMany` 批量获取配置
+- `GetMany<T>` 批量获取并转换类型
+- `SetMany` 批量设置配置
+
+### 示例 5: 类型转换 (TypeConversionDemo)
+
+演示 `Get<T>` 类型转换功能：
+- 基本类型：int、long、double、decimal、bool
+- 复杂类型：DateTime、Guid、枚举
+- 可空类型与默认值处理
+
+### 示例 6: 动态重载 (DynamicReloadDemo)
+
+演示配置动态重载功能：
+- `reloadOnChange` 参数启用文件监听
+- `DynamicReloadOptions` 配置防抖、策略等
+- `IChangeToken` 监听配置变更
+- `ConfigChanges` (Rx) 订阅配置变更事件
+
+### 示例 7: 依赖注入 (DependencyInjectionDemo)
+
+演示与 Microsoft.Extensions.DependencyInjection 集成：
+- `AddApqCfg` 注册配置服务
+- `ConfigureApqCfg<T>` 绑定强类型配置
+- 通过 DI 获取 `ICfgRoot`、`IConfigurationRoot`
+- 通过 `IOptions<T>` 获取强类型配置
+
+### 示例 8: 编码映射 (EncodingMappingDemo)
+
+演示编码检测和映射功能：
+- `WithEncodingConfidenceThreshold` 设置检测置信度
+- `WithEncodingDetectionLogging` 启用检测日志
+- `AddReadEncodingMapping` 指定读取编码
+- `AddWriteEncodingMappingWildcard` 通配符映射
+
+### 示例 9: Redis 配置源 (RedisDemo)
+
+演示 Redis 作为配置源：
+- 连接 Redis 服务器
+- 从 Redis Hash 读取配置
+- 配置键前缀和数据库选择
+- 支持配置变更监听
+
+### 示例 10: 数据库配置源 (DatabaseDemo)
+
+演示数据库作为配置源：
+- 支持 SqlSugar 多数据库（MySQL、PostgreSQL、SQLite 等）
+- 从数据库表读取配置
+- 自定义表名、键列、值列
+- 支持配置变更监听
+
+### 示例 11: Consul 配置源 (ConsulDemo)
+
+演示 Consul KV 作为配置源：
+- 连接 Consul 服务器
+- 从 Consul KV 存储读取配置
+- 配置键前缀过滤
+- 支持 ACL Token 认证
+- 支持配置变更监听
+
+### 示例 12: Etcd 配置源 (EtcdDemo)
+
+演示 Etcd 作为配置源：
+- 连接 Etcd 集群
+- 从 Etcd 键值存储读取配置
+- 配置键前缀过滤
+- 支持用户名密码认证
+- 支持配置变更监听
+
+### 示例 13: Nacos 配置源 (NacosDemo)
+
+演示 Nacos 作为配置源：
+- 连接 Nacos 配置中心
+- 从 Nacos 读取配置
+- 配置命名空间、分组、数据ID
+- 支持用户名密码认证
+- 支持配置变更监听
+
+### 示例 14: Apollo 配置源 (ApolloDemo)
+
+演示 Apollo 作为配置源：
+- 连接 Apollo 配置中心
+- 从 Apollo 读取配置
+- 配置应用ID、集群、命名空间
+- 支持 Secret 认证
+- 支持配置变更监听
+
+### 示例 15: Zookeeper 配置源 (ZookeeperDemo)
+
+演示 Zookeeper 作为配置源：
+- 连接 Zookeeper 集群
+- 从 Zookeeper 节点读取配置
+- 配置根路径
+- 支持认证
+- 支持配置变更监听
+
+### 示例 16: HashiCorp Vault 配置源 (VaultDemo)
+
+演示 HashiCorp Vault 作为配置源：
+- 连接 Vault 服务器
+- 从 Vault KV 存储读取密钥配置
+- 配置挂载点和路径
+- 支持 Token 认证
+- 支持配置变更监听
+
+### 示例 17: 源代码生成器 (SourceGeneratorDemo)
+
+演示 Apq.Cfg.SourceGenerator 功能：
+- 使用 `[CfgSection]` 特性标记配置类
+- 自动生成配置绑定代码
+- 编译时类型安全
+- 减少运行时反射开销
+
+## 配置模型
+
+示例中使用的强类型配置模型定义在 `Models/ConfigModels.cs`：
 
 ```csharp
-var cfg = new CfgBuilder()
-    .AddJson(configPath, level: 0, writeable: false)
-    .AddJson(localConfigPath, level: 1, writeable: true, isPrimaryWriter: true)
-    .AddEnvironmentVariables(level: 2, prefix: "MYAPP_")
-    .Build();
-
-// 读取（自动从最高优先级获取）
-var value = cfg.Get("App:Name");
-
-// 写入（需指定 targetLevel，因为最高层级环境变量不可写）
-cfg.Set("App:LastRun", DateTime.Now.ToString(), targetLevel: 1);
-await cfg.SaveAsync(targetLevel: 1);
-```
-
-### 示例 2: 多格式支持
-
-支持的配置格式：
-- **JSON** - 内置支持
-- **INI** - 需引用 `Apq.Cfg.Ini`
-- **XML** - 需引用 `Apq.Cfg.Xml`
-- **YAML** - 需引用 `Apq.Cfg.Yaml`
-- **TOML** - 需引用 `Apq.Cfg.Toml`
-
-```csharp
-// 混合多种格式，通过 level 控制优先级
-using var cfg = new CfgBuilder()
-    .AddIni(iniPath, level: 0)
-    .AddYaml(yamlPath, level: 1)
-    .AddToml(tomlPath, level: 2, isPrimaryWriter: true)
-    .Build();
-```
-
-### 示例 3: 配置节与子键枚举
-
-```csharp
-// 获取配置节简化嵌套访问
-var dbSection = cfg.GetSection("Database");
-var primarySection = dbSection.GetSection("Primary");
-var host = primarySection.Get("Host");
-
-// 枚举子键
-foreach (var key in dbSection.GetChildKeys())
+public class DatabaseOptions
 {
-    Console.WriteLine(key);  // 输出: Primary, Replica
+    public string? Host { get; set; }
+    public int Port { get; set; }
+    public string? Name { get; set; }
+}
+
+public class LoggingOptions
+{
+    public string? Level { get; set; }
+    public bool EnableConsole { get; set; }
+}
+
+public enum LogLevel
+{
+    Debug, Info, Warning, Error
 }
 ```
 
-### 示例 4: 批量操作
+## 支持的框架
 
-```csharp
-// 批量获取
-var keys = new[] { "Settings:Theme", "Settings:Language" };
-var values = cfg.GetMany(keys);
+- .NET 6.0
+- .NET 7.0
+- .NET 8.0
+- .NET 9.0
 
-// 批量获取并转换类型
-var intValues = cfg.GetMany<int>(new[] { "Settings:FontSize" });
+## 依赖
 
-// 批量设置
-cfg.SetMany(new Dictionary<string, string?>
-{
-    ["Settings:Theme"] = "light",
-    ["Settings:FontSize"] = "16"
-});
-```
+### 核心库
+- Apq.Cfg（核心库）
 
-### 示例 5: 类型转换
+### 文件格式扩展
+- Apq.Cfg.Ini
+- Apq.Cfg.Xml
+- Apq.Cfg.Yaml
+- Apq.Cfg.Toml
 
-支持的类型：
-- 基本类型：`int`, `long`, `double`, `decimal`, `bool`
-- 日期时间：`DateTime`, `DateTimeOffset`
-- 其他：`Guid`, `Enum`, 可空类型
+### 分布式配置源
+- Apq.Cfg.Redis
+- Apq.Cfg.Database
+- Apq.Cfg.Consul
+- Apq.Cfg.Etcd
+- Apq.Cfg.Nacos
+- Apq.Cfg.Apollo
+- Apq.Cfg.Zookeeper
+- Apq.Cfg.Vault
 
-```csharp
-var intVal = cfg.Get<int>("Types:IntValue");
-var dateVal = cfg.Get<DateTime>("Types:DateValue");
-var enumVal = cfg.Get<LogLevel>("Types:EnumValue");
-var nullableVal = cfg.Get<int?>("Types:NotExist");  // 返回 null
-```
-
-### 示例 6: 动态配置重载
-
-```csharp
-// 启用文件变更监听
-var cfg = new CfgBuilder()
-    .AddJson(configPath, reloadOnChange: true)
-    .Build();
-
-// 配置重载选项
-var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
-{
-    DebounceMs = 100,           // 防抖时间
-    EnableDynamicReload = true,  // 启用动态重载
-    Strategy = ReloadStrategy.Eager,  // 立即重载
-    RollbackOnError = true,      // 错误时回滚
-    HistorySize = 5              // 保留历史记录数
-});
-
-// 方式1: 使用 IChangeToken
-ChangeToken.OnChange(
-    () => msConfig.GetReloadToken(),
-    () => Console.WriteLine("配置已更新"));
-
-// 方式2: 使用 Rx 订阅
-cfg.ConfigChanges.Subscribe(e =>
-{
-    foreach (var (key, change) in e.Changes)
-    {
-        Console.WriteLine($"[{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
-    }
-});
-```
-
-### 示例 7: 依赖注入集成
-
-```csharp
-var services = new ServiceCollection();
-
-// 注册配置服务
-services.AddApqCfg(cfg => cfg
-    .AddJson(configPath, writeable: true, isPrimaryWriter: true));
-
-// 绑定强类型配置
-services.ConfigureApqCfg<DatabaseOptions>("Database");
-services.ConfigureApqCfg<LoggingOptions>("Logging");
-
-// 使用
-var provider = services.BuildServiceProvider();
-var cfgRoot = provider.GetRequiredService<ICfgRoot>();
-var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
-```
-
-### 示例 8: 编码映射配置
-
-```csharp
-var cfg = new CfgBuilder()
-    // 设置编码检测置信度阈值
-    .WithEncodingConfidenceThreshold(0.7f)
-    // 编码检测日志回调
-    .WithEncodingDetectionLogging(result =>
-    {
-        Console.WriteLine($"编码: {result.Encoding.EncodingName}");
-        Console.WriteLine($"置信度: {result.Confidence:P0}");
-        Console.WriteLine($"方法: {result.Method}");
-    })
-    // 为特定文件指定读取编码
-    .AddReadEncodingMapping(configPath, Encoding.UTF8, priority: 100)
-    // 为通配符匹配的文件指定写入编码
-    .AddWriteEncodingMappingWildcard("*.json", new UTF8Encoding(false), priority: 50)
-    // 使用正则表达式匹配
-    .AddReadEncodingMappingRegex(@"config.*\.json$", Encoding.UTF8, priority: 80)
-    .AddJson(configPath)
-    .Build();
-```
-
-## 项目依赖
-
-```xml
-<ItemGroup>
-  <ProjectReference Include="..\..\Apq.Cfg\Apq.Cfg.csproj" />
-  <ProjectReference Include="..\..\Apq.Cfg.Ini\Apq.Cfg.Ini.csproj" />
-  <ProjectReference Include="..\..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
-  <ProjectReference Include="..\..\Apq.Cfg.Yaml\Apq.Cfg.Yaml.csproj" />
-  <ProjectReference Include="..\..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
-</ItemGroup>
-
-<ItemGroup>
-  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
-</ItemGroup>
-```
+### 代码生成
+- Apq.Cfg.SourceGenerator
 
 ## 注意事项
 
-1. **层级与可写性**：当最高优先级的配置源不可写时（如环境变量），调用 `Set()` 和 `SaveAsync()` 需要显式指定 `targetLevel` 参数。
-
-2. **isPrimaryWriter**：只能有一个配置源设置为 `isPrimaryWriter: true`，它将作为默认的写入目标。
-
-3. **reloadOnChange**：启用后会监听文件变更，配合 `DynamicReloadOptions` 可以实现配置热更新。
-
-4. **编码检测**：默认使用 UTF.Unknown 库进行编码检测，可通过映射规则强制指定编码。
+1. **分布式配置源示例**（示例 9-16）需要对应的服务运行才能正常工作
+2. 示例代码中的连接地址、端口、认证信息仅为演示用途，请根据实际环境修改
+3. 源代码生成器示例需要 .NET 6.0 或更高版本
