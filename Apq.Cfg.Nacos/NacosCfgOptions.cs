@@ -54,6 +54,16 @@ public sealed class NacosCfgOptions
     /// 配置数据格式，默认 Json
     /// </summary>
     public NacosDataFormat DataFormat { get; set; } = NacosDataFormat.Json;
+
+    /// <summary>
+    /// 是否启用热重载，默认 false
+    /// </summary>
+    public bool EnableHotReload { get; set; } = false;
+
+    /// <summary>
+    /// 重连间隔（毫秒），默认 5000
+    /// </summary>
+    public int ReconnectIntervalMs { get; set; } = 5000;
 }
 
 /// <summary>

@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Nacos)](https://www.nuget.org/packages/Apq.Cfg.Nacos)
 
-Nacos 配置中心支持，为 Apq.Cfg 提供从 Nacos 读取配置的能力，使用官方 SDK。
+Nacos 配置中心支持，为 Apq.Cfg 提供从 Nacos 读取配置的能力，使用官方 SDK，**支持热重载**。
 
 ## 安装
 
@@ -24,6 +24,7 @@ var cfg = new CfgBuilder()
         options.Namespace = "public";
         options.DataId = "app-config";
         options.Group = "DEFAULT_GROUP";
+        options.EnableHotReload = true;  // 启用热重载
     }, level: 10)
     .Build();
 
@@ -45,6 +46,49 @@ var value = cfg.Get("Database:Host");
 | `SecretKey` | string? | null | Secret Key（阿里云 MSE） |
 | `ConnectTimeoutMs` | int | 10000 | 连接超时时间（毫秒） |
 | `DataFormat` | NacosDataFormat | Json | 配置数据格式 |
+| `EnableHotReload` | bool | false | 是否启用热重载 |
+| `ReconnectIntervalMs` | int | 5000 | 重连间隔（毫秒） |
+
+## 热重载
+
+Nacos 配置源支持热重载，当 Nacos 中的配置发生变化时，会自动更新本地配置：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Nacos;
+using Microsoft.Extensions.Primitives;
+
+var cfg = new CfgBuilder()
+    .AddNacos(options =>
+    {
+        options.ServerAddresses = "localhost:8848";
+        options.DataId = "app-config";
+        options.EnableHotReload = true;  // 启用热重载
+    }, level: 10)
+    .Build();
+
+// 方式1：使用 Rx 订阅配置变更
+cfg.ConfigChanges.Subscribe(e =>
+{
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"[{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
+    }
+});
+
+// 方式2：使用 IChangeToken 监听变更
+var msConfig = cfg.ToMicrosoftConfiguration();
+ChangeToken.OnChange(
+    () => msConfig.GetReloadToken(),
+    () => Console.WriteLine("配置已更新"));
+```
+
+### 热重载特性
+
+- **实时监听**：使用 Nacos SDK 的 `IListener` 接口监听配置变更
+- **自动更新**：配置变更时自动解析并更新本地数据
+- **变更通知**：通过 `ConfigChanges` 或 `IChangeToken` 通知订阅者
+- **优雅关闭**：Dispose 时自动移除监听器
 
 ## 数据格式
 
@@ -63,10 +107,15 @@ var value = cfg.Get("Database:Host");
 ```
 
 ```csharp
+// 使用简化方法
+.AddNacosJson("localhost:8848", "app-config", enableHotReload: true)
+
+// 或使用完整配置
 .AddNacos(options =>
 {
     options.DataId = "app-config";
     options.DataFormat = NacosDataFormat.Json;
+    options.EnableHotReload = true;
 })
 ```
 
@@ -79,10 +128,15 @@ App.Name=MyApp
 ```
 
 ```csharp
+// 使用简化方法
+.AddNacosProperties("localhost:8848", "app-config", enableHotReload: true)
+
+// 或使用完整配置
 .AddNacos(options =>
 {
     options.DataId = "app-config";
     options.DataFormat = NacosDataFormat.Properties;
+    options.EnableHotReload = true;
 })
 ```
 
@@ -101,6 +155,7 @@ App:
 {
     options.DataId = "app-config";
     options.DataFormat = NacosDataFormat.Yaml;
+    options.EnableHotReload = true;
 })
 ```
 
@@ -116,6 +171,7 @@ App:
     options.ServerAddresses = "localhost:8848";
     options.Username = "nacos";
     options.Password = "nacos";
+    options.EnableHotReload = true;
 })
 ```
 
@@ -127,6 +183,7 @@ App:
     options.ServerAddresses = "mse-xxx.nacos.mse.aliyuncs.com:8848";
     options.AccessKey = "your-access-key";
     options.SecretKey = "your-secret-key";
+    options.EnableHotReload = true;
 })
 ```
 
@@ -142,6 +199,7 @@ var cfg = new CfgBuilder()
     {
         options.ServerAddresses = "nacos:8848";
         options.DataId = "myapp-config";
+        options.EnableHotReload = true;
     }, level: 10)
     .Build();
 ```
@@ -156,6 +214,7 @@ var cfg = new CfgBuilder()
     {
         options.ServerAddresses = "localhost:8848";
         options.DataId = "app-config";
+        options.EnableHotReload = true;
     }, level: 0, isPrimaryWriter: true)
     .Build();
 
@@ -169,7 +228,17 @@ await cfg.SaveAsync();  // 发布到 Nacos
 ```csharp
 // 使用简化的扩展方法
 var cfg = new CfgBuilder()
-    .AddNacos("localhost:8848", "app-config", "DEFAULT_GROUP", level: 10)
+    .AddNacos("localhost:8848", "app-config", "DEFAULT_GROUP", level: 10, enableHotReload: true)
+    .Build();
+
+// JSON 格式简化方法
+var cfg2 = new CfgBuilder()
+    .AddNacosJson("localhost:8848", "app-config.json", enableHotReload: true)
+    .Build();
+
+// Properties 格式简化方法
+var cfg3 = new CfgBuilder()
+    .AddNacosProperties("localhost:8848", "app-config.properties", enableHotReload: true)
     .Build();
 ```
 

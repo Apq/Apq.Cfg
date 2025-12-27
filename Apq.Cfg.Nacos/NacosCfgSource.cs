@@ -4,13 +4,14 @@ using System.Text.Json;
 using Apq.Cfg.Sources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using Nacos.V2;
 using Nacos.V2.DependencyInjection;
 
 namespace Apq.Cfg.Nacos;
 
 /// <summary>
-/// Nacos 配置源，使用官方 SDK
+/// Nacos 配置源，使用官方 SDK，支持热重载
 /// </summary>
 internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
 {
@@ -18,6 +19,9 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
     private readonly INacosConfigService _configService;
     private readonly ConcurrentDictionary<string, string?> _data;
     private readonly ServiceProvider _serviceProvider;
+    private readonly NacosConfigListener? _listener;
+    private ConfigurationReloadToken _reloadToken;
+    private readonly object _reloadTokenLock = new();
     private volatile bool _disposed;
 
     public NacosCfgSource(NacosCfgOptions options, int level, bool isPrimaryWriter)
@@ -26,6 +30,7 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
         _data = new ConcurrentDictionary<string, string?>();
+        _reloadToken = new ConfigurationReloadToken();
 
         // 创建 Nacos 配置服务
         var services = new ServiceCollection();
@@ -35,6 +40,13 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
 
         // 初始加载
         InitializeAsync().GetAwaiter().GetResult();
+
+        // 启用热重载监听
+        if (options.EnableHotReload)
+        {
+            _listener = new NacosConfigListener(this);
+            AddListenerAsync().GetAwaiter().GetResult();
+        }
     }
 
     public int Level { get; }
@@ -81,10 +93,52 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
+    private async Task AddListenerAsync()
+    {
+        try
+        {
+            if (_listener != null)
+            {
+                await _configService.AddListener(
+                    _options.DataId,
+                    _options.Group,
+                    _listener).ConfigureAwait(false);
+            }
+        }
+        catch
+        {
+            // 添加监听器失败，忽略
+        }
+    }
+
+    private async Task RemoveListenerAsync()
+    {
+        try
+        {
+            if (_listener != null)
+            {
+                await _configService.RemoveListener(
+                    _options.DataId,
+                    _options.Group,
+                    _listener).ConfigureAwait(false);
+            }
+        }
+        catch
+        {
+            // 移除监听器失败，忽略
+        }
+    }
+
     public void Dispose()
     {
         if (_disposed) return;
         _disposed = true;
+
+        // 移除监听器
+        if (_listener != null)
+        {
+            RemoveListenerAsync().GetAwaiter().GetResult();
+        }
 
         // 关闭服务
         try
@@ -134,6 +188,35 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
 
         await _configService.PublishConfig(_options.DataId, _options.Group, content, configType)
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// 处理配置变更（由监听器调用）
+    /// </summary>
+    internal void OnConfigChanged(string content)
+    {
+        if (_disposed) return;
+
+        try
+        {
+            ParseContent(content);
+            OnReload();
+        }
+        catch
+        {
+            // 解析失败，保持原有数据
+        }
+    }
+
+    private void OnReload()
+    {
+        ConfigurationReloadToken previousToken;
+        lock (_reloadTokenLock)
+        {
+            previousToken = _reloadToken;
+            _reloadToken = new ConfigurationReloadToken();
+        }
+        previousToken.OnReload();
     }
 
     private void ParseContent(string content)
@@ -301,6 +384,32 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
 
     internal bool TryGetValue(string key, out string? value) => _data.TryGetValue(key, out value);
 
+    internal IChangeToken GetReloadToken()
+    {
+        lock (_reloadTokenLock)
+        {
+            return _reloadToken;
+        }
+    }
+
+    /// <summary>
+    /// Nacos 配置监听器
+    /// </summary>
+    private sealed class NacosConfigListener : IListener
+    {
+        private readonly NacosCfgSource _source;
+
+        public NacosConfigListener(NacosCfgSource source)
+        {
+            _source = source;
+        }
+
+        public void ReceiveConfigInfo(string configInfo)
+        {
+            _source.OnConfigChanged(configInfo);
+        }
+    }
+
     /// <summary>
     /// 内部配置源，用于集成到 Microsoft.Extensions.Configuration
     /// </summary>
@@ -346,6 +455,11 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         public override bool TryGet(string key, out string? value)
         {
             return _nacosSource.TryGetValue(key, out value);
+        }
+
+        public new IChangeToken GetReloadToken()
+        {
+            return _nacosSource.GetReloadToken();
         }
     }
 }

@@ -1,3 +1,5 @@
+#pragma warning disable CS0162 // 检测到无法访问的代码
+
 using Apq.Cfg;
 using Apq.Cfg.Consul;
 

@@ -33,19 +33,78 @@ public static class CfgBuilderExtensions
     /// <param name="dataId">配置的 DataId</param>
     /// <param name="group">配置分组</param>
     /// <param name="level">配置层级</param>
+    /// <param name="enableHotReload">是否启用热重载</param>
     /// <returns>配置构建器</returns>
     public static CfgBuilder AddNacos(
         this CfgBuilder builder,
         string serverAddresses,
         string dataId,
         string group = "DEFAULT_GROUP",
-        int level = 0)
+        int level = 0,
+        bool enableHotReload = false)
     {
         return builder.AddNacos(options =>
         {
             options.ServerAddresses = serverAddresses;
             options.DataId = dataId;
             options.Group = group;
+            options.EnableHotReload = enableHotReload;
+        }, level);
+    }
+
+    /// <summary>
+    /// 添加 Nacos JSON 配置源
+    /// </summary>
+    /// <param name="builder">配置构建器</param>
+    /// <param name="serverAddresses">Nacos 服务地址</param>
+    /// <param name="dataId">配置的 DataId</param>
+    /// <param name="group">配置分组</param>
+    /// <param name="level">配置层级</param>
+    /// <param name="enableHotReload">是否启用热重载</param>
+    /// <returns>配置构建器</returns>
+    public static CfgBuilder AddNacosJson(
+        this CfgBuilder builder,
+        string serverAddresses,
+        string dataId,
+        string group = "DEFAULT_GROUP",
+        int level = 0,
+        bool enableHotReload = false)
+    {
+        return builder.AddNacos(options =>
+        {
+            options.ServerAddresses = serverAddresses;
+            options.DataId = dataId;
+            options.Group = group;
+            options.DataFormat = NacosDataFormat.Json;
+            options.EnableHotReload = enableHotReload;
+        }, level);
+    }
+
+    /// <summary>
+    /// 添加 Nacos Properties 配置源
+    /// </summary>
+    /// <param name="builder">配置构建器</param>
+    /// <param name="serverAddresses">Nacos 服务地址</param>
+    /// <param name="dataId">配置的 DataId</param>
+    /// <param name="group">配置分组</param>
+    /// <param name="level">配置层级</param>
+    /// <param name="enableHotReload">是否启用热重载</param>
+    /// <returns>配置构建器</returns>
+    public static CfgBuilder AddNacosProperties(
+        this CfgBuilder builder,
+        string serverAddresses,
+        string dataId,
+        string group = "DEFAULT_GROUP",
+        int level = 0,
+        bool enableHotReload = false)
+    {
+        return builder.AddNacos(options =>
+        {
+            options.ServerAddresses = serverAddresses;
+            options.DataId = dataId;
+            options.Group = group;
+            options.DataFormat = NacosDataFormat.Properties;
+            options.EnableHotReload = enableHotReload;
         }, level);
     }
 }

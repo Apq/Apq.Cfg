@@ -259,6 +259,7 @@ var cfg3 = new CfgBuilder()
         options.Username = "nacos";      // 可选
         options.Password = "nacos";      // 可选
         options.DataFormat = NacosDataFormat.Json;  // 支持 Json/Yaml/Properties
+        options.EnableHotReload = true;  // 启用热重载
     }, level: 10)
     .Build();
 
@@ -358,7 +359,7 @@ cfg.ConfigChanges.Subscribe(change => {
 |---------|---------|---------|--------|------|
 | **Consul** | ✅ | KV/JSON/YAML | ✅ Blocking Query | KV 存储，支持前缀监听 |
 | **Etcd** | ✅ | KV/JSON | ✅ Watch API | 强一致性，支持前缀监听 |
-| **Nacos** | ✅ | JSON/YAML/Properties | ❌ | 支持命名空间、分组、多 DataId |
+| **Nacos** | ✅ | JSON/YAML/Properties | ✅ IListener | 支持命名空间、分组、多 DataId |
 | **Apollo** | ❌ | Properties | ✅ 长轮询 + 通知 | 支持多环境、集群、命名空间 |
 | **Zookeeper** | ✅ | KV/JSON | ✅ Watch API | 节点监听，支持会话管理 |
 | **Vault** | ✅ | KV (V1/V2) | ✅ 轮询 | 密钥管理，支持 Token/AppRole 认证 |

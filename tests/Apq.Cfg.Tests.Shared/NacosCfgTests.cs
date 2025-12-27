@@ -137,4 +137,65 @@ public class NacosCfgTests : IAsyncLifetime
 
         Assert.NotNull(cfg);
     }
+
+    [SkippableFact]
+    public void AddNacos_WithHotReload_Works()
+    {
+        Skip.If(!TestSettings.IsNacosConfigured, "Nacos 服务未配置，跳过测试");
+
+        using var cfg = new CfgBuilder()
+            .AddNacos(options =>
+            {
+                options.ServerAddresses = TestSettings.NacosServerAddress!;
+                options.Namespace = TestSettings.NacosNamespace ?? "public";
+                options.Group = TestSettings.NacosGroup ?? "DEFAULT_GROUP";
+                options.DataId = TestSettings.NacosDataId ?? "apqcfgtest";
+                options.EnableHotReload = true;  // 启用热重载
+            }, level: 0)
+            .Build();
+
+        Assert.NotNull(cfg);
+        
+        // 测试 ConfigChanges 订阅不抛异常
+        var subscription = cfg.ConfigChanges.Subscribe(e =>
+        {
+            // 配置变更回调
+        });
+        
+        subscription.Dispose();
+    }
+
+    [SkippableFact]
+    public void AddNacosJson_SimplifiedMethod_Works()
+    {
+        Skip.If(!TestSettings.IsNacosConfigured, "Nacos 服务未配置，跳过测试");
+
+        using var cfg = new CfgBuilder()
+            .AddNacosJson(
+                TestSettings.NacosServerAddress!,
+                TestSettings.NacosDataId ?? "apqcfgtest",
+                TestSettings.NacosGroup ?? "DEFAULT_GROUP",
+                level: 0,
+                enableHotReload: true)
+            .Build();
+
+        Assert.NotNull(cfg);
+    }
+
+    [SkippableFact]
+    public void AddNacosProperties_SimplifiedMethod_Works()
+    {
+        Skip.If(!TestSettings.IsNacosConfigured, "Nacos 服务未配置，跳过测试");
+
+        using var cfg = new CfgBuilder()
+            .AddNacosProperties(
+                TestSettings.NacosServerAddress!,
+                "test.properties",
+                "DEFAULT_GROUP",
+                level: 0,
+                enableHotReload: false)
+            .Build();
+
+        Assert.NotNull(cfg);
+    }
 }

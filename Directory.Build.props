@@ -15,6 +15,9 @@
     <!-- 抑制 XML 注释警告 -->
     <NoWarn>$(NoWarn);CS1591;CS1570;CS1574</NoWarn>
 
+    <!-- 抑制 .NET 7 EOL 警告 -->
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+
     <!-- 抑制 TFM 不支持警告 -->
     <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
