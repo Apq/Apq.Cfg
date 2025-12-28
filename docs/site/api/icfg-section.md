@@ -1,4 +1,4 @@
-﻿# ICfgSection API
+# ICfgSection API
 
 `ICfgSection` 是配置节接口，表示配置的一个子节。
 
@@ -8,24 +8,24 @@
 public interface ICfgSection
 {
     /// <summary>
-    /// 配置节的键名
-    /// </summary>
-    string Key { get; }
-    
-    /// <summary>
-    /// 配置节的值（如果是叶子节点）
-    /// </summary>
-    string? Value { get; }
-    
-    /// <summary>
     /// 配置节的完整路径
     /// </summary>
     string Path { get; }
     
     /// <summary>
-    /// 通过键获取子配置值
+    /// 获取子配置值
     /// </summary>
-    string this[string key] { get; }
+    string? Get(string key);
+    
+    /// <summary>
+    /// 获取类型化的子配置值
+    /// </summary>
+    T? Get<T>(string key);
+    
+    /// <summary>
+    /// 设置子配置值
+    /// </summary>
+    void Set(string key, string? value, int? targetLevel = null);
     
     /// <summary>
     /// 获取子配置节
@@ -33,52 +33,87 @@ public interface ICfgSection
     ICfgSection GetSection(string key);
     
     /// <summary>
-    /// 获取所有子节
+    /// 获取所有子键
     /// </summary>
-    IEnumerable<ICfgSection> GetChildren();
+    IEnumerable<string> GetChildKeys();
 }
 ```
 
 ## 属性
-
-### Key
-
-配置节的键名（不包含父路径）。
-
-```csharp
-var dbSection = cfg.GetSection("Database");
-Console.WriteLine(dbSection.Key); // 输出: Database
-```
-
-### Value
-
-配置节的值。对于叶子节点返回实际值，对于容器节点返回 `null`。
-
-```csharp
-var hostSection = cfg.GetSection("Database:Host");
-Console.WriteLine(hostSection.Value); // 输出: localhost
-```
 
 ### Path
 
 配置节的完整路径。
 
 ```csharp
-var portSection = cfg.GetSection("Database").GetSection("Port");
+var dbSection = cfg.GetSection("Database");
+Console.WriteLine(dbSection.Path); // 输出: Database
+
+var portSection = dbSection.GetSection("Port");
 Console.WriteLine(portSection.Path); // 输出: Database:Port
 ```
 
-### 索引器 this[string key]
+## 方法
+
+### Get
+
+```csharp
+string? Get(string key)
+```
 
 获取子配置的值。
 
+**参数：**
+- `key`: 子配置键
+
+**返回：** 配置值，如果不存在返回 `null`
+
+**示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-var host = dbSection["Host"];
-var port = dbSection["Port"];
+var host = dbSection.Get("Host");
+var port = dbSection.Get("Port");
 ```
 
-## 方法
+### Get&lt;T&gt;
+
+```csharp
+T? Get<T>(string key)
+```
+
+获取子配置的类型化值。
+
+**参数：**
+- `key`: 子配置键
+
+**返回：** 转换后的值
+
+**示例：**
+```csharp
+var dbSection = cfg.GetSection("Database");
+var port = dbSection.Get<int>("Port");
+var timeout = dbSection.Get<int>("Timeout");
+```
+
+### Set
+
+```csharp
+void Set(string key, string? value, int? targetLevel = null)
+```
+
+设置子配置值。
+
+**参数：**
+- `key`: 子配置键
+- `value`: 配置值
+- `targetLevel`: 目标层级（可选）
+
+**示例：**
+```csharp
+var dbSection = cfg.GetSection("Database");
+dbSection.Set("Host", "new-host");
+dbSection.Set("Port", "5433");
+```
 
 ### GetSection
 
@@ -95,107 +130,32 @@ ICfgSection GetSection(string key)
 
 **示例：**
 ```csharp
-var dbSection = cfg.GetSection("Database");
-var connSection = dbSection.GetSection("Connection");
+var servicesSection = cfg.GetSection("Services");
+var apiSection = servicesSection.GetSection("Api");
+var url = apiSection.Get("Url");
 ```
 
-### GetChildren
+### GetChildKeys
 
 ```csharp
-IEnumerable<ICfgSection> GetChildren()
+IEnumerable<string> GetChildKeys()
 ```
 
-获取所有直接子节。
+获取所有直接子键。
 
-**返回：** 子配置节集合
+**返回：** 子键集合
 
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-foreach (var child in dbSection.GetChildren())
+foreach (var key in dbSection.GetChildKeys())
 {
-    Console.WriteLine($"{child.Key} = {child.Value}");
+    Console.WriteLine($"{key} = {dbSection.Get(key)}");
 }
-```
-
-## 扩展方法
-
-### Get&lt;T&gt;
-
-```csharp
-public static T Get<T>(this ICfgSection section)
-```
-
-将配置节绑定到指定类型。
-
-**返回：** 绑定后的对象实例
-
-**示例：**
-```csharp
-public class DatabaseConfig
-{
-    public string Host { get; set; } = "";
-    public int Port { get; set; }
-}
-
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
-```
-
-### GetValue&lt;T&gt;
-
-```csharp
-public static T GetValue<T>(this ICfgSection section, string key, T defaultValue = default)
-```
-
-获取子配置的类型化值。
-
-**参数：**
-- `key`: 子配置键
-- `defaultValue`: 默认值
-
-**返回：** 转换后的值
-
-**示例：**
-```csharp
-var dbSection = cfg.GetSection("Database");
-var port = dbSection.GetValue<int>("Port");
-var timeout = dbSection.GetValue<int>("Timeout", 30);
-```
-
-### Exists
-
-```csharp
-public static bool Exists(this ICfgSection section)
-```
-
-检查配置节是否存在（有值或有子节）。
-
-**返回：** 是否存在
-
-**示例：**
-```csharp
-var optionalSection = cfg.GetSection("Optional");
-if (optionalSection.Exists())
-{
-    // 处理可选配置
-}
-```
-
-### Bind
-
-```csharp
-public static void Bind(this ICfgSection section, object instance)
-```
-
-将配置节绑定到现有对象实例。
-
-**参数：**
-- `instance`: 要绑定的对象实例
-
-**示例：**
-```csharp
-var dbConfig = new DatabaseConfig();
-cfg.GetSection("Database").Bind(dbConfig);
+// 输出:
+// Host = localhost
+// Port = 5432
+// Database = mydb
 ```
 
 ## 使用示例
@@ -204,20 +164,20 @@ cfg.GetSection("Database").Bind(dbConfig);
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 获取配置节
 var dbSection = cfg.GetSection("Database");
 
 // 读取值
-var host = dbSection["Host"];
-var port = dbSection.GetValue<int>("Port");
+var host = dbSection.Get("Host");
+var port = dbSection.Get<int>("Port");
 
-// 遍历子节
-foreach (var child in dbSection.GetChildren())
+// 遍历子键
+foreach (var key in dbSection.GetChildKeys())
 {
-    Console.WriteLine($"{child.Key}: {child.Value}");
+    Console.WriteLine($"{key}: {dbSection.Get(key)}");
 }
 ```
 
@@ -230,40 +190,63 @@ var apiSection = cfg.GetSection("Services:Api");
 // 或
 var apiSection = cfg.GetSection("Services").GetSection("Api");
 
-var url = apiSection["Url"];
-var timeout = apiSection.GetValue<int>("Timeout");
+var url = apiSection.Get("Url");
+var timeout = apiSection.Get<int>("Timeout");
 ```
 
-### 绑定到对象
+### 修改配置节
 
 ```csharp
-public class ServiceConfig
-{
-    public string Url { get; set; } = "";
-    public int Timeout { get; set; } = 30;
-    public bool Enabled { get; set; } = true;
-}
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
 
-var apiConfig = cfg.GetSection("Services:Api").Get<ServiceConfig>();
-Console.WriteLine($"API URL: {apiConfig.Url}");
+var dbSection = cfg.GetSection("Database");
+dbSection.Set("Host", "new-host");
+dbSection.Set("Port", "5433");
+
+await cfg.SaveAsync();
 ```
 
-### 绑定到集合
+### 处理数组配置
 
 ```csharp
 // JSON: { "Servers": ["s1", "s2", "s3"] }
-var servers = cfg.GetSection("Servers").Get<List<string>>();
-
-// JSON: { "Endpoints": [{ "Name": "api", "Url": "..." }, ...] }
-var endpoints = cfg.GetSection("Endpoints").Get<List<EndpointConfig>>();
+var serversSection = cfg.GetSection("Servers");
+foreach (var key in serversSection.GetChildKeys())
+{
+    var server = serversSection.Get(key);
+    Console.WriteLine($"Server {key}: {server}");
+}
+// 输出:
+// Server 0: s1
+// Server 1: s2
+// Server 2: s3
 ```
 
-### 绑定到字典
+### 处理对象数组
 
 ```csharp
-// JSON: { "ConnectionStrings": { "Default": "...", "Readonly": "..." } }
-var connStrings = cfg.GetSection("ConnectionStrings")
-    .Get<Dictionary<string, string>>();
+// JSON: { "Endpoints": [{ "Name": "api", "Url": "..." }, { "Name": "auth", "Url": "..." }] }
+var endpointsSection = cfg.GetSection("Endpoints");
+foreach (var key in endpointsSection.GetChildKeys())
+{
+    var endpoint = endpointsSection.GetSection(key);
+    var name = endpoint.Get("Name");
+    var url = endpoint.Get("Url");
+    Console.WriteLine($"Endpoint {name}: {url}");
+}
+```
+
+### 检查配置节是否存在
+
+```csharp
+var optionalSection = cfg.GetSection("Optional");
+var childKeys = optionalSection.GetChildKeys().ToList();
+if (childKeys.Count > 0 || optionalSection.Get("Value") != null)
+{
+    // 配置节存在
+}
 ```
 
 ## 下一步

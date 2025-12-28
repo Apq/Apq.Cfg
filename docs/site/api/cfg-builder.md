@@ -1,4 +1,4 @@
-﻿# CfgBuilder API
+# CfgBuilder API
 
 `CfgBuilder` 是配置构建器，用于组合多个配置源并创建配置实例。
 
@@ -15,92 +15,154 @@ public CfgBuilder()
 ### AddSource
 
 ```csharp
-public CfgBuilder AddSource(ICfgSource source, bool optional = false)
+public CfgBuilder AddSource(ICfgSource source)
 ```
 
 添加自定义配置源。
 
 **参数：**
 - `source`: 配置源实例
-- `optional`: 是否可选，默认 `false`
 
 **返回：** 当前构建器实例（支持链式调用）
 
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new MyCustomSource())
+    .AddSource(new MyCustomSource(level: 5, writeable: false))
     .Build();
 ```
 
-### AddJsonFile
+### AddJson
 
 ```csharp
-public CfgBuilder AddJsonFile(string path, bool optional = false, bool reloadOnChange = false)
+public CfgBuilder AddJson(
+    string path,
+    int level,
+    bool writeable,
+    bool isPrimaryWriter = false,
+    bool optional = false,
+    bool reloadOnChange = false,
+    EncodingOptions? encoding = null)
 ```
 
 添加 JSON 文件配置源。
 
 **参数：**
 - `path`: 文件路径
+- `level`: 层级优先级（数值越大优先级越高）
+- `writeable`: 是否可写
+- `isPrimaryWriter`: 是否为主写入源（同层级只能有一个）
 - `optional`: 是否可选
 - `reloadOnChange`: 是否在文件变更时重载
+- `encoding`: 编码选项
 
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile("config.local.json", optional: true, reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
     .Build();
 ```
 
-### AddInMemory
+### AddYaml
 
 ```csharp
-public CfgBuilder AddInMemory(IDictionary<string, string> data)
+public CfgBuilder AddYaml(
+    string path,
+    int level,
+    bool writeable,
+    bool isPrimaryWriter = false,
+    bool optional = false,
+    bool reloadOnChange = false,
+    EncodingOptions? encoding = null)
 ```
 
-添加内存配置源。
-
-**参数：**
-- `data`: 配置键值对字典
+添加 YAML 文件配置源。参数与 `AddJson` 相同。
 
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddInMemory(new Dictionary<string, string>
-    {
-        ["Database:Host"] = "localhost",
-        ["Database:Port"] = "5432"
-    })
+    .AddYaml("config.yaml", level: 0, writeable: false)
     .Build();
 ```
 
 ### AddEnvironmentVariables
 
 ```csharp
-public CfgBuilder AddEnvironmentVariables(string prefix = null)
+public CfgBuilder AddEnvironmentVariables(int level, string? prefix = null)
 ```
 
 添加环境变量配置源。
 
 **参数：**
+- `level`: 层级优先级
 - `prefix`: 环境变量前缀（可选）
 
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddEnvironmentVariables("MYAPP_")
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 ```
 
-### ConfigureReload
+### AddReadEncodingMapping
 
 ```csharp
-public CfgBuilder ConfigureReload(Action<DynamicReloadOptions> configure)
+public CfgBuilder AddReadEncodingMapping(string path, Encoding encoding, int priority = 100)
 ```
 
-配置动态重载选项。
+添加读取编码映射（完整路径）。
+
+**参数：**
+- `path`: 文件完整路径
+- `encoding`: 编码
+- `priority`: 优先级（默认 100）
+
+**示例：**
+```csharp
+var cfg = new CfgBuilder()
+    .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
+    .AddJson("config.json", level: 0, writeable: false)
+    .Build();
+```
+
+### AddReadEncodingMappingWildcard
+
+```csharp
+public CfgBuilder AddReadEncodingMappingWildcard(string pattern, Encoding encoding, int priority = 0)
+```
+
+添加读取编码映射（通配符）。
+
+**参数：**
+- `pattern`: 通配符模式（如 `*.ini`）
+- `encoding`: 编码
+- `priority`: 优先级（默认 0）
+
+### AddReadEncodingMappingRegex
+
+```csharp
+public CfgBuilder AddReadEncodingMappingRegex(string pattern, Encoding encoding, int priority = 0)
+```
+
+添加读取编码映射（正则表达式）。
+
+**参数：**
+- `pattern`: 正则表达式模式
+- `encoding`: 编码
+- `priority`: 优先级（默认 0）
+
+### AddWriteEncodingMapping / AddWriteEncodingMappingWildcard / AddWriteEncodingMappingRegex
+
+与读取映射方法类似，用于配置写入编码映射。
+
+### ConfigureEncodingMapping
+
+```csharp
+public CfgBuilder ConfigureEncodingMapping(Action<EncodingMappingConfig> configure)
+```
+
+高级编码映射配置。
 
 **参数：**
 - `configure`: 配置委托
@@ -108,37 +170,37 @@ public CfgBuilder ConfigureReload(Action<DynamicReloadOptions> configure)
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .ConfigureReload(options =>
+    .ConfigureEncodingMapping(config =>
     {
-        options.DebounceDelay = 500;
-        options.Strategy = ReloadStrategy.Debounced;
+        config.AddReadMapping("*.xml", EncodingMappingType.Wildcard, Encoding.UTF8, priority: 50);
+        config.AddWriteMapping("**/*.txt", EncodingMappingType.Wildcard, new UTF8Encoding(true), priority: 10);
+        config.ClearWriteMappings();
     })
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 ```
 
-### ConfigureEncoding
+### WithEncodingConfidenceThreshold
 
 ```csharp
-public CfgBuilder ConfigureEncoding(Action<EncodingOptions> configure)
+public CfgBuilder WithEncodingConfidenceThreshold(float threshold)
 ```
 
-配置文件编码选项。
+设置编码检测置信度阈值。
 
 **参数：**
-- `configure`: 配置委托
+- `threshold`: 置信度阈值（0.0 - 1.0，默认 0.6）
 
-**示例：**
+### WithEncodingDetectionLogging
+
 ```csharp
-var cfg = new CfgBuilder()
-    .ConfigureEncoding(options =>
-    {
-        options.DefaultEncoding = Encoding.UTF8;
-        options.AddMapping(".ini", Encoding.GetEncoding("GBK"));
-    })
-    .AddJsonFile("config.json")
-    .Build();
+public CfgBuilder WithEncodingDetectionLogging(Action<EncodingDetectionResult> logger)
 ```
+
+启用编码检测日志。
+
+**参数：**
+- `logger`: 日志回调
 
 ### Build
 
@@ -153,25 +215,8 @@ public ICfgRoot Build()
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
-```
-
-### BuildAsync
-
-```csharp
-public Task<ICfgRoot> BuildAsync(CancellationToken cancellationToken = default)
-```
-
-异步构建配置实例。
-
-**返回：** `Task<ICfgRoot>` 配置根实例
-
-**示例：**
-```csharp
-var cfg = await new CfgBuilder()
-    .AddConsul("http://localhost:8500", "myapp/config")
-    .BuildAsync();
 ```
 
 ## 完整示例
@@ -181,20 +226,18 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     // 环境特定配置
-    .AddJsonFile($"config.{environment}.json", optional: true)
-    // 本地覆盖
-    .AddJsonFile("config.local.json", optional: true, reloadOnChange: true)
+    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    // 本地覆盖（可写）
+    .AddJson("config.local.json", level: 2, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
     // 远程配置
-    .AddConsul("http://consul:8500", "myapp/config", optional: true)
-    // 环境变量
-    .AddEnvironmentVariables("MYAPP_")
-    // 配置重载
-    .ConfigureReload(options =>
-    {
-        options.DebounceDelay = 1000;
-    })
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, optional: true))
+    // 环境变量（最高优先级）
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    // 编码配置
+    .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
+    .WithEncodingConfidenceThreshold(0.8f)
     .Build();
 ```
 

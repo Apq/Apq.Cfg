@@ -1,4 +1,4 @@
-﻿# JSON 配置源
+# JSON 配置源
 
 JSON 是最常用的配置格式，Apq.Cfg 核心包内置支持。
 
@@ -16,7 +16,7 @@ dotnet add package Apq.Cfg
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -24,8 +24,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile("config.local.json", optional: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: false, optional: true)
     .Build();
 ```
 
@@ -33,8 +33,20 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", optional: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
     .Build();
+```
+
+### 可写配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 修改配置
+cfg.Set("App:Name", "NewName");
+await cfg.SaveAsync();
 ```
 
 ## JSON 文件格式
@@ -88,15 +100,13 @@ var cfg = new CfgBuilder()
 ### 读取数组
 
 ```csharp
-// 读取字符串数组
-var servers = cfg.GetSection("Servers").Get<List<string>>();
-
-// 读取对象数组
-var endpoints = cfg.GetSection("Endpoints").Get<List<EndpointConfig>>();
-
 // 按索引访问
-var firstServer = cfg["Servers:0"];
-var firstEndpointName = cfg["Endpoints:0:Name"];
+var firstServer = cfg.Get("Servers:0");
+var firstEndpointName = cfg.Get("Endpoints:0:Name");
+
+// 获取配置节
+var serversSection = cfg.GetSection("Servers");
+var endpointsSection = cfg.GetSection("Endpoints");
 ```
 
 ## 键路径映射
@@ -115,20 +125,14 @@ JSON 结构会被扁平化为冒号分隔的键路径：
 ### 指定编码
 
 ```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", encoding: Encoding.UTF8)
-    .Build();
-```
+var options = new EncodingOptions
+{
+    ReadStrategy = EncodingReadStrategy.Specified,
+    ReadEncoding = Encoding.UTF8
+};
 
-### JSON 解析选项
-
-```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", jsonOptions: new JsonDocumentOptions
-    {
-        AllowTrailingCommas = true,
-        CommentHandling = JsonCommentHandling.Skip
-    })
+    .AddJson("config.json", level: 0, writeable: false, encoding: options)
     .Build();
 ```
 
@@ -137,16 +141,7 @@ var cfg = new CfgBuilder()
 ```csharp
 using var stream = File.OpenRead("config.json");
 var cfg = new CfgBuilder()
-    .AddJsonStream(stream)
-    .Build();
-```
-
-### 从字符串加载
-
-```csharp
-var json = @"{ ""Key"": ""Value"" }";
-var cfg = new CfgBuilder()
-    .AddJsonString(json)
+    .AddSource(new JsonStreamCfgSource(stream, level: 0))
     .Build();
 ```
 
@@ -158,8 +153,9 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile($"config.{environment}.json", optional: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 

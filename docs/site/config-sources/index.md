@@ -1,4 +1,4 @@
-﻿# 配置源概述
+# 配置源概述
 
 Apq.Cfg 支持多种配置源，可以灵活组合使用。
 
@@ -39,9 +39,9 @@ Apq.Cfg 支持多种配置源，可以灵活组合使用。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile("config.Development.json", optional: true)
-    .AddEnvironmentVariables()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 
@@ -51,9 +51,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")  // 基础配置
-    .AddConsul("http://consul:8500", "myapp/config")  // 动态配置
-    .AddVault("https://vault:8200", "secret/myapp")   // 敏感配置
+    .AddJson("config.json", level: 0, writeable: false)  // 基础配置
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10))  // 动态配置
+    .AddSource(new VaultCfgSource("https://vault:8200", "secret/myapp", level: 15))   // 敏感配置
     .Build();
 ```
 
@@ -62,13 +62,13 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     // 环境特定配置
-    .AddJsonFile($"config.{env}.json", optional: true)
+    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
     // 远程配置（可选，用于动态更新）
-    .AddConsul("http://consul:8500", "myapp/config", optional: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, optional: true))
     // 环境变量覆盖
-    .AddEnvironmentVariables()
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 ```
 
@@ -85,14 +85,14 @@ var cfg = new CfgBuilder()
 
 ## 配置源优先级
 
-后添加的配置源优先级更高：
+使用 `level` 参数控制优先级，数值越大优先级越高：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("base.json")           // 优先级 1
-    .AddYamlFile("override.yaml")       // 优先级 2
-    .AddConsul("...", "...")            // 优先级 3
-    .AddEnvironmentVariables()          // 优先级 4（最高）
+    .AddJson("base.json", level: 0, writeable: false)           // 优先级 0（最低）
+    .AddYaml("override.yaml", level: 1, writeable: false)       // 优先级 1
+    .AddSource(new ConsulCfgSource(..., level: 10))             // 优先级 10
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")         // 优先级 20（最高）
     .Build();
 ```
 

@@ -1,4 +1,4 @@
-﻿# Redis 配置源
+# Redis 配置源
 
 Redis 是高性能的键值存储，适合作为配置中心使用。
 
@@ -15,7 +15,11 @@ using Apq.Cfg;
 using Apq.Cfg.Redis;
 
 var cfg = new CfgBuilder()
-    .AddRedis("localhost:6379", "config:myapp")
+    .AddSource(new RedisCfgSource(
+        connectionString: "localhost:6379",
+        keyPrefix: "config:myapp",
+        level: 10,
+        writeable: false))
     .Build();
 ```
 
@@ -23,7 +27,12 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis("localhost:6379", "config:myapp", subscribeChanges: true)
+    .AddSource(new RedisCfgSource(
+        connectionString: "localhost:6379",
+        keyPrefix: "config:myapp",
+        level: 10,
+        writeable: false,
+        subscribeChanges: true))
     .Build();
 ```
 
@@ -33,15 +42,15 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis(options =>
+    .AddSource(new RedisCfgSource(new RedisCfgOptions
     {
-        options.ConnectionString = "localhost:6379,password=secret";
-        options.KeyPrefix = "config:myapp";
-        options.Database = 0;
-        options.SubscribeChanges = true;
-        options.ChangeChannel = "config:myapp:changes";
-        options.Optional = false;
-    })
+        ConnectionString = "localhost:6379,password=secret",
+        KeyPrefix = "config:myapp",
+        Database = 0,
+        SubscribeChanges = true,
+        ChangeChannel = "config:myapp:changes",
+        Optional = false
+    }, level: 10, writeable: false))
     .Build();
 ```
 
@@ -88,7 +97,12 @@ SET config:myapp '{"Database":{"Host":"localhost","Port":5432}}'
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis("localhost:6379", "config:myapp", parseJson: true)
+    .AddSource(new RedisCfgSource(new RedisCfgOptions
+    {
+        ConnectionString = "localhost:6379",
+        KeyPrefix = "config:myapp",
+        ParseJson = true
+    }, level: 10, writeable: false))
     .Build();
 ```
 
@@ -106,18 +120,22 @@ PUBLISH config:myapp:changes "Database:Host"
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis(options =>
+    .AddSource(new RedisCfgSource(new RedisCfgOptions
     {
-        options.ConnectionString = "localhost:6379";
-        options.KeyPrefix = "config:myapp";
-        options.SubscribeChanges = true;
-        options.ChangeChannel = "config:myapp:changes";
-    })
+        ConnectionString = "localhost:6379",
+        KeyPrefix = "config:myapp",
+        SubscribeChanges = true,
+        ChangeChannel = "config:myapp:changes"
+    }, level: 10, writeable: false))
     .Build();
 
-cfg.OnChange(changes =>
+cfg.ConfigChanges.Subscribe(e =>
 {
-    Console.WriteLine("Redis 配置已更新");
+    Console.WriteLine("Redis 配置已更新:");
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"  [{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
+    }
 });
 ```
 
@@ -127,11 +145,11 @@ cfg.OnChange(changes =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis(options =>
+    .AddSource(new RedisCfgSource(new RedisCfgOptions
     {
-        options.ConnectionString = "sentinel1:26379,sentinel2:26379,serviceName=mymaster";
-        options.KeyPrefix = "config:myapp";
-    })
+        ConnectionString = "sentinel1:26379,sentinel2:26379,serviceName=mymaster",
+        KeyPrefix = "config:myapp"
+    }, level: 10, writeable: false))
     .Build();
 ```
 
@@ -139,11 +157,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis(options =>
+    .AddSource(new RedisCfgSource(new RedisCfgOptions
     {
-        options.ConnectionString = "node1:6379,node2:6379,node3:6379";
-        options.KeyPrefix = "config:myapp";
-    })
+        ConnectionString = "node1:6379,node2:6379,node3:6379",
+        KeyPrefix = "config:myapp"
+    }, level: 10, writeable: false))
     .Build();
 ```
 
@@ -153,7 +171,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis("localhost:6379,password=your-password", "config:myapp")
+    .AddSource(new RedisCfgSource(
+        connectionString: "localhost:6379,password=your-password",
+        keyPrefix: "config:myapp",
+        level: 10,
+        writeable: false))
     .Build();
 ```
 
@@ -161,7 +183,24 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddRedis("localhost:6379,ssl=true,sslHost=redis.example.com", "config:myapp")
+    .AddSource(new RedisCfgSource(
+        connectionString: "localhost:6379,ssl=true,sslHost=redis.example.com",
+        keyPrefix: "config:myapp",
+        level: 10,
+        writeable: false))
+    .Build();
+```
+
+## 与本地配置混合使用
+
+```csharp
+var cfg = new CfgBuilder()
+    // 本地基础配置
+    .AddJson("config.json", level: 0, writeable: false)
+    // Redis 远程配置（高优先级）
+    .AddSource(new RedisCfgSource("localhost:6379", "config:myapp", level: 10, writeable: false, subscribeChanges: true))
+    // 环境变量（最高优先级）
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 ```
 

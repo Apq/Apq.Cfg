@@ -1,4 +1,4 @@
-﻿# YAML 配置源
+# YAML 配置源
 
 YAML 是一种人类友好的数据序列化格式，适合复杂配置。
 
@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYamlFile("config.yaml")
+    .AddYaml("config.yaml", level: 0, writeable: false)
     .Build();
 ```
 
@@ -23,9 +23,21 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddYamlFile("config.yaml", optional: false, reloadOnChange: true)
-    .AddYamlFile("config.local.yaml", optional: true, reloadOnChange: true)
+    .AddYaml("config.yaml", level: 0, writeable: false, reloadOnChange: true)
+    .AddYaml("config.local.yaml", level: 1, writeable: false, optional: true, reloadOnChange: true)
     .Build();
+```
+
+### 可写配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddYaml("config.yaml", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 修改配置
+cfg.Set("App:Name", "NewName");
+await cfg.SaveAsync();
 ```
 
 ## YAML 文件格式
@@ -114,8 +126,14 @@ YAML 结构映射为冒号分隔的键路径：
 ### 指定编码
 
 ```csharp
+var options = new EncodingOptions
+{
+    ReadStrategy = EncodingReadStrategy.Specified,
+    ReadEncoding = Encoding.UTF8
+};
+
 var cfg = new CfgBuilder()
-    .AddYamlFile("config.yaml", encoding: Encoding.UTF8)
+    .AddYaml("config.yaml", level: 0, writeable: false, encoding: options)
     .Build();
 ```
 
@@ -124,19 +142,7 @@ var cfg = new CfgBuilder()
 ```csharp
 using var stream = File.OpenRead("config.yaml");
 var cfg = new CfgBuilder()
-    .AddYamlStream(stream)
-    .Build();
-```
-
-### 从字符串加载
-
-```csharp
-var yaml = @"
-App:
-  Name: MyApp
-";
-var cfg = new CfgBuilder()
-    .AddYamlString(yaml)
+    .AddSource(new YamlStreamCfgSource(stream, level: 0))
     .Build();
 ```
 
@@ -144,9 +150,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddYamlFile("config.yaml", optional: true)
-    .AddEnvironmentVariables()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 

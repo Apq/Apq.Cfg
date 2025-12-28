@@ -1,4 +1,4 @@
-﻿# API 概述
+# API 概述
 
 本节提供 Apq.Cfg 的完整 API 参考文档。
 
@@ -10,7 +10,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -18,15 +18,29 @@ var cfg = new CfgBuilder()
 
 ### ICfgRoot
 
-配置根接口，提供配置读取功能。
+配置根接口，提供配置读写功能。
 
 ```csharp
-public interface ICfgRoot
+public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
-    string this[string key] { get; }
-    T GetValue<T>(string key, T defaultValue = default);
+    // 读取操作
+    string? Get(string key);
+    T? Get<T>(string key);
+    bool Exists(string key);
     ICfgSection GetSection(string key);
-    IChangeToken GetReloadToken();
+    
+    // 写入操作
+    void Set(string key, string? value, int? targetLevel = null);
+    void Remove(string key, int? targetLevel = null);
+    Task SaveAsync(int? targetLevel = null, CancellationToken ct = default);
+    
+    // 批量操作
+    IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys);
+    void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
+    
+    // 转换与事件
+    IConfigurationRoot ToMicrosoftConfiguration();
+    IObservable<ConfigChangeEvent> ConfigChanges { get; }
 }
 ```
 
@@ -39,11 +53,12 @@ public interface ICfgRoot
 ```csharp
 public interface ICfgSection
 {
-    string Key { get; }
-    string Value { get; }
     string Path { get; }
-    T Get<T>();
-    IEnumerable<ICfgSection> GetChildren();
+    string? Get(string key);
+    T? Get<T>(string key);
+    void Set(string key, string? value, int? targetLevel = null);
+    ICfgSection GetSection(string key);
+    IEnumerable<string> GetChildKeys();
 }
 ```
 
@@ -58,10 +73,23 @@ public interface ICfgSection
 ```csharp
 public interface ICfgSource
 {
-    string Name { get; }
-    bool SupportsReload { get; }
-    Task<IDictionary<string, string>> LoadAsync(CancellationToken ct = default);
-    IChangeToken? GetReloadToken();
+    int Level { get; }              // 层级优先级
+    bool IsWriteable { get; }       // 是否可写
+    bool IsPrimaryWriter { get; }   // 是否为主写入源
+    IConfigurationSource BuildSource();
+}
+```
+
+### IWritableCfgSource
+
+可写配置源接口。
+
+```csharp
+public interface IWritableCfgSource : ICfgSource
+{
+    void Set(string key, string? value);
+    void Remove(string key);
+    Task SaveAsync(CancellationToken ct = default);
 }
 ```
 
@@ -71,16 +99,16 @@ public interface ICfgSource
 
 | 方法 | 说明 |
 |------|------|
-| `AddJsonFile()` | 添加 JSON 文件配置源 |
-| `AddYamlFile()` | 添加 YAML 文件配置源 |
-| `AddXmlFile()` | 添加 XML 文件配置源 |
-| `AddIniFile()` | 添加 INI 文件配置源 |
-| `AddTomlFile()` | 添加 TOML 文件配置源 |
+| `AddJson()` | 添加 JSON 文件配置源 |
+| `AddYaml()` | 添加 YAML 文件配置源 |
+| `AddXml()` | 添加 XML 文件配置源 |
+| `AddIni()` | 添加 INI 文件配置源 |
+| `AddToml()` | 添加 TOML 文件配置源 |
 | `AddEnvironmentVariables()` | 添加环境变量配置源 |
-| `AddConsul()` | 添加 Consul 配置源 |
-| `AddRedis()` | 添加 Redis 配置源 |
-| `AddApollo()` | 添加 Apollo 配置源 |
-| `AddVault()` | 添加 Vault 配置源 |
+| `AddSource()` | 添加自定义配置源 |
+| `AddReadEncodingMapping()` | 添加读取编码映射 |
+| `AddWriteEncodingMapping()` | 添加写入编码映射 |
+| `ConfigureEncodingMapping()` | 配置编码映射 |
 
 [查看详细 API →](/api/extensions)
 
@@ -88,20 +116,22 @@ public interface ICfgSource
 
 | 方法 | 说明 |
 |------|------|
-| `GetValue<T>()` | 获取类型化配置值 |
+| `Get()` | 获取配置值 |
+| `Get<T>()` | 获取类型化配置值 |
 | `GetSection()` | 获取配置节 |
-| `GetRequiredSection()` | 获取必需的配置节 |
-| `GetChildren()` | 获取所有子节 |
 | `Exists()` | 检查配置是否存在 |
+| `Set()` | 设置配置值 |
+| `Remove()` | 移除配置键 |
+| `SaveAsync()` | 保存配置 |
 
 ### ICfgSection 扩展
 
 | 方法 | 说明 |
 |------|------|
-| `Get<T>()` | 绑定到类型 |
-| `GetValue<T>()` | 获取类型化值 |
-| `GetChildren()` | 获取子节 |
-| `Exists()` | 检查是否存在 |
+| `Get()` | 获取配置值 |
+| `Get<T>()` | 获取类型化值 |
+| `GetSection()` | 获取子节 |
+| `GetChildKeys()` | 获取子键列表 |
 
 ## 命名空间
 
@@ -110,6 +140,7 @@ public interface ICfgSource
 | `Apq.Cfg` | 核心类型和接口 |
 | `Apq.Cfg.Sources` | 配置源基类和接口 |
 | `Apq.Cfg.Changes` | 配置变更相关类型 |
+| `Apq.Cfg.Encoding` | 编码处理相关类型 |
 | `Apq.Cfg.DependencyInjection` | DI 集成 |
 | `Apq.Cfg.Yaml` | YAML 配置源 |
 | `Apq.Cfg.Xml` | XML 配置源 |
