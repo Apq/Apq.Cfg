@@ -1,5 +1,7 @@
 # 动态配置重载设计方案
 
+本文档详细说明 Apq.Cfg 动态配置重载功能的设计与实现。
+
 ## 1. 背景与目标
 
 ### 1.1 当前状态
@@ -543,3 +545,9 @@ cfg.ConfigChanges.Subscribe(e =>
 | API 兼容 | 保持现有接口，新增可选参数 |
 
 该设计在保持 API 简洁的同时，提供了高效、准确的动态配置重载能力。
+
+## 下一步
+
+- [动态重载](/guide/dynamic-reload) - 动态重载基础用法
+- [架构设计](/guide/architecture) - 整体架构设计
+- [性能优化](/guide/performance) - 性能调优指南

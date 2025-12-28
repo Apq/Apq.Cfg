@@ -1,16 +1,14 @@
-# Apq.Cfg 复杂场景示例
-
-## 概述
+# 复杂场景示例
 
 本文档提供了 Apq.Cfg 在复杂场景下的使用示例，帮助开发者解决实际项目中的配置管理挑战。
 
 ## 1. 多环境部署配置
 
-### 1.1 场景描述
+### 场景描述
 
 企业级应用程序通常需要在多个环境（开发、测试、预发布、生产）之间部署，每个环境需要不同的配置值。
 
-### 1.2 解决方案
+### 解决方案
 
 ```csharp
 public static class ConfigurationBuilder
@@ -54,7 +52,7 @@ public static class ConfigurationBuilder
 }
 ```
 
-### 1.3 部署脚本
+### 部署脚本
 
 ```bash
 #!/bin/bash
@@ -69,11 +67,11 @@ dotnet MyApp.dll
 
 ## 2. 配置迁移场景
 
-### 2.1 场景描述
+### 场景描述
 
 当应用程序升级或配置结构发生变化时，需要将旧配置迁移到新格式。
 
-### 2.2 解决方案
+### 解决方案
 
 ```csharp
 public class ConfigurationMigrator
@@ -173,11 +171,11 @@ public class ConfigurationMigrator
 
 ## 3. 动态配置更新场景
 
-### 3.1 场景描述
+### 场景描述
 
 在微服务架构中，需要在不重启服务的情况下动态更新配置，如功能开关、限流参数等。
 
-### 3.2 解决方案
+### 解决方案
 
 ```csharp
 public class DynamicConfigurationManager
@@ -230,7 +228,7 @@ public class DynamicConfigurationManager
 }
 ```
 
-### 3.3 使用示例
+### 使用示例
 
 ```csharp
 // 在服务中注册动态配置管理器
@@ -267,11 +265,11 @@ public class FeaturesController : ControllerBase
 
 ## 4. 多租户配置场景
 
-### 4.1 场景描述
+### 场景描述
 
 SaaS 应用程序需要为每个租户提供独立的配置，同时允许租户自定义某些设置。
 
-### 4.2 解决方案
+### 解决方案
 
 ```csharp
 public class TenantConfigurationProvider
@@ -356,11 +354,11 @@ public class TenantConfigurationProvider
 
 ## 5. 配置中心集成场景
 
-### 5.1 场景描述
+### 场景描述
 
 大型分布式系统需要集中管理配置，支持实时更新、版本控制和访问控制。
 
-### 5.2 解决方案
+### 解决方案
 
 ```csharp
 public class ConfigurationCenterIntegration
@@ -439,7 +437,7 @@ public class ConfigurationCenterIntegration
 }
 ```
 
-### 5.3 配置中心客户端实现
+### 配置中心客户端实现
 
 ```csharp
 public interface IConfigurationCenterClient
@@ -508,254 +506,11 @@ public class ApolloConfigurationCenterClient : IConfigurationCenterClient
 
 ## 6. 高可用配置场景
 
-### 6.1 场景描述
-
-关键业务系统需要确保配置服务的高可用性，避免单点故障导致整个系统不可用。
-
-### 6.2 解决方案
-
-```csharp
-public class HighAvailabilityConfigurationProvider
-{
-    private readonly List<ICfgSource> _primarySources;
-    private readonly List<ICfgSource> _fallbackSources;
-    private readonly ILogger<HighAvailabilityConfigurationProvider> _logger;
-    private readonly Timer _healthCheckTimer;
-    private readonly ConcurrentDictionary<ICfgSource, bool> _sourceHealth = new();
-
-    public HighAvailabilityConfigurationProvider(
-        IEnumerable<ICfgSource> primarySources,
-        IEnumerable<ICfgSource> fallbackSources,
-        ILogger<HighAvailabilityConfigurationProvider> logger)
-    {
-        _primarySources = primarySources.ToList();
-        _fallbackSources = fallbackSources.ToList();
-        _logger = logger;
-
-        // 初始化所有源为健康状态
-        foreach (var source in _primarySources.Concat(_fallbackSources))
-        {
-            _sourceHealth[source] = true;
-        }
-
-        // 设置定期健康检查（每30秒）
-        _healthCheckTimer = new Timer(CheckSourceHealth, null, 
-                                     TimeSpan.Zero, TimeSpan.FromSeconds(30));
-    }
-
-    public string? Get(string key)
-    {
-        // 首先尝试从主要源获取
-        foreach (var source in _primarySources.OrderByDescending(s => s.Level))
-        {
-            if (_sourceHealth[source])
-            {
-                try
-                {
-                    var value = source.Get(key);
-                    if (value != null)
-                    {
-                        _logger.LogDebug("从主要源 {SourceType} 获取配置 {Key}={Value}", 
-                                         source.GetType().Name, key, value);
-                        return value;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogWarning(ex, "从主要源 {SourceType} 获取配置 {Key} 失败", 
-                                      source.GetType().Name, key);
-                    _sourceHealth[source] = false;
-                }
-            }
-        }
-
-        // 如果主要源失败，尝试从备用源获取
-        foreach (var source in _fallbackSources.OrderByDescending(s => s.Level))
-        {
-            if (_sourceHealth[source])
-            {
-                try
-                {
-                    var value = source.Get(key);
-                    if (value != null)
-                    {
-                        _logger.LogWarning("从备用源 {SourceType} 获取配置 {Key}={Value}", 
-                                          source.GetType().Name, key, value);
-                        return value;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogWarning(ex, "从备用源 {SourceType} 获取配置 {Key} 失败", 
-                                      source.GetType().Name, key);
-                    _sourceHealth[source] = false;
-                }
-            }
-        }
-
-        _logger.LogError("无法从任何配置源获取配置键 {Key}", key);
-        return null;
-    }
-
-    private async void CheckSourceHealth(object? state)
-    {
-        foreach (var source in _primarySources.Concat(_fallbackSources))
-        {
-            try
-            {
-                // 简单的健康检查：尝试获取一个已知存在的配置项
-                source.Get("HealthCheckKey");
-                _sourceHealth[source] = true;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "配置源 {SourceType} 健康检查失败", source.GetType().Name);
-                _sourceHealth[source] = false;
-            }
-        }
-    }
-
-    public void Dispose()
-    {
-        _healthCheckTimer?.Dispose();
-    }
-}
-```
-
-## 7. 配置加密场景
-
-### 7.1 场景描述
-
-处理敏感配置（如数据库密码、API密钥）需要加密存储，同时保持应用程序中的透明使用。
-
-### 7.2 解决方案
-
-```csharp
-public class EncryptedConfigurationSource : IWritableCfgSource
-{
-    private readonly ICfgSource _innerSource;
-    private readonly IEncryptionProvider _encryptionProvider;
-    private readonly ILogger<EncryptedConfigurationSource> _logger;
-
-    public EncryptedConfigurationSource(
-        ICfgSource innerSource,
-        IEncryptionProvider encryptionProvider,
-        ILogger<EncryptedConfigurationSource> logger)
-    {
-        _innerSource = innerSource;
-        _encryptionProvider = encryptionProvider;
-        _logger = logger;
-    }
-
-    public int Level => _innerSource.Level;
-    public bool IsWriteable => _innerSource.IsWriteable;
-    public bool IsPrimaryWriter => _innerSource.IsPrimaryWriter;
-
-    public string? Get(string key)
-    {
-        try
-        {
-            var encryptedValue = _innerSource.Get(key);
-            if (encryptedValue == null || !IsEncryptedValue(encryptedValue))
-                return encryptedValue;
-
-            var decryptedValue = _encryptionProvider.Decrypt(encryptedValue);
-            _logger.LogDebug("解密配置 {Key}", key);
-            return decryptedValue;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "解密配置 {Key} 失败", key);
-            return null;
-        }
-    }
-
-    public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
-    {
-        if (!_innerSource.IsWriteable)
-        {
-            throw new InvalidOperationException("底层配置源不支持写入");
-        }
-
-        var encryptedChanges = new Dictionary<string, string?>();
-
-        foreach (var kvp in changes)
-        {
-            if (kvp.Value == null)
-            {
-                encryptedChanges[kvp.Key] = null;
-            }
-            else if (IsSensitiveKey(kvp.Key))
-            {
-                var encryptedValue = _encryptionProvider.Encrypt(kvp.Value);
-                encryptedChanges[kvp.Key] = encryptedValue;
-                _logger.LogDebug("加密配置 {Key}", kvp.Key);
-            }
-            else
-            {
-                encryptedChanges[kvp.Key] = kvp.Value;
-            }
-        }
-
-        await _innerSource.ApplyChangesAsync(encryptedChanges, cancellationToken);
-    }
-
-    private static bool IsEncryptedValue(string value)
-    {
-        // 简单检查：加密值以特定前缀开始
-        return value.StartsWith("ENC:");
-    }
-
-    private bool IsSensitiveKey(string key)
-    {
-        // 定义哪些键是敏感的
-        var sensitiveKeys = new[]
-        {
-            "ConnectionStrings:DefaultConnection:Password",
-            "ApiKeys:PaymentGateway",
-            "Security:JwtSigningKey"
-        };
-
-        return sensitiveKeys.Contains(key, StringComparer.OrdinalIgnoreCase);
-    }
-}
-```
-
-## 结论
-
-通过以上复杂场景的示例，您可以看到 Apq.Cfg 提供了灵活的配置管理能力，可以满足各种复杂应用场景的需求。关键在于根据具体需求选择合适的配置源组合，并正确处理配置的层级关系和变更通知。Set(e.Key, e.Value);
-        await _cfg.SaveAsync();
-    }
-
-    public async Task PublishToCenterAsync(string key, string value)
-    {
-        try
-        {
-            // 更新本地配置
-            await _cfg.Set(key, value);
-            await _cfg.SaveAsync();
-
-            // 发布到配置中心
-            await _centerClient.SetConfigurationAsync(key, value);
-
-            _logger.LogInformation("已发布配置到中心: {Key} = {Value}", key, value);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "发布配置到中心失败: {Key}", key);
-            throw;
-        }
-    }
-}
-```
-
-## 6. 高可用配置场景
-
-### 6.1 场景描述
+### 场景描述
 
 关键业务系统需要配置高可用性，防止单点故障导致系统不可用。
 
-### 6.2 解决方案
+### 解决方案
 
 ```csharp
 public class HighAvailabilityConfigurationProvider
@@ -875,11 +630,11 @@ public class HighAvailabilityConfigurationProvider
 
 ## 7. 配置加密与脱敏场景
 
-### 7.1 场景描述
+### 场景描述
 
 安全敏感型应用程序需要保护配置中的敏感信息，同时在日志和监控中避免泄露这些信息。
 
-### 7.2 解决方案
+### 解决方案
 
 ```csharp
 public class SecureConfigurationManager
@@ -975,11 +730,11 @@ public class SecureConfigurationManager
 
 ## 8. 配置验证与合规场景
 
-### 8.1 场景描述
+### 场景描述
 
 受监管行业（如金融、医疗）的应用程序需要确保配置符合特定法规要求，并进行验证。
 
-### 8.2 解决方案
+### 解决方案
 
 ```csharp
 public class ComplianceConfigurationManager
@@ -1078,6 +833,19 @@ public class ComplianceConfigurationManager
 }
 ```
 
-## 结论
+## 总结
 
-以上场景展示了 Apq.Cfg 在复杂环境中的应用方式，包括多环境部署、配置迁移、动态更新、多租户支持、配置中心集成、高可用性保障、安全加密和合规性验证。这些示例可以作为您实际项目中的参考，根据具体需求进行调整和扩展。
+以上场景展示了 Apq.Cfg 在复杂环境中的应用方式，包括：
+
+| 场景 | 关键特性 |
+|------|---------|
+| 多环境部署 | 层级配置、环境变量覆盖 |
+| 配置迁移 | 版本控制、结构转换 |
+| 动态更新 | 变更订阅、缓存刷新 |
+| 多租户 | 配置隔离、按需加载 |
+| 配置中心 | 远程同步、实时推送 |
+| 高可用 | 故障转移、健康检查 |
+| 加密脱敏 | 敏感数据保护、日志安全 |
+| 合规验证 | 规则检查、默认值应用 |
+
+这些示例可以作为您实际项目中的参考，根据具体需求进行调整和扩展。

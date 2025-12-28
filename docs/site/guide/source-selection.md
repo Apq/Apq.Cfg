@@ -248,6 +248,8 @@ var cfg = new CfgBuilder()
 IConfiguration msConfig = cfg.ToMicrosoftConfiguration();
 ```
 
----
+## 下一步
 
-*本文档创建于 2025-12-28*
+- [配置源概述](/config-sources/) - 了解各配置源详情
+- [最佳实践](/guide/best-practices) - 配置管理最佳实践
+- [复杂场景示例](/examples/complex-scenarios) - 企业级应用示例

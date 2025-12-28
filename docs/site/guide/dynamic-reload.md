@@ -196,5 +196,6 @@ public class MyService
 
 ## 下一步
 
+- [动态重载设计](/guide/dynamic-reload-design) - 深入了解动态重载的设计与实现
 - [依赖注入](/guide/dependency-injection) - DI 集成详解
 - [性能优化](/guide/performance) - 性能调优指南

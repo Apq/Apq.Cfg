@@ -34,6 +34,7 @@ export default defineConfig({
           text: '基础',
           items: [
             { text: '基本用法', link: '/guide/basic-usage' },
+            { text: '配置源选择', link: '/guide/source-selection' },
             { text: '配置合并', link: '/guide/config-merge' },
             { text: '动态重载', link: '/guide/dynamic-reload' }
           ]
@@ -43,7 +44,6 @@ export default defineConfig({
           items: [
             { text: '依赖注入', link: '/guide/dependency-injection' },
             { text: '编码处理', link: '/guide/encoding' },
-            { text: '编码处理流程', link: '/guide/encoding-workflow' },
             { text: '性能优化', link: '/guide/performance' },
             { text: '最佳实践', link: '/guide/best-practices' },
             { text: '扩展开发', link: '/guide/extension' }
@@ -52,7 +52,9 @@ export default defineConfig({
         {
           text: '深入',
           items: [
-            { text: '架构设计', link: '/guide/architecture' }
+            { text: '架构设计', link: '/guide/architecture' },
+            { text: '编码处理流程', link: '/guide/encoding-workflow' },
+            { text: '动态重载设计', link: '/guide/dynamic-reload-design' }
           ]
         }
       ],
@@ -88,7 +90,8 @@ export default defineConfig({
             { text: '基础示例', link: '/examples/basic' },
             { text: '多配置源', link: '/examples/multi-source' },
             { text: '依赖注入', link: '/examples/di-integration' },
-            { text: '动态重载', link: '/examples/dynamic-reload' }
+            { text: '动态重载', link: '/examples/dynamic-reload' },
+            { text: '复杂场景', link: '/examples/complex-scenarios' }
           ]
         }
       ]
