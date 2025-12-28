@@ -1,0 +1,198 @@
+# TOML 配置源
+
+TOML (Tom's Obvious, Minimal Language) 是一种易于阅读的配置格式，语义明确。
+
+## 安装
+
+```bash
+dotnet add package Apq.Cfg.Toml
+```
+
+## 基本用法
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Toml;
+
+var cfg = new CfgBuilder()
+    .AddToml("config.toml", level: 0, writeable: false)
+    .Build();
+```
+
+### 可选文件和重载
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddToml("config.toml", level: 0, writeable: false, reloadOnChange: true)
+    .AddToml("config.local.toml", level: 1, writeable: false, optional: true, reloadOnChange: true)
+    .Build();
+```
+
+### 可写配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddToml("config.toml", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 修改配置
+cfg.Set("App:Name", "NewName");
+await cfg.SaveAsync();
+```
+
+## 方法签名
+
+```csharp
+public static CfgBuilder AddToml(
+    this CfgBuilder builder,
+    string path,
+    int level,
+    bool writeable = false,
+    bool optional = true,
+    bool reloadOnChange = true,
+    bool isPrimaryWriter = false)
+```
+
+## 参数说明
+
+| 参数 | 说明 |
+|------|------|
+| `path` | TOML 文件路径 |
+| `level` | 配置层级，数值越大优先级越高 |
+| `writeable` | 是否可写 |
+| `optional` | 文件不存在时是否忽略 |
+| `reloadOnChange` | 文件变更时是否自动重载 |
+| `isPrimaryWriter` | 是否为默认写入目标 |
+
+## TOML 文件格式
+
+### 基本结构
+
+```toml
+# 这是注释
+AppName = "MyApp"
+Version = "1.0.0"
+
+[Database]
+Host = "localhost"
+Port = 5432
+Name = "mydb"
+Username = "admin"
+Password = "secret"
+
+[Logging]
+Level = "Information"
+EnableConsole = true
+```
+
+### 数组配置
+
+```toml
+# 简单数组
+Servers = ["server1.example.com", "server2.example.com", "server3.example.com"]
+
+# 表数组
+[[Endpoints]]
+Name = "api"
+Url = "https://api.example.com"
+Timeout = 30
+
+[[Endpoints]]
+Name = "auth"
+Url = "https://auth.example.com"
+Timeout = 10
+```
+
+### 内联表
+
+```toml
+[Database]
+Connection = { Host = "localhost", Port = 5432, Name = "mydb" }
+```
+
+### 多行字符串
+
+```toml
+[Query]
+SQL = """
+SELECT * FROM users
+WHERE active = true
+ORDER BY created_at DESC
+"""
+
+# 字面量字符串（不处理转义）
+Regex = '''\\d+\\.\\d+'''
+```
+
+### 日期时间
+
+```toml
+[Schedule]
+StartDate = 2024-01-01
+StartTime = 08:00:00
+StartDateTime = 2024-01-01T08:00:00
+```
+
+## 键路径映射
+
+TOML 结构映射为冒号分隔的键路径：
+
+| TOML 路径 | 配置键 |
+|-----------|--------|
+| `AppName` | `AppName` |
+| `[Database] Host` | `Database:Host` |
+| `[[Endpoints]][0] Name` | `Endpoints:0:Name` |
+| `Servers[0]` | `Servers:0` |
+
+## 高级选项
+
+### 指定编码
+
+```csharp
+var options = new EncodingOptions
+{
+    ReadStrategy = EncodingReadStrategy.Specified,
+    ReadEncoding = Encoding.UTF8
+};
+
+var cfg = new CfgBuilder()
+    .AddToml("config.toml", level: 0, writeable: false, encoding: options)
+    .Build();
+```
+
+## 与其他格式混合使用
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddToml("config.toml", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .Build();
+```
+
+## TOML vs 其他格式
+
+| 特性 | TOML | JSON | YAML | INI |
+|------|------|------|------|-----|
+| 可读性 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| 注释支持 | ✅ | ❌ | ✅ | ✅ |
+| 类型支持 | ✅ | ✅ | ✅ | ❌ |
+| 日期时间 | ✅ | ❌ | ❌ | ❌ |
+| 多行字符串 | ✅ | ❌ | ✅ | ❌ |
+| 嵌套支持 | ✅ | ✅ | ✅ | ❌ |
+
+## 适用场景
+
+- Rust/Go 项目配置（TOML 是这些语言的常用配置格式）
+- 需要日期时间类型的配置
+- 需要注释的配置文件
+- 需要多行字符串的配置
+
+## 依赖
+
+- [Tomlyn](https://www.nuget.org/packages/Tomlyn) - TOML 解析库
+
+## 下一步
+
+- [环境变量](/config-sources/env) - 环境变量配置
+- [Consul](/config-sources/consul) - Consul 配置中心

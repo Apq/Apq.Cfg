@@ -60,13 +60,27 @@ export default defineConfig({
       ],
       '/config-sources/': [
         {
-          text: '配置源',
+          text: '本地配置源',
           items: [
             { text: '概述', link: '/config-sources/' },
             { text: 'JSON', link: '/config-sources/json' },
             { text: 'YAML', link: '/config-sources/yaml' },
+            { text: 'XML', link: '/config-sources/xml' },
+            { text: 'INI', link: '/config-sources/ini' },
+            { text: 'TOML', link: '/config-sources/toml' },
+            { text: '环境变量', link: '/config-sources/env' }
+          ]
+        },
+        {
+          text: '远程配置源',
+          items: [
             { text: 'Consul', link: '/config-sources/consul' },
-            { text: 'Redis', link: '/config-sources/redis' }
+            { text: 'Redis', link: '/config-sources/redis' },
+            { text: 'Apollo', link: '/config-sources/apollo' },
+            { text: 'Nacos', link: '/config-sources/nacos' },
+            { text: 'Vault', link: '/config-sources/vault' },
+            { text: 'Etcd', link: '/config-sources/etcd' },
+            { text: 'Zookeeper', link: '/config-sources/zookeeper' }
           ]
         }
       ],
@@ -159,5 +173,13 @@ export default defineConfig({
     lineNumbers: true
   },
   
-  lastUpdated: true
+  lastUpdated: true,
+  
+  // 忽略 localhost 链接（用于部署文档中的本地开发服务器地址）
+  ignoreDeadLinks: [
+    /^http:\/\/localhost/
+  ],
+  
+  // 排除不需要构建的文件
+  srcExclude: ['**/DEPLOY.md']
 })
