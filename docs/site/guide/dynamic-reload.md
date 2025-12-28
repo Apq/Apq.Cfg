@@ -1,4 +1,4 @@
-﻿# 动态重载
+# 动态重载
 
 Apq.Cfg 支持配置的动态重载，无需重启应用即可更新配置。
 
@@ -8,8 +8,7 @@ Apq.Cfg 支持配置的动态重载，无需重启应用即可更新配置。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", optional: false, reloadOnChange: true)
-    .AddYamlFile("config.yaml", optional: true, reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false, optional: false, reloadOnChange: true)
     .Build();
 ```
 
@@ -19,83 +18,30 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddConsul("http://localhost:8500", "myapp/config", watch: true)
-    .AddRedis("localhost:6379", "config:myapp", subscribeChanges: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new ConsulCfgSource(options => {
+        options.Address = "http://localhost:8500";
+        options.KeyPrefix = "myapp/config";
+        options.EnableHotReload = true;
+    }, level: 10))
     .Build();
 ```
 
 ## 监听配置变更
 
-### 使用 OnChange 回调
+### 使用 ConfigChanges 可观察序列
 
 ```csharp
-cfg.OnChange((changedKeys) =>
+cfg.ConfigChanges.Subscribe(changeEvent =>
 {
-    Console.WriteLine("配置已更新:");
-    foreach (var key in changedKeys)
+    Console.WriteLine($"配置变更批次: {changeEvent.BatchId}");
+    Console.WriteLine($"变更时间: {changeEvent.Timestamp}");
+    
+    foreach (var (key, change) in changeEvent.Changes)
     {
-        Console.WriteLine($"  {key} = {cfg[key]}");
+        Console.WriteLine($"  [{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
     }
 });
-```
-
-### 使用 ChangeToken
-
-```csharp
-ChangeToken.OnChange(
-    () => cfg.GetReloadToken(),
-    () =>
-    {
-        Console.WriteLine("配置已重新加载");
-        // 重新读取配置
-        var newValue = cfg["SomeKey"];
-    });
-```
-
-## 重载策略
-
-### 配置重载选项
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .ConfigureReload(options =>
-    {
-        // 防抖延迟（毫秒）
-        options.DebounceDelay = 500;
-        
-        // 重载策略
-        options.Strategy = ReloadStrategy.Immediate;
-        
-        // 错误处理
-        options.OnError = (ex) =>
-        {
-            Console.WriteLine($"重载失败: {ex.Message}");
-        };
-    })
-    .Build();
-```
-
-### 重载策略类型
-
-| 策略 | 说明 |
-|------|------|
-| `Immediate` | 立即重载 |
-| `Debounced` | 防抖重载，合并短时间内的多次变更 |
-| `Scheduled` | 定时重载 |
-
-## 配置变更事件
-
-### ConfigChangeEvent
-
-```csharp
-cfg.ConfigChanged += (sender, e) =>
-{
-    foreach (var change in e.Changes)
-    {
-        Console.WriteLine($"[{change.Type}] {change.Key}: {change.OldValue} -> {change.NewValue}");
-    }
-};
 ```
 
 ### 变更类型
@@ -105,6 +51,46 @@ cfg.ConfigChanged += (sender, e) =>
 | `Added` | 新增配置项 |
 | `Modified` | 修改配置项 |
 | `Removed` | 删除配置项 |
+
+## 转换为 Microsoft Configuration
+
+### 静态快照
+
+```csharp
+// 创建静态快照，不支持动态重载
+IConfigurationRoot msConfig = cfg.ToMicrosoftConfiguration();
+```
+
+### 支持动态重载
+
+```csharp
+// 创建支持动态重载的配置
+IConfigurationRoot msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
+{
+    EnableDynamicReload = true,
+    DebounceMs = 100,
+    Strategy = ReloadStrategy.Eager
+});
+```
+
+### DynamicReloadOptions 选项
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `EnableDynamicReload` | `bool` | `true` | 是否启用动态重载 |
+| `DebounceMs` | `int` | `100` | 防抖时间窗口（毫秒） |
+| `Strategy` | `ReloadStrategy` | `Eager` | 重载策略 |
+| `KeyPrefixFilters` | `IReadOnlyList<string>?` | `null` | 键前缀过滤器 |
+| `RollbackOnError` | `bool` | `true` | 重载失败时是否回滚 |
+| `HistorySize` | `int` | `0` | 保留的变更历史记录数量 |
+
+### 重载策略
+
+| 策略 | 说明 |
+|------|------|
+| `Eager` | 立即重载（默认） |
+| `Lazy` | 延迟重载，下次访问时生效 |
+| `Scheduled` | 定时重载 |
 
 ## 与依赖注入集成
 
@@ -138,18 +124,37 @@ public class MyService
 public class MyService
 {
     private readonly IOptionsMonitor<DatabaseConfig> _options;
+    private readonly IDisposable? _changeListener;
     
     public MyService(IOptionsMonitor<DatabaseConfig> options)
     {
         _options = options;
         
         // 监听变更
-        _options.OnChange(config =>
+        _changeListener = _options.OnChange((config, name) =>
         {
             Console.WriteLine($"数据库配置已更新: {config.Host}");
         });
     }
+    
+    public void Dispose()
+    {
+        _changeListener?.Dispose();
+    }
 }
+```
+
+### 注册带变更回调的配置
+
+```csharp
+services.AddApqCfg(cfg => cfg
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true));
+
+services.ConfigureApqCfg<DatabaseConfig>("Database", config =>
+{
+    Console.WriteLine($"数据库配置已更新: {config.Host}");
+    // 执行必要的重新连接逻辑
+});
 ```
 
 ## 最佳实践
@@ -159,39 +164,45 @@ public class MyService
 避免频繁重载：
 
 ```csharp
-.ConfigureReload(options =>
+var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
 {
-    options.DebounceDelay = 1000; // 1秒防抖
-})
+    DebounceMs = 500 // 500毫秒防抖
+});
 ```
 
-### 2. 错误处理
+### 2. 按需启用热重载
+
+只对需要动态更新的配置启用热重载：
+
+```csharp
+var cfg = new CfgBuilder()
+    // 基础配置不需要热重载
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: false)
+    // 只对需要动态更新的配置启用热重载
+    .AddJson("dynamic-config.json", level: 1, writeable: true, reloadOnChange: true)
+    .Build();
+```
+
+### 3. 错误处理
 
 配置重载失败时保留旧配置：
 
 ```csharp
-.ConfigureReload(options =>
+var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
 {
-    options.OnError = (ex) =>
-    {
-        _logger.LogError(ex, "配置重载失败，保留当前配置");
-    };
-})
+    RollbackOnError = true // 重载失败时回滚到之前的配置
+});
 ```
 
-### 3. 验证新配置
+### 4. 键前缀过滤
 
-重载前验证配置有效性：
+只监听特定前缀的配置变更：
 
 ```csharp
-.ConfigureReload(options =>
+var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
 {
-    options.Validator = (newConfig) =>
-    {
-        // 返回 false 将拒绝此次重载
-        return !string.IsNullOrEmpty(newConfig["Database:ConnectionString"]);
-    };
-})
+    KeyPrefixFilters = new[] { "Database:", "Cache:" }
+});
 ```
 
 ## 下一步

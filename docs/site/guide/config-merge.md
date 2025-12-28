@@ -1,18 +1,18 @@
-﻿# 配置合并
+# 配置合并
 
-Apq.Cfg 支持从多个配置源加载配置，并按优先级合并。
+Apq.Cfg 支持从多个配置源加载配置，并按层级（level）合并。
 
 ## 合并规则
 
-### 优先级顺序
+### 层级优先级
 
-后添加的配置源优先级更高：
+使用 `level` 参数控制优先级，数值越大优先级越高：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("base.json")           // 优先级 1（最低）
-    .AddJsonFile("override.json")       // 优先级 2
-    .AddEnvironmentVariables()          // 优先级 3（最高）
+    .AddJson("base.json", level: 0, writeable: false)           // 优先级最低
+    .AddJson("override.json", level: 1, writeable: false)       // 优先级中
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")          // 优先级最高
     .Build();
 ```
 
@@ -83,20 +83,22 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile($"config.{environment}.json", optional: true)
-    .AddEnvironmentVariables()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 
 ### 用户配置覆盖
 
 ```csharp
+var userConfigPath = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+    ".myapp/config.json");
+
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile(Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-        ".myapp/config.json"), optional: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson(userConfigPath, level: 1, writeable: true, optional: true)
     .Build();
 ```
 
@@ -104,26 +106,54 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile("config.Development.json", optional: true)
-    .AddJsonFile("config.local.json", optional: true)  // gitignore
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.local.json", level: 2, writeable: true, optional: true, isPrimaryWriter: true)  // gitignore
     .Build();
 ```
 
-## 使用 MergedCfgRoot
+## 层级设计建议
 
-对于需要显式控制合并行为的场景：
+推荐的层级分配：
+
+| 层级范围 | 用途 | 示例 |
+|----------|------|------|
+| 0-2 | 基础配置 | config.json, config.{env}.json |
+| 3-5 | 本地覆盖 | config.local.json, .env |
+| 6-9 | 用户配置 | ~/.myapp/config.json |
+| 10-19 | 远程配置 | Consul, Nacos, Apollo |
+| 20+ | 环境变量 | 最高优先级覆盖 |
 
 ```csharp
-var baseCfg = new CfgBuilder()
-    .AddJsonFile("base.json")
+var cfg = new CfgBuilder()
+    // 基础配置
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
+    
+    // 本地覆盖
+    .AddJson("config.local.json", level: 3, writeable: true, optional: true, isPrimaryWriter: true)
+    
+    // 远程配置
+    .AddSource(new ConsulCfgSource(/* ... */, level: 10))
+    
+    // 环境变量
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    
     .Build();
+```
 
-var overrideCfg = new CfgBuilder()
-    .AddJsonFile("override.json")
-    .Build();
+## 写入配置
 
-var merged = new MergedCfgRoot(baseCfg, overrideCfg);
+当配置有多个可写源时，可以指定写入目标：
+
+```csharp
+// 写入到默认的可写源（isPrimaryWriter: true 的源）
+cfg.Set("Database:Timeout", "60");
+await cfg.SaveAsync();
+
+// 写入到特定层级
+cfg.Set("Database:Timeout", "60", targetLevel: 3);
+await cfg.SaveAsync(targetLevel: 3);
 ```
 
 ## 下一步

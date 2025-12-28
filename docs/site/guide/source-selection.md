@@ -1,4 +1,4 @@
-﻿# 配置源选择指南
+# 配置源选择指南
 
 本文档帮助您根据不同场景选择合适的配置源。
 
@@ -40,9 +40,9 @@
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{env}.json", level: 1, optional: true)
-    .AddEnvironmentVariables(prefix: "APP_", level: 2)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 
@@ -53,12 +53,12 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddConsul(options => {
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new ConsulCfgSource(options => {
         options.Address = "http://consul:8500";
         options.KeyPrefix = $"services/{serviceName}/";
         options.EnableHotReload = true;
-    }, level: 10)
+    }, level: 10))
     .Build();
 ```
 
@@ -69,8 +69,9 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddYaml("/config/app-config.yaml", level: 1, reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new YamlFileCfgSource("/config/app-config.yaml", level: 1, 
+        writeable: false, optional: false, reloadOnChange: true))
     .AddEnvironmentVariables(level: 2)
     .Build();
 ```
@@ -82,14 +83,14 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddNacos(options => {
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new NacosCfgSource(options => {
         options.ServerAddresses = "mse-xxx.nacos.mse.aliyuncs.com:8848";
         options.AccessKey = Environment.GetEnvironmentVariable("NACOS_AK");
         options.SecretKey = Environment.GetEnvironmentVariable("NACOS_SK");
         options.DataId = "app-config";
         options.EnableHotReload = true;
-    }, level: 10)
+    }, level: 10))
     .Build();
 ```
 
@@ -100,14 +101,14 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddApollo(options => {
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new ApolloCfgSource(options => {
         options.AppId = "my-app";
         options.MetaServer = "http://apollo-meta:8080";
         options.Cluster = Environment.GetEnvironmentVariable("APOLLO_CLUSTER") ?? "default";
         options.Namespaces = new[] { "application", "common" };
         options.EnableHotReload = true;
-    }, level: 10)
+    }, level: 10))
     .Build();
 ```
 
@@ -118,8 +119,8 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddVaultAppRole(
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new VaultCfgSource(
         address: "https://vault.example.com:8200",
         roleId: Environment.GetEnvironmentVariable("VAULT_ROLE_ID")!,
         roleSecret: Environment.GetEnvironmentVariable("VAULT_SECRET_ID")!,
@@ -127,7 +128,7 @@ var cfg = new CfgBuilder()
         path: "apps/my-app/secrets",
         kvVersion: 2,
         level: 10
-    )
+    ))
     .Build();
 ```
 
@@ -138,13 +139,13 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddXml("app.config", level: 0)
-    .AddIni("settings.ini", level: 1)
-    .AddDatabase(options => {
+    .AddSource(new XmlFileCfgSource("app.config", level: 0, writeable: false))
+    .AddSource(new IniFileCfgSource("settings.ini", level: 1, writeable: false))
+    .AddSource(new DatabaseCfgSource(options => {
         options.Provider = "SqlServer";
         options.ConnectionString = connectionString;
         options.Table = "AppConfig";
-    }, level: 2)
+    }, level: 2))
     .Build();
 ```
 
@@ -155,11 +156,11 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson("config.Development.json", level: 1, optional: true)
-    .AddEnv(".env", level: 2, optional: true)
-    .AddEnv(".env.local", level: 3, optional: true)
-    .AddEnvironmentVariables(prefix: "APP_", level: 4)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
+    .AddSource(new EnvFileCfgSource(".env", level: 2, optional: true))
+    .AddSource(new EnvFileCfgSource(".env.local", level: 3, optional: true))
+    .AddEnvironmentVariables(level: 4, prefix: "APP_")
     .Build();
 ```
 
@@ -180,22 +181,22 @@ level 20+:   环境变量/命令行（覆盖配置）
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置（打包在应用中）
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json", level: 0, writeable: false)
     
     // 环境特定配置（可选）
-    .AddJson($"config.{env}.json", level: 1, optional: true)
+    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
     
     // 本地覆盖（开发用，不提交版本控制）
-    .AddJson("config.local.json", level: 2, optional: true, writeable: true)
+    .AddJson("config.local.json", level: 2, writeable: true, optional: true, isPrimaryWriter: true)
     
     // 远程配置中心（生产环境）
-    .AddConsul(options => { /* ... */ }, level: 10)
+    .AddSource(new ConsulCfgSource(options => { /* ... */ }, level: 10))
     
     // 密钥管理（敏感配置）
-    .AddVault(options => { /* ... */ }, level: 15)
+    .AddSource(new VaultCfgSource(options => { /* ... */ }, level: 15))
     
     // 环境变量（最高优先级覆盖）
-    .AddEnvironmentVariables(prefix: "APP_", level: 20)
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     
     .Build();
 ```
@@ -241,11 +242,11 @@ Apq.Cfg 兼容 `Microsoft.Extensions.Configuration`，可以通过 `ToMicrosoftC
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 转换为 IConfiguration，兼容现有代码
-IConfiguration msConfig = cfg.ToMicrosoftConfiguration();
+IConfigurationRoot msConfig = cfg.ToMicrosoftConfiguration();
 ```
 
 ## 下一步

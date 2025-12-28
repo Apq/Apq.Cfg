@@ -1,4 +1,4 @@
-﻿# 快速开始
+# 快速开始
 
 本教程将帮助您在 5 分钟内上手 Apq.Cfg。
 
@@ -44,23 +44,23 @@ using Apq.Cfg;
 
 // 1. 创建配置构建器并加载配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 2. 读取简单值
-var appName = cfg["App:Name"];
+var appName = cfg.Get("App:Name");
 Console.WriteLine($"应用名称: {appName}");
 
 // 3. 读取类型化值
-var maxConnections = cfg.GetValue<int>("Database:MaxConnections");
-var enableConsole = cfg.GetValue<bool>("Logging:EnableConsole");
+var maxConnections = cfg.Get<int>("Database:MaxConnections");
+var enableConsole = cfg.Get<bool>("Logging:EnableConsole");
 Console.WriteLine($"最大连接数: {maxConnections}");
 Console.WriteLine($"启用控制台日志: {enableConsole}");
 
 // 4. 读取配置节
 var dbSection = cfg.GetSection("Database");
-Console.WriteLine($"连接字符串: {dbSection["ConnectionString"]}");
-Console.WriteLine($"超时时间: {dbSection["Timeout"]}");
+Console.WriteLine($"连接字符串: {dbSection.Get("ConnectionString")}");
+Console.WriteLine($"超时时间: {dbSection.Get("Timeout")}");
 ```
 
 ## 运行程序
@@ -98,29 +98,50 @@ public class AppConfig
 }
 ```
 
-绑定配置：
+绑定配置（通过依赖注入）：
 
 ```csharp
-// 绑定到强类型对象
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
-var appConfig = cfg.GetSection("App").Get<AppConfig>();
+// 在 DI 容器中注册
+services.AddApqCfg(cfg => cfg
+    .AddJson("config.json", level: 0, writeable: false));
 
-Console.WriteLine($"应用: {appConfig.Name} v{appConfig.Version}");
-Console.WriteLine($"数据库超时: {dbConfig.Timeout}秒");
+services.ConfigureApqCfg<DatabaseConfig>("Database");
+services.ConfigureApqCfg<AppConfig>("App");
+
+// 使用
+public class MyService
+{
+    private readonly IOptions<DatabaseConfig> _dbConfig;
+    private readonly IOptions<AppConfig> _appConfig;
+    
+    public MyService(IOptions<DatabaseConfig> dbConfig, IOptions<AppConfig> appConfig)
+    {
+        _dbConfig = dbConfig;
+        _appConfig = appConfig;
+    }
+    
+    public void PrintInfo()
+    {
+        Console.WriteLine($"应用: {_appConfig.Value.Name} v{_appConfig.Value.Version}");
+        Console.WriteLine($"数据库超时: {_dbConfig.Value.Timeout}秒");
+    }
+}
 ```
 
 ## 多配置源
 
-Apq.Cfg 支持从多个来源加载配置：
+Apq.Cfg 支持从多个来源加载配置，数值越大的 level 优先级越高：
 
 ```csharp
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
 var cfg = new CfgBuilder()
-    // 基础配置
-    .AddJsonFile("config.json")
-    // 环境特定配置（覆盖基础配置）
-    .AddJsonFile($"config.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
-    // 环境变量（最高优先级）
-    .AddEnvironmentVariables()
+    // 基础配置（level: 0，最低优先级）
+    .AddJson("config.json", level: 0, writeable: false)
+    // 环境特定配置（level: 1，覆盖基础配置）
+    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    // 环境变量（level: 2，最高优先级）
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 

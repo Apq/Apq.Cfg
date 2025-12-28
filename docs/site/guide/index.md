@@ -1,4 +1,4 @@
-﻿# 简介
+# 简介
 
 Apq.Cfg 是一个高性能的 .NET 配置管理库，旨在提供统一、灵活、高效的配置管理解决方案。
 
@@ -30,11 +30,11 @@ Apq.Cfg 是一个高性能的 .NET 配置管理库，旨在提供统一、灵活
 
 ```csharp
 services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json")
-    .AddConsul("http://localhost:8500", "myapp/config"));
+    .AddJson("config.json", level: 0)
+    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 // 使用 IOptions 模式
-services.Configure<DatabaseOptions>(cfg.GetSection("Database"));
+services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```
 
 ### 🔧 易于扩展
@@ -44,7 +44,10 @@ services.Configure<DatabaseOptions>(cfg.GetSection("Database"));
 ```csharp
 public class MyCustomSource : ICfgSource
 {
-    public Task<IDictionary<string, string>> LoadAsync()
+    public int Level { get; }
+    public bool IsWriteable { get; }
+    
+    public Task<IDictionary<string, string?>> LoadAsync(CancellationToken cancellationToken)
     {
         // 实现自定义加载逻辑
     }
@@ -65,12 +68,12 @@ dotnet add package Apq.Cfg
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 读取配置
-var value = cfg["Section:Key"];
-var typedValue = cfg.GetValue<int>("Section:IntKey");
+var value = cfg.Get("Section:Key");
+var typedValue = cfg.Get<int>("Section:IntKey");
 ```
 
 ## 兼容性

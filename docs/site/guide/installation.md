@@ -1,4 +1,4 @@
-﻿# 安装
+# 安装
 
 本页介绍如何安装 Apq.Cfg 及其扩展包。
 
@@ -51,6 +51,10 @@ dotnet add package Apq.Cfg.Ini
 dotnet add package Apq.Cfg.Toml
 ```
 
+```bash [Env]
+dotnet add package Apq.Cfg.Env
+```
+
 :::
 
 ### 远程配置源
@@ -79,6 +83,10 @@ dotnet add package Apq.Cfg.Etcd
 
 ```bash [Zookeeper]
 dotnet add package Apq.Cfg.Zookeeper
+```
+
+```bash [Nacos]
+dotnet add package Apq.Cfg.Nacos
 ```
 
 :::
@@ -118,14 +126,30 @@ dotnet add package Apq.Cfg.SourceGenerator
 ```csharp
 using Apq.Cfg;
 
+// 创建一个简单的 JSON 配置文件 test.json
+// { "Test": { "Key": "Hello, Apq.Cfg!" } }
+
 var cfg = new CfgBuilder()
-    .AddInMemory(new Dictionary<string, string>
-    {
-        ["Test:Key"] = "Hello, Apq.Cfg!"
-    })
+    .AddJson("test.json", level: 0, writeable: false)
     .Build();
 
-Console.WriteLine(cfg["Test:Key"]);
+Console.WriteLine(cfg.Get("Test:Key"));
+// 输出: Hello, Apq.Cfg!
+```
+
+或者使用环境变量测试：
+
+```csharp
+using Apq.Cfg;
+
+// 设置环境变量 TEST_KEY=Hello, Apq.Cfg!
+Environment.SetEnvironmentVariable("TEST_KEY", "Hello, Apq.Cfg!");
+
+var cfg = new CfgBuilder()
+    .AddEnvironmentVariables(level: 0, prefix: "TEST_")
+    .Build();
+
+Console.WriteLine(cfg.Get("KEY"));
 // 输出: Hello, Apq.Cfg!
 ```
 
