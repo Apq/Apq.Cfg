@@ -8,8 +8,8 @@ triggers:
       precise:
         - master
     paths:
-      precise:
-        - docs/site
+      regex:
+        - ^docs/site/.*
 variables:
   global:
     - TENCENT_SECRET_ID
