@@ -80,8 +80,9 @@ npm install -g @cloudbase/cli
 # 使用密钥登录
 tcb login --apiKeyId "$TENCENT_SECRET_ID" --apiKey "$TENCENT_SECRET_KEY"
 
-# 部署静态文件
-tcb hosting deploy .vitepress/dist -e "$CLOUDBASE_ENV_ID"
+# 部署静态文件到根目录
+# 格式: tcb hosting deploy <本地目录> <云端目录> -e <环境ID>
+tcb hosting deploy .vitepress/dist / -e "$CLOUDBASE_ENV_ID"
 
 echo ""
 echo "=========================================="

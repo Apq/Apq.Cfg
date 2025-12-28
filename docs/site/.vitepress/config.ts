@@ -155,13 +155,14 @@ export default defineConfig({
       next: '下一页'
     },
     
-    lastUpdated: {
-      text: '最后更新于',
-      formatOptions: {
-        dateStyle: 'short',
-        timeStyle: 'short'
-      }
-    },
+    // 禁用最后更新时间（Vercel/CloudBase 部署时无法获取 git 信息）
+    // lastUpdated: {
+    //   text: '最后更新于',
+    //   formatOptions: {
+    //     dateStyle: 'short',
+    //     timeStyle: 'short'
+    //   }
+    // },
     
     editLink: {
       pattern: 'https://gitee.com/apq/Apq.Cfg/edit/main/docs/site/:path',
@@ -173,7 +174,7 @@ export default defineConfig({
     lineNumbers: true
   },
   
-  lastUpdated: true,
+  lastUpdated: false,
   
   // 忽略 localhost 链接（用于部署文档中的本地开发服务器地址）
   ignoreDeadLinks: [
