@@ -24,9 +24,9 @@ stages:
     steps:
       - step: execute@docker
         name: execute_by_docker
-        displayName: 构建并部署到CloudBase
+        displayName: 基于镜像的脚本执行
         certificate: ''
-        image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/node:24-alpine
+        image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/node:23-alpine
         command:
           - sh buildTools/gitee-deploy-cloudbase.sh
         notify: []
