@@ -451,7 +451,7 @@ public sealed class ConfigChangeEvent
 var cfg = new CfgBuilder()
     .AddJson("config.json", level: 1, writeable: false, reloadOnChange: true)
     .AddJson("config.local.json", level: 2, writeable: true, reloadOnChange: true)
-    .AddEnvironmentVariables(level: 3)
+    .AddEnvironmentVariables(level: 3, prefix: "APP_")
     .Build();
 
 // 获取支持动态重载的 Microsoft Configuration

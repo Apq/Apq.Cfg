@@ -322,7 +322,7 @@ public static class HttpApiCfgBuilderExtensions
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddHttpApi(options =>
     {
         options.BaseUrl = "http://config-server:5000";
@@ -485,7 +485,7 @@ var cfg = new CfgBuilder()
         config.ClearReadMappings();
         config.ClearWriteMappings();
     })
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 ```
 

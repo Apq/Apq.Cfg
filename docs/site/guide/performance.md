@@ -123,9 +123,9 @@ var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置不需要热重载
-    .AddJson("config.json", level: 0, reloadOnChange: false)
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: false)
     // 只对需要动态更新的配置启用热重载
-    .AddJson("dynamic-config.json", level: 1, reloadOnChange: true)
+    .AddJson("dynamic-config.json", level: 1, writeable: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -135,11 +135,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config1.json", level: 0)
-    .AddJson("config2.json", level: 1)
-    .AddJson("config3.json", level: 2)
-    .AddJson("config4.json", level: 3)
-    .AddJson("config5.json", level: 4)
+    .AddJson("config1.json", level: 0, writeable: false)
+    .AddJson("config2.json", level: 1, writeable: false)
+    .AddJson("config3.json", level: 2, writeable: false)
+    .AddJson("config4.json", level: 3, writeable: false)
+    .AddJson("config5.json", level: 4, writeable: false)
     // ... 更多配置源
     .Build();
 ```
@@ -148,9 +148,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)           // 基础配置
-    .AddJson($"config.{env}.json", level: 1)    // 环境配置
-    .AddEnvironmentVariables(prefix: "APP_", level: 2) // 覆盖配置
+    .AddJson("config.json", level: 0, writeable: false)           // 基础配置
+    .AddJson($"config.{env}.json", level: 1, writeable: false)    // 环境配置
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")            // 覆盖配置
     .Build();
 ```
 
@@ -233,7 +233,7 @@ var loggingSection = cfg.GetSection("Logging");
 ```csharp
 // 1. 延迟加载远程配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)  // 本地配置先加载
+    .AddJson("config.json", level: 0, writeable: false)  // 本地配置先加载
     .Build();
 
 // 应用启动后异步加载远程配置
@@ -243,7 +243,10 @@ _ = Task.Run(async () =>
 });
 
 // 2. 使用可选配置源
-.AddJson("optional-config.json", level: 1, optional: true)
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("optional-config.json", level: 1, writeable: false, optional: true)
+    .Build();
 ```
 
 ### 内存优化
@@ -254,7 +257,7 @@ cfg.GetMany(keys, (key, value) => { /* 处理 */ });
 
 // 2. 及时释放不再使用的配置
 await using var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 3. 避免频繁创建配置实例

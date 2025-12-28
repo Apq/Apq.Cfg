@@ -42,8 +42,8 @@ var cfg = new CfgBuilder()
 ```csharp
 // 推荐：使用外部配置中心
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddVault("secret/", level: 5, token: vaultToken) // 从 HashiCorp Vault 加载
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new VaultCfgSource("secret/", level: 5, token: vaultToken)) // 从 HashiCorp Vault 加载
     .Build();
 
 // 避免：直接在配置文件中存储敏感信息
@@ -59,14 +59,11 @@ var cfg = new CfgBuilder()
 对需要本地存储的敏感配置进行加密：
 
 ```csharp
+// 使用自定义加密配置源
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson("config.encrypted.json", level: 2, 
-              encryption: new EncryptionOptions 
-              { 
-                  Key = encryptionKey, 
-                  Algorithm = "AES256" 
-              })
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new EncryptedJsonCfgSource("config.encrypted.json", level: 2,
+        writeable: false, encryptionKey: encryptionKey))
     .Build();
 ```
 
@@ -155,11 +152,11 @@ public class AppSettings
 
 // 使用
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
-var settings = cfg.GetSection<AppSettings>("App");
-Validator.ValidateObject(settings);
+var settings = ObjectBinder.Bind<AppSettings>(cfg.GetSection("App"));
+Validator.ValidateObject(settings, new ValidationContext(settings), validateAllProperties: true);
 ```
 
 ### 4.2 配置健康检查
@@ -283,7 +280,7 @@ public class CachedConfigurationService
 ```csharp
 // 推荐：使用批量获取
 var keys = new[] { "FeatureA:Enabled", "FeatureB:Enabled", "FeatureC:Enabled" };
-var features = cfg.GetMany<bool>(keys);
+var features = cfg.GetMany(keys);
 
 // 避免：多次单独获取
 var featureA = cfg.Get<bool>("FeatureA:Enabled");
@@ -369,9 +366,9 @@ public class ConfigurationDiagnostics
 1. **启用详细日志**
    ```csharp
    var cfg = new CfgBuilder()
-       .AddJson("config.json", level: 0)
-       .AddEnvironmentVariables(level: 5)
-       .EnableDetailedLogging() // 启用详细日志
+       .AddJson("config.json", level: 0, writeable: false)
+       .AddEnvironmentVariables(level: 5, prefix: "APP_")
+       .WithEncodingDetectionLogging(result => Console.WriteLine($"编码检测: {result}"))
        .Build();
    ```
 

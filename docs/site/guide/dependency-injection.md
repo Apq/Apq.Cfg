@@ -1,4 +1,4 @@
-﻿# 依赖注入
+# 依赖注入
 
 Apq.Cfg 完美集成 Microsoft.Extensions.DependencyInjection。
 
@@ -11,14 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 方式一：使用 AddApqCfg 扩展方法
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json")
-    .AddEnvironmentVariables());
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
-// 方式二：手动注册
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .Build();
-builder.Services.AddSingleton<ICfgRoot>(cfg);
+// 方式二：使用工厂方法（可访问其他服务）
+builder.Services.AddApqCfg(sp =>
+{
+    var env = sp.GetRequiredService<IWebHostEnvironment>();
+    return new CfgBuilder()
+        .AddJson("config.json", level: 0, writeable: false)
+        .AddJson($"config.{env.EnvironmentName}.json", level: 1, writeable: false, optional: true)
+        .AddEnvironmentVariables(level: 2, prefix: "APP_")
+        .Build();
+});
 ```
 
 ### 注入使用
@@ -33,9 +38,9 @@ public class MyService
         _cfg = cfg;
     }
     
-    public string GetConnectionString()
+    public string? GetConnectionString()
     {
-        return _cfg["Database:ConnectionString"];
+        return _cfg.Get("Database:ConnectionString");
     }
 }
 ```
@@ -55,9 +60,19 @@ public class DatabaseOptions
     public string Password { get; set; } = "";
 }
 
-// 注册配置
-builder.Services.Configure<DatabaseOptions>(
-    builder.Configuration.GetSection("Database"));
+// 注册配置并绑定
+builder.Services.AddApqCfg(cfg => cfg
+    .AddJson("config.json", level: 0, writeable: false));
+
+builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
+```
+
+### 一步完成注册和绑定
+
+```csharp
+builder.Services.AddApqCfg<DatabaseOptions>(
+    cfg => cfg.AddJson("config.json", level: 0, writeable: false),
+    "Database");
 ```
 
 ### IOptions&lt;T&gt;
@@ -106,14 +121,14 @@ public class MyService
 public class MyService : IDisposable
 {
     private readonly IOptionsMonitor<DatabaseOptions> _options;
-    private readonly IDisposable _changeListener;
+    private readonly IDisposable? _changeListener;
     
     public MyService(IOptionsMonitor<DatabaseOptions> options)
     {
         _options = options;
         
         // 监听配置变更
-        _changeListener = _options.OnChange(newOptions =>
+        _changeListener = _options.OnChange((newOptions, name) =>
         {
             Console.WriteLine($"数据库主机已更改为: {newOptions.Host}");
         });
@@ -128,38 +143,56 @@ public class MyService : IDisposable
 }
 ```
 
-## 命名配置
+## 配置变更回调
 
-支持同一类型的多个配置实例：
+注册配置时同时添加变更回调：
 
 ```csharp
-// config.json
+builder.Services.AddApqCfg(cfg => cfg
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true));
+
+builder.Services.ConfigureApqCfg<DatabaseOptions>("Database", options =>
 {
-  "Databases": {
-    "Primary": { "Host": "primary.db.local" },
-    "Readonly": { "Host": "readonly.db.local" }
-  }
+    Console.WriteLine($"数据库配置已更新: {options.Host}:{options.Port}");
+    // 执行必要的重新连接逻辑
+});
+```
+
+## 嵌套对象绑定
+
+支持嵌套对象和集合的自动绑定：
+
+```csharp
+public class DatabaseOptions
+{
+    public string? ConnectionString { get; set; }
+    public int Timeout { get; set; } = 30;
+    public RetryOptions Retry { get; set; } = new();
 }
 
-// 注册命名配置
-builder.Services.Configure<DatabaseOptions>("Primary",
-    builder.Configuration.GetSection("Databases:Primary"));
-builder.Services.Configure<DatabaseOptions>("Readonly",
-    builder.Configuration.GetSection("Databases:Readonly"));
-
-// 使用命名配置
-public class MyService
+public class RetryOptions
 {
-    private readonly IOptionsSnapshot<DatabaseOptions> _options;
-    
-    public MyService(IOptionsSnapshot<DatabaseOptions> options)
-    {
-        _options = options;
-    }
-    
-    public DatabaseOptions GetPrimaryDb() => _options.Get("Primary");
-    public DatabaseOptions GetReadonlyDb() => _options.Get("Readonly");
+    public int Count { get; set; } = 3;
+    public int Delay { get; set; } = 1000;
 }
+
+// 配置 JSON
+// {
+//   "Database": {
+//     "ConnectionString": "...",
+//     "Timeout": 60,
+//     "Retry": {
+//       "Count": 5,
+//       "Delay": 2000
+//     }
+//   }
+// }
+
+builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
+
+// 使用
+var dbOptions = serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+var retryCount = dbOptions.Retry.Count; // 5
 ```
 
 ## 配置验证
@@ -182,43 +215,38 @@ public class DatabaseOptions
 
 // 启用验证
 builder.Services.AddOptions<DatabaseOptions>()
-    .Bind(builder.Configuration.GetSection("Database"))
+    .Configure<ICfgRoot>((options, cfg) =>
+    {
+        var section = cfg.GetSection("Database");
+        // 手动绑定或使用 ObjectBinder
+    })
     .ValidateDataAnnotations()
     .ValidateOnStart(); // 启动时验证
 ```
 
-### 自定义验证
+## 与 Microsoft Configuration 集成
+
+Apq.Cfg 可以转换为 `IConfigurationRoot`，与现有代码无缝集成：
 
 ```csharp
-builder.Services.AddOptions<DatabaseOptions>()
-    .Bind(builder.Configuration.GetSection("Database"))
-    .Validate(options =>
-    {
-        if (string.IsNullOrEmpty(options.Host))
-            return false;
-        if (options.Port <= 0 || options.Port > 65535)
-            return false;
-        return true;
-    }, "数据库配置无效");
+builder.Services.AddApqCfg(cfg => cfg
+    .AddJson("config.json", level: 0, writeable: false));
+
+// AddApqCfg 会自动注册 IConfigurationRoot
+// 可以直接使用 Microsoft.Extensions.Configuration 的 API
+builder.Services.Configure<DatabaseOptions>(
+    builder.Configuration.GetSection("Database"));
 ```
 
-## 配置后处理
+## 生命周期
 
-```csharp
-builder.Services.AddOptions<DatabaseOptions>()
-    .Bind(builder.Configuration.GetSection("Database"))
-    .PostConfigure(options =>
-    {
-        // 设置默认值
-        if (string.IsNullOrEmpty(options.Host))
-            options.Host = "localhost";
-        
-        // 环境变量覆盖
-        var envHost = Environment.GetEnvironmentVariable("DB_HOST");
-        if (!string.IsNullOrEmpty(envHost))
-            options.Host = envHost;
-    });
-```
+| 接口 | 生命周期 | 说明 |
+|------|----------|------|
+| `ICfgRoot` | Singleton | 配置根，整个应用共享 |
+| `IConfigurationRoot` | Singleton | Microsoft Configuration 根 |
+| `IOptions<T>` | Singleton | 配置快照，启动时读取 |
+| `IOptionsSnapshot<T>` | Scoped | 每次请求重新绑定 |
+| `IOptionsMonitor<T>` | Singleton | 支持变更通知 |
 
 ## 下一步
 
