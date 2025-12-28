@@ -2,13 +2,10 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Zookeeper)](https://www.nuget.org/packages/Apq.Cfg.Zookeeper)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
-[![国内文档](https://img.shields.io/badge/国内文档-CloudBase-green)](https://apq-9g6w58ii54088d8b-1251405840.tcloudbaseapp.com/)
 
 Apq.Cfg 的 Zookeeper 配置中心扩展，支持热重载。
 
-**📖 在线文档**：
-- 国际访问：https://apq-cfg.vercel.app/
-- 国内访问：https://apq-9g6w58ii54088d8b-1251405840.tcloudbaseapp.com/
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 安装
 

@@ -2,15 +2,12 @@
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
-[![国内文档](https://img.shields.io/badge/国内文档-CloudBase-green)](https://apq-9g6w58ii54088d8b-1251405840.tcloudbaseapp.com/)
 
 本目录包含 Apq.Cfg 配置库的性能基准测试，使用 [BenchmarkDotNet](https://benchmarkdotnet.org/) 框架。
 
 **仓库地址**：https://gitee.com/apq/Apq.Cfg
 
-**📖 在线文档**：
-- 国际访问：https://apq-cfg.vercel.app/
-- 国内访问：https://apq-9g6w58ii54088d8b-1251405840.tcloudbaseapp.com/
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 项目结构
 
