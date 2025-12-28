@@ -316,3 +316,9 @@ FileCfgSourceBase.EncodingDetector.ClearCache();
 |------|------|
 | `EncodingOptions.Default` | 默认配置 |
 | `EncodingOptions.PowerShell` | PowerShell 脚本配置（UTF-8 BOM） |
+
+## 下一步
+
+- [编码处理](/guide/encoding) - 编码处理基础
+- [性能优化](/guide/performance) - 性能调优指南
+- [最佳实践](/guide/best-practices) - 最佳实践指南

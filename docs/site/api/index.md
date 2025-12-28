@@ -1,135 +1,126 @@
-# API 参考
+# API 概述
 
-本节提供 Apq.Cfg 的完整 API 文档。
+本节提供 Apq.Cfg 的完整 API 参考文档。
 
-## 核心类
+## 核心类型
 
 ### CfgBuilder
 
-配置构建器，用于创建和配置 `CfgRoot` 实例。
+配置构建器，用于创建配置实例。
 
 ```csharp
 var cfg = new CfgBuilder()
     .AddJsonFile("config.json")
-    .AddYamlFile("config.yaml", optional: true)
     .Build();
 ```
 
-[查看详细文档](/api/cfg-builder)
+[查看详细 API →](/api/cfg-builder)
 
-### CfgRoot
+### ICfgRoot
 
-配置根对象，提供配置读取和管理功能。
-
-```csharp
-// 获取值
-var value = cfg.Get<string>("Key");
-var valueWithDefault = cfg.Get<int>("Key", 10);
-
-// 获取配置节
-var section = cfg.GetSection("Section");
-
-// 绑定到对象
-var settings = cfg.Bind<AppSettings>();
-```
-
-[查看详细文档](/api/cfg-root)
-
-### CfgSection
-
-配置节，表示配置树中的一个节点。
+配置根接口，提供配置读取功能。
 
 ```csharp
-var section = cfg.GetSection("Database");
-var connectionString = section.Get<string>("ConnectionString");
-var settings = section.Bind<DatabaseSettings>();
+public interface ICfgRoot
+{
+    string this[string key] { get; }
+    T GetValue<T>(string key, T defaultValue = default);
+    ICfgSection GetSection(string key);
+    IChangeToken GetReloadToken();
+}
 ```
 
-[查看详细文档](/api/cfg-section)
+[查看详细 API →](/api/icfg-root)
 
-## 扩展方法
+### ICfgSection
 
-### 配置源扩展
-
-每个配置源包都提供相应的扩展方法：
+配置节接口，表示配置的一个子节。
 
 ```csharp
-// JSON
-builder.AddJsonFile("config.json");
-
-// YAML
-builder.AddYamlFile("config.yaml");
-
-// TOML
-builder.AddTomlFile("config.toml");
-
-// Redis
-builder.AddRedis(options => {
-    options.ConnectionString = "localhost:6379";
-    options.KeyPrefix = "config:";
-});
-
-// Consul
-builder.AddConsul("http://localhost:8500", "app/config");
+public interface ICfgSection
+{
+    string Key { get; }
+    string Value { get; }
+    string Path { get; }
+    T Get<T>();
+    IEnumerable<ICfgSection> GetChildren();
+}
 ```
 
-### 依赖注入扩展
+[查看详细 API →](/api/icfg-section)
 
-```csharp
-// 注册配置服务
-services.AddApqCfg(builder => {
-    builder.AddJsonFile("appsettings.json");
-});
-
-// 配置选项
-services.Configure<AppSettings>(cfg => cfg.GetSection("App"));
-```
-
-## 接口
+## 配置源接口
 
 ### ICfgSource
 
-配置源接口，实现此接口可创建自定义配置源。
+配置源接口，所有配置源都实现此接口。
 
 ```csharp
 public interface ICfgSource
 {
-    IEnumerable<KeyValuePair<string, string>> Load();
-    void Reload();
-    event EventHandler<CfgChangedEventArgs> Changed;
+    string Name { get; }
+    bool SupportsReload { get; }
+    Task<IDictionary<string, string>> LoadAsync(CancellationToken ct = default);
+    IChangeToken? GetReloadToken();
 }
 ```
 
-### ICfgProvider
+## 扩展方法
 
-配置提供程序接口。
+### CfgBuilder 扩展
 
-```csharp
-public interface ICfgProvider
-{
-    bool TryGet(string key, out string value);
-    void Set(string key, string value);
-    IEnumerable<string> GetChildKeys(string parentPath);
-}
-```
+| 方法 | 说明 |
+|------|------|
+| `AddJsonFile()` | 添加 JSON 文件配置源 |
+| `AddYamlFile()` | 添加 YAML 文件配置源 |
+| `AddXmlFile()` | 添加 XML 文件配置源 |
+| `AddIniFile()` | 添加 INI 文件配置源 |
+| `AddTomlFile()` | 添加 TOML 文件配置源 |
+| `AddEnvironmentVariables()` | 添加环境变量配置源 |
+| `AddConsul()` | 添加 Consul 配置源 |
+| `AddRedis()` | 添加 Redis 配置源 |
+| `AddApollo()` | 添加 Apollo 配置源 |
+| `AddVault()` | 添加 Vault 配置源 |
 
-## 特性
+[查看详细 API →](/api/extensions)
 
-### CfgSectionAttribute
+### ICfgRoot 扩展
 
-用于源代码生成器的配置节特性。
+| 方法 | 说明 |
+|------|------|
+| `GetValue<T>()` | 获取类型化配置值 |
+| `GetSection()` | 获取配置节 |
+| `GetRequiredSection()` | 获取必需的配置节 |
+| `GetChildren()` | 获取所有子节 |
+| `Exists()` | 检查配置是否存在 |
 
-```csharp
-[CfgSection("Database")]
-public partial class DatabaseSettings
-{
-    public string ConnectionString { get; set; }
-    public int Timeout { get; set; }
-}
-```
+### ICfgSection 扩展
+
+| 方法 | 说明 |
+|------|------|
+| `Get<T>()` | 绑定到类型 |
+| `GetValue<T>()` | 获取类型化值 |
+| `GetChildren()` | 获取子节 |
+| `Exists()` | 检查是否存在 |
+
+## 命名空间
+
+| 命名空间 | 说明 |
+|----------|------|
+| `Apq.Cfg` | 核心类型和接口 |
+| `Apq.Cfg.Sources` | 配置源基类和接口 |
+| `Apq.Cfg.Changes` | 配置变更相关类型 |
+| `Apq.Cfg.DependencyInjection` | DI 集成 |
+| `Apq.Cfg.Yaml` | YAML 配置源 |
+| `Apq.Cfg.Xml` | XML 配置源 |
+| `Apq.Cfg.Ini` | INI 配置源 |
+| `Apq.Cfg.Toml` | TOML 配置源 |
+| `Apq.Cfg.Consul` | Consul 配置源 |
+| `Apq.Cfg.Redis` | Redis 配置源 |
+| `Apq.Cfg.Apollo` | Apollo 配置源 |
+| `Apq.Cfg.Vault` | Vault 配置源 |
 
 ## 下一步
 
-- [CfgBuilder 详解](/api/cfg-builder)
-- [CfgRoot 详解](/api/cfg-root)
-- [CfgSection 详解](/api/cfg-section)
+- [CfgBuilder API](/api/cfg-builder) - 配置构建器详细 API
+- [ICfgRoot API](/api/icfg-root) - 配置根接口详细 API

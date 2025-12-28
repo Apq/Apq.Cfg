@@ -1,119 +1,135 @@
-# 安装指南
+# 安装
 
-本页面介绍如何安装 Apq.Cfg 及其各个配置源包。
+本页介绍如何安装 Apq.Cfg 及其扩展包。
 
-## NuGet 包列表
+## 系统要求
 
-### 核心包
+- .NET 6.0 或更高版本
+- 或 .NET Standard 2.0/2.1 兼容的运行时
 
-| 包名 | 描述 | NuGet |
-|-----|------|-------|
-| `Apq.Cfg` | 核心库，包含基础功能和 JSON 支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.svg)](https://www.nuget.org/packages/Apq.Cfg) |
-
-### 本地配置源
-
-| 包名 | 描述 | NuGet |
-|-----|------|-------|
-| `Apq.Cfg.Yaml` | YAML 配置文件支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Yaml.svg)](https://www.nuget.org/packages/Apq.Cfg.Yaml) |
-| `Apq.Cfg.Toml` | TOML 配置文件支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Toml.svg)](https://www.nuget.org/packages/Apq.Cfg.Toml) |
-| `Apq.Cfg.Xml` | XML 配置文件支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Xml.svg)](https://www.nuget.org/packages/Apq.Cfg.Xml) |
-| `Apq.Cfg.Ini` | INI 配置文件支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Ini.svg)](https://www.nuget.org/packages/Apq.Cfg.Ini) |
-| `Apq.Cfg.Env` | ENV 环境变量文件支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Env.svg)](https://www.nuget.org/packages/Apq.Cfg.Env) |
-
-### 远程配置源
-
-| 包名 | 描述 | NuGet |
-|-----|------|-------|
-| `Apq.Cfg.Redis` | Redis 配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Redis.svg)](https://www.nuget.org/packages/Apq.Cfg.Redis) |
-| `Apq.Cfg.Database` | 数据库配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Database.svg)](https://www.nuget.org/packages/Apq.Cfg.Database) |
-| `Apq.Cfg.Etcd` | Etcd 配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Etcd.svg)](https://www.nuget.org/packages/Apq.Cfg.Etcd) |
-| `Apq.Cfg.Consul` | Consul 配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Consul.svg)](https://www.nuget.org/packages/Apq.Cfg.Consul) |
-| `Apq.Cfg.Nacos` | Nacos 配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Nacos.svg)](https://www.nuget.org/packages/Apq.Cfg.Nacos) |
-| `Apq.Cfg.Apollo` | Apollo 配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Apollo.svg)](https://www.nuget.org/packages/Apq.Cfg.Apollo) |
-| `Apq.Cfg.Vault` | HashiCorp Vault 支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Vault.svg)](https://www.nuget.org/packages/Apq.Cfg.Vault) |
-| `Apq.Cfg.Zookeeper` | Zookeeper 配置支持 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Zookeeper.svg)](https://www.nuget.org/packages/Apq.Cfg.Zookeeper) |
-
-### 扩展包
-
-| 包名 | 描述 | NuGet |
-|-----|------|-------|
-| `Apq.Cfg.SourceGenerator` | 源代码生成器 | [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.SourceGenerator.svg)](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) |
-
-## 安装方式
+## 核心包安装
 
 ### 使用 .NET CLI
 
 ```bash
-# 安装核心包
 dotnet add package Apq.Cfg
-
-# 安装配置源包
-dotnet add package Apq.Cfg.Yaml
-dotnet add package Apq.Cfg.Redis
 ```
 
-### 使用 Package Manager Console
+### 使用 Package Manager
 
 ```powershell
-# 安装核心包
 Install-Package Apq.Cfg
-
-# 安装配置源包
-Install-Package Apq.Cfg.Yaml
-Install-Package Apq.Cfg.Redis
 ```
 
 ### 使用 PackageReference
 
-在 `.csproj` 文件中添加：
-
 ```xml
-<ItemGroup>
-  <PackageReference Include="Apq.Cfg" Version="1.0.*" />
-  <PackageReference Include="Apq.Cfg.Yaml" Version="1.0.*" />
-  <PackageReference Include="Apq.Cfg.Redis" Version="1.0.*" />
-</ItemGroup>
+<PackageReference Include="Apq.Cfg" Version="1.0.*" />
 ```
 
-## 版本兼容性
+## 扩展包安装
 
-所有 Apq.Cfg 包遵循语义化版本控制，主版本号相同的包之间保证兼容。
+根据需要安装对应的扩展包：
 
-建议在项目中使用相同版本的所有 Apq.Cfg 包：
+### 本地配置源
 
-```xml
-<ItemGroup>
-  <PackageReference Include="Apq.Cfg" Version="1.0.5" />
-  <PackageReference Include="Apq.Cfg.Yaml" Version="1.0.5" />
-  <PackageReference Include="Apq.Cfg.Redis" Version="1.0.5" />
-</ItemGroup>
+::: code-group
+
+```bash [YAML]
+dotnet add package Apq.Cfg.Yaml
 ```
 
-## 国内镜像
+```bash [XML]
+dotnet add package Apq.Cfg.Xml
+```
 
-如果 NuGet 官方源访问较慢，可以使用国内镜像：
+```bash [INI]
+dotnet add package Apq.Cfg.Ini
+```
+
+```bash [TOML]
+dotnet add package Apq.Cfg.Toml
+```
+
+:::
+
+### 远程配置源
+
+::: code-group
+
+```bash [Consul]
+dotnet add package Apq.Cfg.Consul
+```
+
+```bash [Redis]
+dotnet add package Apq.Cfg.Redis
+```
+
+```bash [Apollo]
+dotnet add package Apq.Cfg.Apollo
+```
+
+```bash [Vault]
+dotnet add package Apq.Cfg.Vault
+```
+
+```bash [Etcd]
+dotnet add package Apq.Cfg.Etcd
+```
+
+```bash [Zookeeper]
+dotnet add package Apq.Cfg.Zookeeper
+```
+
+:::
+
+### 源生成器
 
 ```bash
-# 添加华为云镜像
-dotnet nuget add source https://repo.huaweicloud.com/repository/nuget/v3/index.json -n huaweicloud
-
-# 添加腾讯云镜像
-dotnet nuget add source https://mirrors.cloud.tencent.com/nuget/ -n tencentcloud
+dotnet add package Apq.Cfg.SourceGenerator
 ```
 
-或在 `nuget.config` 中配置：
+## 完整安装示例
+
+一个典型的企业应用可能需要以下包：
 
 ```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
-    <add key="huaweicloud" value="https://repo.huaweicloud.com/repository/nuget/v3/index.json" />
-  </packageSources>
-</configuration>
+<ItemGroup>
+  <!-- 核心包 -->
+  <PackageReference Include="Apq.Cfg" Version="1.0.*" />
+  
+  <!-- 本地配置格式 -->
+  <PackageReference Include="Apq.Cfg.Yaml" Version="1.0.*" />
+  <PackageReference Include="Apq.Cfg.Toml" Version="1.0.*" />
+  
+  <!-- 远程配置中心 -->
+  <PackageReference Include="Apq.Cfg.Consul" Version="1.0.*" />
+  <PackageReference Include="Apq.Cfg.Vault" Version="1.0.*" />
+  
+  <!-- 源生成器 -->
+  <PackageReference Include="Apq.Cfg.SourceGenerator" Version="1.0.*" />
+</ItemGroup>
+```
+
+## 验证安装
+
+创建一个简单的测试程序验证安装：
+
+```csharp
+using Apq.Cfg;
+
+var cfg = new CfgBuilder()
+    .AddInMemory(new Dictionary<string, string>
+    {
+        ["Test:Key"] = "Hello, Apq.Cfg!"
+    })
+    .Build();
+
+Console.WriteLine(cfg["Test:Key"]);
+// 输出: Hello, Apq.Cfg!
 ```
 
 ## 下一步
 
-- [快速开始](/guide/getting-started) - 开始使用
-- [配置源](/sources/) - 了解各配置源的使用方法
+- [快速开始](/guide/quick-start) - 学习基本用法
+- [基础用法](/guide/basic-usage) - 深入了解配置读取

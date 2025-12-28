@@ -1,23 +1,24 @@
 {
   "name": "apq-cfg-docs",
   "version": "1.0.0",
-  "description": "Apq.Cfg 配置管理框架文档站点",
+  "description": "Apq.Cfg 文档站点 - 高性能 .NET 配置管理库",
   "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
-  },
-  "devDependencies": {
-    "vitepress": "^1.5.0"
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "deploy": "npm run build && tcb hosting deploy .vitepress/dist -e $TCB_ENV_ID"
   },
   "keywords": [
-    "apq",
-    "config",
+    "apq.cfg",
     "configuration",
     "dotnet",
-    "documentation"
+    "documentation",
+    "vitepress"
   ],
   "author": "Apq",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.5.0"
+  }
 }
