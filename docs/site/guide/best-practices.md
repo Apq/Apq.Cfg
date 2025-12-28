@@ -1,273 +1,395 @@
-﻿# 最佳实践
+# 最佳实践
 
-本指南总结了使用 Apq.Cfg 的最佳实践。
+本指南提供了使用 Apq.Cfg 进行配置管理的最佳实践，帮助开发者构建更加健壮、安全和可维护的配置系统。
 
-## 配置组织
+## 1. 配置层级设计
 
-### 分层配置
+### 1.1 层级原则
 
-```
-config/
-├── config.json           # 基础配置
-├── config.Development.json  # 开发环境
-├── config.Staging.json      # 预发布环境
-├── config.Production.json   # 生产环境
-└── config.local.json        # 本地覆盖（gitignore）
-```
+配置层级是 Apq.Cfg 的核心概念，数值越大优先级越高。建议遵循以下层级设计原则：
 
-### 配置加载顺序
+- **0-2层**：系统默认值和基础配置，通常包含在应用程序包中
+- **3-5层**：环境特定配置，如开发、测试、预发布环境
+- **6-8层**：租户/用户特定配置，允许覆盖环境配置
+- **9-10层**：运行时动态配置，具有最高优先级
+
+### 1.2 层级示例
 
 ```csharp
-var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
-
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddJsonFile($"config.{environment}.json", optional: true)
-    .AddJsonFile("config.local.json", optional: true)
-    .AddEnvironmentVariables()
-    .AddCommandLine(args)
+    // 0层：系统默认值
+    .AddJson("config.json", level: 0, writeable: false)
+
+    // 1层：环境特定默认值
+    .AddJson($"config.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", 
+              level: 1, writeable: false)
+
+    // 5层：环境变量
+    .AddEnvironmentVariables(level: 5, prefix: "APP_")
+
+    // 8层：用户特定配置（可选）
+    .AddJson("user.config.json", level: 8, writeable: true, isPrimaryWriter: true)
+
     .Build();
 ```
 
-### 配置分组
+## 2. 安全配置管理
 
-```json
-{
-  "App": {
-    "Name": "MyApp",
-    "Version": "1.0.0"
-  },
-  "Database": {
-    "Primary": { ... },
-    "Readonly": { ... }
-  },
-  "Cache": { ... },
-  "Logging": { ... },
-  "Features": { ... }
-}
-```
+### 2.1 敏感数据处理
 
-## 类型安全
-
-### 使用强类型配置
+避免将敏感信息（如密码、API密钥）直接存储在配置文件中：
 
 ```csharp
-// ✅ 推荐：强类型
-public class DatabaseOptions
-{
-    public string Host { get; set; } = "";
-    public int Port { get; set; } = 5432;
-}
-
-var dbOptions = cfg.GetSection("Database").Get<DatabaseOptions>();
-
-// ❌ 避免：魔法字符串
-var host = cfg["Database:Host"];
-var port = int.Parse(cfg["Database:Port"]);
-```
-
-### 配置验证
-
-```csharp
-public class DatabaseOptions
-{
-    [Required]
-    [MinLength(1)]
-    public string Host { get; set; } = "";
-    
-    [Range(1, 65535)]
-    public int Port { get; set; } = 5432;
-    
-    [Required]
-    public string ConnectionString { get; set; } = "";
-}
-
-// 启动时验证
-services.AddOptions<DatabaseOptions>()
-    .Bind(configuration.GetSection("Database"))
-    .ValidateDataAnnotations()
-    .ValidateOnStart();
-```
-
-### 使用源生成器
-
-```csharp
-[CfgSection("Database")]
-public partial class DatabaseConfig
-{
-    public string Host { get; set; } = "";
-    public int Port { get; set; } = 5432;
-}
-
-// 自动生成绑定代码
-var config = DatabaseConfig.FromConfiguration(cfg);
-```
-
-## 安全实践
-
-### 敏感信息处理
-
-```csharp
-// ❌ 避免：配置文件中存储密码
-{
-  "Database": {
-    "Password": "secret123"
-  }
-}
-
-// ✅ 推荐：使用环境变量或密钥管理
+// 推荐：使用外部配置中心
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddEnvironmentVariables("MYAPP_")  // MYAPP_Database__Password
-    .AddVault("https://vault.example.com", "secret/myapp")
+    .AddJson("config.json", level: 0)
+    .AddVault("secret/", level: 5, token: vaultToken) // 从 HashiCorp Vault 加载
+    .Build();
+
+// 避免：直接在配置文件中存储敏感信息
+// {
+//   "ConnectionStrings": {
+//     "DefaultConnection": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;password=myPassword;"
+//   }
+// }
+```
+
+### 2.2 配置加密
+
+对需要本地存储的敏感配置进行加密：
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddJson("config.encrypted.json", level: 2, 
+              encryption: new EncryptionOptions 
+              { 
+                  Key = encryptionKey, 
+                  Algorithm = "AES256" 
+              })
     .Build();
 ```
 
-### 配置加密
+### 2.3 访问控制
+
+实施最小权限原则，限制配置源的访问权限：
 
 ```csharp
+// 生产环境配置文件权限设置
+// - config.json: 只读 (应用程序服务账户)
+// - config.Production.json: 只读 (配置管理服务账户)
+// - config.Development.json: 读写 (开发者账户)
+```
+
+## 3. 环境隔离
+
+### 3.1 环境特定配置
+
+为不同环境维护独立的配置文件：
+
+```
+/config
+    ├── config.json              # 基础配置
+    ├── config.Development.json  # 开发环境覆盖
+    ├── config.Staging.json      # 预发布环境覆盖
+    └── config.Production.json   # 生产环境覆盖
+```
+
+### 3.2 环境变量约定
+
+建立清晰的环境变量命名约定：
+
+```csharp
+// 推荐：使用层次化命名
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .ConfigureEncryption(options =>
+    .AddEnvironmentVariables(level: 5, prefix: "APP_")
+    // APP_ConnectionStrings__DefaultConnection
+    // APP_Logging__LogLevel__Default
+    // APP_Caching__Redis__ConnectionString
+    .Build();
+
+// 避免：扁平化命名
+// APP_CONNECTIONSTRING
+// APP_LOGLEVEL
+// APP_REDIS_CONNECTION
+```
+
+## 4. 配置验证
+
+### 4.1 启动时验证
+
+在应用程序启动时验证关键配置：
+
+```csharp
+public class AppSettings
+{
+    public string ConnectionString { get; set; }
+    public int RetryCount { get; set; }
+    public TimeSpan Timeout { get; set; }
+
+    [ValidateComplexType]
+    public class ValidateComplexType : ValidationAttribute
     {
-        options.EncryptedKeys = new[] { "Database:Password", "Api:Secret" };
-        options.DecryptionKey = Environment.GetEnvironmentVariable("CONFIG_KEY");
-    })
-    .Build();
-```
-
-### 日志脱敏
-
-```csharp
-// 配置日志时排除敏感字段
-services.AddOptions<DatabaseOptions>()
-    .Bind(configuration.GetSection("Database"))
-    .Configure(options =>
-    {
-        // 日志中不显示密码
-        options.LoggingExcludes = new[] { "Password", "ConnectionString" };
-    });
-```
-
-## 错误处理
-
-### 必需配置检查
-
-```csharp
-var connectionString = cfg["Database:ConnectionString"];
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new InvalidOperationException("数据库连接字符串未配置");
-}
-
-// 或使用 GetRequiredSection
-var dbSection = cfg.GetRequiredSection("Database");
-```
-
-### 默认值处理
-
-```csharp
-// 提供合理的默认值
-public class CacheOptions
-{
-    public bool Enabled { get; set; } = true;
-    public int MaxSize { get; set; } = 1000;
-    public TimeSpan Expiry { get; set; } = TimeSpan.FromMinutes(5);
-}
-```
-
-### 配置回退
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddConsul("http://consul:8500", "myapp/config")
-    .AddJsonFile("config.fallback.json", fallback: true)
-    .Build();
-```
-
-## 测试实践
-
-### 配置模拟
-
-```csharp
-[Fact]
-public void TestWithMockConfig()
-{
-    var cfg = new CfgBuilder()
-        .AddInMemory(new Dictionary<string, string>
+        public override bool IsValid(object? value)
         {
-            ["Database:Host"] = "localhost",
-            ["Database:Port"] = "5432"
-        })
-        .Build();
-    
-    var service = new MyService(cfg);
-    // 测试...
-}
-```
+            if (value is AppSettings settings)
+            {
+                // 验证连接字符串格式
+                if (string.IsNullOrWhiteSpace(settings.ConnectionString))
+                    return false;
 
-### 配置快照
+                // 验证重试次数范围
+                if (settings.RetryCount < 0 || settings.RetryCount > 10)
+                    return false;
 
-```csharp
-[Fact]
-public void TestWithOptionsSnapshot()
-{
-    var options = Options.Create(new DatabaseOptions
-    {
-        Host = "localhost",
-        Port = 5432
-    });
-    
-    var service = new MyService(options);
-    // 测试...
-}
-```
+                // 验证超时时间范围
+                if (settings.Timeout < TimeSpan.FromSeconds(1) || settings.Timeout > TimeSpan.FromMinutes(5))
+                    return false;
 
-## 运维实践
-
-### 配置版本控制
-
-```json
-{
-  "_version": "1.2.0",
-  "_lastModified": "2024-01-15T10:30:00Z",
-  "Database": { ... }
-}
-```
-
-### 配置审计
-
-```csharp
-cfg.ConfigChanged += (sender, e) =>
-{
-    foreach (var change in e.Changes)
-    {
-        _auditLogger.Log(
-            $"配置变更: {change.Key} [{change.Type}] " +
-            $"由 {e.Source} 在 {e.Timestamp} 触发");
+                return true;
+            }
+            return false;
+        }
     }
-};
+}
+
+// 使用
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .Build();
+
+var settings = cfg.GetSection<AppSettings>("App");
+Validator.ValidateObject(settings);
 ```
 
-### 健康检查
+### 4.2 配置健康检查
+
+实施配置健康检查机制：
 
 ```csharp
-services.AddHealthChecks()
-    .AddCheck("config", () =>
+// 定期检查关键配置的有效性
+public class ConfigurationHealthCheck : IHealthCheck
+{
+    private readonly ICfgRoot _cfg;
+
+    public ConfigurationHealthCheck(ICfgRoot cfg)
+    {
+        _cfg = cfg;
+    }
+
+    public async Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context, 
+        CancellationToken cancellationToken = default)
     {
         try
         {
-            var required = cfg["Database:ConnectionString"];
-            return string.IsNullOrEmpty(required)
-                ? HealthCheckResult.Unhealthy("缺少必需配置")
-                : HealthCheckResult.Healthy();
+            // 验证数据库连接
+            var connectionString = _cfg.Get<string>("ConnectionStrings:DefaultConnection");
+            using var connection = new SqlConnection(connectionString);
+            await connection.OpenAsync(cancellationToken);
+
+            return HealthCheckResult.Healthy();
         }
         catch (Exception ex)
         {
-            return HealthCheckResult.Unhealthy(ex.Message);
+            return HealthCheckResult.Unhealthy("数据库连接失败", ex);
         }
-    });
+    }
+}
 ```
+
+## 5. 配置变更管理
+
+### 5.1 配置版本控制
+
+对配置文件实施版本控制：
+
+```json
+{
+  "Version": "1.2.0",
+  "Info": {
+    "Description": "应用程序主配置文件",
+    "LastModified": "2023-12-01T10:30:00Z",
+    "ModifiedBy": "admin@example.com"
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "..."
+  }
+}
+```
+
+### 5.2 配置变更审计
+
+记录配置变更历史：
+
+```csharp
+public class ConfigurationAuditService
+{
+    private readonly ICfgRoot _cfg;
+    private readonly IAuditLogger _auditLogger;
+
+    public ConfigurationAuditService(ICfgRoot cfg, IAuditLogger auditLogger)
+    {
+        _cfg = cfg;
+        _auditLogger = auditLogger;
+
+        // 订阅配置变更事件
+        _cfg.ConfigChanges.Subscribe(OnConfigurationChanged);
+    }
+
+    private void OnConfigurationChanged(ConfigChangeEvent change)
+    {
+        _auditLogger.LogInformation("配置已更改: {Key}={Key}, OldValue={OldValue}, NewValue={NewValue}, ChangedAt={ChangedAt}",
+            change.Key, 
+            change.OldValue, 
+            change.NewValue, 
+            DateTime.UtcNow);
+    }
+}
+```
+
+## 6. 性能优化
+
+### 6.1 配置缓存
+
+缓存频繁访问的配置值：
+
+```csharp
+public class CachedConfigurationService
+{
+    private readonly ICfgRoot _cfg;
+    private readonly IMemoryCache _cache;
+    private readonly TimeSpan _cacheDuration = TimeSpan.FromMinutes(5);
+
+    public CachedConfigurationService(ICfgRoot cfg, IMemoryCache cache)
+    {
+        _cfg = cfg;
+        _cache = cache;
+    }
+
+    public T Get<T>(string key)
+    {
+        var cacheKey = $"cfg_{key}";
+
+        return _cache.GetOrCreate(cacheKey, () => _cfg.Get<T>(key), _cacheDuration);
+    }
+}
+```
+
+### 6.2 批量操作
+
+使用批量操作减少配置源访问：
+
+```csharp
+// 推荐：使用批量获取
+var keys = new[] { "FeatureA:Enabled", "FeatureB:Enabled", "FeatureC:Enabled" };
+var features = cfg.GetMany<bool>(keys);
+
+// 避免：多次单独获取
+var featureA = cfg.Get<bool>("FeatureA:Enabled");
+var featureB = cfg.Get<bool>("FeatureB:Enabled");
+var featureC = cfg.Get<bool>("FeatureC:Enabled");
+```
+
+## 7. 监控和诊断
+
+### 7.1 配置使用监控
+
+监控配置访问模式：
+
+```csharp
+public class ConfigurationMetrics
+{
+    private readonly IMetrics _metrics;
+    private readonly ConcurrentDictionary<string, int> _accessCounts = new();
+
+    public void RecordAccess(string key)
+    {
+        _accessCounts.AddOrUpdate(key, 1, (_, count) => count + 1);
+        _metrics.Counter("configuration.access.count").Inc();
+        _metrics.Histogram("configuration.access.frequency").Observe(_accessCounts.Count);
+    }
+
+    public void ReportTopAccessedKeys()
+    {
+        var topKeys = _accessCounts.OrderByDescending(kvp => kvp.Value)
+                              .Take(10)
+                              .Select(kvp => kvp.Key);
+
+        _metrics.Gauge("configuration.top_keys", topKeys);
+    }
+}
+```
+
+### 7.2 配置加载诊断
+
+诊断配置加载问题：
+
+```csharp
+public class ConfigurationDiagnostics
+{
+    public static void LogConfigurationSources(ICfgRoot cfg)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("配置源加载情况:");
+
+        // 这里需要访问内部实现，实际项目中可能需要添加诊断API
+        foreach (var source in cfg.GetSources())
+        {
+            sb.AppendLine($"- {source.GetType().Name}: Level={source.Level}, Writeable={source.IsWriteable}");
+        }
+
+        // 记录到日志或诊断系统
+        Console.WriteLine(sb.ToString());
+    }
+}
+```
+
+## 8. 故障排除
+
+### 8.1 常见问题
+
+1. **配置未生效**
+   - 检查配置层级是否正确
+   - 确认配置键名拼写正确
+   - 验证配置源是否成功加载
+
+2. **配置值类型转换错误**
+   - 检查目标类型是否匹配
+   - 确认字符串格式正确
+   - 使用 TryGet 方法避免异常
+
+3. **配置热重载不工作**
+   - 确认配置源支持热重载
+   - 检查文件权限
+   - 验证文件监控机制
+
+### 8.2 调试技巧
+
+1. **启用详细日志**
+   ```csharp
+   var cfg = new CfgBuilder()
+       .AddJson("config.json", level: 0)
+       .AddEnvironmentVariables(level: 5)
+       .EnableDetailedLogging() // 启用详细日志
+       .Build();
+   ```
+
+2. **导出配置快照**
+   ```csharp
+   // 导出当前配置快照用于调试
+   var snapshot = cfg.ExportSnapshot();
+   File.WriteAllText("debug-config.json", snapshot);
+   ```
+
+3. **配置诊断工具**
+   ```csharp
+   // 创建诊断工具
+   var diagnostics = new ConfigurationDiagnostics(cfg);
+   diagnostics.ValidateRequiredKeys();
+   diagnostics.ReportConflictingValues();
+   diagnostics.CheckForDeprecatedSettings();
+   ```
 
 ## 下一步
 
