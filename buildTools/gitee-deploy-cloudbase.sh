@@ -31,33 +31,52 @@ fi
 SITE_DIR="docs/site"
 OUTPUT_DIR="$SITE_DIR/.vitepress/dist"
 
-# 步骤 1: 安装 Node.js 依赖
+# 步骤 0: 配置国内镜像源
 echo ""
 echo "=========================================="
-echo "  步骤 1/4: 安装依赖"
+echo "  步骤 0/4: 配置国内镜像源"
+echo "=========================================="
+
+# 配置 Alpine apk 使用阿里云镜像
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
+# 配置 npm 使用淘宝镜像
+npm config set registry https://registry.npmmirror.com
+
+echo "Alpine APK 镜像: mirrors.aliyun.com"
+echo "NPM 镜像: registry.npmmirror.com"
+
+# 步骤 1: 安装系统依赖（git 用于 VitePress 获取文件最后更新时间）
+echo ""
+echo "=========================================="
+echo "  步骤 1/4: 安装系统依赖"
+echo "=========================================="
+apk add --no-cache git
+
+# 步骤 2: 安装 Node.js 依赖
+echo ""
+echo "=========================================="
+echo "  步骤 2/4: 安装 npm 依赖"
 echo "=========================================="
 cd "$SITE_DIR"
 npm install
 
-# 步骤 2: 构建文档站点
+# 步骤 3: 构建文档站点
 echo ""
 echo "=========================================="
-echo "  步骤 2/4: 构建文档站点"
+echo "  步骤 3/4: 构建文档站点"
 echo "=========================================="
 npm run build
 
-# 步骤 3: 安装 CloudBase CLI
-echo ""
-echo "=========================================="
-echo "  步骤 3/4: 安装 CloudBase CLI"
-echo "=========================================="
-npm install -g @cloudbase/cli
-
-# 步骤 4: 登录并部署
+# 步骤 4: 安装 CloudBase CLI 并部署
 echo ""
 echo "=========================================="
 echo "  步骤 4/4: 部署到 CloudBase"
 echo "=========================================="
+
+# 安装 CloudBase CLI
+npm install -g @cloudbase/cli
+
 # 使用密钥登录
 tcb login --apiKeyId "$TENCENT_SECRET_ID" --apiKey "$TENCENT_SECRET_KEY"
 
