@@ -10,6 +10,11 @@ triggers:
     paths:
       precise:
         - docs/site
+variables:
+  global:
+    - TENCENT_SECRET_ID
+    - TENCENT_SECRET_KEY
+    - CLOUDBASE_ENV_ID
 stages:
   - name: stage-85fc9c58
     displayName: 部署文档站点
@@ -19,12 +24,11 @@ stages:
     steps:
       - step: execute@docker
         name: execute_by_docker
-        displayName: 基于镜像的脚本执行
+        displayName: 构建并部署到CloudBase
         certificate: ''
-        image: ubuntu
+        image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/node:24-alpine
         command:
-          - '# 请在此输入您想执行的脚本'
-          - echo 'Hello Gitee!'
+          - sh buildTools/gitee-deploy-cloudbase.sh
         notify: []
         strategy:
           retry: '0'
