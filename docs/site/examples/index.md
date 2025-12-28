@@ -1,4 +1,4 @@
-﻿# 示例概述
+# 示例概述
 
 本节提供 Apq.Cfg 的各种使用示例。
 
@@ -26,10 +26,10 @@
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
-var appName = cfg["App:Name"];
+var appName = cfg.Get("App:Name");
 Console.WriteLine($"应用名称: {appName}");
 ```
 
@@ -37,9 +37,9 @@ Console.WriteLine($"应用名称: {appName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddYamlFile("config.yaml", optional: true)
-    .AddEnvironmentVariables()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
 
@@ -52,7 +52,12 @@ public class DatabaseConfig
     public int Port { get; set; } = 5432;
 }
 
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
+var dbSection = cfg.GetSection("Database");
+var dbConfig = new DatabaseConfig
+{
+    Host = dbSection.Get("Host") ?? "localhost",
+    Port = dbSection.Get<int>("Port")
+};
 Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
 ```
 
@@ -62,24 +67,42 @@ Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json")
-    .AddEnvironmentVariables());
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
-builder.Services.Configure<DatabaseConfig>(
-    builder.Configuration.GetSection("Database"));
+builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 ```
 
 ### 动态重载
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
     .Build();
 
-cfg.OnChange(changes =>
+cfg.ConfigChanges.Subscribe(e =>
 {
     Console.WriteLine("配置已更新!");
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"  [{change.Type}] {key}");
+    }
 });
+```
+
+### 可写配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 修改配置
+cfg.Set("App:Name", "NewName");
+cfg.Set("Database:Port", "5433");
+
+// 保存到文件
+await cfg.SaveAsync();
 ```
 
 ## 运行示例项目

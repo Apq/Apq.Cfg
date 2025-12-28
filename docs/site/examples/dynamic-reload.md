@@ -1,4 +1,4 @@
-﻿# 动态重载示例
+# 动态重载示例
 
 本页展示如何实现配置的动态重载（热更新）。
 
@@ -8,16 +8,16 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", optional: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
     .Build();
 
 // 监听变更
-cfg.OnChange(changedKeys =>
+cfg.ConfigChanges.Subscribe(e =>
 {
     Console.WriteLine("配置已更新:");
-    foreach (var key in changedKeys)
+    foreach (var (key, change) in e.Changes)
     {
-        Console.WriteLine($"  {key} = {cfg[key]}");
+        Console.WriteLine($"  [{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
     }
 });
 ```
@@ -26,59 +26,13 @@ cfg.OnChange(changedKeys =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddConsul("http://consul:8500", "myapp/config", watch: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true))
     .Build();
 
-cfg.OnChange(changedKeys =>
+cfg.ConfigChanges.Subscribe(e =>
 {
     Console.WriteLine("Consul 配置已更新");
 });
-```
-
-## 重载策略
-
-### 防抖重载
-
-避免频繁重载：
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .ConfigureReload(options =>
-    {
-        options.Strategy = ReloadStrategy.Debounced;
-        options.DebounceDelay = 1000; // 1秒内的变更合并
-    })
-    .Build();
-```
-
-### 节流重载
-
-限制重载频率：
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .ConfigureReload(options =>
-    {
-        options.Strategy = ReloadStrategy.Throttled;
-        options.ThrottleInterval = TimeSpan.FromSeconds(5); // 最多每5秒重载一次
-    })
-    .Build();
-```
-
-### 立即重载
-
-每次变更立即重载：
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .ConfigureReload(options =>
-    {
-        options.Strategy = ReloadStrategy.Immediate;
-    })
-    .Build();
 ```
 
 ## 变更事件处理
@@ -86,24 +40,23 @@ var cfg = new CfgBuilder()
 ### 详细变更信息
 
 ```csharp
-cfg.ConfigChanged += (sender, e) =>
+cfg.ConfigChanges.Subscribe(e =>
 {
     Console.WriteLine($"配置变更时间: {e.Timestamp}");
-    Console.WriteLine($"变更来源: {e.Source}");
     
-    foreach (var change in e.Changes)
+    foreach (var (key, change) in e.Changes)
     {
-        Console.WriteLine($"  [{change.Type}] {change.Key}");
-        Console.WriteLine($"    旧值: {change.OldValue}");
-        Console.WriteLine($"    新值: {change.NewValue}");
+        Console.WriteLine($"  [{change.Type}] {key}");
+        Console.WriteLine($"    旧值: {change.OldValue ?? "(null)"}");
+        Console.WriteLine($"    新值: {change.NewValue ?? "(null)"}");
     }
-};
+});
 ```
 
 ### 按键过滤
 
 ```csharp
-cfg.ConfigChanged += (sender, e) =>
+cfg.ConfigChanges.Subscribe(e =>
 {
     // 只处理数据库配置变更
     var dbChanges = e.Changes.Where(c => c.Key.StartsWith("Database:"));
@@ -113,7 +66,30 @@ cfg.ConfigChanged += (sender, e) =>
         Console.WriteLine("数据库配置已更新，需要重新连接");
         ReconnectDatabase();
     }
-};
+});
+```
+
+### 使用 Rx 操作符
+
+```csharp
+using System.Reactive.Linq;
+
+// 防抖处理
+cfg.ConfigChanges
+    .Throttle(TimeSpan.FromSeconds(1))
+    .Subscribe(e =>
+    {
+        Console.WriteLine("配置已更新（防抖后）");
+    });
+
+// 只关注特定键
+cfg.ConfigChanges
+    .Where(e => e.Changes.ContainsKey("App:Name"))
+    .Subscribe(e =>
+    {
+        var change = e.Changes["App:Name"];
+        Console.WriteLine($"应用名称已更改: {change.OldValue} -> {change.NewValue}");
+    });
 ```
 
 ## 与 IOptionsMonitor 集成
@@ -192,90 +168,43 @@ public class DynamicConfigService : BackgroundService
 }
 ```
 
-## 重载错误处理
+## 层级覆盖感知
 
-### 错误回调
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .ConfigureReload(options =>
-    {
-        options.OnReloadError = (source, exception) =>
-        {
-            Console.WriteLine($"配置重载失败: {source}");
-            Console.WriteLine($"错误: {exception.Message}");
-            
-            // 可以选择：
-            // 1. 记录日志
-            // 2. 发送告警
-            // 3. 使用缓存的旧配置
-        };
-    })
-    .Build();
-```
-
-### 重试策略
+动态重载会正确处理层级覆盖：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddConsul("http://consul:8500", "myapp/config", watch: true)
-    .ConfigureReload(options =>
-    {
-        options.RetryCount = 3;
-        options.RetryDelay = TimeSpan.FromSeconds(5);
-        options.OnRetry = (attempt, exception) =>
-        {
-            Console.WriteLine($"重试 {attempt}/3: {exception.Message}");
-        };
-    })
-    .Build();
-```
-
-## 手动重载
-
-### 触发重载
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.local.json", level: 1, writeable: false, reloadOnChange: true)
     .Build();
 
-// 手动触发重载
-await cfg.ReloadAsync();
-```
+// 假设两个文件都有 "Timeout" 配置
+// config.json: Timeout = 30
+// config.local.json: Timeout = 60
+// 最终值: 60 (level 1 覆盖 level 0)
 
-### 定时重载
-
-```csharp
-public class ConfigReloadService : BackgroundService
+cfg.ConfigChanges.Subscribe(e =>
 {
-    private readonly ICfgRoot _cfg;
-    private readonly TimeSpan _interval = TimeSpan.FromMinutes(5);
-    
-    public ConfigReloadService(ICfgRoot cfg)
-    {
-        _cfg = cfg;
-    }
-    
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            await Task.Delay(_interval, stoppingToken);
-            
-            try
-            {
-                await _cfg.ReloadAsync();
-                Console.WriteLine("配置已定时重载");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"定时重载失败: {ex.Message}");
-            }
-        }
-    }
-}
+    // 只有当最终合并值真正变化时才会触发
+    // 如果 config.json 的 Timeout 从 30 改为 45，
+    // 但 config.local.json 仍然是 60，
+    // 则不会触发变更通知（因为最终值仍是 60）
+});
+```
+
+## 可写配置的动态重载
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true)
+    .Build();
+
+// 修改配置
+cfg.Set("App:Name", "NewName");
+await cfg.SaveAsync();
+
+// 文件变更会触发重载，但由于是自己的修改，
+// 系统会智能处理避免重复通知
 ```
 
 ## 完整示例
@@ -285,17 +214,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置动态重载
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json", reloadOnChange: true)
-    .AddConsul("http://consul:8500", "myapp/config", watch: true, optional: true)
-    .ConfigureReload(options =>
-    {
-        options.Strategy = ReloadStrategy.Debounced;
-        options.DebounceDelay = 1000;
-        options.OnReloadError = (source, ex) =>
-        {
-            Console.WriteLine($"重载失败 [{source}]: {ex.Message}");
-        };
-    }));
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, writeable: false, optional: true, reloadOnChange: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true, optional: true))
+    .AddEnvironmentVariables(level: 20, prefix: "APP_"));
 
 // 配置选项
 builder.Services.AddOptions<AppOptions>()
@@ -308,13 +230,57 @@ var app = builder.Build();
 
 // 获取配置实例并监听变更
 var cfg = app.Services.GetRequiredService<ICfgRoot>();
-cfg.ConfigChanged += (sender, e) =>
+cfg.ConfigChanges.Subscribe(e =>
 {
     app.Logger.LogInformation("配置已更新: {Keys}", 
-        string.Join(", ", e.Changes.Select(c => c.Key)));
-};
+        string.Join(", ", e.Changes.Keys));
+});
 
 app.Run();
+```
+
+## 配置监听服务示例
+
+```csharp
+public class ConfigWatcherService : IHostedService, IDisposable
+{
+    private readonly ICfgRoot _cfg;
+    private readonly ILogger<ConfigWatcherService> _logger;
+    private IDisposable? _subscription;
+    
+    public ConfigWatcherService(ICfgRoot cfg, ILogger<ConfigWatcherService> logger)
+    {
+        _cfg = cfg;
+        _logger = logger;
+    }
+    
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _subscription = _cfg.ConfigChanges.Subscribe(OnConfigChanged);
+        _logger.LogInformation("配置监听服务已启动");
+        return Task.CompletedTask;
+    }
+    
+    private void OnConfigChanged(ConfigChangeEvent e)
+    {
+        _logger.LogInformation("检测到配置变更，共 {Count} 项", e.Changes.Count);
+        
+        foreach (var (key, change) in e.Changes)
+        {
+            _logger.LogInformation("  [{Type}] {Key}: {OldValue} -> {NewValue}",
+                change.Type, key, change.OldValue ?? "(null)", change.NewValue ?? "(null)");
+        }
+    }
+    
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        _subscription?.Dispose();
+        _logger.LogInformation("配置监听服务已停止");
+        return Task.CompletedTask;
+    }
+    
+    public void Dispose() => _subscription?.Dispose();
+}
 ```
 
 ## 下一步

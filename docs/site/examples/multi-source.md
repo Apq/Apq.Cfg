@@ -1,4 +1,4 @@
-﻿# 多配置源示例
+# 多配置源示例
 
 本页展示如何组合使用多个配置源。
 
@@ -8,8 +8,8 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddEnvironmentVariables()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddEnvironmentVariables(level: 1, prefix: "APP_")
     .Build();
 ```
 
@@ -17,9 +17,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddYamlFile("config.yaml", optional: true)
-    .AddTomlFile("config.toml", optional: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
+    .AddToml("config.toml", level: 2, writeable: false, optional: true)
     .Build();
 ```
 
@@ -33,13 +33,13 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     // 环境特定配置
-    .AddJsonFile($"config.{environment}.json", optional: true)
+    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
     // 本地开发覆盖（不提交到版本控制）
-    .AddJsonFile("config.local.json", optional: true)
+    .AddJson("config.local.json", level: 2, writeable: true, isPrimaryWriter: true, optional: true)
     // 环境变量（最高优先级）
-    .AddEnvironmentVariables()
+    .AddEnvironmentVariables(level: 3, prefix: "APP_")
     .Build();
 ```
 
@@ -90,11 +90,11 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     // 远程动态配置
-    .AddConsul("http://consul:8500", "myapp/config", watch: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true))
     // 环境变量覆盖
-    .AddEnvironmentVariables()
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 ```
 
@@ -102,19 +102,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddRedis("localhost:6379", "config:myapp", subscribeChanges: true)
-    .AddEnvironmentVariables()
-    .Build();
-```
-
-### Apollo 集成
-
-```csharp
-var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddApollo("http://apollo:8080", "myapp", "application")
-    .AddEnvironmentVariables()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new RedisCfgSource("localhost:6379", "config:myapp", level: 10, writeable: false, subscribeChanges: true))
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 ```
 
@@ -125,12 +115,12 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 普通配置
-    .AddJsonFile("config.json")
-    .AddConsul("http://consul:8500", "myapp/config")
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false))
     // 敏感配置（密码、密钥等）
-    .AddVault("https://vault:8200", "secret/myapp")
+    .AddSource(new VaultCfgSource("https://vault:8200", "secret/myapp", level: 15, writeable: false))
     // 环境变量
-    .AddEnvironmentVariables()
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 ```
 
@@ -161,12 +151,12 @@ Vault (secret/myapp):
 
 ```csharp
 var cfg = new CfgBuilder()
+    // 本地回退（最低优先级）
+    .AddJson("config.fallback.json", level: 0, writeable: false)
     // 主配置源
-    .AddConsul("http://consul:8500", "myapp/config", optional: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, optional: true))
     // 备用配置源
-    .AddRedis("localhost:6379", "config:myapp", optional: true)
-    // 本地回退
-    .AddJsonFile("config.fallback.json")
+    .AddSource(new RedisCfgSource("localhost:6379", "config:myapp", level: 5, writeable: false, optional: true))
     .Build();
 ```
 
@@ -174,38 +164,36 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddConsul(options =>
+    .AddSource(new ConsulCfgSource(new ConsulCfgOptions
     {
-        options.Addresses = new[]
+        Addresses = new[]
         {
             "http://consul-dc1:8500",
             "http://consul-dc2:8500"
-        };
-        options.KeyPrefix = "myapp/config";
-        options.Optional = true;
-    })
-    .AddJsonFile("config.fallback.json")
+        },
+        KeyPrefix = "myapp/config",
+        Optional = true
+    }, level: 10, writeable: false))
+    .AddJson("config.fallback.json", level: 0, writeable: false)
     .Build();
 ```
 
 ## 配置优先级示例
 
 ```csharp
-// 优先级从低到高：
-// 1. 基础配置
-// 2. 环境配置
-// 3. 远程配置
-// 4. 本地覆盖
-// 5. 环境变量
-// 6. 命令行参数
+// 优先级从低到高（level 数值越大优先级越高）：
+// level 0: 基础配置
+// level 1: 环境配置
+// level 10: 远程配置
+// level 15: 本地覆盖
+// level 20: 环境变量
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")                    // 优先级 1
-    .AddJsonFile($"config.{env}.json", optional: true)  // 优先级 2
-    .AddConsul("http://consul:8500", "myapp/config")    // 优先级 3
-    .AddJsonFile("config.local.json", optional: true)   // 优先级 4
-    .AddEnvironmentVariables("MYAPP_")                  // 优先级 5
-    .AddCommandLine(args)                               // 优先级 6
+    .AddJson("config.json", level: 0, writeable: false)                           // 优先级 0
+    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)    // 优先级 1
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false))  // 优先级 10
+    .AddJson("config.local.json", level: 15, writeable: true, isPrimaryWriter: true, optional: true)    // 优先级 15
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")                           // 优先级 20
     .Build();
 ```
 
@@ -221,39 +209,37 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("config.json")
-    .AddYamlFile("config.yaml", optional: true)
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
     
     // 环境特定
-    .AddJsonFile($"config.{environment}.json", optional: true)
+    .AddJson($"config.{environment}.json", level: 2, writeable: false, optional: true)
     
     // 远程配置（生产环境）
-    .AddConsul("http://consul:8500", "myapp/config", 
-        watch: true, 
-        optional: environment != "Production")
+    .AddSource(new ConsulCfgSource(
+        address: "http://consul:8500",
+        keyPrefix: "myapp/config",
+        level: 10,
+        writeable: false,
+        watch: true,
+        optional: environment != "Production"))
     
     // 本地覆盖（开发环境）
-    .AddJsonFile("config.local.json", optional: true)
+    .AddJson("config.local.json", level: 15, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
     
     // 环境变量
-    .AddEnvironmentVariables("MYAPP_")
-    
-    // 配置重载
-    .ConfigureReload(options =>
-    {
-        options.DebounceDelay = 1000;
-    })
+    .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
 
 // 监听变更
-cfg.OnChange(keys =>
+cfg.ConfigChanges.Subscribe(e =>
 {
-    Console.WriteLine($"配置已更新: {string.Join(", ", keys)}");
+    Console.WriteLine($"配置已更新: {string.Join(", ", e.Changes.Keys)}");
 });
 
 // 使用配置
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
-Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
+var dbSection = cfg.GetSection("Database");
+Console.WriteLine($"数据库: {dbSection.Get("Host")}:{dbSection.Get<int>("Port")}");
 ```
 
 ## 下一步

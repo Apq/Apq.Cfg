@@ -1,4 +1,4 @@
-﻿# 依赖注入集成示例
+# 依赖注入集成示例
 
 本页展示如何将 Apq.Cfg 集成到 ASP.NET Core 依赖注入系统。
 
@@ -9,11 +9,11 @@
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 
-// 方式一：使用 AddApqCfg
+// 使用 AddApqCfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json")
-    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", optional: true)
-    .AddEnvironmentVariables());
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, writeable: false, optional: true)
+    .AddEnvironmentVariables(level: 2, prefix: "APP_"));
 
 var app = builder.Build();
 ```
@@ -32,7 +32,7 @@ public class MyService
     
     public string GetDatabaseHost()
     {
-        return _cfg["Database:Host"];
+        return _cfg.Get("Database:Host") ?? "localhost";
     }
 }
 ```
@@ -73,14 +73,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 注册配置
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json")
-    .AddEnvironmentVariables());
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 // 绑定选项
-builder.Services.Configure<DatabaseOptions>(
-    builder.Configuration.GetSection(DatabaseOptions.SectionName));
-builder.Services.Configure<CacheOptions>(
-    builder.Configuration.GetSection(CacheOptions.SectionName));
+builder.Services.ConfigureApqCfg<DatabaseOptions>(DatabaseOptions.SectionName);
+builder.Services.ConfigureApqCfg<CacheOptions>(CacheOptions.SectionName);
 ```
 
 ### 使用 IOptions
@@ -296,10 +294,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置 Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("config.json")
-    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", optional: true)
-    .AddConsul("http://consul:8500", "myapp/config", watch: true, optional: true)
-    .AddEnvironmentVariables("MYAPP_"));
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, writeable: false, optional: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true, optional: true))
+    .AddEnvironmentVariables(level: 20, prefix: "APP_"));
 
 // 配置选项
 builder.Services.AddOptions<DatabaseOptions>()

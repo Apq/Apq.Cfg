@@ -13,38 +13,32 @@
 ```csharp
 public static class ConfigurationBuilder
 {
-    public static ICfgRoot BuildConfiguration(string environment)
+    public static ICfgRoot BuildConfiguration(string environment, string[]? args = null)
     {
         var builder = new CfgBuilder();
 
         // 0层：基础配置，所有环境共享
-        builder.AddJson("config.json", level: 0, optional: true);
+        builder.AddJson("config.json", level: 0, writeable: false, optional: true);
 
         // 1-3层：环境特定配置
-        builder.AddJson($"config.{environment}.json", level: 1, optional: true);
+        builder.AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true);
 
         // 4层：机器特定配置（可选）
-        builder.AddJson($"config.{environment}.{Environment.MachineName}.json", 
-                     level: 4, optional: true);
+        builder.AddJson($"config.{environment}.{Environment.MachineName}.json",
+                     level: 4, writeable: false, optional: true);
 
         // 5层：环境变量，可覆盖任何文件配置
         builder.AddEnvironmentVariables(level: 5, prefix: "APP_");
 
-        // 6层：命令行参数，最高优先级
-        if (args?.Length > 0)
-        {
-            builder.AddCommandLine(args, level: 6);
-        }
-
         // 7层：远程配置中心（生产环境）
         if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
         {
-            builder.AddConsul(options => 
-            {
-                options.Address = "https://consul.example.com";
-                options.KeyPrefix = "myapp/config/";
-                options.EnableHotReload = true;
-            }, level: 7);
+            builder.AddSource(new ConsulCfgSource(
+                address: "https://consul.example.com",
+                keyPrefix: "myapp/config/",
+                level: 7,
+                writeable: false,
+                watch: true));
         }
 
         return builder.Build();
@@ -178,11 +172,12 @@ public class ConfigurationMigrator
 ### 解决方案
 
 ```csharp
-public class DynamicConfigurationManager
+public class DynamicConfigurationManager : IDisposable
 {
     private readonly ICfgRoot _cfg;
     private readonly ILogger<DynamicConfigurationManager> _logger;
     private readonly ConcurrentDictionary<string, object> _featureCache = new();
+    private readonly IDisposable _subscription;
 
     public DynamicConfigurationManager(ICfgRoot cfg, ILogger<DynamicConfigurationManager> logger)
     {
@@ -190,41 +185,46 @@ public class DynamicConfigurationManager
         _logger = logger;
 
         // 订阅配置变更事件
-        _cfg.ConfigChanges
-            .Where(change => change.Key.StartsWith("Features:"))
-            .Subscribe(OnFeatureChanged);
+        _subscription = _cfg.ConfigChanges
+            .Subscribe(OnConfigChanged);
     }
 
     public bool IsFeatureEnabled(string featureName)
     {
         var cacheKey = $"Features:{featureName}:Enabled";
 
-        return (bool?)_featureCache.GetOrAdd(cacheKey, _ => 
+        return (bool)_featureCache.GetOrAdd(cacheKey, _ =>
         {
             var value = _cfg.Get<bool>($"Features:{featureName}:Enabled");
             _logger.LogDebug("功能 {FeatureName} 状态: {IsEnabled}", featureName, value);
-            return value;
+            return (object)value;
         });
     }
 
-    private void OnFeatureChanged(ConfigChangeEvent change)
+    private void OnConfigChanged(ConfigChangeEvent e)
     {
-        // 更新缓存
-        if (_featureCache.TryGetValue(change.Key, out var oldValue))
+        // 只处理功能开关相关的变更
+        foreach (var (key, change) in e.Changes.Where(c => c.Key.StartsWith("Features:")))
         {
-            _featureCache[change.Key] = Convert.ToBoolean(change.NewValue);
-            _logger.LogInformation("功能状态已更改: {FeatureName} 从 {OldState} 变为 {NewState}", 
-                             change.Key.Substring("Features:".Length), 
-                             oldValue, 
-                             change.NewValue);
+            // 更新缓存
+            if (_featureCache.TryGetValue(key, out var oldValue))
+            {
+                _featureCache[key] = Convert.ToBoolean(change.NewValue);
+                _logger.LogInformation("功能状态已更改: {FeatureName} 从 {OldState} 变为 {NewState}",
+                                 key.Substring("Features:".Length),
+                                 oldValue,
+                                 change.NewValue);
 
-            // 触发功能变更事件
-            FeatureChanged?.Invoke(change.Key.Substring("Features:".Length), 
-                                Convert.ToBoolean(change.NewValue));
+                // 触发功能变更事件
+                FeatureChanged?.Invoke(key.Substring("Features:".Length),
+                                    Convert.ToBoolean(change.NewValue));
+            }
         }
     }
 
     public event Action<string, bool>? FeatureChanged;
+    
+    public void Dispose() => _subscription?.Dispose();
 }
 ```
 
@@ -322,26 +322,18 @@ public class TenantConfigurationProvider
 
     private async Task<ICfgRoot> LoadTenantConfigurationAsync(string tenantId)
     {
-        // 从数据库加载租户配置
-        var connectionString = _baseCfg.Get<string>("ConnectionStrings:TenantDb");
-        var options = new DatabaseOptions
-        {
-            Provider = "sqlserver",
-            ConnectionString = connectionString,
-            Table = "TenantConfigurations",
-            KeyColumn = "ConfigKey",
-            ValueColumn = "ConfigValue"
-        };
-
+        // 从数据库或其他存储加载租户配置
+        var connectionString = _baseCfg.Get("ConnectionStrings:TenantDb");
+        
+        // 这里可以实现自定义的租户配置源
         var builder = new CfgBuilder()
-            .AddDatabase(options, level: 5);
+            .AddSource(new TenantDatabaseCfgSource(
+                connectionString: connectionString ?? "",
+                tenantId: tenantId,
+                level: 5,
+                writeable: false));
 
-        var cfg = builder.Build();
-
-        // 添加租户ID作为过滤条件
-        cfg.SetFilter($"TenantId = '{tenantId}'");
-
-        return cfg;
+        return builder.Build();
     }
 
     public void InvalidateTenantCache(string tenantId)

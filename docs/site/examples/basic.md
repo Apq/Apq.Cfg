@@ -1,4 +1,4 @@
-﻿# 基础示例
+# 基础示例
 
 本页展示 Apq.Cfg 的基础用法示例。
 
@@ -31,15 +31,15 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
-// 使用索引器
-var appName = cfg["App:Name"];
+// 使用 Get 方法
+var appName = cfg.Get("App:Name");
 Console.WriteLine($"应用名称: {appName}");
 
 // 嵌套路径
-var dbHost = cfg["Database:Host"];
+var dbHost = cfg.Get("Database:Host");
 Console.WriteLine($"数据库主机: {dbHost}");
 ```
 
@@ -47,20 +47,16 @@ Console.WriteLine($"数据库主机: {dbHost}");
 
 ```csharp
 // 整数
-var port = cfg.GetValue<int>("Database:Port");
+var port = cfg.Get<int>("Database:Port");
 Console.WriteLine($"端口: {port}");
 
 // 布尔值
-var debug = cfg.GetValue<bool>("App:Debug");
+var debug = cfg.Get<bool>("App:Debug");
 Console.WriteLine($"调试模式: {debug}");
 
-// 带默认值
-var timeout = cfg.GetValue<int>("Database:Timeout", defaultValue: 60);
+// 超时
+var timeout = cfg.Get<int>("Database:Timeout");
 Console.WriteLine($"超时: {timeout}秒");
-
-// TimeSpan
-var cacheExpiry = cfg.GetValue<TimeSpan>("Features:CacheExpiry");
-Console.WriteLine($"缓存过期: {cacheExpiry}");
 ```
 
 ## 配置节操作
@@ -70,26 +66,25 @@ Console.WriteLine($"缓存过期: {cacheExpiry}");
 ```csharp
 var dbSection = cfg.GetSection("Database");
 
-Console.WriteLine($"主机: {dbSection["Host"]}");
-Console.WriteLine($"端口: {dbSection.GetValue<int>("Port")}");
-Console.WriteLine($"数据库: {dbSection["Database"]}");
+Console.WriteLine($"主机: {dbSection.Get("Host")}");
+Console.WriteLine($"端口: {dbSection.Get<int>("Port")}");
+Console.WriteLine($"数据库: {dbSection.Get("Database")}");
 ```
 
-### 遍历子节
+### 遍历子键
 
 ```csharp
 var appSection = cfg.GetSection("App");
-foreach (var child in appSection.GetChildren())
+foreach (var key in appSection.GetChildKeys())
 {
-    Console.WriteLine($"{child.Key} = {child.Value}");
+    Console.WriteLine($"{key} = {appSection.Get(key)}");
 }
 ```
 
 ### 检查配置存在
 
 ```csharp
-var optionalSection = cfg.GetSection("Optional");
-if (optionalSection.Exists())
+if (cfg.Exists("Optional"))
 {
     Console.WriteLine("可选配置存在");
 }
@@ -130,13 +125,26 @@ public class FeaturesConfig
 ### 绑定配置
 
 ```csharp
-var appConfig = cfg.GetSection("App").Get<AppConfig>();
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
-var featuresConfig = cfg.GetSection("Features").Get<FeaturesConfig>();
+// 手动绑定
+var appSection = cfg.GetSection("App");
+var appConfig = new AppConfig
+{
+    Name = appSection.Get("Name") ?? "",
+    Version = appSection.Get("Version") ?? "",
+    Debug = appSection.Get<bool>("Debug")
+};
+
+var dbSection = cfg.GetSection("Database");
+var dbConfig = new DatabaseConfig
+{
+    Host = dbSection.Get("Host") ?? "localhost",
+    Port = dbSection.Get<int>("Port"),
+    Database = dbSection.Get("Database") ?? "",
+    Timeout = dbSection.Get<int>("Timeout")
+};
 
 Console.WriteLine($"应用: {appConfig.Name} v{appConfig.Version}");
 Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}/{dbConfig.Database}");
-Console.WriteLine($"缓存: {featuresConfig.EnableCache}, 大小: {featuresConfig.CacheSize}");
 ```
 
 ## 数组配置
@@ -169,10 +177,10 @@ Console.WriteLine($"缓存: {featuresConfig.EnableCache}, 大小: {featuresConfi
 
 ```csharp
 // 字符串数组
-var servers = cfg.GetSection("Servers").Get<List<string>>();
-foreach (var server in servers)
+var serversSection = cfg.GetSection("Servers");
+foreach (var key in serversSection.GetChildKeys())
 {
-    Console.WriteLine($"服务器: {server}");
+    Console.WriteLine($"服务器: {serversSection.Get(key)}");
 }
 
 // 对象数组
@@ -183,15 +191,16 @@ public class EndpointConfig
     public int Timeout { get; set; }
 }
 
-var endpoints = cfg.GetSection("Endpoints").Get<List<EndpointConfig>>();
-foreach (var endpoint in endpoints)
+var endpointsSection = cfg.GetSection("Endpoints");
+foreach (var key in endpointsSection.GetChildKeys())
 {
-    Console.WriteLine($"端点: {endpoint.Name} -> {endpoint.Url}");
+    var endpoint = endpointsSection.GetSection(key);
+    Console.WriteLine($"端点: {endpoint.Get("Name")} -> {endpoint.Get("Url")}");
 }
 
 // 按索引访问
-var firstServer = cfg["Servers:0"];
-var firstEndpointName = cfg["Endpoints:0:Name"];
+var firstServer = cfg.Get("Servers:0");
+var firstEndpointName = cfg.Get("Endpoints:0:Name");
 ```
 
 ## 字典配置
@@ -211,13 +220,26 @@ var firstEndpointName = cfg["Endpoints:0:Name"];
 ### 读取字典
 
 ```csharp
-var connStrings = cfg.GetSection("ConnectionStrings")
-    .Get<Dictionary<string, string>>();
-
-foreach (var (name, connString) in connStrings)
+var connSection = cfg.GetSection("ConnectionStrings");
+foreach (var key in connSection.GetChildKeys())
 {
-    Console.WriteLine($"{name}: {connString}");
+    Console.WriteLine($"{key}: {connSection.Get(key)}");
 }
+```
+
+## 可写配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 修改配置
+cfg.Set("App:Name", "NewName");
+cfg.Set("Database:Port", "5433");
+
+// 保存到文件
+await cfg.SaveAsync();
 ```
 
 ## 完整示例
@@ -227,29 +249,30 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
+    .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
 // 读取应用配置
-var appConfig = cfg.GetSection("App").Get<AppConfig>();
-Console.WriteLine($"=== {appConfig.Name} v{appConfig.Version} ===");
+var appSection = cfg.GetSection("App");
+Console.WriteLine($"=== {appSection.Get("Name")} v{appSection.Get("Version")} ===");
 
 // 读取数据库配置
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
-Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
+var dbSection = cfg.GetSection("Database");
+Console.WriteLine($"数据库: {dbSection.Get("Host")}:{dbSection.Get<int>("Port")}");
 
 // 读取功能配置
-var features = cfg.GetSection("Features").Get<FeaturesConfig>();
-if (features.EnableCache)
+var featuresSection = cfg.GetSection("Features");
+if (featuresSection.Get<bool>("EnableCache"))
 {
-    Console.WriteLine($"缓存已启用，大小: {features.CacheSize}");
+    Console.WriteLine($"缓存已启用，大小: {featuresSection.Get<int>("CacheSize")}");
 }
 
 // 遍历所有顶级配置
 Console.WriteLine("\n所有配置节:");
-foreach (var section in cfg.GetChildren())
+var rootSection = cfg.GetSection("");
+foreach (var key in rootSection.GetChildKeys())
 {
-    Console.WriteLine($"  - {section.Key}");
+    Console.WriteLine($"  - {key}");
 }
 ```
 
