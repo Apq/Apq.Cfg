@@ -85,14 +85,14 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 
 ### 1. ReadWriteBenchmarks - 读写性能测试
 
-测试不同配置源（JSON/INI/XML/YAML/TOML）的基本操作性能：
+测试不同配置源（JSON/Env/INI/XML/YAML/TOML）的基本操作性能：
 
 | 测试方法 | 说明 |
 |----------|------|
-| Json/Ini/Xml/Yaml/Toml_Get | 读取字符串值 |
-| Json/Ini/Xml/Yaml/Toml_GetInt | 读取并转换类型（如 int） |
-| Json/Ini/Xml/Yaml/Toml_Exists | 检查键是否存在 |
-| Json/Ini/Xml/Yaml/Toml_Set | 写入配置值 |
+| Json/Env/Ini/Xml/Yaml/Toml_Get | 读取字符串值 |
+| Json/Env/Ini/Xml/Yaml/Toml_GetInt | 读取并转换类型（如 int） |
+| Json/Env/Ini/Xml/Yaml/Toml_Exists | 检查键是否存在 |
+| Json/Env/Ini/Xml/Yaml/Toml_Set | 写入配置值 |
 
 ### 2. LargeFileBenchmarks - 大文件加载测试
 

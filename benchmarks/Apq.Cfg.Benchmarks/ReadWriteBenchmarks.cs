@@ -1,4 +1,5 @@
 using BenchmarkDotNet.Attributes;
+using Apq.Cfg.Env;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -15,6 +16,7 @@ public class ReadWriteBenchmarks : IDisposable
 {
     private readonly string _testDir;
     private ICfgRoot _jsonCfg = null!;
+    private ICfgRoot _envCfg = null!;
     private ICfgRoot _iniCfg = null!;
     private ICfgRoot _xmlCfg = null!;
     private ICfgRoot _yamlCfg = null!;
@@ -48,6 +50,21 @@ public class ReadWriteBenchmarks : IDisposable
             """);
         _jsonCfg = new CfgBuilder()
             .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        // 创建 .env 配置文件
+        var envPath = Path.Combine(_testDir, ".env");
+        File.WriteAllText(envPath, """
+            DATABASE_HOST=localhost
+            DATABASE_PORT=5432
+            DATABASE_NAME=testdb
+            APP_NAME=BenchmarkApp
+            APP_VERSION=1.0.0
+            APP_MAXRETRIES=3
+            APP_ENABLED=true
+            """);
+        _envCfg = new CfgBuilder()
+            .AddEnv(envPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 创建 INI 配置文件
@@ -135,6 +152,7 @@ public class ReadWriteBenchmarks : IDisposable
     public void Dispose()
     {
         _jsonCfg?.Dispose();
+        _envCfg?.Dispose();
         _iniCfg?.Dispose();
         _xmlCfg?.Dispose();
         _yamlCfg?.Dispose();
@@ -151,6 +169,10 @@ public class ReadWriteBenchmarks : IDisposable
     [Benchmark(Baseline = true)]
     [BenchmarkCategory("Get")]
     public string? Json_Get() => _jsonCfg.Get("Database:Host");
+
+    [Benchmark]
+    [BenchmarkCategory("Get")]
+    public string? Env_Get() => _envCfg.Get("DATABASE_HOST");
 
     [Benchmark]
     [BenchmarkCategory("Get")]
@@ -178,6 +200,10 @@ public class ReadWriteBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
+    public int Env_GetInt() => _envCfg.Get<int>("DATABASE_PORT");
+
+    [Benchmark]
+    [BenchmarkCategory("GetTyped")]
     public int Ini_GetInt() => _iniCfg.Get<int>("Database:Port");
 
     [Benchmark]
@@ -202,6 +228,10 @@ public class ReadWriteBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("Exists")]
+    public bool Env_Exists() => _envCfg.Exists("DATABASE_HOST");
+
+    [Benchmark]
+    [BenchmarkCategory("Exists")]
     public bool Ini_Exists() => _iniCfg.Exists("Database:Host");
 
     [Benchmark]
@@ -223,6 +253,10 @@ public class ReadWriteBenchmarks : IDisposable
     [Benchmark]
     [BenchmarkCategory("Set")]
     public void Json_Set() => _jsonCfg.Set("App:TempKey", "TempValue");
+
+    [Benchmark]
+    [BenchmarkCategory("Set")]
+    public void Env_Set() => _envCfg.Set("APP_TEMPKEY", "TempValue");
 
     [Benchmark]
     [BenchmarkCategory("Set")]
