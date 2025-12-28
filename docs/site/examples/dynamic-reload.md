@@ -1,4 +1,4 @@
-# 动态重载示例
+﻿# 动态重载示例
 
 本页展示如何实现配置的动态重载（热更新）。
 
@@ -285,7 +285,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置动态重载
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json", reloadOnChange: true)
+    .AddJsonFile("config.json", reloadOnChange: true)
     .AddConsul("http://consul:8500", "myapp/config", watch: true, optional: true)
     .ConfigureReload(options =>
     {

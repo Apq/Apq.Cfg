@@ -1,4 +1,4 @@
-# 架构设计
+﻿# 架构设计
 
 本文档详细说明 Apq.Cfg 的架构设计、核心组件和交互流程。
 
@@ -159,9 +159,9 @@ public class CfgBuilder
 配置源按 `Level` 属性排序，数值越大优先级越高：
 
 ```
-Level 0:  appsettings.json          (基础配置)
-Level 1:  appsettings.{env}.json    (环境配置)
-Level 2:  appsettings.local.json    (本地覆盖)
+Level 0:  config.json          (基础配置)
+Level 1:  config.{env}.json    (环境配置)
+Level 2:  config.local.json    (本地覆盖)
 Level 10: Consul/Nacos/Etcd         (远程配置)
 Level 15: Vault                     (密钥配置)
 Level 20: 环境变量                   (最高优先级)
@@ -357,7 +357,7 @@ public static class ServiceCollectionExtensions
 ### 编译时代码生成
 
 ```csharp
-[CfgSection("AppSettings")]
+[CfgSection("config")]
 public partial class AppConfig
 {
     public string? Name { get; set; }

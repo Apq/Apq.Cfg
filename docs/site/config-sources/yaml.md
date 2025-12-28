@@ -1,4 +1,4 @@
-# YAML 配置源
+﻿# YAML 配置源
 
 YAML 是一种人类友好的数据序列化格式，适合复杂配置。
 
@@ -144,7 +144,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddYamlFile("config.yaml", optional: true)
     .AddEnvironmentVariables()
     .Build();

@@ -1,4 +1,4 @@
-# 复杂场景示例
+﻿# 复杂场景示例
 
 本文档提供了 Apq.Cfg 在复杂场景下的使用示例，帮助开发者解决实际项目中的配置管理挑战。
 
@@ -18,13 +18,13 @@ public static class ConfigurationBuilder
         var builder = new CfgBuilder();
 
         // 0层：基础配置，所有环境共享
-        builder.AddJson("appsettings.json", level: 0, optional: true);
+        builder.AddJson("config.json", level: 0, optional: true);
 
         // 1-3层：环境特定配置
-        builder.AddJson($"appsettings.{environment}.json", level: 1, optional: true);
+        builder.AddJson($"config.{environment}.json", level: 1, optional: true);
 
         // 4层：机器特定配置（可选）
-        builder.AddJson($"appsettings.{environment}.{Environment.MachineName}.json", 
+        builder.AddJson($"config.{environment}.{Environment.MachineName}.json", 
                      level: 4, optional: true);
 
         // 5层：环境变量，可覆盖任何文件配置

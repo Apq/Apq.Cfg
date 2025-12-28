@@ -1,4 +1,4 @@
-# 多配置源示例
+﻿# 多配置源示例
 
 本页展示如何组合使用多个配置源。
 
@@ -8,7 +8,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables()
     .Build();
 ```
@@ -33,11 +33,11 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     // 环境特定配置
-    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddJsonFile($"config.{environment}.json", optional: true)
     // 本地开发覆盖（不提交到版本控制）
-    .AddJsonFile("appsettings.local.json", optional: true)
+    .AddJsonFile("config.local.json", optional: true)
     // 环境变量（最高优先级）
     .AddEnvironmentVariables()
     .Build();
@@ -45,7 +45,7 @@ var cfg = new CfgBuilder()
 
 ### 配置文件示例
 
-**appsettings.json**（基础配置）:
+**config.json**（基础配置）:
 ```json
 {
   "App": {
@@ -62,7 +62,7 @@ var cfg = new CfgBuilder()
 }
 ```
 
-**appsettings.Development.json**（开发环境）:
+**config.Development.json**（开发环境）:
 ```json
 {
   "Logging": {
@@ -74,7 +74,7 @@ var cfg = new CfgBuilder()
 }
 ```
 
-**appsettings.Production.json**（生产环境）:
+**config.Production.json**（生产环境）:
 ```json
 {
   "Database": {
@@ -90,7 +90,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     // 远程动态配置
     .AddConsul("http://consul:8500", "myapp/config", watch: true)
     // 环境变量覆盖
@@ -102,7 +102,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddRedis("localhost:6379", "config:myapp", subscribeChanges: true)
     .AddEnvironmentVariables()
     .Build();
@@ -112,7 +112,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddApollo("http://apollo:8080", "myapp", "application")
     .AddEnvironmentVariables()
     .Build();
@@ -125,7 +125,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 普通配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddConsul("http://consul:8500", "myapp/config")
     // 敏感配置（密码、密钥等）
     .AddVault("https://vault:8200", "secret/myapp")
@@ -137,7 +137,7 @@ var cfg = new CfgBuilder()
 ### 配置结构
 
 ```
-appsettings.json:
+config.json:
 {
   "Database": {
     "Host": "localhost",
@@ -200,10 +200,10 @@ var cfg = new CfgBuilder()
 // 6. 命令行参数
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")                    // 优先级 1
-    .AddJsonFile($"appsettings.{env}.json", optional: true)  // 优先级 2
+    .AddJsonFile("config.json")                    // 优先级 1
+    .AddJsonFile($"config.{env}.json", optional: true)  // 优先级 2
     .AddConsul("http://consul:8500", "myapp/config")    // 优先级 3
-    .AddJsonFile("appsettings.local.json", optional: true)   // 优先级 4
+    .AddJsonFile("config.local.json", optional: true)   // 优先级 4
     .AddEnvironmentVariables("MYAPP_")                  // 优先级 5
     .AddCommandLine(args)                               // 优先级 6
     .Build();
@@ -221,11 +221,11 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddYamlFile("config.yaml", optional: true)
     
     // 环境特定
-    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddJsonFile($"config.{environment}.json", optional: true)
     
     // 远程配置（生产环境）
     .AddConsul("http://consul:8500", "myapp/config", 
@@ -233,7 +233,7 @@ var cfg = new CfgBuilder()
         optional: environment != "Production")
     
     // 本地覆盖（开发环境）
-    .AddJsonFile("appsettings.local.json", optional: true)
+    .AddJsonFile("config.local.json", optional: true)
     
     // 环境变量
     .AddEnvironmentVariables("MYAPP_")

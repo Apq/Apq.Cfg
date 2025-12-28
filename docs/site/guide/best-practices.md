@@ -1,4 +1,4 @@
-# 最佳实践
+﻿# 最佳实践
 
 本指南总结了使用 Apq.Cfg 的最佳实践。
 
@@ -8,11 +8,11 @@
 
 ```
 config/
-├── appsettings.json           # 基础配置
-├── appsettings.Development.json  # 开发环境
-├── appsettings.Staging.json      # 预发布环境
-├── appsettings.Production.json   # 生产环境
-└── appsettings.local.json        # 本地覆盖（gitignore）
+├── config.json           # 基础配置
+├── config.Development.json  # 开发环境
+├── config.Staging.json      # 预发布环境
+├── config.Production.json   # 生产环境
+└── config.local.json        # 本地覆盖（gitignore）
 ```
 
 ### 配置加载顺序
@@ -21,9 +21,9 @@ config/
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{environment}.json", optional: true)
-    .AddJsonFile("appsettings.local.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{environment}.json", optional: true)
+    .AddJsonFile("config.local.json", optional: true)
     .AddEnvironmentVariables()
     .AddCommandLine(args)
     .Build();
@@ -117,7 +117,7 @@ var config = DatabaseConfig.FromConfiguration(cfg);
 
 // ✅ 推荐：使用环境变量或密钥管理
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables("MYAPP_")  // MYAPP_Database__Password
     .AddVault("https://vault.example.com", "secret/myapp")
     .Build();
@@ -127,7 +127,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .ConfigureEncryption(options =>
     {
         options.EncryptedKeys = new[] { "Database:Password", "Api:Secret" };

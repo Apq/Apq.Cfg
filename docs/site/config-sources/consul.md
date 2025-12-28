@@ -1,4 +1,4 @@
-# Consul 配置源
+﻿# Consul 配置源
 
 Consul 是 HashiCorp 的分布式服务发现和配置管理工具。
 

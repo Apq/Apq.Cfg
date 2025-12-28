@@ -1,4 +1,4 @@
-# 基础用法
+﻿# 基础用法
 
 本页详细介绍 Apq.Cfg 的基础用法。
 
@@ -18,8 +18,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile("appsettings.local.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", optional: true)
     .AddYamlFile("config.yaml", optional: true)
     .AddEnvironmentVariables()
     .Build();
@@ -30,12 +30,12 @@ var cfg = new CfgBuilder()
 后添加的配置源优先级更高，会覆盖先添加的同名配置：
 
 ```csharp
-// appsettings.json: { "Key": "value1" }
-// appsettings.local.json: { "Key": "value2" }
+// config.json: { "Key": "value1" }
+// config.local.json: { "Key": "value2" }
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")        // 优先级低
-    .AddJsonFile("appsettings.local.json")  // 优先级高
+    .AddJsonFile("config.json")        // 优先级低
+    .AddJsonFile("config.local.json")  // 优先级高
     .Build();
 
 Console.WriteLine(cfg["Key"]); // 输出: value2

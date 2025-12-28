@@ -1,4 +1,4 @@
-# 依赖注入
+﻿# 依赖注入
 
 Apq.Cfg 完美集成 Microsoft.Extensions.DependencyInjection。
 
@@ -11,12 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 方式一：使用 AddApqCfg 扩展方法
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables());
 
 // 方式二：手动注册
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 builder.Services.AddSingleton<ICfgRoot>(cfg);
 ```
@@ -133,7 +133,7 @@ public class MyService : IDisposable
 支持同一类型的多个配置实例：
 
 ```csharp
-// appsettings.json
+// config.json
 {
   "Databases": {
     "Primary": { "Host": "primary.db.local" },

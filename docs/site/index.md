@@ -1,4 +1,4 @@
----
+﻿---
 layout: home
 
 hero:
@@ -14,7 +14,7 @@ hero:
       link: /guide/
     - theme: alt
       text: 在 Gitee 上查看
-      link: https://gitee.com/AlanPoon/Apq.Cfg
+      link: https://gitee.com/apq/Apq.Cfg
 
 features:
   - icon: 🚀
@@ -69,7 +69,7 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddYamlFile("config.yaml", optional: true)
     .AddEnvironmentVariables()
     .Build();

@@ -1,4 +1,4 @@
-# Apq.Cfg 文档站点部署指南
+﻿# Apq.Cfg 文档站点部署指南
 
 本文档介绍如何将 Apq.Cfg 文档站点部署到腾讯云 CloudBase 静态网站托管。
 

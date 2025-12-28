@@ -1,4 +1,4 @@
-# 配置合并
+﻿# 配置合并
 
 Apq.Cfg 支持从多个配置源加载配置，并按优先级合并。
 
@@ -83,8 +83,8 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{environment}.json", optional: true)
     .AddEnvironmentVariables()
     .Build();
 ```
@@ -104,9 +104,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile("appsettings.Development.json", optional: true)
-    .AddJsonFile("appsettings.local.json", optional: true)  // gitignore
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.Development.json", optional: true)
+    .AddJsonFile("config.local.json", optional: true)  // gitignore
     .Build();
 ```
 

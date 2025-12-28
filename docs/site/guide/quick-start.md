@@ -1,4 +1,4 @@
-# 快速开始
+﻿# 快速开始
 
 本教程将帮助您在 5 分钟内上手 Apq.Cfg。
 
@@ -15,7 +15,7 @@ dotnet add package Apq.Cfg
 
 ## 创建配置文件
 
-创建 `appsettings.json`：
+创建 `config.json`：
 
 ```json
 {
@@ -44,7 +44,7 @@ using Apq.Cfg;
 
 // 1. 创建配置构建器并加载配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 
 // 2. 读取简单值
@@ -116,9 +116,9 @@ Apq.Cfg 支持从多个来源加载配置：
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     // 环境特定配置（覆盖基础配置）
-    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+    .AddJsonFile($"config.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
     // 环境变量（最高优先级）
     .AddEnvironmentVariables()
     .Build();

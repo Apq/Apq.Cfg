@@ -1,4 +1,4 @@
-# 配置源选择指南
+﻿# 配置源选择指南
 
 本文档帮助您根据不同场景选择合适的配置源。
 
@@ -40,8 +40,8 @@
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
-    .AddJson($"appsettings.{env}.json", level: 1, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{env}.json", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_", level: 2)
     .Build();
 ```
@@ -53,7 +53,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddConsul(options => {
         options.Address = "http://consul:8500";
         options.KeyPrefix = $"services/{serviceName}/";
@@ -69,7 +69,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddYaml("/config/app-config.yaml", level: 1, reloadOnChange: true)
     .AddEnvironmentVariables(level: 2)
     .Build();
@@ -82,7 +82,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddNacos(options => {
         options.ServerAddresses = "mse-xxx.nacos.mse.aliyuncs.com:8848";
         options.AccessKey = Environment.GetEnvironmentVariable("NACOS_AK");
@@ -100,7 +100,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddApollo(options => {
         options.AppId = "my-app";
         options.MetaServer = "http://apollo-meta:8080";
@@ -118,7 +118,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddVaultAppRole(
         address: "https://vault.example.com:8200",
         roleId: Environment.GetEnvironmentVariable("VAULT_ROLE_ID")!,
@@ -155,8 +155,8 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
-    .AddJson("appsettings.Development.json", level: 1, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson("config.Development.json", level: 1, optional: true)
     .AddEnv(".env", level: 2, optional: true)
     .AddEnv(".env.local", level: 3, optional: true)
     .AddEnvironmentVariables(prefix: "APP_", level: 4)
@@ -180,13 +180,13 @@ level 20+:   环境变量/命令行（覆盖配置）
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置（打包在应用中）
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     
     // 环境特定配置（可选）
-    .AddJson($"appsettings.{env}.json", level: 1, optional: true)
+    .AddJson($"config.{env}.json", level: 1, optional: true)
     
     // 本地覆盖（开发用，不提交版本控制）
-    .AddJson("appsettings.local.json", level: 2, optional: true, writeable: true)
+    .AddJson("config.local.json", level: 2, optional: true, writeable: true)
     
     // 远程配置中心（生产环境）
     .AddConsul(options => { /* ... */ }, level: 10)
@@ -228,7 +228,7 @@ var cfg = new CfgBuilder()
 
 ## 迁移建议
 
-### 从 appsettings.json 迁移到配置中心
+### 从 config.json 迁移到配置中心
 
 1. **保持本地配置作为默认值**
 2. **配置中心只存储需要动态修改的配置**
@@ -241,7 +241,7 @@ Apq.Cfg 兼容 `Microsoft.Extensions.Configuration`，可以通过 `ToMicrosoftC
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json")
+    .AddJson("config.json")
     .Build();
 
 // 转换为 IConfiguration，兼容现有代码

@@ -1,4 +1,4 @@
-# 依赖注入集成示例
+﻿# 依赖注入集成示例
 
 本页展示如何将 Apq.Cfg 集成到 ASP.NET Core 依赖注入系统。
 
@@ -11,8 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 方式一：使用 AddApqCfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables());
 
 var app = builder.Build();
@@ -73,7 +73,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 注册配置
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables());
 
 // 绑定选项
@@ -254,7 +254,7 @@ builder.Services.AddSingleton<IValidateOptions<DatabaseOptions>, DatabaseOptions
 ## 命名选项
 
 ```csharp
-// appsettings.json
+// config.json
 {
   "Databases": {
     "Primary": {
@@ -296,8 +296,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置 Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddConsul("http://consul:8500", "myapp/config", watch: true, optional: true)
     .AddEnvironmentVariables("MYAPP_"));
 

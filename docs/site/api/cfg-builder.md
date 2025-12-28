@@ -1,4 +1,4 @@
-# CfgBuilder API
+﻿# CfgBuilder API
 
 `CfgBuilder` 是配置构建器，用于组合多个配置源并创建配置实例。
 
@@ -49,8 +49,8 @@ public CfgBuilder AddJsonFile(string path, bool optional = false, bool reloadOnC
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -181,11 +181,11 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     // 环境特定配置
-    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddJsonFile($"config.{environment}.json", optional: true)
     // 本地覆盖
-    .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("config.local.json", optional: true, reloadOnChange: true)
     // 远程配置
     .AddConsul("http://consul:8500", "myapp/config", optional: true)
     // 环境变量

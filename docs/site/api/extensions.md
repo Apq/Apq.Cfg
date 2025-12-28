@@ -1,4 +1,4 @@
-# 扩展方法
+﻿# 扩展方法
 
 本页列出 Apq.Cfg 提供的所有扩展方法。
 
@@ -293,7 +293,7 @@ public static IServiceCollection AddApqCfg(
 **示例：**
 ```csharp
 services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables());
 ```
 
@@ -317,7 +317,7 @@ services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```csharp
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddYamlFile("config.yaml", optional: true)
     .AddConsul("http://consul:8500", "myapp/config", watch: true)
     .AddEnvironmentVariables("MYAPP_")
@@ -338,7 +338,7 @@ cfg.OnChange(keys =>
 
 // 依赖注入
 services.AddApqCfg(builder => builder
-    .AddJsonFile("appsettings.json"));
+    .AddJsonFile("config.json"));
 services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```
 

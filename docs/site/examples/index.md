@@ -1,4 +1,4 @@
-# 示例概述
+﻿# 示例概述
 
 本节提供 Apq.Cfg 的各种使用示例。
 
@@ -26,7 +26,7 @@
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 
 var appName = cfg["App:Name"];
@@ -37,7 +37,7 @@ Console.WriteLine($"应用名称: {appName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddYamlFile("config.yaml", optional: true)
     .AddEnvironmentVariables()
     .Build();
@@ -62,7 +62,7 @@ Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables());
 
 builder.Services.Configure<DatabaseConfig>(

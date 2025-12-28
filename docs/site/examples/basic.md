@@ -1,4 +1,4 @@
-# 基础示例
+﻿# 基础示例
 
 本页展示 Apq.Cfg 的基础用法示例。
 
@@ -31,7 +31,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 
 // 使用索引器
@@ -227,7 +227,7 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 
 // 读取应用配置

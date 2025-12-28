@@ -1,4 +1,4 @@
-# JSON 配置源
+﻿# JSON 配置源
 
 JSON 是最常用的配置格式，Apq.Cfg 核心包内置支持。
 
@@ -16,7 +16,7 @@ dotnet add package Apq.Cfg
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 ```
 
@@ -24,8 +24,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile("appsettings.local.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", optional: true)
     .Build();
 ```
 
@@ -33,7 +33,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("config.json", optional: false, reloadOnChange: true)
     .Build();
 ```
 
@@ -158,14 +158,14 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{environment}.json", optional: true)
     .Build();
 ```
 
 ### 配置文件示例
 
-**appsettings.json** (基础配置):
+**config.json** (基础配置):
 ```json
 {
   "Logging": {
@@ -178,7 +178,7 @@ var cfg = new CfgBuilder()
 }
 ```
 
-**appsettings.Development.json** (开发环境):
+**config.Development.json** (开发环境):
 ```json
 {
   "Logging": {
@@ -187,7 +187,7 @@ var cfg = new CfgBuilder()
 }
 ```
 
-**appsettings.Production.json** (生产环境):
+**config.Production.json** (生产环境):
 ```json
 {
   "Database": {

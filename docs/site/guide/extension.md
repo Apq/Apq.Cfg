@@ -1,4 +1,4 @@
-# 扩展开发
+﻿# 扩展开发
 
 本指南介绍如何开发自定义配置源和扩展功能。
 
@@ -322,7 +322,7 @@ public static class HttpApiCfgBuilderExtensions
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
+    .AddJson("config.json", level: 0)
     .AddHttpApi(options =>
     {
         options.BaseUrl = "http://config-server:5000";
@@ -573,9 +573,9 @@ public static class CfgBuilderExtensions
         var path = string.IsNullOrEmpty(basePath) ? "" : basePath + "/";
         
         return builder
-            .AddJson($"{path}appsettings.json", level: 0)
-            .AddJson($"{path}appsettings.{environment}.json", level: 1, optional: true)
-            .AddJson($"{path}appsettings.local.json", level: 2, optional: true, writeable: true)
+            .AddJson($"{path}config.json", level: 0)
+            .AddJson($"{path}config.{environment}.json", level: 1, optional: true)
+            .AddJson($"{path}config.local.json", level: 2, optional: true, writeable: true)
             .AddEnvironmentVariables(prefix: "APP_", level: 10);
     }
     
@@ -585,8 +585,8 @@ public static class CfgBuilderExtensions
     public static CfgBuilder AddDevelopmentConfig(this CfgBuilder builder)
     {
         return builder
-            .AddJson("appsettings.json", level: 0)
-            .AddJson("appsettings.Development.json", level: 1, optional: true)
+            .AddJson("config.json", level: 0)
+            .AddJson("config.Development.json", level: 1, optional: true)
             .AddEnv(".env", level: 2, optional: true)
             .AddEnv(".env.local", level: 3, optional: true)
             .AddEnvironmentVariables(prefix: "APP_", level: 10);
@@ -601,8 +601,8 @@ public static class CfgBuilderExtensions
         string serviceName)
     {
         return builder
-            .AddJson("appsettings.json", level: 0)
-            .AddJson("appsettings.Production.json", level: 1, optional: true)
+            .AddJson("config.json", level: 0)
+            .AddJson("config.Production.json", level: 1, optional: true)
             .AddConsul(options =>
             {
                 options.Address = consulAddress;

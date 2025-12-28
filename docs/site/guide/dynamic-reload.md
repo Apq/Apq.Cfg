@@ -1,4 +1,4 @@
-# 动态重载
+﻿# 动态重载
 
 Apq.Cfg 支持配置的动态重载，无需重启应用即可更新配置。
 
@@ -8,7 +8,7 @@ Apq.Cfg 支持配置的动态重载，无需重启应用即可更新配置。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("config.json", optional: false, reloadOnChange: true)
     .AddYamlFile("config.yaml", optional: true, reloadOnChange: true)
     .Build();
 ```

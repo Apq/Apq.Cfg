@@ -1,4 +1,4 @@
-# 配置源概述
+﻿# 配置源概述
 
 Apq.Cfg 支持多种配置源，可以灵活组合使用。
 
@@ -39,8 +39,8 @@ Apq.Cfg 支持多种配置源，可以灵活组合使用。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile("appsettings.Development.json", optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.Development.json", optional: true)
     .AddEnvironmentVariables()
     .Build();
 ```
@@ -51,7 +51,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")  // 基础配置
+    .AddJsonFile("config.json")  // 基础配置
     .AddConsul("http://consul:8500", "myapp/config")  // 动态配置
     .AddVault("https://vault:8200", "secret/myapp")   // 敏感配置
     .Build();
@@ -62,9 +62,9 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     // 环境特定配置
-    .AddJsonFile($"appsettings.{env}.json", optional: true)
+    .AddJsonFile($"config.{env}.json", optional: true)
     // 远程配置（可选，用于动态更新）
     .AddConsul("http://consul:8500", "myapp/config", optional: true)
     // 环境变量覆盖

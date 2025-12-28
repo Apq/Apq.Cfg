@@ -1,4 +1,4 @@
-# 简介
+﻿# 简介
 
 Apq.Cfg 是一个高性能的 .NET 配置管理库，旨在提供统一、灵活、高效的配置管理解决方案。
 
@@ -30,7 +30,7 @@ Apq.Cfg 是一个高性能的 .NET 配置管理库，旨在提供统一、灵活
 
 ```csharp
 services.AddApqCfg(cfg => cfg
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .AddConsul("http://localhost:8500", "myapp/config"));
 
 // 使用 IOptions 模式
@@ -65,7 +65,7 @@ dotnet add package Apq.Cfg
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 
 // 读取配置

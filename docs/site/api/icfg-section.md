@@ -1,4 +1,4 @@
-# ICfgSection API
+﻿# ICfgSection API
 
 `ICfgSection` 是配置节接口，表示配置的一个子节。
 
@@ -204,7 +204,7 @@ cfg.GetSection("Database").Bind(dbConfig);
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJsonFile("appsettings.json")
+    .AddJsonFile("config.json")
     .Build();
 
 // 获取配置节

@@ -1,4 +1,4 @@
-# ICfgRoot API
+﻿# ICfgRoot API
 
 `ICfgRoot` 是配置根接口，提供配置读取的核心功能。
 
