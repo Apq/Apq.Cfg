@@ -37,8 +37,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var dbHost = cfg["Database:Host"];
-var apiKey = cfg["Api:Key"];
+var dbHost = cfg.Get("Database:Host");
+var apiKey = cfg.Get("Api:Key");
 ```
 
 ### 使用 UserPass 认证
@@ -121,9 +121,9 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 更新配置
-cfg["Database:Host"] = "new-db-host";
-cfg["Database:Port"] = "5433";
-cfg["Feature:NewFeature"] = "true";
+cfg.Set("Database:Host", "new-db-host");
+cfg.Set("Database:Port", "5433");
+cfg.Set("Feature:NewFeature", "true");
 
 // 保存到 Vault
 await cfg.SaveAsync();
@@ -144,10 +144,13 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 订阅配置变化事件
-cfg.Changed += (sender, e) =>
+cfg.ConfigChanges.Subscribe(e =>
 {
-    Console.WriteLine($"配置已更新: {e}");
-};
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"[{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
+    }
+});
 ```
 
 ### 与 Microsoft.Extensions.Configuration 集成

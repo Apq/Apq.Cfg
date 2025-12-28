@@ -8,8 +8,8 @@
 
 ## 特性
 
-- **多格式支持**：JSON、INI、XML、YAML、TOML、Redis、数据库
-- **远程配置中心**：支持 Consul、Etcd、Nacos、Apollo 等配置中心，支持热重载
+- **多格式支持**：JSON、INI、XML、YAML、TOML、Env、Redis、数据库
+- **远程配置中心**：支持 Consul、Etcd、Nacos、Apollo、Zookeeper、Vault 等配置中心，支持热重载
 - **智能编码检测**：读取时自动检测文件编码（BOM 优先，UTF.Unknown 库辅助）
 - **灵活编码映射**：支持完整路径、通配符、正则表达式三种匹配方式
 - **多层级配置**：支持配置源优先级，高层级覆盖低层级
@@ -36,6 +36,7 @@ dotnet add package Apq.Cfg.Ini
 dotnet add package Apq.Cfg.Xml
 dotnet add package Apq.Cfg.Yaml
 dotnet add package Apq.Cfg.Toml
+dotnet add package Apq.Cfg.Env
 
 # 数据存储扩展
 dotnet add package Apq.Cfg.Redis
@@ -46,6 +47,8 @@ dotnet add package Apq.Cfg.Consul
 dotnet add package Apq.Cfg.Etcd
 dotnet add package Apq.Cfg.Apollo
 dotnet add package Apq.Cfg.Nacos
+dotnet add package Apq.Cfg.Zookeeper
+dotnet add package Apq.Cfg.Vault
 
 # 源生成器（Native AOT 支持）
 dotnet add package Apq.Cfg.SourceGenerator
@@ -323,12 +326,15 @@ public class DatabaseOptions
 | `Apq.Cfg.Xml`      | XML 文件扩展                   | Microsoft.Extensions.Configuration.Xml        |
 | `Apq.Cfg.Yaml`     | YAML 文件扩展                  | YamlDotNet                                    |
 | `Apq.Cfg.Toml`     | TOML 文件扩展                  | Tomlyn                                        |
+| `Apq.Cfg.Env`      | .env 文件扩展                  | 无                                            |
 | `Apq.Cfg.Redis`    | Redis 扩展                     | StackExchange.Redis                           |
 | `Apq.Cfg.Database` | 数据库扩展                     | SqlSugarCore                                  |
 | `Apq.Cfg.Consul`   | Consul 配置中心                | Consul                                        |
 | `Apq.Cfg.Etcd`     | Etcd 配置中心                  | dotnet-etcd                                   |
 | `Apq.Cfg.Nacos`    | Nacos 配置中心                 | nacos-sdk-csharp                              |
 | `Apq.Cfg.Apollo`   | Apollo 配置中心                | 无（HTTP API）                                |
+| `Apq.Cfg.Zookeeper`| Zookeeper 配置中心             | ZooKeeperNetEx                                |
+| `Apq.Cfg.Vault`    | HashiCorp Vault 密钥管理       | VaultSharp                                    |
 | `Apq.Cfg.SourceGenerator` | 源生成器，Native AOT 支持 | Microsoft.CodeAnalysis.CSharp                 |
 
 ### 使用扩展包示例

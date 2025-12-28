@@ -13,12 +13,16 @@
 | **Apq.Cfg.Xml** | XML 文件扩展 |
 | **Apq.Cfg.Yaml** | YAML 文件扩展 |
 | **Apq.Cfg.Toml** | TOML 文件扩展 |
+| **Apq.Cfg.Env** | .env 文件扩展 |
 | **Apq.Cfg.Redis** | Redis 配置源 |
 | **Apq.Cfg.Database** | 数据库配置源 |
 | **Apq.Cfg.Consul** | Consul 配置中心 |
 | **Apq.Cfg.Etcd** | Etcd 配置中心 |
 | **Apq.Cfg.Nacos** | Nacos 配置中心 |
 | **Apq.Cfg.Apollo** | Apollo 配置中心 |
+| **Apq.Cfg.Zookeeper** | Zookeeper 配置中心 |
+| **Apq.Cfg.Vault** | HashiCorp Vault 密钥管理 |
+| **Apq.Cfg.SourceGenerator** | 源生成器（Native AOT） |
 
 ### 核心 API
 

@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-Apq.Cfg 是一个统一配置管理系统，支持多种配置格式（JSON、INI、XML、YAML、TOML）和远程配置中心（Redis、Database、Consul、Etcd）。
+Apq.Cfg 是一个统一配置管理系统，支持多种配置格式（JSON、INI、XML、YAML、TOML、Env）和远程配置中心（Redis、Database、Consul、Etcd、Nacos、Apollo、Zookeeper、Vault）。
 
 ## 代码规范
 
@@ -59,15 +59,20 @@ Apq.Cfg 是一个统一配置管理系统，支持多种配置格式（JSON、IN
 ## 项目结构
 
 ```
-Apq.Cfg/                    # 核心库
+Apq.Cfg/                    # 核心库（JSON、环境变量、DI 集成）
 Apq.Cfg.Ini/               # INI 格式支持
 Apq.Cfg.Xml/               # XML 格式支持
 Apq.Cfg.Yaml/              # YAML 格式支持
 Apq.Cfg.Toml/              # TOML 格式支持
+Apq.Cfg.Env/               # .env 文件格式支持
 Apq.Cfg.Redis/             # Redis 配置源
 Apq.Cfg.Database/          # 数据库配置源
 Apq.Cfg.Consul/            # Consul 配置中心
 Apq.Cfg.Etcd/              # Etcd 配置中心
+Apq.Cfg.Nacos/             # Nacos 配置中心
+Apq.Cfg.Apollo/            # Apollo 配置中心
+Apq.Cfg.Zookeeper/         # Zookeeper 配置中心
+Apq.Cfg.Vault/             # HashiCorp Vault 密钥管理
 Apq.Cfg.SourceGenerator/   # 源生成器（Native AOT）
 tests/                     # 单元测试
 benchmarks/                # 性能基准测试

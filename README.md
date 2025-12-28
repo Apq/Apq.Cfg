@@ -474,9 +474,9 @@ dotnet run -c Release
 
 | 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
 |------|------|------|------|------|------|
-| .NET 6.0 | 290 | 0 | 0 | 290 | ✅ 通过 |
-| .NET 8.0 | 290 | 0 | 0 | 290 | ✅ 通过 |
-| .NET 9.0 | 290 | 0 | 0 | 290 | ✅ 通过 |
+| .NET 6.0 | 294 | 0 | 0 | 294 | ✅ 通过 |
+| .NET 8.0 | 294 | 0 | 0 | 294 | ✅ 通过 |
+| .NET 9.0 | 294 | 0 | 0 | 294 | ✅ 通过 |
 
 > 详细测试覆盖情况见 [tests/README.md](tests/README.md)
 
@@ -517,7 +517,7 @@ Apq.Cfg.Apollo/              # Apollo 配置中心
 Apq.Cfg.Zookeeper/           # Zookeeper 配置中心
 Apq.Cfg.Vault/               # HashiCorp Vault 密钥管理
 Apq.Cfg.SourceGenerator/     # 源生成器（Native AOT 支持）
-tests/                       # 单元测试（346 个测试用例）
+tests/                       # 单元测试（294 个测试用例）
 benchmarks/                  # 性能基准测试（18 个测试类）
 docs/                        # 技术文档
 Samples/                     # 示例项目

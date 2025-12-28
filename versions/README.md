@@ -89,6 +89,7 @@ echo "# Apq.Cfg.Nacos v1.1.0" > versions/Apq.Cfg.Nacos/v1.1.0.md
 | Apq.Cfg.Xml | XML 文件支持 |
 | Apq.Cfg.Yaml | YAML 文件支持 |
 | Apq.Cfg.Toml | TOML 文件支持 |
+| Apq.Cfg.Env | .env 文件支持 |
 | Apq.Cfg.Redis | Redis 配置源 |
 | Apq.Cfg.Database | 数据库配置源 |
 | Apq.Cfg.Consul | Consul 配置中心 |

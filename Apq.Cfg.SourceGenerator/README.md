@@ -157,7 +157,7 @@ using Apq.Cfg;
 var cfgRoot = new CfgBuilder()
     .AddJson("config.json")
     .AddIni("config.ini")
-    .AddEnvironmentVariables("APP_")
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 
 // 使用源生成器绑定配置
