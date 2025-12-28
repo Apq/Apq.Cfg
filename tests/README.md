@@ -6,6 +6,8 @@
 
 ```text
 tests/
+├── appsettings.json         # 共享测试配置文件（三个测试项目共用）
+├── Directory.Build.props    # 共享构建配置
 ├── Apq.Cfg.Tests.Shared/    # 共享测试代码
 ├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
 ├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
@@ -25,38 +27,74 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 346 个测试）
+## 测试统计（共 346 个测试，41 个需外部服务）
 
-| 测试类 | 测试数量 | 说明 |
-|--------|----------|------|
-| JsonCfgTests | 15 | JSON 配置源测试 |
-| EnvVarsCfgTests | 4 | 环境变量配置源测试 |
-| EnvCfgTests | 15 | .env 文件配置源测试 |
-| IniCfgTests | 5 | INI 文件配置源测试 |
-| XmlCfgTests | 5 | XML 文件配置源测试 |
-| YamlCfgTests | 6 | YAML 文件配置源测试 |
-| TomlCfgTests | 6 | TOML 文件配置源测试 |
-| RedisCfgTests | 5 | Redis 配置源测试（需要 Redis 服务）|
-| DatabaseCfgTests | 5 | 数据库配置源测试（需要数据库服务）|
-| ZookeeperCfgTests | 6 | Zookeeper 配置中心测试（需要 Zookeeper 服务）|
-| ApolloCfgTests | 6 | Apollo 配置中心测试（需要 Apollo 服务）|
-| ConsulCfgTests | 6 | Consul 配置中心测试（需要 Consul 服务）|
-| EtcdCfgTests | 6 | Etcd 配置中心测试（需要 Etcd 服务）|
-| NacosCfgTests | 6 | Nacos 配置中心测试（需要 Nacos 服务）|
-| VaultCfgTests | 8 | Vault 密钥管理测试（需要 Vault 服务）|
-| CfgRootExtensionsTests | 4 | 扩展方法测试（TryGet/GetRequired）|
-| CfgBuilderAdvancedTests | 14 | 高级功能测试 |
-| DynamicReloadTests | 22 | 动态配置重载测试 |
-| EncodingDetectionTests | 14 | 编码检测测试 |
-| ConcurrencyTests | 9 | 并发安全测试 |
-| BoundaryConditionTests | 25 | 边界条件测试 |
-| ExceptionHandlingTests | 18 | 异常处理测试 |
-| ConfigChangesSubscriptionTests | 28 | 配置变更订阅测试 |
-| CfgSectionTests | 13 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
-| ServiceCollectionExtensionsTests | 21 | 依赖注入扩展测试（IOptions/IOptionsMonitor/IOptionsSnapshot/嵌套对象/集合绑定）|
-| EncodingTests | 33 | 编码映射测试 |
-| PerformanceOptimizationTests | 30 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
-| SourceGeneratorTests | 8 | 源生成器测试（[CfgSection] 特性/BindFrom/BindTo）|
+| 测试类 | 测试数量 | 跳过 | 说明 |
+|--------|----------|------|------|
+| JsonCfgTests | 15 | 0 | JSON 配置源测试 |
+| EnvVarsCfgTests | 4 | 0 | 环境变量配置源测试 |
+| EnvCfgTests | 15 | 0 | .env 文件配置源测试 |
+| IniCfgTests | 5 | 0 | INI 文件配置源测试 |
+| XmlCfgTests | 5 | 0 | XML 文件配置源测试 |
+| YamlCfgTests | 6 | 0 | YAML 文件配置源测试 |
+| TomlCfgTests | 6 | 0 | TOML 文件配置源测试 |
+| RedisCfgTests | 5 | 0 | Redis 配置源测试（✅ 已配置）|
+| DatabaseCfgTests | 5 | 0 | 数据库配置源测试（✅ 已配置）|
+| ZookeeperCfgTests | 6 | 6 | Zookeeper 配置中心测试（需要 Zookeeper 服务）|
+| ApolloCfgTests | 6 | 6 | Apollo 配置中心测试（需要 Apollo 服务）|
+| ConsulCfgTests | 6 | 6 | Consul 配置中心测试（需要 Consul 服务）|
+| EtcdCfgTests | 6 | 6 | Etcd 配置中心测试（需要 Etcd 服务）|
+| NacosCfgTests | 9 | 9 | Nacos 配置中心测试（需要 Nacos 服务）|
+| VaultCfgTests | 8 | 8 | Vault 密钥管理测试（需要 Vault 服务）|
+| CfgRootExtensionsTests | 4 | 0 | 扩展方法测试（TryGet/GetRequired）|
+| CfgBuilderAdvancedTests | 14 | 0 | 高级功能测试 |
+| DynamicReloadTests | 22 | 0 | 动态配置重载测试 |
+| EncodingDetectionTests | 14 | 0 | 编码检测测试 |
+| ConcurrencyTests | 9 | 0 | 并发安全测试 |
+| BoundaryConditionTests | 25 | 0 | 边界条件测试 |
+| ExceptionHandlingTests | 18 | 0 | 异常处理测试 |
+| ConfigChangesSubscriptionTests | 28 | 0 | 配置变更订阅测试 |
+| CfgSectionTests | 13 | 0 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
+| ServiceCollectionExtensionsTests | 21 | 0 | 依赖注入扩展测试（IOptions/IOptionsMonitor/IOptionsSnapshot/嵌套对象/集合绑定）|
+| EncodingTests | 33 | 0 | 编码映射测试 |
+| PerformanceOptimizationTests | 30 | 0 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
+| SourceGeneratorTests | 8 | 0 | 源生成器测试（[CfgSection] 特性/BindFrom/BindTo）|
+
+### 跳过测试说明
+
+共 41 个测试被跳过，原因是需要外部服务支持。这些测试使用 `[SkippableFact]` 特性，在未配置相应服务时自动跳过。
+
+> **已配置服务**: Redis、Database（MySQL）
+
+配置服务连接信息后可完整运行，配置文件位于 `tests/appsettings.json`（三个测试项目共用）：
+
+```json
+{
+  "TestConnections": {
+    "Redis": "localhost:6379",
+    "Database": "Server=localhost;Database=ApqCfgTest;...",
+    "DatabaseProvider": "SqlServer",
+    "Zookeeper": "localhost:2181",
+    "Apollo": {
+      "AppId": "your-app-id",
+      "MetaServer": "http://localhost:8080"
+    },
+    "Consul": {
+      "Address": "http://localhost:8500"
+    },
+    "Etcd": {
+      "ConnectionString": "http://localhost:2379"
+    },
+    "Nacos": {
+      "ServerAddress": "localhost:8848"
+    },
+    "Vault": {
+      "Address": "http://localhost:8200",
+      "Token": "your-token"
+    }
+  }
+}
+```
 
 ## 公开 API 覆盖矩阵
 
@@ -144,21 +182,23 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 
 ## 测试场景覆盖
 
-| 场景类别 | 测试文件 | 测试数量 |
-|----------|----------|----------|
-| 基本读写 | JsonCfgTests, EnvCfgTests, 各格式测试 | 62 |
-| 类型转换 | JsonCfgTests | 15 |
-| 编码检测 | EncodingDetectionTests | 14 |
-| 编码映射 | EncodingTests | 33 |
-| 并发安全 | ConcurrencyTests | 9 |
-| 边界条件 | BoundaryConditionTests | 25 |
-| 异常处理 | ExceptionHandlingTests | 18 |
-| 动态重载 | DynamicReloadTests | 22 |
-| 变更订阅 | ConfigChangesSubscriptionTests | 28 |
-| 配置节访问 | CfgSectionTests | 13 |
-| 依赖注入 | ServiceCollectionExtensionsTests | 21 |
-| 批量操作 | PerformanceOptimizationTests | 30 |
-| 源生成器 | SourceGeneratorTests | 8 |
+| 场景类别 | 测试文件 | 测试数量 | 跳过 |
+|----------|----------|----------|------|
+| 基本读写 | JsonCfgTests, EnvCfgTests, 各格式测试 | 107 | 41 |
+| 类型转换 | JsonCfgTests | 15 | 0 |
+| 编码检测 | EncodingDetectionTests | 14 | 0 |
+| 编码映射 | EncodingTests | 33 | 0 |
+| 并发安全 | ConcurrencyTests | 9 | 0 |
+| 边界条件 | BoundaryConditionTests | 25 | 0 |
+| 异常处理 | ExceptionHandlingTests | 18 | 0 |
+| 动态重载 | DynamicReloadTests | 22 | 0 |
+| 变更订阅 | ConfigChangesSubscriptionTests | 28 | 0 |
+| 配置节访问 | CfgSectionTests | 13 | 0 |
+| 依赖注入 | ServiceCollectionExtensionsTests | 21 | 0 |
+| 批量操作 | PerformanceOptimizationTests | 30 | 0 |
+| 源生成器 | SourceGeneratorTests | 8 | 0 |
+
+> 注：基本读写测试中 41 个跳过的测试需要外部服务（Zookeeper/Apollo/Consul/Etcd/Nacos/Vault），Redis 和 Database 已配置
 
 ## 性能基准测试
 

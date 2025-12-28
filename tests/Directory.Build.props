@@ -64,9 +64,9 @@
     <ProjectReference Include="..\..\Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
-  <!-- 测试文件 -->
+  <!-- 共享测试配置文件 -->
   <ItemGroup>
-    <None Update="appsettings.json">
+    <None Include="..\appsettings.json" Link="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\**\*">

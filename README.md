@@ -470,13 +470,30 @@ dotnet run -c Release
 
 ### 单元测试通过情况
 
-**最后运行时间**: 2025-12-26
+**最后运行时间**: 2025-12-28
 
 | 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
 |------|------|------|------|------|------|
-| .NET 6.0 | 294 | 0 | 0 | 294 | ✅ 通过 |
-| .NET 8.0 | 294 | 0 | 0 | 294 | ✅ 通过 |
-| .NET 9.0 | 294 | 0 | 0 | 294 | ✅ 通过 |
+| .NET 6.0 | 305 | 0 | 41 | 346 | ✅ 通过 |
+| .NET 8.0 | 305 | 0 | 41 | 346 | ✅ 通过 |
+| .NET 9.0 | 305 | 0 | 41 | 346 | ✅ 通过 |
+
+#### 跳过测试说明
+
+共 41 个测试被跳过，原因是需要外部服务支持：
+
+| 配置源 | 跳过数量 | 原因 |
+|--------|----------|------|
+| Redis | 0 | ✅ 已配置 |
+| Database | 0 | ✅ 已配置 |
+| Zookeeper | 6 | 需要 Zookeeper 服务（配置 `TestConnections:Zookeeper`）|
+| Apollo | 6 | 需要 Apollo 配置中心（配置 `TestConnections:Apollo`）|
+| Consul | 6 | 需要 Consul 服务（配置 `TestConnections:Consul`）|
+| Etcd | 6 | 需要 Etcd 服务（配置 `TestConnections:Etcd`）|
+| Nacos | 9 | 需要 Nacos 配置中心（配置 `TestConnections:Nacos`）|
+| Vault | 8 | 需要 HashiCorp Vault 服务（配置 `TestConnections:Vault`）|
+
+> 这些测试使用 `[SkippableFact]` 特性，在未配置相应服务时自动跳过。配置服务连接信息后可完整运行，配置文件位于 `tests/appsettings.json`（三个测试项目共用）。
 
 > 详细测试覆盖情况见 [tests/README.md](tests/README.md)
 
@@ -517,7 +534,7 @@ Apq.Cfg.Apollo/              # Apollo 配置中心
 Apq.Cfg.Zookeeper/           # Zookeeper 配置中心
 Apq.Cfg.Vault/               # HashiCorp Vault 密钥管理
 Apq.Cfg.SourceGenerator/     # 源生成器（Native AOT 支持）
-tests/                       # 单元测试（294 个测试用例）
+tests/                       # 单元测试（346 个测试用例，41 个需外部服务）
 benchmarks/                  # 性能基准测试（18 个测试类）
 docs/                        # 技术文档
 Samples/                     # 示例项目
