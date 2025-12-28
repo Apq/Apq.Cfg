@@ -13,6 +13,12 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
     private readonly SqlSugarDatabaseProvider _databaseProvider;
     private readonly DatabaseOptions _options;
 
+    /// <summary>
+    /// 初始化 DatabaseCfgSource 实例
+    /// </summary>
+    /// <param name="options">数据库连接选项</param>
+    /// <param name="level">配置层级，数值越大优先级越高</param>
+    /// <param name="isPrimaryWriter">是否为主要写入源</param>
     public DatabaseCfgSource(DatabaseOptions options, int level, bool isPrimaryWriter)
     {
         _options = options;
@@ -21,6 +27,12 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
         _databaseProvider = CreateProvider(options.Provider!);
     }
 
+    /// <summary>
+    /// 根据提供程序名称创建 SqlSugar 数据库提供程序
+    /// </summary>
+    /// <param name="providerName">数据库提供程序名称</param>
+    /// <returns>SqlSugar 数据库提供程序实例</returns>
+    /// <exception cref="ArgumentException">当提供程序名称不受支持时抛出</exception>
     private static SqlSugarDatabaseProvider CreateProvider(string providerName)
     {
         var dbType = providerName.ToLowerInvariant() switch
@@ -35,10 +47,25 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
         return new SqlSugarDatabaseProvider(dbType);
     }
 
+    /// <summary>
+    /// 获取配置层级，数值越大优先级越高
+    /// </summary>
     public int Level { get; }
+
+    /// <summary>
+    /// 获取是否可写，数据库支持通过 API 写入配置，因此始终为 true
+    /// </summary>
     public bool IsWriteable => true;
+
+    /// <summary>
+    /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
+    /// </summary>
     public bool IsPrimaryWriter { get; }
 
+    /// <summary>
+    /// 构建 Microsoft.Extensions.Configuration 的内存配置源，从数据库加载数据
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource 实例</returns>
     public IConfigurationSource BuildSource()
     {
         var data = new List<KeyValuePair<string, string?>>();
@@ -57,6 +84,12 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
         return new MemoryConfigurationSource { InitialData = data };
     }
 
+    /// <summary>
+    /// 应用配置更改到数据库
+    /// </summary>
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
     public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
         using var timeoutCts = new CancellationTokenSource(_options.CommandTimeoutMs);

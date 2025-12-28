@@ -8,9 +8,32 @@ namespace Apq.Cfg;
 /// </summary>
 public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
-    // 读取方法
+    /// <summary>
+    /// 获取配置值
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <returns>配置值，不存在时返回null</returns>
     string? Get(string key);
+
+    /// <summary>
+    /// 获取配置值并转换为指定类型
+    /// </summary>
+    /// <typeparam name="T">目标类型</typeparam>
+    /// <param name="key">配置键</param>
+    /// <returns>转换后的配置值，不存在或转换失败时返回默认值</returns>
+    /// <example>
+    /// <code>
+    /// var port = cfg.Get&lt;int&gt;("Server:Port");
+    /// var enabled = cfg.Get&lt;bool&gt;("Features:NewUI");
+    /// </code>
+    /// </example>
     T? Get<T>(string key);
+
+    /// <summary>
+    /// 检查配置键是否存在
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <returns>存在返回true，否则返回false</returns>
     bool Exists(string key);
 
     /// <summary>
@@ -25,9 +48,40 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     /// </summary>
     IEnumerable<string> GetChildKeys();
 
-    // 写入方法
+    /// <summary>
+    /// 设置配置值
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <param name="value">配置值</param>
+    /// <param name="targetLevel">目标层级，为null时使用可写的最高层级</param>
+    /// <example>
+    /// <code>
+    /// cfg.Set("Server:Port", "8080");
+    /// cfg.Set("Features:NewUI", "true");
+    /// </code>
+    /// </example>
     void Set(string key, string? value, int? targetLevel = null);
+
+    /// <summary>
+    /// 移除配置键
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <param name="targetLevel">目标层级，为null时从所有层级移除</param>
     void Remove(string key, int? targetLevel = null);
+
+    /// <summary>
+    /// 保存配置更改到持久化存储
+    /// </summary>
+    /// <param name="targetLevel">目标层级，为null时保存所有可写层级</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
+    /// <example>
+    /// <code>
+    /// await cfg.SaveAsync();
+    /// // 或指定特定层级
+    /// await cfg.SaveAsync(targetLevel: 1);
+    /// </code>
+    /// </example>
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
 
     // 批量操作方法

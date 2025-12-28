@@ -6,15 +6,33 @@
 
 **仓库地址**：https://gitee.com/apq/Apq.Cfg
 
+## 目录
+
+- [特性](#特性)
+- [5分钟上手](#5分钟上手)
+- [故障排除](#故障排除)
+- [支持的框架](#支持的框架)
+- [NuGet 包](#nuget-包)
+- [批量操作](#批量操作)
+- [动态配置重载](#动态配置重载)
+- [.env 文件支持](#env-文件支持)
+- [编码处理](#编码处理)
+- [依赖注入集成](#依赖注入集成)
+- [远程配置中心](#远程配置中心)
+- [源生成器（Native AOT 支持）](#源生成器native-aot-支持)
+- [构建与测试](#构建与测试)
+- [性能亮点](#性能亮点)
+- [项目结构](#项目结构)
+
 ## 特性
 
 - **多格式支持**：JSON、INI、XML、YAML、TOML、Env、Redis、数据库
 - **远程配置中心**：支持 Consul、Etcd、Nacos、Apollo 等配置中心，支持热重载
 - **智能编码处理**：
   - 读取时自动检测（BOM 优先，UTF.Unknown 库辅助，支持缓存）
-  - 写入时统一 UTF-8 无 BOM（PowerShell 脚本自动使用 UTF-8 BOM）
+  - 写入时统一 UTF-8 无 BOM
   - 支持完整路径、通配符、正则表达式三种编码映射方式
-- **多层级配置合并**：高层级覆盖低层级
+- **多层级配置合并**：重复的Key处理: 高层级覆盖低层级
 - **可写配置**：支持配置修改并持久化到指定配置源
 - **热重载**：文件配置源支持变更自动重载
 - **动态配置重载**：支持文件变更自动检测、防抖、增量更新
@@ -26,61 +44,71 @@
 - **Microsoft.Extensions.Configuration 兼容**：可无缝转换为标准配置接口
 - **Rx 支持**：通过 `ConfigChanges` 订阅配置变更事件
 
+## 5分钟上手
+
+以下是最常见的使用场景，帮助您快速上手 Apq.Cfg：
+
+### 基本用法
+
+```csharp
+using Apq.Cfg;
+
+// 创建配置，支持多个配置源，按层级覆盖
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)           // 基础配置
+    .AddJson("config.Development.json", level: 1) // 环境特定配置
+    .AddEnvironmentVariables(prefix: "APP_", level: 2) // 环境变量
+    .Build();
+
+// 读取配置
+var dbHost = cfg.Get("Database:Host");
+var dbPort = cfg.Get<int>("Database:Port");
+
+// 使用配置节简化嵌套访问
+var dbSection = cfg.GetSection("Database");
+var connectionString = dbSection.Get("ConnectionString");
+```
+
+> 更多功能：[动态配置重载](#动态配置重载) | [依赖注入集成](#依赖注入集成) | [远程配置中心](#远程配置中心) | [源生成器](#源生成器native-aot-支持)
+
+## 故障排除
+
+| 问题        | 原因                 | 解决方案                                                       |
+| --------- | ------------------ | ---------------------------------------------------------- |
+| 配置返回 null | 路径错误/文件不存在         | 使用 `Path.Combine(AppContext.BaseDirectory, "config.json")` |
+| 类型转换失败    | 值格式不正确             | 使用 `cfg.Get<int?>("Key") ?? 默认值` 或 `TryGet<T>()`           |
+| 远程配置连接失败  | 网络/认证问题            | 添加 `OnConnectFailed` 回调，使用 try-catch 降级到本地配置               |
+| 热重载不生效    | 未启用 reloadOnChange | 添加 `reloadOnChange: true` 参数                               |
+| 编码乱码      | 非 UTF-8 文件         | 使用 `AddReadEncodingMapping()` 指定编码                         |
+| 性能问题      | 未使用高性能 API         | 使用 `GetMany(keys, callback)` 回调方式或源生成器                     |
+
+> 更多详情请查看 [单元测试覆盖分析报告](docs/单元测试覆盖分析报告.md) 或提交 Issue 到 Gitee 仓库。
+
 ## 支持的框架
 
 .NET 6.0 / 7.0 / 8.0 / 9.0
 
 ## NuGet 包
 
-| 包名 | 说明 |
-|------|------|
-| [Apq.Cfg](https://www.nuget.org/packages/Apq.Cfg) | 核心库，包含 JSON 支持 |
-| [Apq.Cfg.Ini](https://www.nuget.org/packages/Apq.Cfg.Ini) | INI 格式支持 |
-| [Apq.Cfg.Xml](https://www.nuget.org/packages/Apq.Cfg.Xml) | XML 格式支持 |
-| [Apq.Cfg.Yaml](https://www.nuget.org/packages/Apq.Cfg.Yaml) | YAML 格式支持 |
-| [Apq.Cfg.Toml](https://www.nuget.org/packages/Apq.Cfg.Toml) | TOML 格式支持 |
-| [Apq.Cfg.Env](https://www.nuget.org/packages/Apq.Cfg.Env) | .env 文件格式支持 |
-| [Apq.Cfg.Redis](https://www.nuget.org/packages/Apq.Cfg.Redis) | Redis 配置源 |
-| [Apq.Cfg.Database](https://www.nuget.org/packages/Apq.Cfg.Database) | 数据库配置源 |
-| [Apq.Cfg.Consul](https://www.nuget.org/packages/Apq.Cfg.Consul) | Consul 配置中心 |
-| [Apq.Cfg.Etcd](https://www.nuget.org/packages/Apq.Cfg.Etcd) | Etcd 配置中心 |
-| [Apq.Cfg.Nacos](https://www.nuget.org/packages/Apq.Cfg.Nacos) | Nacos 配置中心 |
-| [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo) | Apollo 配置中心 |
-| [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper) | Zookeeper 配置中心 |
-| [Apq.Cfg.Vault](https://www.nuget.org/packages/Apq.Cfg.Vault) | HashiCorp Vault 密钥管理 |
-| [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT |
+| 包名                                                                                | 说明                   |
+| --------------------------------------------------------------------------------- | -------------------- |
+| [Apq.Cfg](https://www.nuget.org/packages/Apq.Cfg)                                 | 核心库，包含 JSON 支持       |
+| [Apq.Cfg.Ini](https://www.nuget.org/packages/Apq.Cfg.Ini)                         | INI 格式支持             |
+| [Apq.Cfg.Xml](https://www.nuget.org/packages/Apq.Cfg.Xml)                         | XML 格式支持             |
+| [Apq.Cfg.Yaml](https://www.nuget.org/packages/Apq.Cfg.Yaml)                       | YAML 格式支持            |
+| [Apq.Cfg.Toml](https://www.nuget.org/packages/Apq.Cfg.Toml)                       | TOML 格式支持            |
+| [Apq.Cfg.Env](https://www.nuget.org/packages/Apq.Cfg.Env)                         | .env 文件格式支持          |
+| [Apq.Cfg.Redis](https://www.nuget.org/packages/Apq.Cfg.Redis)                     | Redis 配置源            |
+| [Apq.Cfg.Database](https://www.nuget.org/packages/Apq.Cfg.Database)               | 数据库配置源               |
+| [Apq.Cfg.Consul](https://www.nuget.org/packages/Apq.Cfg.Consul)                   | Consul 配置中心          |
+| [Apq.Cfg.Etcd](https://www.nuget.org/packages/Apq.Cfg.Etcd)                       | Etcd 配置中心            |
+| [Apq.Cfg.Nacos](https://www.nuget.org/packages/Apq.Cfg.Nacos)                     | Nacos 配置中心           |
+| [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo)                   | Apollo 配置中心          |
+| [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper)             | Zookeeper 配置中心       |
+| [Apq.Cfg.Vault](https://www.nuget.org/packages/Apq.Cfg.Vault)                     | HashiCorp Vault 密钥管理 |
+| [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT   |
 
-## 快速开始
-
-```csharp
-using Apq.Cfg;
-
-var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
-    .Build();
-
-// 读取配置
-var value = cfg.Get("Database:ConnectionString");
-
-// 使用配置节简化嵌套访问
-var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
-
-// 枚举配置节的子键
-foreach (var key in dbSection.GetChildKeys())
-{
-    Console.WriteLine($"{key}: {dbSection.Get(key)}");
-}
-
-// 修改配置
-cfg.Set("App:LastRun", DateTime.Now.ToString());
-await cfg.SaveAsync();
-```
-
-### 批量操作
+## 批量操作
 
 支持两种批量获取方式：
 
@@ -177,6 +205,7 @@ var dbPort = cfg.Get<int>("DATABASE:PORT");
 ```
 
 .env 文件示例：
+
 ```env
 # 应用配置
 APP_NAME=MyApp
@@ -202,7 +231,7 @@ export API_KEY=secret123
   - BOM 优先检测（UTF-8、UTF-16 LE/BE、UTF-32 LE/BE）
   - UTF.Unknown 库辅助检测，支持 GBK、GB2312 等常见编码
   - 检测结果自动缓存，文件修改后自动失效
-- **写入时统一 UTF-8**：默认使用 UTF-8 无 BOM，PowerShell 脚本（*.ps1、*.psm1、*.psd1）自动使用 UTF-8 BOM
+- **写入时统一 UTF-8**：默认使用 UTF-8 无 BOM，PowerShell 脚本（*.ps1、*.psm1、*.psd1）默认使用 UTF-8 BOM
 - **编码映射**：支持完整路径、通配符、正则表达式三种匹配方式
 
 ```csharp
@@ -323,65 +352,9 @@ var cfg5 = new CfgBuilder()
     }, level: 10)
     .Build();
 
-// Zookeeper 简化用法
-var cfg5_simple = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddZookeeper("localhost:2181", "/app/config", level: 10)
-    .Build();
-
-// Zookeeper JSON 模式
-var cfg5_json = new CfgBuilder()
-    .AddZookeeperJson("localhost:2181", "/app/config.json", level: 10)
-    .Build();
-
-// 使用 HashiCorp Vault 密钥管理（KV V2）
+// 使用 HashiCorp Vault 密钥管理
 var cfg6 = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddVaultV2(
-        address: "http://localhost:8200",
-        token: "s.1234567890abcdef",
-        enginePath: "kv",
-        path: "myapp/config",
-        level: 10,
-        enableHotReload: true
-    )
-    .Build();
-
-// 使用 Vault UserPass 认证
-var cfg6_userpass = new CfgBuilder()
-    .AddVaultUserPass(
-        address: "http://localhost:8200",
-        username: "myapp",
-        password: "secure-password",
-        enginePath: "kv",
-        path: "myapp/production",
-        kvVersion: 2,
-        level: 10
-    )
-    .Build();
-
-// 使用 Vault AppRole 认证
-var cfg6_approle = new CfgBuilder()
-    .AddVaultAppRole(
-        address: "http://localhost:8200",
-        roleId: "role-id-value",
-        roleSecret: "role-secret-value",
-        enginePath: "kv",
-        path: "myapp/staging",
-        kvVersion: 2,
-        level: 10
-    )
-    .Build();
-
-// Vault KV V1 引擎支持
-var cfg6_v1 = new CfgBuilder()
-    .AddVaultV1(
-        address: "http://localhost:8200",
-        token: "s.1234567890abcdef",
-        enginePath: "secret",
-        path: "myapp",
-        level: 10
-    )
+    .AddVaultV2("http://localhost:8200", "s.token", "kv", "myapp/config", level: 10)
     .Build();
 
 // 订阅配置变更
@@ -392,14 +365,16 @@ cfg.ConfigChanges.Subscribe(change => {
 
 #### 配置中心对比
 
-| 配置中心 | 写入支持 | 数据格式 | 热重载 | 特点 |
-|---------|---------|---------|--------|------|
-| **Consul** | ✅ | KV/JSON/YAML | ✅ Blocking Query | KV 存储，支持前缀监听 |
-| **Etcd** | ✅ | KV/JSON | ✅ Watch API | 强一致性，支持前缀监听 |
-| **Nacos** | ✅ | JSON/YAML/Properties | ✅ IListener | 支持命名空间、分组、多 DataId |
-| **Apollo** | ❌ | Properties | ✅ 长轮询 + 通知 | 支持多环境、集群、命名空间 |
-| **Zookeeper** | ✅ | KV/JSON | ✅ Watch API | 节点监听，支持会话管理 |
-| **Vault** | ✅ | KV (V1/V2) | ✅ 轮询 | 密钥管理，支持 Token/AppRole 认证 |
+| 配置中心          | 写入  | 热重载 | 适用场景        | 特点              |
+| ------------- |:---:|:---:| ----------- | --------------- |
+| **Consul**    | ✅   | ✅   | 微服务、服务发现    | KV 存储 + 服务发现一体化 |
+| **Etcd**      | ✅   | ✅   | K8s 生态、强一致性 | 高可用、强一致性        |
+| **Nacos**     | ✅   | ✅   | 阿里云、国内微服务   | 功能丰富、中文文档好      |
+| **Apollo**    | ❌   | ✅   | 大型企业、灰度发布   | 权限管理、多环境支持      |
+| **Zookeeper** | ✅   | ✅   | 分布式协调、传统项目  | 成熟稳定、广泛使用       |
+| **Vault**     | ✅   | ✅   | 密钥管理、安全敏感   | 审计完善、多种认证       |
+
+> 详细的配置源选择建议请参阅 [配置源选择指南](docs/配置源选择指南.md)
 
 ### 源生成器（Native AOT 支持）
 
@@ -448,6 +423,7 @@ Console.WriteLine($"Database: {appConfig.Database?.ConnectionString}");
 ```
 
 源生成器支持的类型：
+
 - **简单类型**：`string`、`int`、`long`、`bool`、`double`、`decimal`、`DateTime`、`Guid`、枚举等
 - **集合类型**：`T[]`、`List<T>`、`HashSet<T>`、`Dictionary<TKey, TValue>`
 - **复杂类型**：嵌套的配置类（需要同样标记 `[CfgSection]`）
@@ -472,26 +448,26 @@ dotnet run -c Release
 
 **最后运行时间**: 2025-12-28
 
-| 框架 | 通过 | 失败 | 跳过 | 总计 | 状态 |
-|------|------|------|------|------|------|
-| .NET 6.0 | 305 | 0 | 41 | 346 | ✅ 通过 |
-| .NET 8.0 | 305 | 0 | 41 | 346 | ✅ 通过 |
-| .NET 9.0 | 305 | 0 | 41 | 346 | ✅ 通过 |
+| 框架       | 通过  | 失败  | 跳过  | 总计  | 状态   |
+| -------- | --- | --- | --- | --- | ---- |
+| .NET 6.0 | 305 | 0   | 41  | 346 | ✅ 通过 |
+| .NET 8.0 | 305 | 0   | 41  | 346 | ✅ 通过 |
+| .NET 9.0 | 305 | 0   | 41  | 346 | ✅ 通过 |
 
 #### 跳过测试说明
 
 共 41 个测试被跳过，原因是需要外部服务支持：
 
-| 配置源 | 跳过数量 | 原因 |
-|--------|----------|------|
-| Redis | 0 | ✅ 已配置 |
-| Database | 0 | ✅ 已配置 |
-| Zookeeper | 6 | 需要 Zookeeper 服务（配置 `TestConnections:Zookeeper`）|
-| Apollo | 6 | 需要 Apollo 配置中心（配置 `TestConnections:Apollo`）|
-| Consul | 6 | 需要 Consul 服务（配置 `TestConnections:Consul`）|
-| Etcd | 6 | 需要 Etcd 服务（配置 `TestConnections:Etcd`）|
-| Nacos | 9 | 需要 Nacos 配置中心（配置 `TestConnections:Nacos`）|
-| Vault | 8 | 需要 HashiCorp Vault 服务（配置 `TestConnections:Vault`）|
+| 配置源       | 跳过数量 | 原因                                                |
+| --------- | ---- | ------------------------------------------------- |
+| Redis     | 0    | ✅ 已配置                                             |
+| Database  | 0    | ✅ 已配置                                             |
+| Zookeeper | 6    | 需要 Zookeeper 服务（配置 `TestConnections:Zookeeper`）   |
+| Apollo    | 6    | 需要 Apollo 配置中心（配置 `TestConnections:Apollo`）       |
+| Consul    | 6    | 需要 Consul 服务（配置 `TestConnections:Consul`）         |
+| Etcd      | 6    | 需要 Etcd 服务（配置 `TestConnections:Etcd`）             |
+| Nacos     | 9    | 需要 Nacos 配置中心（配置 `TestConnections:Nacos`）         |
+| Vault     | 8    | 需要 HashiCorp Vault 服务（配置 `TestConnections:Vault`） |
 
 > 这些测试使用 `[SkippableFact]` 特性，在未配置相应服务时自动跳过。配置服务连接信息后可完整运行，配置文件位于 `tests/appsettings.json`（三个测试项目共用）。
 
@@ -501,18 +477,18 @@ dotnet run -c Release
 
 ## 性能亮点
 
-| 场景 | 性能指标 | 说明 |
-|------|----------|------|
-| **基本读写** | 17-22 ns | Get/Set 操作纳秒级响应 |
-| **类型转换** | 67-136 ns | 支持所有标准类型 |
-| **批量操作** | 零堆分配 | `GetMany(keys, callback)` 回调版本比返回字典版本快 43-50% |
-| **并发读取** | 14-19 μs (16线程) | 高并发场景性能提升 19% |
-| **缓存命中** | 1.5-1.7 μs | 缓存性能提升 12% |
-| **配置节** | 18-29 ns | GetSection 操作性能提升 10-15% |
-| **源生成器** | 2.1-2.7 μs | 比反射绑定快约 100 倍 |
-| **DI 解析** | 6-12 ns | Scoped 解析性能极佳 |
-| **编码检测** | 30-117 μs | UTF-8 加载性能提升 23% |
-| **热重载** | 防抖 + 增量 | 只重载变化的配置源 |
+| 场景        | 性能指标            | 说明                                            |
+| --------- | --------------- | --------------------------------------------- |
+| **基本读写**  | 17-22 ns        | Get/Set 操作纳秒级响应                               |
+| **类型转换**  | 67-136 ns       | 支持所有标准类型                                      |
+| **批量操作**  | 零堆分配            | `GetMany(keys, callback)` 回调版本比返回字典版本快 43-50% |
+| **并发读取**  | 14-19 μs (16线程) | 高并发场景性能提升 19%                                 |
+| **缓存命中**  | 1.5-1.7 μs      | 缓存性能提升 12%                                    |
+| **配置节**   | 18-29 ns        | GetSection 操作性能提升 10-15%                      |
+| **源生成器**  | 2.1-2.7 μs      | 比反射绑定快约 100 倍                                 |
+| **DI 解析** | 6-12 ns         | Scoped 解析性能极佳                                 |
+| **编码检测**  | 30-117 μs       | UTF-8 加载性能提升 23%                              |
+| **热重载**   | 防抖 + 增量         | 只重载变化的配置源                                     |
 
 **运行时建议**：推荐 .NET 8.0 或 .NET 9.0，性能比 .NET 6.0 提升 35-55%。
 

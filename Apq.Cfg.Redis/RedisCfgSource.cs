@@ -17,6 +17,12 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
     private readonly RedisOptions _options;
     private volatile bool _disposed;
 
+    /// <summary>
+    /// 初始化 RedisCfgSource 实例
+    /// </summary>
+    /// <param name="options">Redis 连接选项</param>
+    /// <param name="level">配置层级，数值越大优先级越高</param>
+    /// <param name="isPrimaryWriter">是否为主要写入源</param>
     public RedisCfgSource(RedisOptions options, int level, bool isPrimaryWriter)
     {
         _options = options;
@@ -30,10 +36,24 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
         _multiplexer = ConnectionMultiplexer.Connect(conn);
     }
 
+    /// <summary>
+    /// 获取配置层级，数值越大优先级越高
+    /// </summary>
     public int Level { get; }
+
+    /// <summary>
+    /// 获取是否可写，Redis 支持通过 API 写入配置，因此始终为 true
+    /// </summary>
     public bool IsWriteable => true;
+
+    /// <summary>
+    /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
+    /// </summary>
     public bool IsPrimaryWriter { get; }
 
+    /// <summary>
+    /// 释放资源，关闭 Redis 连接
+    /// </summary>
     public void Dispose()
     {
         if (_disposed) return;
@@ -42,6 +62,11 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
         catch { }
     }
 
+    /// <summary>
+    /// 构建 Microsoft.Extensions.Configuration 的内存配置源，从 Redis 加载数据
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource 实例</returns>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     public IConfigurationSource BuildSource()
     {
         ThrowIfDisposed();
@@ -78,6 +103,13 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
         return new MemoryConfigurationSource { InitialData = data };
     }
 
+    /// <summary>
+    /// 应用配置更改到 Redis
+    /// </summary>
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
         ThrowIfDisposed();
@@ -107,11 +139,20 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
+    /// <summary>
+    /// 检查对象是否已释放，如果已释放则抛出异常
+    /// </summary>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     private void ThrowIfDisposed()
     {
         if (_disposed) throw new ObjectDisposedException(nameof(RedisCfgSource));
     }
 
+    /// <summary>
+    /// 确保连接字符串包含 allowAdmin 选项
+    /// </summary>
+    /// <param name="connectionString">原始连接字符串</param>
+    /// <returns>包含 allowAdmin 选项的连接字符串</returns>
     private static string EnsureAllowAdmin(string connectionString)
     {
         return connectionString.Contains("allowAdmin", StringComparison.OrdinalIgnoreCase)

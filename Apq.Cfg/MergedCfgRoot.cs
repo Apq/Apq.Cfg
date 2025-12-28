@@ -323,6 +323,22 @@ internal sealed class MergedCfgRoot : ICfgRoot
     /// <summary>
     /// 手动触发配置重载（用于 Manual 和 Lazy 策略）
     /// </summary>
+    /// <example>
+    /// <code>
+    /// // 手动重载配置
+    /// cfg.Reload();
+    /// 
+    /// // 在特定条件下重载
+    /// if (ShouldReload())
+    /// {
+    ///     cfg.Reload();
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 对于 Manual 和 Lazy 策略，此方法会立即检查所有配置源并应用更改。
+    /// 对于 Automatic 策略，此方法不会产生额外效果，因为配置会自动重载。
+    /// </remarks>
     public void Reload()
     {
         _coordinator?.Reload();
@@ -331,11 +347,40 @@ internal sealed class MergedCfgRoot : ICfgRoot
     /// <summary>
     /// 检查是否有待处理的配置变更
     /// </summary>
+    /// <returns>如果有待处理的配置变更返回true，否则返回false</returns>
+    /// <example>
+    /// <code>
+    /// // 检查是否有待保存的更改
+    /// if (cfg.HasPendingChanges)
+    /// {
+    ///     await cfg.SaveAsync();
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 待处理的配置变更是指通过 Set 或 SetMany 方法设置但尚未通过 SaveAsync 保存的更改。
+    /// 此属性在检查前会确保配置是最新的（Lazy 策略）。
+    /// </remarks>
     public bool HasPendingChanges => _coordinator?.HasPendingChanges ?? false;
 
     /// <summary>
     /// 获取配置变更历史记录
     /// </summary>
+    /// <returns>配置变更事件的只读列表，按时间顺序排列</returns>
+    /// <example>
+    /// <code>
+    /// // 获取最近的配置变更
+    /// var changes = cfg.GetChangeHistory();
+    /// foreach (var change in changes.Take(10))
+    /// {
+    ///     Console.WriteLine($"[{change.Timestamp}] {change.Key}: {change.OldValue} -> {change.NewValue}");
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 变更历史记录包含所有已应用的配置更改，包括通过 SaveAsync 保存的更改和自动重载的更改。
+    /// 历史记录的数量受 DynamicReloadOptions.HistoryLimit 限制。
+    /// </remarks>
     public IReadOnlyList<ConfigChangeEvent> GetChangeHistory()
     {
         return _coordinator?.GetHistory() ?? Array.Empty<ConfigChangeEvent>();
@@ -344,13 +389,69 @@ internal sealed class MergedCfgRoot : ICfgRoot
     /// <summary>
     /// 清空配置变更历史记录
     /// </summary>
+    /// <example>
+    /// <code>
+    /// // 在特定条件下清空历史记录
+    /// if (historyTooLarge)
+    /// {
+    ///     cfg.ClearChangeHistory();
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 清空历史记录不会影响当前配置值，只是删除变更事件的记录。
+    /// 此操作不可逆，清空后无法恢复历史记录。
+    /// </remarks>
     public void ClearChangeHistory()
     {
         _coordinator?.ClearHistory();
     }
 
+    /// <summary>
+    /// 转换为 Microsoft Configuration（静态快照）
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.IConfigurationRoot 实例</returns>
+    /// <example>
+    /// <code>
+    /// // 转换为 Microsoft Configuration 并使用
+    /// var msConfig = cfg.ToMicrosoftConfiguration();
+    /// var connectionString = msConfig.GetConnectionString("DefaultConnection");
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 返回的配置根是静态快照，不会自动更新配置变更。
+    /// 如需支持动态重载，请使用带 DynamicReloadOptions 参数的重载方法。
+    /// </remarks>
     public IConfigurationRoot ToMicrosoftConfiguration() => _merged;
 
+    /// <summary>
+    /// 转换为支持动态重载的 Microsoft Configuration
+    /// </summary>
+    /// <param name="options">动态重载选项，为 null 时使用默认选项</param>
+    /// <returns>Microsoft.Extensions.Configuration.IConfigurationRoot 实例</returns>
+    /// <example>
+    /// <code>
+    /// // 创建支持动态重载的配置
+    /// var options = new DynamicReloadOptions
+    /// {
+    ///     EnableDynamicReload = true,
+    ///     DebounceMs = 500,
+    ///     HistoryLimit = 100
+    /// };
+    /// 
+    /// var msConfig = cfg.ToMicrosoftConfiguration(options);
+    /// 
+    /// // 监听配置变更
+    /// ChangeToken.OnChange(
+    ///     () => msConfig.GetReloadToken(),
+    ///     () => Console.WriteLine("配置已更新"));
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 当 EnableDynamicReload 为 true 时，返回的配置根会自动跟踪配置变更。
+    /// 配置变更会通过 Microsoft.Extensions.Configuration 的重载机制传播。
+    /// 此方法只会创建一个动态配置实例，多次调用会返回相同的实例。
+    /// </remarks>
     public IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options)
     {
         options ??= new DynamicReloadOptions();

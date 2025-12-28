@@ -49,8 +49,19 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
+    /// <summary>
+    /// 获取配置层级，数值越大优先级越高
+    /// </summary>
     public int Level { get; }
+
+    /// <summary>
+    /// 获取是否可写，Nacos 支持通过 API 写入配置，因此始终为 true
+    /// </summary>
     public bool IsWriteable => true;
+
+    /// <summary>
+    /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
+    /// </summary>
     public bool IsPrimaryWriter { get; }
 
     private static void ConfigureNacosServices(IServiceCollection services, NacosCfgOptions options)
@@ -129,6 +140,9 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
+    /// <summary>
+    /// 释放资源，移除监听器、关闭 Nacos 服务并释放服务提供程序
+    /// </summary>
     public void Dispose()
     {
         if (_disposed) return;
@@ -153,12 +167,24 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         _serviceProvider.Dispose();
     }
 
+    /// <summary>
+    /// 构建 Microsoft.Extensions.Configuration 的配置源
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.IConfigurationSource 实例</returns>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     public IConfigurationSource BuildSource()
     {
         ThrowIfDisposed();
         return new NacosConfigurationSource(this);
     }
 
+    /// <summary>
+    /// 应用配置更改到 Nacos
+    /// </summary>
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
         ThrowIfDisposed();

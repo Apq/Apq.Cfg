@@ -16,6 +16,22 @@ public sealed class CfgBuilder
     /// <summary>
     /// 添加JSON文件配置源
     /// </summary>
+    /// <param name="path">JSON文件路径</param>
+    /// <param name="level">配置层级，数值越大优先级越高</param>
+    /// <param name="writeable">是否可写</param>
+    /// <param name="optional">是否为可选文件，默认为true</param>
+    /// <param name="reloadOnChange">文件变更时是否自动重载，默认为true</param>
+    /// <param name="isPrimaryWriter">是否为主要写入器，默认为false</param>
+    /// <param name="encoding">编码选项，默认为null</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0, writeable: false)
+    ///     .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
+    ///     .Build();
+    /// </code>
+    /// </example>
     public CfgBuilder AddJson(string path, int level, bool writeable, bool optional = true, bool reloadOnChange = true,
         bool isPrimaryWriter = false, EncodingOptions? encoding = null)
     {
@@ -26,6 +42,17 @@ public sealed class CfgBuilder
     /// <summary>
     /// 添加环境变量配置源
     /// </summary>
+    /// <param name="level">配置层级，数值越大优先级越高</param>
+    /// <param name="prefix">环境变量前缀，为null时加载所有环境变量</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddEnvironmentVariables(level: 1, prefix: "APP_")
+    ///     .Build();
+    /// </code>
+    /// </example>
     public CfgBuilder AddEnvironmentVariables(int level, string? prefix = null)
     {
         _sources.Add(new EnvVarsCfgSource(prefix, level));
@@ -35,6 +62,18 @@ public sealed class CfgBuilder
     /// <summary>
     /// 添加自定义配置源（供扩展包使用）
     /// </summary>
+    /// <param name="source">配置源实例，实现 ICfgSource 接口</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// // 添加自定义配置源
+    /// var customSource = new CustomCfgSource();
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddSource(customSource)
+    ///     .Build();
+    /// </code>
+    /// </example>
     public CfgBuilder AddSource(ICfgSource source)
     {
         _sources.Add(source);

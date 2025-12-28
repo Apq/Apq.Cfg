@@ -6,14 +6,30 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Apq.Cfg.Ini;
 
+/// <summary>
+/// INI 文件配置源，支持读取和写入 INI 格式的配置文件
+/// </summary>
 internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 {
+    /// <summary>
+    /// 初始化 IniFileCfgSource 实例
+    /// </summary>
+    /// <param name="path">INI 文件路径</param>
+    /// <param name="level">配置层级，数值越大优先级越高</param>
+    /// <param name="writeable">是否可写</param>
+    /// <param name="optional">是否为可选文件</param>
+    /// <param name="reloadOnChange">文件变更时是否自动重载</param>
+    /// <param name="isPrimaryWriter">是否为主要写入源</param>
     public IniFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
         bool isPrimaryWriter)
         : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
     {
     }
 
+    /// <summary>
+    /// 构建 Microsoft.Extensions.Configuration 的 INI 配置源
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.Ini.IniConfigurationSource 实例</returns>
     public override IConfigurationSource BuildSource()
     {
         var (fp, file) = CreatePhysicalFileProvider(_path);
@@ -28,6 +44,13 @@ internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         return src;
     }
 
+    /// <summary>
+    /// 应用配置更改到 INI 文件
+    /// </summary>
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
+    /// <exception cref="InvalidOperationException">当配置源不可写时抛出</exception>
     public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
         if (!IsWriteable)

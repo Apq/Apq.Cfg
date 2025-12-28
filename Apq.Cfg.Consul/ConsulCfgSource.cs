@@ -53,10 +53,24 @@ internal sealed class ConsulCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
+    /// <summary>
+    /// 获取配置层级，数值越大优先级越高
+    /// </summary>
     public int Level { get; }
+
+    /// <summary>
+    /// 获取是否可写，Consul 支持通过 API 写入配置，因此始终为 true
+    /// </summary>
     public bool IsWriteable => true;
+
+    /// <summary>
+    /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
+    /// </summary>
     public bool IsPrimaryWriter { get; }
 
+    /// <summary>
+    /// 释放资源，取消所有异步操作并释放 Consul 客户端
+    /// </summary>
     public void Dispose()
     {
         if (_disposed) return;
@@ -70,12 +84,24 @@ internal sealed class ConsulCfgSource : IWritableCfgSource, IDisposable
         _client.Dispose();
     }
 
+    /// <summary>
+    /// 构建 Microsoft.Extensions.Configuration 的配置源
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.IConfigurationSource 实例</returns>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     public IConfigurationSource BuildSource()
     {
         ThrowIfDisposed();
         return new ConsulConfigurationSource(this);
     }
 
+    /// <summary>
+    /// 应用配置更改到 Consul
+    /// </summary>
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
+    /// <exception cref="ObjectDisposedException">当对象已释放时抛出</exception>
     public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
         ThrowIfDisposed();

@@ -16,12 +16,26 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     // 缓存 JsonSerializerOptions，避免每次序列化都创建新实例
     private static readonly JsonSerializerOptions s_writeOptions = new() { WriteIndented = true };
 
+    /// <summary>
+    /// 初始化 JsonFileCfgSource 实例
+    /// </summary>
+    /// <param name="path">JSON 文件路径</param>
+    /// <param name="level">配置层级，数值越大优先级越高</param>
+    /// <param name="writeable">是否可写</param>
+    /// <param name="optional">是否为可选文件</param>
+    /// <param name="reloadOnChange">文件变更时是否自动重载</param>
+    /// <param name="isPrimaryWriter">是否为主要写入源</param>
+    /// <param name="encodingOptions">编码选项</param>
     public JsonFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
         bool isPrimaryWriter, EncodingOptions? encodingOptions = null)
         : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encodingOptions)
     {
     }
 
+    /// <summary>
+    /// 构建 Microsoft.Extensions.Configuration 的 JSON 配置源
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.Json.JsonConfigurationSource 实例</returns>
     public override IConfigurationSource BuildSource()
     {
         var (fp, file) = CreatePhysicalFileProvider(_path);
@@ -36,6 +50,13 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         return src;
     }
 
+    /// <summary>
+    /// 应用配置更改到 JSON 文件
+    /// </summary>
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    /// <returns>表示异步操作的任务</returns>
+    /// <exception cref="InvalidOperationException">当配置源不可写或 JSON 根节点不是对象时抛出</exception>
     public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
         if (!IsWriteable)
@@ -69,6 +90,12 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         await System.IO.File.WriteAllTextAsync(_path, jsonString, writeEncoding, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// 根据冒号分隔的键路径设置 JSON 对象中的值
+    /// </summary>
+    /// <param name="root">JSON 根对象</param>
+    /// <param name="key">冒号分隔的键路径（如 "Database:Connection:Timeout"）</param>
+    /// <param name="value">要设置的值，为 null 时删除该键</param>
     private static void SetByColonKey(JsonObject root, string key, string? value)
     {
         var parts = key.Split(':', StringSplitOptions.RemoveEmptyEntries);
