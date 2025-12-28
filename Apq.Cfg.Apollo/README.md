@@ -1,8 +1,11 @@
 # Apq.Cfg.Apollo
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Apollo)](https://www.nuget.org/packages/Apq.Cfg.Apollo)
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
 Apollo 配置中心支持，为 Apq.Cfg 提供从 Apollo 读取配置的能力，支持热重载。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 安装
 

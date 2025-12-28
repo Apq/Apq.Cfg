@@ -1,6 +1,10 @@
 # Apq.Cfg.Vault
 
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
+
 Apq.Cfg 的 HashiCorp Vault 扩展，支持密钥管理和热重载功能。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 功能特性
 

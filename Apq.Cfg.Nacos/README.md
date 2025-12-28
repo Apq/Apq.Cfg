@@ -1,8 +1,11 @@
 # Apq.Cfg.Nacos
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Nacos)](https://www.nuget.org/packages/Apq.Cfg.Nacos)
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
 Nacos 配置中心支持，为 Apq.Cfg 提供从 Nacos 读取配置的能力，使用官方 SDK，**支持热重载**。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 安装
 

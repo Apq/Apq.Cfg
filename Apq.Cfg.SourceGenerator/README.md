@@ -1,6 +1,10 @@
 # Apq.Cfg.SourceGenerator
 
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
+
 基于 Roslyn 的源生成器，为 Apq.Cfg 配置类自动生成零反射的绑定代码，支持 Native AOT。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 特性
 

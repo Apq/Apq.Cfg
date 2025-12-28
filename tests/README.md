@@ -1,6 +1,10 @@
 # Apq.Cfg 测试
 
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
+
 本目录包含 Apq.Cfg 的单元测试项目。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 项目结构
 

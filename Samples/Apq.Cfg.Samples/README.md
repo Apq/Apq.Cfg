@@ -1,6 +1,10 @@
 # Apq.Cfg.Samples
 
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
+
 Apq.Cfg 配置库的完整功能示例项目。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 项目结构
 

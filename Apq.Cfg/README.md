@@ -1,10 +1,13 @@
 # Apq.Cfg
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
 统一配置管理系统核心库，提供配置管理接口和基础实现。
 
 **仓库地址**：https://gitee.com/apq/Apq.Cfg
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 特性
 
