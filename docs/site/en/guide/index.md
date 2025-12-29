@@ -1,6 +1,6 @@
 # Introduction
 
-Apq.Cfg is a powerful, flexible, and high-performance .NET configuration management library.
+Apq.Cfg is a powerful, flexible, and high-performance .NET configuration library.
 
 ## Features
 

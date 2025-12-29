@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-Apq.Cfg 是一个统一配置管理系统，支持多种配置格式（JSON、INI、XML、YAML、TOML、Env）和远程配置中心（Redis、Database、Consul、Etcd、Nacos、Apollo、Zookeeper、Vault）。
+Apq.Cfg 是一个 .NET 统一配置组件库，支持多种配置格式（JSON、INI、XML、YAML、TOML、Env）和远程配置中心（Redis、Database、Consul、Etcd、Nacos、Apollo、Zookeeper、Vault）。
 
 ## 代码规范
 

@@ -197,7 +197,7 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', href: '/logo.svg' }],
     // SEO meta 标签
-    ['meta', { name: 'keywords', content: 'Apq.Cfg, .NET, 配置管理, Configuration, C#, JSON, YAML, Consul, Nacos, Redis, Vault, 热重载, 依赖注入' }],
+    ['meta', { name: 'keywords', content: 'Apq.Cfg, .NET, 配置组件, Configuration, C#, JSON, YAML, Consul, Nacos, Redis, Vault, 热重载, 依赖注入' }],
     ['meta', { name: 'author', content: 'Apq' }],
     // Open Graph 标签（社交媒体分享）
     ['meta', { property: 'og:type', content: 'website' }],
@@ -217,7 +217,7 @@ export default defineConfig({
     root: {
       label: '简体中文',
       lang: 'zh-CN',
-      description: '强大、灵活、高性能的 .NET 配置管理库',
+      description: '强大、灵活、高性能的 .NET 配置组件库',
       themeConfig: {
         nav: [
           { text: '指南', link: '/guide/', activeMatch: '/guide/' },

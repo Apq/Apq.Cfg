@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: Apq.Cfg
-  text: 高性能 .NET 配置管理库
+  text: 高性能 .NET 配置组件库
   tagline: 支持多种配置源、动态重载、依赖注入集成
   image:
     src: /logo.svg

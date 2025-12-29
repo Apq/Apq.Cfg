@@ -76,7 +76,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Initial release
-- Core configuration management
+- Core configuration library
 - JSON configuration source support
 - Environment variables support
 - Multi-source level-based merging
