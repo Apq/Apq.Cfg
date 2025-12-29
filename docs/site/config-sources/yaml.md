@@ -28,6 +28,30 @@ var cfg = new CfgBuilder()
     .Build();
 ```
 
+## 方法签名
+
+```csharp
+public static CfgBuilder AddYaml(
+    this CfgBuilder builder,
+    string path,
+    int level,
+    bool writeable = false,
+    bool optional = true,
+    bool reloadOnChange = true,
+    bool isPrimaryWriter = false)
+```
+
+## 参数说明
+
+| 参数 | 说明 |
+|------|------|
+| `path` | YAML 文件路径 |
+| `level` | 配置层级，数值越大优先级越高 |
+| `writeable` | 是否可写（默认 `false`） |
+| `optional` | 文件不存在时是否忽略（默认 `true`） |
+| `reloadOnChange` | 文件变更时是否自动重载（默认 `true`） |
+| `isPrimaryWriter` | 是否为默认写入目标（默认 `false`） |
+
 ### 可写配置
 
 ```csharp

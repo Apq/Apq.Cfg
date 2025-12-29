@@ -67,19 +67,19 @@ apq-cfg-crypto decrypt -k "base64key..." -v "[ENCRYPTED]base64cipher..." -p "[EN
 
 ```bash
 # 加密配置文件中的敏感值
-apq-cfg-crypto encrypt-file --key "base64key..." --file appsettings.json
+apq-cfg-crypto encrypt-file --key "base64key..." --file config.json
 
 # 预览将要加密的键（不实际修改）
-apq-cfg-crypto encrypt-file -k "base64key..." -f appsettings.json --dry-run
+apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --dry-run
 
 # 指定输出文件
-apq-cfg-crypto encrypt-file -k "base64key..." -f appsettings.json -o appsettings.encrypted.json
+apq-cfg-crypto encrypt-file -k "base64key..." -f config.json -o config.encrypted.json
 
 # 自定义敏感键模式
-apq-cfg-crypto encrypt-file -k "base64key..." -f appsettings.json --patterns "*Password*,*Secret*,*ApiKey*"
+apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --patterns "*Password*,*Secret*,*ApiKey*"
 
 # 使用自定义前缀
-apq-cfg-crypto encrypt-file -k "base64key..." -f appsettings.json --prefix "[ENC]"
+apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --prefix "[ENC]"
 ```
 
 ## 敏感键模式

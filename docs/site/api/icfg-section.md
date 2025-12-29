@@ -23,9 +23,19 @@ public interface ICfgSection
     T? Get<T>(string key);
     
     /// <summary>
+    /// 检查配置键是否存在
+    /// </summary>
+    bool Exists(string key);
+    
+    /// <summary>
     /// 设置子配置值
     /// </summary>
     void Set(string key, string? value, int? targetLevel = null);
+    
+    /// <summary>
+    /// 移除配置键
+    /// </summary>
+    void Remove(string key, int? targetLevel = null);
     
     /// <summary>
     /// 获取子配置节
@@ -64,15 +74,15 @@ string? Get(string key)
 获取子配置的值。
 
 **参数：**
-- `key`: 子配置键
+- `key`: 子配置键（相对于此节的键名）
 
 **返回：** 配置值，如果不存在返回 `null`
 
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host");
-var port = dbSection.Get("Port");
+var host = dbSection.Get("Host");      // 等同于 cfg.Get("Database:Host")
+var port = dbSection.Get("Port");      // 等同于 cfg.Get("Database:Port")
 ```
 
 ### Get&lt;T&gt;
@@ -86,13 +96,45 @@ T? Get<T>(string key)
 **参数：**
 - `key`: 子配置键
 
-**返回：** 转换后的值
+**返回：** 转换后的值，不存在或转换失败时返回默认值
 
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-var port = dbSection.Get<int>("Port");
-var timeout = dbSection.Get<int>("Timeout");
+var port = dbSection.Get<int>("Port");       // 等同于 cfg.Get<int>("Database:Port")
+var timeout = dbSection.Get<int>("Timeout"); // 等同于 cfg.Get<int>("Database:Timeout")
+```
+
+### Exists
+
+```csharp
+bool Exists(string key)
+```
+
+检查配置键是否存在。
+
+**参数：**
+- `key`: 子配置键（相对于此节的键名）
+
+**返回：** 存在返回 `true`，否则返回 `false`
+
+**示例：**
+```csharp
+var dbSection = cfg.GetSection("Database");
+if (dbSection.Exists("ConnectionString"))
+{
+    var connStr = dbSection.Get("ConnectionString");
+    // 处理连接字符串
+}
+
+if (dbSection.Exists("Password"))
+{
+    // 使用密码
+}
+else
+{
+    // 使用默认认证
+}
 ```
 
 ### Set
@@ -106,13 +148,32 @@ void Set(string key, string? value, int? targetLevel = null)
 **参数：**
 - `key`: 子配置键
 - `value`: 配置值
-- `targetLevel`: 目标层级（可选）
+- `targetLevel`: 目标层级（可选，默认写入可写的最高层级）
 
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-dbSection.Set("Host", "new-host");
-dbSection.Set("Port", "5433");
+dbSection.Set("Host", "new-host");   // 等同于 cfg.Set("Database:Host", "new-host")
+dbSection.Set("Port", "5433");       // 等同于 cfg.Set("Database:Port", "5433")
+```
+
+### Remove
+
+```csharp
+void Remove(string key, int? targetLevel = null)
+```
+
+移除配置键。
+
+**参数：**
+- `key`: 子配置键（相对于此节的键名）
+- `targetLevel`: 目标层级（可选，为 null 时从所有层级移除）
+
+**示例：**
+```csharp
+var dbSection = cfg.GetSection("Database");
+dbSection.Remove("OldSetting");              // 等同于 cfg.Remove("Database:OldSetting")
+dbSection.Remove("TempValue", targetLevel: 1); // 只从层级1移除
 ```
 
 ### GetSection
@@ -131,7 +192,7 @@ ICfgSection GetSection(string key)
 **示例：**
 ```csharp
 var servicesSection = cfg.GetSection("Services");
-var apiSection = servicesSection.GetSection("Api");
+var apiSection = servicesSection.GetSection("Api");  // 等同于 cfg.GetSection("Services:Api")
 var url = apiSection.Get("Url");
 ```
 
@@ -174,6 +235,12 @@ var dbSection = cfg.GetSection("Database");
 var host = dbSection.Get("Host");
 var port = dbSection.Get<int>("Port");
 
+// 检查键是否存在
+if (dbSection.Exists("Password"))
+{
+    var password = dbSection.Get("Password");
+}
+
 // 遍历子键
 foreach (var key in dbSection.GetChildKeys())
 {
@@ -202,8 +269,13 @@ var cfg = new CfgBuilder()
     .Build();
 
 var dbSection = cfg.GetSection("Database");
+
+// 设置值
 dbSection.Set("Host", "new-host");
 dbSection.Set("Port", "5433");
+
+// 移除旧配置
+dbSection.Remove("DeprecatedSetting");
 
 await cfg.SaveAsync();
 ```
@@ -243,10 +315,27 @@ foreach (var key in endpointsSection.GetChildKeys())
 ```csharp
 var optionalSection = cfg.GetSection("Optional");
 var childKeys = optionalSection.GetChildKeys().ToList();
-if (childKeys.Count > 0 || optionalSection.Get("Value") != null)
+if (childKeys.Count > 0 || optionalSection.Exists("Value"))
 {
-    // 配置节存在
+    // 配置节存在且有内容
 }
+```
+
+### 条件配置处理
+
+```csharp
+var featureSection = cfg.GetSection("Features");
+
+// 检查功能是否启用
+if (featureSection.Exists("NewUI") && featureSection.Get<bool>("NewUI"))
+{
+    // 启用新 UI
+}
+
+// 获取可选配置，带默认值
+var maxRetries = featureSection.Exists("MaxRetries") 
+    ? featureSection.Get<int>("MaxRetries") 
+    : 3;
 ```
 
 ## 下一步

@@ -49,6 +49,31 @@ cfg.Set("App:Name", "NewName");
 await cfg.SaveAsync();
 ```
 
+## 方法签名
+
+```csharp
+public CfgBuilder AddJson(
+    string path,
+    int level,
+    bool writeable,
+    bool optional = true,
+    bool reloadOnChange = true,
+    bool isPrimaryWriter = false,
+    EncodingOptions? encoding = null)
+```
+
+## 参数说明
+
+| 参数 | 说明 |
+|------|------|
+| `path` | JSON 文件路径 |
+| `level` | 配置层级，数值越大优先级越高 |
+| `writeable` | 是否可写 |
+| `optional` | 文件不存在时是否忽略（默认 `true`） |
+| `reloadOnChange` | 文件变更时是否自动重载（默认 `true`） |
+| `isPrimaryWriter` | 是否为默认写入目标（默认 `false`） |
+| `encoding` | 编码选项（默认 `null`，自动检测） |
+
 ## JSON 文件格式
 
 ### 基本结构

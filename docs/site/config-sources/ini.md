@@ -59,10 +59,10 @@ public static CfgBuilder AddIni(
 |------|------|
 | `path` | INI 文件路径 |
 | `level` | 配置层级，数值越大优先级越高 |
-| `writeable` | 是否可写 |
-| `optional` | 文件不存在时是否忽略 |
-| `reloadOnChange` | 文件变更时是否自动重载 |
-| `isPrimaryWriter` | 是否为默认写入目标 |
+| `writeable` | 是否可写（默认 `false`） |
+| `optional` | 文件不存在时是否忽略（默认 `true`） |
+| `reloadOnChange` | 文件变更时是否自动重载（默认 `true`） |
+| `isPrimaryWriter` | 是否为默认写入目标（默认 `false`） |
 
 ## INI 文件格式
 

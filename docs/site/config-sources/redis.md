@@ -15,25 +15,35 @@ using Apq.Cfg;
 using Apq.Cfg.Redis;
 
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(
-        connectionString: "localhost:6379",
-        keyPrefix: "config:myapp",
-        level: 10,
-        writeable: false))
+    .AddRedis(options =>
+    {
+        options.ConnectionString = "localhost:6379";
+        options.KeyPrefix = "config:myapp:";
+    }, level: 10)
     .Build();
 ```
 
-### 启用订阅
+### 启用变更通知
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(
-        connectionString: "localhost:6379",
-        keyPrefix: "config:myapp",
-        level: 10,
-        writeable: false,
-        subscribeChanges: true))
+    .AddRedis(options =>
+    {
+        options.ConnectionString = "localhost:6379";
+        options.KeyPrefix = "config:myapp:";
+        options.Channel = "config:myapp:changes";
+    }, level: 10)
     .Build();
+```
+
+## 方法签名
+
+```csharp
+public static CfgBuilder AddRedis(
+    this CfgBuilder builder,
+    Action<RedisOptions> configure,
+    int level,
+    bool isPrimaryWriter = false)
 ```
 
 ## 配置选项
@@ -42,15 +52,16 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(new RedisCfgOptions
+    .AddRedis(options =>
     {
-        ConnectionString = "localhost:6379,password=secret",
-        KeyPrefix = "config:myapp",
-        Database = 0,
-        SubscribeChanges = true,
-        ChangeChannel = "config:myapp:changes",
-        Optional = false
-    }, level: 10, writeable: false))
+        options.ConnectionString = "localhost:6379,password=secret";
+        options.KeyPrefix = "config:myapp:";
+        options.Database = 0;
+        options.Channel = "config:myapp:changes";
+        options.ConnectTimeoutMs = 5000;
+        options.OperationTimeoutMs = 5000;
+        options.ScanPageSize = 250;
+    }, level: 10)
     .Build();
 ```
 
@@ -58,12 +69,13 @@ var cfg = new CfgBuilder()
 
 | 选项 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `ConnectionString` | string | - | Redis 连接字符串 |
-| `KeyPrefix` | string | - | 配置键前缀 |
-| `Database` | int | 0 | Redis 数据库索引 |
-| `SubscribeChanges` | bool | false | 是否订阅变更 |
-| `ChangeChannel` | string | null | 变更通知频道 |
-| `Optional` | bool | false | 是否可选 |
+| `ConnectionString` | string? | null | Redis 连接字符串 |
+| `KeyPrefix` | string? | null | 配置键前缀 |
+| `Database` | int? | null | Redis 数据库索引 |
+| `Channel` | string? | null | 变更通知频道 |
+| `ConnectTimeoutMs` | int | 5000 | 连接超时时间（毫秒） |
+| `OperationTimeoutMs` | int | 5000 | 操作超时时间（毫秒） |
+| `ScanPageSize` | int | 250 | SCAN 命令每次返回的键数量 |
 
 ## Redis 配置结构
 
@@ -95,24 +107,13 @@ SET config:myapp:Database:Port "5432"
 SET config:myapp '{"Database":{"Host":"localhost","Port":5432}}'
 ```
 
-```csharp
-var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(new RedisCfgOptions
-    {
-        ConnectionString = "localhost:6379",
-        KeyPrefix = "config:myapp",
-        ParseJson = true
-    }, level: 10, writeable: false))
-    .Build();
-```
-
 ## 配置变更通知
 
 ### 发布变更
 
 ```bash
 # 修改配置后发布通知
-HSET config:myapp Database:Host "new-host"
+SET config:myapp:Database:Host "new-host"
 PUBLISH config:myapp:changes "Database:Host"
 ```
 
@@ -120,13 +121,12 @@ PUBLISH config:myapp:changes "Database:Host"
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(new RedisCfgOptions
+    .AddRedis(options =>
     {
-        ConnectionString = "localhost:6379",
-        KeyPrefix = "config:myapp",
-        SubscribeChanges = true,
-        ChangeChannel = "config:myapp:changes"
-    }, level: 10, writeable: false))
+        options.ConnectionString = "localhost:6379";
+        options.KeyPrefix = "config:myapp:";
+        options.Channel = "config:myapp:changes";
+    }, level: 10)
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -145,11 +145,11 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(new RedisCfgOptions
+    .AddRedis(options =>
     {
-        ConnectionString = "sentinel1:26379,sentinel2:26379,serviceName=mymaster",
-        KeyPrefix = "config:myapp"
-    }, level: 10, writeable: false))
+        options.ConnectionString = "sentinel1:26379,sentinel2:26379,serviceName=mymaster";
+        options.KeyPrefix = "config:myapp:";
+    }, level: 10)
     .Build();
 ```
 
@@ -157,11 +157,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(new RedisCfgOptions
+    .AddRedis(options =>
     {
-        ConnectionString = "node1:6379,node2:6379,node3:6379",
-        KeyPrefix = "config:myapp"
-    }, level: 10, writeable: false))
+        options.ConnectionString = "node1:6379,node2:6379,node3:6379";
+        options.KeyPrefix = "config:myapp:";
+    }, level: 10)
     .Build();
 ```
 
@@ -171,11 +171,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(
-        connectionString: "localhost:6379,password=your-password",
-        keyPrefix: "config:myapp",
-        level: 10,
-        writeable: false))
+    .AddRedis(options =>
+    {
+        options.ConnectionString = "localhost:6379,password=your-password";
+        options.KeyPrefix = "config:myapp:";
+    }, level: 10)
     .Build();
 ```
 
@@ -183,11 +183,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new RedisCfgSource(
-        connectionString: "localhost:6379,ssl=true,sslHost=redis.example.com",
-        keyPrefix: "config:myapp",
-        level: 10,
-        writeable: false))
+    .AddRedis(options =>
+    {
+        options.ConnectionString = "localhost:6379,ssl=true,sslHost=redis.example.com";
+        options.KeyPrefix = "config:myapp:";
+    }, level: 10)
     .Build();
 ```
 
@@ -198,7 +198,12 @@ var cfg = new CfgBuilder()
     // 本地基础配置
     .AddJson("config.json", level: 0, writeable: false)
     // Redis 远程配置（高优先级）
-    .AddSource(new RedisCfgSource("localhost:6379", "config:myapp", level: 10, writeable: false, subscribeChanges: true))
+    .AddRedis(options =>
+    {
+        options.ConnectionString = "localhost:6379";
+        options.KeyPrefix = "config:myapp:";
+        options.Channel = "config:myapp:changes";
+    }, level: 10)
     // 环境变量（最高优先级）
     .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
