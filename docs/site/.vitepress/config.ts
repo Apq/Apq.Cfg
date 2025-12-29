@@ -6,7 +6,22 @@ export default defineConfig({
   lang: 'zh-CN',
   
   head: [
-    ['link', { rel: 'icon', href: '/logo.svg' }]
+    ['link', { rel: 'icon', href: '/logo.svg' }],
+    // SEO meta 标签
+    ['meta', { name: 'keywords', content: 'Apq.Cfg, .NET, 配置管理, Configuration, C#, JSON, YAML, Consul, Nacos, Redis, Vault, 热重载, 依赖注入' }],
+    ['meta', { name: 'author', content: 'Apq' }],
+    // Open Graph 标签（社交媒体分享）
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: 'Apq.Cfg - 高性能 .NET 配置管理库' }],
+    ['meta', { property: 'og:description', content: '支持多种配置源、动态重载、加密脱敏、依赖注入集成的 .NET 配置管理库' }],
+    ['meta', { property: 'og:image', content: '/logo.svg' }],
+    ['meta', { property: 'og:locale', content: 'zh_CN' }],
+    // Twitter Card 标签
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'Apq.Cfg - 高性能 .NET 配置管理库' }],
+    ['meta', { name: 'twitter:description', content: '支持多种配置源、动态重载、加密脱敏、依赖注入集成的 .NET 配置管理库' }],
+    // Sitemap 链接
+    ['link', { rel: 'sitemap', type: 'application/xml', href: '/sitemap.xml' }]
   ],
   
   themeConfig: {
@@ -43,6 +58,7 @@ export default defineConfig({
           text: '进阶',
           items: [
             { text: '依赖注入', link: '/guide/dependency-injection' },
+            { text: '加密脱敏', link: '/guide/encryption-masking' },
             { text: '编码处理', link: '/guide/encoding' },
             { text: '性能优化', link: '/guide/performance' },
             { text: '最佳实践', link: '/guide/best-practices' },
@@ -53,6 +69,7 @@ export default defineConfig({
           text: '深入',
           items: [
             { text: '架构设计', link: '/guide/architecture' },
+            { text: '加密脱敏设计', link: '/guide/encryption-masking-design' },
             { text: '编码处理流程', link: '/guide/encoding-workflow' },
             { text: '动态重载设计', link: '/guide/dynamic-reload-design' }
           ]
@@ -182,5 +199,10 @@ export default defineConfig({
   ],
   
   // 排除不需要构建的文件
-  srcExclude: ['**/DEPLOY.md']
+  srcExclude: ['**/DEPLOY.md'],
+
+  // Sitemap 配置（SEO 优化）
+  sitemap: {
+    hostname: 'https://apq-cfg.gitee.io'
+  }
 })

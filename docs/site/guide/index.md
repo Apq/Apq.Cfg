@@ -46,12 +46,31 @@ public class MyCustomSource : ICfgSource
 {
     public int Level { get; }
     public bool IsWriteable { get; }
-    
+
     public Task<IDictionary<string, string?>> LoadAsync(CancellationToken cancellationToken)
     {
         // 实现自定义加载逻辑
     }
 }
+```
+
+### 🔐 加密脱敏
+
+内置配置加密和脱敏功能，保护敏感信息：
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddAesGcmEncryptionFromEnv()  // 自动解密 {ENC} 前缀的值
+    .AddSensitiveMasking()          // 日志输出时自动脱敏
+    .Build();
+
+// 读取时自动解密
+var password = cfg.Get("Database:Password");
+
+// 日志输出时脱敏
+logger.LogInfo("密码: {0}", cfg.GetMasked("Database:Password"));
+// 输出: 密码: myS***ord
 ```
 
 ## 快速开始
@@ -88,4 +107,5 @@ var typedValue = cfg.Get<int>("Section:IntKey");
 - [安装指南](/guide/installation) - 详细的安装说明
 - [快速开始](/guide/quick-start) - 5 分钟上手教程
 - [配置源](/config-sources/) - 了解所有支持的配置源
+- [加密脱敏](/guide/encryption-masking) - 保护敏感配置
 - [API 参考](/api/) - 完整的 API 文档

@@ -17,6 +17,7 @@
 ### 高级示例
 
 - [复杂场景](/examples/complex-scenarios) - 企业级应用配置
+- [加密脱敏](/guide/encryption-masking) - 配置加密与脱敏
 
 ## 快速示例
 
@@ -88,6 +89,26 @@ cfg.ConfigChanges.Subscribe(e =>
         Console.WriteLine($"  [{change.Type}] {key}");
     }
 });
+```
+
+### 加密脱敏
+
+```csharp
+using Apq.Cfg.Crypto;
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddAesGcmEncryptionFromEnv()  // 从环境变量读取密钥
+    .AddSensitiveMasking()          // 添加脱敏支持
+    .Build();
+
+// 配置文件中的加密值: { "Database": { "Password": "{ENC}base64..." } }
+// 读取时自动解密
+var password = cfg.Get("Database:Password");
+
+// 日志输出时使用脱敏值
+Console.WriteLine($"密码: {cfg.GetMasked("Database:Password")}");
+// 输出: 密码: myS***ord
 ```
 
 ### 可写配置

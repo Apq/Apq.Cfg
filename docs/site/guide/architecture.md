@@ -273,6 +273,21 @@ cfg.ConfigChanges.Subscribe(e =>
 更多编码处理细节请参阅 [编码处理流程](/guide/encoding-workflow)。
 :::
 
+## 加密脱敏机制
+
+Apq.Cfg 提供完整的配置加密和脱敏功能，采用接口抽象和依赖注入实现解耦：
+
+- **IValueTransformer**：值转换器接口，用于读取时解密、写入时加密
+- **IValueMasker**：值脱敏器接口，用于日志输出时隐藏敏感信息
+- **ICryptoProvider**：加密提供者接口，支持多种加密算法
+
+核心库不依赖任何加密扩展包，加密功能通过独立的 `Apq.Cfg.Crypto` 包提供。
+
+::: tip 深入了解
+更多加密脱敏设计细节请参阅 [加密脱敏设计](/guide/encryption-masking-design)。
+使用指南请参阅 [加密脱敏](/guide/encryption-masking)。
+:::
+
 ## 配置源实现
 
 ### 文件配置源基类
@@ -442,6 +457,7 @@ var cfg = new CfgBuilder()
 
 ## 下一步
 
+- [加密脱敏](/guide/encryption-masking) - 配置加密与脱敏功能
 - [扩展开发](/guide/extension) - 了解如何开发自定义配置源
 - [性能优化](/guide/performance) - 性能调优指南
 - [最佳实践](/guide/best-practices) - 最佳实践指南
