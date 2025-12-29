@@ -169,6 +169,7 @@ class Program
         {
             try
             {
+#pragma warning disable CS0618 // Triple DES 已过时，但仍需支持遗留系统
                 ICryptoProvider provider = algorithm.ToLower() switch
                 {
                     "aes-gcm" => new AesGcmCryptoProvider(key),
@@ -179,6 +180,7 @@ class Program
                     "triple-des" => new TripleDesCryptoProvider(key),
                     _ => throw new ArgumentException($"不支持的算法: {algorithm}")
                 };
+#pragma warning restore CS0618
                 
                 var encrypted = provider.Encrypt(value);
                 Console.WriteLine($"{prefix}{encrypted}");
@@ -310,6 +312,7 @@ class Program
                 var json = File.ReadAllText(file.FullName);
                 using var doc = JsonDocument.Parse(json);
 
+#pragma warning disable CS0618 // Triple DES 已过时，但仍需支持遗留系统
                 ICryptoProvider provider = algorithm.ToLower() switch
                 {
                     "aes-gcm" => new AesGcmCryptoProvider(key),
@@ -320,6 +323,7 @@ class Program
                     "triple-des" => new TripleDesCryptoProvider(key),
                     _ => throw new ArgumentException($"不支持的算法: {algorithm}")
                 };
+#pragma warning restore CS0618
                 
                 var encryptedCount = 0;
 
