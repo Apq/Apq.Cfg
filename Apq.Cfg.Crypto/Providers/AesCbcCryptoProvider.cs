@@ -1,5 +1,8 @@
+using System.Buffers;
 using System.Text;
+using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Macs;
 using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Paddings;
 using Org.BouncyCastle.Crypto.Parameters;
@@ -10,8 +13,14 @@ namespace Apq.Cfg.Crypto.Providers;
 /// <summary>
 /// AES-CBC 加密提供者（使用 BouncyCastle 实现）
 /// </summary>
+/// <remarks>
+/// 性能优化：
+/// 1. 使用静态 SecureRandom 实例避免重复创建
+/// 2. 使用 ArrayPool 减少内存分配
+/// </remarks>
 public class AesCbcCryptoProvider : ICryptoProvider, IDisposable
 {
+    private static readonly SecureRandom SharedRandom = new();
     private readonly byte[] _encryptionKey;
     private readonly byte[] _hmacKey;
     private const int BlockSize = 16;
@@ -37,31 +46,37 @@ public class AesCbcCryptoProvider : ICryptoProvider, IDisposable
     {
         var plainBytes = Encoding.UTF8.GetBytes(plainText);
         var iv = new byte[BlockSize];
-        var random = new SecureRandom();
-        random.NextBytes(iv);
+        SharedRandom.NextBytes(iv);
 
         var cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new AesEngine()), new Pkcs7Padding());
         cipher.Init(true, new ParametersWithIV(new KeyParameter(_encryptionKey), iv));
 
-        var cipherBytes = new byte[cipher.GetOutputSize(plainBytes.Length)];
-        var len = cipher.ProcessBytes(plainBytes, 0, plainBytes.Length, cipherBytes, 0);
-        cipher.DoFinal(cipherBytes, len);
+        var cipherOutputSize = cipher.GetOutputSize(plainBytes.Length);
+        var resultSize = BlockSize + HmacSize + cipherOutputSize;
+        var result = ArrayPool<byte>.Shared.Rent(resultSize);
+        try
+        {
+            // 写入 IV
+            Buffer.BlockCopy(iv, 0, result, 0, BlockSize);
 
-        // 计算HMAC
-        var hmac = new Org.BouncyCastle.Crypto.Macs.HMac(new Org.BouncyCastle.Crypto.Digests.Sha256Digest());
-        hmac.Init(new KeyParameter(_hmacKey));
-        hmac.BlockUpdate(iv, 0, iv.Length);
-        hmac.BlockUpdate(cipherBytes, 0, cipherBytes.Length);
-        var hmacBytes = new byte[hmac.GetMacSize()];
-        hmac.DoFinal(hmacBytes, 0);
+            // 加密数据写入 IV + HMAC 之后的位置
+            var cipherOffset = BlockSize + HmacSize;
+            var len = cipher.ProcessBytes(plainBytes, 0, plainBytes.Length, result, cipherOffset);
+            cipher.DoFinal(result, cipherOffset + len);
 
-        // 格式: iv(16) + hmac(32) + cipher
-        var result = new byte[iv.Length + hmacBytes.Length + cipherBytes.Length];
-        Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-        Buffer.BlockCopy(hmacBytes, 0, result, iv.Length, hmacBytes.Length);
-        Buffer.BlockCopy(cipherBytes, 0, result, iv.Length + hmacBytes.Length, cipherBytes.Length);
+            // 计算 HMAC (IV + ciphertext)
+            var hmac = new HMac(new Sha256Digest());
+            hmac.Init(new KeyParameter(_hmacKey));
+            hmac.BlockUpdate(iv, 0, BlockSize);
+            hmac.BlockUpdate(result, cipherOffset, cipherOutputSize);
+            hmac.DoFinal(result, BlockSize); // HMAC 写入 IV 之后
 
-        return Convert.ToBase64String(result);
+            return Convert.ToBase64String(result, 0, resultSize);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(result, clearArray: true);
+        }
     }
 
     public string Decrypt(string cipherText)
@@ -71,44 +86,43 @@ public class AesCbcCryptoProvider : ICryptoProvider, IDisposable
         if (data.Length < BlockSize + HmacSize)
             throw new ArgumentException("Invalid cipher text");
 
-        var iv = new byte[BlockSize];
-        var hmacBytes = new byte[HmacSize];
-        var cipherBytes = new byte[data.Length - BlockSize - HmacSize];
+        var cipherLength = data.Length - BlockSize - HmacSize;
 
-        Buffer.BlockCopy(data, 0, iv, 0, BlockSize);
-        Buffer.BlockCopy(data, BlockSize, hmacBytes, 0, HmacSize);
-        Buffer.BlockCopy(data, BlockSize + HmacSize, cipherBytes, 0, cipherBytes.Length);
-
-        // 验证HMAC
-        var hmac = new Org.BouncyCastle.Crypto.Macs.HMac(new Org.BouncyCastle.Crypto.Digests.Sha256Digest());
+        // 验证 HMAC
+        var hmac = new HMac(new Sha256Digest());
         hmac.Init(new KeyParameter(_hmacKey));
-        hmac.BlockUpdate(iv, 0, iv.Length);
-        hmac.BlockUpdate(cipherBytes, 0, cipherBytes.Length);
-        var expectedHmac = new byte[hmac.GetMacSize()];
+        hmac.BlockUpdate(data, 0, BlockSize); // IV
+        hmac.BlockUpdate(data, BlockSize + HmacSize, cipherLength); // ciphertext
+        var expectedHmac = new byte[HmacSize];
         hmac.DoFinal(expectedHmac, 0);
 
-        if (!ConstantTimeEquals(hmacBytes, expectedHmac))
+        if (!ConstantTimeEquals(data, BlockSize, expectedHmac, 0, HmacSize))
             throw new InvalidOperationException("HMAC verification failed");
 
         // 解密
         var cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new AesEngine()), new Pkcs7Padding());
-        cipher.Init(false, new ParametersWithIV(new KeyParameter(_encryptionKey), iv));
+        cipher.Init(false, new ParametersWithIV(new KeyParameter(_encryptionKey), data.AsSpan(0, BlockSize).ToArray()));
 
-        var plainBytes = new byte[cipher.GetOutputSize(cipherBytes.Length)];
-        var len = cipher.ProcessBytes(cipherBytes, 0, cipherBytes.Length, plainBytes, 0);
-        len += cipher.DoFinal(plainBytes, len);
+        var outputSize = cipher.GetOutputSize(cipherLength);
+        var plainBytes = ArrayPool<byte>.Shared.Rent(outputSize);
+        try
+        {
+            var len = cipher.ProcessBytes(data, BlockSize + HmacSize, cipherLength, plainBytes, 0);
+            len += cipher.DoFinal(plainBytes, len);
 
-        return Encoding.UTF8.GetString(plainBytes, 0, len);
+            return Encoding.UTF8.GetString(plainBytes, 0, len);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(plainBytes, clearArray: true);
+        }
     }
 
-    private static bool ConstantTimeEquals(byte[] a, byte[] b)
+    private static bool ConstantTimeEquals(byte[] a, int aOffset, byte[] b, int bOffset, int length)
     {
-        if (a.Length != b.Length)
-            return false;
-
         uint result = 0;
-        for (int i = 0; i < a.Length; i++)
-            result |= (uint)(a[i] ^ b[i]);
+        for (int i = 0; i < length; i++)
+            result |= (uint)(a[aOffset + i] ^ b[bOffset + i]);
 
         return result == 0;
     }

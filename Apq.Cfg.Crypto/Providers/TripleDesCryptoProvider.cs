@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Text;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Modes;
@@ -10,9 +11,15 @@ namespace Apq.Cfg.Crypto.Providers;
 /// <summary>
 /// Triple DES 加密提供者（使用 BouncyCastle 实现）
 /// </summary>
+/// <remarks>
+/// 性能优化：
+/// 1. 使用静态 SecureRandom 实例避免重复创建
+/// 2. 使用 ArrayPool 减少内存分配
+/// </remarks>
 [Obsolete("Triple DES is considered weak. Use AES-GCM for new projects.")]
 public class TripleDesCryptoProvider : ICryptoProvider, IDisposable
 {
+    private static readonly SecureRandom SharedRandom = new();
     private readonly byte[] _key;
     private const int BlockSize = 8;
 
@@ -32,22 +39,29 @@ public class TripleDesCryptoProvider : ICryptoProvider, IDisposable
     {
         var plainBytes = Encoding.UTF8.GetBytes(plainText);
         var iv = new byte[BlockSize];
-        var random = new SecureRandom();
-        random.NextBytes(iv);
+        SharedRandom.NextBytes(iv);
 
         var cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new DesEdeEngine()), new Pkcs7Padding());
         cipher.Init(true, new ParametersWithIV(new DesEdeParameters(_key), iv));
 
-        var cipherBytes = new byte[cipher.GetOutputSize(plainBytes.Length)];
-        var len = cipher.ProcessBytes(plainBytes, 0, plainBytes.Length, cipherBytes, 0);
-        cipher.DoFinal(cipherBytes, len);
+        var outputSize = cipher.GetOutputSize(plainBytes.Length);
+        var resultSize = BlockSize + outputSize;
+        var result = ArrayPool<byte>.Shared.Rent(resultSize);
+        try
+        {
+            // 写入 IV
+            Buffer.BlockCopy(iv, 0, result, 0, BlockSize);
 
-        // 格式: IV(8) + cipher
-        var result = new byte[iv.Length + cipherBytes.Length];
-        Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-        Buffer.BlockCopy(cipherBytes, 0, result, iv.Length, cipherBytes.Length);
+            // 加密数据写入 IV 之后
+            var len = cipher.ProcessBytes(plainBytes, 0, plainBytes.Length, result, BlockSize);
+            cipher.DoFinal(result, BlockSize + len);
 
-        return Convert.ToBase64String(result);
+            return Convert.ToBase64String(result, 0, resultSize);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(result, clearArray: true);
+        }
     }
 
     public string Decrypt(string cipherText)
@@ -58,19 +72,25 @@ public class TripleDesCryptoProvider : ICryptoProvider, IDisposable
             throw new ArgumentException("Invalid cipher text");
 
         var iv = new byte[BlockSize];
-        var cipherBytes = new byte[data.Length - BlockSize];
-
         Buffer.BlockCopy(data, 0, iv, 0, BlockSize);
-        Buffer.BlockCopy(data, BlockSize, cipherBytes, 0, cipherBytes.Length);
 
+        var cipherLength = data.Length - BlockSize;
         var cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new DesEdeEngine()), new Pkcs7Padding());
         cipher.Init(false, new ParametersWithIV(new DesEdeParameters(_key), iv));
 
-        var plainBytes = new byte[cipher.GetOutputSize(cipherBytes.Length)];
-        var len = cipher.ProcessBytes(cipherBytes, 0, cipherBytes.Length, plainBytes, 0);
-        len += cipher.DoFinal(plainBytes, len);
+        var outputSize = cipher.GetOutputSize(cipherLength);
+        var plainBytes = ArrayPool<byte>.Shared.Rent(outputSize);
+        try
+        {
+            var len = cipher.ProcessBytes(data, BlockSize, cipherLength, plainBytes, 0);
+            len += cipher.DoFinal(plainBytes, len);
 
-        return Encoding.UTF8.GetString(plainBytes, 0, len);
+            return Encoding.UTF8.GetString(plainBytes, 0, len);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(plainBytes, clearArray: true);
+        }
     }
 
     public void Dispose()

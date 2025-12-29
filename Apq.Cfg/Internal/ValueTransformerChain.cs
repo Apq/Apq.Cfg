@@ -11,18 +11,40 @@ namespace Apq.Cfg.Internal;
 /// 1. 解密结果缓存 - 首次解密后缓存明文，后续读取直接返回缓存
 /// 2. 使用 StringComparison.Ordinal 进行前缀检查
 /// 3. 支持缓存失效（配置变更时）
+/// 4. LRU 缓存策略，限制最大缓存数量
 /// </remarks>
 internal sealed class ValueTransformerChain
 {
     private readonly IValueTransformer[] _transformers;
     private readonly ValueTransformerOptions _options;
 
-    // 解密结果缓存：key -> 解密后的明文值
+    // 最大缓存数量
+    private const int MaxCacheSize = 10000;
+
+    // 解密结果缓存：key -> (解密后的明文值, 访问时间戳)
     // 使用 ConcurrentDictionary 保证线程安全
-    private readonly ConcurrentDictionary<string, string?> _decryptedCache = new();
+    private readonly ConcurrentDictionary<string, CacheEntry> _decryptedCache = new();
 
     // 标记哪些键不需要转换（快速跳过）
-    private readonly ConcurrentDictionary<string, bool> _noTransformKeys = new();
+    private readonly ConcurrentDictionary<string, long> _noTransformKeys = new();
+
+    // 用于生成递增的时间戳
+    private long _timestamp;
+
+    /// <summary>
+    /// 缓存条目
+    /// </summary>
+    private readonly struct CacheEntry
+    {
+        public readonly string? Value;
+        public readonly long Timestamp;
+
+        public CacheEntry(string? value, long timestamp)
+        {
+            Value = value;
+            Timestamp = timestamp;
+        }
+    }
 
     /// <summary>
     /// 初始化值转换器链
@@ -56,14 +78,18 @@ internal sealed class ValueTransformerChain
 
         // 快速路径1：检查解密缓存
         if (_decryptedCache.TryGetValue(key, out var cached))
-            return cached;
+        {
+            // 更新访问时间戳（LRU）
+            var newTimestamp = Interlocked.Increment(ref _timestamp);
+            _decryptedCache[key] = new CacheEntry(cached.Value, newTimestamp);
+            return cached.Value;
+        }
 
         // 快速路径2：检查是否已知不需要转换
         if (_noTransformKeys.ContainsKey(key))
             return value;
 
         // 慢路径：执行转换
-        var originalValue = value;
         var transformed = false;
 
         foreach (var transformer in _transformers)
@@ -79,15 +105,79 @@ internal sealed class ValueTransformerChain
         if (transformed)
         {
             // 值被转换了，缓存解密结果
-            _decryptedCache[key] = value;
+            AddToCache(key, value);
         }
         else
         {
             // 值不需要转换，标记为快速跳过
-            _noTransformKeys[key] = true;
+            AddToNoTransformCache(key);
         }
 
         return value;
+    }
+
+    /// <summary>
+    /// 添加到解密缓存，带 LRU 淘汰
+    /// </summary>
+    private void AddToCache(string key, string? value)
+    {
+        var newTimestamp = Interlocked.Increment(ref _timestamp);
+        _decryptedCache[key] = new CacheEntry(value, newTimestamp);
+
+        // 检查是否需要淘汰
+        if (_decryptedCache.Count > MaxCacheSize)
+        {
+            EvictOldestEntries(_decryptedCache, MaxCacheSize / 10);
+        }
+    }
+
+    /// <summary>
+    /// 添加到不需要转换的缓存，带 LRU 淘汰
+    /// </summary>
+    private void AddToNoTransformCache(string key)
+    {
+        var newTimestamp = Interlocked.Increment(ref _timestamp);
+        _noTransformKeys[key] = newTimestamp;
+
+        // 检查是否需要淘汰
+        if (_noTransformKeys.Count > MaxCacheSize)
+        {
+            EvictOldestNoTransformEntries(MaxCacheSize / 10);
+        }
+    }
+
+    /// <summary>
+    /// 淘汰最旧的缓存条目
+    /// </summary>
+    private void EvictOldestEntries(ConcurrentDictionary<string, CacheEntry> cache, int count)
+    {
+        var oldest = cache
+            .OrderBy(kvp => kvp.Value.Timestamp)
+            .Take(count)
+            .Select(kvp => kvp.Key)
+            .ToList();
+
+        foreach (var key in oldest)
+        {
+            cache.TryRemove(key, out _);
+        }
+    }
+
+    /// <summary>
+    /// 淘汰最旧的不需要转换的缓存条目
+    /// </summary>
+    private void EvictOldestNoTransformEntries(int count)
+    {
+        var oldest = _noTransformKeys
+            .OrderBy(kvp => kvp.Value)
+            .Take(count)
+            .Select(kvp => kvp.Key)
+            .ToList();
+
+        foreach (var key in oldest)
+        {
+            _noTransformKeys.TryRemove(key, out _);
+        }
     }
 
     /// <summary>
@@ -150,4 +240,10 @@ internal sealed class ValueTransformerChain
             }
         }
     }
+
+    /// <summary>
+    /// 获取缓存统计信息
+    /// </summary>
+    public (int DecryptedCacheCount, int NoTransformCacheCount) GetCacheStats()
+        => (_decryptedCache.Count, _noTransformKeys.Count);
 }
