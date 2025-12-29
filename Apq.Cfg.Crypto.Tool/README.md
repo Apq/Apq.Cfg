@@ -21,13 +21,13 @@ dotnet tool install -g Apq.Cfg.Crypto.Tool
 
 ```bash
 # 生成 256 位 AES-GCM 密钥（默认）
-apq-cfg-crypto generate-key
+apqenc generate-key
 
 # 生成 128 位密钥
-apq-cfg-crypto generate-key --bits 128
+apqenc generate-key --bits 128
 
 # 生成 192 位密钥
-apq-cfg-crypto generate-key -b 192
+apqenc generate-key -b 192
 ```
 
 输出示例：
@@ -44,11 +44,11 @@ Base64 密钥: abc123...xyz789==
 
 ```bash
 # 加密单个值
-apq-cfg-crypto encrypt --key "base64key..." --value "mySecretPassword"
+apqenc encrypt --key "base64key..." --value "mySecretPassword"
 # 输出: {ENC}base64ciphertext...
 
 # 使用自定义前缀
-apq-cfg-crypto encrypt -k "base64key..." -v "mySecret" --prefix "[ENCRYPTED]"
+apqenc encrypt -k "base64key..." -v "mySecret" --prefix "[ENCRYPTED]"
 # 输出: [ENCRYPTED]base64ciphertext...
 ```
 
@@ -56,30 +56,30 @@ apq-cfg-crypto encrypt -k "base64key..." -v "mySecret" --prefix "[ENCRYPTED]"
 
 ```bash
 # 解密值
-apq-cfg-crypto decrypt --key "base64key..." --value "{ENC}base64ciphertext..."
+apqenc decrypt --key "base64key..." --value "{ENC}base64ciphertext..."
 # 输出: mySecretPassword
 
 # 使用自定义前缀
-apq-cfg-crypto decrypt -k "base64key..." -v "[ENCRYPTED]base64cipher..." -p "[ENCRYPTED]"
+apqenc decrypt -k "base64key..." -v "[ENCRYPTED]base64cipher..." -p "[ENCRYPTED]"
 ```
 
 ### encrypt-file - 批量加密配置文件
 
 ```bash
 # 加密配置文件中的敏感值
-apq-cfg-crypto encrypt-file --key "base64key..." --file config.json
+apqenc encrypt-file --key "base64key..." --file config.json
 
 # 预览将要加密的键（不实际修改）
-apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --dry-run
+apqenc encrypt-file -k "base64key..." -f config.json --dry-run
 
 # 指定输出文件
-apq-cfg-crypto encrypt-file -k "base64key..." -f config.json -o config.encrypted.json
+apqenc encrypt-file -k "base64key..." -f config.json -o config.encrypted.json
 
 # 自定义敏感键模式
-apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --patterns "*Password*,*Secret*,*ApiKey*"
+apqenc encrypt-file -k "base64key..." -f config.json --patterns "*Password*,*Secret*,*ApiKey*"
 
 # 使用自定义前缀
-apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --prefix "[ENC]"
+apqenc encrypt-file -k "base64key..." -f config.json --prefix "[ENC]"
 ```
 
 ## 敏感键模式
@@ -99,17 +99,17 @@ apq-cfg-crypto encrypt-file -k "base64key..." -f config.json --prefix "[ENC]"
 
 ```bash
 # 1. 生成密钥
-apq-cfg-crypto generate-key
+apqenc generate-key
 # 输出: Base64 密钥: abc123...xyz789==
 
 # 2. 设置环境变量
 export APQ_CFG_ENCRYPTION_KEY="abc123...xyz789=="
 
 # 3. 预览将要加密的键
-apq-cfg-crypto encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f appsettings.json --dry-run
+apqenc encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f appsettings.json --dry-run
 
 # 4. 执行加密
-apq-cfg-crypto encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f appsettings.json
+apqenc encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f appsettings.json
 
 # 5. 验证加密结果
 cat appsettings.json

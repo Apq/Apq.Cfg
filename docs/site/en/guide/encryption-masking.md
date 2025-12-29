@@ -166,6 +166,101 @@ var password = cfg.Get("Database:Password");
 logger.LogInformation("Database password: {Password}", cfg.GetMasked("Database:Password"));
 ```
 
+## Command Line Tool
+
+Apq.Cfg provides the `apqenc` command-line tool for generating keys, encrypting/decrypting values, and batch encrypting configuration files.
+
+### Install Tool
+
+```bash
+dotnet tool install -g Apq.Cfg.Crypto.Tool
+```
+
+### Generate Key
+
+```bash
+# Generate 256-bit AES-GCM key (default)
+apqenc generate-key
+
+# Generate 128-bit key
+apqenc generate-key --bits 128
+
+# Generate 192-bit key
+apqenc generate-key -b 192
+```
+
+Output example:
+```
+Algorithm: AES-GCM
+Key bits: 256
+Base64 Key: abc123...xyz789==
+
+Keep this key safe, do not store it in configuration files!
+Recommend using environment variable APQ_CFG_ENCRYPTION_KEY to store the key.
+```
+
+### Encrypt Single Value
+
+```bash
+# Encrypt value
+apqenc encrypt --key "base64key..." --value "mySecretPassword"
+# Output: {ENC}base64ciphertext...
+
+# Use custom prefix
+apqenc encrypt -k "base64key..." -v "mySecret" --prefix "[ENCRYPTED]"
+# Output: [ENCRYPTED]base64ciphertext...
+```
+
+### Decrypt Value
+
+```bash
+# Decrypt value
+apqenc decrypt --key "base64key..." --value "{ENC}base64ciphertext..."
+# Output: mySecretPassword
+
+# Use custom prefix
+apqenc decrypt -k "base64key..." -v "[ENCRYPTED]base64cipher..." -p "[ENCRYPTED]"
+```
+
+### Batch Encrypt Configuration File
+
+```bash
+# Encrypt sensitive values in config file
+apqenc encrypt-file --key "base64key..." --file config.json
+
+# Preview keys to be encrypted (dry run)
+apqenc encrypt-file -k "base64key..." -f config.json --dry-run
+
+# Specify output file
+apqenc encrypt-file -k "base64key..." -f config.json -o config.encrypted.json
+
+# Custom sensitive key patterns
+apqenc encrypt-file -k "base64key..." -f config.json --patterns "*Password*,*Secret*,*ApiKey*"
+
+# Use custom prefix
+apqenc encrypt-file -k "base64key..." -f config.json --prefix "[ENC]"
+```
+
+### Complete Workflow Example
+
+```bash
+# 1. Generate key
+apqenc generate-key
+# Output: Base64 Key: abc123...xyz789==
+
+# 2. Set environment variable
+export APQ_CFG_ENCRYPTION_KEY="abc123...xyz789=="
+
+# 3. Preview keys to be encrypted
+apqenc encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f config.json --dry-run
+
+# 4. Execute encryption
+apqenc encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f config.json
+
+# 5. Verify encryption result
+cat config.json
+```
+
 ## Key Management Best Practices
 
 ### 1. Never Hardcode Keys

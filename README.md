@@ -251,16 +251,16 @@ var snapshot = cfg.GetMaskedSnapshot();
 dotnet tool install -g Apq.Cfg.Crypto.Tool
 
 # 生成密钥
-apq-cfg-crypto generate-key
+apqenc generate-key
 
 # 加密单个值
-apq-cfg-crypto encrypt --key "base64key..." --value "mySecret"
+apqenc encrypt --key "base64key..." --value "mySecret"
 
 # 批量加密配置文件
-apq-cfg-crypto encrypt-file --key "base64key..." --file config.json
+apqenc encrypt-file --key "base64key..." --file config.json
 
 # 预览将要加密的键
-apq-cfg-crypto encrypt-file --key "base64key..." --file config.json --dry-run
+apqenc encrypt-file --key "base64key..." --file config.json --dry-run
 ```
 
 #### 支持的加密算法

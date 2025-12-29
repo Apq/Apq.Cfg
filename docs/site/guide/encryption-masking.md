@@ -305,6 +305,101 @@ logger.LogInformation("数据库密码: {Password}", cfg.GetMasked("Database:Pas
 }
 ```
 
+## 命令行工具
+
+Apq.Cfg 提供了 `apqenc` 命令行工具，用于生成密钥、加密/解密配置值和批量加密配置文件。
+
+### 安装工具
+
+```bash
+dotnet tool install -g Apq.Cfg.Crypto.Tool
+```
+
+### 生成密钥
+
+```bash
+# 生成 256 位 AES-GCM 密钥（默认）
+apqenc generate-key
+
+# 生成 128 位密钥
+apqenc generate-key --bits 128
+
+# 生成 192 位密钥
+apqenc generate-key -b 192
+```
+
+输出示例：
+```
+算法: AES-GCM
+密钥位数: 256
+Base64 密钥: abc123...xyz789==
+
+请妥善保管此密钥，不要将其存储在配置文件中！
+建议使用环境变量 APQ_CFG_ENCRYPTION_KEY 存储密钥。
+```
+
+### 加密单个值
+
+```bash
+# 加密值
+apqenc encrypt --key "base64key..." --value "mySecretPassword"
+# 输出: {ENC}base64ciphertext...
+
+# 使用自定义前缀
+apqenc encrypt -k "base64key..." -v "mySecret" --prefix "[ENCRYPTED]"
+# 输出: [ENCRYPTED]base64ciphertext...
+```
+
+### 解密值
+
+```bash
+# 解密值
+apqenc decrypt --key "base64key..." --value "{ENC}base64ciphertext..."
+# 输出: mySecretPassword
+
+# 使用自定义前缀
+apqenc decrypt -k "base64key..." -v "[ENCRYPTED]base64cipher..." -p "[ENCRYPTED]"
+```
+
+### 批量加密配置文件
+
+```bash
+# 加密配置文件中的敏感值
+apqenc encrypt-file --key "base64key..." --file config.json
+
+# 预览将要加密的键（不实际修改）
+apqenc encrypt-file -k "base64key..." -f config.json --dry-run
+
+# 指定输出文件
+apqenc encrypt-file -k "base64key..." -f config.json -o config.encrypted.json
+
+# 自定义敏感键模式
+apqenc encrypt-file -k "base64key..." -f config.json --patterns "*Password*,*Secret*,*ApiKey*"
+
+# 使用自定义前缀
+apqenc encrypt-file -k "base64key..." -f config.json --prefix "[ENC]"
+```
+
+### 完整工作流示例
+
+```bash
+# 1. 生成密钥
+apqenc generate-key
+# 输出: Base64 密钥: abc123...xyz789==
+
+# 2. 设置环境变量
+export APQ_CFG_ENCRYPTION_KEY="abc123...xyz789=="
+
+# 3. 预览将要加密的键
+apqenc encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f config.json --dry-run
+
+# 4. 执行加密
+apqenc encrypt-file -k "$APQ_CFG_ENCRYPTION_KEY" -f config.json
+
+# 5. 验证加密结果
+cat config.json
+```
+
 ## 密钥管理最佳实践
 
 ### 1. 不要硬编码密钥
