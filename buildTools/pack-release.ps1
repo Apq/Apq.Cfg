@@ -398,6 +398,28 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText($rootIndexPath, $rootIndexContent, $utf8NoBom)
 
 Write-ColorText "  API 索引页生成完成" 'Green'
+
+# 为英文版创建 API 文档的符号链接（解决语言切换 404 问题）
+Write-ColorText '创建英文版 API 符号链接...' 'Cyan'
+$enApiDir = Join-Path $RootDir 'docs\site\en\api'
+foreach ($netVersion in $generatedDocVersions) {
+    $sourcePath = Join-Path $RootDir "docs\site\api\$netVersion"
+    $targetPath = Join-Path $enApiDir $netVersion
+
+    # 如果目标已存在，先删除
+    if (Test-Path $targetPath) {
+        Remove-Item $targetPath -Force -Recurse -ErrorAction SilentlyContinue
+    }
+
+    # 创建目录连接（junction）- 不需要管理员权限
+    cmd /c mklink /J "$targetPath" "$sourcePath" 2>&1 | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+        Write-ColorText "  ✓ $netVersion" 'Green'
+    } else {
+        Write-ColorText "  ✗ $netVersion 创建失败" 'Red'
+    }
+}
+Write-ColorText "  英文版 API 链接创建完成" 'Green'
 Write-Host ''
 
 # 列出生成的包
