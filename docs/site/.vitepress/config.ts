@@ -77,6 +77,26 @@ const zhSidebar = {
         { text: 'ICfgSection', link: '/api/icfg-section' },
         { text: '扩展方法', link: '/api/extensions' }
       ]
+    },
+    {
+      text: '自动生成 API',
+      items: [
+        { text: 'Apq.Cfg', link: '/api/core/' },
+        { text: 'Apq.Cfg.Crypto', link: '/api/crypto/' },
+        { text: 'Apq.Cfg.Ini', link: '/api/ini/' },
+        { text: 'Apq.Cfg.Xml', link: '/api/xml/' },
+        { text: 'Apq.Cfg.Yaml', link: '/api/yaml/' },
+        { text: 'Apq.Cfg.Toml', link: '/api/toml/' },
+        { text: 'Apq.Cfg.Env', link: '/api/env/' },
+        { text: 'Apq.Cfg.Redis', link: '/api/redis/' },
+        { text: 'Apq.Cfg.Consul', link: '/api/consul/' },
+        { text: 'Apq.Cfg.Etcd', link: '/api/etcd/' },
+        { text: 'Apq.Cfg.Nacos', link: '/api/nacos/' },
+        { text: 'Apq.Cfg.Apollo', link: '/api/apollo/' },
+        { text: 'Apq.Cfg.Zookeeper', link: '/api/zookeeper/' },
+        { text: 'Apq.Cfg.Vault', link: '/api/vault/' },
+        { text: 'Apq.Cfg.Database', link: '/api/database/' }
+      ]
     }
   ],
   '/examples/': [
@@ -170,6 +190,26 @@ const enSidebar = {
         { text: 'ICfgRoot', link: '/en/api/icfg-root' },
         { text: 'ICfgSection', link: '/en/api/icfg-section' },
         { text: 'Extensions', link: '/en/api/extensions' }
+      ]
+    },
+    {
+      text: 'Auto-generated API',
+      items: [
+        { text: 'Apq.Cfg', link: '/api/core/' },
+        { text: 'Apq.Cfg.Crypto', link: '/api/crypto/' },
+        { text: 'Apq.Cfg.Ini', link: '/api/ini/' },
+        { text: 'Apq.Cfg.Xml', link: '/api/xml/' },
+        { text: 'Apq.Cfg.Yaml', link: '/api/yaml/' },
+        { text: 'Apq.Cfg.Toml', link: '/api/toml/' },
+        { text: 'Apq.Cfg.Env', link: '/api/env/' },
+        { text: 'Apq.Cfg.Redis', link: '/api/redis/' },
+        { text: 'Apq.Cfg.Consul', link: '/api/consul/' },
+        { text: 'Apq.Cfg.Etcd', link: '/api/etcd/' },
+        { text: 'Apq.Cfg.Nacos', link: '/api/nacos/' },
+        { text: 'Apq.Cfg.Apollo', link: '/api/apollo/' },
+        { text: 'Apq.Cfg.Zookeeper', link: '/api/zookeeper/' },
+        { text: 'Apq.Cfg.Vault', link: '/api/vault/' },
+        { text: 'Apq.Cfg.Database', link: '/api/database/' }
       ]
     }
   ],

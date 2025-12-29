@@ -145,8 +145,11 @@ if (-not (Read-Confirm '确认开始打包? ([Y]/N): ')) {
     exit 0
 }
 
-# 创建输出目录
-if (-not (Test-Path $OutputDir)) {
+# 清空并创建输出目录
+if (Test-Path $OutputDir) {
+    Write-ColorText "清空输出目录: $OutputDir" 'Gray'
+    Remove-Item -Path "$OutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
+} else {
     New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
     Write-ColorText "已创建输出目录: $OutputDir" 'Gray'
 }
@@ -243,5 +246,4 @@ if ($symbolPackages.Count -gt 0) {
 
 Write-ColorText '下一步操作:' 'Yellow'
 Write-ColorText '  运行 push-nuget.bat 发布到 NuGet' 'Gray'
-Write-ColorText '  或指定项目打包: .\pack-release.ps1 -Projects Apq.Cfg,Apq.Cfg.Nacos' 'Gray'
 Write-Host ''

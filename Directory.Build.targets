@@ -1,0 +1,80 @@
+<Project>
+  <!--
+    API 文档自动生成
+    在构建后自动运行 xmldoc2md 生成 Markdown 文档
+
+    使用方式：
+    - dotnet build                               # 构建但不生成文档
+    - dotnet build -p:GenerateApiDocs=true       # 构建并生成文档（Debug 或 Release）
+    - dotnet pack -c Release                     # 打包时自动生成文档
+
+    前提条件：
+    - dotnet tool install -g xmldoc2markdown
+  -->
+
+  <PropertyGroup>
+    <!-- 默认不生成，打包时自动启用 -->
+    <GenerateApiDocs Condition="'$(GenerateApiDocs)' == ''">false</GenerateApiDocs>
+    <GenerateApiDocsOnPack Condition="'$(GenerateApiDocsOnPack)' == ''">true</GenerateApiDocsOnPack>
+
+    <!-- 文档输出目录 -->
+    <ApiDocsOutputDir>$(MSBuildThisFileDirectory)docs\site\api</ApiDocsOutputDir>
+  </PropertyGroup>
+
+  <!-- 打包时启用文档生成 -->
+  <Target Name="EnableApiDocsOnPack" BeforeTargets="Pack" Condition="'$(GenerateApiDocsOnPack)' == 'true'">
+    <PropertyGroup>
+      <GenerateApiDocs>true</GenerateApiDocs>
+    </PropertyGroup>
+  </Target>
+
+  <!-- 生成 API 文档 -->
+  <Target Name="GenerateApiDocumentation"
+          AfterTargets="Build"
+          Condition="'$(GenerateApiDocs)' == 'true' AND '$(TargetFramework)' == 'net8.0' AND Exists('$(DocumentationFile)')">
+
+    <!-- 项目名到输出目录的映射 -->
+    <PropertyGroup>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg'">core</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Crypto'">crypto</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Ini'">ini</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Xml'">xml</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Yaml'">yaml</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Toml'">toml</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Env'">env</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Redis'">redis</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Consul'">consul</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Etcd'">etcd</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Nacos'">nacos</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Apollo'">apollo</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Zookeeper'">zookeeper</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Vault'">vault</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Database'">database</ApiDocSubDir>
+      <ApiDocSubDir Condition="'$(MSBuildProjectName)' == 'Apq.Cfg.Crypto.DataProtection'">crypto-dp</ApiDocSubDir>
+    </PropertyGroup>
+
+    <!-- 只处理有映射的项目 -->
+    <PropertyGroup Condition="'$(ApiDocSubDir)' != ''">
+      <ProjectApiDocsDir>$(ApiDocsOutputDir)\$(ApiDocSubDir)</ProjectApiDocsDir>
+    </PropertyGroup>
+
+    <!-- 创建输出目录 -->
+    <MakeDir Directories="$(ProjectApiDocsDir)" Condition="'$(ApiDocSubDir)' != '' AND !Exists('$(ProjectApiDocsDir)')" />
+
+    <!-- 运行 xmldoc2markdown -->
+    <Exec Command="xmldoc2md &quot;$(DocumentationFile)&quot; &quot;$(ProjectApiDocsDir)&quot;"
+          Condition="'$(ApiDocSubDir)' != ''"
+          IgnoreExitCode="true"
+          ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="XmlDoc2MdExitCode" />
+    </Exec>
+
+    <Message Text="生成 API 文档: $(MSBuildProjectName) -> $(ProjectApiDocsDir)"
+             Importance="high"
+             Condition="'$(ApiDocSubDir)' != '' AND '$(XmlDoc2MdExitCode)' == '0'" />
+
+    <Warning Text="xmldoc2md 未安装或执行失败。请运行: dotnet tool install -g xmldoc2markdown"
+             Condition="'$(ApiDocSubDir)' != '' AND '$(XmlDoc2MdExitCode)' != '0'" />
+  </Target>
+
+</Project>
