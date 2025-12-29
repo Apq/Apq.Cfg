@@ -263,6 +263,14 @@ foreach ($project in $TargetProjects) {
                     # 运行 DefaultDocumentation
                     & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
                     if ($LASTEXITCODE -eq 0) {
+                        # 生成 index.md（从主命名空间文件复制）
+                        $mainMdFile = Get-ChildItem -Path $projOutputDir -Filter "$project.md" -ErrorAction SilentlyContinue | Select-Object -First 1
+                        if ($mainMdFile) {
+                            $indexPath = Join-Path $projOutputDir 'index.md'
+                            $content = [System.IO.File]::ReadAllText($mainMdFile.FullName, [System.Text.Encoding]::UTF8)
+                            $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+                            [System.IO.File]::WriteAllText($indexPath, $content, $utf8NoBom)
+                        }
                         Write-ColorText "      ✓ $netVersion 文档" 'Green'
                     } else {
                         Write-ColorText "      ✗ $netVersion 文档生成失败" 'Red'
