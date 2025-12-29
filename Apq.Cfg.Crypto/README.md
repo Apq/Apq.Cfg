@@ -30,7 +30,7 @@ using Apq.Cfg.Crypto;
 
 // 使用自定义加密提供者
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddEncryption(new MyCustomCryptoProvider())
     .AddSensitiveMasking()
     .Build();
@@ -63,7 +63,7 @@ var maskedValue = cfg.GetMasked("Database:ConnectionString");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddEncryption(provider, options =>
     {
         // 自定义前缀
@@ -82,7 +82,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddSensitiveMasking(options =>
     {
         options.MaskString = "****";

@@ -31,7 +31,7 @@ using Apq.Cfg.Crypto;
 using Apq.Cfg.Crypto.DataProtection;
 
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddDataProtectionEncryption("MyApp")
     .AddSensitiveMasking()
     .Build();
@@ -53,7 +53,7 @@ public class MyService
     public MyService(IDataProtectionProvider dataProtectionProvider)
     {
         _cfg = new CfgBuilder()
-            .AddJson("appsettings.json", level: 0, writeable: false)
+            .AddJson("config.json", level: 0, writeable: false)
             .AddDataProtectionEncryption(dataProtectionProvider)
             .Build();
     }
@@ -64,7 +64,7 @@ public class MyService
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddDataProtectionEncryption(
         new DirectoryInfo("/var/keys"),
         "MyApp")
@@ -75,7 +75,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddDataProtectionEncryption(
         "MyApp",
         purpose: "ConfigEncryption")

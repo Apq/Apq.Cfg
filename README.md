@@ -18,6 +18,7 @@
 - [NuGet 包](#nuget-包)
 - [批量操作](#批量操作)
 - [动态配置重载](#动态配置重载)
+- [配置加密脱敏](#配置加密脱敏)
 - [.env 文件支持](#env-文件支持)
 - [编码处理](#编码处理)
 - [依赖注入集成](#依赖注入集成)
@@ -31,6 +32,10 @@
 
 - **多格式支持**：JSON、INI、XML、YAML、TOML、Env、Redis、数据库
 - **远程配置中心**：支持 Consul、Etcd、Nacos、Apollo 等配置中心，支持热重载
+- **配置加密脱敏**：
+  - 敏感配置值（密码、API密钥等）自动加密存储、读取时解密
+  - 日志输出时自动脱敏，保护敏感信息
+  - 支持 AES-GCM、Data Protection 等多种加密算法
 - **智能编码处理**：
   - 读取时自动检测（BOM 优先，UTF.Unknown 库辅助，支持缓存）
   - 写入时统一 UTF-8 无 BOM
@@ -109,6 +114,9 @@ var connectionString = dbSection.Get("ConnectionString");
 | [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo)                   | Apollo 配置中心          |
 | [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper)             | Zookeeper 配置中心       |
 | [Apq.Cfg.Vault](https://www.nuget.org/packages/Apq.Cfg.Vault)                     | HashiCorp Vault 密钥管理 |
+| [Apq.Cfg.Crypto](https://www.nuget.org/packages/Apq.Cfg.Crypto)                   | 配置加密脱敏核心抽象          |
+| [Apq.Cfg.Crypto.AesGcm](https://www.nuget.org/packages/Apq.Cfg.Crypto.AesGcm)     | AES-GCM 加密实现         |
+| [Apq.Cfg.Crypto.DataProtection](https://www.nuget.org/packages/Apq.Cfg.Crypto.DataProtection) | ASP.NET Core Data Protection 加密 |
 | [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT   |
 
 ## 批量操作
@@ -188,6 +196,75 @@ cfg.ConfigChanges.Subscribe(e =>
 - **增量更新**：只重新加载发生变化的配置源，而非全部重载
 - **层级覆盖感知**：只有当最终合并值真正发生变化时才触发通知
 - **多源支持**：支持多个配置源同时存在的场景
+
+### 配置加密脱敏
+
+支持敏感配置值的加密存储和日志脱敏，保护密码、API密钥等敏感信息：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Crypto;
+using Apq.Cfg.Crypto.AesGcm;
+
+// 使用 AES-GCM 加密
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddAesGcmEncryption("base64key...")  // 或使用 AddAesGcmEncryptionFromEnv()
+    .AddSensitiveMasking()  // 添加脱敏支持
+    .Build();
+
+// 读取时自动解密
+var password = cfg.Get("Database:Password");
+
+// 写入时自动加密（匹配敏感键模式的值）
+cfg.Set("Database:Password", "newPassword");
+await cfg.SaveAsync();
+// 文件中保存的是: "Database:Password": "{ENC}base64ciphertext..."
+
+// 日志输出时使用脱敏值
+var maskedPassword = cfg.GetMasked("Database:Password");
+// 输出: new***ord
+
+// 获取所有配置的脱敏快照（用于调试）
+var snapshot = cfg.GetMaskedSnapshot();
+```
+
+配置文件中的加密值使用 `{ENC}` 前缀标记：
+
+```json
+{
+    "Database": {
+        "Host": "localhost",
+        "Password": "{ENC}base64ciphertext..."
+    },
+    "Api": {
+        "Key": "{ENC}base64ciphertext..."
+    }
+}
+```
+
+#### 命令行工具
+
+使用 `Apq.Cfg.Crypto.Tool` 命令行工具批量加密配置文件：
+
+```bash
+# 安装工具
+dotnet tool install -g Apq.Cfg.Crypto.Tool
+
+# 生成密钥
+apq-cfg-crypto generate-key
+
+# 加密单个值
+apq-cfg-crypto encrypt --key "base64key..." --value "mySecret"
+
+# 批量加密配置文件
+apq-cfg-crypto encrypt-file --key "base64key..." --file config.json
+
+# 预览将要加密的键
+apq-cfg-crypto encrypt-file --key "base64key..." --file config.json --dry-run
+```
+
+> 详细文档见 [Apq.Cfg.Crypto/README.md](Apq.Cfg.Crypto/README.md)
 
 ### .env 文件支持
 

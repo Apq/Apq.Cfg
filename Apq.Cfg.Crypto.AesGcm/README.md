@@ -30,7 +30,7 @@ using Apq.Cfg.Crypto;
 using Apq.Cfg.Crypto.AesGcm;
 
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddAesGcmEncryption("base64key...")
     .AddSensitiveMasking()
     .Build();
@@ -44,13 +44,13 @@ var connectionString = cfg.Get("Database:ConnectionString");
 ```csharp
 // 设置环境变量 APQ_CFG_ENCRYPTION_KEY=base64key...
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddAesGcmEncryptionFromEnv()
     .Build();
 
 // 或使用自定义环境变量名
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddAesGcmEncryptionFromEnv("MY_ENCRYPTION_KEY")
     .Build();
 ```
@@ -59,7 +59,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
     .AddAesGcmEncryption("base64key...")
     .Build();
 
@@ -74,7 +74,7 @@ await cfg.SaveAsync();
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0, writeable: false)
     .AddAesGcmEncryption("base64key...", options =>
     {
         options.EncryptedPrefix = "[ENCRYPTED]";  // 自定义前缀
