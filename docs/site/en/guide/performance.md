@@ -28,10 +28,10 @@ Configuration sources are loaded on-demand, reducing startup time.
 
 | Operation | Time | Allocations |
 |-----------|------|-------------|
-| Get (string) | ~50ns | 0 bytes |
-| Get<int> | ~80ns | 0 bytes |
-| GetSection | ~100ns | 24 bytes |
-| GetMany (100 keys) | ~2μs | 0 bytes |
+| `Get` (string) | ~50ns | 0 bytes |
+| `Get<int>` | ~80ns | 0 bytes |
+| `GetSection` | ~100ns | 24 bytes |
+| `GetMany` (100 keys) | ~2μs | 0 bytes |
 
 ## Optimization Tips
 
