@@ -101,7 +101,6 @@ const zhSidebar = {
     },
     {
       text: '自动生成 API (net8.0)',
-      collapsible: true,
       collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net8.0/core/' },
@@ -123,7 +122,6 @@ const zhSidebar = {
     },
     {
       text: '自动生成 API (net7.0)',
-      collapsible: true,
       collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net7.0/core/' },
@@ -145,7 +143,6 @@ const zhSidebar = {
     },
     {
       text: '自动生成 API (net6.0)',
-      collapsible: true,
       collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net6.0/core/' },
@@ -282,7 +279,6 @@ const enSidebar = {
     },
     {
       text: 'Auto-generated API (net8.0)',
-      collapsible: true,
       collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net8.0/core/' },
@@ -304,7 +300,6 @@ const enSidebar = {
     },
     {
       text: 'Auto-generated API (net7.0)',
-      collapsible: true,
       collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net7.0/core/' },
@@ -326,7 +321,6 @@ const enSidebar = {
     },
     {
       text: 'Auto-generated API (net6.0)',
-      collapsible: true,
       collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net6.0/core/' },
