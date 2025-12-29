@@ -79,23 +79,23 @@ const zhSidebar = {
       ]
     },
     {
-      text: '自动生成 API',
+      text: '自动生成 API (net9.0)',
       items: [
-        { text: 'Apq.Cfg', link: '/api/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/database/' }
+        { text: 'Apq.Cfg', link: '/api/net9.0/core/' },
+        { text: 'Apq.Cfg.Crypto', link: '/api/net9.0/crypto/' },
+        { text: 'Apq.Cfg.Ini', link: '/api/net9.0/ini/' },
+        { text: 'Apq.Cfg.Xml', link: '/api/net9.0/xml/' },
+        { text: 'Apq.Cfg.Yaml', link: '/api/net9.0/yaml/' },
+        { text: 'Apq.Cfg.Toml', link: '/api/net9.0/toml/' },
+        { text: 'Apq.Cfg.Env', link: '/api/net9.0/env/' },
+        { text: 'Apq.Cfg.Redis', link: '/api/net9.0/redis/' },
+        { text: 'Apq.Cfg.Consul', link: '/api/net9.0/consul/' },
+        { text: 'Apq.Cfg.Etcd', link: '/api/net9.0/etcd/' },
+        { text: 'Apq.Cfg.Nacos', link: '/api/net9.0/nacos/' },
+        { text: 'Apq.Cfg.Apollo', link: '/api/net9.0/apollo/' },
+        { text: 'Apq.Cfg.Zookeeper', link: '/api/net9.0/zookeeper/' },
+        { text: 'Apq.Cfg.Vault', link: '/api/net9.0/vault/' },
+        { text: 'Apq.Cfg.Database', link: '/api/net9.0/database/' }
       ]
     }
   ],
@@ -193,23 +193,23 @@ const enSidebar = {
       ]
     },
     {
-      text: 'Auto-generated API',
+      text: 'Auto-generated API (net9.0)',
       items: [
-        { text: 'Apq.Cfg', link: '/api/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/database/' }
+        { text: 'Apq.Cfg', link: '/api/net9.0/core/' },
+        { text: 'Apq.Cfg.Crypto', link: '/api/net9.0/crypto/' },
+        { text: 'Apq.Cfg.Ini', link: '/api/net9.0/ini/' },
+        { text: 'Apq.Cfg.Xml', link: '/api/net9.0/xml/' },
+        { text: 'Apq.Cfg.Yaml', link: '/api/net9.0/yaml/' },
+        { text: 'Apq.Cfg.Toml', link: '/api/net9.0/toml/' },
+        { text: 'Apq.Cfg.Env', link: '/api/net9.0/env/' },
+        { text: 'Apq.Cfg.Redis', link: '/api/net9.0/redis/' },
+        { text: 'Apq.Cfg.Consul', link: '/api/net9.0/consul/' },
+        { text: 'Apq.Cfg.Etcd', link: '/api/net9.0/etcd/' },
+        { text: 'Apq.Cfg.Nacos', link: '/api/net9.0/nacos/' },
+        { text: 'Apq.Cfg.Apollo', link: '/api/net9.0/apollo/' },
+        { text: 'Apq.Cfg.Zookeeper', link: '/api/net9.0/zookeeper/' },
+        { text: 'Apq.Cfg.Vault', link: '/api/net9.0/vault/' },
+        { text: 'Apq.Cfg.Database', link: '/api/net9.0/database/' }
       ]
     }
   ],
