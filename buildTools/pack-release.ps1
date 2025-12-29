@@ -43,9 +43,9 @@ function Read-Confirm {
 # 获取项目版本（从 versions/{ProjectName}/v*.md 目录）
 function Get-ProjectVersion {
     param([string]$ProjectName)
-    
+
     $projectVersionDir = Join-Path $VersionsDir $ProjectName
-    
+
     # 优先使用项目独立版本目录
     if (Test-Path $projectVersionDir) {
         $versionFiles = @(Get-ChildItem -Path $projectVersionDir -Filter 'v*.md' -ErrorAction SilentlyContinue)
@@ -53,7 +53,7 @@ function Get-ProjectVersion {
         # 回退到根版本目录
         $versionFiles = @(Get-ChildItem -Path $VersionsDir -Filter 'v*.md' -ErrorAction SilentlyContinue)
     }
-    
+
     $versions = @($versionFiles | Where-Object { $_.BaseName -match '^v(\d+)\.(\d+)\.(\d+)' } | ForEach-Object {
         $fullVersion = $_.BaseName -replace '^v', ''
         $baseVersion = $_.BaseName -replace '^v(\d+\.\d+\.\d+).*', '$1'
@@ -62,7 +62,7 @@ function Get-ProjectVersion {
             Version = [version]$baseVersion
         }
     } | Sort-Object Version -Descending)
-    
+
     if ($versions.Count -gt 0) {
         return $versions[0].Name
     }
@@ -158,6 +158,16 @@ Write-Host ''
 Write-ColorText '开始打包...' 'Cyan'
 Write-Host ''
 
+# 检查 DefaultDocumentation 是否安装
+Write-ColorText '检查文档生成工具...' 'Gray'
+$toolInstalled = dotnet tool list -g | Select-String 'defaultdocumentation'
+if (-not $toolInstalled) {
+    Write-ColorText '  安装 DefaultDocumentation...' 'Yellow'
+    dotnet tool install -g DefaultDocumentation.Console 2>&1 | Out-Null
+}
+Write-ColorText '  文档生成工具就绪' 'Green'
+Write-Host ''
+
 $successCount = 0
 $failCount = 0
 $generatedPackages = @()
@@ -168,22 +178,22 @@ foreach ($project in $TargetProjects) {
         Write-ColorText "跳过 $project (未找到版本)" 'Yellow'
         continue
     }
-    
+
     # 查找项目文件
     $projectPath = Join-Path $RootDir "$project/$project.csproj"
     if (-not (Test-Path $projectPath)) {
         Write-ColorText "跳过 $project (项目文件不存在)" 'Yellow'
         continue
     }
-    
+
     Write-ColorText "打包 $project v$version..." 'Gray'
-    
+
     # 删除当前版本的旧包
     $oldPackages = Get-ChildItem -Path $OutputDir -Filter "$project.$version.*pkg" -ErrorAction SilentlyContinue
     foreach ($pkg in $oldPackages) {
         Remove-Item $pkg.FullName -Force
     }
-    
+
     # 构建打包参数
     $packArgs = @(
         'pack'
@@ -191,18 +201,74 @@ foreach ($project in $TargetProjects) {
         '-c', 'Release'
         '-o', $OutputDir
     )
-    
+
     if ($NoBuild) {
         $packArgs += '--no-build'
     }
-    
+
     try {
         & dotnet @packArgs 2>&1 | Out-Null
-        
+
         if ($LASTEXITCODE -eq 0) {
             $successCount++
             $generatedPackages += "$project.$version.nupkg"
             Write-ColorText "  ✓ $project v$version" 'Green'
+
+            # 在打包成功后立即生成该项目的文档
+            Write-ColorText "    生成 $project 文档..." 'Gray'
+
+            # 获取所有支持的 .NET 版本
+            $netVersions = @('net6.0', 'net7.0', 'net8.0', 'net9.0')
+
+            # 确定项目输出目录名
+            $outputDirName = switch ($project) {
+                'Apq.Cfg' { 'core' }
+                'Apq.Cfg.Crypto' { 'crypto' }
+                'Apq.Cfg.Ini' { 'ini' }
+                'Apq.Cfg.Xml' { 'xml' }
+                'Apq.Cfg.Yaml' { 'yaml' }
+                'Apq.Cfg.Toml' { 'toml' }
+                'Apq.Cfg.Env' { 'env' }
+                'Apq.Cfg.Redis' { 'redis' }
+                'Apq.Cfg.Consul' { 'consul' }
+                'Apq.Cfg.Etcd' { 'etcd' }
+                'Apq.Cfg.Nacos' { 'nacos' }
+                'Apq.Cfg.Apollo' { 'apollo' }
+                'Apq.Cfg.Zookeeper' { 'zookeeper' }
+                'Apq.Cfg.Vault' { 'vault' }
+                'Apq.Cfg.Database' { 'database' }
+                'Apq.Cfg.Crypto.DataProtection' { 'crypto-dp' }
+                default { $project.ToLower() }
+            }
+
+            # 为每个 .NET 版本生成文档
+            foreach ($netVersion in $netVersions) {
+                $dllPath = Join-Path $RootDir "$project\bin\Release\$netVersion\$project.dll"
+                $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
+                $projOutputDir = Join-Path $apiDocsDir $outputDirName
+
+                if (Test-Path $dllPath) {
+                    # 创建 API 文档目录
+                    if (-not (Test-Path $apiDocsDir)) {
+                        New-Item -ItemType Directory -Path $apiDocsDir -Force | Out-Null
+                    }
+
+                    # 清空并创建输出目录
+                    if (Test-Path $projOutputDir) {
+                        Remove-Item -Path "$projOutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
+                    } else {
+                        New-Item -ItemType Directory -Path $projOutputDir -Force | Out-Null
+                    }
+
+                    # 运行 DefaultDocumentation
+                    & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
+                    if ($LASTEXITCODE -eq 0) {
+                        Write-ColorText "      ✓ $netVersion 文档" 'Green'
+                    } else {
+                        Write-ColorText "      ✗ $netVersion 文档生成失败" 'Red'
+                    }
+                }
+            }
         } else {
             $failCount++
             Write-ColorText "  ✗ $project 打包失败" 'Red'
@@ -223,73 +289,42 @@ if ($failCount -gt 0) {
 Write-ColorText "========================================" 'Cyan'
 Write-Host ''
 
-# 生成 API 文档
-Write-ColorText '生成 API 文档...' 'Cyan'
+# 生成所有 .NET 版本的 API 索引页
+Write-ColorText '生成 API 索引页...' 'Cyan'
 
-$apiDocsDir = Join-Path $RootDir 'docs\site\api\net9.0'
-$docProjects = @(
-    @{ Name = 'Apq.Cfg'; Output = 'core' },
-    @{ Name = 'Apq.Cfg.Crypto'; Output = 'crypto' },
-    @{ Name = 'Apq.Cfg.Ini'; Output = 'ini' },
-    @{ Name = 'Apq.Cfg.Xml'; Output = 'xml' },
-    @{ Name = 'Apq.Cfg.Yaml'; Output = 'yaml' },
-    @{ Name = 'Apq.Cfg.Toml'; Output = 'toml' },
-    @{ Name = 'Apq.Cfg.Env'; Output = 'env' },
-    @{ Name = 'Apq.Cfg.Redis'; Output = 'redis' },
-    @{ Name = 'Apq.Cfg.Consul'; Output = 'consul' },
-    @{ Name = 'Apq.Cfg.Etcd'; Output = 'etcd' },
-    @{ Name = 'Apq.Cfg.Nacos'; Output = 'nacos' },
-    @{ Name = 'Apq.Cfg.Apollo'; Output = 'apollo' },
-    @{ Name = 'Apq.Cfg.Zookeeper'; Output = 'zookeeper' },
-    @{ Name = 'Apq.Cfg.Vault'; Output = 'vault' },
-    @{ Name = 'Apq.Cfg.Database'; Output = 'database' },
-    @{ Name = 'Apq.Cfg.Crypto.DataProtection'; Output = 'crypto-dp' }
-)
+$netVersions = @('net6.0', 'net7.0', 'net8.0', 'net9.0')
+$generatedDocVersions = @()
 
-# 检查 DefaultDocumentation 是否安装
-$toolInstalled = dotnet tool list -g | Select-String 'defaultdocumentation'
-if (-not $toolInstalled) {
-    Write-ColorText '  安装 DefaultDocumentation...' 'Yellow'
-    dotnet tool install -g DefaultDocumentation.Console 2>&1 | Out-Null
-}
-
-# 创建 API 文档目录
-if (-not (Test-Path $apiDocsDir)) {
-    New-Item -ItemType Directory -Path $apiDocsDir -Force | Out-Null
-}
-
-$docSuccessCount = 0
-$docFailCount = 0
-
-foreach ($proj in $docProjects) {
-    $dllPath = Join-Path $RootDir "$($proj.Name)\bin\Release\net9.0\$($proj.Name).dll"
-    $projOutputDir = Join-Path $apiDocsDir $proj.Output
-
-    if (Test-Path $dllPath) {
-        # 清空并创建输出目录
-        if (Test-Path $projOutputDir) {
-            Remove-Item -Path "$projOutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
-        } else {
-            New-Item -ItemType Directory -Path $projOutputDir -Force | Out-Null
-        }
-
-        # 运行 DefaultDocumentation
-        & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) {
-            $docSuccessCount++
-        } else {
-            $docFailCount++
+# 检查每个 .NET 版本是否有文档生成
+foreach ($netVersion in $netVersions) {
+    $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
+    if (Test-Path $apiDocsDir) {
+        $docDirs = Get-ChildItem -Path $apiDocsDir -Directory -ErrorAction SilentlyContinue
+        if ($docDirs.Count -gt 0) {
+            $generatedDocVersions += $netVersion
         }
     }
 }
 
-# 生成 API 索引页
-$indexContent = @"
-# API 参考 (.NET 9.0)
+# 为每个 .NET 版本生成索引页
+foreach ($netVersion in $generatedDocVersions) {
+    $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
+
+    # 根据版本调整标题
+    $versionTitle = switch ($netVersion) {
+        'net6.0' { '.NET 6.0' }
+        'net7.0' { '.NET 7.0' }
+        'net8.0' { '.NET 8.0' }
+        'net9.0' { '.NET 9.0' }
+        default { $netVersion }
+    }
+
+    $indexContent = @"
+# API 参考 ($versionTitle)
 
 本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
 
-> 当前文档基于 .NET 9.0 版本生成。各版本 API 基本一致，仅内部实现有差异。
+> 当前文档基于 $versionTitle 版本生成。各版本 API 基本一致，仅内部实现有差异。
 
 ## 核心库
 
@@ -320,14 +355,41 @@ $indexContent = @"
 - [Apq.Cfg.Database](./database/) - 数据库配置源
 "@
 
-$indexPath = Join-Path $apiDocsDir 'index.md'
-$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-[System.IO.File]::WriteAllText($indexPath, $indexContent, $utf8NoBom)
-
-Write-ColorText "  API 文档: $docSuccessCount 成功" 'Green'
-if ($docFailCount -gt 0) {
-    Write-ColorText "  API 文档: $docFailCount 失败" 'Yellow'
+    $indexPath = Join-Path $apiDocsDir 'index.md'
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($indexPath, $indexContent, $utf8NoBom)
 }
+
+# 生成总的 API 索引页
+$apiRootDir = Join-Path $RootDir 'docs\site\api'
+$rootIndexContent = @"
+# API 参考
+
+本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
+
+> 各版本 API 基本一致，仅内部实现有差异。建议使用最新版本。
+
+## 可用版本
+
+"@
+
+foreach ($netVersion in $generatedDocVersions) {
+    $versionTitle = switch ($netVersion) {
+        'net6.0' { '.NET 6.0' }
+        'net7.0' { '.NET 7.0' }
+        'net8.0' { '.NET 8.0' }
+        'net9.0' { '.NET 9.0' }
+        default { $netVersion }
+    }
+
+    $rootIndexContent += "- [$versionTitle](./$netVersion/)`n"
+}
+
+$rootIndexPath = Join-Path $apiRootDir 'index.md'
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($rootIndexPath, $rootIndexContent, $utf8NoBom)
+
+Write-ColorText "  API 索引页生成完成" 'Green'
 Write-Host ''
 
 # 列出生成的包
@@ -353,4 +415,4 @@ if ($symbolPackages.Count -gt 0) {
 
 Write-ColorText '下一步操作:' 'Yellow'
 Write-ColorText '  运行 push-nuget.bat 发布到 NuGet' 'Gray'
-Write-Host ''
+Write-Host 
