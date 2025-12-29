@@ -1,3 +1,5 @@
+using Apq.Cfg.Crypto.Providers;
+
 namespace Apq.Cfg.Crypto;
 
 /// <summary>
@@ -62,5 +64,107 @@ public static class CfgBuilderExtensions
 
         builder.AddValueMasker(new SensitiveMasker(options));
         return builder;
+    }
+
+    // ==================== 内置算法扩展方法 ====================
+
+    /// <summary>
+    /// 添加 AES-GCM 加密支持
+    /// </summary>
+    public static CfgBuilder AddAesGcmEncryption(
+        this CfgBuilder builder,
+        string base64Key,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = new AesGcmCryptoProvider(base64Key);
+        return builder.AddEncryption(provider, configure);
+    }
+
+    /// <summary>
+    /// 添加 AES-GCM 加密支持（从环境变量读取密钥）
+    /// </summary>
+    public static CfgBuilder AddAesGcmEncryptionFromEnv(
+        this CfgBuilder builder,
+        string envVarName = "APQ_CFG_ENCRYPTION_KEY",
+        Action<EncryptionOptions>? configure = null)
+    {
+        var key = Environment.GetEnvironmentVariable(envVarName)
+            ?? throw new InvalidOperationException($"环境变量 {envVarName} 未设置");
+        return builder.AddAesGcmEncryption(key, configure);
+    }
+
+    /// <summary>
+    /// 添加 AES-CBC 加密支持
+    /// </summary>
+    public static CfgBuilder AddAesCbcEncryption(
+        this CfgBuilder builder,
+        string base64EncryptionKey,
+        string base64HmacKey,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = new AesCbcCryptoProvider(base64EncryptionKey, base64HmacKey);
+        return builder.AddEncryption(provider, configure);
+    }
+
+    /// <summary>
+    /// 添加 ChaCha20-Poly1305 加密支持
+    /// </summary>
+    public static CfgBuilder AddChaCha20Encryption(
+        this CfgBuilder builder,
+        string base64Key,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = new ChaCha20CryptoProvider(base64Key);
+        return builder.AddEncryption(provider, configure);
+    }
+
+    /// <summary>
+    /// 添加 RSA 加密支持（从 PEM 文件）
+    /// </summary>
+    public static CfgBuilder AddRsaEncryption(
+        this CfgBuilder builder,
+        string pemFilePath,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = RsaCryptoProvider.FromPemFile(pemFilePath);
+        return builder.AddEncryption(provider, configure);
+    }
+
+    /// <summary>
+    /// 添加 RSA 加密支持（从 PEM 字符串）
+    /// </summary>
+    public static CfgBuilder AddRsaEncryptionFromPem(
+        this CfgBuilder builder,
+        string pem,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = RsaCryptoProvider.FromPem(pem);
+        return builder.AddEncryption(provider, configure);
+    }
+
+    /// <summary>
+    /// 添加 SM4 国密加密支持
+    /// </summary>
+    public static CfgBuilder AddSm4Encryption(
+        this CfgBuilder builder,
+        string base64Key,
+        Sm4Mode mode = Sm4Mode.CBC,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = new Sm4CryptoProvider(base64Key, mode);
+        return builder.AddEncryption(provider, configure);
+    }
+
+    /// <summary>
+    /// 添加 Triple DES 加密支持（仅用于遗留系统兼容）
+    /// </summary>
+    [Obsolete("Triple DES is considered weak. Use AES-GCM for new projects.")]
+    public static CfgBuilder AddTripleDesEncryption(
+        this CfgBuilder builder,
+        string base64Key,
+        Action<EncryptionOptions>? configure = null)
+    {
+        var provider = new TripleDesCryptoProvider(base64Key);
+        return builder.AddEncryption(provider, configure);
     }
 }

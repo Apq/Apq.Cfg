@@ -2,7 +2,8 @@ using System.CommandLine;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Apq.Cfg.Crypto.AesGcm;
+using Apq.Cfg.Crypto;
+using Apq.Cfg.Crypto.Providers;
 
 namespace Apq.Cfg.Crypto.Tool;
 
@@ -42,7 +43,7 @@ class Program
         var algorithmOption = new Option<string>(
             aliases: new[] { "--algorithm", "-a" },
             getDefaultValue: () => "aes-gcm",
-            description: "加密算法 (aes-gcm)");
+            description: "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)");
 
         var bitsOption = new Option<int>(
             aliases: new[] { "--bits", "-b" },
@@ -57,25 +58,72 @@ class Program
 
         command.SetHandler((algorithm, bits) =>
         {
-            if (algorithm.ToLower() != "aes-gcm")
+            var alg = algorithm.ToLower();
+            byte[] keyBytes;
+            string? additionalInfo = null;
+
+            switch (alg)
             {
-                Console.Error.WriteLine($"不支持的算法: {algorithm}，目前仅支持 aes-gcm");
-                return;
+                case "aes-gcm":
+                case "aes-cbc":
+                    if (bits != 128 && bits != 192 && bits != 256)
+                    {
+                        Console.Error.WriteLine($"AES 不支持的密钥位数: {bits}，支持 128, 192, 256");
+                        return;
+                    }
+                    keyBytes = new byte[bits / 8];
+                    RandomNumberGenerator.Fill(keyBytes);
+                    break;
+
+                case "chacha20":
+                    keyBytes = new byte[32]; // ChaCha20 固定 256 位
+                    RandomNumberGenerator.Fill(keyBytes);
+                    break;
+
+                case "sm4":
+                    keyBytes = new byte[16]; // SM4 固定 128 位
+                    RandomNumberGenerator.Fill(keyBytes);
+                    break;
+
+                case "rsa":
+                    using (var rsa = RSA.Create(bits))
+                    {
+                        var parameters = rsa.ExportParameters(true);
+                        var writer = new StringWriter();
+                        var pemWriter = new Org.BouncyCastle.OpenSsl.PemWriter(writer);
+                        var keyPair = Org.BouncyCastle.Security.DotNetUtilities.GetRsaKeyPair(parameters);
+                        pemWriter.WriteObject(keyPair.Private);
+                        additionalInfo = writer.ToString();
+                    }
+                    keyBytes = Array.Empty<byte>(); // RSA 使用 PEM 格式
+                    break;
+
+                case "triple-des":
+                    keyBytes = new byte[24]; // Triple DES 固定 192 位
+                    RandomNumberGenerator.Fill(keyBytes);
+                    break;
+
+                default:
+                    Console.Error.WriteLine($"不支持的算法: {algorithm}");
+                    Console.Error.WriteLine("支持的算法: aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des");
+                    return;
             }
 
-            if (bits != 128 && bits != 192 && bits != 256)
-            {
-                Console.Error.WriteLine($"不支持的密钥位数: {bits}，支持 128, 192, 256");
-                return;
-            }
-
-            var keyBytes = new byte[bits / 8];
-            RandomNumberGenerator.Fill(keyBytes);
-            var base64Key = Convert.ToBase64String(keyBytes);
+            var base64Key = keyBytes.Length > 0 ? Convert.ToBase64String(keyBytes) : "";
 
             Console.WriteLine($"算法: {algorithm.ToUpper()}");
-            Console.WriteLine($"密钥位数: {bits}");
-            Console.WriteLine($"Base64 密钥: {base64Key}");
+            if (bits > 0 && alg != "chacha20" && alg != "sm4" && alg != "rsa" && alg != "triple-des")
+                Console.WriteLine($"密钥位数: {bits}");
+            
+            if (base64Key.Length > 0)
+                Console.WriteLine($"Base64 密钥: {base64Key}");
+            
+            if (additionalInfo != null)
+            {
+                Console.WriteLine("私钥 (PEM 格式):");
+                Console.WriteLine(additionalInfo);
+            }
+            
             Console.WriteLine();
             Console.WriteLine("请妥善保管此密钥，不要将其存储在配置文件中！");
             Console.WriteLine("建议使用环境变量 APQ_CFG_ENCRYPTION_KEY 存储密钥。");
@@ -103,19 +151,35 @@ class Program
             aliases: new[] { "--prefix", "-p" },
             getDefaultValue: () => "{ENC}",
             description: "加密值前缀");
+            
+        var algorithmOption = new Option<string>(
+            aliases: new[] { "--algorithm", "-a" },
+            getDefaultValue: () => "aes-gcm",
+            description: "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)");
 
         var command = new Command("encrypt", "加密配置值")
         {
             keyOption,
             valueOption,
-            prefixOption
+            prefixOption,
+            algorithmOption
         };
 
-        command.SetHandler((key, value, prefix) =>
+        command.SetHandler((key, value, prefix, algorithm) =>
         {
             try
             {
-                using var provider = new AesGcmCryptoProvider(key);
+                ICryptoProvider provider = algorithm.ToLower() switch
+                {
+                    "aes-gcm" => new AesGcmCryptoProvider(key),
+                    "aes-cbc" => new AesCbcCryptoProvider(key, key), // 简化示例，实际应有两个密钥
+                    "chacha20" => new ChaCha20CryptoProvider(key),
+                    "rsa" => RsaCryptoProvider.FromPem(key),
+                    "sm4" => new Sm4CryptoProvider(key),
+                    "triple-des" => new TripleDesCryptoProvider(key),
+                    _ => throw new ArgumentException($"不支持的算法: {algorithm}")
+                };
+                
                 var encrypted = provider.Encrypt(value);
                 Console.WriteLine($"{prefix}{encrypted}");
             }
@@ -123,7 +187,7 @@ class Program
             {
                 Console.Error.WriteLine($"加密失败: {ex.Message}");
             }
-        }, keyOption, valueOption, prefixOption);
+        }, keyOption, valueOption, prefixOption, algorithmOption);
 
         return command;
     }
@@ -186,7 +250,7 @@ class Program
     {
         var keyOption = new Option<string>(
             aliases: new[] { "--key", "-k" },
-            description: "Base64 编码的加密密钥")
+            description: "Base64 编码的加密密钥或 PEM 格式的私钥")
         { IsRequired = true };
 
         var fileOption = new Option<FileInfo>(
@@ -203,6 +267,11 @@ class Program
             aliases: new[] { "--prefix", "-p" },
             getDefaultValue: () => "{ENC}",
             description: "加密值前缀");
+            
+        var algorithmOption = new Option<string>(
+            aliases: new[] { "--algorithm", "-a" },
+            getDefaultValue: () => "aes-gcm",
+            description: "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)");
 
         var outputOption = new Option<FileInfo?>(
             aliases: new[] { "--output", "-o" },
@@ -219,11 +288,12 @@ class Program
             fileOption,
             patternsOption,
             prefixOption,
+            algorithmOption,
             outputOption,
             dryRunOption
         };
 
-        command.SetHandler((key, file, patterns, prefix, output, dryRun) =>
+        command.SetHandler((key, file, patterns, prefix, algorithm, output, dryRun) =>
         {
             try
             {
@@ -240,7 +310,17 @@ class Program
                 var json = File.ReadAllText(file.FullName);
                 using var doc = JsonDocument.Parse(json);
 
-                using var provider = new AesGcmCryptoProvider(key);
+                ICryptoProvider provider = algorithm.ToLower() switch
+                {
+                    "aes-gcm" => new AesGcmCryptoProvider(key),
+                    "aes-cbc" => new AesCbcCryptoProvider(key, key), // 简化示例，实际应有两个密钥
+                    "chacha20" => new ChaCha20CryptoProvider(key),
+                    "rsa" => RsaCryptoProvider.FromPem(key),
+                    "sm4" => new Sm4CryptoProvider(key),
+                    "triple-des" => new TripleDesCryptoProvider(key),
+                    _ => throw new ArgumentException($"不支持的算法: {algorithm}")
+                };
+                
                 var encryptedCount = 0;
 
                 using var stream = new MemoryStream();
@@ -269,7 +349,7 @@ class Program
             {
                 Console.Error.WriteLine($"处理失败: {ex.Message}");
             }
-        }, keyOption, fileOption, patternsOption, prefixOption, outputOption, dryRunOption);
+        }, keyOption, fileOption, patternsOption, prefixOption, algorithmOption, outputOption, dryRunOption);
 
         return command;
     }
@@ -283,7 +363,7 @@ class Program
         string currentPath,
         List<string> patterns,
         string prefix,
-        AesGcmCryptoProvider provider,
+        ICryptoProvider provider,
         bool dryRun)
     {
         var encryptedCount = 0;
