@@ -1,5 +1,5 @@
 using Apq.Cfg.Crypto;
-using Apq.Cfg.Crypto.AesGcm;
+using Apq.Cfg.Crypto.Providers;
 using System.Security.Cryptography;
 
 namespace Apq.Cfg.Tests;

@@ -1,6 +1,5 @@
 using System.Text;
 using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.Crypto.Macs;
 using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
@@ -14,6 +13,7 @@ public class ChaCha20CryptoProvider : ICryptoProvider, IDisposable
 {
     private readonly byte[] _key;
     private const int NonceSize = 12;
+    private const int TagSize = 16;
 
     public ChaCha20CryptoProvider(byte[] key)
     {
@@ -34,8 +34,8 @@ public class ChaCha20CryptoProvider : ICryptoProvider, IDisposable
         var random = new SecureRandom();
         random.NextBytes(nonce);
 
-        var cipher = new ChaCha20Poly1305Engine();
-        var parameters = new ParametersWithIV(new KeyParameter(_key), nonce);
+        var cipher = new ChaCha20Poly1305();
+        var parameters = new AeadParameters(new KeyParameter(_key), TagSize * 8, nonce);
         cipher.Init(true, parameters);
 
         var cipherBytes = new byte[cipher.GetOutputSize(plainBytes.Length)];
@@ -63,8 +63,8 @@ public class ChaCha20CryptoProvider : ICryptoProvider, IDisposable
         Buffer.BlockCopy(data, 0, nonce, 0, NonceSize);
         Buffer.BlockCopy(data, NonceSize, cipherBytes, 0, cipherBytes.Length);
 
-        var cipher = new ChaCha20Poly1305Engine();
-        var parameters = new ParametersWithIV(new KeyParameter(_key), nonce);
+        var cipher = new ChaCha20Poly1305();
+        var parameters = new AeadParameters(new KeyParameter(_key), TagSize * 8, nonce);
         cipher.Init(false, parameters);
 
         var plainBytes = new byte[cipher.GetOutputSize(cipherBytes.Length)];

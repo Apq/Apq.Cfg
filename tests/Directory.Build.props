@@ -62,7 +62,6 @@
     <ProjectReference Include="..\..\Apq.Cfg.Nacos\Apq.Cfg.Nacos.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Vault\Apq.Cfg.Vault.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj" />
-    <ProjectReference Include="..\..\Apq.Cfg.Crypto.AesGcm\Apq.Cfg.Crypto.AesGcm.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Crypto.DataProtection\Apq.Cfg.Crypto.DataProtection.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.SourceGenerator\Apq.Cfg.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>

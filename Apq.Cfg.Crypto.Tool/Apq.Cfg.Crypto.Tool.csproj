@@ -20,7 +20,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Apq.Cfg.Crypto.AesGcm\Apq.Cfg.Crypto.AesGcm.csproj"/>
+        <ProjectReference Include="..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
