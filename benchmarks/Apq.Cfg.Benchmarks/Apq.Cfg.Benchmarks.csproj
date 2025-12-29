@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Apq.Cfg\Apq.Cfg.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Env\Apq.Cfg.Env.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Ini\Apq.Cfg.Ini.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
