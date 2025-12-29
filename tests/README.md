@@ -31,7 +31,7 @@ dotnet test tests/Apq.Cfg.Tests.Net9/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 346 个测试，41 个需外部服务）
+## 测试统计（共 404 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
@@ -63,6 +63,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | EncodingTests | 33 | 0 | 编码映射测试 |
 | PerformanceOptimizationTests | 30 | 0 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
 | SourceGeneratorTests | 8 | 0 | 源生成器测试（[CfgSection] 特性/BindFrom/BindTo）|
+| **CryptoTests** | **58** | **0** | **加密脱敏测试（AES-GCM/AES-CBC/ChaCha20/SM4/3DES/脱敏）**|
 
 ### 跳过测试说明
 
@@ -201,8 +202,49 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 依赖注入 | ServiceCollectionExtensionsTests | 21 | 0 |
 | 批量操作 | PerformanceOptimizationTests | 30 | 0 |
 | 源生成器 | SourceGeneratorTests | 8 | 0 |
+| **加密脱敏** | **CryptoTests** | **58** | **0** |
 
 > 注：基本读写测试中 41 个跳过的测试需要外部服务（Zookeeper/Apollo/Consul/Etcd/Nacos/Vault），Redis 和 Database 已配置
+
+## 加密脱敏测试详情
+
+CryptoTests 包含 58 个测试，覆盖所有加密脱敏公开功能：
+
+### 加密提供者测试
+
+| 提供者 | 测试数 | 覆盖功能 |
+|--------|--------|----------|
+| AesGcmCryptoProvider | 12 | 加解密、中文、空字符串、长文本、128/192/256位密钥、错误密钥 |
+| AesCbcCryptoProvider | 5 | 加解密、中文、无效密钥、错误密钥、数据篡改检测（HMAC） |
+| ChaCha20CryptoProvider | 4 | 加解密、中文、无效密钥、随机 nonce |
+| Sm4CryptoProvider | 4 | CBC/ECB 模式、中文、无效密钥 |
+| TripleDesCryptoProvider | 3 | 加解密、128/192 位密钥、无效密钥 |
+
+### 转换器/脱敏器测试
+
+| 组件 | 测试数 | 覆盖功能 |
+|------|--------|----------|
+| EncryptionTransformer | 10 | ShouldTransform、TransformOnRead/Write、自定义前缀/模式、缓存清除 |
+| SensitiveMasker | 8 | ShouldMask、Mask、自定义选项、大小写不敏感、缓存清除 |
+
+### CfgBuilder 集成测试
+
+| 扩展方法 | 测试数 |
+|----------|--------|
+| AddAesGcmEncryption | 3 |
+| AddAesCbcEncryption | 1 |
+| AddChaCha20Encryption | 1 |
+| AddSm4Encryption | 1 |
+| AddTripleDesEncryption | 1 |
+| AddSensitiveMasking | 2 |
+| 组合使用 | 2 |
+
+### 边界条件测试
+
+- null 值处理
+- 特殊字符（!@#$%^&*() 等）
+- Unicode/Emoji（😀🎉🔐💻🌍）
+- 大小写不敏感匹配
 
 ## 性能基准测试
 
@@ -222,6 +264,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | KeyPathBenchmarks | 键路径解析性能测试 |
 | BatchOperationBenchmarks | GetMany/SetMany 批量操作性能测试 |
 | MicrosoftConfigBenchmarks | ToMicrosoftConfiguration/ConfigChanges 性能测试 |
+| **CryptoBenchmarks** | **加密脱敏性能测试（算法对比/缓存效果/集成性能）**|
 
 运行性能测试：
 

@@ -40,6 +40,7 @@ benchmarks/
     ├── ObjectBinderBenchmarks.cs         # 对象绑定性能测试（反射）
     ├── SourceGeneratorBenchmarks.cs      # 源生成器绑定性能测试（零反射）
     ├── DependencyInjectionBenchmarks.cs  # 依赖注入集成性能测试
+    ├── CryptoBenchmarks.cs               # 加密脱敏性能测试
     │
     ├── # 远程配置中心测试
     ├── ConsulBenchmarks.cs               # Consul 配置中心性能测试
@@ -313,7 +314,31 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 | ICfgRoot | Resolve_ICfgRoot, Resolve_ICfgRoot_ThenGet |
 | 复杂对象 | Resolve_ComplexOptions, Resolve_MultipleOptions |
 
-### 17. ConsulBenchmarks - Consul 配置中心性能测试（需要 Consul 服务）
+### 17. CryptoBenchmarks - 加密脱敏性能测试
+
+测试各种加密算法、脱敏操作、缓存效果等场景：
+
+| 测试类别 | 测试方法 |
+|----------|----------|
+| 加密算法对比 | AesGcm/AesCbc/ChaCha20/Sm4/TripleDes_Encrypt_Short |
+| 解密算法对比 | AesGcm/ChaCha20_Decrypt_Short |
+| 文本长度对比 | AesGcm_Encrypt_Short/Medium/Long, ChaCha20_Encrypt_Long |
+| 批量加密 | AesGcm/ChaCha20_Encrypt_Batch100 |
+| Transformer 性能 | Transformer_ShouldTransform_SensitiveKey/NonSensitiveKey/EncryptedValue |
+| Transformer 缓存 | Transformer_ShouldTransform_Batch1000, Transformer_TransformOnRead |
+| Masker 性能 | Masker_ShouldMask_SensitiveKey/NonSensitiveKey, Masker_Mask |
+| Masker 缓存 | Masker_ShouldMask_Batch1000 |
+| CfgRoot 集成 | CfgRoot_GetEncrypted_FirstAccess/Cached1000, CfgRoot_GetPlain/GetMasked |
+| 脱敏快照 | CfgRoot_GetMaskedSnapshot |
+| 模式匹配 | PatternMatch_Simple/Various/NoMatch_1000 |
+
+运行加密脱敏基准测试：
+
+```bash
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Crypto*
+```
+
+### 18. ConsulBenchmarks - Consul 配置中心性能测试（需要 Consul 服务）
 
 测试 Consul 配置源的读写性能：
 
@@ -342,8 +367,8 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
-- **预计耗时**：全部测试约 **25 分钟**完成
-- **测试覆盖**：约 220 个测试方法 × 3 个运行时 = 660 个测试点
+- **预计耗时**：全部测试约 **30 分钟**完成
+- **测试覆盖**：约 250 个测试方法 × 3 个运行时 = 750 个测试点
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ## 测试结果
@@ -377,26 +402,27 @@ benchmarks/Apq.Cfg.Benchmarks/
 
 ## 测试覆盖矩阵
 
-| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges | 编码检测 | 对象绑定 | 源生成器 | DI |
-|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|----------|----------|----------|-----|
-| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
-| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
-| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - |
-| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
-| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
-| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
-| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
-| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - |
-| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
-| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - |
-| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - | - | - | - | - |
-| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - | - |
-| EncodingBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - | - |
-| ObjectBinderBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
-| SourceGeneratorBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - |
-| DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ |
-| ConsulBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - |
-| EtcdBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - |
+| 测试类 | Get | Set | Exists | Remove | Save | Load | 并发 | 类型转换 | GetSection | GetMany | SetMany | ToMsConfig | ConfigChanges | 编码检测 | 对象绑定 | 源生成器 | DI | 加密 | 脱敏 |
+|--------|-----|-----|--------|--------|------|------|------|----------|------------|---------|---------|------------|---------------|----------|----------|----------|-----|------|------|
+| ReadWriteBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| LargeFileBenchmarks | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| ConcurrencyBenchmarks | ✅ | ✅ | ✅ | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
+| SaveBenchmarks | - | ✅ | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| RemoveBenchmarks | - | - | - | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| MultiSourceBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| KeyPathBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| TypeConversionBenchmarks | ✅ | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
+| CacheBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| GetSectionBenchmarks | ✅ | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - |
+| BatchOperationBenchmarks | ✅ | ✅ | - | - | - | - | - | ✅ | - | ✅ | ✅ | - | - | - | - | - | - | - | - |
+| MicrosoftConfigBenchmarks | ✅ | ✅ | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - | - | - | - |
+| EncodingBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - | - | - | - |
+| ObjectBinderBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - | - | - |
+| SourceGeneratorBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - |
+| DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
+| **CryptoBenchmarks** | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ |
+| ConsulBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - |
+| EtcdBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - |
 
 ## 注意事项
 
