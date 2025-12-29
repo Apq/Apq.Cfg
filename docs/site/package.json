@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build --mpa",
+    "build": "vitepress build",
     "preview": "vitepress preview",
     "deploy": "npm run build && tcb hosting deploy .vitepress/dist -e $TCB_ENV_ID"
   },
