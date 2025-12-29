@@ -114,14 +114,9 @@ var connectionString = dbSection.Get("ConnectionString");
 | [Apq.Cfg.Apollo](https://www.nuget.org/packages/Apq.Cfg.Apollo)                   | Apollo 配置中心          |
 | [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper)             | Zookeeper 配置中心       |
 | [Apq.Cfg.Vault](https://www.nuget.org/packages/Apq.Cfg.Vault)                     | HashiCorp Vault 密钥管理 |
-| [Apq.Cfg.Crypto](https://www.nuget.org/packages/Apq.Cfg.Crypto)                   | 配置加密脱敏核心抽象          |
-| [Apq.Cfg.Crypto.AesGcm](https://www.nuget.org/packages/Apq.Cfg.Crypto.AesGcm)     | AES-GCM 加密实现（推荐）     |
-| [Apq.Cfg.Crypto.AesCbc](https://www.nuget.org/packages/Apq.Cfg.Crypto.AesCbc)     | AES-CBC + HMAC 加密实现  |
-| [Apq.Cfg.Crypto.ChaCha20](https://www.nuget.org/packages/Apq.Cfg.Crypto.ChaCha20) | ChaCha20-Poly1305 加密（高性能） |
-| [Apq.Cfg.Crypto.Rsa](https://www.nuget.org/packages/Apq.Cfg.Crypto.Rsa)           | RSA 非对称加密            |
-| [Apq.Cfg.Crypto.TripleDes](https://www.nuget.org/packages/Apq.Cfg.Crypto.TripleDes) | Triple DES 加密（遗留兼容） |
-| [Apq.Cfg.Crypto.Sm4](https://www.nuget.org/packages/Apq.Cfg.Crypto.Sm4)           | SM4 国密算法             |
-| [Apq.Cfg.Crypto.DataProtection](https://www.nuget.org/packages/Apq.Cfg.Crypto.DataProtection) | ASP.NET Core Data Protection 加密 |
+| [Apq.Cfg.Crypto](https://www.nuget.org/packages/Apq.Cfg.Crypto)                   | 配置加密脱敏（含多种算法）        |
+| [Apq.Cfg.Crypto.DataProtection](https://www.nuget.org/packages/Apq.Cfg.Crypto.DataProtection) | ASP.NET Core Data Protection 集成 |
+| [Apq.Cfg.Crypto.Tool](https://www.nuget.org/packages/Apq.Cfg.Crypto.Tool)         | 加密命令行工具 (dotnet tool) |
 | [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT   |
 
 ## 批量操作
@@ -209,9 +204,8 @@ cfg.ConfigChanges.Subscribe(e =>
 ```csharp
 using Apq.Cfg;
 using Apq.Cfg.Crypto;
-using Apq.Cfg.Crypto.AesGcm;
 
-// 使用 AES-GCM 加密
+// 使用 AES-GCM 加密（推荐）
 var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
     .AddAesGcmEncryption("base64key...")  // 或使用 AddAesGcmEncryptionFromEnv()
@@ -271,21 +265,20 @@ apq-cfg-crypto encrypt-file --key "base64key..." --file config.json --dry-run
 
 #### 支持的加密算法
 
-| 算法 | 包名 | 安全级别 | 适用场景 |
-|------|------|----------|----------|
-| AES-GCM | Apq.Cfg.Crypto.AesGcm | ⭐⭐⭐⭐⭐ | 推荐首选，认证加密 |
-| AES-CBC | Apq.Cfg.Crypto.AesCbc | ⭐⭐⭐⭐ | 兼容性好，需配合 HMAC |
-| ChaCha20-Poly1305 | Apq.Cfg.Crypto.ChaCha20 | ⭐⭐⭐⭐⭐ | 高性能，移动端友好 |
-| RSA | Apq.Cfg.Crypto.Rsa | ⭐⭐⭐⭐ | 非对称加密，密钥分发 |
-| SM4 | Apq.Cfg.Crypto.Sm4 | ⭐⭐⭐⭐ | 国密算法，合规要求 |
-| Triple DES | Apq.Cfg.Crypto.TripleDes | ⭐⭐⭐ | 遗留系统兼容 |
-| Data Protection | Apq.Cfg.Crypto.DataProtection | ⭐⭐⭐⭐ | ASP.NET Core 集成 |
+`Apq.Cfg.Crypto` 包内置多种加密算法：
+
+| 算法 | 扩展方法 | 安全级别 | 适用场景 |
+|------|----------|----------|----------|
+| AES-GCM | `AddAesGcmEncryption` | ⭐⭐⭐⭐⭐ | 推荐首选，认证加密 |
+| AES-CBC | `AddAesCbcEncryption` | ⭐⭐⭐⭐ | 兼容性好，需配合 HMAC |
+| ChaCha20-Poly1305 | `AddChaCha20Encryption` | ⭐⭐⭐⭐⭐ | 高性能，移动端友好 |
+| RSA | `AddRsaEncryption` | ⭐⭐⭐⭐ | 非对称加密，密钥分发 |
+| SM4 | `AddSm4Encryption` | ⭐⭐⭐⭐ | 国密算法，合规要求 |
+| Triple DES | `AddTripleDesEncryption` | ⭐⭐⭐ | 遗留系统兼容 |
 
 ```csharp
-// 使用不同的加密算法
-using Apq.Cfg.Crypto.ChaCha20;
-using Apq.Cfg.Crypto.Sm4;
-using Apq.Cfg.Crypto.Rsa;
+using Apq.Cfg;
+using Apq.Cfg.Crypto;
 
 // ChaCha20-Poly1305（高性能）
 var cfg1 = new CfgBuilder()
@@ -302,7 +295,7 @@ var cfg2 = new CfgBuilder()
 // RSA 非对称加密（密钥分发场景）
 var cfg3 = new CfgBuilder()
     .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
-    .AddRsaEncryptionFromFile("/path/to/private.pem")
+    .AddRsaEncryption("/path/to/private.pem")
     .Build();
 ```
 
@@ -631,9 +624,12 @@ Apq.Cfg.Nacos/               # Nacos 配置中心
 Apq.Cfg.Apollo/              # Apollo 配置中心
 Apq.Cfg.Zookeeper/           # Zookeeper 配置中心
 Apq.Cfg.Vault/               # HashiCorp Vault 密钥管理
+Apq.Cfg.Crypto/              # 配置加密脱敏（含多种算法）
+Apq.Cfg.Crypto.DataProtection/ # ASP.NET Core Data Protection 集成
+Apq.Cfg.Crypto.Tool/         # 加密命令行工具
 Apq.Cfg.SourceGenerator/     # 源生成器（Native AOT 支持）
-tests/                       # 单元测试（346 个测试用例，41 个需外部服务）
-benchmarks/                  # 性能基准测试（18 个测试类）
+tests/                       # 单元测试
+benchmarks/                  # 性能基准测试
 docs/                        # 技术文档
 Samples/                     # 示例项目
 ```
