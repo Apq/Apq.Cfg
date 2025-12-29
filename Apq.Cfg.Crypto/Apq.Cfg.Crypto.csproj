@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Crypto</RootNamespace>
+        <Description>Apq.Cfg 的加密脱敏核心抽象包，提供 ICryptoProvider 接口和通用加密转换器</Description>
+        <PackageTags>configuration;config;encryption;crypto;security</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+    </ItemGroup>
+
+</Project>

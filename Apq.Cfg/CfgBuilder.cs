@@ -1,5 +1,7 @@
 using System.Text;
 using Apq.Cfg.EncodingSupport;
+using Apq.Cfg.Internal;
+using Apq.Cfg.Security;
 using Apq.Cfg.Sources;
 using Apq.Cfg.Sources.Environment;
 using Apq.Cfg.Sources.File;
@@ -12,6 +14,9 @@ namespace Apq.Cfg;
 public sealed class CfgBuilder
 {
     private readonly List<ICfgSource> _sources = new();
+    private readonly List<IValueTransformer> _transformers = new();
+    private readonly List<IValueMasker> _maskers = new();
+    private ValueTransformerOptions _transformerOptions = new();
 
     /// <summary>
     /// 添加JSON文件配置源
@@ -186,11 +191,83 @@ public sealed class CfgBuilder
         return this;
     }
 
+    #region 值转换器和脱敏器
+
+    /// <summary>
+    /// 添加值转换器（供扩展包使用）
+    /// </summary>
+    /// <param name="transformer">值转换器实例</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddValueTransformer(new EncryptionTransformer(provider))
+    ///     .Build();
+    /// </code>
+    /// </example>
+    public CfgBuilder AddValueTransformer(IValueTransformer transformer)
+    {
+        _transformers.Add(transformer);
+        return this;
+    }
+
+    /// <summary>
+    /// 添加值脱敏器（供扩展包使用）
+    /// </summary>
+    /// <param name="masker">值脱敏器实例</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddValueMasker(new SensitiveMasker())
+    ///     .Build();
+    /// </code>
+    /// </example>
+    public CfgBuilder AddValueMasker(IValueMasker masker)
+    {
+        _maskers.Add(masker);
+        return this;
+    }
+
+    /// <summary>
+    /// 配置值转换选项
+    /// </summary>
+    /// <param name="configure">配置委托</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .ConfigureValueTransformer(options =>
+    ///     {
+    ///         options.EncryptedPrefix = "[ENCRYPTED]";
+    ///         options.SensitiveKeyPatterns.Add("*ApiSecret*");
+    ///     })
+    ///     .Build();
+    /// </code>
+    /// </example>
+    public CfgBuilder ConfigureValueTransformer(Action<ValueTransformerOptions> configure)
+    {
+        configure(_transformerOptions);
+        return this;
+    }
+
+    #endregion
+
     /// <summary>
     /// 构建配置根实例
     /// </summary>
     public ICfgRoot Build()
     {
-        return new MergedCfgRoot(_sources);
+        var transformerChain = _transformers.Count > 0
+            ? new ValueTransformerChain(_transformers, _transformerOptions)
+            : null;
+        var maskerChain = _maskers.Count > 0
+            ? new ValueMaskerChain(_maskers)
+            : null;
+
+        return new MergedCfgRoot(_sources, transformerChain, maskerChain);
     }
 }

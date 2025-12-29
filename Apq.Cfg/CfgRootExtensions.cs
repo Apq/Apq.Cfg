@@ -45,4 +45,56 @@ public static class CfgRootExtensions
             return defaultValue;
         return ValueConverter.Convert<T>(rawValue);
     }
+
+    /// <summary>
+    /// 获取脱敏后的配置值（用于日志输出）
+    /// </summary>
+    /// <param name="cfg">配置根</param>
+    /// <param name="key">配置键</param>
+    /// <returns>脱敏后的值</returns>
+    /// <example>
+    /// <code>
+    /// // 日志输出时使用脱敏值
+    /// logger.LogInformation("连接字符串: {ConnectionString}", cfg.GetMasked("Database:ConnectionString"));
+    /// // 输出: 连接字符串: Ser***ion
+    /// </code>
+    /// </example>
+    public static string GetMasked(this ICfgRoot cfg, string key)
+    {
+        if (cfg is MergedCfgRoot merged)
+        {
+            return merged.GetMasked(key);
+        }
+        return cfg.Get(key) ?? "[null]";
+    }
+
+    /// <summary>
+    /// 获取所有配置的脱敏快照（用于调试）
+    /// </summary>
+    /// <param name="cfg">配置根</param>
+    /// <returns>脱敏后的配置键值对字典</returns>
+    /// <example>
+    /// <code>
+    /// // 获取脱敏快照用于调试
+    /// var snapshot = cfg.GetMaskedSnapshot();
+    /// foreach (var (key, value) in snapshot)
+    /// {
+    ///     Console.WriteLine($"{key}: {value}");
+    /// }
+    /// </code>
+    /// </example>
+    public static IReadOnlyDictionary<string, string> GetMaskedSnapshot(this ICfgRoot cfg)
+    {
+        if (cfg is MergedCfgRoot merged)
+        {
+            return merged.GetMaskedSnapshot();
+        }
+
+        var result = new Dictionary<string, string>();
+        foreach (var key in cfg.GetChildKeys())
+        {
+            result[key] = cfg.Get(key) ?? "[null]";
+        }
+        return result;
+    }
 }

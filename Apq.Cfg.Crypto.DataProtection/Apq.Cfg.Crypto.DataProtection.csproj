@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Crypto.DataProtection</RootNamespace>
+        <Description>Apq.Cfg 的 ASP.NET Core Data Protection 加密实现</Description>
+        <PackageTags>configuration;config;encryption;crypto;dataprotection;security</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="9.0.0"/>
+    </ItemGroup>
+
+</Project>

@@ -46,6 +46,42 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
+    /// 添加 Apq.Cfg 配置服务（支持访问 IServiceProvider）
+    /// </summary>
+    /// <param name="services">服务集合</param>
+    /// <param name="configure">配置构建器委托，接收 CfgBuilder 和 IServiceProvider</param>
+    /// <returns>服务集合，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// // 使用 Data Protection 加密
+    /// services.AddDataProtection();
+    /// services.AddApqCfg((builder, sp) =&gt; builder
+    ///     .AddJson("appsettings.json", level: 0, writeable: false)
+    ///     .AddDataProtectionEncryption(sp.GetRequiredService&lt;IDataProtectionProvider&gt;())
+    ///     .AddSensitiveMasking());
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 此重载允许在配置构建过程中访问已注册的服务，
+    /// 适用于需要依赖其他服务（如 IDataProtectionProvider）的场景。
+    /// </remarks>
+    public static IServiceCollection AddApqCfg(
+        this IServiceCollection services,
+        Action<CfgBuilder, IServiceProvider> configure)
+    {
+        services.TryAddSingleton<ICfgRoot>(sp =>
+        {
+            var builder = new CfgBuilder();
+            configure(builder, sp);
+            return builder.Build();
+        });
+
+        services.TryAddSingleton(sp => sp.GetRequiredService<ICfgRoot>().ToMicrosoftConfiguration());
+
+        return services;
+    }
+
+    /// <summary>
     /// 添加 Apq.Cfg 配置服务（使用工厂方法）
     /// </summary>
     /// <param name="services">服务集合</param>

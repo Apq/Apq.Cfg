@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Crypto.AesGcm</RootNamespace>
+        <Description>Apq.Cfg 的 AES-GCM 加密实现</Description>
+        <PackageTags>configuration;config;encryption;crypto;aes;aesgcm;security</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj"/>
+    </ItemGroup>
+
+</Project>

@@ -45,8 +45,23 @@ internal sealed class MergedCfgRoot : ICfgRoot
     private readonly int[] _levelsAscending;
     private readonly IConfigurationProvider[] _providersArray;
 
+    // 值转换器和脱敏器
+    private readonly ValueTransformerChain? _transformerChain;
+    private readonly ValueMaskerChain? _maskerChain;
+
     public MergedCfgRoot(IEnumerable<ICfgSource> sources)
+        : this(sources, null, null)
     {
+    }
+
+    public MergedCfgRoot(
+        IEnumerable<ICfgSource> sources,
+        ValueTransformerChain? transformerChain,
+        ValueMaskerChain? maskerChain)
+    {
+        _transformerChain = transformerChain;
+        _maskerChain = maskerChain;
+
         var sortedSources = sources.OrderBy(s => s.Level).ThenBy(s => s.IsPrimaryWriter ? 1 : 0).ToList();
         var groups = sortedSources.GroupBy(s => s.Level).ToList();
         _levelData = new Dictionary<int, LevelData>(groups.Count);
@@ -81,13 +96,22 @@ internal sealed class MergedCfgRoot : ICfgRoot
         // Lazy 策略：访问前确保配置是最新的
         _coordinator?.EnsureLatest();
 
+        string? value = null;
+
         // 使用缓存的降序层级数组，避免每次排序
         foreach (var level in _levelsDescending)
         {
             if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
-                return pendingValue;
+            {
+                value = pendingValue;
+                break;
+            }
         }
-        return _merged[key];
+
+        value ??= _merged[key];
+
+        // 应用值转换（如解密）
+        return _transformerChain?.TransformOnRead(key, value) ?? value;
     }
 
     public T? Get<T>(string key)
@@ -95,17 +119,79 @@ internal sealed class MergedCfgRoot : ICfgRoot
         // Lazy 策略：访问前确保配置是最新的
         _coordinator?.EnsureLatest();
 
+        string? rawValue = null;
+
         // 先检查 Pending 中是否有待保存的值，与 Get(string) 行为一致
         foreach (var level in _levelsDescending)
         {
             if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
             {
-                if (pendingValue == null) return default;
-                // Pending 中有值但还未保存，需要手动转换
-                return ValueConverter.Convert<T>(pendingValue);
+                rawValue = pendingValue;
+                break;
             }
         }
-        return _merged.GetValue<T>(key);
+
+        rawValue ??= _merged[key];
+
+        // 应用值转换（如解密）
+        var transformedValue = _transformerChain?.TransformOnRead(key, rawValue) ?? rawValue;
+
+        if (transformedValue == null) return default;
+        return ValueConverter.Convert<T>(transformedValue);
+    }
+
+    /// <summary>
+    /// 获取脱敏后的配置值（用于日志输出）
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <returns>脱敏后的值</returns>
+    /// <example>
+    /// <code>
+    /// // 日志输出时使用脱敏值
+    /// logger.LogInformation("连接字符串: {ConnectionString}", cfg.GetMasked("Database:ConnectionString"));
+    /// // 输出: 连接字符串: Ser***ion
+    /// </code>
+    /// </example>
+    public string GetMasked(string key)
+    {
+        var value = Get(key);
+        return _maskerChain?.Mask(key, value) ?? value ?? "[null]";
+    }
+
+    /// <summary>
+    /// 获取所有配置的脱敏快照（用于调试）
+    /// </summary>
+    /// <returns>脱敏后的配置键值对字典</returns>
+    /// <example>
+    /// <code>
+    /// // 获取脱敏快照用于调试
+    /// var snapshot = cfg.GetMaskedSnapshot();
+    /// foreach (var (key, value) in snapshot)
+    /// {
+    ///     Console.WriteLine($"{key}: {value}");
+    /// }
+    /// </code>
+    /// </example>
+    public IReadOnlyDictionary<string, string> GetMaskedSnapshot()
+    {
+        var result = new Dictionary<string, string>();
+        CollectAllKeysMasked(_merged, string.Empty, result);
+        return result;
+    }
+
+    private void CollectAllKeysMasked(IConfiguration config, string parentPath, Dictionary<string, string> result)
+    {
+        foreach (var child in config.GetChildren())
+        {
+            var fullKey = string.IsNullOrEmpty(parentPath) ? child.Key : string.Concat(parentPath, ":", child.Key);
+
+            if (child.Value != null)
+            {
+                result[fullKey] = GetMasked(fullKey);
+            }
+
+            CollectAllKeysMasked(child, fullKey, result);
+        }
     }
 
     public bool Exists(string key)
@@ -145,7 +231,10 @@ internal sealed class MergedCfgRoot : ICfgRoot
         var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
         if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)
             throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
-        data.Pending[key] = value;
+
+        // 应用值转换（如加密）
+        var transformedValue = _transformerChain?.TransformOnWrite(key, value) ?? value;
+        data.Pending[key] = transformedValue;
     }
 
     public void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
@@ -156,7 +245,9 @@ internal sealed class MergedCfgRoot : ICfgRoot
 
         foreach (var kvp in values)
         {
-            data.Pending[kvp.Key] = kvp.Value;
+            // 应用值转换（如加密）
+            var transformedValue = _transformerChain?.TransformOnWrite(kvp.Key, kvp.Value) ?? kvp.Value;
+            data.Pending[kvp.Key] = transformedValue;
         }
     }
 
@@ -342,6 +433,8 @@ internal sealed class MergedCfgRoot : ICfgRoot
     public void Reload()
     {
         _coordinator?.Reload();
+        // 重载后清除解密缓存，确保下次读取时重新解密
+        _transformerChain?.ClearCache();
     }
 
     /// <summary>
