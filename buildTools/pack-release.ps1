@@ -104,6 +104,9 @@ $AllProjects = @(
     'Apq.Cfg.Apollo',
     'Apq.Cfg.Zookeeper',
     'Apq.Cfg.Vault',
+    'Apq.Cfg.Crypto',
+    'Apq.Cfg.Crypto.DataProtection',
+    'Apq.Cfg.Crypto.Tool',
     'Apq.Cfg.SourceGenerator'
 )
 

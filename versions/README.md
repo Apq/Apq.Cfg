@@ -98,4 +98,7 @@ echo "# Apq.Cfg.Nacos v1.1.0" > versions/Apq.Cfg.Nacos/v1.1.0.md
 | Apq.Cfg.Apollo | Apollo 配置中心 |
 | Apq.Cfg.Zookeeper | Zookeeper 配置中心 |
 | Apq.Cfg.Vault | HashiCorp Vault |
+| Apq.Cfg.Crypto | 加密脱敏核心包 |
+| Apq.Cfg.Crypto.DataProtection | ASP.NET Core Data Protection 集成 |
+| Apq.Cfg.Crypto.Tool | 加密命令行工具 (dotnet tool) |
 | Apq.Cfg.SourceGenerator | 源生成器 |

@@ -25,6 +25,9 @@ Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj
 Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj
 Apq.Cfg.Zookeeper/Apq.Cfg.Zookeeper.csproj
 Apq.Cfg.Vault/Apq.Cfg.Vault.csproj
+Apq.Cfg.Crypto/Apq.Cfg.Crypto.csproj
+Apq.Cfg.Crypto.DataProtection/Apq.Cfg.Crypto.DataProtection.csproj
+Apq.Cfg.Crypto.Tool/Apq.Cfg.Crypto.Tool.csproj
 Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj
 "
 
