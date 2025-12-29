@@ -679,4 +679,461 @@ public class CryptoTests : IDisposable
     }
 
     #endregion
+
+    #region AesCbcCryptoProvider 测试
+
+    [Fact]
+    public void AesCbcCryptoProvider_EncryptDecrypt_RoundTrip()
+    {
+        // Arrange
+        var encKeyBytes = new byte[32];
+        var hmacKeyBytes = new byte[32];
+        RandomNumberGenerator.Fill(encKeyBytes);
+        RandomNumberGenerator.Fill(hmacKeyBytes);
+        var encKey = Convert.ToBase64String(encKeyBytes);
+        var hmacKey = Convert.ToBase64String(hmacKeyBytes);
+
+        using var provider = new AesCbcCryptoProvider(encKey, hmacKey);
+        var plainText = "Hello, AES-CBC!";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.NotEqual(plainText, encrypted);
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void AesCbcCryptoProvider_EncryptDecrypt_ChineseText()
+    {
+        // Arrange
+        var encKeyBytes = new byte[32];
+        var hmacKeyBytes = new byte[32];
+        RandomNumberGenerator.Fill(encKeyBytes);
+        RandomNumberGenerator.Fill(hmacKeyBytes);
+
+        using var provider = new AesCbcCryptoProvider(encKeyBytes, hmacKeyBytes);
+        var plainText = "你好，AES-CBC 加密测试！";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void AesCbcCryptoProvider_InvalidKeyLength_ThrowsException()
+    {
+        // Arrange
+        var invalidKey = Convert.ToBase64String(new byte[15]);
+        var validKey = Convert.ToBase64String(new byte[32]);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new AesCbcCryptoProvider(invalidKey, validKey));
+        Assert.Throws<ArgumentException>(() => new AesCbcCryptoProvider(validKey, invalidKey));
+    }
+
+    [Fact]
+    public void AesCbcCryptoProvider_WrongKey_ThrowsException()
+    {
+        // Arrange
+        var encKeyBytes1 = new byte[32];
+        var encKeyBytes2 = new byte[32];
+        var hmacKeyBytes = new byte[32];
+        RandomNumberGenerator.Fill(encKeyBytes1);
+        RandomNumberGenerator.Fill(encKeyBytes2);
+        RandomNumberGenerator.Fill(hmacKeyBytes);
+
+        using var provider1 = new AesCbcCryptoProvider(encKeyBytes1, hmacKeyBytes);
+        using var provider2 = new AesCbcCryptoProvider(encKeyBytes2, hmacKeyBytes);
+
+        var plainText = "Secret message";
+        var encrypted = provider1.Encrypt(plainText);
+
+        // Act & Assert - HMAC 验证失败
+        Assert.ThrowsAny<Exception>(() => provider2.Decrypt(encrypted));
+    }
+
+    [Fact]
+    public void AesCbcCryptoProvider_TamperedData_ThrowsException()
+    {
+        // Arrange
+        var encKeyBytes = new byte[32];
+        var hmacKeyBytes = new byte[32];
+        RandomNumberGenerator.Fill(encKeyBytes);
+        RandomNumberGenerator.Fill(hmacKeyBytes);
+
+        using var provider = new AesCbcCryptoProvider(encKeyBytes, hmacKeyBytes);
+        var plainText = "Secret message";
+        var encrypted = provider.Encrypt(plainText);
+
+        // 篡改密文
+        var data = Convert.FromBase64String(encrypted);
+        data[data.Length - 1] ^= 0xFF;
+        var tampered = Convert.ToBase64String(data);
+
+        // Act & Assert
+        Assert.ThrowsAny<Exception>(() => provider.Decrypt(tampered));
+    }
+
+    #endregion
+
+    #region ChaCha20CryptoProvider 测试
+
+    [Fact]
+    public void ChaCha20CryptoProvider_EncryptDecrypt_RoundTrip()
+    {
+        // Arrange
+        using var provider = new ChaCha20CryptoProvider(_testKey);
+        var plainText = "Hello, ChaCha20!";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.NotEqual(plainText, encrypted);
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void ChaCha20CryptoProvider_EncryptDecrypt_ChineseText()
+    {
+        // Arrange
+        var keyBytes = new byte[32];
+        RandomNumberGenerator.Fill(keyBytes);
+
+        using var provider = new ChaCha20CryptoProvider(keyBytes);
+        var plainText = "你好，ChaCha20 加密测试！";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void ChaCha20CryptoProvider_InvalidKeyLength_ThrowsException()
+    {
+        // Arrange
+        var invalidKey = Convert.ToBase64String(new byte[16]); // 必须是 32 字节
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new ChaCha20CryptoProvider(invalidKey));
+    }
+
+    [Fact]
+    public void ChaCha20CryptoProvider_DifferentEncryptions_ProduceDifferentCiphertext()
+    {
+        // Arrange
+        using var provider = new ChaCha20CryptoProvider(_testKey);
+        var plainText = "Same text";
+
+        // Act
+        var encrypted1 = provider.Encrypt(plainText);
+        var encrypted2 = provider.Encrypt(plainText);
+
+        // Assert - 由于随机 nonce，每次加密结果应该不同
+        Assert.NotEqual(encrypted1, encrypted2);
+    }
+
+    #endregion
+
+    #region Sm4CryptoProvider 测试
+
+    [Fact]
+    public void Sm4CryptoProvider_CBC_EncryptDecrypt_RoundTrip()
+    {
+        // Arrange
+        var keyBytes = new byte[16]; // SM4 密钥必须是 128 位
+        RandomNumberGenerator.Fill(keyBytes);
+        var key = Convert.ToBase64String(keyBytes);
+
+        using var provider = new Sm4CryptoProvider(key, Sm4Mode.CBC);
+        var plainText = "Hello, SM4-CBC!";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.NotEqual(plainText, encrypted);
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void Sm4CryptoProvider_ECB_EncryptDecrypt_RoundTrip()
+    {
+        // Arrange
+        var keyBytes = new byte[16];
+        RandomNumberGenerator.Fill(keyBytes);
+
+        using var provider = new Sm4CryptoProvider(keyBytes, Sm4Mode.ECB);
+        var plainText = "Hello, SM4-ECB!";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void Sm4CryptoProvider_EncryptDecrypt_ChineseText()
+    {
+        // Arrange
+        var keyBytes = new byte[16];
+        RandomNumberGenerator.Fill(keyBytes);
+
+        using var provider = new Sm4CryptoProvider(keyBytes);
+        var plainText = "你好，国密 SM4 加密测试！";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void Sm4CryptoProvider_InvalidKeyLength_ThrowsException()
+    {
+        // Arrange
+        var invalidKey = Convert.ToBase64String(new byte[32]); // SM4 必须是 16 字节
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new Sm4CryptoProvider(invalidKey));
+    }
+
+    #endregion
+
+    #region TripleDesCryptoProvider 测试
+
+    [Fact]
+    public void TripleDesCryptoProvider_EncryptDecrypt_RoundTrip()
+    {
+        // Arrange
+        var keyBytes = new byte[24]; // Triple DES 密钥 192 位
+        RandomNumberGenerator.Fill(keyBytes);
+        var key = Convert.ToBase64String(keyBytes);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        using var provider = new TripleDesCryptoProvider(key);
+#pragma warning restore CS0618
+
+        var plainText = "Hello, Triple DES!";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.NotEqual(plainText, encrypted);
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void TripleDesCryptoProvider_128BitKey_Works()
+    {
+        // Arrange
+        var keyBytes = new byte[16]; // 128 位密钥
+        RandomNumberGenerator.Fill(keyBytes);
+
+#pragma warning disable CS0618
+        using var provider = new TripleDesCryptoProvider(keyBytes);
+#pragma warning restore CS0618
+
+        var plainText = "Test with 128-bit key";
+
+        // Act
+        var encrypted = provider.Encrypt(plainText);
+        var decrypted = provider.Decrypt(encrypted);
+
+        // Assert
+        Assert.Equal(plainText, decrypted);
+    }
+
+    [Fact]
+    public void TripleDesCryptoProvider_InvalidKeyLength_ThrowsException()
+    {
+        // Arrange
+        var invalidKey = Convert.ToBase64String(new byte[32]); // 必须是 16 或 24 字节
+
+        // Act & Assert
+#pragma warning disable CS0618
+        Assert.Throws<ArgumentException>(() => new TripleDesCryptoProvider(invalidKey));
+#pragma warning restore CS0618
+    }
+
+    #endregion
+
+    #region CfgBuilder 扩展方法测试
+
+    [Fact]
+    public void CfgBuilder_AddAesCbcEncryption_Works()
+    {
+        // Arrange
+        var encKeyBytes = new byte[32];
+        var hmacKeyBytes = new byte[32];
+        RandomNumberGenerator.Fill(encKeyBytes);
+        RandomNumberGenerator.Fill(hmacKeyBytes);
+        var encKey = Convert.ToBase64String(encKeyBytes);
+        var hmacKey = Convert.ToBase64String(hmacKeyBytes);
+
+        using var provider = new AesCbcCryptoProvider(encKey, hmacKey);
+        var encryptedPassword = "{ENC}" + provider.Encrypt("AesCbcPassword");
+
+        var jsonPath = Path.Combine(_testDir, "aescbc_config.json");
+        File.WriteAllText(jsonPath, $$"""
+            {
+                "Password": "{{encryptedPassword}}"
+            }
+            """);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddAesCbcEncryption(encKey, hmacKey)
+            .Build();
+
+        // Assert
+        Assert.Equal("AesCbcPassword", cfg.Get("Password"));
+    }
+
+    [Fact]
+    public void CfgBuilder_AddChaCha20Encryption_Works()
+    {
+        // Arrange
+        using var provider = new ChaCha20CryptoProvider(_testKey);
+        var encryptedPassword = "{ENC}" + provider.Encrypt("ChaCha20Password");
+
+        var jsonPath = Path.Combine(_testDir, "chacha20_config.json");
+        File.WriteAllText(jsonPath, $$"""
+            {
+                "Password": "{{encryptedPassword}}"
+            }
+            """);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddChaCha20Encryption(_testKey)
+            .Build();
+
+        // Assert
+        Assert.Equal("ChaCha20Password", cfg.Get("Password"));
+    }
+
+    [Fact]
+    public void CfgBuilder_AddSm4Encryption_Works()
+    {
+        // Arrange
+        var keyBytes = new byte[16];
+        RandomNumberGenerator.Fill(keyBytes);
+        var key = Convert.ToBase64String(keyBytes);
+
+        using var provider = new Sm4CryptoProvider(key);
+        var encryptedPassword = "{ENC}" + provider.Encrypt("Sm4Password");
+
+        var jsonPath = Path.Combine(_testDir, "sm4_config.json");
+        File.WriteAllText(jsonPath, $$"""
+            {
+                "Password": "{{encryptedPassword}}"
+            }
+            """);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddSm4Encryption(key)
+            .Build();
+
+        // Assert
+        Assert.Equal("Sm4Password", cfg.Get("Password"));
+    }
+
+    [Fact]
+    public void CfgBuilder_AddTripleDesEncryption_Works()
+    {
+        // Arrange
+        var keyBytes = new byte[24];
+        RandomNumberGenerator.Fill(keyBytes);
+        var key = Convert.ToBase64String(keyBytes);
+
+#pragma warning disable CS0618
+        using var provider = new TripleDesCryptoProvider(key);
+#pragma warning restore CS0618
+        var encryptedPassword = "{ENC}" + provider.Encrypt("TripleDesPassword");
+
+        var jsonPath = Path.Combine(_testDir, "tripledes_config.json");
+        File.WriteAllText(jsonPath, $$"""
+            {
+                "Password": "{{encryptedPassword}}"
+            }
+            """);
+
+        // Act
+#pragma warning disable CS0618
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddTripleDesEncryption(key)
+            .Build();
+#pragma warning restore CS0618
+
+        // Assert
+        Assert.Equal("TripleDesPassword", cfg.Get("Password"));
+    }
+
+    #endregion
+
+    #region EncryptionTransformer 缓存测试
+
+    [Fact]
+    public void EncryptionTransformer_ClearCache_Works()
+    {
+        // Arrange
+        using var provider = new AesGcmCryptoProvider(_testKey);
+        var transformer = new EncryptionTransformer(provider);
+
+        // 触发缓存
+        transformer.ShouldTransform("Password", "value");
+        transformer.ShouldTransform("NonSensitive", "value");
+
+        // Act - 清除缓存不应抛出异常
+        transformer.ClearCache();
+
+        // Assert - 清除后仍能正常工作
+        Assert.True(transformer.ShouldTransform("Password", "value"));
+    }
+
+    #endregion
+
+    #region SensitiveMasker 缓存测试
+
+    [Fact]
+    public void SensitiveMasker_ClearCache_Works()
+    {
+        // Arrange
+        var masker = new SensitiveMasker();
+
+        // 触发缓存
+        masker.ShouldMask("Password");
+        masker.ShouldMask("NonSensitive");
+
+        // Act - 清除缓存不应抛出异常
+        masker.ClearCache();
+
+        // Assert - 清除后仍能正常工作
+        Assert.True(masker.ShouldMask("Password"));
+    }
+
+    #endregion
 }
