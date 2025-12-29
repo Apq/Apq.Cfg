@@ -1,0 +1,139 @@
+# JSON Configuration Source
+
+JSON is the most commonly used configuration format, included in the core `Apq.Cfg` package.
+
+## Installation
+
+```bash
+dotnet add package Apq.Cfg
+```
+
+## Basic Usage
+
+### Configuration File
+
+```json
+{
+    "App": {
+        "Name": "MyApp",
+        "Port": 8080,
+        "Debug": true
+    },
+    "Database": {
+        "Host": "localhost",
+        "Port": 5432,
+        "Name": "mydb",
+        "ConnectionString": "Host=localhost;Database=mydb"
+    },
+    "Logging": {
+        "Level": "Information",
+        "Providers": ["Console", "File"]
+    }
+}
+```
+
+### Read Configuration
+
+```csharp
+using Apq.Cfg;
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .Build();
+
+// Read values
+var appName = cfg.Get("App:Name");
+var port = cfg.Get<int>("App:Port");
+var debug = cfg.Get<bool>("App:Debug");
+```
+
+## Configuration Options
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `path` | string | Required | File path |
+| `level` | int | Required | Priority level |
+| `writeable` | bool | `false` | Enable write support |
+| `optional` | bool | `false` | Allow missing file |
+| `reloadOnChange` | bool | `false` | Enable hot reload |
+| `isPrimaryWriter` | bool | `false` | Mark as primary write target |
+
+## Multi-Environment Configuration
+
+```csharp
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.local.json", level: 2, writeable: false, optional: true)
+    .Build();
+```
+
+## Writable Configuration
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// Modify values
+cfg.Set("App:Name", "NewAppName");
+cfg.Set("App:Port", "9090");
+
+// Save to file
+await cfg.SaveAsync();
+```
+
+## Hot Reload
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .Build();
+
+// Subscribe to changes
+cfg.ConfigChanges.Subscribe(e =>
+{
+    Console.WriteLine("Configuration changed!");
+    foreach (var (key, change) in e.Changes)
+    {
+        Console.WriteLine($"  {key}: {change.OldValue} -> {change.NewValue}");
+    }
+});
+```
+
+## Array Support
+
+### Configuration
+
+```json
+{
+    "Servers": [
+        { "Host": "server1.example.com", "Port": 8080 },
+        { "Host": "server2.example.com", "Port": 8081 }
+    ]
+}
+```
+
+### Reading Arrays
+
+```csharp
+// Access by index
+var host1 = cfg.Get("Servers:0:Host");
+var port1 = cfg.Get<int>("Servers:0:Port");
+
+// Enumerate
+var serversSection = cfg.GetSection("Servers");
+foreach (var key in serversSection.GetChildKeys())
+{
+    var server = serversSection.GetSection(key);
+    Console.WriteLine($"{server.Get("Host")}:{server.Get<int>("Port")}");
+}
+```
+
+## Next Steps
+
+- [YAML](/en/config-sources/yaml) - Alternative format
+- [Config Merge](/en/guide/config-merge) - Multi-source merging
+- [Dynamic Reload](/en/guide/dynamic-reload) - Hot reload details
