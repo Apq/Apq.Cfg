@@ -6,10 +6,18 @@ namespace Apq.Cfg.Crypto;
 /// <summary>
 /// 加密值转换器
 /// </summary>
+/// <remarks>
+/// 性能优化：
+/// 1. 使用 Lazy 延迟编译正则表达式
+/// 2. 使用 RegexOptions.Compiled 提升匹配性能
+/// </remarks>
 public class EncryptionTransformer : IValueTransformer
 {
     private readonly ICryptoProvider _provider;
     private readonly EncryptionOptions _options;
+
+    // 缓存编译后的正则表达式，延迟初始化
+    private readonly Lazy<Regex[]> _compiledPatterns;
 
     /// <summary>
     /// 转换器名称
@@ -30,6 +38,16 @@ public class EncryptionTransformer : IValueTransformer
     {
         _provider = provider ?? throw new ArgumentNullException(nameof(provider));
         _options = options ?? new EncryptionOptions();
+
+        // 延迟编译正则表达式，首次使用时才编译
+        _compiledPatterns = new Lazy<Regex[]>(() =>
+            _options.SensitiveKeyPatterns
+                .Select(pattern => new Regex(
+                    "^" + Regex.Escape(pattern)
+                        .Replace("\\*", ".*")
+                        .Replace("\\?", ".") + "$",
+                    RegexOptions.IgnoreCase | RegexOptions.Compiled))
+                .ToArray());
     }
 
     /// <summary>
@@ -44,11 +62,10 @@ public class EncryptionTransformer : IValueTransformer
         if (value?.StartsWith(_options.EncryptedPrefix) == true)
             return true;
 
-        // 写入时：检查是否匹配敏感键模式
+        // 写入时：使用缓存的正则表达式匹配敏感键模式
         if (_options.AutoEncryptOnWrite)
         {
-            return _options.SensitiveKeyPatterns.Any(pattern =>
-                MatchPattern(key, pattern));
+            return MatchSensitiveKey(key);
         }
 
         return false;
@@ -87,9 +104,8 @@ public class EncryptionTransformer : IValueTransformer
         if (value.StartsWith(_options.EncryptedPrefix))
             return value;
 
-        // 检查是否需要加密
-        if (!_options.AutoEncryptOnWrite ||
-            !_options.SensitiveKeyPatterns.Any(p => MatchPattern(key, p)))
+        // 使用缓存的正则表达式检查是否需要加密
+        if (!_options.AutoEncryptOnWrite || !MatchSensitiveKey(key))
             return value;
 
         var cipherText = _provider.Encrypt(value);
@@ -97,16 +113,12 @@ public class EncryptionTransformer : IValueTransformer
     }
 
     /// <summary>
-    /// 简单通配符匹配实现
+    /// 使用缓存的正则表达式匹配敏感键
     /// </summary>
     /// <param name="key">配置键</param>
-    /// <param name="pattern">通配符模式</param>
-    /// <returns>是否匹配</returns>
-    private static bool MatchPattern(string key, string pattern)
+    /// <returns>是否匹配任一敏感键模式</returns>
+    private bool MatchSensitiveKey(string key)
     {
-        var regex = "^" + Regex.Escape(pattern)
-            .Replace("\\*", ".*")
-            .Replace("\\?", ".") + "$";
-        return Regex.IsMatch(key, regex, RegexOptions.IgnoreCase);
+        return _compiledPatterns.Value.Any(regex => regex.IsMatch(key));
     }
 }

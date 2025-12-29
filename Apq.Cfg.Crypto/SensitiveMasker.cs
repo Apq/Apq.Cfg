@@ -6,9 +6,17 @@ namespace Apq.Cfg.Crypto;
 /// <summary>
 /// 敏感值脱敏器
 /// </summary>
+/// <remarks>
+/// 性能优化：
+/// 1. 使用 Lazy 延迟编译正则表达式
+/// 2. 使用 RegexOptions.Compiled 提升匹配性能
+/// </remarks>
 public class SensitiveMasker : IValueMasker
 {
     private readonly MaskingOptions _options;
+
+    // 缓存编译后的正则表达式，延迟初始化
+    private readonly Lazy<Regex[]> _compiledPatterns;
 
     /// <summary>
     /// 初始化敏感值脱敏器
@@ -17,6 +25,16 @@ public class SensitiveMasker : IValueMasker
     public SensitiveMasker(MaskingOptions? options = null)
     {
         _options = options ?? new MaskingOptions();
+
+        // 延迟编译正则表达式，首次使用时才编译
+        _compiledPatterns = new Lazy<Regex[]>(() =>
+            _options.SensitiveKeyPatterns
+                .Select(pattern => new Regex(
+                    "^" + Regex.Escape(pattern)
+                        .Replace("\\*", ".*")
+                        .Replace("\\?", ".") + "$",
+                    RegexOptions.IgnoreCase | RegexOptions.Compiled))
+                .ToArray());
     }
 
     /// <summary>
@@ -26,8 +44,7 @@ public class SensitiveMasker : IValueMasker
     /// <returns>如果应该脱敏返回 true，否则返回 false</returns>
     public bool ShouldMask(string key)
     {
-        return _options.SensitiveKeyPatterns.Any(pattern =>
-            MatchPattern(key, pattern));
+        return _compiledPatterns.Value.Any(regex => regex.IsMatch(key));
     }
 
     /// <summary>
@@ -47,19 +64,5 @@ public class SensitiveMasker : IValueMasker
         return value.Substring(0, _options.VisibleChars)
             + _options.MaskString
             + value.Substring(value.Length - _options.VisibleChars);
-    }
-
-    /// <summary>
-    /// 简单通配符匹配实现
-    /// </summary>
-    /// <param name="key">配置键</param>
-    /// <param name="pattern">通配符模式</param>
-    /// <returns>是否匹配</returns>
-    private static bool MatchPattern(string key, string pattern)
-    {
-        var regex = "^" + Regex.Escape(pattern)
-            .Replace("\\*", ".*")
-            .Replace("\\?", ".") + "$";
-        return Regex.IsMatch(key, regex, RegexOptions.IgnoreCase);
     }
 }
