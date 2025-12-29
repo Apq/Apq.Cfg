@@ -274,7 +274,7 @@ public class JsonCfgTests : IDisposable
     }
 
     [Fact]
-    public void Get_InvalidValue_ThrowsException()
+    public void Get_InvalidValue_ReturnsDefault()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -284,8 +284,8 @@ public class JsonCfgTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert - 无效值应抛出异常（Microsoft.Extensions.Configuration 的行为）
-        Assert.Throws<InvalidOperationException>(() => cfg.Get<int>("NotANumber"));
+        // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
+        Assert.Equal(default(int), cfg.Get<int>("NotANumber"));
     }
 
     [Fact]

@@ -129,7 +129,7 @@ public class ExceptionHandlingTests : IDisposable
     #region 类型转换异常测试
 
     [Fact]
-    public void Get_InvalidIntConversion_ThrowsException()
+    public void Get_InvalidIntConversion_ReturnsDefault()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -139,12 +139,12 @@ public class ExceptionHandlingTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => cfg.Get<int>("NotANumber"));
+        // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
+        Assert.Equal(default(int), cfg.Get<int>("NotANumber"));
     }
 
     [Fact]
-    public void Get_InvalidBoolConversion_ThrowsException()
+    public void Get_InvalidBoolConversion_ReturnsDefault()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -154,12 +154,12 @@ public class ExceptionHandlingTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert - Microsoft.Extensions.Configuration 对无效 bool 值抛出异常
-        Assert.Throws<InvalidOperationException>(() => cfg.Get<bool>("NotABool"));
+        // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
+        Assert.Equal(default(bool), cfg.Get<bool>("NotABool"));
     }
 
     [Fact]
-    public void Get_OverflowInt_ThrowsException()
+    public void Get_OverflowInt_ReturnsDefault()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -170,8 +170,8 @@ public class ExceptionHandlingTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert - 溢出时抛出异常
-        Assert.Throws<InvalidOperationException>(() => cfg.Get<int>("TooBig"));
+        // Act & Assert - 溢出时返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
+        Assert.Equal(default(int), cfg.Get<int>("TooBig"));
     }
 
     [Fact]
