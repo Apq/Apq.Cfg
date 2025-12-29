@@ -223,6 +223,113 @@ if ($failCount -gt 0) {
 Write-ColorText "========================================" 'Cyan'
 Write-Host ''
 
+# 生成 API 文档
+Write-ColorText '生成 API 文档...' 'Cyan'
+
+$apiDocsDir = Join-Path $RootDir 'docs\site\api\net9.0'
+$docProjects = @(
+    @{ Name = 'Apq.Cfg'; Output = 'core' },
+    @{ Name = 'Apq.Cfg.Crypto'; Output = 'crypto' },
+    @{ Name = 'Apq.Cfg.Ini'; Output = 'ini' },
+    @{ Name = 'Apq.Cfg.Xml'; Output = 'xml' },
+    @{ Name = 'Apq.Cfg.Yaml'; Output = 'yaml' },
+    @{ Name = 'Apq.Cfg.Toml'; Output = 'toml' },
+    @{ Name = 'Apq.Cfg.Env'; Output = 'env' },
+    @{ Name = 'Apq.Cfg.Redis'; Output = 'redis' },
+    @{ Name = 'Apq.Cfg.Consul'; Output = 'consul' },
+    @{ Name = 'Apq.Cfg.Etcd'; Output = 'etcd' },
+    @{ Name = 'Apq.Cfg.Nacos'; Output = 'nacos' },
+    @{ Name = 'Apq.Cfg.Apollo'; Output = 'apollo' },
+    @{ Name = 'Apq.Cfg.Zookeeper'; Output = 'zookeeper' },
+    @{ Name = 'Apq.Cfg.Vault'; Output = 'vault' },
+    @{ Name = 'Apq.Cfg.Database'; Output = 'database' },
+    @{ Name = 'Apq.Cfg.Crypto.DataProtection'; Output = 'crypto-dp' }
+)
+
+# 检查 DefaultDocumentation 是否安装
+$toolInstalled = dotnet tool list -g | Select-String 'defaultdocumentation'
+if (-not $toolInstalled) {
+    Write-ColorText '  安装 DefaultDocumentation...' 'Yellow'
+    dotnet tool install -g DefaultDocumentation.Console 2>&1 | Out-Null
+}
+
+# 创建 API 文档目录
+if (-not (Test-Path $apiDocsDir)) {
+    New-Item -ItemType Directory -Path $apiDocsDir -Force | Out-Null
+}
+
+$docSuccessCount = 0
+$docFailCount = 0
+
+foreach ($proj in $docProjects) {
+    $dllPath = Join-Path $RootDir "$($proj.Name)\bin\Release\net9.0\$($proj.Name).dll"
+    $projOutputDir = Join-Path $apiDocsDir $proj.Output
+
+    if (Test-Path $dllPath) {
+        # 清空并创建输出目录
+        if (Test-Path $projOutputDir) {
+            Remove-Item -Path "$projOutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
+        } else {
+            New-Item -ItemType Directory -Path $projOutputDir -Force | Out-Null
+        }
+
+        # 运行 DefaultDocumentation
+        & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            $docSuccessCount++
+        } else {
+            $docFailCount++
+        }
+    }
+}
+
+# 生成 API 索引页
+$indexContent = @"
+# API 参考 (.NET 9.0)
+
+本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
+
+> 当前文档基于 .NET 9.0 版本生成。各版本 API 基本一致，仅内部实现有差异。
+
+## 核心库
+
+- [Apq.Cfg](./core/) - 核心配置库（JSON、环境变量、DI 集成）
+
+## 加密脱敏
+
+- [Apq.Cfg.Crypto](./crypto/) - 配置加密脱敏
+- [Apq.Cfg.Crypto.DataProtection](./crypto-dp/) - ASP.NET Core DataProtection 集成
+
+## 本地配置源
+
+- [Apq.Cfg.Ini](./ini/) - INI 格式支持
+- [Apq.Cfg.Xml](./xml/) - XML 格式支持
+- [Apq.Cfg.Yaml](./yaml/) - YAML 格式支持
+- [Apq.Cfg.Toml](./toml/) - TOML 格式支持
+- [Apq.Cfg.Env](./env/) - .env 文件支持
+
+## 远程配置源
+
+- [Apq.Cfg.Redis](./redis/) - Redis 配置源
+- [Apq.Cfg.Consul](./consul/) - Consul 配置中心
+- [Apq.Cfg.Etcd](./etcd/) - Etcd 配置中心
+- [Apq.Cfg.Nacos](./nacos/) - Nacos 配置中心
+- [Apq.Cfg.Apollo](./apollo/) - Apollo 配置中心
+- [Apq.Cfg.Zookeeper](./zookeeper/) - Zookeeper 配置中心
+- [Apq.Cfg.Vault](./vault/) - HashiCorp Vault
+- [Apq.Cfg.Database](./database/) - 数据库配置源
+"@
+
+$indexPath = Join-Path $apiDocsDir 'index.md'
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($indexPath, $indexContent, $utf8NoBom)
+
+Write-ColorText "  API 文档: $docSuccessCount 成功" 'Green'
+if ($docFailCount -gt 0) {
+    Write-ColorText "  API 文档: $docFailCount 失败" 'Yellow'
+}
+Write-Host ''
+
 # 列出生成的包
 $packages = Get-ChildItem -Path $OutputDir -Filter "Apq.Cfg*.nupkg" -ErrorAction SilentlyContinue | Sort-Object Name
 if ($packages.Count -gt 0) {
