@@ -35,7 +35,7 @@
 - **配置加密脱敏**：
   - 敏感配置值（密码、API密钥等）自动加密存储、读取时解密
   - 日志输出时自动脱敏，保护敏感信息
-  - 支持 AES-GCM、Data Protection 等多种加密算法
+  - 支持 AES-GCM、AES-CBC、ChaCha20、RSA、SM4 等多种加密算法
 - **智能编码处理**：
   - 读取时自动检测（BOM 优先，UTF.Unknown 库辅助，支持缓存）
   - 写入时统一 UTF-8 无 BOM
@@ -115,7 +115,12 @@ var connectionString = dbSection.Get("ConnectionString");
 | [Apq.Cfg.Zookeeper](https://www.nuget.org/packages/Apq.Cfg.Zookeeper)             | Zookeeper 配置中心       |
 | [Apq.Cfg.Vault](https://www.nuget.org/packages/Apq.Cfg.Vault)                     | HashiCorp Vault 密钥管理 |
 | [Apq.Cfg.Crypto](https://www.nuget.org/packages/Apq.Cfg.Crypto)                   | 配置加密脱敏核心抽象          |
-| [Apq.Cfg.Crypto.AesGcm](https://www.nuget.org/packages/Apq.Cfg.Crypto.AesGcm)     | AES-GCM 加密实现         |
+| [Apq.Cfg.Crypto.AesGcm](https://www.nuget.org/packages/Apq.Cfg.Crypto.AesGcm)     | AES-GCM 加密实现（推荐）     |
+| [Apq.Cfg.Crypto.AesCbc](https://www.nuget.org/packages/Apq.Cfg.Crypto.AesCbc)     | AES-CBC + HMAC 加密实现  |
+| [Apq.Cfg.Crypto.ChaCha20](https://www.nuget.org/packages/Apq.Cfg.Crypto.ChaCha20) | ChaCha20-Poly1305 加密（高性能） |
+| [Apq.Cfg.Crypto.Rsa](https://www.nuget.org/packages/Apq.Cfg.Crypto.Rsa)           | RSA 非对称加密            |
+| [Apq.Cfg.Crypto.TripleDes](https://www.nuget.org/packages/Apq.Cfg.Crypto.TripleDes) | Triple DES 加密（遗留兼容） |
+| [Apq.Cfg.Crypto.Sm4](https://www.nuget.org/packages/Apq.Cfg.Crypto.Sm4)           | SM4 国密算法             |
 | [Apq.Cfg.Crypto.DataProtection](https://www.nuget.org/packages/Apq.Cfg.Crypto.DataProtection) | ASP.NET Core Data Protection 加密 |
 | [Apq.Cfg.SourceGenerator](https://www.nuget.org/packages/Apq.Cfg.SourceGenerator) | 源生成器，支持 Native AOT   |
 
@@ -264,7 +269,44 @@ apq-cfg-crypto encrypt-file --key "base64key..." --file config.json
 apq-cfg-crypto encrypt-file --key "base64key..." --file config.json --dry-run
 ```
 
-> 详细文档见 [Apq.Cfg.Crypto/README.md](Apq.Cfg.Crypto/README.md)
+#### 支持的加密算法
+
+| 算法 | 包名 | 安全级别 | 适用场景 |
+|------|------|----------|----------|
+| AES-GCM | Apq.Cfg.Crypto.AesGcm | ⭐⭐⭐⭐⭐ | 推荐首选，认证加密 |
+| AES-CBC | Apq.Cfg.Crypto.AesCbc | ⭐⭐⭐⭐ | 兼容性好，需配合 HMAC |
+| ChaCha20-Poly1305 | Apq.Cfg.Crypto.ChaCha20 | ⭐⭐⭐⭐⭐ | 高性能，移动端友好 |
+| RSA | Apq.Cfg.Crypto.Rsa | ⭐⭐⭐⭐ | 非对称加密，密钥分发 |
+| SM4 | Apq.Cfg.Crypto.Sm4 | ⭐⭐⭐⭐ | 国密算法，合规要求 |
+| Triple DES | Apq.Cfg.Crypto.TripleDes | ⭐⭐⭐ | 遗留系统兼容 |
+| Data Protection | Apq.Cfg.Crypto.DataProtection | ⭐⭐⭐⭐ | ASP.NET Core 集成 |
+
+```csharp
+// 使用不同的加密算法
+using Apq.Cfg.Crypto.ChaCha20;
+using Apq.Cfg.Crypto.Sm4;
+using Apq.Cfg.Crypto.Rsa;
+
+// ChaCha20-Poly1305（高性能）
+var cfg1 = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddChaCha20Encryption("base64key...")
+    .Build();
+
+// SM4 国密算法（合规要求）
+var cfg2 = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddSm4Encryption("base64key...")
+    .Build();
+
+// RSA 非对称加密（密钥分发场景）
+var cfg3 = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddRsaEncryptionFromFile("/path/to/private.pem")
+    .Build();
+```
+
+> 详细文档见 [Apq.Cfg.Crypto/README.md](Apq.Cfg.Crypto/README.md) 和 [配置加密脱敏设计方案](docs/配置加密脱敏设计方案.md)
 
 ### .env 文件支持
 

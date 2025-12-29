@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    
+    <PackageId>Apq.Cfg.Crypto.AesCbc</PackageId>
+    <Description>AES-CBC encryption provider for Apq.Cfg configuration library with HMAC authentication</Description>
+    <PackageTags>configuration;encryption;aes;cbc;hmac;security</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj" />
+  </ItemGroup>
+
+</Project>
