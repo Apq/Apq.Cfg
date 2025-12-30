@@ -10,9 +10,20 @@
         <ProjectReference Include="..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="9.0.0"/>
+    <!-- .NET 6.0 使用 6.x 版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="6.0.36"/>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="6.0.36"/>
+    </ItemGroup>
+    <!-- .NET 7.0 使用 7.x 版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="7.0.20"/>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="7.0.20"/>
+    </ItemGroup>
+    <!-- .NET 8.0+ 使用最新版本 -->
+    <ItemGroup Condition="'$(TargetFramework)' != 'net6.0' And '$(TargetFramework)' != 'net7.0'">
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="9.0.1"/>
     </ItemGroup>
 
 </Project>
