@@ -224,6 +224,90 @@ function Get-BestVersionForFramework {
     return $null
 }
 
+# 查找包在哪个文件中定义（csproj 或 Directory.Build.props）
+function Find-PackageDefinitionFile {
+    param(
+        [string]$ProjectPath,
+        [string]$PackageName
+    )
+
+    # 转义包名中的正则特殊字符
+    $escapedPackageName = [regex]::Escape($PackageName)
+
+    # 首先检查项目文件本身
+    if (Test-Path $ProjectPath) {
+        $content = [System.IO.File]::ReadAllText($ProjectPath, [System.Text.Encoding]::UTF8)
+        if ($content -match "<PackageReference\s+Include\s*=\s*[`"']$escapedPackageName[`"']") {
+            return $ProjectPath
+        }
+    }
+
+    # 向上查找 Directory.Build.props
+    $dir = Split-Path $ProjectPath -Parent
+    while ($dir) {
+        $propsFile = Join-Path $dir 'Directory.Build.props'
+        if (Test-Path $propsFile) {
+            $content = [System.IO.File]::ReadAllText($propsFile, [System.Text.Encoding]::UTF8)
+            if ($content -match "<PackageReference\s+Include\s*=\s*[`"']$escapedPackageName[`"']") {
+                return $propsFile
+            }
+        }
+        $parentDir = Split-Path $dir -Parent
+        if ($parentDir -eq $dir) { break }
+        $dir = $parentDir
+    }
+
+    return $null
+}
+
+# 更新文件中的包版本
+function Update-PackageVersion {
+    param(
+        [string]$FilePath,
+        [string]$PackageName,
+        [string]$NewVersion,
+        [string]$TargetFramework = $null
+    )
+
+    $content = [System.IO.File]::ReadAllText($FilePath, [System.Text.Encoding]::UTF8)
+    $modified = $false
+
+    # 转义包名中的正则特殊字符
+    $escapedPackageName = [regex]::Escape($PackageName)
+
+    if ($TargetFramework) {
+        # 按框架条件更新
+        $pattern = "(<ItemGroup[^>]*Condition\s*=\s*[`"'][^`"']*\`$\(TargetFramework\)[^`"']*==\s*'$TargetFramework'[^`"']*[`"'][^>]*>[\s\S]*?<PackageReference\s+Include\s*=\s*[`"']$escapedPackageName[`"'][^>]*Version\s*=\s*[`"'])([^`"']+)([`"'])"
+        if ($content -match $pattern) {
+            $content = $content -replace $pattern, "`${1}$NewVersion`${3}"
+            $modified = $true
+        }
+    } else {
+        # 统一更新（无条件或所有条件）
+        $pattern = "(<PackageReference\s+Include\s*=\s*[`"']$escapedPackageName[`"'][^>]*Version\s*=\s*[`"'])([^`"']+)([`"'])"
+        if ($content -match $pattern) {
+            $content = $content -replace $pattern, "`${1}$NewVersion`${3}"
+            $modified = $true
+        }
+    }
+
+    if ($modified) {
+        # 检测原文件编码（是否有 BOM）
+        $bytes = [System.IO.File]::ReadAllBytes($FilePath)
+        $hasBom = ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF)
+
+        if ($hasBom) {
+            $encoding = New-Object System.Text.UTF8Encoding($true)
+        } else {
+            $encoding = New-Object System.Text.UTF8Encoding($false)
+        }
+
+        [System.IO.File]::WriteAllText($FilePath, $content, $encoding)
+    }
+
+    return $modified
+}
+
 Write-ColorText "`n========================================" 'Cyan'
 Write-ColorText '  Apq.Cfg 依赖包升级工具' 'Cyan'
 Write-ColorText '  (智能框架兼容性检查)' 'DarkCyan'
@@ -231,13 +315,13 @@ Write-ColorText "========================================" 'Cyan'
 Write-ColorText '  按 Q 随时退出' 'DarkGray'
 Write-ColorText "========================================`n" 'Cyan'
 
-# 检查过期包
-Write-ColorText '正在检查过期的依赖包...' 'Cyan'
+# 检查可更新的包
+Write-ColorText '正在检查可更新的依赖包...' 'Cyan'
 Write-Host ''
 
 $outdatedOutput = & dotnet list "$RootDir\Apq.Cfg.sln" package --outdated --format json 2>$null
 if ($LASTEXITCODE -ne 0) {
-    Write-ColorText '错误: 无法检查过期包' 'Red'
+    Write-ColorText '错误: 无法检查可更新的包' 'Red'
     exit 1
 }
 
@@ -408,25 +492,72 @@ $simpleUpgrades = $upgradeActions | Where-Object { $_.Type -eq 'Simple' }
 $perFrameworkUpgrades = $upgradeActions | Where-Object { $_.Type -eq 'PerFramework' }
 
 if ($simpleUpgrades.Count -gt 0) {
-    Write-ColorText '  [统一升级] 所有框架使用相同版本:' 'Green'
+    Write-ColorText '  可升级的包:' 'Green'
+
+    # 按包名分组，检查是否来自同一个 Directory.Build.props
+    $packageGroups = $simpleUpgrades | Group-Object -Property Package
     $index = 1
-    foreach ($action in $simpleUpgrades) {
-        Write-ColorText "    $index. $($action.Package)" 'White'
-        Write-ColorText "       $($action.CurrentVersions) -> $($action.Version)" 'Gray'
-        Write-ColorText "       项目: $($action.Project)" 'DarkGray'
-        $index++
+
+    foreach ($pkgGroup in $packageGroups) {
+        $packageName = $pkgGroup.Name
+        $actions = $pkgGroup.Group
+        $firstAction = $actions | Select-Object -First 1
+
+        # 查找包定义文件
+        $definitionFile = Find-PackageDefinitionFile -ProjectPath $firstAction.ProjectPath -PackageName $packageName
+        $isSharedProps = $definitionFile -and ($definitionFile -ne $firstAction.ProjectPath) -and ($definitionFile -match 'Directory\.Build\.props$')
+
+        if ($isSharedProps -and $actions.Count -gt 1) {
+            # 来自共享的 Directory.Build.props，合并显示
+            $propsFileName = Split-Path $definitionFile -Leaf
+            $projectNames = ($actions | ForEach-Object { $_.Project }) -join ', '
+            Write-ColorText "    $index. $packageName" 'White'
+            Write-ColorText "       $($firstAction.CurrentVersions) -> $($firstAction.Version)" 'Gray'
+            Write-ColorText "       定义: $propsFileName (影响 $($actions.Count) 个项目)" 'DarkCyan'
+            $index++
+        } else {
+            # 每个项目单独显示
+            foreach ($action in $actions) {
+                Write-ColorText "    $index. $($action.Package)" 'White'
+                Write-ColorText "       $($action.CurrentVersions) -> $($action.Version)" 'Gray'
+                Write-ColorText "       项目: $($action.Project)" 'DarkGray'
+                $index++
+            }
+        }
     }
     Write-Host ''
 }
 
 if ($perFrameworkUpgrades.Count -gt 0) {
-    Write-ColorText '  [按框架升级] 不同框架使用不同版本:' 'Cyan'
+    Write-ColorText '  需按框架分别升级的包:' 'Cyan'
     $grouped = $perFrameworkUpgrades | Group-Object -Property Package
     foreach ($group in $grouped) {
-        Write-ColorText "    $($group.Name):" 'White'
-        foreach ($action in $group.Group) {
-            Write-ColorText "       [$($action.Frameworks)] $($action.CurrentVersions) -> $($action.Version)" 'Gray'
-            Write-ColorText "       项目: $($action.Project)" 'DarkGray'
+        $packageName = $group.Name
+        $actions = $group.Group
+        $firstAction = $actions | Select-Object -First 1
+
+        # 查找包定义文件
+        $definitionFile = Find-PackageDefinitionFile -ProjectPath $firstAction.ProjectPath -PackageName $packageName
+        $isSharedProps = $definitionFile -and ($definitionFile -ne $firstAction.ProjectPath) -and ($definitionFile -match 'Directory\.Build\.props$')
+
+        Write-ColorText "    ${packageName}:" 'White'
+
+        if ($isSharedProps) {
+            $propsFileName = Split-Path $definitionFile -Leaf
+            Write-ColorText "       定义: $propsFileName" 'DarkCyan'
+        }
+
+        # 按版本分组显示
+        $versionGroups = $actions | Group-Object -Property Version
+        foreach ($vg in $versionGroups) {
+            $fws = ($vg.Group | ForEach-Object { $_.Frameworks }) -join ', '
+            $currentVer = ($vg.Group | Select-Object -First 1).CurrentVersions
+            Write-ColorText "       [$fws] $currentVer -> $($vg.Name)" 'Gray'
+        }
+
+        if (-not $isSharedProps) {
+            $projectNames = ($actions | ForEach-Object { $_.Project } | Select-Object -Unique) -join ', '
+            Write-ColorText "       项目: $projectNames" 'DarkGray'
         }
     }
     Write-Host ''
@@ -445,6 +576,9 @@ $successCount = 0
 $failCount = 0
 $skipCount = 0
 
+# 记录已更新的 props 文件中的包（避免重复更新）
+$updatedPropsPackages = @{}
+
 # 执行简单升级（所有框架用同一版本）
 foreach ($action in $simpleUpgrades) {
     Write-ColorText "升级 $($action.Package) -> $($action.Version)" 'White'
@@ -453,19 +587,37 @@ foreach ($action in $simpleUpgrades) {
     $csprojFile = $action.ProjectPath
 
     if ($csprojFile -and (Test-Path $csprojFile)) {
-        try {
-            $output = & dotnet add $csprojFile package $action.Package --version $action.Version 2>&1
-            if ($LASTEXITCODE -eq 0) {
+        # 查找包实际定义的文件
+        $definitionFile = Find-PackageDefinitionFile -ProjectPath $csprojFile -PackageName $action.Package
+
+        if ($definitionFile -and $definitionFile -ne $csprojFile) {
+            # 包在 Directory.Build.props 中定义
+            $propsKey = "$($action.Package)|$definitionFile"
+            if ($updatedPropsPackages.ContainsKey($propsKey)) {
+                Write-ColorText "  $($action.Project) 已通过 $(Split-Path $definitionFile -Leaf) 更新" 'DarkGray'
+                continue
+            }
+
+            $propsFileName = Split-Path $definitionFile -Leaf
+            Write-ColorText "  包定义在 $propsFileName 中，直接修改..." 'DarkCyan'
+
+            if (Update-PackageVersion -FilePath $definitionFile -PackageName $action.Package -NewVersion $action.Version) {
+                Write-ColorText "  $propsFileName 更新成功" 'Green'
+                $updatedPropsPackages[$propsKey] = $true
+                $successCount++
+            } else {
+                Write-ColorText "  $propsFileName 更新失败" 'Red'
+                $failCount++
+            }
+        } else {
+            # 包在项目文件中定义，直接修改文件
+            if (Update-PackageVersion -FilePath $csprojFile -PackageName $action.Package -NewVersion $action.Version) {
                 Write-ColorText "  $($action.Project) 成功" 'Green'
                 $successCount++
             } else {
                 Write-ColorText "  $($action.Project) 失败" 'Red'
-                Write-ColorText "    $output" 'DarkGray'
                 $failCount++
             }
-        } catch {
-            Write-ColorText "  $($action.Project) 失败: $($_.Exception.Message)" 'Red'
-            $failCount++
         }
     } else {
         Write-ColorText "  $($action.Project) 未找到项目文件: $csprojFile" 'Red'
@@ -473,7 +625,7 @@ foreach ($action in $simpleUpgrades) {
     }
 }
 
-# 执行按框架升级（需要修改 csproj 中的条件引用）
+# 执行按框架升级（需要修改 csproj 或 Directory.Build.props 中的条件引用）
 if ($perFrameworkUpgrades.Count -gt 0) {
     Write-Host ''
     Write-ColorText '按框架升级:' 'Cyan'
@@ -490,8 +642,15 @@ if ($perFrameworkUpgrades.Count -gt 0) {
         $csprojFile = $firstAction.ProjectPath
 
         if ($csprojFile -and (Test-Path $csprojFile)) {
-            # 读取项目文件
-            $content = [System.IO.File]::ReadAllText($csprojFile, [System.Text.Encoding]::UTF8)
+            # 查找包实际定义的文件
+            $definitionFile = Find-PackageDefinitionFile -ProjectPath $csprojFile -PackageName $packageName
+            if (-not $definitionFile) {
+                $definitionFile = $csprojFile
+            }
+
+            # 读取定义文件
+            $content = [System.IO.File]::ReadAllText($definitionFile, [System.Text.Encoding]::UTF8)
+            $definitionFileName = Split-Path $definitionFile -Leaf
 
             $modified = $false
             foreach ($action in $actions) {
@@ -507,14 +666,14 @@ if ($perFrameworkUpgrades.Count -gt 0) {
                     if ($content -match $pattern) {
                         $content = $content -replace $pattern, "`${1}$newVersion`${3}"
                         $modified = $true
-                        Write-ColorText "    [$fw] 已更新到 $newVersion" 'Green'
+                        Write-ColorText "    [$fw] 已更新到 $newVersion ($definitionFileName)" 'Green'
                     }
                 }
             }
 
             if ($modified) {
                 # 检测原文件编码（是否有 BOM）
-                $bytes = [System.IO.File]::ReadAllBytes($csprojFile)
+                $bytes = [System.IO.File]::ReadAllBytes($definitionFile)
                 $hasBom = ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF)
 
                 if ($hasBom) {
@@ -523,11 +682,11 @@ if ($perFrameworkUpgrades.Count -gt 0) {
                     $encoding = New-Object System.Text.UTF8Encoding($false)
                 }
 
-                [System.IO.File]::WriteAllText($csprojFile, $content, $encoding)
+                [System.IO.File]::WriteAllText($definitionFile, $content, $encoding)
                 $successCount++
             } else {
                 # 如果没有找到条件引用，提示用户手动处理
-                Write-ColorText "    未找到条件引用，请手动修改:" 'Yellow'
+                Write-ColorText "    未找到条件引用，请手动修改 $definitionFileName :" 'Yellow'
                 foreach ($action in $actions) {
                     Write-ColorText "      [$($action.Frameworks)] -> $($action.Version)" 'Gray'
                 }
