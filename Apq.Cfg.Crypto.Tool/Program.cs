@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.CommandLine.Parsing;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -18,21 +19,21 @@ class Program
 
         // generate-key 命令
         var generateKeyCommand = CreateGenerateKeyCommand();
-        rootCommand.AddCommand(generateKeyCommand);
+        rootCommand.Subcommands.Add(generateKeyCommand);
 
         // encrypt 命令
         var encryptCommand = CreateEncryptCommand();
-        rootCommand.AddCommand(encryptCommand);
+        rootCommand.Subcommands.Add(encryptCommand);
 
         // decrypt 命令
         var decryptCommand = CreateDecryptCommand();
-        rootCommand.AddCommand(decryptCommand);
+        rootCommand.Subcommands.Add(decryptCommand);
 
         // encrypt-file 命令
         var encryptFileCommand = CreateEncryptFileCommand();
-        rootCommand.AddCommand(encryptFileCommand);
+        rootCommand.Subcommands.Add(encryptFileCommand);
 
-        return await rootCommand.InvokeAsync(args);
+        return await rootCommand.Parse(args).InvokeAsync();
     }
 
     /// <summary>
@@ -40,24 +41,27 @@ class Program
     /// </summary>
     static Command CreateGenerateKeyCommand()
     {
-        var algorithmOption = new Option<string>(
-            aliases: new[] { "--algorithm", "-a" },
-            getDefaultValue: () => "aes-gcm",
-            description: "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)");
-
-        var bitsOption = new Option<int>(
-            aliases: new[] { "--bits", "-b" },
-            getDefaultValue: () => 256,
-            description: "密钥位数 (128, 192, 256)");
-
-        var command = new Command("generate-key", "生成加密密钥")
+        var algorithmOption = new Option<string>("--algorithm", "-a")
         {
-            algorithmOption,
-            bitsOption
+            Description = "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)",
+            DefaultValueFactory = _ => "aes-gcm"
         };
 
-        command.SetHandler((algorithm, bits) =>
+        var bitsOption = new Option<int>("--bits", "-b")
         {
+            Description = "密钥位数 (128, 192, 256)",
+            DefaultValueFactory = _ => 256
+        };
+
+        var command = new Command("generate-key", "生成加密密钥");
+        command.Options.Add(algorithmOption);
+        command.Options.Add(bitsOption);
+
+        command.SetAction(parseResult =>
+        {
+            var algorithm = parseResult.GetValue(algorithmOption)!;
+            var bits = parseResult.GetValue(bitsOption);
+
             var alg = algorithm.ToLower();
             byte[] keyBytes;
             string? additionalInfo = null;
@@ -114,20 +118,20 @@ class Program
             Console.WriteLine($"算法: {algorithm.ToUpper()}");
             if (bits > 0 && alg != "chacha20" && alg != "sm4" && alg != "rsa" && alg != "triple-des")
                 Console.WriteLine($"密钥位数: {bits}");
-            
+
             if (base64Key.Length > 0)
                 Console.WriteLine($"Base64 密钥: {base64Key}");
-            
+
             if (additionalInfo != null)
             {
                 Console.WriteLine("私钥 (PEM 格式):");
                 Console.WriteLine(additionalInfo);
             }
-            
+
             Console.WriteLine();
             Console.WriteLine("请妥善保管此密钥，不要将其存储在配置文件中！");
             Console.WriteLine("建议使用环境变量 APQ_CFG_ENCRYPTION_KEY 存储密钥。");
-        }, algorithmOption, bitsOption);
+        });
 
         return command;
     }
@@ -137,36 +141,43 @@ class Program
     /// </summary>
     static Command CreateEncryptCommand()
     {
-        var keyOption = new Option<string>(
-            aliases: new[] { "--key", "-k" },
-            description: "Base64 编码的加密密钥")
-        { IsRequired = true };
-
-        var valueOption = new Option<string>(
-            aliases: new[] { "--value", "-v" },
-            description: "要加密的明文值")
-        { IsRequired = true };
-
-        var prefixOption = new Option<string>(
-            aliases: new[] { "--prefix", "-p" },
-            getDefaultValue: () => "{ENC}",
-            description: "加密值前缀");
-            
-        var algorithmOption = new Option<string>(
-            aliases: new[] { "--algorithm", "-a" },
-            getDefaultValue: () => "aes-gcm",
-            description: "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)");
-
-        var command = new Command("encrypt", "加密配置值")
+        var keyOption = new Option<string>("--key", "-k")
         {
-            keyOption,
-            valueOption,
-            prefixOption,
-            algorithmOption
+            Description = "Base64 编码的加密密钥",
+            Required = true
         };
 
-        command.SetHandler((key, value, prefix, algorithm) =>
+        var valueOption = new Option<string>("--value", "-v")
         {
+            Description = "要加密的明文值",
+            Required = true
+        };
+
+        var prefixOption = new Option<string>("--prefix", "-p")
+        {
+            Description = "加密值前缀",
+            DefaultValueFactory = _ => "{ENC}"
+        };
+
+        var algorithmOption = new Option<string>("--algorithm", "-a")
+        {
+            Description = "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)",
+            DefaultValueFactory = _ => "aes-gcm"
+        };
+
+        var command = new Command("encrypt", "加密配置值");
+        command.Options.Add(keyOption);
+        command.Options.Add(valueOption);
+        command.Options.Add(prefixOption);
+        command.Options.Add(algorithmOption);
+
+        command.SetAction(parseResult =>
+        {
+            var key = parseResult.GetValue(keyOption)!;
+            var value = parseResult.GetValue(valueOption)!;
+            var prefix = parseResult.GetValue(prefixOption)!;
+            var algorithm = parseResult.GetValue(algorithmOption)!;
+
             try
             {
 #pragma warning disable CS0618 // Triple DES 已过时，但仍需支持遗留系统
@@ -181,7 +192,7 @@ class Program
                     _ => throw new ArgumentException($"不支持的算法: {algorithm}")
                 };
 #pragma warning restore CS0618
-                
+
                 var encrypted = provider.Encrypt(value);
                 Console.WriteLine($"{prefix}{encrypted}");
             }
@@ -189,7 +200,7 @@ class Program
             {
                 Console.Error.WriteLine($"加密失败: {ex.Message}");
             }
-        }, keyOption, valueOption, prefixOption, algorithmOption);
+        });
 
         return command;
     }
@@ -199,30 +210,35 @@ class Program
     /// </summary>
     static Command CreateDecryptCommand()
     {
-        var keyOption = new Option<string>(
-            aliases: new[] { "--key", "-k" },
-            description: "Base64 编码的加密密钥")
-        { IsRequired = true };
-
-        var valueOption = new Option<string>(
-            aliases: new[] { "--value", "-v" },
-            description: "要解密的密文值（包含前缀）")
-        { IsRequired = true };
-
-        var prefixOption = new Option<string>(
-            aliases: new[] { "--prefix", "-p" },
-            getDefaultValue: () => "{ENC}",
-            description: "加密值前缀");
-
-        var command = new Command("decrypt", "解密配置值")
+        var keyOption = new Option<string>("--key", "-k")
         {
-            keyOption,
-            valueOption,
-            prefixOption
+            Description = "Base64 编码的加密密钥",
+            Required = true
         };
 
-        command.SetHandler((key, value, prefix) =>
+        var valueOption = new Option<string>("--value", "-v")
         {
+            Description = "要解密的密文值（包含前缀）",
+            Required = true
+        };
+
+        var prefixOption = new Option<string>("--prefix", "-p")
+        {
+            Description = "加密值前缀",
+            DefaultValueFactory = _ => "{ENC}"
+        };
+
+        var command = new Command("decrypt", "解密配置值");
+        command.Options.Add(keyOption);
+        command.Options.Add(valueOption);
+        command.Options.Add(prefixOption);
+
+        command.SetAction(parseResult =>
+        {
+            var key = parseResult.GetValue(keyOption)!;
+            var value = parseResult.GetValue(valueOption)!;
+            var prefix = parseResult.GetValue(prefixOption)!;
+
             try
             {
                 if (!value.StartsWith(prefix))
@@ -240,7 +256,7 @@ class Program
             {
                 Console.Error.WriteLine($"解密失败: {ex.Message}");
             }
-        }, keyOption, valueOption, prefixOption);
+        });
 
         return command;
     }
@@ -250,53 +266,66 @@ class Program
     /// </summary>
     static Command CreateEncryptFileCommand()
     {
-        var keyOption = new Option<string>(
-            aliases: new[] { "--key", "-k" },
-            description: "Base64 编码的加密密钥或 PEM 格式的私钥")
-        { IsRequired = true };
-
-        var fileOption = new Option<FileInfo>(
-            aliases: new[] { "--file", "-f" },
-            description: "要处理的 JSON 配置文件")
-        { IsRequired = true };
-
-        var patternsOption = new Option<string>(
-            aliases: new[] { "--patterns" },
-            getDefaultValue: () => "*Password*,*Secret*,*ApiKey*,*ConnectionString*,*Credential*,*Token*",
-            description: "敏感键模式（逗号分隔，支持通配符）");
-
-        var prefixOption = new Option<string>(
-            aliases: new[] { "--prefix", "-p" },
-            getDefaultValue: () => "{ENC}",
-            description: "加密值前缀");
-            
-        var algorithmOption = new Option<string>(
-            aliases: new[] { "--algorithm", "-a" },
-            getDefaultValue: () => "aes-gcm",
-            description: "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)");
-
-        var outputOption = new Option<FileInfo?>(
-            aliases: new[] { "--output", "-o" },
-            description: "输出文件路径（默认覆盖原文件）");
-
-        var dryRunOption = new Option<bool>(
-            aliases: new[] { "--dry-run" },
-            getDefaultValue: () => false,
-            description: "仅显示将要加密的键，不实际修改文件");
-
-        var command = new Command("encrypt-file", "批量加密配置文件中的敏感值")
+        var keyOption = new Option<string>("--key", "-k")
         {
-            keyOption,
-            fileOption,
-            patternsOption,
-            prefixOption,
-            algorithmOption,
-            outputOption,
-            dryRunOption
+            Description = "Base64 编码的加密密钥或 PEM 格式的私钥",
+            Required = true
         };
 
-        command.SetHandler((key, file, patterns, prefix, algorithm, output, dryRun) =>
+        var fileOption = new Option<FileInfo>("--file", "-f")
         {
+            Description = "要处理的 JSON 配置文件",
+            Required = true
+        };
+
+        var patternsOption = new Option<string>("--patterns")
+        {
+            Description = "敏感键模式（逗号分隔，支持通配符）",
+            DefaultValueFactory = _ => "*Password*,*Secret*,*ApiKey*,*ConnectionString*,*Credential*,*Token*"
+        };
+
+        var prefixOption = new Option<string>("--prefix", "-p")
+        {
+            Description = "加密值前缀",
+            DefaultValueFactory = _ => "{ENC}"
+        };
+
+        var algorithmOption = new Option<string>("--algorithm", "-a")
+        {
+            Description = "加密算法 (aes-gcm, aes-cbc, chacha20, rsa, sm4, triple-des)",
+            DefaultValueFactory = _ => "aes-gcm"
+        };
+
+        var outputOption = new Option<FileInfo?>("--output", "-o")
+        {
+            Description = "输出文件路径（默认覆盖原文件）"
+        };
+
+        var dryRunOption = new Option<bool>("--dry-run")
+        {
+            Description = "仅显示将要加密的键，不实际修改文件",
+            DefaultValueFactory = _ => false
+        };
+
+        var command = new Command("encrypt-file", "批量加密配置文件中的敏感值");
+        command.Options.Add(keyOption);
+        command.Options.Add(fileOption);
+        command.Options.Add(patternsOption);
+        command.Options.Add(prefixOption);
+        command.Options.Add(algorithmOption);
+        command.Options.Add(outputOption);
+        command.Options.Add(dryRunOption);
+
+        command.SetAction(parseResult =>
+        {
+            var key = parseResult.GetValue(keyOption)!;
+            var file = parseResult.GetValue(fileOption)!;
+            var patterns = parseResult.GetValue(patternsOption)!;
+            var prefix = parseResult.GetValue(prefixOption)!;
+            var algorithm = parseResult.GetValue(algorithmOption)!;
+            var output = parseResult.GetValue(outputOption);
+            var dryRun = parseResult.GetValue(dryRunOption);
+
             try
             {
                 if (!file.Exists)
@@ -324,7 +353,7 @@ class Program
                     _ => throw new ArgumentException($"不支持的算法: {algorithm}")
                 };
 #pragma warning restore CS0618
-                
+
                 var encryptedCount = 0;
 
                 using var stream = new MemoryStream();
@@ -353,7 +382,7 @@ class Program
             {
                 Console.Error.WriteLine($"处理失败: {ex.Message}");
             }
-        }, keyOption, fileOption, patternsOption, prefixOption, algorithmOption, outputOption, dryRunOption);
+        });
 
         return command;
     }
