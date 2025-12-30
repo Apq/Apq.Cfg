@@ -8,7 +8,6 @@
   ],
   // 排除的版本模式（正则表达式）
   "ExcludeVersionPatterns": [
-    "^10\\.",    // .NET 10 预览版
     "-preview",
     "-alpha",
     "-beta",
