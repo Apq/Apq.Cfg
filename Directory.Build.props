@@ -19,6 +19,14 @@
     <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
 
+  <!-- Microsoft.Extensions.* 版本：根据目标框架选择匹配版本 -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <MicrosoftExtensionsVersion>8.0.0</MicrosoftExtensionsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <MicrosoftExtensionsVersion>10.0.1</MicrosoftExtensionsVersion>
+  </PropertyGroup>
+
   <!-- Apq.Cfg 特定的 NuGet 包元数据 -->
   <PropertyGroup>
     <PackageReadmeFile>README.md</PackageReadmeFile>

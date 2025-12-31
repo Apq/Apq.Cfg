@@ -30,7 +30,7 @@ dotnet test tests/Apq.Cfg.Tests.Net10/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 408 个测试，41 个需外部服务）
+## 测试统计（共 429 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
@@ -49,8 +49,8 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | EtcdCfgTests | 6 | 6 | Etcd 配置中心测试（需要 Etcd 服务）|
 | NacosCfgTests | 9 | 9 | Nacos 配置中心测试（需要 Nacos 服务）|
 | VaultCfgTests | 8 | 8 | Vault 密钥管理测试（需要 Vault 服务）|
-| CfgRootExtensionsTests | 4 | 0 | 扩展方法测试（TryGet/GetRequired）|
-| CfgBuilderAdvancedTests | 14 | 0 | 高级功能测试 |
+| CfgRootExtensionsTests | 11 | 0 | 扩展方法测试（TryGet/GetRequired/GetMasked/GetMaskedSnapshot）|
+| CfgBuilderAdvancedTests | 28 | 0 | 高级功能测试（编码映射/值转换器/脱敏器/编码检测日志）|
 | DynamicReloadTests | 22 | 0 | 动态配置重载测试 |
 | EncodingDetectionTests | 14 | 0 | 编码检测测试 |
 | ConcurrencyTests | 9 | 0 | 并发安全测试 |
@@ -130,8 +130,11 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `AddEnvironmentVariables()` | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `AddEnv()` | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - | - |
 | `AddSource()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddValueTransformer()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddValueMasker()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `WithEncodingConfidenceThreshold()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `AddReadEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `AddReadEncodingMappingWildcard()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `AddWriteEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `ConfigureEncodingMapping()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `WithEncodingDetectionLogging()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
@@ -140,6 +143,8 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `TryGet<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetOrDefault<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetMasked()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetMaskedSnapshot()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **FileCfgSourceBase** |
 | `EncodingDetector` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `EncodingConfidenceThreshold` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |

@@ -20,7 +20,21 @@ Apq.Cfg 是一个 .NET 统一配置组件库，支持多种配置格式（JSON�
 
 ### 多目标框架
 
-所有项目支持 `net6.0;net8.0;net10.0` 三个 LTS 目标框架。
+发布到Nuget的所有项目支持 `net8.0;net10.0` 两个 LTS 目标框架。
+
+### 依赖版本策略
+
+为了最大化兼容性，`Microsoft.Extensions.*` 包根据目标框架使用匹配的版本：
+
+| 目标框架 | Microsoft.Extensions.* 版本 |
+|---------|---------------------------|
+| net8.0  | 8.0.0                     |
+| net10.0 | 10.0.1                    |
+
+这通过 `Directory.Build.props` 中的 `$(MicrosoftExtensionsVersion)` 变量实现，确保：
+- 下游项目不会被强制升级依赖
+- 每个目标框架使用最匹配的依赖版本
+- 避免版本冲突问题
 
 ## 文档规范
 

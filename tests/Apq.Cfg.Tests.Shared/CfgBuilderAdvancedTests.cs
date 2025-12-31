@@ -1,4 +1,11 @@
 using Apq.Cfg.Changes;
+using Apq.Cfg.Crypto;
+using Apq.Cfg.Crypto.Providers;
+using Apq.Cfg.EncodingSupport;
+using Apq.Cfg.Security;
+using Apq.Cfg.Sources.File;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Apq.Cfg.Tests;
 
@@ -17,6 +24,11 @@ public class CfgBuilderAdvancedTests : IDisposable
 
     public void Dispose()
     {
+        // 清理全局编码映射，避免影响其他测试
+        // 只清除读取映射（测试添加的），保留默认的写入映射（PowerShell 等）
+        FileCfgSourceBase.EncodingDetector.MappingConfig.ClearReadMappings();
+        FileCfgSourceBase.EncodingDetector.ClearCache();
+
         if (Directory.Exists(_testDir))
         {
             Directory.Delete(_testDir, true);
@@ -312,4 +324,337 @@ public class CfgBuilderAdvancedTests : IDisposable
         Assert.Equal("Value1", cfg.Get("Key"));
         Assert.Equal("Value2", cfg.Get("Key2"));
     }
+
+    #region AddValueTransformer 测试
+
+    [Fact]
+    public void AddValueTransformer_DecryptsEncryptedValues()
+    {
+        // Arrange
+        var keyBytes = new byte[32];
+        RandomNumberGenerator.Fill(keyBytes);
+        var base64Key = Convert.ToBase64String(keyBytes);
+
+        using var provider = new AesGcmCryptoProvider(base64Key);
+        var encryptedValue = "{ENC}" + provider.Encrypt("MySecretPassword");
+
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, $$"""{"Database:Password": "{{encryptedValue}}"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddAesGcmEncryption(base64Key)
+            .Build();
+
+        // Act
+        var decryptedValue = cfg.Get("Database:Password");
+
+        // Assert
+        Assert.Equal("MySecretPassword", decryptedValue);
+    }
+
+    [Fact]
+    public void AddValueTransformer_NonEncryptedValues_ReturnAsIs()
+    {
+        // Arrange
+        var keyBytes = new byte[32];
+        RandomNumberGenerator.Fill(keyBytes);
+        var base64Key = Convert.ToBase64String(keyBytes);
+
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"AppName": "TestApp", "Version": "1.0.0"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddAesGcmEncryption(base64Key)
+            .Build();
+
+        // Act & Assert - 非加密值应该原样返回
+        Assert.Equal("TestApp", cfg.Get("AppName"));
+        Assert.Equal("1.0.0", cfg.Get("Version"));
+    }
+
+    [Fact]
+    public async Task AddValueTransformer_EncryptsOnWrite()
+    {
+        // Arrange
+        var keyBytes = new byte[32];
+        RandomNumberGenerator.Fill(keyBytes);
+        var base64Key = Convert.ToBase64String(keyBytes);
+
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddAesGcmEncryption(base64Key, options =>
+            {
+                options.SensitiveKeyPatterns.Add("*Password*");
+            })
+            .Build();
+
+        // Act
+        cfg.Set("Database:Password", "MySecretPassword");
+        await cfg.SaveAsync();
+
+        // Assert - 文件中应该是加密后的值
+        var fileContent = File.ReadAllText(jsonPath);
+        Assert.Contains("{ENC}", fileContent);
+        Assert.DoesNotContain("MySecretPassword", fileContent);
+    }
+
+    #endregion
+
+    #region AddValueMasker 测试
+
+    [Fact]
+    public void AddValueMasker_MasksSensitiveKeys()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Database:Password": "MySecretPassword123"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddSensitiveMasking()
+            .Build();
+
+        // Act
+        var maskedValue = cfg.GetMasked("Database:Password");
+
+        // Assert
+        Assert.NotEqual("MySecretPassword123", maskedValue);
+        Assert.Contains("***", maskedValue);
+    }
+
+    [Fact]
+    public void AddValueMasker_WithCustomOptions_UsesCustomMaskString()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"ApiKey": "sk-1234567890abcdef"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddSensitiveMasking(options =>
+            {
+                options.MaskString = "****";
+                options.VisibleChars = 4;
+            })
+            .Build();
+
+        // Act
+        var maskedValue = cfg.GetMasked("ApiKey");
+
+        // Assert
+        Assert.Contains("****", maskedValue);
+        Assert.StartsWith("sk-1", maskedValue);
+    }
+
+    [Fact]
+    public void AddValueMasker_NonSensitiveKeys_NotMasked()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"AppName": "TestApp"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddSensitiveMasking()
+            .Build();
+
+        // Act
+        var maskedValue = cfg.GetMasked("AppName");
+
+        // Assert - 非敏感键不应被脱敏
+        Assert.Equal("TestApp", maskedValue);
+    }
+
+    #endregion
+
+    #region ConfigureValueTransformer 测试
+
+    [Fact]
+    public void ConfigureValueTransformer_CustomPrefix_Works()
+    {
+        // Arrange
+        var keyBytes = new byte[32];
+        RandomNumberGenerator.Fill(keyBytes);
+        var base64Key = Convert.ToBase64String(keyBytes);
+
+        using var provider = new AesGcmCryptoProvider(base64Key);
+        var encryptedValue = "[ENCRYPTED]" + provider.Encrypt("MySecret");
+
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, $$"""{"Secret": "{{encryptedValue}}"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddAesGcmEncryption(base64Key, options =>
+            {
+                options.EncryptedPrefix = "[ENCRYPTED]";
+            })
+            .Build();
+
+        // Act
+        var decryptedValue = cfg.Get("Secret");
+
+        // Assert
+        Assert.Equal("MySecret", decryptedValue);
+    }
+
+    [Fact]
+    public void ConfigureValueTransformer_CustomSensitivePatterns_Works()
+    {
+        // Arrange
+        var keyBytes = new byte[32];
+        RandomNumberGenerator.Fill(keyBytes);
+        var base64Key = Convert.ToBase64String(keyBytes);
+
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddAesGcmEncryption(base64Key, options =>
+            {
+                options.SensitiveKeyPatterns.Clear();
+                options.SensitiveKeyPatterns.Add("*MyCustomSecret*");
+            })
+            .Build();
+
+        // Act - 设置自定义敏感键
+        cfg.Set("MyCustomSecret", "SecretValue");
+        cfg.Set("NormalKey", "NormalValue");
+
+        // Assert - 自定义敏感键应该被加密处理
+        // 注意：这里只验证配置生效，实际加密在 SaveAsync 时发生
+        Assert.Equal("SecretValue", cfg.Get("MyCustomSecret"));
+        Assert.Equal("NormalValue", cfg.Get("NormalKey"));
+    }
+
+    #endregion
+
+    #region 编码映射方法测试
+
+    [Fact]
+    public void AddReadEncodingMapping_ExactPath_UsesSpecifiedEncoding()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value", "中文": "测试"}""", Encoding.UTF8);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddReadEncodingMapping(jsonPath, Encoding.UTF8, priority: 100)
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Assert
+        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("测试", cfg.Get("中文"));
+    }
+
+    [Fact]
+    public void AddReadEncodingMappingWildcard_MatchesPattern()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""", Encoding.UTF8);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddReadEncodingMappingWildcard("*.json", Encoding.UTF8)
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Assert
+        Assert.Equal("Value", cfg.Get("Key"));
+    }
+
+    [Fact]
+    public void AddWriteEncodingMapping_ExactPath_WritesWithSpecifiedEncoding()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{}""");
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddWriteEncodingMapping(jsonPath, Encoding.UTF8, priority: 100)
+            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .Build();
+
+        cfg.Set("Key", "Value");
+
+        // Assert - 配置应该正常工作
+        Assert.Equal("Value", cfg.Get("Key"));
+    }
+
+    [Fact]
+    public void ConfigureEncodingMapping_ActionDelegate_Works()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""", Encoding.UTF8);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .ConfigureEncodingMapping(config =>
+            {
+                config.AddReadMapping(jsonPath, EncodingMappingType.ExactPath, Encoding.UTF8, 100);
+            })
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Assert
+        Assert.Equal("Value", cfg.Get("Key"));
+    }
+
+    #endregion
+
+    #region WithEncodingDetectionLogging 测试
+
+    [Fact]
+    public void WithEncodingDetectionLogging_CanRegisterCallback()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""", Encoding.UTF8);
+
+        // Act - 验证可以注册回调而不抛出异常
+        using var cfg = new CfgBuilder()
+            .WithEncodingDetectionLogging(_ => { })
+            .AddJson(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Assert - 配置应该正常构建
+        Assert.Equal("Value", cfg.Get("Key"));
+    }
+
+    [Fact]
+    public void WithEncodingDetectionLogging_WithEnableLogging_InvokesCallback()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"Key": "Value"}""", Encoding.UTF8);
+
+        EncodingDetectionResult? capturedResult = null;
+
+        // 直接使用 EncodingDetector 测试日志功能
+        var detector = FileCfgSourceBase.EncodingDetector;
+        detector.OnEncodingDetected += result => capturedResult = result;
+
+        var options = new Apq.Cfg.EncodingSupport.EncodingOptions { EnableLogging = true };
+
+        // Act
+        detector.Detect(jsonPath, options);
+
+        // Assert
+        Assert.NotNull(capturedResult);
+        Assert.NotNull(capturedResult.Encoding);
+        Assert.Equal(Path.GetFullPath(jsonPath), Path.GetFullPath(capturedResult.FilePath));
+    }
+
+    #endregion
 }

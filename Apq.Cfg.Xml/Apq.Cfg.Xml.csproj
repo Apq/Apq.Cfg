@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="$(MicrosoftExtensionsVersion)"/>
     </ItemGroup>
 
 </Project>
