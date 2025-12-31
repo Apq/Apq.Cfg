@@ -10,6 +10,7 @@
         <InternalsVisibleTo Include="Apq.Cfg.Tests.Net6" />
         <InternalsVisibleTo Include="Apq.Cfg.Tests.Net8" />
         <InternalsVisibleTo Include="Apq.Cfg.Tests.Net9" />
+        <InternalsVisibleTo Include="Apq.Cfg.Tests.Net10" />
         <InternalsVisibleTo Include="Apq.Cfg.Benchmarks" />
     </ItemGroup>
 

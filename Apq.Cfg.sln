@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Crypto.DataProtecti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Crypto.Tool", "Apq.Cfg.Crypto.Tool\Apq.Cfg.Crypto.Tool.csproj", "{6B7C8D9E-0FA1-B2C3-D4E5-F607182930AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Tests.Net10", "tests\Apq.Cfg.Tests.Net10\Apq.Cfg.Tests.Net10.csproj", "{F696FB60-8871-4D4E-BE21-F931D6C43D7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -349,6 +351,18 @@ Global
 		{6B7C8D9E-0FA1-B2C3-D4E5-F607182930AB}.Release|x64.Build.0 = Release|Any CPU
 		{6B7C8D9E-0FA1-B2C3-D4E5-F607182930AB}.Release|x86.ActiveCfg = Release|Any CPU
 		{6B7C8D9E-0FA1-B2C3-D4E5-F607182930AB}.Release|x86.Build.0 = Release|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Debug|x64.Build.0 = Debug|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Debug|x86.Build.0 = Debug|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Release|x64.ActiveCfg = Release|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Release|x64.Build.0 = Release|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -359,6 +373,7 @@ Global
 		{C906A287-1781-40AB-98E9-0D515D70BFA7} = {E1234567-1234-1234-1234-123456789ABC}
 		{A99F31E2-4C2A-4B6B-9055-65C112F1E20C} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{5531B297-C91E-495E-A746-0DD15E3EDCCB} = {B1234567-1234-1234-1234-123456789DEF}
+		{F696FB60-8871-4D4E-BE21-F931D6C43D7B} = {E1234567-1234-1234-1234-123456789ABC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42FA23E1-2218-4B92-B62D-714161EC71A6}
