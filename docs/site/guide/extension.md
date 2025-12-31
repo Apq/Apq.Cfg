@@ -768,7 +768,7 @@ public class HttpApiCfgSourceIntegrationTests : IClassFixture<ConfigServerFixtur
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;net10.0</TargetFrameworks>
     <PackageId>Apq.Cfg.HttpApi</PackageId>
     <Version>1.0.0</Version>
     <Authors>Your Name</Authors>

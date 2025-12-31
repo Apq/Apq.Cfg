@@ -14,7 +14,7 @@
 ```
 benchmarks/
 └── Apq.Cfg.Benchmarks/                   # 多目标框架基准测试项目
-    ├── Apq.Cfg.Benchmarks.csproj         # 支持 net6.0;net8.0;net9.0
+    ├── Apq.Cfg.Benchmarks.csproj         # 支持 net6.0;net8.0;net10.0
     ├── Program.cs                        # 入口程序
     │
     ├── # 基础性能测试
@@ -55,23 +55,23 @@ benchmarks/
 
 ```bash
 # 运行所有基准测试（Release 模式必须）
-# 使用 .NET 9 作为宿主运行，自动测试 .NET 6/8/9 三个版本
+# 使用 .NET 10 作为宿主运行，自动测试 .NET 6/8/10 三个版本
 # 结果自动保存到带时间戳的子目录
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *
 ```
 
 ### 运行特定测试
 
 ```bash
 # 运行特定测试类
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *ReadWriteBenchmarks*
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *CacheBenchmarks*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *ReadWriteBenchmarks*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *CacheBenchmarks*
 
 # 运行特定测试方法
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json_Get*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *Json_Get*
 
 # 组合多个过滤器
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Json* --filter *Ini*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *Json* --filter *Ini*
 ```
 
 > **注意**：`--` 是必须的，它将后面的参数传递给 BenchmarkDotNet 而不是 dotnet 命令。
@@ -80,7 +80,7 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --fil
 
 ```bash
 # 列出所有可用测试（不实际运行）
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --list flat
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --list flat
 ```
 
 > **说明**：导出格式（Markdown、HTML、CSV）已在 `BenchmarkConfig` 中配置，无需手动指定。
@@ -335,7 +335,7 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --lis
 运行加密脱敏基准测试：
 
 ```bash
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0 -- --filter *Crypto*
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *Crypto*
 ```
 
 ### 18. ConsulBenchmarks - Consul 配置中心性能测试（需要 Consul 服务）
@@ -427,7 +427,7 @@ benchmarks/Apq.Cfg.Benchmarks/
 ## 注意事项
 
 1. **必须使用 Release 模式** - Debug 模式结果不准确
-2. **必须指定框架** - 多目标项目需要 `-f net9.0` 等参数
+2. **必须指定框架** - 多目标项目需要 `-f net10.0` 等参数
 3. **关闭其他程序** - 减少系统干扰
 4. **多次运行** - BenchmarkDotNet 会自动预热和多次迭代
 5. **结果对比** - 使用 `--runtimes` 参数可在一次运行中对比多个版本

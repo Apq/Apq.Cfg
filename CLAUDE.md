@@ -20,7 +20,7 @@ Apq.Cfg 是一个 .NET 统一配置组件库，支持多种配置格式（JSON�
 
 ### 多目标框架
 
-所有项目支持 `net6.0;net7.0;net8.0;net9.0` 四个目标框架。
+所有项目支持 `net6.0;net8.0;net10.0` 三个 LTS 目标框架。
 
 ## 文档规范
 
@@ -89,5 +89,5 @@ dotnet build
 dotnet test
 
 # 运行性能测试
-dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net9.0
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0
 ```

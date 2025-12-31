@@ -15,7 +15,7 @@ tests/
 ├── Apq.Cfg.Tests.Shared/    # 共享测试代码
 ├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
 ├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
-└── Apq.Cfg.Tests.Net9/      # .NET 9 测试项目
+└── Apq.Cfg.Tests.Net10/     # .NET 10 测试项目
 ```
 
 ## 运行测试
@@ -25,7 +25,7 @@ tests/
 dotnet test
 
 # 运行特定框架的测试
-dotnet test tests/Apq.Cfg.Tests.Net9/
+dotnet test tests/Apq.Cfg.Tests.Net10/
 
 # 运行特定测试类
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
