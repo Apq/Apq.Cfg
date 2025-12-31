@@ -145,6 +145,9 @@ if (-not (Read-Confirm '确认开始打包? ([Y]/N): ')) {
     exit 0
 }
 
+# 询问是否生成文档
+$generateDocs = Read-Confirm '是否重新生成 API 文档? ([Y]/N): '
+
 # 清空并创建输出目录
 if (Test-Path $OutputDir) {
     Write-ColorText "清空输出目录: $OutputDir" 'Gray'
@@ -158,15 +161,17 @@ Write-Host ''
 Write-ColorText '开始打包...' 'Cyan'
 Write-Host ''
 
-# 检查 DefaultDocumentation 是否安装
-Write-ColorText '检查文档生成工具...' 'Gray'
-$toolInstalled = dotnet tool list -g | Select-String 'defaultdocumentation'
-if (-not $toolInstalled) {
-    Write-ColorText '  安装 DefaultDocumentation...' 'Yellow'
-    dotnet tool install -g DefaultDocumentation.Console 2>&1 | Out-Null
+# 检查 DefaultDocumentation 是否安装（仅在需要生成文档时）
+if ($generateDocs) {
+    Write-ColorText '检查文档生成工具...' 'Gray'
+    $toolInstalled = dotnet tool list -g | Select-String 'defaultdocumentation'
+    if (-not $toolInstalled) {
+        Write-ColorText '  安装 DefaultDocumentation...' 'Yellow'
+        dotnet tool install -g DefaultDocumentation.Console 2>&1 | Out-Null
+    }
+    Write-ColorText '  文档生成工具就绪' 'Green'
+    Write-Host ''
 }
-Write-ColorText '  文档生成工具就绪' 'Green'
-Write-Host ''
 
 $successCount = 0
 $failCount = 0
@@ -214,66 +219,74 @@ foreach ($project in $TargetProjects) {
             $generatedPackages += "$project.$version.nupkg"
             Write-ColorText "  ✓ $project v$version" 'Green'
 
-            # 在打包成功后立即生成该项目的文档
-            Write-ColorText "    生成 $project 文档..." 'Gray'
+            # 在打包成功后立即生成该项目的文档（如果用户选择生成）
+            if ($generateDocs) {
+                Write-ColorText "    生成 $project 文档..." 'Gray'
 
-            # 获取所有支持的 .NET 版本
-            $netVersions = @('net10.0', 'net8.0')
+                # 获取所有支持的 .NET 版本
+                # SourceGenerator 使用 netstandard2.0，其他项目使用 net10.0/net8.0
+                if ($project -eq 'Apq.Cfg.SourceGenerator') {
+                    $netVersions = @('netstandard2.0')
+                } else {
+                    $netVersions = @('net10.0', 'net8.0')
+                }
 
-            # 确定项目输出目录名
-            $outputDirName = switch ($project) {
-                'Apq.Cfg' { 'core' }
-                'Apq.Cfg.Crypto' { 'crypto' }
-                'Apq.Cfg.Ini' { 'ini' }
-                'Apq.Cfg.Xml' { 'xml' }
-                'Apq.Cfg.Yaml' { 'yaml' }
-                'Apq.Cfg.Toml' { 'toml' }
-                'Apq.Cfg.Env' { 'env' }
-                'Apq.Cfg.Redis' { 'redis' }
-                'Apq.Cfg.Consul' { 'consul' }
-                'Apq.Cfg.Etcd' { 'etcd' }
-                'Apq.Cfg.Nacos' { 'nacos' }
-                'Apq.Cfg.Apollo' { 'apollo' }
-                'Apq.Cfg.Zookeeper' { 'zookeeper' }
-                'Apq.Cfg.Vault' { 'vault' }
-                'Apq.Cfg.Database' { 'database' }
-                'Apq.Cfg.Crypto.DataProtection' { 'crypto-dp' }
-                default { $project.ToLower() }
-            }
+                # 确定项目输出目录名
+                $outputDirName = switch ($project) {
+                    'Apq.Cfg' { 'core' }
+                    'Apq.Cfg.Crypto' { 'crypto' }
+                    'Apq.Cfg.Ini' { 'ini' }
+                    'Apq.Cfg.Xml' { 'xml' }
+                    'Apq.Cfg.Yaml' { 'yaml' }
+                    'Apq.Cfg.Toml' { 'toml' }
+                    'Apq.Cfg.Env' { 'env' }
+                    'Apq.Cfg.Redis' { 'redis' }
+                    'Apq.Cfg.Consul' { 'consul' }
+                    'Apq.Cfg.Etcd' { 'etcd' }
+                    'Apq.Cfg.Nacos' { 'nacos' }
+                    'Apq.Cfg.Apollo' { 'apollo' }
+                    'Apq.Cfg.Zookeeper' { 'zookeeper' }
+                    'Apq.Cfg.Vault' { 'vault' }
+                    'Apq.Cfg.Database' { 'database' }
+                    'Apq.Cfg.Crypto.DataProtection' { 'crypto-dp' }
+                    'Apq.Cfg.SourceGenerator' { 'sourcegen' }
+                    default { $project.ToLower() }
+                }
 
-            # 为每个 .NET 版本生成文档
-            foreach ($netVersion in $netVersions) {
-                $dllPath = Join-Path $RootDir "$project\bin\Release\$netVersion\$project.dll"
-                $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
-                $projOutputDir = Join-Path $apiDocsDir $outputDirName
+                # 为每个 .NET 版本生成文档
+                foreach ($netVersion in $netVersions) {
+                    $dllPath = Join-Path $RootDir "$project\bin\Release\$netVersion\$project.dll"
+                    $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
+                    $projOutputDir = Join-Path $apiDocsDir $outputDirName
 
-                if (Test-Path $dllPath) {
-                    # 创建 API 文档目录
-                    if (-not (Test-Path $apiDocsDir)) {
-                        New-Item -ItemType Directory -Path $apiDocsDir -Force | Out-Null
-                    }
-
-                    # 清空并创建输出目录
-                    if (Test-Path $projOutputDir) {
-                        Remove-Item -Path "$projOutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
-                    } else {
-                        New-Item -ItemType Directory -Path $projOutputDir -Force | Out-Null
-                    }
-
-                    # 运行 DefaultDocumentation
-                    & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
-                    if ($LASTEXITCODE -eq 0) {
-                        # 生成 index.md（从主命名空间文件复制）
-                        $mainMdFile = Get-ChildItem -Path $projOutputDir -Filter "$project.md" -ErrorAction SilentlyContinue | Select-Object -First 1
-                        if ($mainMdFile) {
-                            $indexPath = Join-Path $projOutputDir 'index.md'
-                            $content = [System.IO.File]::ReadAllText($mainMdFile.FullName, [System.Text.Encoding]::UTF8)
-                            $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-                            [System.IO.File]::WriteAllText($indexPath, $content, $utf8NoBom)
+                    if (Test-Path $dllPath) {
+                        # 创建 API 文档目录
+                        if (-not (Test-Path $apiDocsDir)) {
+                            New-Item -ItemType Directory -Path $apiDocsDir -Force | Out-Null
                         }
-                        Write-ColorText "      ✓ $netVersion 文档" 'Green'
-                    } else {
-                        Write-ColorText "      ✗ $netVersion 文档生成失败" 'Red'
+
+                        # 清空并创建输出目录
+                        if (Test-Path $projOutputDir) {
+                            Remove-Item -Path "$projOutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
+                        } else {
+                            New-Item -ItemType Directory -Path $projOutputDir -Force | Out-Null
+                        }
+
+                        # 运行 DefaultDocumentation
+                        & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
+                        if ($LASTEXITCODE -eq 0) {
+                            # 生成 index.md（从主命名空间文件复制）
+                            $mainMdFile = Get-ChildItem -Path $projOutputDir -Filter "$project.md" -ErrorAction SilentlyContinue | Select-Object -First 1
+                            if ($mainMdFile) {
+                                $indexPath = Join-Path $projOutputDir 'index.md'
+                                $content = [System.IO.File]::ReadAllText($mainMdFile.FullName, [System.Text.Encoding]::UTF8)
+                                $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+                                [System.IO.File]::WriteAllText($indexPath, $content, $utf8NoBom)
+                            }
+                            Write-ColorText "      ✓ $netVersion 文档" 'Green'
+                        } else {
+                            Write-ColorText "      ✗ $netVersion 文档生成失败" 'Red'
+                        }
                     }
                 }
             }
@@ -297,35 +310,37 @@ if ($failCount -gt 0) {
 Write-ColorText "========================================" 'Cyan'
 Write-Host ''
 
-# 生成所有 .NET 版本的 API 索引页
-Write-ColorText '生成 API 索引页...' 'Cyan'
+# 生成 API 索引页和符号链接（仅在用户选择生成文档时）
+if ($generateDocs) {
+    # 生成所有 .NET 版本的 API 索引页
+    Write-ColorText '生成 API 索引页...' 'Cyan'
 
-$netVersions = @('net10.0', 'net8.0')
-$generatedDocVersions = @()
+    $netVersions = @('net10.0', 'net8.0')
+    $generatedDocVersions = @()
 
-# 检查每个 .NET 版本是否有文档生成
-foreach ($netVersion in $netVersions) {
-    $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
-    if (Test-Path $apiDocsDir) {
-        $docDirs = Get-ChildItem -Path $apiDocsDir -Directory -ErrorAction SilentlyContinue
-        if ($docDirs.Count -gt 0) {
-            $generatedDocVersions += $netVersion
+    # 检查每个 .NET 版本是否有文档生成
+    foreach ($netVersion in $netVersions) {
+        $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
+        if (Test-Path $apiDocsDir) {
+            $docDirs = Get-ChildItem -Path $apiDocsDir -Directory -ErrorAction SilentlyContinue
+            if ($docDirs.Count -gt 0) {
+                $generatedDocVersions += $netVersion
+            }
         }
     }
-}
 
-# 为每个 .NET 版本生成索引页
-foreach ($netVersion in $generatedDocVersions) {
-    $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
+    # 为每个 .NET 版本生成索引页
+    foreach ($netVersion in $generatedDocVersions) {
+        $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
 
-    # 根据版本调整标题
-    $versionTitle = switch ($netVersion) {
-        'net8.0' { '.NET 8.0' }
-        'net10.0' { '.NET 10.0' }
-        default { $netVersion }
-    }
+        # 根据版本调整标题
+        $versionTitle = switch ($netVersion) {
+            'net8.0' { '.NET 8.0' }
+            'net10.0' { '.NET 10.0' }
+            default { $netVersion }
+        }
 
-    $indexContent = @"
+        $indexContent = @"
 # API 参考 ($versionTitle)
 
 本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
@@ -361,14 +376,14 @@ foreach ($netVersion in $generatedDocVersions) {
 - [Apq.Cfg.Database](./database/) - 数据库配置源
 "@
 
-    $indexPath = Join-Path $apiDocsDir 'index.md'
-    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-    [System.IO.File]::WriteAllText($indexPath, $indexContent, $utf8NoBom)
-}
+        $indexPath = Join-Path $apiDocsDir 'index.md'
+        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText($indexPath, $indexContent, $utf8NoBom)
+    }
 
-# 生成总的 API 索引页
-$apiRootDir = Join-Path $RootDir 'docs\site\api'
-$rootIndexContent = @"
+    # 生成总的 API 索引页
+    $apiRootDir = Join-Path $RootDir 'docs\site\api'
+    $rootIndexContent = @"
 # API 参考
 
 本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
@@ -379,44 +394,45 @@ $rootIndexContent = @"
 
 "@
 
-foreach ($netVersion in $generatedDocVersions) {
-    $versionTitle = switch ($netVersion) {
-        'net8.0' { '.NET 8.0' }
-        'net10.0' { '.NET 10.0' }
-        default { $netVersion }
+    foreach ($netVersion in $generatedDocVersions) {
+        $versionTitle = switch ($netVersion) {
+            'net8.0' { '.NET 8.0' }
+            'net10.0' { '.NET 10.0' }
+            default { $netVersion }
+        }
+
+        $rootIndexContent += "- [$versionTitle](./$netVersion/)`n"
     }
 
-    $rootIndexContent += "- [$versionTitle](./$netVersion/)`n"
+    $rootIndexPath = Join-Path $apiRootDir 'index.md'
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($rootIndexPath, $rootIndexContent, $utf8NoBom)
+
+    Write-ColorText "  API 索引页生成完成" 'Green'
+
+    # 为英文版创建 API 文档的符号链接（解决语言切换 404 问题）
+    Write-ColorText '创建英文版 API 符号链接...' 'Cyan'
+    $enApiDir = Join-Path $RootDir 'docs\site\en\api'
+    foreach ($netVersion in $generatedDocVersions) {
+        $sourcePath = Join-Path $RootDir "docs\site\api\$netVersion"
+        $targetPath = Join-Path $enApiDir $netVersion
+
+        # 如果目标已存在，先删除
+        if (Test-Path $targetPath) {
+            Remove-Item $targetPath -Force -Recurse -ErrorAction SilentlyContinue
+        }
+
+        # 创建目录连接（junction）- 不需要管理员权限
+        cmd /c mklink /J "$targetPath" "$sourcePath" 2>&1 | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            Write-ColorText "  ✓ $netVersion" 'Green'
+        } else {
+            Write-ColorText "  ✗ $netVersion 创建失败" 'Red'
+        }
+    }
+    Write-ColorText "  英文版 API 链接创建完成" 'Green'
+    Write-Host ''
 }
-
-$rootIndexPath = Join-Path $apiRootDir 'index.md'
-$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-[System.IO.File]::WriteAllText($rootIndexPath, $rootIndexContent, $utf8NoBom)
-
-Write-ColorText "  API 索引页生成完成" 'Green'
-
-# 为英文版创建 API 文档的符号链接（解决语言切换 404 问题）
-Write-ColorText '创建英文版 API 符号链接...' 'Cyan'
-$enApiDir = Join-Path $RootDir 'docs\site\en\api'
-foreach ($netVersion in $generatedDocVersions) {
-    $sourcePath = Join-Path $RootDir "docs\site\api\$netVersion"
-    $targetPath = Join-Path $enApiDir $netVersion
-
-    # 如果目标已存在，先删除
-    if (Test-Path $targetPath) {
-        Remove-Item $targetPath -Force -Recurse -ErrorAction SilentlyContinue
-    }
-
-    # 创建目录连接（junction）- 不需要管理员权限
-    cmd /c mklink /J "$targetPath" "$sourcePath" 2>&1 | Out-Null
-    if ($LASTEXITCODE -eq 0) {
-        Write-ColorText "  ✓ $netVersion" 'Green'
-    } else {
-        Write-ColorText "  ✗ $netVersion 创建失败" 'Red'
-    }
-}
-Write-ColorText "  英文版 API 链接创建完成" 'Green'
-Write-Host ''
 
 # 列出生成的包
 $packages = Get-ChildItem -Path $OutputDir -Filter "Apq.Cfg*.nupkg" -ErrorAction SilentlyContinue | Sort-Object Name

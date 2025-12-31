@@ -14,7 +14,7 @@
 ```
 benchmarks/
 └── Apq.Cfg.Benchmarks/                   # 多目标框架基准测试项目
-    ├── Apq.Cfg.Benchmarks.csproj         # 支持 net6.0;net8.0;net10.0
+    ├── Apq.Cfg.Benchmarks.csproj         # 支持 net8.0;net10.0
     ├── Program.cs                        # 入口程序
     │
     ├── # 基础性能测试
@@ -55,7 +55,7 @@ benchmarks/
 
 ```bash
 # 运行所有基准测试（Release 模式必须）
-# 使用 .NET 10 作为宿主运行，自动测试 .NET 6/8/10 三个版本
+# 使用 .NET 10 作为宿主运行，自动测试 .NET 8/10 两个版本
 # 结果自动保存到带时间戳的子目录
 dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *
 ```
@@ -364,11 +364,11 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --fi
 
 ## 测试配置说明
 
-本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 6/8/9 三个版本的性能。
+本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 8/10 两个版本的性能。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
 - **预计耗时**：全部测试约 **30 分钟**完成
-- **测试覆盖**：约 250 个测试方法 × 3 个运行时 = 750 个测试点
+- **测试覆盖**：约 250 个测试方法 × 2 个运行时 = 500 个测试点
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ## 测试结果

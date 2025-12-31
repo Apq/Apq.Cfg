@@ -126,6 +126,13 @@ const zhSidebar = {
         { text: 'Apq.Cfg.Vault', link: '/api/net8.0/vault/' },
         { text: 'Apq.Cfg.Database', link: '/api/net8.0/database/' }
       ]
+    },
+    {
+      text: '源生成器 API (netstandard2.0)',
+      collapsed: true,
+      items: [
+        { text: 'Apq.Cfg.SourceGenerator', link: '/api/netstandard2.0/sourcegen/' }
+      ]
     }
   ],
   '/examples/': [
@@ -268,6 +275,13 @@ const enSidebar = {
         { text: 'Apq.Cfg.Zookeeper', link: '/api/net8.0/zookeeper/' },
         { text: 'Apq.Cfg.Vault', link: '/api/net8.0/vault/' },
         { text: 'Apq.Cfg.Database', link: '/api/net8.0/database/' }
+      ]
+    },
+    {
+      text: 'Source Generator API (netstandard2.0)',
+      collapsed: true,
+      items: [
+        { text: 'Apq.Cfg.SourceGenerator', link: '/api/netstandard2.0/sourcegen/' }
       ]
     }
   ],

@@ -7,6 +7,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
 
+    <!-- 生成文档（用于 API 文档生成） -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
     <!-- Roslyn 分析器/生成器配置 -->
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <IsRoslynComponent>true</IsRoslynComponent>
