@@ -15,21 +15,30 @@ Apq.Cfg 支持多种配置源，可以灵活组合使用。
 | [XML](/config-sources/xml) | Apq.Cfg.Xml | XML 格式配置文件 |
 | [INI](/config-sources/ini) | Apq.Cfg.Ini | INI 格式配置文件 |
 | [TOML](/config-sources/toml) | Apq.Cfg.Toml | TOML 格式配置文件 |
+| [.env 文件](/config-sources/env#env-文件支持) | Apq.Cfg.Env | .env 格式配置文件 |
 | [环境变量](/config-sources/env) | Apq.Cfg (内置) | 系统环境变量 |
 
-### 远程配置源
+### 数据存储配置源
+
+从数据存储系统读取配置：
+
+| 配置源 | NuGet 包 | 说明 |
+|--------|----------|------|
+| [Redis](/config-sources/redis) | Apq.Cfg.Redis | Redis 键值存储 |
+| [Database](/config-sources/database) | Apq.Cfg.Database | 数据库配置源（支持多种数据库） |
+
+### 远程配置中心
 
 从远程配置中心读取配置：
 
 | 配置源 | NuGet 包 | 说明 |
 |--------|----------|------|
 | [Consul](/config-sources/consul) | Apq.Cfg.Consul | HashiCorp Consul |
-| [Redis](/config-sources/redis) | Apq.Cfg.Redis | Redis 键值存储 |
 | [Apollo](/config-sources/apollo) | Apq.Cfg.Apollo | 携程 Apollo 配置中心 |
+| [Nacos](/config-sources/nacos) | Apq.Cfg.Nacos | 阿里巴巴 Nacos |
 | [Vault](/config-sources/vault) | Apq.Cfg.Vault | HashiCorp Vault |
 | [Etcd](/config-sources/etcd) | Apq.Cfg.Etcd | Etcd 分布式键值存储 |
 | [Zookeeper](/config-sources/zookeeper) | Apq.Cfg.Zookeeper | Apache Zookeeper |
-| [Nacos](/config-sources/nacos) | Apq.Cfg.Nacos | 阿里巴巴 Nacos |
 
 ## 配置源选择指南
 

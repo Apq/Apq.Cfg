@@ -91,13 +91,24 @@ var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
 | 本地 | XML | Apq.Cfg.Xml |
 | 本地 | INI | Apq.Cfg.Ini |
 | 本地 | TOML | Apq.Cfg.Toml |
+| 本地 | .env 文件 | Apq.Cfg.Env |
 | 本地 | 环境变量 | Apq.Cfg (内置) |
-| 远程 | Consul | Apq.Cfg.Consul |
-| 远程 | Redis | Apq.Cfg.Redis |
-| 远程 | Apollo | Apq.Cfg.Apollo |
-| 远程 | Vault | Apq.Cfg.Vault |
-| 远程 | Etcd | Apq.Cfg.Etcd |
-| 远程 | Zookeeper | Apq.Cfg.Zookeeper |
-| 远程 | Nacos | Apq.Cfg.Nacos |
+| 数据存储 | Redis | Apq.Cfg.Redis |
+| 数据存储 | Database | Apq.Cfg.Database |
+| 配置中心 | Consul | Apq.Cfg.Consul |
+| 配置中心 | Apollo | Apq.Cfg.Apollo |
+| 配置中心 | Nacos | Apq.Cfg.Nacos |
+| 配置中心 | Vault | Apq.Cfg.Vault |
+| 配置中心 | Etcd | Apq.Cfg.Etcd |
+| 配置中心 | Zookeeper | Apq.Cfg.Zookeeper |
+
+## 扩展功能
+
+| 功能 | 说明 | NuGet 包 |
+|------|------|----------|
+| 加密脱敏 | AES-GCM/AES-CBC/ChaCha20/SM4/3DES 加密，敏感字段脱敏 | Apq.Cfg.Crypto |
+| Data Protection | ASP.NET Core Data Protection 集成 | Apq.Cfg.Crypto.DataProtection |
+| 加密工具 | 命令行加密工具 (dotnet tool) | Apq.Cfg.Crypto.Tool |
+| 源生成器 | 编译时生成零反射绑定代码，支持 Native AOT | Apq.Cfg.SourceGenerator |
 
 </div>

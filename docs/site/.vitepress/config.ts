@@ -51,14 +51,21 @@ const zhSidebar = {
         { text: 'XML', link: '/config-sources/xml' },
         { text: 'INI', link: '/config-sources/ini' },
         { text: 'TOML', link: '/config-sources/toml' },
-        { text: '环境变量', link: '/config-sources/env' }
+        { text: '环境变量', link: '/config-sources/env' },
+        { text: '.env 文件', link: '/config-sources/env#env-文件支持' }
       ]
     },
     {
-      text: '远程配置源',
+      text: '数据存储配置源',
+      items: [
+        { text: 'Redis', link: '/config-sources/redis' },
+        { text: 'Database', link: '/config-sources/database' }
+      ]
+    },
+    {
+      text: '远程配置中心',
       items: [
         { text: 'Consul', link: '/config-sources/consul' },
-        { text: 'Redis', link: '/config-sources/redis' },
         { text: 'Apollo', link: '/config-sources/apollo' },
         { text: 'Nacos', link: '/config-sources/nacos' },
         { text: 'Vault', link: '/config-sources/vault' },
@@ -208,14 +215,21 @@ const enSidebar = {
         { text: 'XML', link: '/en/config-sources/xml' },
         { text: 'INI', link: '/en/config-sources/ini' },
         { text: 'TOML', link: '/en/config-sources/toml' },
-        { text: 'Environment Variables', link: '/en/config-sources/env' }
+        { text: 'Environment Variables', link: '/en/config-sources/env' },
+        { text: '.env File', link: '/en/config-sources/env#env-file-support' }
       ]
     },
     {
-      text: 'Remote Sources',
+      text: 'Data Storage Sources',
+      items: [
+        { text: 'Redis', link: '/en/config-sources/redis' },
+        { text: 'Database', link: '/en/config-sources/database' }
+      ]
+    },
+    {
+      text: 'Remote Config Centers',
       items: [
         { text: 'Consul', link: '/en/config-sources/consul' },
-        { text: 'Redis', link: '/en/config-sources/redis' },
         { text: 'Apollo', link: '/en/config-sources/apollo' },
         { text: 'Nacos', link: '/en/config-sources/nacos' },
         { text: 'Vault', link: '/en/config-sources/vault' },

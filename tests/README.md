@@ -31,13 +31,13 @@ dotnet test tests/Apq.Cfg.Tests.Net10/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 404 个测试，41 个需外部服务）
+## 测试统计（共 408 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
 | JsonCfgTests | 15 | 0 | JSON 配置源测试 |
 | EnvVarsCfgTests | 4 | 0 | 环境变量配置源测试 |
-| EnvCfgTests | 15 | 0 | .env 文件配置源测试 |
+| EnvCfgTests | 19 | 0 | .env 文件配置源测试（含 setEnvironmentVariables）|
 | IniCfgTests | 5 | 0 | INI 文件配置源测试 |
 | XmlCfgTests | 5 | 0 | XML 文件配置源测试 |
 | YamlCfgTests | 6 | 0 | YAML 文件配置源测试 |
@@ -189,7 +189,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 
 | 场景类别 | 测试文件 | 测试数量 | 跳过 |
 |----------|----------|----------|------|
-| 基本读写 | JsonCfgTests, EnvCfgTests, 各格式测试 | 107 | 41 |
+| 基本读写 | JsonCfgTests, EnvCfgTests, 各格式测试 | 111 | 41 |
 | 类型转换 | JsonCfgTests | 15 | 0 |
 | 编码检测 | EncodingDetectionTests | 14 | 0 |
 | 编码映射 | EncodingTests | 33 | 0 |

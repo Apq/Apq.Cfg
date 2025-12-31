@@ -354,4 +354,107 @@ public class EnvCfgTests : IDisposable
         Assert.Equal("", cfg.Get("EMPTY_VALUE"));
         Assert.Equal("", cfg.Get("QUOTED_EMPTY"));
     }
+
+    [Fact]
+    public void SetEnvironmentVariables_True_SetsSystemEnvVars()
+    {
+        // Arrange
+        var envPath = Path.Combine(_testDir, ".env");
+        var uniqueKey1 = $"APQ_TEST_ENV_{Guid.NewGuid():N}";
+        var uniqueKey2 = $"APQ_TEST_NESTED__{Guid.NewGuid():N}";
+        File.WriteAllText(envPath, $"""
+            {uniqueKey1}=TestValue1
+            {uniqueKey2}=TestValue2
+            """);
+
+        try
+        {
+            // Act
+            using var cfg = new CfgBuilder()
+                .AddEnv(envPath, level: 0, writeable: false, setEnvironmentVariables: true)
+                .Build();
+
+            // Assert - 验证系统环境变量已设置
+            Assert.Equal("TestValue1", Environment.GetEnvironmentVariable(uniqueKey1));
+            Assert.Equal("TestValue2", Environment.GetEnvironmentVariable(uniqueKey2));
+        }
+        finally
+        {
+            // Cleanup - 清理环境变量
+            Environment.SetEnvironmentVariable(uniqueKey1, null);
+            Environment.SetEnvironmentVariable(uniqueKey2, null);
+        }
+    }
+
+    [Fact]
+    public void SetEnvironmentVariables_False_DoesNotSetSystemEnvVars()
+    {
+        // Arrange
+        var envPath = Path.Combine(_testDir, ".env");
+        var uniqueKey = $"APQ_TEST_NO_ENV_{Guid.NewGuid():N}";
+        File.WriteAllText(envPath, $"""
+            {uniqueKey}=TestValue
+            """);
+
+        // Act
+        using var cfg = new CfgBuilder()
+            .AddEnv(envPath, level: 0, writeable: false, setEnvironmentVariables: false)
+            .Build();
+
+        // Assert - 验证系统环境变量未设置
+        Assert.Null(Environment.GetEnvironmentVariable(uniqueKey));
+        // 但配置值应该可以正常读取
+        Assert.Equal("TestValue", cfg.Get(uniqueKey));
+    }
+
+    [Fact]
+    public void SetEnvironmentVariables_Default_DoesNotSetSystemEnvVars()
+    {
+        // Arrange
+        var envPath = Path.Combine(_testDir, ".env");
+        var uniqueKey = $"APQ_TEST_DEFAULT_{Guid.NewGuid():N}";
+        File.WriteAllText(envPath, $"""
+            {uniqueKey}=TestValue
+            """);
+
+        // Act - 不指定 setEnvironmentVariables 参数（默认为 false）
+        using var cfg = new CfgBuilder()
+            .AddEnv(envPath, level: 0, writeable: false)
+            .Build();
+
+        // Assert - 验证系统环境变量未设置
+        Assert.Null(Environment.GetEnvironmentVariable(uniqueKey));
+        // 但配置值应该可以正常读取
+        Assert.Equal("TestValue", cfg.Get(uniqueKey));
+    }
+
+    [Fact]
+    public void SetEnvironmentVariables_NestedKey_PreservesOriginalFormat()
+    {
+        // Arrange
+        var envPath = Path.Combine(_testDir, ".env");
+        var uniquePrefix = $"APQ_TEST_{Guid.NewGuid():N}";
+        var nestedKey = $"{uniquePrefix}__HOST";
+        File.WriteAllText(envPath, $"""
+            {nestedKey}=localhost
+            """);
+
+        try
+        {
+            // Act
+            using var cfg = new CfgBuilder()
+                .AddEnv(envPath, level: 0, writeable: false, setEnvironmentVariables: true)
+                .Build();
+
+            // Assert - 环境变量使用原始格式（双下划线）
+            Assert.Equal("localhost", Environment.GetEnvironmentVariable(nestedKey));
+            // 配置键使用冒号分隔
+            Assert.Equal("localhost", cfg.Get($"{uniquePrefix}:HOST"));
+        }
+        finally
+        {
+            // Cleanup
+            Environment.SetEnvironmentVariable(nestedKey, null);
+        }
+    }
 }

@@ -15,10 +15,12 @@ public static class CfgBuilderExtensions
     /// <param name="optional">文件不存在时是否忽略</param>
     /// <param name="reloadOnChange">文件变更时是否自动重载</param>
     /// <param name="isPrimaryWriter">是否为默认写入目标</param>
+    /// <param name="setEnvironmentVariables">是否将配置写入系统环境变量（默认为 false）</param>
     /// <returns>配置构建器</returns>
     public static CfgBuilder AddEnv(this CfgBuilder builder, string path, int level, bool writeable = false,
-        bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false)
+        bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false,
+        bool setEnvironmentVariables = false)
     {
-        return builder.AddSource(new EnvFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter));
+        return builder.AddSource(new EnvFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, setEnvironmentVariables));
     }
 }

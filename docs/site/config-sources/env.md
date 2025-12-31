@@ -114,7 +114,8 @@ public static CfgBuilder AddEnv(
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
-    bool isPrimaryWriter = false)
+    bool isPrimaryWriter = false,
+    bool setEnvironmentVariables = false)
 ```
 
 ## 参数说明
@@ -127,6 +128,7 @@ public static CfgBuilder AddEnv(
 | `writeable` | 是否可写 |
 | `optional` | 文件不存在时是否忽略 |
 | `reloadOnChange` | 文件变更时是否自动重载 |
+| `setEnvironmentVariables` | 是否将配置写入系统环境变量（默认为 false） |
 
 ## 典型用法
 
@@ -193,6 +195,23 @@ spec:
 | 文件变更自动重载 | ✅ |
 | 可写配置源 | ✅ |
 | 转义字符（双引号内） | ✅ |
+| 写入系统环境变量 | ✅ |
+
+### 写入系统环境变量
+
+默认情况下，`.env` 文件中的配置只会加载到配置系统中，不会写入系统环境变量。如果需要将配置同时写入系统环境变量（例如供子进程使用），可以启用 `setEnvironmentVariables` 参数：
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddEnv(".env", level: 0, writeable: false, setEnvironmentVariables: true)
+    .Build();
+
+// .env 文件中的 DATABASE__HOST=localhost 会：
+// 1. 作为配置键 "DATABASE:HOST" 可通过 cfg.Get("DATABASE:HOST") 访问
+// 2. 同时设置系统环境变量 DATABASE__HOST=localhost
+```
+
+> **注意**：启用此选项后，配置会写入当前进程的环境变量，子进程可以继承这些环境变量。但这不会影响系统级别的环境变量。
 
 ## 最佳实践
 

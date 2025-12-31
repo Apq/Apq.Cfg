@@ -11,10 +11,13 @@ namespace Apq.Cfg.Env;
 /// </summary>
 internal sealed class EnvFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 {
+    private readonly bool _setEnvironmentVariables;
+
     public EnvFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter)
+        bool isPrimaryWriter, bool setEnvironmentVariables = false)
         : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
     {
+        _setEnvironmentVariables = setEnvironmentVariables;
     }
 
     public override IConfigurationSource BuildSource()
@@ -25,7 +28,8 @@ internal sealed class EnvFileCfgSource : FileCfgSourceBase, IWritableCfgSource
             FileProvider = fp,
             Path = file,
             Optional = _optional,
-            ReloadOnChange = _reloadOnChange
+            ReloadOnChange = _reloadOnChange,
+            SetEnvironmentVariables = _setEnvironmentVariables
         };
         src.ResolveFileProvider();
         return src;
@@ -196,6 +200,11 @@ internal sealed class EnvFileCfgSource : FileCfgSourceBase, IWritableCfgSource
 /// </summary>
 internal sealed class EnvConfigurationSource : FileConfigurationSource
 {
+    /// <summary>
+    /// 是否将配置写入系统环境变量
+    /// </summary>
+    public bool SetEnvironmentVariables { get; set; }
+
     public override IConfigurationProvider Build(IConfigurationBuilder builder)
     {
         // 不调用 EnsureDefaults，因为它可能会覆盖我们设置的 FileProvider
@@ -213,8 +222,11 @@ internal sealed class EnvConfigurationSource : FileConfigurationSource
 /// </summary>
 internal sealed class EnvConfigurationProvider : FileConfigurationProvider
 {
+    private readonly bool _setEnvironmentVariables;
+
     public EnvConfigurationProvider(EnvConfigurationSource source) : base(source)
     {
+        _setEnvironmentVariables = source.SetEnvironmentVariables;
     }
 
     public override void Load(Stream stream)
@@ -237,6 +249,12 @@ internal sealed class EnvConfigurationProvider : FileConfigurationProvider
                 // 将 __ 转换为 : 以支持嵌套配置
                 var configKey = key.Replace("__", ConfigurationPath.KeyDelimiter);
                 data[configKey] = value;
+
+                // 如果启用了写入环境变量，则设置系统环境变量
+                if (_setEnvironmentVariables && value != null)
+                {
+                    Environment.SetEnvironmentVariable(key, value);
+                }
             }
         }
 

@@ -94,7 +94,7 @@ var connectionString = dbSection.Get("ConnectionString");
 
 ## 支持的框架
 
-.NET 6.0 / 7.0 / 8.0 / 9.0
+.NET 6.0 / 8.0 / 10.0 (LTS)
 
 ## NuGet 包
 
@@ -317,6 +317,11 @@ var cfg = new CfgBuilder()
 // 读取配置（DATABASE__HOST 自动转换为 DATABASE:HOST）
 var dbHost = cfg.Get("DATABASE:HOST");
 var dbPort = cfg.Get<int>("DATABASE:PORT");
+
+// 可选：将配置写入系统环境变量（供子进程使用）
+var cfg2 = new CfgBuilder()
+    .AddEnv(".env", level: 0, writeable: false, setEnvironmentVariables: true)
+    .Build();
 ```
 
 .env 文件示例：
@@ -561,13 +566,13 @@ dotnet run -c Release
 
 ### 单元测试通过情况
 
-**最后运行时间**: 2025-12-29
+**最后运行时间**: 2026-01-01
 
 | 框架       | 通过  | 失败  | 跳过  | 总计  | 状态   |
 | -------- | --- | --- | --- | --- | ---- |
-| .NET 6.0 | 363 | 0   | 41  | 404 | ✅ 通过 |
-| .NET 8.0 | 363 | 0   | 41  | 404 | ✅ 通过 |
-| .NET 10.0 | 363 | 0   | 41  | 404 | ✅ 通过 |
+| .NET 6.0 | 367 | 0   | 41  | 408 | ✅ 通过 |
+| .NET 8.0 | 367 | 0   | 41  | 408 | ✅ 通过 |
+| .NET 10.0 | 367 | 0   | 41  | 408 | ✅ 通过 |
 
 #### 跳过测试说明
 
