@@ -218,7 +218,7 @@ foreach ($project in $TargetProjects) {
             Write-ColorText "    生成 $project 文档..." 'Gray'
 
             # 获取所有支持的 .NET 版本
-            $netVersions = @('net6.0', 'net7.0', 'net8.0', 'net9.0')
+            $netVersions = @('net10.0', 'net8.0', 'net6.0')
 
             # 确定项目输出目录名
             $outputDirName = switch ($project) {
@@ -300,7 +300,7 @@ Write-Host ''
 # 生成所有 .NET 版本的 API 索引页
 Write-ColorText '生成 API 索引页...' 'Cyan'
 
-$netVersions = @('net6.0', 'net7.0', 'net8.0', 'net9.0')
+$netVersions = @('net10.0', 'net8.0', 'net6.0')
 $generatedDocVersions = @()
 
 # 检查每个 .NET 版本是否有文档生成
@@ -321,9 +321,8 @@ foreach ($netVersion in $generatedDocVersions) {
     # 根据版本调整标题
     $versionTitle = switch ($netVersion) {
         'net6.0' { '.NET 6.0' }
-        'net7.0' { '.NET 7.0' }
         'net8.0' { '.NET 8.0' }
-        'net9.0' { '.NET 9.0' }
+        'net10.0' { '.NET 10.0' }
         default { $netVersion }
     }
 
@@ -384,9 +383,8 @@ $rootIndexContent = @"
 foreach ($netVersion in $generatedDocVersions) {
     $versionTitle = switch ($netVersion) {
         'net6.0' { '.NET 6.0' }
-        'net7.0' { '.NET 7.0' }
         'net8.0' { '.NET 8.0' }
-        'net9.0' { '.NET 9.0' }
+        'net10.0' { '.NET 10.0' }
         default { $netVersion }
     }
 

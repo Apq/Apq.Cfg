@@ -27,7 +27,7 @@ Implements [Microsoft\.Extensions\.Options\.IOptionsMonitor&lt;](https://learn.m
 
 | Properties | |
 | :--- | :--- |
-| [CurrentValue](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.CurrentValue.md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.CurrentValue') | Returns the current [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.TOptions') instance with the [Microsoft\.Extensions\.Options\.Options\.DefaultName](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.options.defaultname 'Microsoft\.Extensions\.Options\.Options\.DefaultName')\. |
+| [CurrentValue](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.CurrentValue.md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.CurrentValue') | Gets the current [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.TOptions') instance with the [Microsoft\.Extensions\.Options\.Options\.DefaultName](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.options.defaultname 'Microsoft\.Extensions\.Options\.Options\.DefaultName')\. |
 
 | Methods | |
 | :--- | :--- |

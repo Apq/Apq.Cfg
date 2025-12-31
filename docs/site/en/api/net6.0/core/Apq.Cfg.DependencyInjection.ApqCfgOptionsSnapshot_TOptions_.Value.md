@@ -3,7 +3,7 @@
 
 ## ApqCfgOptionsSnapshot\<TOptions\>\.Value Property
 
-The default configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance
+Gets the default configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance\.
 
 ```csharp
 public TOptions Value { get; }

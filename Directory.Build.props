@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <!-- 支持 .NET 6 及以上所有版本 -->
-    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <!-- 支持 .NET 6/8/10 LTS 版本 -->
+    <TargetFrameworks>net6.0;net8.0;net10.0</TargetFrameworks>
 
     <!-- 公共设置 -->
     <ImplicitUsings>enable</ImplicitUsings>
@@ -14,9 +14,6 @@
 
     <!-- 抑制 XML 注释警告 -->
     <NoWarn>$(NoWarn);CS1591;CS1570;CS1574</NoWarn>
-
-    <!-- 抑制 .NET 7 EOL 警告 -->
-    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
 
     <!-- 抑制 TFM 不支持警告 -->
     <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
@@ -33,14 +30,17 @@
   </PropertyGroup>
   <Import Project="buildTools/Version.props" />
 
-  <!-- 动态选择 README 文件：优先使用版本文件，内容不足5字符时回退到项目 README -->
+  <!-- 始终使用项目目录下的 README.md -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- 动态选择 README 文件：优先使用版本文件，内容不足5字符时回退到项目 README（已禁用）
   <Target Name="SelectReadmeFile" BeforeTargets="_GetPackageFiles" DependsOnTargets="DetectVersionFromFiles">
-    <!-- 检查版本文件内容长度 -->
     <CheckFileLength FilePath="$(DetectedVersionFile)" MinLength="5">
       <Output TaskParameter="IsLongEnough" PropertyName="UseVersionFileAsReadme" />
     </CheckFileLength>
 
-    <!-- 如果版本文件内容足够长，使用版本文件 -->
     <ItemGroup Condition="'$(UseVersionFileAsReadme)' == 'true'">
       <_PackageFiles Include="$(DetectedVersionFile)">
         <PackagePath>README.md</PackagePath>
@@ -48,7 +48,6 @@
       </_PackageFiles>
     </ItemGroup>
 
-    <!-- 否则使用项目目录下的 README.md -->
     <ItemGroup Condition="'$(UseVersionFileAsReadme)' != 'true'">
       <_PackageFiles Include="README.md">
         <PackagePath>README.md</PackagePath>
@@ -59,4 +58,5 @@
     <Message Text="README 来源: $(DetectedVersionFile) (版本文件)" Importance="high" Condition="'$(UseVersionFileAsReadme)' == 'true'" />
     <Message Text="README 来源: README.md (项目目录)" Importance="high" Condition="'$(UseVersionFileAsReadme)' != 'true'" />
   </Target>
+  -->
 </Project>

@@ -20,4 +20,4 @@ Implements [OnChange\(Action&lt;TOptions,string&gt;\)](https://learn.microsoft.c
 
 #### Returns
 [System\.IDisposable](https://learn.microsoft.com/en-us/dotnet/api/system.idisposable 'System\.IDisposable')  
-An [System\.IDisposable](https://learn.microsoft.com/en-us/dotnet/api/system.idisposable 'System\.IDisposable') which should be disposed to stop listening for changes\.
+An [System\.IDisposable](https://learn.microsoft.com/en-us/dotnet/api/system.idisposable 'System\.IDisposable') that should be disposed to stop listening for changes\.

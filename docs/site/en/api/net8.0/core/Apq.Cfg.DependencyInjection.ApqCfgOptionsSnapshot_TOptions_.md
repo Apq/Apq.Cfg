@@ -27,7 +27,7 @@ Implements [Microsoft\.Extensions\.Options\.IOptionsSnapshot&lt;](https://learn.
 
 | Properties | |
 | :--- | :--- |
-| [Value](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Value.md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Value') | The default configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance |
+| [Value](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Value.md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Value') | Gets the default configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance\. |
 
 | Methods | |
 | :--- | :--- |

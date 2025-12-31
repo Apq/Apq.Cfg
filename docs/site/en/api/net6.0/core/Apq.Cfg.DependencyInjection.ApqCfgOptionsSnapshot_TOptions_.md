@@ -27,8 +27,8 @@ Implements [Microsoft\.Extensions\.Options\.IOptionsSnapshot&lt;](https://learn.
 
 | Properties | |
 | :--- | :--- |
-| [Value](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Value.md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Value') | The default configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance |
+| [Value](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Value.md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Value') | Gets the default configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance\. |
 
 | Methods | |
 | :--- | :--- |
-| [Get\(string\)](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Get(string).md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Get\(string\)') | Returns a configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance with the given name\. |
+| [Get\(string\)](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Get(string).md 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Get\(string\)') | Returns a configured [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.TOptions') instance with the given [name](Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Get(string).md#Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot_TOptions_.Get(string).name 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsSnapshot\<TOptions\>\.Get\(string\)\.name')\. |
