@@ -69,9 +69,11 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --fi
 
 ```powershell
 # 同时运行 .NET 8 和 .NET 10 测试，结果保存到不同目录
-# 注意：并行运行会因 CPU/内存竞争影响测试准确性，追求精确结果请顺序执行
+# 通过绑定 CPU 核心（ProcessorAffinity）减少竞争，需要至少 16 核 CPU
+# 0x00FF = 核心 0-7，0xFF00 = 核心 8-15
+# 注意：即使绑定核心，L3 缓存和内存带宽仍共享，追求精确结果请顺序执行
 
-Start-Process powershell -ArgumentList "-Command", "dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net8.0 -- --filter *"; Start-Process powershell -ArgumentList "-Command", "dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *"
+$p1 = Start-Process powershell -ArgumentList "-Command", "dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net8.0 -- --filter *" -PassThru; $p2 = Start-Process powershell -ArgumentList "-Command", "dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *" -PassThru; Start-Sleep -Milliseconds 500; $p1.ProcessorAffinity = 0x00FF; $p2.ProcessorAffinity = 0xFF00
 ```
 
 ### 运行特定测试
