@@ -364,17 +364,30 @@ if ($generateDocs) {
 - [Apq.Cfg.Toml](./toml/) - TOML 格式支持
 - [Apq.Cfg.Env](./env/) - .env 文件支持
 
-## 远程配置源
+## 数据存储配置源
 
-- [Apq.Cfg.Redis](./redis/) - Redis 配置源
-- [Apq.Cfg.Consul](./consul/) - Consul 配置中心
-- [Apq.Cfg.Etcd](./etcd/) - Etcd 配置中心
-- [Apq.Cfg.Nacos](./nacos/) - Nacos 配置中心
-- [Apq.Cfg.Apollo](./apollo/) - Apollo 配置中心
-- [Apq.Cfg.Zookeeper](./zookeeper/) - Zookeeper 配置中心
-- [Apq.Cfg.Vault](./vault/) - HashiCorp Vault
 - [Apq.Cfg.Database](./database/) - 数据库配置源
+- [Apq.Cfg.Redis](./redis/) - Redis 配置源
+
+## 远程配置中心
+
+- [Apq.Cfg.Consul](./consul/) - Consul 配置中心
+- [Apq.Cfg.Apollo](./apollo/) - Apollo 配置中心
+- [Apq.Cfg.Nacos](./nacos/) - Nacos 配置中心
+- [Apq.Cfg.Vault](./vault/) - HashiCorp Vault
+- [Apq.Cfg.Etcd](./etcd/) - Etcd 配置中心
+- [Apq.Cfg.Zookeeper](./zookeeper/) - Zookeeper 配置中心
 "@
+
+        # SourceGenerator 使用 netstandard2.0，单独处理
+        if ($netVersion -eq 'net10.0') {
+            $indexContent += @"
+
+## 源生成器
+
+- [Apq.Cfg.SourceGenerator](../netstandard2.0/sourcegen/) - 源生成器（Native AOT 支持）
+"@
+        }
 
         $indexPath = Join-Path $apiDocsDir 'index.md'
         $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
@@ -413,9 +426,18 @@ if ($generateDocs) {
     # 为英文版创建 API 文档的符号链接（解决语言切换 404 问题）
     Write-ColorText '创建英文版 API 符号链接...' 'Cyan'
     $enApiDir = Join-Path $RootDir 'docs\site\en\api'
-    foreach ($netVersion in $generatedDocVersions) {
+
+    # 包含 netstandard2.0（SourceGenerator 使用）
+    $allDocVersions = $generatedDocVersions + @('netstandard2.0')
+
+    foreach ($netVersion in $allDocVersions) {
         $sourcePath = Join-Path $RootDir "docs\site\api\$netVersion"
         $targetPath = Join-Path $enApiDir $netVersion
+
+        # 如果源目录不存在，跳过
+        if (-not (Test-Path $sourcePath)) {
+            continue
+        }
 
         # 如果目标已存在，先删除
         if (Test-Path $targetPath) {

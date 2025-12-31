@@ -35,16 +35,15 @@ benchmarks/
     ├── GetSectionBenchmarks.cs           # 配置节访问测试
     ├── MicrosoftConfigBenchmarks.cs      # Microsoft Configuration 转换测试
     │
-    ├── # 新增功能测试
+    ├── # 功能测试
     ├── EncodingBenchmarks.cs             # 编码检测性能测试
     ├── ObjectBinderBenchmarks.cs         # 对象绑定性能测试（反射）
     ├── SourceGeneratorBenchmarks.cs      # 源生成器绑定性能测试（零反射）
     ├── DependencyInjectionBenchmarks.cs  # 依赖注入集成性能测试
     ├── CryptoBenchmarks.cs               # 加密脱敏性能测试
     │
-    ├── # 远程配置中心测试
-    ├── ConsulBenchmarks.cs               # Consul 配置中心性能测试
-    └── EtcdBenchmarks.cs                 # Etcd 配置中心性能测试
+    └── # 远程配置中心测试（需要对应服务）
+        └── ZookeeperBenchmarks.cs        # Zookeeper 配置中心性能测试
 ```
 
 ## 运行基准测试
@@ -354,37 +353,25 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --li
 dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *Crypto*
 ```
 
-### 18. ConsulBenchmarks - Consul 配置中心性能测试（需要 Consul 服务）
+### 18. ZookeeperBenchmarks - Zookeeper 配置中心性能测试（需要 Zookeeper 服务）
 
-测试 Consul 配置源的读写性能：
-
-| 测试类别 | 测试方法 |
-|----------|----------|
-| 基本读写 | Consul_Get, Consul_Set, Consul_Exists, Consul_Remove |
-| 批量操作 | Consul_Get_Multiple, Consul_Set_Multiple |
-| 热重载 | Consul_Watch_ChangeDetection |
-
-> **注意**：需要运行 Consul 服务才能执行此测试。
-
-### 18. EtcdBenchmarks - Etcd 配置中心性能测试（需要 Etcd 服务）
-
-测试 Etcd 配置源的读写性能：
+测试 Zookeeper 配置源的读写性能：
 
 | 测试类别 | 测试方法 |
 |----------|----------|
-| 基本读写 | Etcd_Get, Etcd_Set, Etcd_Exists, Etcd_Remove |
-| 批量操作 | Etcd_Get_Multiple, Etcd_Set_Multiple |
-| 热重载 | Etcd_Watch_ChangeDetection |
+| 基本读写 | Zookeeper_Get, Zookeeper_Set, Zookeeper_Exists |
+| 批量操作 | Zookeeper_Get_Multiple, Zookeeper_Set_Multiple |
+| 类型转换 | Zookeeper_Get_Int |
 
-> **注意**：需要运行 Etcd 服务才能执行此测试。
+> **注意**：需要运行 Zookeeper 服务才能执行此测试。
 
 ## 测试配置说明
 
 本项目使用自定义 `BenchmarkConfig` 配置，通过 `-f` 参数指定目标框架进行测试。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
-- **预计耗时**：单个框架约 **10 分钟**完成
-- **测试覆盖**：约 250 个测试方法
+- **预计耗时**：单个框架约 **60-90 分钟**完成（取决于硬件性能）
+- **测试覆盖**：约 280 个测试方法
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ## 测试结果
@@ -437,8 +424,7 @@ benchmarks/Apq.Cfg.Benchmarks/
 | SourceGeneratorBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ | - | - | - |
 | DependencyInjectionBenchmarks | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | - | - |
 | **CryptoBenchmarks** | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | - | ✅ | ✅ |
-| ConsulBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - |
-| EtcdBenchmarks | ✅ | ✅ | ✅ | ✅ | - | - | - | - | - | - | - | - | ✅ | - | - | - | - | - | - |
+| ZookeeperBenchmarks | ✅ | ✅ | ✅ | - | - | - | - | ✅ | - | - | - | - | - | - | - | - | - | - | - |
 
 ## 注意事项
 
