@@ -6,14 +6,10 @@
         <PackageTags>configuration;config;etcd</PackageTags>
     </PropertyGroup>
 
-    <!-- .NET 6.0/7.0 使用旧版本（8.x 不支持） -->
-        <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net7.0'">
-        <PackageReference Include="dotnet-etcd" Version="7.2.0" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' != 'net6.0' And '$(TargetFramework)' != 'net7.0'">
+    <!-- .NET 8.0+ 使用最新版本 -->
+    <ItemGroup>
         <PackageReference Include="dotnet-etcd" Version="8.1.0" />
     </ItemGroup>
-    <!-- .NET 8.0+ 使用最新版本 -->
     <ItemGroup>
         <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
     </ItemGroup>

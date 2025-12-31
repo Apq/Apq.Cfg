@@ -21,11 +21,8 @@
     <PackageReference Include="Xunit.SkippableFact" Version="1.5.61" />
   </ItemGroup>
 
-  <!-- xunit.runner.visualstudio 版本根据目标框架选择 -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+  <!-- xunit.runner.visualstudio -->
+  <ItemGroup>
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
   </ItemGroup>
   <ItemGroup>
