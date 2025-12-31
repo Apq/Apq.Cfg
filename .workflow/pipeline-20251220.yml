@@ -21,7 +21,7 @@ stages:
         name: execute_by_docker
         displayName: 打包并发布到NuGet
         certificate: ''
-        image: registry.cn-chengdu.aliyuncs.com/apq/dotnet_sdk:9.0_amd64
+        image: registry.cn-chengdu.aliyuncs.com/apq/dotnet_sdk:10.0_amd64
         command:
           - sh buildTools/gitee-pack-push.sh
         notify: []
