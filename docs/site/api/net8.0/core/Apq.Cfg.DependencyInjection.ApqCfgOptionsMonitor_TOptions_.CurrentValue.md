@@ -3,7 +3,7 @@
 
 ## ApqCfgOptionsMonitor\<TOptions\>\.CurrentValue Property
 
-Gets the current [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.TOptions') instance with the [Microsoft\.Extensions\.Options\.Options\.DefaultName](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.options.defaultname 'Microsoft\.Extensions\.Options\.Options\.DefaultName')\.
+Returns the current [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.TOptions') instance with the [Microsoft\.Extensions\.Options\.Options\.DefaultName](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.options.defaultname 'Microsoft\.Extensions\.Options\.Options\.DefaultName')\.
 
 ```csharp
 public TOptions CurrentValue { get; }

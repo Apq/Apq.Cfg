@@ -21,13 +21,16 @@
 - [Apq.Cfg.Toml](./toml/) - TOML 格式支持
 - [Apq.Cfg.Env](./env/) - .env 文件支持
 
-## 远程配置源
+## 数据存储配置源
 
-- [Apq.Cfg.Redis](./redis/) - Redis 配置源
-- [Apq.Cfg.Consul](./consul/) - Consul 配置中心
-- [Apq.Cfg.Etcd](./etcd/) - Etcd 配置中心
-- [Apq.Cfg.Nacos](./nacos/) - Nacos 配置中心
-- [Apq.Cfg.Apollo](./apollo/) - Apollo 配置中心
-- [Apq.Cfg.Zookeeper](./zookeeper/) - Zookeeper 配置中心
-- [Apq.Cfg.Vault](./vault/) - HashiCorp Vault
 - [Apq.Cfg.Database](./database/) - 数据库配置源
+- [Apq.Cfg.Redis](./redis/) - Redis 配置源
+
+## 远程配置中心
+
+- [Apq.Cfg.Consul](./consul/) - Consul 配置中心
+- [Apq.Cfg.Apollo](./apollo/) - Apollo 配置中心
+- [Apq.Cfg.Nacos](./nacos/) - Nacos 配置中心
+- [Apq.Cfg.Vault](./vault/) - HashiCorp Vault
+- [Apq.Cfg.Etcd](./etcd/) - Etcd 配置中心
+- [Apq.Cfg.Zookeeper](./zookeeper/) - Zookeeper 配置中心

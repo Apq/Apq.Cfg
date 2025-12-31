@@ -8,8 +8,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Apq.Cfg.Crypto\Apq.Cfg.Crypto.csproj"/>
-        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="10.0.1"/>
-        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="10.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="$(MicrosoftAspNetCoreVersion)"/>
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="$(MicrosoftAspNetCoreVersion)"/>
     </ItemGroup>
 
 </Project>

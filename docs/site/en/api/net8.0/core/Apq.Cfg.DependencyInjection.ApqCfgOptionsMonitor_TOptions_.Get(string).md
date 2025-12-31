@@ -14,7 +14,7 @@ public TOptions Get(string? name);
 
 `name` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
-The name of the [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.TOptions') instance\. If [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null'), [Microsoft\.Extensions\.Options\.Options\.DefaultName](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.options.defaultname 'Microsoft\.Extensions\.Options\.Options\.DefaultName'), which is the empty string, is used\.
+The name of the [TOptions](Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.md#Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor_TOptions_.TOptions 'Apq\.Cfg\.DependencyInjection\.ApqCfgOptionsMonitor\<TOptions\>\.TOptions') instance, if a [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')[Microsoft\.Extensions\.Options\.Options\.DefaultName](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.options.defaultname 'Microsoft\.Extensions\.Options\.Options\.DefaultName') is used\.
 
 Implements [Get\(string\)](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionsmonitor-1.get#microsoft-extensions-options-ioptionsmonitor-1-get(system-string) 'Microsoft\.Extensions\.Options\.IOptionsMonitor\`1\.Get\(System\.String\)')
 
