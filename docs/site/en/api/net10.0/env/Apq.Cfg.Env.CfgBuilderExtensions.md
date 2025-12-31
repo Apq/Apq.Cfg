@@ -12,4 +12,4 @@ Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system
 
 | Methods | |
 | :--- | :--- |
-| [AddEnv\(this CfgBuilder, string, int, bool, bool, bool, bool\)](Apq.Cfg.Env.CfgBuilderExtensions.AddEnv(thisApq.Cfg.CfgBuilder,string,int,bool,bool,bool,bool).md 'Apq\.Cfg\.Env\.CfgBuilderExtensions\.AddEnv\(this Apq\.Cfg\.CfgBuilder, string, int, bool, bool, bool, bool\)') | 添加 \.env 文件配置源 |
+| [AddEnv\(this CfgBuilder, string, int, bool, bool, bool, bool, bool\)](Apq.Cfg.Env.CfgBuilderExtensions.AddEnv(thisApq.Cfg.CfgBuilder,string,int,bool,bool,bool,bool,bool).md 'Apq\.Cfg\.Env\.CfgBuilderExtensions\.AddEnv\(this Apq\.Cfg\.CfgBuilder, string, int, bool, bool, bool, bool, bool\)') | 添加 \.env 文件配置源 |

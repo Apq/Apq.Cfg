@@ -94,7 +94,7 @@ var connectionString = dbSection.Get("ConnectionString");
 
 ## 支持的框架
 
-.NET 6.0 / 8.0 / 10.0 (LTS)
+.NET 8.0 / 10.0 (LTS)
 
 ## NuGet 包
 
@@ -570,7 +570,6 @@ dotnet run -c Release
 
 | 框架       | 通过  | 失败  | 跳过  | 总计  | 状态   |
 | -------- | --- | --- | --- | --- | ---- |
-| .NET 6.0 | 367 | 0   | 41  | 408 | ✅ 通过 |
 | .NET 8.0 | 367 | 0   | 41  | 408 | ✅ 通过 |
 | .NET 10.0 | 367 | 0   | 41  | 408 | ✅ 通过 |
 

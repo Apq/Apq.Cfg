@@ -58,8 +58,8 @@ const zhSidebar = {
     {
       text: '数据存储配置源',
       items: [
-        { text: 'Redis', link: '/config-sources/redis' },
-        { text: 'Database', link: '/config-sources/database' }
+        { text: 'Database', link: '/config-sources/database' },
+        { text: 'Redis', link: '/config-sources/redis' }
       ]
     },
     {
@@ -125,27 +125,6 @@ const zhSidebar = {
         { text: 'Apq.Cfg.Zookeeper', link: '/api/net8.0/zookeeper/' },
         { text: 'Apq.Cfg.Vault', link: '/api/net8.0/vault/' },
         { text: 'Apq.Cfg.Database', link: '/api/net8.0/database/' }
-      ]
-    },
-    {
-      text: '自动生成 API (net6.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg', link: '/api/net6.0/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/net6.0/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/net6.0/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/net6.0/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/net6.0/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/net6.0/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/net6.0/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/net6.0/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/net6.0/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/net6.0/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/net6.0/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/net6.0/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/net6.0/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/net6.0/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/net6.0/database/' }
       ]
     }
   ],
@@ -222,8 +201,8 @@ const enSidebar = {
     {
       text: 'Data Storage Sources',
       items: [
-        { text: 'Redis', link: '/en/config-sources/redis' },
-        { text: 'Database', link: '/en/config-sources/database' }
+        { text: 'Database', link: '/en/config-sources/database' },
+        { text: 'Redis', link: '/en/config-sources/redis' }
       ]
     },
     {
@@ -290,27 +269,6 @@ const enSidebar = {
         { text: 'Apq.Cfg.Vault', link: '/api/net8.0/vault/' },
         { text: 'Apq.Cfg.Database', link: '/api/net8.0/database/' }
       ]
-    },
-    {
-      text: 'Auto-generated API (net6.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg', link: '/api/net6.0/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/net6.0/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/net6.0/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/net6.0/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/net6.0/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/net6.0/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/net6.0/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/net6.0/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/net6.0/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/net6.0/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/net6.0/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/net6.0/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/net6.0/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/net6.0/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/net6.0/database/' }
-      ]
     }
   ],
   '/en/examples/': [
@@ -371,6 +329,9 @@ export default defineConfig({
           label: '页面导航',
           level: [2, 3]
         },
+        darkModeSwitchLabel: '外观',
+        darkModeSwitchTitle: '切换到深色模式',
+        lightModeSwitchTitle: '切换到浅色模式',
         docFooter: {
           prev: '上一页',
           next: '下一页'

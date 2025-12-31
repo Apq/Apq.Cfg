@@ -10,10 +10,9 @@
 
 ```text
 tests/
-├── appsettings.json         # 共享测试配置文件（三个测试项目共用）
+├── appsettings.json         # 共享测试配置文件（两个测试项目共用）
 ├── Directory.Build.props    # 共享构建配置
 ├── Apq.Cfg.Tests.Shared/    # 共享测试代码
-├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
 ├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
 └── Apq.Cfg.Tests.Net10/     # .NET 10 测试项目
 ```
