@@ -217,7 +217,7 @@ public enum LogLevel
 - .NET 10.0
 
 > **注意**：由于 `dotnet-etcd` 依赖 `Microsoft.Extensions.DependencyInjection >= 10.0.1`，示例项目只支持 .NET 8.0+。
-> 核心库 `Apq.Cfg` 和所有扩展库仍然支持 .NET 6.0+。
+> 核心库 `Apq.Cfg` 和所有扩展库支持 .NET 8.0+。
 
 ## 依赖
 
@@ -247,4 +247,4 @@ public enum LogLevel
 
 1. **分布式配置源示例**（示例 9-16）需要对应的服务运行才能正常工作
 2. 示例代码中的连接地址、端口、认证信息仅为演示用途，请根据实际环境修改
-3. 源代码生成器示例需要 .NET 6.0 或更高版本
+3. 源代码生成器示例需要 .NET 8.0 或更高版本

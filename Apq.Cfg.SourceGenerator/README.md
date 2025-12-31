@@ -75,7 +75,7 @@ var config = cfgRoot.GetAppConfig();
 - `bool`, `char`
 - `DateTime`, `DateTimeOffset`, `TimeSpan`
 - `Guid`, `Uri`
-- `DateOnly`, `TimeOnly` (.NET 6+)
+- `DateOnly`, `TimeOnly`
 - 枚举类型
 
 ### 集合类型
@@ -174,7 +174,7 @@ Console.WriteLine($"Database: {appConfig.Database?.ConnectionString}");
 
 ## 要求
 
-- .NET 6.0 或更高版本
+- .NET 8.0 或更高版本
 - C# 9.0 或更高版本（支持 `partial` 类）
 
 ## 许可证
