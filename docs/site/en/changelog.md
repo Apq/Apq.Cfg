@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] - 2026-01-01
+
+### Changed
+- Fixed .NET version descriptions in documentation
+- Removed outdated references to .NET 6.0/7.0/9.0 in documentation
+
+## [1.1.0] - 2026-01-01
+
+### Breaking Changes
+- **Target Framework Update**: Now supports only .NET 8.0 and .NET 10.0 (LTS versions)
+- Removed .NET 6.0/7.0/9.0 support
+
+### Changed
+- Optimized dependency version strategy: `Microsoft.Extensions.*` packages use matching versions per target framework
+  - net8.0 → 8.0.0
+  - net10.0 → 10.0.1
+- Updated performance benchmarks to .NET 10.0
+
 ## [1.0.6] - 2025-12-30
 
 ### Added
@@ -84,7 +102,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Writable configuration support
 - Dependency injection integration
 - Source generator support (Native AOT)
-- .NET 6.0/7.0/8.0/9.0 support
 
 ## [0.0.1] - 2025-12-20
 
