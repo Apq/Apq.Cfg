@@ -87,7 +87,7 @@ const zhSidebar = {
     },
     {
       text: '自动生成 API (net10.0)',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net10.0/core/' },
         { text: 'Apq.Cfg.Crypto', link: '/api/net10.0/crypto/' },
@@ -237,7 +237,7 @@ const enSidebar = {
     },
     {
       text: 'Auto-generated API (net10.0)',
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: 'Apq.Cfg', link: '/api/net10.0/core/' },
         { text: 'Apq.Cfg.Crypto', link: '/api/net10.0/crypto/' },
