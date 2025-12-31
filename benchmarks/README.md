@@ -55,9 +55,23 @@ benchmarks/
 
 ```bash
 # 运行所有基准测试（Release 模式必须）
-# 使用 .NET 10 作为宿主运行，自动测试 .NET 8/10 两个版本
-# 结果自动保存到带时间戳的子目录
+# 使用 -f 参数指定目标框架，分别测试 .NET 8 和 .NET 10
+# 结果自动保存到带时间戳和框架名称的子目录，支持并行运行
+
+# 测试 .NET 8
+dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net8.0 -- --filter *
+
+# 测试 .NET 10
 dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *
+```
+
+### 并行运行（PowerShell）
+
+```powershell
+# 同时运行 .NET 8 和 .NET 10 测试，结果保存到不同目录
+# 注意：并行运行会因 CPU/内存竞争影响测试准确性，追求精确结果请顺序执行
+
+Start-Process powershell -ArgumentList "-Command", "dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net8.0 -- --filter *"; Start-Process powershell -ArgumentList "-Command", "dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --filter *"
 ```
 
 ### 运行特定测试
@@ -364,11 +378,11 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --fi
 
 ## 测试配置说明
 
-本项目使用自定义 `BenchmarkConfig` 配置，自动对比 .NET 8/10 两个版本的性能。
+本项目使用自定义 `BenchmarkConfig` 配置，通过 `-f` 参数指定目标框架进行测试。
 
 - **迭代次数**：5 次预热 + 10 次实际测试
-- **预计耗时**：全部测试约 **30 分钟**完成
-- **测试覆盖**：约 250 个测试方法 × 2 个运行时 = 500 个测试点
+- **预计耗时**：单个框架约 **10 分钟**完成
+- **测试覆盖**：约 250 个测试方法
 - **导出格式**：自动生成 Markdown、HTML、CSV 三种格式报告
 
 ## 测试结果
