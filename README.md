@@ -61,20 +61,24 @@
 ```csharp
 using Apq.Cfg;
 
-// 创建配置，支持多个配置源，按层级覆盖
+// 创建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)           // 基础配置
-    .AddJson("config.Development.json", level: 1) // 环境特定配置
-    .AddEnvironmentVariables(prefix: "APP_", level: 2) // 环境变量
+    .AddJson("config.json", level: 0)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .Build();
 
-// 读取配置
-var dbHost = cfg.Get("Database:Host");
-var dbPort = cfg.Get<int>("Database:Port");
+// 读取配置（使用索引器）
+var host = cfg["Database:Host"];
+var port = cfg.Get<int>("Database:Port");
 
 // 使用配置节简化嵌套访问
-var dbSection = cfg.GetSection("Database");
-var connectionString = dbSection.Get("ConnectionString");
+var db = cfg.GetSection("Database");
+var name = db["Name"];
+var timeout = db.Get<int>("Timeout");
+
+// 修改配置
+cfg["App:LastRun"] = DateTime.Now.ToString();
+await cfg.SaveAsync();
 ```
 
 > 更多功能：[动态配置重载](#动态配置重载) | [依赖注入集成](#依赖注入集成) | [远程配置中心](#远程配置中心) | [源生成器](#源生成器native-aot-支持)
@@ -321,18 +325,13 @@ using Apq.Cfg;
 using Apq.Cfg.Env;
 
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0, writeable: true)
+    .AddEnv(".env", level: 0)
     .AddEnv(".env.local", level: 1, writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 读取配置（DATABASE__HOST 自动转换为 DATABASE:HOST）
-var dbHost = cfg.Get("DATABASE:HOST");
+var dbHost = cfg["DATABASE:HOST"];
 var dbPort = cfg.Get<int>("DATABASE:PORT");
-
-// 可选：将配置写入系统环境变量（供子进程使用）
-var cfg2 = new CfgBuilder()
-    .AddEnv(".env", level: 0, writeable: false, setEnvironmentVariables: true)
-    .Build();
 ```
 
 .env 文件示例：
@@ -392,16 +391,13 @@ var services = new ServiceCollection();
 
 // 注册 Apq.Cfg 配置
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true));
 
 // 绑定强类型配置
 services.ConfigureApqCfg<DatabaseOptions>("Database");
-services.ConfigureApqCfg<LoggingOptions>("Logging");
 
 var provider = services.BuildServiceProvider();
-
-// 通过 DI 获取配置
 var cfgRoot = provider.GetRequiredService<ICfgRoot>();
 var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
@@ -409,7 +405,6 @@ public class DatabaseOptions
 {
     public string? Host { get; set; }
     public int Port { get; set; }
-    public string? Name { get; set; }
 }
 ```
 
@@ -420,10 +415,6 @@ public class DatabaseOptions
 ```csharp
 using Apq.Cfg;
 using Apq.Cfg.Consul;
-using Apq.Cfg.Etcd;
-using Apq.Cfg.Nacos;
-using Apq.Cfg.Apollo;
-using Apq.Cfg.Vault;
 
 // 使用 Consul 配置中心
 var cfg = new CfgBuilder()
@@ -431,66 +422,17 @@ var cfg = new CfgBuilder()
     .AddConsul(options => {
         options.Address = "http://localhost:8500";
         options.KeyPrefix = "app/config/";
-        options.EnableHotReload = true;  // 启用热重载
+        options.EnableHotReload = true;
     }, level: 10)
     .Build();
 
-// 使用 Etcd 配置中心
-var cfg2 = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddEtcd(options => {
-        options.Endpoints = new[] { "http://localhost:2379" };
-        options.KeyPrefix = "/app/config/";
-        options.EnableHotReload = true;  // 启用热重载
-    }, level: 10)
-    .Build();
-
-// 使用 Nacos 配置中心
-var cfg3 = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddNacos(options => {
-        options.ServerAddresses = "localhost:8848";
-        options.Namespace = "public";
-        options.DataId = "app-config";
-        options.Group = "DEFAULT_GROUP";
-        options.Username = "nacos";      // 可选
-        options.Password = "nacos";      // 可选
-        options.DataFormat = NacosDataFormat.Json;  // 支持 Json/Yaml/Properties
-        options.EnableHotReload = true;  // 启用热重载
-    }, level: 10)
-    .Build();
-
-// 使用 Apollo 配置中心
-var cfg4 = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddApollo(options => {
-        options.AppId = "my-app";
-        options.MetaServer = "http://localhost:8080";
-        options.Cluster = "default";
-        options.Namespaces = new[] { "application", "common" };
-        options.Secret = "your-secret";  // 可选，用于访问控制
-        options.EnableHotReload = true;  // 启用热重载
-    }, level: 10)
-    .Build();
-
-// 使用 Zookeeper 配置中心
-var cfg5 = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddZookeeper(options => {
-        options.ConnectionString = "localhost:2181";
-        options.RootPath = "/app/config";
-        options.EnableHotReload = true;  // 启用热重载
-    }, level: 10)
-    .Build();
-
-// 使用 HashiCorp Vault 密钥管理
-var cfg6 = new CfgBuilder()
-    .AddVaultV2("http://localhost:8200", "s.token", "kv", "myapp/config", level: 10)
-    .Build();
+// 读取配置
+var dbHost = cfg["Database:Host"];
 
 // 订阅配置变更
-cfg.ConfigChanges.Subscribe(change => {
-    Console.WriteLine($"配置变更: {change.Key} = {change.NewValue}");
+cfg.ConfigChanges.Subscribe(e => {
+    foreach (var (key, change) in e.Changes)
+        Console.WriteLine($"[{change.Type}] {key}: {change.OldValue} -> {change.NewValue}");
 });
 ```
 
@@ -509,13 +451,7 @@ cfg.ConfigChanges.Subscribe(change => {
 
 ### 源生成器（Native AOT 支持）
 
-使用 `Apq.Cfg.SourceGenerator` 包可以在编译时生成零反射的配置绑定代码，完全支持 Native AOT：
-
-```bash
-dotnet add package Apq.Cfg.SourceGenerator
-```
-
-定义配置类时使用 `[CfgSection]` 特性标记，类必须是 `partial` 的：
+使用 `Apq.Cfg.SourceGenerator` 包可以在编译时生成零反射的配置绑定代码：
 
 ```csharp
 using Apq.Cfg;
@@ -525,41 +461,12 @@ public partial class AppConfig
 {
     public string? Name { get; set; }
     public int Port { get; set; }
-    public DatabaseConfig? Database { get; set; }
 }
-
-[CfgSection]
-public partial class DatabaseConfig
-{
-    public string? ConnectionString { get; set; }
-    public int Timeout { get; set; } = 30;
-}
-```
-
-源生成器会自动生成 `BindFrom` 和 `BindTo` 静态方法：
-
-```csharp
-// 构建配置
-var cfgRoot = new CfgBuilder()
-    .AddJson("config.json")
-    .AddIni("config.ini")
-    .Build();
 
 // 使用源生成器绑定配置（零反射）
-var appConfig = AppConfig.BindFrom(cfgRoot.GetSection("AppSettings"));
-
-Console.WriteLine($"App: {appConfig.Name}");
-Console.WriteLine($"Port: {appConfig.Port}");
-Console.WriteLine($"Database: {appConfig.Database?.ConnectionString}");
+var cfg = new CfgBuilder().AddJson("config.json").Build();
+var appConfig = AppConfig.BindFrom(cfg.GetSection("AppSettings"));
 ```
-
-源生成器支持的类型：
-
-- **简单类型**：`string`、`int`、`long`、`bool`、`double`、`decimal`、`DateTime`、`Guid`、枚举等
-- **集合类型**：`T[]`、`List<T>`、`HashSet<T>`、`Dictionary<TKey, TValue>`
-- **复杂类型**：嵌套的配置类（需要同样标记 `[CfgSection]`）
-
-> 详细文档见 [Apq.Cfg.SourceGenerator/README.md](Apq.Cfg.SourceGenerator/README.md)
 
 ## 构建与测试
 

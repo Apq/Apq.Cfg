@@ -9,6 +9,22 @@ namespace Apq.Cfg;
 public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
     /// <summary>
+    /// 通过索引器获取或设置配置值
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <returns>配置值，不存在时返回null</returns>
+    /// <example>
+    /// <code>
+    /// // 读取配置
+    /// var name = cfg["App:Name"];
+    ///
+    /// // 写入配置
+    /// cfg["App:Name"] = "NewName";
+    /// </code>
+    /// </example>
+    string? this[string key] { get; set; }
+
+    /// <summary>
     /// 获取配置值
     /// </summary>
     /// <param name="key">配置键</param>

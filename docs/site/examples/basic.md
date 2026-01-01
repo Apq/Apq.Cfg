@@ -31,15 +31,15 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 
-// 使用 Get 方法
-var appName = cfg.Get("App:Name");
+// 使用索引器
+var appName = cfg["App:Name"];
 Console.WriteLine($"应用名称: {appName}");
 
 // 嵌套路径
-var dbHost = cfg.Get("Database:Host");
+var dbHost = cfg["Database:Host"];
 Console.WriteLine($"数据库主机: {dbHost}");
 ```
 
@@ -64,20 +64,20 @@ Console.WriteLine($"超时: {timeout}秒");
 ### 获取配置节
 
 ```csharp
-var dbSection = cfg.GetSection("Database");
+var db = cfg.GetSection("Database");
 
-Console.WriteLine($"主机: {dbSection.Get("Host")}");
-Console.WriteLine($"端口: {dbSection.Get<int>("Port")}");
-Console.WriteLine($"数据库: {dbSection.Get("Database")}");
+Console.WriteLine($"主机: {db["Host"]}");
+Console.WriteLine($"端口: {db.Get<int>("Port")}");
+Console.WriteLine($"数据库: {db["Database"]}");
 ```
 
 ### 遍历子键
 
 ```csharp
-var appSection = cfg.GetSection("App");
-foreach (var key in appSection.GetChildKeys())
+var app = cfg.GetSection("App");
+foreach (var key in app.GetChildKeys())
 {
-    Console.WriteLine($"{key} = {appSection.Get(key)}");
+    Console.WriteLine($"{key} = {app[key]}");
 }
 ```
 
@@ -126,21 +126,21 @@ public class FeaturesConfig
 
 ```csharp
 // 手动绑定
-var appSection = cfg.GetSection("App");
+var app = cfg.GetSection("App");
 var appConfig = new AppConfig
 {
-    Name = appSection.Get("Name") ?? "",
-    Version = appSection.Get("Version") ?? "",
-    Debug = appSection.Get<bool>("Debug")
+    Name = app["Name"] ?? "",
+    Version = app["Version"] ?? "",
+    Debug = app.Get<bool>("Debug")
 };
 
-var dbSection = cfg.GetSection("Database");
+var db = cfg.GetSection("Database");
 var dbConfig = new DatabaseConfig
 {
-    Host = dbSection.Get("Host") ?? "localhost",
-    Port = dbSection.Get<int>("Port"),
-    Database = dbSection.Get("Database") ?? "",
-    Timeout = dbSection.Get<int>("Timeout")
+    Host = db["Host"] ?? "localhost",
+    Port = db.Get<int>("Port"),
+    Database = db["Database"] ?? "",
+    Timeout = db.Get<int>("Timeout")
 };
 
 Console.WriteLine($"应用: {appConfig.Name} v{appConfig.Version}");
@@ -177,10 +177,10 @@ Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}/{dbConfig.Databas
 
 ```csharp
 // 字符串数组
-var serversSection = cfg.GetSection("Servers");
-foreach (var key in serversSection.GetChildKeys())
+var servers = cfg.GetSection("Servers");
+foreach (var key in servers.GetChildKeys())
 {
-    Console.WriteLine($"服务器: {serversSection.Get(key)}");
+    Console.WriteLine($"服务器: {servers[key]}");
 }
 
 // 对象数组
@@ -191,16 +191,16 @@ public class EndpointConfig
     public int Timeout { get; set; }
 }
 
-var endpointsSection = cfg.GetSection("Endpoints");
-foreach (var key in endpointsSection.GetChildKeys())
+var endpoints = cfg.GetSection("Endpoints");
+foreach (var key in endpoints.GetChildKeys())
 {
-    var endpoint = endpointsSection.GetSection(key);
-    Console.WriteLine($"端点: {endpoint.Get("Name")} -> {endpoint.Get("Url")}");
+    var endpoint = endpoints.GetSection(key);
+    Console.WriteLine($"端点: {endpoint["Name"]} -> {endpoint["Url"]}");
 }
 
 // 按索引访问
-var firstServer = cfg.Get("Servers:0");
-var firstEndpointName = cfg.Get("Endpoints:0:Name");
+var firstServer = cfg["Servers:0"];
+var firstEndpointName = cfg["Endpoints:0:Name"];
 ```
 
 ## 字典配置
@@ -220,10 +220,10 @@ var firstEndpointName = cfg.Get("Endpoints:0:Name");
 ### 读取字典
 
 ```csharp
-var connSection = cfg.GetSection("ConnectionStrings");
-foreach (var key in connSection.GetChildKeys())
+var conn = cfg.GetSection("ConnectionStrings");
+foreach (var key in conn.GetChildKeys())
 {
-    Console.WriteLine($"{key}: {connSection.Get(key)}");
+    Console.WriteLine($"{key}: {conn[key]}");
 }
 ```
 
@@ -235,8 +235,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
-cfg.Set("Database:Port", "5433");
+cfg["App:Name"] = "NewName";
+cfg["Database:Port"] = "5433";
 
 // 保存到文件
 await cfg.SaveAsync();
@@ -249,28 +249,28 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 
 // 读取应用配置
-var appSection = cfg.GetSection("App");
-Console.WriteLine($"=== {appSection.Get("Name")} v{appSection.Get("Version")} ===");
+var app = cfg.GetSection("App");
+Console.WriteLine($"=== {app["Name"]} v{app["Version"]} ===");
 
 // 读取数据库配置
-var dbSection = cfg.GetSection("Database");
-Console.WriteLine($"数据库: {dbSection.Get("Host")}:{dbSection.Get<int>("Port")}");
+var db = cfg.GetSection("Database");
+Console.WriteLine($"数据库: {db["Host"]}:{db.Get<int>("Port")}");
 
 // 读取功能配置
-var featuresSection = cfg.GetSection("Features");
-if (featuresSection.Get<bool>("EnableCache"))
+var features = cfg.GetSection("Features");
+if (features.Get<bool>("EnableCache"))
 {
-    Console.WriteLine($"缓存已启用，大小: {featuresSection.Get<int>("CacheSize")}");
+    Console.WriteLine($"缓存已启用，大小: {features.Get<int>("CacheSize")}");
 }
 
 // 遍历所有顶级配置
 Console.WriteLine("\n所有配置节:");
-var rootSection = cfg.GetSection("");
-foreach (var key in rootSection.GetChildKeys())
+var root = cfg.GetSection("");
+foreach (var key in root.GetChildKeys())
 {
     Console.WriteLine($"  - {key}");
 }

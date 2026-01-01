@@ -39,8 +39,8 @@ var cfg = new CfgBuilder()
     }, level: 1, isPrimaryWriter: true)
     .Build();
 
-// 读取配置
-var connStr = cfg.Get("Database:ConnectionString");
+// 使用索引器访问
+var connStr = cfg["Database:ConnectionString"];
 var timeout = cfg.Get<int>("Database:Timeout");
 ```
 

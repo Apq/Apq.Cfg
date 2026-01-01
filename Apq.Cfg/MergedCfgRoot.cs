@@ -91,6 +91,13 @@ internal sealed class MergedCfgRoot : ICfgRoot
     /// </summary>
     public IObservable<ReloadErrorEvent> ReloadErrors => _reloadErrorSubject.AsObservable();
 
+    /// <inheritdoc />
+    public string? this[string key]
+    {
+        get => Get(key);
+        set => Set(key, value);
+    }
+
     public string? Get(string key)
     {
         // Lazy 策略：访问前确保配置是最新的

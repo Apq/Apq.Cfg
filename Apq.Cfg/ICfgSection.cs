@@ -6,6 +6,24 @@ namespace Apq.Cfg;
 public interface ICfgSection
 {
     /// <summary>
+    /// 通过索引器获取或设置配置值（相对于此节的键）
+    /// </summary>
+    /// <param name="key">相对于此节的键名</param>
+    /// <returns>配置值，不存在时返回null</returns>
+    /// <example>
+    /// <code>
+    /// var dbSection = cfg.GetSection("Database");
+    ///
+    /// // 读取配置
+    /// var host = dbSection["Host"]; // 等同于 cfg["Database:Host"]
+    ///
+    /// // 写入配置
+    /// dbSection["Host"] = "localhost"; // 等同于 cfg["Database:Host"] = "localhost"
+    /// </code>
+    /// </example>
+    string? this[string key] { get; set; }
+
+    /// <summary>
     /// 获取此节的路径前缀
     /// </summary>
     /// <example>

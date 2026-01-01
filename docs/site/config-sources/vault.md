@@ -28,8 +28,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var dbHost = cfg.Get("Database:Host");
-var apiKey = cfg.Get("Api:Key");
+var dbHost = cfg["Database:Host"];
+var apiKey = cfg["Api:Key"];
 ```
 
 ### 使用 UserPass 认证
@@ -131,9 +131,9 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 更新配置
-cfg.Set("Database:Host", "new-db-host");
-cfg.Set("Database:Port", "5433");
-cfg.Set("Feature:NewFeature", "true");
+cfg["Database:Host"] = "new-db-host";
+cfg["Database:Port"] = "5433";
+cfg["Feature:NewFeature"] = "true";
 
 // 保存到 Vault
 await cfg.SaveAsync();

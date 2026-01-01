@@ -44,11 +44,11 @@ using Apq.Cfg;
 
 // 1. 创建配置构建器并加载配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 
-// 2. 读取简单值
-var appName = cfg.Get("App:Name");
+// 2. 使用索引器读取配置
+var appName = cfg["App:Name"];
 Console.WriteLine($"应用名称: {appName}");
 
 // 3. 读取类型化值
@@ -57,10 +57,10 @@ var enableConsole = cfg.Get<bool>("Logging:EnableConsole");
 Console.WriteLine($"最大连接数: {maxConnections}");
 Console.WriteLine($"启用控制台日志: {enableConsole}");
 
-// 4. 读取配置节
-var dbSection = cfg.GetSection("Database");
-Console.WriteLine($"连接字符串: {dbSection.Get("ConnectionString")}");
-Console.WriteLine($"超时时间: {dbSection.Get("Timeout")}");
+// 4. 使用配置节简化访问
+var db = cfg.GetSection("Database");
+Console.WriteLine($"连接字符串: {db["ConnectionString"]}");
+Console.WriteLine($"超时时间: {db["Timeout"]}");
 ```
 
 ## 运行程序
@@ -137,9 +137,9 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 var cfg = new CfgBuilder()
     // 基础配置（level: 0，最低优先级）
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     // 环境特定配置（level: 1，覆盖基础配置）
-    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    .AddJson($"config.{environment}.json", level: 1, optional: true)
     // 环境变量（level: 2，最高优先级）
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();

@@ -20,6 +20,13 @@ internal sealed class CfgSection : ICfgSection
 
     public string Path { get; }
 
+    /// <inheritdoc />
+    public string? this[string key]
+    {
+        get => Get(key);
+        set => Set(key, value);
+    }
+
     /// <summary>
     /// 组合完整的配置键
     /// </summary>

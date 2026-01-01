@@ -8,7 +8,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 ```
 
@@ -18,7 +18,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddJson("config.local.json", level: 1, writeable: true, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
@@ -33,14 +33,23 @@ var cfg = new CfgBuilder()
 // config.local.json: { "Key": "value2" }
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)        // 优先级低
-    .AddJson("config.local.json", level: 1, writeable: true)   // 优先级高
+    .AddJson("config.json", level: 0)        // 优先级低
+    .AddJson("config.local.json", level: 1)  // 优先级高
     .Build();
 
-Console.WriteLine(cfg.Get("Key")); // 输出: value2
+Console.WriteLine(cfg["Key"]); // 输出: value2
 ```
 
 ## 读取配置值
+
+### 索引器
+
+使用索引器是最简洁的方式：
+
+```csharp
+// JSON: { "Database": { "Host": "localhost" } }
+var host = cfg["Database:Host"];
+```
 
 ### Get 方法
 
@@ -102,11 +111,11 @@ if (cfg.TryGet<int>("Database:Port", out var port))
 获取配置的子节：
 
 ```csharp
-var dbSection = cfg.GetSection("Database");
+var db = cfg.GetSection("Database");
 
-// 读取子节的值
-var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
+// 使用索引器读取子节的值
+var host = db["Host"];
+var port = db.Get<int>("Port");
 ```
 
 ### 嵌套配置节
@@ -114,22 +123,22 @@ var port = dbSection.Get<int>("Port");
 ```csharp
 // JSON: { "Services": { "Api": { "Url": "..." } } }
 var apiSection = cfg.GetSection("Services:Api");
-var url = apiSection.Get("Url");
+var url = apiSection["Url"];
 
 // 或者直接访问
-var url = cfg.Get("Services:Api:Url");
+var url = cfg["Services:Api:Url"];
 ```
 
 ### 配置节属性
 
 ```csharp
-var dbSection = cfg.GetSection("Database");
+var db = cfg.GetSection("Database");
 
 // 获取节的路径
-Console.WriteLine(dbSection.Path); // 输出: Database
+Console.WriteLine(db.Path); // 输出: Database
 
 // 检查键是否存在
-if (dbSection.Exists("ConnectionString"))
+if (db.Exists("ConnectionString"))
 {
     // 配置存在
 }
@@ -162,10 +171,10 @@ foreach (var key in cfg.GetChildKeys())
 }
 
 // 获取配置节的子键
-var dbSection = cfg.GetSection("Database");
-foreach (var key in dbSection.GetChildKeys())
+var db = cfg.GetSection("Database");
+foreach (var key in db.GetChildKeys())
 {
-    Console.WriteLine($"{key} = {dbSection.Get(key)}");
+    Console.WriteLine($"{key} = {db[key]}");
 }
 ```
 
@@ -206,7 +215,14 @@ await cfg.SaveAsync();
 
 ## 写入配置
 
-### 设置单个值
+### 使用索引器设置值
+
+```csharp
+cfg["Database:Timeout"] = "60";
+await cfg.SaveAsync();
+```
+
+### 使用 Set 方法
 
 ```csharp
 cfg.Set("Database:Timeout", "60");

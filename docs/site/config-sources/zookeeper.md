@@ -17,7 +17,7 @@ using Apq.Cfg;
 using Apq.Cfg.Zookeeper;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddZookeeper(options => {
         options.ConnectionString = "localhost:2181";
         options.RootPath = "/app/config";
@@ -26,7 +26,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var dbHost = cfg.Get("Database:Host");
+var dbHost = cfg["Database:Host"];
 var dbPort = cfg.Get<int>("Database:Port");
 ```
 
@@ -34,7 +34,7 @@ var dbPort = cfg.Get<int>("Database:Port");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddZookeeper("localhost:2181", "/app/config", level: 10)
     .Build();
 ```
@@ -122,7 +122,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // 写入单个配置
-cfg.Set("Database:Host", "192.168.1.100");
+cfg["Database:Host"] = "192.168.1.100";
 await cfg.SaveAsync();
 
 // 批量写入
@@ -157,10 +157,10 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)                        // 基础配置
-    .AddJson("config.local.json", level: 1, writeable: true)                   // 本地覆盖
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")                         // 环境变量
-    .AddZookeeper("localhost:2181", "/app/config", level: 10)                  // Zookeeper 最高优先级
+    .AddJson("config.json", level: 0)                                         // 基础配置
+    .AddJson("config.local.json", level: 1, writeable: true)                  // 本地覆盖
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")                        // 环境变量
+    .AddZookeeper("localhost:2181", "/app/config", level: 10)                 // Zookeeper 最高优先级
     .Build();
 ```
 

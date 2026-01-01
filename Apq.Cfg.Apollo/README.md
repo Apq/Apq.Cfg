@@ -25,20 +25,13 @@ var cfg = new CfgBuilder()
     {
         options.AppId = "my-app";
         options.MetaServer = "http://localhost:8080";
-        options.Cluster = "default";
         options.Namespaces = new[] { "application" };
         options.EnableHotReload = true;
     }, level: 10)
     .Build();
 
-// 读取配置
-var value = cfg.Get("Database:Host");
-
-// 订阅配置变更
-cfg.ConfigChanges.Subscribe(change =>
-{
-    Console.WriteLine($"配置变更: {change.Key} = {change.NewValue}");
-});
+// 使用索引器访问
+var host = cfg["Database:Host"];
 ```
 
 ## 配置选项

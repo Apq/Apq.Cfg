@@ -24,15 +24,13 @@ var cfg = new CfgBuilder()
     .AddXml("config.xml", level: 0, writeable: true)
     .Build();
 
-// 使用配置节访问
-var dbSection = cfg.GetSection("Database");
-var connStr = dbSection.Get("ConnectionString");
+// 使用索引器访问
+var appName = cfg["AppName"];
 
-// 枚举子键
-foreach (var key in dbSection.GetChildKeys())
-{
-    Console.WriteLine($"{key}: {dbSection.Get(key)}");
-}
+// 使用配置节
+var db = cfg.GetSection("Database");
+var connStr = db["ConnectionString"];
+var timeout = db.Get<int>("Timeout");
 ```
 
 ## 方法签名

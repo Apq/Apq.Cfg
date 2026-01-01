@@ -10,9 +10,9 @@ Apq.Cfg 支持从多个配置源加载配置，并按层级（level）合并。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("base.json", level: 0, writeable: false)           // 优先级最低
-    .AddJson("override.json", level: 1, writeable: false)       // 优先级中
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")          // 优先级最高
+    .AddJson("base.json", level: 0)                                // 优先级最低
+    .AddJson("override.json", level: 1)                            // 优先级中
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")             // 优先级最高
     .Build();
 ```
 
@@ -83,8 +83,8 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{environment}.json", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
@@ -97,7 +97,7 @@ var userConfigPath = Path.Combine(
     ".myapp/config.json");
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddJson(userConfigPath, level: 1, writeable: true, optional: true)
     .Build();
 ```
@@ -106,8 +106,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson("config.Development.json", level: 1, optional: true)
     .AddJson("config.local.json", level: 2, writeable: true, optional: true, isPrimaryWriter: true)  // gitignore
     .Build();
 ```
@@ -127,18 +127,18 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
-    
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{env}.json", level: 1, optional: true)
+
     // 本地覆盖
     .AddJson("config.local.json", level: 3, writeable: true, optional: true, isPrimaryWriter: true)
-    
+
     // 远程配置
     .AddSource(new ConsulCfgSource(/* ... */, level: 10))
-    
+
     // 环境变量
     .AddEnvironmentVariables(level: 20, prefix: "APP_")
-    
+
     .Build();
 ```
 
@@ -148,11 +148,11 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // 写入到默认的可写源（isPrimaryWriter: true 的源）
-cfg.Set("Database:Timeout", "60");
+cfg["Database:Timeout"] = "60";
 await cfg.SaveAsync();
 
 // 写入到特定层级
-cfg.Set("Database:Timeout", "60", targetLevel: 3);
+cfg["Database:Timeout"] = "60";
 await cfg.SaveAsync(targetLevel: 3);
 ```
 

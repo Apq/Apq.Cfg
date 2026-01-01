@@ -40,9 +40,9 @@ var cfg = new CfgBuilder()
     )
     .Build();
 
-// 读取配置
-var dbHost = cfg.Get("Database:Host");
-var apiKey = cfg.Get("Api:Key");
+// 使用索引器访问
+var dbHost = cfg["Database:Host"];
+var apiKey = cfg["Api:Key"];
 ```
 
 ### 使用 UserPass 认证

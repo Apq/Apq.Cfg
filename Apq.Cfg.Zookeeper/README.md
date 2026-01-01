@@ -30,8 +30,8 @@ var cfg = new CfgBuilder()
     }, level: 10)
     .Build();
 
-// 读取配置
-var dbHost = cfg.Get("Database:Host");
+// 使用索引器访问
+var dbHost = cfg["Database:Host"];
 var dbPort = cfg.Get<int>("Database:Port");
 ```
 

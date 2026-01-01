@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 方式一：使用 AddApqCfg 扩展方法
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 // 方式二：使用工厂方法（可访问其他服务）
@@ -19,8 +19,8 @@ builder.Services.AddApqCfg(sp =>
 {
     var env = sp.GetRequiredService<IWebHostEnvironment>();
     return new CfgBuilder()
-        .AddJson("config.json", level: 0, writeable: false)
-        .AddJson($"config.{env.EnvironmentName}.json", level: 1, writeable: false, optional: true)
+        .AddJson("config.json", level: 0)
+        .AddJson($"config.{env.EnvironmentName}.json", level: 1, optional: true)
         .AddEnvironmentVariables(level: 2, prefix: "APP_")
         .Build();
 });
@@ -32,15 +32,15 @@ builder.Services.AddApqCfg(sp =>
 public class MyService
 {
     private readonly ICfgRoot _cfg;
-    
+
     public MyService(ICfgRoot cfg)
     {
         _cfg = cfg;
     }
-    
+
     public string? GetConnectionString()
     {
-        return _cfg.Get("Database:ConnectionString");
+        return _cfg["Database:ConnectionString"];
     }
 }
 ```
@@ -56,13 +56,11 @@ public class DatabaseOptions
     public string Host { get; set; } = "localhost";
     public int Port { get; set; } = 5432;
     public string Database { get; set; } = "";
-    public string Username { get; set; } = "";
-    public string Password { get; set; } = "";
 }
 
 // 注册配置并绑定
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false));
+    .AddJson("config.json", level: 0));
 
 builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```
@@ -71,7 +69,7 @@ builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
 
 ```csharp
 builder.Services.AddApqCfg<DatabaseOptions>(
-    cfg => cfg.AddJson("config.json", level: 0, writeable: false),
+    cfg => cfg.AddJson("config.json", level: 0),
     "Database");
 ```
 

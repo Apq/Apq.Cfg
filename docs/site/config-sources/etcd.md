@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Etcd;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEtcd(options =>
     {
         options.Endpoints = new[] { "localhost:2379" };
@@ -25,7 +25,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var value = cfg.Get("Database:Host");
+var value = cfg["Database:Host"];
 
 // 订阅配置变更
 cfg.ConfigChanges.Subscribe(e =>
@@ -159,8 +159,8 @@ Etcd 配置源可以与其他配置源组合使用：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)           // 基础配置
-    .AddJson("config.local.json", level: 1, writeable: false)     // 本地覆盖
+    .AddJson("config.json", level: 0)                              // 基础配置
+    .AddJson("config.local.json", level: 1)                        // 本地覆盖
     .AddEtcd(options =>                                            // Etcd 远程配置（最高优先级）
     {
         options.Endpoints = new[] { "etcd:2379" };

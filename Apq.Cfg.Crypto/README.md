@@ -28,15 +28,14 @@
 using Apq.Cfg;
 using Apq.Cfg.Crypto;
 
-// 使用自定义加密提供者
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEncryption(new MyCustomCryptoProvider())
     .AddSensitiveMasking()
     .Build();
 
-// 读取时自动解密
-var connectionString = cfg.Get("Database:ConnectionString");
+// 使用索引器访问（自动解密）
+var connStr = cfg["Database:ConnectionString"];
 
 // 日志输出时自动脱敏
 var maskedValue = cfg.GetMasked("Database:ConnectionString");

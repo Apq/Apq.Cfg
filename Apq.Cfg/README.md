@@ -64,22 +64,21 @@ using Apq.Cfg;
 
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 
-// 读取配置
-var connectionString = cfg.Get("Database:ConnectionString");
-var timeout = cfg.Get<int>("Database:Timeout");
+// 读取配置（使用索引器）
+var host = cfg["Database:Host"];
+var port = cfg.Get<int>("Database:Port");
 
 // 使用配置节简化嵌套访问
-var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
+var db = cfg.GetSection("Database");
+var name = db["Name"];
+var timeout = db.Get<int>("Timeout");
 
-// 修改配置（写入到 isPrimaryWriter 的配置源）
-cfg.Set("App:LastRun", DateTime.Now.ToString());
+// 修改配置
+cfg["App:LastRun"] = DateTime.Now.ToString();
 await cfg.SaveAsync();
 ```
 
@@ -101,7 +100,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // 写入到默认配置源
-cfg.Set("Key", "Value");
+cfg["Key"] = "Value";
 await cfg.SaveAsync();
 
 // 写入到指定层级
@@ -394,6 +393,9 @@ var cfg = new CfgBuilder()
 ```csharp
 public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
+    // 索引器
+    string? this[string key] { get; set; }
+
     // 读取
     string? Get(string key);
     T? Get<T>(string key);
@@ -424,6 +426,9 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 ```csharp
 public interface ICfgSection
 {
+    // 索引器
+    string? this[string key] { get; set; }
+
     string Path { get; }
     string? Get(string key);
     T? Get<T>(string key);

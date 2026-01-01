@@ -8,7 +8,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
     .Build();
 
 // 监听变更
@@ -26,7 +26,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true))
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, watch: true))
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -174,8 +174,8 @@ public class DynamicConfigService : BackgroundService
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
-    .AddJson("config.local.json", level: 1, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson("config.local.json", level: 1, reloadOnChange: true)
     .Build();
 
 // 假设两个文件都有 "Timeout" 配置
@@ -200,7 +200,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
+cfg["App:Name"] = "NewName";
 await cfg.SaveAsync();
 
 // 文件变更会触发重载，但由于是自己的修改，
@@ -214,9 +214,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置动态重载
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
-    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, writeable: false, optional: true, reloadOnChange: true)
-    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true, optional: true))
+    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true, reloadOnChange: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, watch: true, optional: true))
     .AddEnvironmentVariables(level: 20, prefix: "APP_"));
 
 // 配置选项
@@ -232,7 +232,7 @@ var app = builder.Build();
 var cfg = app.Services.GetRequiredService<ICfgRoot>();
 cfg.ConfigChanges.Subscribe(e =>
 {
-    app.Logger.LogInformation("配置已更新: {Keys}", 
+    app.Logger.LogInformation("配置已更新: {Keys}",
         string.Join(", ", e.Changes.Keys));
 });
 

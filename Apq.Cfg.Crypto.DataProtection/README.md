@@ -31,13 +31,13 @@ using Apq.Cfg.Crypto;
 using Apq.Cfg.Crypto.DataProtection;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddDataProtectionEncryption("MyApp")
     .AddSensitiveMasking()
     .Build();
 
-// 读取时自动解密
-var connectionString = cfg.Get("Database:ConnectionString");
+// 使用索引器访问（自动解密）
+var connStr = cfg["Database:ConnectionString"];
 ```
 
 ### 使用自定义 Data Protection 提供者

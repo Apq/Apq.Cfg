@@ -158,18 +158,16 @@ partial class AppConfig
 using Apq.Cfg;
 
 // 使用 CfgBuilder 创建配置根
-var cfgRoot = new CfgBuilder()
+var cfg = new CfgBuilder()
     .AddJson("config.json")
-    .AddIni("config.ini")
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 
 // 使用源生成器绑定配置
-var appConfig = AppConfig.BindFrom(cfgRoot.GetSection("App"));
+var appConfig = AppConfig.BindFrom(cfg.GetSection("App"));
 
-Console.WriteLine($"App: {appConfig.Name}");
-Console.WriteLine($"Port: {appConfig.Port}");
-Console.WriteLine($"Database: {appConfig.Database?.ConnectionString}");
+// 也可以使用索引器访问原始值
+var name = cfg["App:Name"];
 ```
 
 ## 要求

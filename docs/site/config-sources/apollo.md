@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Apollo;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddApollo(options =>
     {
         options.AppId = "my-app";
@@ -27,7 +27,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var value = cfg.Get("Database:Host");
+var value = cfg["Database:Host"];
 
 // 订阅配置变更
 cfg.ConfigChanges.Subscribe(e =>
@@ -70,13 +70,13 @@ Apollo 支持从多个命名空间读取配置：
 
 ```csharp
 // application 命名空间的配置
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 
 // common 命名空间的配置
-var logLevel = cfg.Get("common:Logging:Level");
+var logLevel = cfg["common:Logging:Level"];
 
 // database 命名空间的配置
-var connStr = cfg.Get("database:ConnectionString");
+var connStr = cfg["database:ConnectionString"];
 ```
 
 ## 热重载
@@ -110,8 +110,8 @@ Apollo 配置源可以与其他配置源组合使用：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)           // 基础配置
-    .AddJson("config.local.json", level: 1, writeable: false)     // 本地覆盖
+    .AddJson("config.json", level: 0)                              // 基础配置
+    .AddJson("config.local.json", level: 1)                        // 本地覆盖
     .AddApollo(options =>                                          // Apollo 远程配置（最高优先级）
     {
         options.AppId = "my-app";
@@ -137,7 +137,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // 以下代码会抛出 NotSupportedException
-cfg.Set("Key", "Value");
+cfg["Key"] = "Value";
 await cfg.SaveAsync();  // 抛出异常
 ```
 

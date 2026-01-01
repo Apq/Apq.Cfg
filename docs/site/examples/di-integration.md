@@ -11,8 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 使用 AddApqCfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_"));
 
 var app = builder.Build();
@@ -24,15 +24,15 @@ var app = builder.Build();
 public class MyService
 {
     private readonly ICfgRoot _cfg;
-    
+
     public MyService(ICfgRoot cfg)
     {
         _cfg = cfg;
     }
-    
+
     public string GetDatabaseHost()
     {
-        return _cfg.Get("Database:Host") ?? "localhost";
+        return _cfg["Database:Host"] ?? "localhost";
     }
 }
 ```
@@ -73,7 +73,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 注册配置
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 // 绑定选项
@@ -294,9 +294,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置 Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, writeable: false, optional: true)
-    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true, optional: true))
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
+    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, watch: true, optional: true))
     .AddEnvironmentVariables(level: 20, prefix: "APP_"));
 
 // 配置选项

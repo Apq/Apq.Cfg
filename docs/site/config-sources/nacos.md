@@ -27,7 +27,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var value = cfg.Get("Database:Host");
+var value = cfg["Database:Host"];
 ```
 
 ## 配置选项
@@ -189,8 +189,8 @@ Nacos 配置源可以与其他配置源组合使用：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)           // 基础配置
-    .AddJson("config.local.json", level: 1, writeable: false)     // 本地覆盖
+    .AddJson("config.json", level: 0)                              // 基础配置
+    .AddJson("config.local.json", level: 1)                        // 本地覆盖
     .AddNacos(options =>                                           // Nacos 远程配置（最高优先级）
     {
         options.ServerAddresses = "nacos:8848";
@@ -215,7 +215,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Version", "2.0.0");
+cfg["App:Version"] = "2.0.0";
 await cfg.SaveAsync();  // 发布到 Nacos
 ```
 

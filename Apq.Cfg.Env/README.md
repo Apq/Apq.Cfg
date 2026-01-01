@@ -23,13 +23,13 @@ var cfg = new CfgBuilder()
     .AddEnv(".env", level: 0, writeable: true)
     .Build();
 
-// 读取配置
-var dbHost = cfg.Get("DATABASE__HOST");
-var dbPort = cfg.Get("DATABASE__PORT");
+// 使用索引器访问（__ 会自动转换为 :）
+var dbHost = cfg["DATABASE:HOST"];
 
-// 使用配置节访问（__ 会自动转换为 :）
-var dbSection = cfg.GetSection("DATABASE");
-var host = dbSection.Get("HOST");
+// 使用配置节
+var db = cfg.GetSection("DATABASE");
+var host = db["HOST"];
+var port = db.Get<int>("PORT");
 ```
 
 ## 方法签名
