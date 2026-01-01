@@ -10,7 +10,7 @@ Use `CfgBuilder` to create configuration instances:
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 ```
 
@@ -30,10 +30,10 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // Get string value
-string? value = cfg.Get("App:Name");
+string? value = cfg["App:Name"];
 
 // With default value
-string name = cfg.Get("App:Name") ?? "DefaultApp";
+string name = cfg["App:Name"] ?? "DefaultApp";
 ```
 
 ### Typed Values
@@ -57,7 +57,7 @@ DateTime date = cfg.Get<DateTime>("App:StartDate");
 ```csharp
 if (cfg.Exists("App:Name"))
 {
-    var name = cfg.Get("App:Name");
+    var name = cfg["App:Name"];
 }
 ```
 
@@ -68,7 +68,7 @@ if (cfg.Exists("App:Name"))
 ```csharp
 var dbSection = cfg.GetSection("Database");
 
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var port = dbSection.Get<int>("Port");
 ```
 
@@ -101,7 +101,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Set value
-cfg.Set("App:Name", "NewName");
+cfg["App:Name"] = "NewName";
 
 // Set to specific level
 cfg.Set("App:Port", "9090", targetLevel: 0);

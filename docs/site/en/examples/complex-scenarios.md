@@ -7,7 +7,7 @@ Enterprise application configuration patterns.
 ```csharp
 var cfg = new CfgBuilder()
     // Base configuration
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
 
     // Service discovery
     .AddConsul(options =>
@@ -76,12 +76,12 @@ public class TenantConfigService
     public string GetTenantSetting(string tenantId, string key)
     {
         // Try tenant-specific first
-        var tenantValue = _cfg.Get($"Tenants:{tenantId}:{key}");
+        var tenantValue = _cfg[$"Tenants:{tenantId}:{key}"];
         if (tenantValue != null)
             return tenantValue;
 
         // Fall back to default
-        return _cfg.Get($"Defaults:{key}") ?? "";
+        return _cfg[$"Defaults:{key}"] ?? "";
     }
 }
 ```

@@ -31,19 +31,19 @@ using Apq.Cfg.Crypto;
 // }
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddAesGcmEncryptionFromEnv()  // Read key from environment variable
     .Build();
 
 // Auto-decrypt on read
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 ```
 
 ### Basic Masking
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddSensitiveMasking()  // Add masking support
     .Build();
 
@@ -70,13 +70,13 @@ Apq.Cfg.Crypto is built on BouncyCastle and supports these algorithms:
 ```csharp
 // Method 1: Provide Base64 key directly
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddAesGcmEncryption("your-base64-encoded-key")
     .Build();
 
 // Method 2: Read key from environment variable (recommended)
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddAesGcmEncryptionFromEnv("APQ_CFG_ENCRYPTION_KEY")
     .Build();
 ```
@@ -85,7 +85,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddAesGcmEncryption("key", options =>
     {
         // Custom encryption prefix
@@ -115,7 +115,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddSensitiveMasking(options =>
     {
         // Custom sensitive key patterns
@@ -154,13 +154,13 @@ foreach (var (key, value) in snapshot)
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddAesGcmEncryptionFromEnv()  // Encryption support
     .AddSensitiveMasking()          // Masking support
     .Build();
 
 // Auto-decrypt on read
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // Use masked value for logging
 logger.LogInformation("Database password: {Password}", cfg.GetMasked("Database:Password"));

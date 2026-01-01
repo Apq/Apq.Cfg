@@ -8,7 +8,7 @@ ASP.NET Core dependency injection integration.
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 var app = builder.Build();
@@ -31,7 +31,7 @@ public class MyController : ControllerBase
     {
         return Ok(new
         {
-            AppName = _cfg.Get("App:Name"),
+            AppName = _cfg["App:Name"],
             Port = _cfg.Get<int>("App:Port")
         });
     }

@@ -34,11 +34,11 @@ using Apq.Cfg;
 
 // Build configuration
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 
 // Read string value
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 Console.WriteLine($"App Name: {appName}");
 
 // Read typed value
@@ -57,9 +57,9 @@ Console.WriteLine($"Debug: {debug}");
 var dbSection = cfg.GetSection("Database");
 
 // Read values from section
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var dbPort = dbSection.Get<int>("Port");
-var dbName = dbSection.Get("Name");
+var dbName = dbSection["Name"];
 
 Console.WriteLine($"Database: {host}:{dbPort}/{dbName}");
 ```
@@ -68,8 +68,8 @@ Console.WriteLine($"Database: {host}:{dbPort}/{dbName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson("config.local.json", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
@@ -80,7 +80,7 @@ Higher level values override lower level values.
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
     .Build();
 
 // Subscribe to configuration changes
@@ -102,8 +102,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Modify configuration
-cfg.Set("App:Name", "NewAppName");
-cfg.Set("App:Port", "9090");
+cfg["App:Name"] = "NewAppName";
+cfg["App:Port"] = "9090";
 
 // Save to file
 await cfg.SaveAsync();

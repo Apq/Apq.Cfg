@@ -57,7 +57,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // ❌ Wrong
-logger.LogInfo($"Password: {cfg.Get("Database:Password")}");
+logger.LogInfo($"Password: {cfg["Database:Password"]}");
 
 // ✅ Correct
 logger.LogInfo($"Password: {cfg.GetMasked("Database:Password")}");
@@ -74,7 +74,7 @@ var timeout = cfg.Get<int?>("Service:Timeout") ?? 30;
 ### Validate Required Configuration
 
 ```csharp
-var connectionString = cfg.Get("Database:ConnectionString")
+var connectionString = cfg["Database:ConnectionString"]
     ?? throw new InvalidOperationException("Database connection string is required");
 ```
 
@@ -129,7 +129,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var mockCfg = new Mock<ICfgRoot>();
-mockCfg.Setup(c => c.Get("App:Name")).Returns("TestApp");
+mockCfg.Setup(c => c["App:Name"]).Returns("TestApp");
 ```
 
 ## Next Steps

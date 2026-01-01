@@ -8,11 +8,11 @@ Basic configuration reading and type conversion examples.
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 
 // String value
-var name = cfg.Get("App:Name");
+var name = cfg["App:Name"];
 
 // Integer value
 var port = cfg.Get<int>("App:Port");
@@ -29,9 +29,9 @@ var timeout = cfg.Get<int?>("App:Timeout") ?? 30;
 ```csharp
 var dbSection = cfg.GetSection("Database");
 
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var port = dbSection.Get<int>("Port");
-var name = dbSection.Get("Name");
+var name = dbSection["Name"];
 
 Console.WriteLine($"Database: {host}:{port}/{name}");
 ```
@@ -41,7 +41,7 @@ Console.WriteLine($"Database: {host}:{port}/{name}");
 ```csharp
 if (cfg.Exists("App:OptionalFeature"))
 {
-    var feature = cfg.Get("App:OptionalFeature");
+    var feature = cfg["App:OptionalFeature"];
     // Use feature
 }
 ```

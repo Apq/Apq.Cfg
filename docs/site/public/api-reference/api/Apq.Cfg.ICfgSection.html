@@ -121,6 +121,54 @@ Interface ICfgSection
 </h2>
 
 
+  <a id="Apq_Cfg_ICfgSection_Item_" data-uid="Apq.Cfg.ICfgSection.Item*"></a>
+
+  <h3 id="Apq_Cfg_ICfgSection_Item_System_String_" data-uid="Apq.Cfg.ICfgSection.Item(System.String)">
+  this[string]
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>通过索引器获取或设置配置值（相对于此节的键）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? this[string key] { get; set; }</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>相对于此节的键名</p>
+</dd>
+  </dl>
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置值，不存在时返回null</p>
+</dd>
+  </dl>
+
+
+
+  <h4 class="section" id="Apq_Cfg_ICfgSection_Item_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var dbSection = cfg.GetSection("Database");
+
+// 读取配置
+var host = dbSection["Host"]; // 等同于 cfg["Database:Host"]
+
+// 写入配置
+dbSection["Host"] = "localhost"; // 等同于 cfg["Database:Host"] = "localhost"</code></pre>
+
+
+
+
+
+
   <a id="Apq_Cfg_ICfgSection_Path_" data-uid="Apq.Cfg.ICfgSection.Path*"></a>
 
   <h3 id="Apq_Cfg_ICfgSection_Path" data-uid="Apq.Cfg.ICfgSection.Path">

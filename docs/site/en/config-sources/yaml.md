@@ -31,10 +31,10 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: false)
+    .AddYaml("config.yaml", level: 0)
     .Build();
 
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 var port = cfg.Get<int>("App:Port");
 ```
 

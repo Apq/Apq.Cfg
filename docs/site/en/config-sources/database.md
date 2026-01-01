@@ -36,7 +36,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Read configuration
-var connStr = cfg.Get("Database:ConnectionString");
+var connStr = cfg["Database:ConnectionString"];
 var timeout = cfg.Get<int>("Database:Timeout");
 ```
 
@@ -211,7 +211,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Write configuration
-cfg.Set("App:Version", "2.0.0");
+cfg["App:Version"] = "2.0.0";
 await cfg.SaveAsync();
 ```
 
@@ -220,7 +220,7 @@ await cfg.SaveAsync();
 ```csharp
 var cfg = new CfgBuilder()
     // Local base configuration
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     // Database configuration (higher priority)
     .AddDatabase(options =>
     {

@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 var app = builder.Build();
@@ -29,7 +29,7 @@ public class MyService
 
     public string GetAppName()
     {
-        return _cfg.Get("App:Name") ?? "DefaultApp";
+        return _cfg["App:Name"] ?? "DefaultApp";
     }
 }
 ```
@@ -47,7 +47,7 @@ public class DatabaseOptions
 }
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false));
+    .AddJson("config.json", level: 0));
 
 builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```

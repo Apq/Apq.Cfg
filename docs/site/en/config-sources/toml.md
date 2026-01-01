@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Toml;
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0, writeable: false)
+    .AddToml("config.toml", level: 0)
     .Build();
 ```
 

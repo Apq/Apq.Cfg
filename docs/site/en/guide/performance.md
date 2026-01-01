@@ -39,9 +39,9 @@ Configuration sources are loaded on-demand, reducing startup time.
 
 ```csharp
 // ❌ Slow: Multiple individual reads
-var name = cfg.Get("App:Name");
-var port = cfg.Get("App:Port");
-var debug = cfg.Get("App:Debug");
+var name = cfg["App:Name"];
+var port = cfg["App:Port"];
+var debug = cfg["App:Debug"];
 
 // ✅ Fast: Batch read
 var keys = new[] { "App:Name", "App:Port", "App:Debug" };
@@ -52,13 +52,13 @@ cfg.GetMany(keys, (key, value) => { /* process */ });
 
 ```csharp
 // ❌ Slow: Repeated section lookups
-var host = cfg.GetSection("Database").Get("Host");
-var port = cfg.GetSection("Database").Get("Port");
+var host = cfg.GetSection("Database")["Host"];
+var port = cfg.GetSection("Database")["Port"];
 
 // ✅ Fast: Cache the section
 var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host");
-var port = dbSection.Get("Port");
+var host = dbSection["Host"];
+var port = dbSection["Port"];
 ```
 
 ### 3. Minimize Hot Reload Scope

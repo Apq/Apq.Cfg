@@ -42,8 +42,8 @@ Level 0:  config.json            ─┘
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson("config.local.json", level: 1, optional: true)
     .Build();
 
 // Results:
@@ -65,7 +65,7 @@ When writing values, you can specify the target level:
 
 ```csharp
 // Write to default (highest writable level)
-cfg.Set("App:Name", "NewName");
+cfg["App:Name"] = "NewName";
 
 // Write to specific level
 cfg.Set("App:Name", "NewName", targetLevel: 0);

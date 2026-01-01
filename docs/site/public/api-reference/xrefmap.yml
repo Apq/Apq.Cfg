@@ -3808,6 +3808,25 @@ references:
   fullName.vb: Apq.Cfg.ICfgRoot.Get(Of T)(String)
   nameWithType: ICfgRoot.Get<T>(string)
   nameWithType.vb: ICfgRoot.Get(Of T)(String)
+- uid: Apq.Cfg.ICfgRoot.Item(System.String)
+  name: this[string]
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Item_System_String_
+  commentId: P:Apq.Cfg.ICfgRoot.Item(System.String)
+  name.vb: this[](String)
+  fullName: Apq.Cfg.ICfgRoot.this[string]
+  fullName.vb: Apq.Cfg.ICfgRoot.this[](String)
+  nameWithType: ICfgRoot.this[string]
+  nameWithType.vb: ICfgRoot.this[](String)
+- uid: Apq.Cfg.ICfgRoot.Item*
+  name: this
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Item_
+  commentId: Overload:Apq.Cfg.ICfgRoot.Item
+  isSpec: "True"
+  name.vb: this[]
+  fullName: Apq.Cfg.ICfgRoot.this
+  fullName.vb: Apq.Cfg.ICfgRoot.this[]
+  nameWithType: ICfgRoot.this
+  nameWithType.vb: ICfgRoot.this[]
 - uid: Apq.Cfg.ICfgRoot.Remove(System.String,System.Nullable{System.Int32})
   name: Remove(string, int?)
   href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Remove_System_String_System_Nullable_System_Int32__
@@ -3970,6 +3989,25 @@ references:
   fullName.vb: Apq.Cfg.ICfgSection.Get(Of T)(String)
   nameWithType: ICfgSection.Get<T>(string)
   nameWithType.vb: ICfgSection.Get(Of T)(String)
+- uid: Apq.Cfg.ICfgSection.Item(System.String)
+  name: this[string]
+  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Item_System_String_
+  commentId: P:Apq.Cfg.ICfgSection.Item(System.String)
+  name.vb: this[](String)
+  fullName: Apq.Cfg.ICfgSection.this[string]
+  fullName.vb: Apq.Cfg.ICfgSection.this[](String)
+  nameWithType: ICfgSection.this[string]
+  nameWithType.vb: ICfgSection.this[](String)
+- uid: Apq.Cfg.ICfgSection.Item*
+  name: this
+  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Item_
+  commentId: Overload:Apq.Cfg.ICfgSection.Item
+  isSpec: "True"
+  name.vb: this[]
+  fullName: Apq.Cfg.ICfgSection.this
+  fullName.vb: Apq.Cfg.ICfgSection.this[]
+  nameWithType: ICfgSection.this
+  nameWithType.vb: ICfgSection.this[]
 - uid: Apq.Cfg.ICfgSection.Path
   name: Path
   href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Path

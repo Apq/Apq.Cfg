@@ -6,7 +6,7 @@ Apq.Cfg supports hot reloading configuration without restarting your application
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
     .Build();
 ```
 

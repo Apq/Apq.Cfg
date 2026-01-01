@@ -38,11 +38,11 @@ dotnet add package Apq.Cfg
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 
 // Read values
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 var port = cfg.Get<int>("App:Port");
 var debug = cfg.Get<bool>("App:Debug");
 ```
@@ -64,9 +64,9 @@ var debug = cfg.Get<bool>("App:Debug");
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
-    .AddJson("config.local.json", level: 2, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{env}.json", level: 1, optional: true)
+    .AddJson("config.local.json", level: 2, optional: true)
     .Build();
 ```
 
@@ -78,8 +78,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Modify values
-cfg.Set("App:Name", "NewAppName");
-cfg.Set("App:Port", "9090");
+cfg["App:Name"] = "NewAppName";
+cfg["App:Port"] = "9090";
 
 // Save to file
 await cfg.SaveAsync();
@@ -89,7 +89,7 @@ await cfg.SaveAsync();
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
     .Build();
 
 // Subscribe to changes
@@ -120,7 +120,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 // Access by index
-var host1 = cfg.Get("Servers:0:Host");
+var host1 = cfg["Servers:0:Host"];
 var port1 = cfg.Get<int>("Servers:0:Port");
 
 // Enumerate
@@ -128,7 +128,7 @@ var serversSection = cfg.GetSection("Servers");
 foreach (var key in serversSection.GetChildKeys())
 {
     var server = serversSection.GetSection(key);
-    Console.WriteLine($"{server.Get("Host")}:{server.Get<int>("Port")}");
+    Console.WriteLine($"{server["Host"]}:{server.Get<int>("Port")}");
 }
 ```
 

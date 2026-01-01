@@ -8,8 +8,8 @@ Combining multiple configuration sources with level-based priority.
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{env}.json", level: 1, optional: true)
     .AddJson("config.local.json", level: 2, writeable: true, optional: true)
     .Build();
 ```
@@ -19,7 +19,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // Local base configuration
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
 
     // Remote configuration center
     .AddConsul(options =>
@@ -44,9 +44,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
-    .AddToml("config.toml", level: 2, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddYaml("config.yaml", level: 1, optional: true)
+    .AddToml("config.toml", level: 2, optional: true)
     .Build();
 ```
 

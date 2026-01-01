@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: false)
+    .AddIni("config.ini", level: 0)
     .Build();
 ```
 

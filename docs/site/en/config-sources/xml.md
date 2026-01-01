@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Xml;
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0, writeable: false)
+    .AddXml("config.xml", level: 0)
     .Build();
 ```
 
