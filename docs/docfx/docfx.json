@@ -7,6 +7,8 @@
           "files": [
             "Apq.Cfg/Apq.Cfg.csproj",
             "Apq.Cfg.Crypto/Apq.Cfg.Crypto.csproj",
+            "Apq.Cfg.Crypto.DataProtection/Apq.Cfg.Crypto.DataProtection.csproj",
+            "Apq.Cfg.Crypto.Tool/Apq.Cfg.Crypto.Tool.csproj",
             "Apq.Cfg.Ini/Apq.Cfg.Ini.csproj",
             "Apq.Cfg.Xml/Apq.Cfg.Xml.csproj",
             "Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj",
@@ -19,15 +21,13 @@
             "Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj",
             "Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj",
             "Apq.Cfg.Zookeeper/Apq.Cfg.Zookeeper.csproj",
-            "Apq.Cfg.Vault/Apq.Cfg.Vault.csproj"
+            "Apq.Cfg.Vault/Apq.Cfg.Vault.csproj",
+            "Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj"
           ],
           "src": "../.."
         }
       ],
       "dest": "api",
-      "properties": {
-        "TargetFramework": "net10.0"
-      },
       "includePrivateMembers": false,
       "disableGitFeatures": false,
       "disableDefaultFilter": false,
@@ -65,7 +65,8 @@
       "_enableSearch": true,
       "_disableContribution": true,
       "_appLogoPath": "images/logo-small.svg",
-      "_appFaviconPath": "favicon.svg"
+      "_appFaviconPath": "favicon.svg",
+      "_displayAssembly": true
     },
     "fileMetadata": {},
     "postProcessors": [],

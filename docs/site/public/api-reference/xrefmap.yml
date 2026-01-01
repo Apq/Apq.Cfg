@@ -524,6 +524,57 @@ references:
   fullName.vb: Apq.Cfg.CfgRootExtensions.TryGet(Of T)(Apq.Cfg.ICfgRoot, String, T)
   nameWithType: CfgRootExtensions.TryGet<T>(ICfgRoot, string, out T?)
   nameWithType.vb: CfgRootExtensions.TryGet(Of T)(ICfgRoot, String, T)
+- uid: Apq.Cfg.CfgSectionAttribute
+  name: CfgSectionAttribute
+  href: api/Apq.Cfg.CfgSectionAttribute.html
+  commentId: T:Apq.Cfg.CfgSectionAttribute
+  fullName: Apq.Cfg.CfgSectionAttribute
+  nameWithType: CfgSectionAttribute
+- uid: Apq.Cfg.CfgSectionAttribute.#ctor(System.String)
+  name: CfgSectionAttribute(string)
+  href: api/Apq.Cfg.CfgSectionAttribute.html#Apq_Cfg_CfgSectionAttribute__ctor_System_String_
+  commentId: M:Apq.Cfg.CfgSectionAttribute.#ctor(System.String)
+  name.vb: New(String)
+  fullName: Apq.Cfg.CfgSectionAttribute.CfgSectionAttribute(string)
+  fullName.vb: Apq.Cfg.CfgSectionAttribute.New(String)
+  nameWithType: CfgSectionAttribute.CfgSectionAttribute(string)
+  nameWithType.vb: CfgSectionAttribute.New(String)
+- uid: Apq.Cfg.CfgSectionAttribute.#ctor*
+  name: CfgSectionAttribute
+  href: api/Apq.Cfg.CfgSectionAttribute.html#Apq_Cfg_CfgSectionAttribute__ctor_
+  commentId: Overload:Apq.Cfg.CfgSectionAttribute.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.CfgSectionAttribute.CfgSectionAttribute
+  fullName.vb: Apq.Cfg.CfgSectionAttribute.New
+  nameWithType: CfgSectionAttribute.CfgSectionAttribute
+  nameWithType.vb: CfgSectionAttribute.New
+- uid: Apq.Cfg.CfgSectionAttribute.GenerateExtension
+  name: GenerateExtension
+  href: api/Apq.Cfg.CfgSectionAttribute.html#Apq_Cfg_CfgSectionAttribute_GenerateExtension
+  commentId: P:Apq.Cfg.CfgSectionAttribute.GenerateExtension
+  fullName: Apq.Cfg.CfgSectionAttribute.GenerateExtension
+  nameWithType: CfgSectionAttribute.GenerateExtension
+- uid: Apq.Cfg.CfgSectionAttribute.GenerateExtension*
+  name: GenerateExtension
+  href: api/Apq.Cfg.CfgSectionAttribute.html#Apq_Cfg_CfgSectionAttribute_GenerateExtension_
+  commentId: Overload:Apq.Cfg.CfgSectionAttribute.GenerateExtension
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgSectionAttribute.GenerateExtension
+  nameWithType: CfgSectionAttribute.GenerateExtension
+- uid: Apq.Cfg.CfgSectionAttribute.SectionPath
+  name: SectionPath
+  href: api/Apq.Cfg.CfgSectionAttribute.html#Apq_Cfg_CfgSectionAttribute_SectionPath
+  commentId: P:Apq.Cfg.CfgSectionAttribute.SectionPath
+  fullName: Apq.Cfg.CfgSectionAttribute.SectionPath
+  nameWithType: CfgSectionAttribute.SectionPath
+- uid: Apq.Cfg.CfgSectionAttribute.SectionPath*
+  name: SectionPath
+  href: api/Apq.Cfg.CfgSectionAttribute.html#Apq_Cfg_CfgSectionAttribute_SectionPath_
+  commentId: Overload:Apq.Cfg.CfgSectionAttribute.SectionPath
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgSectionAttribute.SectionPath
+  nameWithType: CfgSectionAttribute.SectionPath
 - uid: Apq.Cfg.Changes
   name: Apq.Cfg.Changes
   href: api/Apq.Cfg.Changes.html
@@ -1271,6 +1322,109 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Crypto.CfgBuilderExtensions.AddTripleDesEncryption
   nameWithType: CfgBuilderExtensions.AddTripleDesEncryption
+- uid: Apq.Cfg.Crypto.DataProtection
+  name: Apq.Cfg.Crypto.DataProtection
+  href: api/Apq.Cfg.Crypto.DataProtection.html
+  commentId: N:Apq.Cfg.Crypto.DataProtection
+  fullName: Apq.Cfg.Crypto.DataProtection
+  nameWithType: Apq.Cfg.Crypto.DataProtection
+- uid: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions
+  name: CfgBuilderExtensions
+  href: api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.html
+  commentId: T:Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions
+  fullName: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions
+  nameWithType: CfgBuilderExtensions
+- uid: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder,Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})
+  name: AddDataProtectionEncryption(CfgBuilder, IDataProtectionProvider, string, Action<EncryptionOptions>?)
+  href: api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.html#Apq_Cfg_Crypto_DataProtection_CfgBuilderExtensions_AddDataProtectionEncryption_Apq_Cfg_CfgBuilder_Microsoft_AspNetCore_DataProtection_IDataProtectionProvider_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__
+  commentId: M:Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder,Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})
+  name.vb: AddDataProtectionEncryption(CfgBuilder, IDataProtectionProvider, String, Action(Of EncryptionOptions))
+  fullName: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder, Microsoft.AspNetCore.DataProtection.IDataProtectionProvider, string, System.Action<Apq.Cfg.Crypto.EncryptionOptions>?)
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder, Microsoft.AspNetCore.DataProtection.IDataProtectionProvider, String, System.Action(Of Apq.Cfg.Crypto.EncryptionOptions))
+  nameWithType: CfgBuilderExtensions.AddDataProtectionEncryption(CfgBuilder, IDataProtectionProvider, string, Action<EncryptionOptions>?)
+  nameWithType.vb: CfgBuilderExtensions.AddDataProtectionEncryption(CfgBuilder, IDataProtectionProvider, String, Action(Of EncryptionOptions))
+- uid: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder,System.IO.DirectoryInfo,System.String,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})
+  name: AddDataProtectionEncryption(CfgBuilder, DirectoryInfo, string, string, Action<EncryptionOptions>?)
+  href: api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.html#Apq_Cfg_Crypto_DataProtection_CfgBuilderExtensions_AddDataProtectionEncryption_Apq_Cfg_CfgBuilder_System_IO_DirectoryInfo_System_String_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__
+  commentId: M:Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder,System.IO.DirectoryInfo,System.String,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})
+  name.vb: AddDataProtectionEncryption(CfgBuilder, DirectoryInfo, String, String, Action(Of EncryptionOptions))
+  fullName: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder, System.IO.DirectoryInfo, string, string, System.Action<Apq.Cfg.Crypto.EncryptionOptions>?)
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder, System.IO.DirectoryInfo, String, String, System.Action(Of Apq.Cfg.Crypto.EncryptionOptions))
+  nameWithType: CfgBuilderExtensions.AddDataProtectionEncryption(CfgBuilder, DirectoryInfo, string, string, Action<EncryptionOptions>?)
+  nameWithType.vb: CfgBuilderExtensions.AddDataProtectionEncryption(CfgBuilder, DirectoryInfo, String, String, Action(Of EncryptionOptions))
+- uid: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder,System.String,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})
+  name: AddDataProtectionEncryption(CfgBuilder, string, string, Action<EncryptionOptions>?)
+  href: api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.html#Apq_Cfg_Crypto_DataProtection_CfgBuilderExtensions_AddDataProtectionEncryption_Apq_Cfg_CfgBuilder_System_String_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__
+  commentId: M:Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder,System.String,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})
+  name.vb: AddDataProtectionEncryption(CfgBuilder, String, String, Action(Of EncryptionOptions))
+  fullName: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder, string, string, System.Action<Apq.Cfg.Crypto.EncryptionOptions>?)
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption(Apq.Cfg.CfgBuilder, String, String, System.Action(Of Apq.Cfg.Crypto.EncryptionOptions))
+  nameWithType: CfgBuilderExtensions.AddDataProtectionEncryption(CfgBuilder, string, string, Action<EncryptionOptions>?)
+  nameWithType.vb: CfgBuilderExtensions.AddDataProtectionEncryption(CfgBuilder, String, String, Action(Of EncryptionOptions))
+- uid: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption*
+  name: AddDataProtectionEncryption
+  href: api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.html#Apq_Cfg_Crypto_DataProtection_CfgBuilderExtensions_AddDataProtectionEncryption_
+  commentId: Overload:Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption
+  isSpec: "True"
+  fullName: Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.AddDataProtectionEncryption
+  nameWithType: CfgBuilderExtensions.AddDataProtectionEncryption
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider
+  name: DataProtectionCryptoProvider
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html
+  commentId: T:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider
+  nameWithType: DataProtectionCryptoProvider
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,System.String)
+  name: DataProtectionCryptoProvider(IDataProtectionProvider, string)
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html#Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider__ctor_Microsoft_AspNetCore_DataProtection_IDataProtectionProvider_System_String_
+  commentId: M:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,System.String)
+  name.vb: New(IDataProtectionProvider, String)
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.DataProtectionCryptoProvider(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider, string)
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.New(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider, String)
+  nameWithType: DataProtectionCryptoProvider.DataProtectionCryptoProvider(IDataProtectionProvider, string)
+  nameWithType.vb: DataProtectionCryptoProvider.New(IDataProtectionProvider, String)
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.#ctor*
+  name: DataProtectionCryptoProvider
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html#Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider__ctor_
+  commentId: Overload:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.DataProtectionCryptoProvider
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.New
+  nameWithType: DataProtectionCryptoProvider.DataProtectionCryptoProvider
+  nameWithType.vb: DataProtectionCryptoProvider.New
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt(System.String)
+  name: Decrypt(string)
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html#Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Decrypt_System_String_
+  commentId: M:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt(System.String)
+  name.vb: Decrypt(String)
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt(string)
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt(String)
+  nameWithType: DataProtectionCryptoProvider.Decrypt(string)
+  nameWithType.vb: DataProtectionCryptoProvider.Decrypt(String)
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt*
+  name: Decrypt
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html#Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Decrypt_
+  commentId: Overload:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt
+  isSpec: "True"
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt
+  nameWithType: DataProtectionCryptoProvider.Decrypt
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt(System.String)
+  name: Encrypt(string)
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html#Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Encrypt_System_String_
+  commentId: M:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt(System.String)
+  name.vb: Encrypt(String)
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt(string)
+  fullName.vb: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt(String)
+  nameWithType: DataProtectionCryptoProvider.Encrypt(string)
+  nameWithType.vb: DataProtectionCryptoProvider.Encrypt(String)
+- uid: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt*
+  name: Encrypt
+  href: api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html#Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Encrypt_
+  commentId: Overload:Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt
+  isSpec: "True"
+  fullName: Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt
+  nameWithType: DataProtectionCryptoProvider.Encrypt
 - uid: Apq.Cfg.Crypto.EncryptionOptions
   name: EncryptionOptions
   href: api/Apq.Cfg.Crypto.EncryptionOptions.html
@@ -4512,6 +4666,31 @@ references:
   fullName.vb: Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg(Of TOptions)(Microsoft.Extensions.DependencyInjection.IServiceCollection, String, System.Action(Of TOptions))
   nameWithType: ServiceCollectionExtensions.ConfigureApqCfg<TOptions>(IServiceCollection, string, Action<TOptions>)
   nameWithType.vb: ServiceCollectionExtensions.ConfigureApqCfg(Of TOptions)(IServiceCollection, String, Action(Of TOptions))
+- uid: Apq.Cfg.SourceGenerator
+  name: Apq.Cfg.SourceGenerator
+  href: api/Apq.Cfg.SourceGenerator.html
+  commentId: N:Apq.Cfg.SourceGenerator
+  fullName: Apq.Cfg.SourceGenerator
+  nameWithType: Apq.Cfg.SourceGenerator
+- uid: Apq.Cfg.SourceGenerator.CfgSectionGenerator
+  name: CfgSectionGenerator
+  href: api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.html
+  commentId: T:Apq.Cfg.SourceGenerator.CfgSectionGenerator
+  fullName: Apq.Cfg.SourceGenerator.CfgSectionGenerator
+  nameWithType: CfgSectionGenerator
+- uid: Apq.Cfg.SourceGenerator.CfgSectionGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext)
+  name: Initialize(IncrementalGeneratorInitializationContext)
+  href: api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.html#Apq_Cfg_SourceGenerator_CfgSectionGenerator_Initialize_Microsoft_CodeAnalysis_IncrementalGeneratorInitializationContext_
+  commentId: M:Apq.Cfg.SourceGenerator.CfgSectionGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext)
+  fullName: Apq.Cfg.SourceGenerator.CfgSectionGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext)
+  nameWithType: CfgSectionGenerator.Initialize(IncrementalGeneratorInitializationContext)
+- uid: Apq.Cfg.SourceGenerator.CfgSectionGenerator.Initialize*
+  name: Initialize
+  href: api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.html#Apq_Cfg_SourceGenerator_CfgSectionGenerator_Initialize_
+  commentId: Overload:Apq.Cfg.SourceGenerator.CfgSectionGenerator.Initialize
+  isSpec: "True"
+  fullName: Apq.Cfg.SourceGenerator.CfgSectionGenerator.Initialize
+  nameWithType: CfgSectionGenerator.Initialize
 - uid: Apq.Cfg.Sources
   name: Apq.Cfg.Sources
   href: api/Apq.Cfg.Sources.html

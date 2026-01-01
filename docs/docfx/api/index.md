@@ -19,6 +19,11 @@
 
 - [Apq.Cfg.Crypto](Apq.Cfg.Crypto.html) - 加密脱敏核心
 - [Apq.Cfg.Crypto.Providers](Apq.Cfg.Crypto.Providers.html) - 加密提供程序
+- [Apq.Cfg.Crypto.DataProtection](Apq.Cfg.Crypto.DataProtection.html) - ASP.NET Core Data Protection 实现
+
+### 命令行工具
+
+- [Apq.Cfg.Crypto.Tool](Apq.Cfg.Crypto.Tool.html) - 配置加密 CLI 工具 (apqenc)
 
 ### 本地配置源
 
@@ -41,3 +46,7 @@
 - [Apq.Cfg.Apollo](Apq.Cfg.Apollo.html) - Apollo 配置中心
 - [Apq.Cfg.Zookeeper](Apq.Cfg.Zookeeper.html) - Zookeeper 配置中心
 - [Apq.Cfg.Vault](Apq.Cfg.Vault.html) - HashiCorp Vault
+
+### 源生成器
+
+- [Apq.Cfg.SourceGenerator](Apq.Cfg.SourceGenerator.html) - 编译时强类型配置绑定（Native AOT）

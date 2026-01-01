@@ -250,7 +250,7 @@ if ($generateDocFx) {
         Push-Location $DocfxDir
         try {
             # 生成元数据
-            Write-ColorText '  生成 API 元数据 (net10.0 + net8.0)...' 'Gray'
+            Write-ColorText '  生成 API 元数据...' 'Gray'
             docfx metadata 2>&1 | Out-Null
             if ($LASTEXITCODE -eq 0) {
                 Write-ColorText '    ✓ 元数据生成完成' 'Green'

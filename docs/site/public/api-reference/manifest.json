@@ -116,6 +116,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.CfgSectionAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.CfgSectionAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.CfgSectionAttribute",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.CfgSectionAttribute.yml\" sourcestartlinenumber=\"1\">标记一个类为配置节，源生成器将为其生成零反射的绑定代码</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.Changes.ChangeType.yml",
       "output": {
         ".html": {
@@ -281,6 +295,48 @@
       "IsMRef": true,
       "Title": "Apq.Cfg.Crypto.CfgBuilderExtensions",
       "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的加密脱敏扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.DataProtection.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Data Protection 加密扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.yml\" sourcestartlinenumber=\"1\">使用 ASP.NET Core Data Protection 的加密提供者</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.DataProtection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.DataProtection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.DataProtection",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -1009,6 +1065,34 @@
       "IsMRef": true,
       "Title": "Apq.Cfg.ServiceCollectionExtensions",
       "Summary": "<p sourcefile=\"api/Apq.Cfg.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">IServiceCollection 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.SourceGenerator.CfgSectionGenerator",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.yml\" sourcestartlinenumber=\"1\">配置节源生成器，为标记了 [CfgSection] 的类生成零反射绑定代码</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.SourceGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.SourceGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.SourceGenerator",
+      "Summary": null
     },
     {
       "type": "ManagedReference",

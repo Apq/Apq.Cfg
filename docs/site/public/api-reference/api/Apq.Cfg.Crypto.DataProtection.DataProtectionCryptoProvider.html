@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class ApqCfgOptionsSnapshot&lt;TOptions&gt; | Apq.Cfg API </title>
+      <title>Class DataProtectionCryptoProvider | Apq.Cfg API </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class ApqCfgOptionsSnapshot&lt;TOptions&gt; | Apq.Cfg API ">
+      <meta name="title" content="Class DataProtectionCryptoProvider | Apq.Cfg API ">
       
-      <meta name="description" content="支持每次请求重新绑定的 IOptionsSnapshot 实现">
+      <meta name="description" content="使用 ASP.NET Core Data Protection 的加密提供者">
       <link rel="icon" href="../favicon.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -84,49 +84,42 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1">
+        <article data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider">
 
 
 
-  <h1 id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1" class="text-break">
-Class ApqCfgOptionsSnapshot&lt;TOptions&gt;  
+  <h1 id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider" class="text-break">
+Class DataProtectionCryptoProvider  
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.DependencyInjection.html">DependencyInjection</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.Crypto.html">Crypto</a>.<a class="xref" href="Apq.Cfg.Crypto.DataProtection.html">DataProtection</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.Crypto.DataProtection.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>支持每次请求重新绑定的 IOptionsSnapshot 实现</p>
+  <div class="markdown summary"><p>使用 ASP.NET Core Data Protection 的加密提供者</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class ApqCfgOptionsSnapshot&lt;TOptions&gt; : IOptionsSnapshot&lt;TOptions&gt;, IOptions&lt;TOptions&gt; where TOptions : class, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class DataProtectionCryptoProvider : ICryptoProvider</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>TOptions</code></dt>
-    <dd><p>配置选项类型</p>
-</dd>
-  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><span class="xref">ApqCfgOptionsSnapshot&lt;TOptions&gt;</span></div>
+      <div><span class="xref">DataProtectionCryptoProvider</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionssnapshot-1">IOptionsSnapshot</a>&lt;TOptions&gt;</div>
-      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptions-1">IOptions</a>&lt;TOptions&gt;</div>
+      <div><a class="xref" href="Apq.Cfg.Crypto.ICryptoProvider.html">ICryptoProvider</a></div>
     </dd>
   </dl>
 
@@ -147,6 +140,9 @@ Class ApqCfgOptionsSnapshot&lt;TOptions&gt;
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
     </div>
     <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
@@ -157,76 +153,44 @@ Class ApqCfgOptionsSnapshot&lt;TOptions&gt;
 
 
 
+  <h2 id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Data Protection 提供了跨机器、跨应用的密钥管理和加密功能。
+适用于 ASP.NET Core 应用程序，支持密钥轮换和撤销。</p>
+</div>
 
 
   <h2 class="section" id="constructors">Constructors
 </h2>
 
 
-  <a id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1__ctor_" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1.#ctor*"></a>
+  <a id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider__ctor_" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.#ctor*"></a>
 
-  <h3 id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1__ctor_Apq_Cfg_ICfgRoot_System_String_" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1.#ctor(Apq.Cfg.ICfgRoot,System.String)">
-  ApqCfgOptionsSnapshot(ICfgRoot, string)
+  <h3 id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider__ctor_Microsoft_AspNetCore_DataProtection_IDataProtectionProvider_System_String_" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.#ctor(Microsoft.AspNetCore.DataProtection.IDataProtectionProvider,System.String)">
+  DataProtectionCryptoProvider(IDataProtectionProvider, string)
   
   </h3>
 
-  <div class="markdown level1 summary"><p>创建 ApqCfgOptionsSnapshot 实例</p>
+  <div class="markdown level1 summary"><p>初始化 Data Protection 加密提供者</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ApqCfgOptionsSnapshot(ICfgRoot cfgRoot, string sectionKey)</code></pre>
+    <pre><code class="lang-csharp hljs">public DataProtectionCryptoProvider(IDataProtectionProvider provider, string purpose = &quot;Apq.Cfg&quot;)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>cfgRoot</code> <a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a></dt>
-    <dd><p>配置根</p>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider">IDataProtectionProvider</a></dt>
+    <dd><p>Data Protection 提供者</p>
 </dd>
-    <dt><code>sectionKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>配置节键名</p>
+    <dt><code>purpose</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>保护目的，用于隔离不同用途的加密数据</p>
 </dd>
   </dl>
 
 
 
 
-
-
-
-
-
-
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1_Value_" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1.Value*"></a>
-
-  <h3 id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1_Value" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1.Value">
-  Value
-  
-  </h3>
-
-  <div class="markdown level1 summary"><p>The default configured <code class="typeparamref">TOptions</code> instance</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TOptions Value { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">TOptions</span></dt>
-    <dd></dd>
-  </dl>
 
 
 
@@ -239,32 +203,71 @@ Class ApqCfgOptionsSnapshot&lt;TOptions&gt;
 </h2>
 
 
-  <a id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1_Get_" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1.Get*"></a>
+  <a id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Decrypt_" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt*"></a>
 
-  <h3 id="Apq_Cfg_DependencyInjection_ApqCfgOptionsSnapshot_1_Get_System_String_" data-uid="Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot`1.Get(System.String)">
-  Get(string?)
+  <h3 id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Decrypt_System_String_" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Decrypt(System.String)">
+  Decrypt(string)
   
   </h3>
 
-  <div class="markdown level1 summary"><p>Returns a configured <code class="typeparamref">TOptions</code> instance with the given <code class="paramref">name</code>.</p>
+  <div class="markdown level1 summary"><p>解密密文</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TOptions Get(string? name)</code></pre>
+    <pre><code class="lang-csharp hljs">public string Decrypt(string cipherText)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The name of the <code class="typeparamref">TOptions</code> instance, if <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.options.defaultname">DefaultName</a> is used.</p>
+    <dt><code>cipherText</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>密文</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><span class="xref">TOptions</span></dt>
-    <dd><p>The <code class="typeparamref">TOptions</code> instance that matches the given <code class="paramref">name</code>.</p>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>明文</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Encrypt_" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_DataProtection_DataProtectionCryptoProvider_Encrypt_System_String_" data-uid="Apq.Cfg.Crypto.DataProtection.DataProtectionCryptoProvider.Encrypt(System.String)">
+  Encrypt(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>加密明文</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Encrypt(string plainText)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>plainText</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>明文</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>加密后的字符串</p>
 </dd>
   </dl>
 

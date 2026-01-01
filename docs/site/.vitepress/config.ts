@@ -83,7 +83,7 @@ const zhSidebar = {
         { text: 'ICfgRoot', link: '/api/icfg-root' },
         { text: 'ICfgSection', link: '/api/icfg-section' },
         { text: '扩展方法', link: '/api/extensions' },
-        { text: 'DocFX API 文档 ↗', link: '/api-reference/api/index.html', target: '_blank' }
+        { text: 'DocFX API 文档', link: '/api-reference/api/index.html', target: '_blank' }
       ]
     }
   ],
@@ -185,7 +185,7 @@ const enSidebar = {
         { text: 'ICfgRoot', link: '/en/api/icfg-root' },
         { text: 'ICfgSection', link: '/en/api/icfg-section' },
         { text: 'Extensions', link: '/en/api/extensions' },
-        { text: 'DocFX API Docs ↗', link: '/api-reference/api/index.html', target: '_blank' }
+        { text: 'DocFX API Docs', link: '/api-reference/api/index.html', target: '_blank' }
       ]
     }
   ],
