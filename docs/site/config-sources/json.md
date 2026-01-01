@@ -16,7 +16,7 @@ dotnet add package Apq.Cfg
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .Build();
 ```
 
@@ -24,8 +24,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson("config.local.json", level: 1, optional: true)
     .Build();
 ```
 
@@ -33,7 +33,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", level: 0, reloadOnChange: true)
     .Build();
 ```
 
@@ -45,7 +45,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
+cfg["App:Name"] = "NewName";
 await cfg.SaveAsync();
 ```
 
@@ -126,8 +126,8 @@ public CfgBuilder AddJson(
 
 ```csharp
 // 按索引访问
-var firstServer = cfg.Get("Servers:0");
-var firstEndpointName = cfg.Get("Endpoints:0:Name");
+var firstServer = cfg["Servers:0"];
+var firstEndpointName = cfg["Endpoints:0:Name"];
 
 // 获取配置节
 var serversSection = cfg.GetSection("Servers");
@@ -157,7 +157,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, encoding: options)
+    .AddJson("config.json", level: 0, encoding: options)
     .Build();
 ```
 
@@ -178,8 +178,8 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{environment}.json", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```

@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Toml;
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0, writeable: false)
+    .AddToml("config.toml", level: 0)
     .Build();
 ```
 
@@ -23,8 +23,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0, writeable: false, reloadOnChange: true)
-    .AddToml("config.local.toml", level: 1, writeable: false, optional: true, reloadOnChange: true)
+    .AddToml("config.toml", level: 0, reloadOnChange: true)
+    .AddToml("config.local.toml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -36,7 +36,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
+cfg["App:Name"] = "NewName";
 await cfg.SaveAsync();
 ```
 
@@ -156,7 +156,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0, writeable: false, encoding: options)
+    .AddToml("config.toml", level: 0, encoding: options)
     .Build();
 ```
 
@@ -164,8 +164,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddToml("config.toml", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddToml("config.toml", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```

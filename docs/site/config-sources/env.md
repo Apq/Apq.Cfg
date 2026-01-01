@@ -30,7 +30,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 环境变量 MYAPP_DATABASE__HOST 映射为 Database:Host
-var host = cfg.Get("Database:Host");
+var host = cfg["Database:Host"];
 ```
 
 ## .env 文件支持
@@ -46,8 +46,8 @@ using Apq.Cfg;
 using Apq.Cfg.Env;
 
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0, writeable: false)
-    .AddEnv(".env.local", level: 1, writeable: false, optional: true)
+    .AddEnv(".env", level: 0)
+    .AddEnv(".env.local", level: 1, optional: true)
     .Build();
 ```
 
@@ -136,10 +136,10 @@ public static CfgBuilder AddEnv(
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
-    .AddEnv(".env", level: 2, writeable: false, optional: true)
-    .AddEnv(".env.local", level: 3, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddJson("config.Development.json", level: 1, optional: true)
+    .AddEnv(".env", level: 2, optional: true)
+    .AddEnv(".env.local", level: 3, optional: true)
     .AddEnvironmentVariables(level: 4, prefix: "APP_")
     .Build();
 ```
@@ -155,7 +155,7 @@ ENV APP_REDIS__HOST=redis
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_")
     .Build();
 ```
@@ -203,7 +203,7 @@ spec:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0, writeable: false, setEnvironmentVariables: true)
+    .AddEnv(".env", level: 0, setEnvironmentVariables: true)
     .Build();
 
 // .env 文件中的 DATABASE__HOST=localhost 会：
@@ -218,10 +218,8 @@ var cfg = new CfgBuilder()
 ### 1. 敏感信息使用环境变量
 
 ```csharp
-// 不要在配置文件中存储敏感信息
-// 使用环境变量传递
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_")
     .Build();
 

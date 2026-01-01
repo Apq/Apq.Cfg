@@ -99,7 +99,7 @@ public class ConfigurationMigrator
             await MigrateFrom1To2Async();
 
             // 更新版本号
-            _cfg.Set("ConfigVersion", targetVersion);
+            _cfg["ConfigVersion"] = targetVersion;
             await _cfg.SaveAsync();
 
             _logger.LogInformation("配置迁移成功完成");
@@ -137,8 +137,7 @@ public class ConfigurationMigrator
             };
 
             // 应用新格式
-            _cfg.Set("ConnectionStrings:DefaultConnection", 
-                    JsonSerializer.Serialize(newFormat));
+            _cfg["ConnectionStrings:DefaultConnection"] = JsonSerializer.Serialize(newFormat);
         }
 
         // 示例：迁移功能开关结构
@@ -156,7 +155,7 @@ public class ConfigurationMigrator
             _cfg.Remove("FeatureFlags");
             foreach (var kvp in newFlags)
             {
-                _cfg.Set(kvp.Key, kvp.Value.ToString());
+                _cfg[kvp.Key] = kvp.Value.ToString();
             }
         }
     }

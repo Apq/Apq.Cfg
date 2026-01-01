@@ -18,7 +18,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     .AddSource(new ConsulCfgSource(options => {
         options.Address = "http://localhost:8500";
         options.KeyPrefix = "myapp/config";

@@ -134,7 +134,7 @@ Consul 键路径映射为配置键：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.fallback.json", level: 0, writeable: false)  // 本地回退配置
+    .AddJson("config.fallback.json", level: 0)  // 本地回退配置
     .AddConsul("http://consul:8500", "myapp/config/", level: 10, enableHotReload: true)
     .Build();
 ```
@@ -190,7 +190,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     // Consul 远程配置（高优先级）
     .AddConsul("http://consul:8500", "myapp/config/", level: 10, enableHotReload: true)
     // 环境变量（最高优先级）

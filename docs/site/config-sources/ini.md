@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: false)
+    .AddIni("config.ini", level: 0)
     .Build();
 ```
 
@@ -23,8 +23,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: false, reloadOnChange: true)
-    .AddIni("config.local.ini", level: 1, writeable: false, optional: true, reloadOnChange: true)
+    .AddIni("config.ini", level: 0, reloadOnChange: true)
+    .AddIni("config.local.ini", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -36,7 +36,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("Database:Host", "newhost");
+cfg["Database:Host"] = "newhost";
 await cfg.SaveAsync();
 ```
 
@@ -121,7 +121,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: false, encoding: options)
+    .AddIni("config.ini", level: 0, encoding: options)
     .Build();
 ```
 
@@ -139,8 +139,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddIni("config.ini", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddIni("config.ini", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```

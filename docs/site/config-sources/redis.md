@@ -196,7 +196,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json", level: 0)
     // Redis 远程配置（高优先级）
     .AddRedis(options =>
     {

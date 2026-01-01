@@ -15,7 +15,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: false)
+    .AddYaml("config.yaml", level: 0)
     .Build();
 ```
 
@@ -23,8 +23,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: false, reloadOnChange: true)
-    .AddYaml("config.local.yaml", level: 1, writeable: false, optional: true, reloadOnChange: true)
+    .AddYaml("config.yaml", level: 0, reloadOnChange: true)
+    .AddYaml("config.local.yaml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -60,7 +60,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
+cfg["App:Name"] = "NewName";
 await cfg.SaveAsync();
 ```
 
@@ -157,7 +157,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: false, encoding: options)
+    .AddYaml("config.yaml", level: 0, encoding: options)
     .Build();
 ```
 
@@ -174,8 +174,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
+    .AddJson("config.json", level: 0)
+    .AddYaml("config.yaml", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
