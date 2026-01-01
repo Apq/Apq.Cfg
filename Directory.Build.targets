@@ -16,13 +16,13 @@
     <GenerateApiDocs Condition="'$(GenerateApiDocs)' == ''">false</GenerateApiDocs>
 
     <!-- 文档输出目录（按 .NET 版本区分） -->
-    <ApiDocsOutputDir>$(MSBuildThisFileDirectory)docs\site\api\net9.0</ApiDocsOutputDir>
+    <ApiDocsOutputDir>$(MSBuildThisFileDirectory)docs\site\api\$(TargetFramework)</ApiDocsOutputDir>
   </PropertyGroup>
 
   <!-- 生成 API 文档（手动构建时） -->
   <Target Name="GenerateApiDocumentation"
           AfterTargets="Build"
-          Condition="'$(GenerateApiDocs)' == 'true' AND '$(TargetFramework)' == 'net9.0'">
+          Condition="'$(GenerateApiDocs)' == 'true' AND ('$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net10.0')">
 
     <!-- 项目名到输出目录的映射 -->
     <PropertyGroup>

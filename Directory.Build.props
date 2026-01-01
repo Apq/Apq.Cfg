@@ -40,13 +40,23 @@
   </PropertyGroup>
   <Import Project="buildTools/Version.props" />
 
-  <!-- 始终使用项目目录下的 README.md -->
-  <ItemGroup>
+  <!--
+    README 默认策略（修改 ReadmeStrategy 的值可改变默认策略）：
+    - Static：始终使用项目目录下的 README.md
+    - VersionFile：优先使用版本文件，内容不足5字符时回退到项目 README
+  -->
+  <PropertyGroup>
+    <ReadmeStrategy Condition="'$(ReadmeStrategy)' == ''">Static</ReadmeStrategy>
+  </PropertyGroup>
+
+  <!-- Static 策略：始终使用项目目录下的 README.md -->
+  <ItemGroup Condition="'$(ReadmeStrategy)' == 'Static'">
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
-  <!-- 动态选择 README 文件：优先使用版本文件，内容不足5字符时回退到项目 README（已禁用）
-  <Target Name="SelectReadmeFile" BeforeTargets="_GetPackageFiles" DependsOnTargets="DetectVersionFromFiles">
+  <!-- VersionFile 策略：优先使用版本文件，内容不足5字符时回退到项目 README -->
+  <Target Name="SelectReadmeFile" BeforeTargets="_GetPackageFiles" DependsOnTargets="DetectVersionFromFiles"
+          Condition="'$(ReadmeStrategy)' == 'VersionFile'">
     <CheckFileLength FilePath="$(DetectedVersionFile)" MinLength="5">
       <Output TaskParameter="IsLongEnough" PropertyName="UseVersionFileAsReadme" />
     </CheckFileLength>
@@ -68,5 +78,4 @@
     <Message Text="README 来源: $(DetectedVersionFile) (版本文件)" Importance="high" Condition="'$(UseVersionFileAsReadme)' == 'true'" />
     <Message Text="README 来源: README.md (项目目录)" Importance="high" Condition="'$(UseVersionFileAsReadme)' != 'true'" />
   </Target>
-  -->
 </Project>
