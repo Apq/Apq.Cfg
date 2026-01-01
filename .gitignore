@@ -405,3 +405,4 @@ FodyWeavers.xsd
 *.sln.iml
 NuGet_Apq_Key.txt
 nul
+/.playwright-mcp

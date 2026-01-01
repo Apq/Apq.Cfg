@@ -1,0 +1,9 @@
+/* 自定义 DocFX 样式 */
+
+/* 调整导航栏 logo 大小 */
+.navbar-brand img#logo {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+}

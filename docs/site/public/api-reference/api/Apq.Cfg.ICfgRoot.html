@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface ICfgRoot | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface ICfgRoot | Apq.Cfg API ">
+      
+      <meta name="description" content="配置根接口，提供统一的配置访问和管理功能">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.ICfgRoot">
+
+
+
+  <h1 id="Apq_Cfg_ICfgRoot" data-uid="Apq.Cfg.ICfgRoot" class="text-break">
+Interface ICfgRoot  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>配置根接口，提供统一的配置访问和管理功能</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ICfgRoot : IDisposable, IAsyncDisposable</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable.dispose">IDisposable.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync">IAsyncDisposable.DisposeAsync()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetMasked_Apq_Cfg_ICfgRoot_System_String_">CfgRootExtensions.GetMasked(ICfgRoot, string)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetMaskedSnapshot_Apq_Cfg_ICfgRoot_">CfgRootExtensions.GetMaskedSnapshot(ICfgRoot)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetOrDefault__1_Apq_Cfg_ICfgRoot_System_String___0_">CfgRootExtensions.GetOrDefault&lt;T&gt;(ICfgRoot, string, T?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetRequired__1_Apq_Cfg_ICfgRoot_System_String_">CfgRootExtensions.GetRequired&lt;T&gt;(ICfgRoot, string)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_TryGet__1_Apq_Cfg_ICfgRoot_System_String___0__">CfgRootExtensions.TryGet&lt;T&gt;(ICfgRoot, string, out T?)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Apq_Cfg_ICfgRoot_ConfigChanges_" data-uid="Apq.Cfg.ICfgRoot.ConfigChanges*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_ConfigChanges" data-uid="Apq.Cfg.ICfgRoot.ConfigChanges">
+  ConfigChanges
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置变更的可观察序列</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IObservable&lt;ConfigChangeEvent&gt; ConfigChanges { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iobservable-1">IObservable</a>&lt;<a class="xref" href="Apq.Cfg.Changes.ConfigChangeEvent.html">ConfigChangeEvent</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_ICfgRoot_Exists_" data-uid="Apq.Cfg.ICfgRoot.Exists*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_Exists_System_String_" data-uid="Apq.Cfg.ICfgRoot.Exists(System.String)">
+  Exists(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>检查配置键是否存在</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Exists(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>存在返回true，否则返回false</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_Get_" data-uid="Apq.Cfg.ICfgRoot.Get*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_Get_System_String_" data-uid="Apq.Cfg.ICfgRoot.Get(System.String)">
+  Get(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? Get(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置值，不存在时返回null</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_GetChildKeys_" data-uid="Apq.Cfg.ICfgRoot.GetChildKeys*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_GetChildKeys" data-uid="Apq.Cfg.ICfgRoot.GetChildKeys">
+  GetChildKeys()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取所有顶级配置键</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;string&gt; GetChildKeys()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_GetMany_" data-uid="Apq.Cfg.ICfgRoot.GetMany*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_GetMany_System_Collections_Generic_IEnumerable_System_String__" data-uid="Apq.Cfg.ICfgRoot.GetMany(System.Collections.Generic.IEnumerable{System.String})">
+  GetMany(IEnumerable&lt;string&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>批量获取多个配置值，减少锁竞争</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;string, string?&gt; GetMany(IEnumerable&lt;string&gt; keys)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>要获取的键集合</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>键值对字典</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_GetMany_" data-uid="Apq.Cfg.ICfgRoot.GetMany*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_GetMany_System_Collections_Generic_IEnumerable_System_String__System_Action_System_String_System_String__" data-uid="Apq.Cfg.ICfgRoot.GetMany(System.Collections.Generic.IEnumerable{System.String},System.Action{System.String,System.String})">
+  GetMany(IEnumerable&lt;string&gt;, Action&lt;string, string?&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>高性能批量获取：通过回调方式返回结果，零堆分配</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetMany(IEnumerable&lt;string&gt; keys, Action&lt;string, string?&gt; onValue)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>要获取的键集合</p>
+</dd>
+    <dt><code>onValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>每个键值对的回调处理函数</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ICfgRoot_GetMany_System_Collections_Generic_IEnumerable_System_String__System_Action_System_String_System_String___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法避免了 Dictionary 分配开销，适合高频调用场景。
+回调会按键的顺序依次调用。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_GetMany_" data-uid="Apq.Cfg.ICfgRoot.GetMany*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_GetMany__1_System_Collections_Generic_IEnumerable_System_String__" data-uid="Apq.Cfg.ICfgRoot.GetMany``1(System.Collections.Generic.IEnumerable{System.String})">
+  GetMany&lt;T&gt;(IEnumerable&lt;string&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>批量获取多个配置值并转换为指定类型</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;string, T?&gt; GetMany&lt;T&gt;(IEnumerable&lt;string&gt; keys)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>要获取的键集合</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, T&gt;</dt>
+    <dd><p>键值对字典</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>目标类型</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_GetMany_" data-uid="Apq.Cfg.ICfgRoot.GetMany*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_GetMany__1_System_Collections_Generic_IEnumerable_System_String__System_Action_System_String___0__" data-uid="Apq.Cfg.ICfgRoot.GetMany``1(System.Collections.Generic.IEnumerable{System.String},System.Action{System.String,``0})">
+  GetMany&lt;T&gt;(IEnumerable&lt;string&gt;, Action&lt;string, T?&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>高性能批量获取：通过回调方式返回结果并转换类型，零堆分配</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetMany&lt;T&gt;(IEnumerable&lt;string&gt; keys, Action&lt;string, T?&gt; onValue)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>要获取的键集合</p>
+</dd>
+    <dt><code>onValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, T&gt;</dt>
+    <dd><p>每个键值对的回调处理函数</p>
+</dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>目标类型</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ICfgRoot_GetMany__1_System_Collections_Generic_IEnumerable_System_String__System_Action_System_String___0___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法避免了 Dictionary 分配开销，适合高频调用场景。
+回调会按键的顺序依次调用。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_GetSection_" data-uid="Apq.Cfg.ICfgRoot.GetSection*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_GetSection_System_String_" data-uid="Apq.Cfg.ICfgRoot.GetSection(System.String)">
+  GetSection(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置节</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ICfgSection GetSection(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>节的键名（如 &quot;Database&quot;）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.ICfgSection.html">ICfgSection</a></dt>
+    <dd><p>配置节对象</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_Get_" data-uid="Apq.Cfg.ICfgRoot.Get*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_Get__1_System_String_" data-uid="Apq.Cfg.ICfgRoot.Get``1(System.String)">
+  Get&lt;T&gt;(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置值并转换为指定类型</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">T? Get&lt;T&gt;(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>转换后的配置值，不存在或转换失败时返回默认值</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>目标类型</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ICfgRoot_Get__1_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var port = cfg.Get&lt;int&gt;("Server:Port");
+var enabled = cfg.Get&lt;bool&gt;("Features:NewUI");</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_Remove_" data-uid="Apq.Cfg.ICfgRoot.Remove*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_Remove_System_String_System_Nullable_System_Int32__" data-uid="Apq.Cfg.ICfgRoot.Remove(System.String,System.Nullable{System.Int32})">
+  Remove(string, int?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>移除配置键</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Remove(string key, int? targetLevel = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>targetLevel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd><p>目标层级，为null时从所有层级移除</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_SaveAsync_" data-uid="Apq.Cfg.ICfgRoot.SaveAsync*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_SaveAsync_System_Nullable_System_Int32__System_Threading_CancellationToken_" data-uid="Apq.Cfg.ICfgRoot.SaveAsync(System.Nullable{System.Int32},System.Threading.CancellationToken)">
+  SaveAsync(int?, CancellationToken)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>保存配置更改到持久化存储</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>targetLevel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd><p>目标层级，为null时保存所有可写层级</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>取消令牌</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd><p>表示异步操作的任务</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ICfgRoot_SaveAsync_System_Nullable_System_Int32__System_Threading_CancellationToken__examples">Examples</h4>
+  <pre><code class="lang-csharp">await cfg.SaveAsync();
+// 或指定特定层级
+await cfg.SaveAsync(targetLevel: 1);</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_Set_" data-uid="Apq.Cfg.ICfgRoot.Set*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_Set_System_String_System_String_System_Nullable_System_Int32__" data-uid="Apq.Cfg.ICfgRoot.Set(System.String,System.String,System.Nullable{System.Int32})">
+  Set(string, string?, int?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>设置配置值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Set(string key, string? value, int? targetLevel = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置值</p>
+</dd>
+    <dt><code>targetLevel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd><p>目标层级，为null时使用可写的最高层级</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ICfgRoot_Set_System_String_System_String_System_Nullable_System_Int32___examples">Examples</h4>
+  <pre><code class="lang-csharp">cfg.Set("Server:Port", "8080");
+cfg.Set("Features:NewUI", "true");</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_SetMany_" data-uid="Apq.Cfg.ICfgRoot.SetMany*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_SetMany_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___System_Nullable_System_Int32__" data-uid="Apq.Cfg.ICfgRoot.SetMany(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Nullable{System.Int32})">
+  SetMany(IEnumerable&lt;KeyValuePair&lt;string, string?&gt;&gt;, int?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>批量设置多个配置值，减少锁竞争</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetMany(IEnumerable&lt;KeyValuePair&lt;string, string?&gt;&gt; values, int? targetLevel = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>values</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dd><p>要设置的键值对</p>
+</dd>
+    <dt><code>targetLevel</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd><p>目标层级</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_ToMicrosoftConfiguration_" data-uid="Apq.Cfg.ICfgRoot.ToMicrosoftConfiguration*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_ToMicrosoftConfiguration" data-uid="Apq.Cfg.ICfgRoot.ToMicrosoftConfiguration">
+  ToMicrosoftConfiguration()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>转换为 Microsoft Configuration（静态快照）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IConfigurationRoot ToMicrosoftConfiguration()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfigurationroot">IConfigurationRoot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ICfgRoot_ToMicrosoftConfiguration_" data-uid="Apq.Cfg.ICfgRoot.ToMicrosoftConfiguration*"></a>
+
+  <h3 id="Apq_Cfg_ICfgRoot_ToMicrosoftConfiguration_Apq_Cfg_Changes_DynamicReloadOptions_" data-uid="Apq.Cfg.ICfgRoot.ToMicrosoftConfiguration(Apq.Cfg.Changes.DynamicReloadOptions)">
+  ToMicrosoftConfiguration(DynamicReloadOptions?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>转换为支持动态重载的 Microsoft Configuration</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>options</code> <a class="xref" href="Apq.Cfg.Changes.DynamicReloadOptions.html">DynamicReloadOptions</a></dt>
+    <dd><p>动态重载选项，为 null 时使用默认选项</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfigurationroot">IConfigurationRoot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

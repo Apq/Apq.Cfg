@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ServiceCollectionExtensions | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ServiceCollectionExtensions | Apq.Cfg API ">
+      
+      <meta name="description" content="IServiceCollection 扩展方法">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.ServiceCollectionExtensions">
+
+
+
+  <h1 id="Apq_Cfg_ServiceCollectionExtensions" data-uid="Apq.Cfg.ServiceCollectionExtensions" class="text-break">
+Class ServiceCollectionExtensions  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>IServiceCollection 扩展方法</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ServiceCollectionExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ServiceCollectionExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder_System_IServiceProvider__" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder,System.IServiceProvider})">
+  AddApqCfg(IServiceCollection, Action&lt;CfgBuilder, IServiceProvider&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Apq.Cfg 配置服务（支持访问 IServiceProvider）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddApqCfg(this IServiceCollection services, Action&lt;CfgBuilder, IServiceProvider&gt; configure)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iserviceprovider">IServiceProvider</a>&gt;</dt>
+    <dd><p>配置构建器委托，接收 CfgBuilder 和 IServiceProvider</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder_System_IServiceProvider___examples">Examples</h4>
+  <pre><code class="lang-csharp">// 使用 Data Protection 加密
+services.AddDataProtection();
+services.AddApqCfg((builder, sp) =&gt; builder
+    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddDataProtectionEncryption(sp.GetRequiredService&lt;IDataProtectionProvider&gt;())
+    .AddSensitiveMasking());</code></pre>
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder_System_IServiceProvider___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此重载允许在配置构建过程中访问已注册的服务，
+适用于需要依赖其他服务（如 IDataProtectionProvider）的场景。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder})">
+  AddApqCfg(IServiceCollection, Action&lt;CfgBuilder&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Apq.Cfg 配置服务</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddApqCfg(this IServiceCollection services, Action&lt;CfgBuilder&gt; configure)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a>&gt;</dt>
+    <dd><p>配置构建器委托，用于配置各种配置源</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder___examples">Examples</h4>
+  <pre><code class="lang-csharp">services.AddApqCfg(cfg =&gt; cfg
+    .AddJson("config.json", level: 0)
+    .AddJson($"config.{environment}.json", level: 1)
+    .AddEnvironmentVariables(prefix: "APP_", level: 2));</code></pre>
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法会同时注册 ICfgRoot 和 IConfigurationRoot 服务，
+使您可以在应用程序中同时使用 Apq.Cfg 和 Microsoft.Extensions.Configuration 的 API。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Func_System_IServiceProvider_Apq_Cfg_ICfgRoot__" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.IServiceProvider,Apq.Cfg.ICfgRoot})">
+  AddApqCfg(IServiceCollection, Func&lt;IServiceProvider, ICfgRoot&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Apq.Cfg 配置服务（使用工厂方法）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddApqCfg(this IServiceCollection services, Func&lt;IServiceProvider, ICfgRoot&gt; factory)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>factory</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iserviceprovider">IServiceProvider</a>, <a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a>&gt;</dt>
+    <dd><p>配置根工厂方法，接收服务提供者并返回配置根实例</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Func_System_IServiceProvider_Apq_Cfg_ICfgRoot___examples">Examples</h4>
+  <pre><code class="lang-csharp">services.AddApqCfg(sp =&gt; {
+    var env = sp.GetRequiredService&lt;IWebHostEnvironment&gt;();
+    return new CfgBuilder()
+        .AddJson("config.json", level: 0)
+        .AddJson($"config.{env.EnvironmentName}.json", level: 1)
+        .AddEnvironmentVariables(prefix: "APP_", level: 2)
+        .Build();
+});</code></pre>
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Func_System_IServiceProvider_Apq_Cfg_ICfgRoot___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>使用工厂方法可以访问其他已注册的服务，实现更复杂的配置逻辑。
+工厂方法只会在首次请求配置时调用一次。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_String_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder},System.String)">
+  AddApqCfg&lt;TOptions&gt;(IServiceCollection, Action&lt;CfgBuilder&gt;, string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Apq.Cfg 配置服务并绑定强类型配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddApqCfg&lt;TOptions&gt;(this IServiceCollection services, Action&lt;CfgBuilder&gt; configure, string sectionKey) where TOptions : class, new()</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a>&gt;</dt>
+    <dd><p>配置构建器委托，用于配置各种配置源</p>
+</dd>
+    <dt><code>sectionKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置节键名，用于定位 TOptions 的配置数据</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TOptions</code></dt>
+    <dd><p>配置选项类型</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">// 定义配置选项类
+public class DatabaseOptions
+{
+    public string? ConnectionString { get; set; }
+    public int Timeout { get; set; } = 30;
+}
+
+// 注册配置服务并绑定强类型配置
+services.AddApqCfg&lt;DatabaseOptions&gt;(cfg =&gt; cfg
+    .AddJson("config.json", level: 0)
+    .AddEnvironmentVariables(prefix: "APP_", level: 2),
+    "Database");
+
+// 使用配置
+var dbOptions = serviceProvider.GetRequiredService&lt;IOptions&lt;DatabaseOptions&gt;&gt;().Value;</code></pre>
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法会注册 ICfgRoot、IConfigurationRoot 和 IOptions&lt;TOptions&gt; 服务。
+配置选项类必须有无参构造函数。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_String_" data-uid="Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+  ConfigureApqCfg&lt;TOptions&gt;(IServiceCollection, string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>配置强类型选项（从 ICfgRoot 绑定），支持嵌套对象和集合</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection ConfigureApqCfg&lt;TOptions&gt;(this IServiceCollection services, string sectionKey) where TOptions : class, new()</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>sectionKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置节键名，用于定位 TOptions 的配置数据</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TOptions</code></dt>
+    <dd><p>配置选项类型</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">// 定义配置选项类
+public class DatabaseOptions
+{
+    public string? ConnectionString { get; set; }
+    public int Timeout { get; set; } = 30;
+    public RetryOptions Retry { get; set; } = new();
+}
+
+public class RetryOptions
+{
+    public int Count { get; set; } = 3;
+    public int Delay { get; set; } = 1000;
+}
+
+// 注册配置服务
+services.AddApqCfg(cfg =&gt; cfg
+    .AddJson("config.json", level: 0)
+    .AddEnvironmentVariables(prefix: "APP_", level: 2));
+
+// 绑定强类型配置
+services.ConfigureApqCfg&lt;DatabaseOptions&gt;("Database");
+
+// 使用配置
+var dbOptions = serviceProvider.GetRequiredService&lt;IOptions&lt;DatabaseOptions&gt;&gt;().Value;
+var retryCount = dbOptions.Retry.Count;</code></pre>
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法会注册 IOptions&lt;TOptions&gt;、IOptionsMonitor&lt;TOptions&gt; 和 IOptionsSnapshot&lt;TOptions&gt; 服务。
+配置选项类必须有无参构造函数。
+支持嵌套对象和集合类型的自动绑定。</p>
+</div>
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_String_System_Action___0__" data-uid="Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Action{``0})">
+  ConfigureApqCfg&lt;TOptions&gt;(IServiceCollection, string, Action&lt;TOptions&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>配置强类型选项并启用配置变更监听</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection ConfigureApqCfg&lt;TOptions&gt;(this IServiceCollection services, string sectionKey, Action&lt;TOptions&gt; onChange) where TOptions : class, new()</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>sectionKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置节键名，用于定位 TOptions 的配置数据</p>
+</dd>
+    <dt><code>onChange</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TOptions&gt;</dt>
+    <dd><p>配置变更回调函数，当配置发生变化时调用</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TOptions</code></dt>
+    <dd><p>配置选项类型</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_String_System_Action___0___examples">Examples</h4>
+  <pre><code class="lang-csharp">// 定义配置选项类
+public class DatabaseOptions
+{
+    public string? ConnectionString { get; set; }
+    public int Timeout { get; set; } = 30;
+}
+
+// 注册配置服务并监听变更
+services.ConfigureApqCfg&lt;DatabaseOptions&gt;("Database", options =&gt; {
+    Console.WriteLine($"数据库连接字符串已更新: {options.ConnectionString}");
+
+    // 执行必要的重新连接逻辑
+    ReconnectDatabase(options.ConnectionString);
+});
+
+void ReconnectDatabase(string connectionString)
+{
+    // 实现数据库重新连接逻辑
+}</code></pre>
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_String_System_Action___0___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法会注册 IOptions&lt;TOptions&gt;、IOptionsMonitor&lt;TOptions&gt; 和 IOptionsSnapshot&lt;TOptions&gt; 服务，
+同时添加一个配置变更监听器。
+变更回调会在配置源发生变化且导致 TOptions 实例更新时触发。
+返回的 IDisposable 对象可用于取消监听，但已自动注册到服务容器，会在应用关闭时释放。</p>
+</div>
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

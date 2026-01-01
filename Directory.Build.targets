@@ -52,8 +52,8 @@
     <!-- 创建输出目录 -->
     <MakeDir Directories="$(ProjectApiDocsDir)" Condition="'$(ApiDocSubDir)' != '' AND !Exists('$(ProjectApiDocsDir)')" />
 
-    <!-- 运行 DefaultDocumentation -->
-    <Exec Command="defaultdocumentation -a &quot;$(TargetPath)&quot; -o &quot;$(ProjectApiDocsDir)&quot;"
+    <!-- 运行 DefaultDocumentation（使用 Md5 文件名模式避免文件名过长） -->
+    <Exec Command="defaultdocumentation -a &quot;$(TargetPath)&quot; -o &quot;$(ProjectApiDocsDir)&quot; -c &quot;$(MSBuildThisFileDirectory)DefaultDocumentation.json&quot;"
           Condition="'$(ApiDocSubDir)' != ''"
           IgnoreExitCode="true"
           ContinueOnError="true">

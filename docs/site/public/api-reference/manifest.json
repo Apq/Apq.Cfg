@@ -1,0 +1,1355 @@
+{
+  "source_base_path": "C:/ApqGitee/Apq.Cfg/docs/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "../site/public/logo-small.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo-small.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "../site/public/logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Apollo.ApolloCfgOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Apollo.ApolloCfgOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Apollo.ApolloCfgOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Apollo.ApolloCfgOptions.yml\" sourcestartlinenumber=\"1\">Apollo 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Apollo.ApolloDataFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Apollo.ApolloDataFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Apollo.ApolloDataFormat",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Apollo.ApolloDataFormat.yml\" sourcestartlinenumber=\"1\">Apollo 数据格式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Apollo.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Apollo.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Apollo.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Apollo.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Apollo 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Apollo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Apollo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Apollo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.CfgBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.CfgBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.CfgBuilder",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.CfgBuilder.yml\" sourcestartlinenumber=\"1\">配置构建器，用于创建和管理配置源</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.CfgRootExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.CfgRootExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.CfgRootExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.CfgRootExtensions.yml\" sourcestartlinenumber=\"1\">ICfgRoot 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.ChangeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.ChangeType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes.ChangeType",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Changes.ChangeType.yml\" sourcestartlinenumber=\"1\">配置变更类型</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.ConfigChange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.ConfigChange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes.ConfigChange",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Changes.ConfigChange.yml\" sourcestartlinenumber=\"1\">配置变更记录</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.ConfigChangeEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.ConfigChangeEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes.ConfigChangeEvent",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Changes.ConfigChangeEvent.yml\" sourcestartlinenumber=\"1\">配置变更事件</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.DynamicReloadOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.DynamicReloadOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes.DynamicReloadOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Changes.DynamicReloadOptions.yml\" sourcestartlinenumber=\"1\">动态重载选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.ReloadErrorEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.ReloadErrorEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes.ReloadErrorEvent",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Changes.ReloadErrorEvent.yml\" sourcestartlinenumber=\"1\">配置重载错误事件</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.ReloadStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.ReloadStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes.ReloadStrategy",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Changes.ReloadStrategy.yml\" sourcestartlinenumber=\"1\">配置重载策略</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Changes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Changes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Changes",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Consul.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Consul.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Consul.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Consul.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Consul 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Consul.ConsulCfgOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Consul.ConsulCfgOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Consul.ConsulCfgOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Consul.ConsulCfgOptions.yml\" sourcestartlinenumber=\"1\">Consul 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Consul.ConsulDataFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Consul.ConsulDataFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Consul.ConsulDataFormat",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Consul.ConsulDataFormat.yml\" sourcestartlinenumber=\"1\">Consul 数据格式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Consul.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Consul.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Consul",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的加密脱敏扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.EncryptionOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.EncryptionOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.EncryptionOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.EncryptionOptions.yml\" sourcestartlinenumber=\"1\">加密选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.EncryptionTransformer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.EncryptionTransformer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.EncryptionTransformer",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.EncryptionTransformer.yml\" sourcestartlinenumber=\"1\">加密值转换器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.ICryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.ICryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.ICryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.ICryptoProvider.yml\" sourcestartlinenumber=\"1\">加密提供者接口</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.MaskingOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.MaskingOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.MaskingOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.MaskingOptions.yml\" sourcestartlinenumber=\"1\">脱敏选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.AesCbcCryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.AesCbcCryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.AesCbcCryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.Providers.AesCbcCryptoProvider.yml\" sourcestartlinenumber=\"1\">AES-CBC 加密提供者（使用 BouncyCastle 实现）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.AesGcmCryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.AesGcmCryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.AesGcmCryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.Providers.AesGcmCryptoProvider.yml\" sourcestartlinenumber=\"1\">AES-GCM 加密提供者（使用 BouncyCastle 实现）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.ChaCha20CryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.ChaCha20CryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.ChaCha20CryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.Providers.ChaCha20CryptoProvider.yml\" sourcestartlinenumber=\"1\">ChaCha20-Poly1305 加密提供者（使用 BouncyCastle 实现）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.RsaCryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.RsaCryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.RsaCryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.Providers.RsaCryptoProvider.yml\" sourcestartlinenumber=\"1\">RSA 加密提供者（使用 BouncyCastle 实现）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.Sm4CryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.Sm4CryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.Sm4CryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.Providers.Sm4CryptoProvider.yml\" sourcestartlinenumber=\"1\">SM4 国密算法加密提供者（使用 BouncyCastle 实现）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.Sm4Mode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.Sm4Mode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.Sm4Mode",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.TripleDesCryptoProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.TripleDesCryptoProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers.TripleDesCryptoProvider",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.Providers.TripleDesCryptoProvider.yml\" sourcestartlinenumber=\"1\">Triple DES 加密提供者（使用 BouncyCastle 实现）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.Providers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.Providers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.Providers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.SensitiveMasker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.SensitiveMasker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto.SensitiveMasker",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Crypto.SensitiveMasker.yml\" sourcestartlinenumber=\"1\">敏感值脱敏器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Crypto.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Crypto.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Crypto",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Database.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Database.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Database.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Database.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Database 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Database.DatabaseOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Database.DatabaseOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Database.DatabaseOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Database.DatabaseOptions.yml\" sourcestartlinenumber=\"1\">数据库配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Database.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Database.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Database",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor<TOptions>",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.DependencyInjection.ApqCfgOptionsMonitor-1.yml\" sourcestartlinenumber=\"1\">支持配置变更自动更新的 IOptionsMonitor 实现</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot<TOptions>",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.DependencyInjection.ApqCfgOptionsSnapshot-1.yml\" sourcestartlinenumber=\"1\">支持每次请求重新绑定的 IOptionsSnapshot 实现</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.DependencyInjection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.DependencyInjection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.DependencyInjection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingDetectionMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingDetectionMethod.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingDetectionMethod",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingDetectionMethod.yml\" sourcestartlinenumber=\"1\">编码检测方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingDetectionResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingDetectionResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingDetectionResult",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingDetectionResult.yml\" sourcestartlinenumber=\"1\">编码检测结果</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingDetector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingDetector.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingDetector",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingDetector.yml\" sourcestartlinenumber=\"1\">增强的编码检测器，支持 BOM 优先检测、缓存、日志和自定义映射</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingMappingConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingMappingConfig.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingMappingConfig",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingMappingConfig.yml\" sourcestartlinenumber=\"1\">编码映射配置</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingMappingRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingMappingRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingMappingRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingMappingRule.yml\" sourcestartlinenumber=\"1\">编码映射规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingMappingType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingMappingType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingMappingType",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingMappingType.yml\" sourcestartlinenumber=\"1\">编码映射匹配类型</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingOptions.yml\" sourcestartlinenumber=\"1\">编码选项配置</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingReadStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingReadStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingReadStrategy",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingReadStrategy.yml\" sourcestartlinenumber=\"1\">编码读取策略</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.EncodingWriteStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.EncodingWriteStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport.EncodingWriteStrategy",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.EncodingSupport.EncodingWriteStrategy.yml\" sourcestartlinenumber=\"1\">编码写入策略</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.EncodingSupport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.EncodingSupport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.EncodingSupport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Env.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Env.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Env.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Env.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 .env 文件扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Env.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Env.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Env",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Etcd.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Etcd.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Etcd.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Etcd.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Etcd 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Etcd.EtcdCfgOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Etcd.EtcdCfgOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Etcd.EtcdCfgOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Etcd.EtcdCfgOptions.yml\" sourcestartlinenumber=\"1\">Etcd 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Etcd.EtcdDataFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Etcd.EtcdDataFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Etcd.EtcdDataFormat",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Etcd.EtcdDataFormat.yml\" sourcestartlinenumber=\"1\">Etcd 数据格式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Etcd.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Etcd.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Etcd",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.ICfgRoot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.ICfgRoot.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.ICfgRoot",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.ICfgRoot.yml\" sourcestartlinenumber=\"1\">配置根接口，提供统一的配置访问和管理功能</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.ICfgSection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.ICfgSection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.ICfgSection",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.ICfgSection.yml\" sourcestartlinenumber=\"1\">配置节接口，表示配置的一个子节</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Ini.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Ini.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Ini.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Ini.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 INI 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Ini.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Ini.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Ini",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Nacos.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Nacos.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Nacos.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Nacos.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Nacos 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Nacos.NacosCfgOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Nacos.NacosCfgOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Nacos.NacosCfgOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Nacos.NacosCfgOptions.yml\" sourcestartlinenumber=\"1\">Nacos 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Nacos.NacosDataFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Nacos.NacosDataFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Nacos.NacosDataFormat",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Nacos.NacosDataFormat.yml\" sourcestartlinenumber=\"1\">Nacos 数据格式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Nacos.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Nacos.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Nacos",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Redis.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Redis.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Redis.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Redis.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Redis 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Redis.RedisOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Redis.RedisOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Redis.RedisOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Redis.RedisOptions.yml\" sourcestartlinenumber=\"1\">Redis 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Redis.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Redis.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Redis",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Security.IValueMasker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Security.IValueMasker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Security.IValueMasker",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Security.IValueMasker.yml\" sourcestartlinenumber=\"1\">配置值脱敏器接口，用于日志输出等场景</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Security.IValueTransformer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Security.IValueTransformer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Security.IValueTransformer",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Security.IValueTransformer.yml\" sourcestartlinenumber=\"1\">配置值转换器接口，用于加密/解密、脱敏等场景</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Security.ValueTransformerOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Security.ValueTransformerOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Security.ValueTransformerOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Security.ValueTransformerOptions.yml\" sourcestartlinenumber=\"1\">值转换器配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Security.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Security.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Security",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.ServiceCollectionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">IServiceCollection 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.File.FileCfgSourceBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.File.FileCfgSourceBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.File.FileCfgSourceBase",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.File.FileCfgSourceBase.yml\" sourcestartlinenumber=\"1\">文件配置源基类，提供编码检测和写入编码功能</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.File.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.File.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.File",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.ICfgSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.ICfgSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.ICfgSource",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.ICfgSource.yml\" sourcestartlinenumber=\"1\">配置源接口，定义了配置源的基本行为</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.IWritableCfgSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.IWritableCfgSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.IWritableCfgSource",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.IWritableCfgSource.yml\" sourcestartlinenumber=\"1\">可写配置源接口，继承自 ICfgSource，增加了写入配置的能力</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Toml.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Toml.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Toml.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Toml.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 TOML 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Toml.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Toml.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Toml",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Vault.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Vault.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Vault.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Vault.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Vault 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Vault.VaultAuthMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Vault.VaultAuthMethod.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Vault.VaultAuthMethod",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Vault.VaultAuthMethod.yml\" sourcestartlinenumber=\"1\">Vault 认证方式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Vault.VaultCfgOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Vault.VaultCfgOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Vault.VaultCfgOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Vault.VaultCfgOptions.yml\" sourcestartlinenumber=\"1\">Vault 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Vault.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Vault.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Vault",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Xml.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Xml.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Xml.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Xml.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 XML 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Xml.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Xml.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Xml",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Yaml.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Yaml.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Yaml.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Yaml.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 YAML 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Yaml.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Yaml.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Yaml",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Zookeeper.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Zookeeper.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Zookeeper.CfgBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Zookeeper.CfgBuilderExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 的 Zookeeper 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Zookeeper.ZookeeperCfgOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Zookeeper.ZookeeperCfgOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Zookeeper.ZookeeperCfgOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Zookeeper.ZookeeperCfgOptions.yml\" sourcestartlinenumber=\"1\">Zookeeper 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Zookeeper.ZookeeperDataFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Zookeeper.ZookeeperDataFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Zookeeper.ZookeeperDataFormat",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Zookeeper.ZookeeperDataFormat.yml\" sourcestartlinenumber=\"1\">Zookeeper 数据格式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Zookeeper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Zookeeper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Zookeeper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg",
+      "Summary": null
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "favicon.svg",
+      "output": {
+        "resource": {
+          "relative_path": "favicon.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

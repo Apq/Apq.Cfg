@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class FileCfgSourceBase | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class FileCfgSourceBase | Apq.Cfg API ">
+      
+      <meta name="description" content="文件配置源基类，提供编码检测和写入编码功能">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase">
+
+
+
+  <h1 id="Apq_Cfg_Sources_File_FileCfgSourceBase" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase" class="text-break">
+Class FileCfgSourceBase  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.Sources.html">Sources</a>.<a class="xref" href="Apq.Cfg.Sources.File.html">File</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>文件配置源基类，提供编码检测和写入编码功能</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class FileCfgSourceBase : ICfgSource, IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">FileCfgSourceBase</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Apq.Cfg.Sources.ICfgSource.html">ICfgSource</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)">
+  FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected FileCfgSourceBase(string path, int level, bool writeable, bool optional, bool reloadOnChange, bool isPrimaryWriter, EncodingOptions? encodingOptions = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>writeable</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>optional</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>reloadOnChange</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>isPrimaryWriter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>encodingOptions</code> <a class="xref" href="Apq.Cfg.EncodingSupport.EncodingOptions.html">EncodingOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__encodingOptions" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase._encodingOptions">
+  _encodingOptions
+  
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly EncodingOptions _encodingOptions</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.EncodingSupport.EncodingOptions.html">EncodingOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__optional" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase._optional">
+  _optional
+  
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly bool _optional</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__path" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase._path">
+  _path
+  
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly string _path</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__reloadOnChange" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase._reloadOnChange">
+  _reloadOnChange
+  
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly bool _reloadOnChange</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_EncodingConfidenceThreshold_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EncodingConfidenceThreshold*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_EncodingConfidenceThreshold" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EncodingConfidenceThreshold">
+  EncodingConfidenceThreshold
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>编码检测置信度阈值（0.0-1.0），可在运行时修改。
+可通过环境变量 APQ_CFG_ENCODING_CONFIDENCE 设置默认值。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static float EncodingConfidenceThreshold { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_EncodingDetector_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EncodingDetector*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_EncodingDetector" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EncodingDetector">
+  EncodingDetector
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>全局编码检测器实例</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static EncodingDetector EncodingDetector { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.EncodingSupport.EncodingDetector.html">EncodingDetector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_EncodingOptionsValue_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EncodingOptionsValue*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_EncodingOptionsValue" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EncodingOptionsValue">
+  EncodingOptionsValue
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>编码选项</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EncodingOptions EncodingOptionsValue { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.EncodingSupport.EncodingOptions.html">EncodingOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_IsPrimaryWriter_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.IsPrimaryWriter*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_IsPrimaryWriter" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.IsPrimaryWriter">
+  IsPrimaryWriter
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPrimaryWriter { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_IsWriteable_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.IsWriteable*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_IsWriteable" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.IsWriteable">
+  IsWriteable
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取是否可写，指示该配置源是否支持写入操作</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsWriteable { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_Level_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Level*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_Level" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Level">
+  Level
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置层级，数值越大优先级越高</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Level { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_BuildSource_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.BuildSource*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_BuildSource" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.BuildSource">
+  BuildSource()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>构建 Microsoft.Extensions.Configuration 的配置源</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract IConfigurationSource BuildSource()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfigurationsource">IConfigurationSource</a></dt>
+    <dd><p>Microsoft.Extensions.Configuration.IConfigurationSource 实例</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_CreatePhysicalFileProvider_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.CreatePhysicalFileProvider*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_CreatePhysicalFileProvider_System_String_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.CreatePhysicalFileProvider(System.String)">
+  CreatePhysicalFileProvider(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>创建 PhysicalFileProvider 并跟踪以便后续释放</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected (PhysicalFileProvider Provider, string FileName) CreatePhysicalFileProvider(string path)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.fileproviders.physicalfileprovider">PhysicalFileProvider</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-microsoft.extensions.fileproviders.physicalfileprovider,system.string-.provider">Provider</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-microsoft.extensions.fileproviders.physicalfileprovider,system.string-.filename">FileName</a>)</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_DetectEncodingEnhanced_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.DetectEncodingEnhanced*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_DetectEncodingEnhanced_System_String_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.DetectEncodingEnhanced(System.String)">
+  DetectEncodingEnhanced(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>检测文件编码（用于读取）- 使用增强的编码检测器</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Encoding DetectEncodingEnhanced(string path)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_Dispose_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Dispose*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_Dispose" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Dispose">
+  Dispose()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_EnsureDirectoryFor_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EnsureDirectoryFor*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_EnsureDirectoryFor_System_String_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.EnsureDirectoryFor(System.String)">
+  EnsureDirectoryFor(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static void EnsureDirectoryFor(string path)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_GetWriteEncoding_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.GetWriteEncoding*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_GetWriteEncoding" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.GetWriteEncoding">
+  GetWriteEncoding()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取写入编码</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Encoding GetWriteEncoding()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

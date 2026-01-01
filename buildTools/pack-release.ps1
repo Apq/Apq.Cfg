@@ -145,8 +145,8 @@ if (-not (Read-Confirm '确认开始打包? ([Y]/N): ')) {
     exit 0
 }
 
-# 询问是否生成文档
-$generateDocs = Read-Confirm '是否重新生成 API 文档? ([Y]/N): '
+# 询问是否生成 DocFX 文档
+$generateDocFx = Read-Confirm '是否生成 DocFX API 文档? ([Y]/N): '
 
 # 清空并创建输出目录
 if (Test-Path $OutputDir) {
@@ -161,17 +161,6 @@ Write-Host ''
 Write-ColorText '开始打包...' 'Cyan'
 Write-Host ''
 
-# 检查 DefaultDocumentation 是否安装（仅在需要生成文档时）
-if ($generateDocs) {
-    Write-ColorText '检查文档生成工具...' 'Gray'
-    $toolInstalled = dotnet tool list -g | Select-String 'defaultdocumentation'
-    if (-not $toolInstalled) {
-        Write-ColorText '  安装 DefaultDocumentation...' 'Yellow'
-        dotnet tool install -g DefaultDocumentation.Console 2>&1 | Out-Null
-    }
-    Write-ColorText '  文档生成工具就绪' 'Green'
-    Write-Host ''
-}
 
 $successCount = 0
 $failCount = 0
@@ -218,78 +207,6 @@ foreach ($project in $TargetProjects) {
             $successCount++
             $generatedPackages += "$project.$version.nupkg"
             Write-ColorText "  ✓ $project v$version" 'Green'
-
-            # 在打包成功后立即生成该项目的文档（如果用户选择生成）
-            if ($generateDocs) {
-                Write-ColorText "    生成 $project 文档..." 'Gray'
-
-                # 获取所有支持的 .NET 版本
-                # SourceGenerator 使用 netstandard2.0，其他项目使用 net10.0/net8.0
-                if ($project -eq 'Apq.Cfg.SourceGenerator') {
-                    $netVersions = @('netstandard2.0')
-                } else {
-                    $netVersions = @('net10.0', 'net8.0')
-                }
-
-                # 确定项目输出目录名
-                $outputDirName = switch ($project) {
-                    'Apq.Cfg' { 'core' }
-                    'Apq.Cfg.Crypto' { 'crypto' }
-                    'Apq.Cfg.Ini' { 'ini' }
-                    'Apq.Cfg.Xml' { 'xml' }
-                    'Apq.Cfg.Yaml' { 'yaml' }
-                    'Apq.Cfg.Toml' { 'toml' }
-                    'Apq.Cfg.Env' { 'env' }
-                    'Apq.Cfg.Redis' { 'redis' }
-                    'Apq.Cfg.Consul' { 'consul' }
-                    'Apq.Cfg.Etcd' { 'etcd' }
-                    'Apq.Cfg.Nacos' { 'nacos' }
-                    'Apq.Cfg.Apollo' { 'apollo' }
-                    'Apq.Cfg.Zookeeper' { 'zookeeper' }
-                    'Apq.Cfg.Vault' { 'vault' }
-                    'Apq.Cfg.Database' { 'database' }
-                    'Apq.Cfg.Crypto.DataProtection' { 'crypto-dp' }
-                    'Apq.Cfg.SourceGenerator' { 'sourcegen' }
-                    default { $project.ToLower() }
-                }
-
-                # 为每个 .NET 版本生成文档
-                foreach ($netVersion in $netVersions) {
-                    $dllPath = Join-Path $RootDir "$project\bin\Release\$netVersion\$project.dll"
-                    $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
-                    $projOutputDir = Join-Path $apiDocsDir $outputDirName
-
-                    if (Test-Path $dllPath) {
-                        # 创建 API 文档目录
-                        if (-not (Test-Path $apiDocsDir)) {
-                            New-Item -ItemType Directory -Path $apiDocsDir -Force | Out-Null
-                        }
-
-                        # 清空并创建输出目录
-                        if (Test-Path $projOutputDir) {
-                            Remove-Item -Path "$projOutputDir\*" -Force -Recurse -ErrorAction SilentlyContinue
-                        } else {
-                            New-Item -ItemType Directory -Path $projOutputDir -Force | Out-Null
-                        }
-
-                        # 运行 DefaultDocumentation
-                        & defaultdocumentation -a $dllPath -o $projOutputDir 2>&1 | Out-Null
-                        if ($LASTEXITCODE -eq 0) {
-                            # 生成 index.md（从主命名空间文件复制）
-                            $mainMdFile = Get-ChildItem -Path $projOutputDir -Filter "$project.md" -ErrorAction SilentlyContinue | Select-Object -First 1
-                            if ($mainMdFile) {
-                                $indexPath = Join-Path $projOutputDir 'index.md'
-                                $content = [System.IO.File]::ReadAllText($mainMdFile.FullName, [System.Text.Encoding]::UTF8)
-                                $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-                                [System.IO.File]::WriteAllText($indexPath, $content, $utf8NoBom)
-                            }
-                            Write-ColorText "      ✓ $netVersion 文档" 'Green'
-                        } else {
-                            Write-ColorText "      ✗ $netVersion 文档生成失败" 'Red'
-                        }
-                    }
-                }
-            }
         } else {
             $failCount++
             Write-ColorText "  ✗ $project 打包失败" 'Red'
@@ -310,149 +227,71 @@ if ($failCount -gt 0) {
 Write-ColorText "========================================" 'Cyan'
 Write-Host ''
 
-# 生成 API 索引页和符号链接（仅在用户选择生成文档时）
-if ($generateDocs) {
-    # 生成所有 .NET 版本的 API 索引页
-    Write-ColorText '生成 API 索引页...' 'Cyan'
+# 生成 DocFX 文档（如果用户选择）
+if ($generateDocFx) {
+    Write-ColorText '生成 DocFX API 文档...' 'Cyan'
 
-    $netVersions = @('net10.0', 'net8.0')
-    $generatedDocVersions = @()
+    # 检查 DocFX 是否安装
+    $docfxInstalled = dotnet tool list -g | Select-String 'docfx'
+    if (-not $docfxInstalled) {
+        Write-ColorText '  安装 DocFX...' 'Yellow'
+        $installOutput = dotnet tool install -g docfx 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Write-ColorText '  ✗ DocFX 安装失败' 'Red'
+            Write-ColorText '    请手动运行: dotnet tool install -g docfx' 'Yellow'
+            Write-ColorText '    或检查网络连接后重试' 'Yellow'
+        }
+        # 重新检查是否安装成功
+        $docfxInstalled = dotnet tool list -g | Select-String 'docfx'
+    }
 
-    # 检查每个 .NET 版本是否有文档生成
-    foreach ($netVersion in $netVersions) {
-        $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
-        if (Test-Path $apiDocsDir) {
-            $docDirs = Get-ChildItem -Path $apiDocsDir -Directory -ErrorAction SilentlyContinue
-            if ($docDirs.Count -gt 0) {
-                $generatedDocVersions += $netVersion
+    if ($docfxInstalled) {
+        $DocfxDir = Join-Path $RootDir 'docs\docfx'
+        Push-Location $DocfxDir
+        try {
+            # 生成元数据
+            Write-ColorText '  生成 API 元数据 (net10.0 + net8.0)...' 'Gray'
+            docfx metadata 2>&1 | Out-Null
+            if ($LASTEXITCODE -eq 0) {
+                Write-ColorText '    ✓ 元数据生成完成' 'Green'
+
+                # 构建文档站点
+                Write-ColorText '  构建文档站点...' 'Gray'
+                docfx build 2>&1 | Out-Null
+                if ($LASTEXITCODE -eq 0) {
+                    Write-ColorText '    ✓ DocFX 文档生成完成' 'Green'
+                    $docfxOutputDir = Join-Path $RootDir 'docs\site\public\api-reference'
+
+                    # 复制 favicon（DocFX 不支持自定义 favicon 路径）
+                    $faviconSrc = Join-Path $DocfxDir 'favicon.svg'
+                    $faviconDest = Join-Path $docfxOutputDir 'favicon.svg'
+                    if (Test-Path $faviconSrc) {
+                        Copy-Item $faviconSrc $faviconDest -Force
+                        # 替换所有 HTML 文件中的 favicon.ico 引用为 favicon.svg
+                        Get-ChildItem -Path $docfxOutputDir -Filter '*.html' -Recurse | ForEach-Object {
+                            $content = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
+                            $newContent = $content -replace 'href="([^"]*?)favicon\.ico"', 'href="$1favicon.svg"'
+                            if ($content -ne $newContent) {
+                                [IO.File]::WriteAllText($_.FullName, $newContent, [Text.Encoding]::UTF8)
+                            }
+                        }
+                        Write-ColorText '    ✓ 已更新 favicon 引用' 'Green'
+                    }
+
+                    Write-ColorText "    输出目录: $docfxOutputDir" 'Gray'
+                } else {
+                    Write-ColorText '    ✗ DocFX 站点构建失败' 'Red'
+                }
+            } else {
+                Write-ColorText '    ✗ DocFX 元数据生成失败' 'Red'
             }
         }
+        finally {
+            Pop-Location
+        }
+    } else {
+        Write-ColorText '  跳过 DocFX 文档生成（工具未安装）' 'Yellow'
     }
-
-    # 为每个 .NET 版本生成索引页
-    foreach ($netVersion in $generatedDocVersions) {
-        $apiDocsDir = Join-Path $RootDir "docs\site\api\$netVersion"
-
-        # 根据版本调整标题
-        $versionTitle = switch ($netVersion) {
-            'net8.0' { '.NET 8.0' }
-            'net10.0' { '.NET 10.0' }
-            default { $netVersion }
-        }
-
-        $indexContent = @"
-# API 参考 ($versionTitle)
-
-本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
-
-> 当前文档基于 $versionTitle 版本生成。各版本 API 基本一致，仅内部实现有差异。
-
-## 核心库
-
-- [Apq.Cfg](./core/) - 核心配置库（JSON、环境变量、DI 集成）
-
-## 加密脱敏
-
-- [Apq.Cfg.Crypto](./crypto/) - 配置加密脱敏
-- [Apq.Cfg.Crypto.DataProtection](./crypto-dp/) - ASP.NET Core DataProtection 集成
-
-## 本地配置源
-
-- [Apq.Cfg.Ini](./ini/) - INI 格式支持
-- [Apq.Cfg.Xml](./xml/) - XML 格式支持
-- [Apq.Cfg.Yaml](./yaml/) - YAML 格式支持
-- [Apq.Cfg.Toml](./toml/) - TOML 格式支持
-- [Apq.Cfg.Env](./env/) - .env 文件支持
-
-## 数据存储配置源
-
-- [Apq.Cfg.Database](./database/) - 数据库配置源
-- [Apq.Cfg.Redis](./redis/) - Redis 配置源
-
-## 远程配置中心
-
-- [Apq.Cfg.Consul](./consul/) - Consul 配置中心
-- [Apq.Cfg.Apollo](./apollo/) - Apollo 配置中心
-- [Apq.Cfg.Nacos](./nacos/) - Nacos 配置中心
-- [Apq.Cfg.Vault](./vault/) - HashiCorp Vault
-- [Apq.Cfg.Etcd](./etcd/) - Etcd 配置中心
-- [Apq.Cfg.Zookeeper](./zookeeper/) - Zookeeper 配置中心
-"@
-
-        # SourceGenerator 使用 netstandard2.0，单独处理
-        if ($netVersion -eq 'net10.0') {
-            $indexContent += @"
-
-## 源生成器
-
-- [Apq.Cfg.SourceGenerator](../netstandard2.0/sourcegen/) - 源生成器（Native AOT 支持）
-"@
-        }
-
-        $indexPath = Join-Path $apiDocsDir 'index.md'
-        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-        [System.IO.File]::WriteAllText($indexPath, $indexContent, $utf8NoBom)
-    }
-
-    # 生成总的 API 索引页
-    $apiRootDir = Join-Path $RootDir 'docs\site\api'
-    $rootIndexContent = @"
-# API 参考
-
-本节包含 Apq.Cfg 所有公开 API 的详细文档，由代码注释自动生成。
-
-> 各版本 API 基本一致，仅内部实现有差异。建议使用最新版本。
-
-## 可用版本
-
-"@
-
-    foreach ($netVersion in $generatedDocVersions) {
-        $versionTitle = switch ($netVersion) {
-            'net8.0' { '.NET 8.0' }
-            'net10.0' { '.NET 10.0' }
-            default { $netVersion }
-        }
-
-        $rootIndexContent += "- [$versionTitle](./$netVersion/)`n"
-    }
-
-    $rootIndexPath = Join-Path $apiRootDir 'index.md'
-    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-    [System.IO.File]::WriteAllText($rootIndexPath, $rootIndexContent, $utf8NoBom)
-
-    Write-ColorText "  API 索引页生成完成" 'Green'
-
-    # 为英文版创建 API 文档的符号链接（解决语言切换 404 问题）
-    Write-ColorText '创建英文版 API 符号链接...' 'Cyan'
-    $enApiDir = Join-Path $RootDir 'docs\site\en\api'
-
-    # 包含 netstandard2.0（SourceGenerator 使用）
-    $allDocVersions = $generatedDocVersions + @('netstandard2.0')
-
-    foreach ($netVersion in $allDocVersions) {
-        $sourcePath = Join-Path $RootDir "docs\site\api\$netVersion"
-        $targetPath = Join-Path $enApiDir $netVersion
-
-        # 如果源目录不存在，跳过
-        if (-not (Test-Path $sourcePath)) {
-            continue
-        }
-
-        # 如果目标已存在，先删除
-        if (Test-Path $targetPath) {
-            Remove-Item $targetPath -Force -Recurse -ErrorAction SilentlyContinue
-        }
-
-        # 创建目录连接（junction）- 不需要管理员权限
-        cmd /c mklink /J "$targetPath" "$sourcePath" 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) {
-            Write-ColorText "  ✓ $netVersion" 'Green'
-        } else {
-            Write-ColorText "  ✗ $netVersion 创建失败" 'Red'
-        }
-    }
-    Write-ColorText "  英文版 API 链接创建完成" 'Green'
     Write-Host ''
 }
 

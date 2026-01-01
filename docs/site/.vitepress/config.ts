@@ -82,56 +82,8 @@ const zhSidebar = {
         { text: 'CfgBuilder', link: '/api/cfg-builder' },
         { text: 'ICfgRoot', link: '/api/icfg-root' },
         { text: 'ICfgSection', link: '/api/icfg-section' },
-        { text: '扩展方法', link: '/api/extensions' }
-      ]
-    },
-    {
-      text: '自动生成 API (net10.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg', link: '/api/net10.0/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/net10.0/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/net10.0/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/net10.0/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/net10.0/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/net10.0/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/net10.0/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/net10.0/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/net10.0/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/net10.0/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/net10.0/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/net10.0/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/net10.0/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/net10.0/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/net10.0/database/' }
-      ]
-    },
-    {
-      text: '自动生成 API (net8.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg', link: '/api/net8.0/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/net8.0/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/net8.0/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/net8.0/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/net8.0/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/net8.0/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/net8.0/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/net8.0/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/net8.0/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/net8.0/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/net8.0/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/net8.0/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/net8.0/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/net8.0/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/net8.0/database/' }
-      ]
-    },
-    {
-      text: '源生成器 API (netstandard2.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg.SourceGenerator', link: '/api/netstandard2.0/sourcegen/' }
+        { text: '扩展方法', link: '/api/extensions' },
+        { text: 'DocFX API 文档 ↗', link: '/api-reference/api/index.html', target: '_blank' }
       ]
     }
   ],
@@ -232,56 +184,8 @@ const enSidebar = {
         { text: 'CfgBuilder', link: '/en/api/cfg-builder' },
         { text: 'ICfgRoot', link: '/en/api/icfg-root' },
         { text: 'ICfgSection', link: '/en/api/icfg-section' },
-        { text: 'Extensions', link: '/en/api/extensions' }
-      ]
-    },
-    {
-      text: 'Auto-generated API (net10.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg', link: '/api/net10.0/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/net10.0/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/net10.0/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/net10.0/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/net10.0/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/net10.0/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/net10.0/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/net10.0/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/net10.0/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/net10.0/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/net10.0/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/net10.0/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/net10.0/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/net10.0/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/net10.0/database/' }
-      ]
-    },
-    {
-      text: 'Auto-generated API (net8.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg', link: '/api/net8.0/core/' },
-        { text: 'Apq.Cfg.Crypto', link: '/api/net8.0/crypto/' },
-        { text: 'Apq.Cfg.Ini', link: '/api/net8.0/ini/' },
-        { text: 'Apq.Cfg.Xml', link: '/api/net8.0/xml/' },
-        { text: 'Apq.Cfg.Yaml', link: '/api/net8.0/yaml/' },
-        { text: 'Apq.Cfg.Toml', link: '/api/net8.0/toml/' },
-        { text: 'Apq.Cfg.Env', link: '/api/net8.0/env/' },
-        { text: 'Apq.Cfg.Redis', link: '/api/net8.0/redis/' },
-        { text: 'Apq.Cfg.Consul', link: '/api/net8.0/consul/' },
-        { text: 'Apq.Cfg.Etcd', link: '/api/net8.0/etcd/' },
-        { text: 'Apq.Cfg.Nacos', link: '/api/net8.0/nacos/' },
-        { text: 'Apq.Cfg.Apollo', link: '/api/net8.0/apollo/' },
-        { text: 'Apq.Cfg.Zookeeper', link: '/api/net8.0/zookeeper/' },
-        { text: 'Apq.Cfg.Vault', link: '/api/net8.0/vault/' },
-        { text: 'Apq.Cfg.Database', link: '/api/net8.0/database/' }
-      ]
-    },
-    {
-      text: 'Source Generator API (netstandard2.0)',
-      collapsed: true,
-      items: [
-        { text: 'Apq.Cfg.SourceGenerator', link: '/api/netstandard2.0/sourcegen/' }
+        { text: 'Extensions', link: '/en/api/extensions' },
+        { text: 'DocFX API Docs ↗', link: '/api-reference/api/index.html', target: '_blank' }
       ]
     }
   ],
@@ -441,5 +345,55 @@ export default defineConfig({
   // Sitemap 配置（SEO 优化）
   sitemap: {
     hostname: 'https://apq-cfg.gitee.io'
+  },
+
+  // Vite 配置：处理 DocFX 静态文件
+  vite: {
+    publicDir: 'public',
+    server: {
+      fs: {
+        // 允许访问项目目录外的文件
+        strict: false
+      }
+    },
+    plugins: [
+      {
+        name: 'api-reference-redirect',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // 处理 /api-reference/ 下所有以 / 结尾的路径，重定向到 index.html
+            if (req.url?.startsWith('/api-reference/') && req.url.endsWith('/')) {
+              const redirectUrl = req.url + 'index.html'
+              res.writeHead(302, { Location: redirectUrl })
+              res.end()
+              return
+            }
+            if (req.url === '/api-reference') {
+              res.writeHead(302, { Location: '/api-reference/index.html' })
+              res.end()
+              return
+            }
+            next()
+          })
+        },
+        configurePreviewServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // 预览服务器也需要同样的处理
+            if (req.url?.startsWith('/api-reference/') && req.url.endsWith('/')) {
+              const redirectUrl = req.url + 'index.html'
+              res.writeHead(302, { Location: redirectUrl })
+              res.end()
+              return
+            }
+            if (req.url === '/api-reference') {
+              res.writeHead(302, { Location: '/api-reference/index.html' })
+              res.end()
+              return
+            }
+            next()
+          })
+        }
+      }
+    ]
   }
 })

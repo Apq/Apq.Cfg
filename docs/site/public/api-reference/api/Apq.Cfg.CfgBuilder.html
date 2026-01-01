@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class CfgBuilder | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CfgBuilder | Apq.Cfg API ">
+      
+      <meta name="description" content="配置构建器，用于创建和管理配置源">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.CfgBuilder">
+
+
+
+  <h1 id="Apq_Cfg_CfgBuilder" data-uid="Apq.Cfg.CfgBuilder" class="text-break">
+Class CfgBuilder  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>配置构建器，用于创建和管理配置源</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CfgBuilder</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">CfgBuilder</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Apq.Cfg.Apollo.CfgBuilderExtensions.html#Apq_Cfg_Apollo_CfgBuilderExtensions_AddApollo_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Apollo_ApolloCfgOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddApollo(CfgBuilder, Action&lt;ApolloCfgOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Apollo.CfgBuilderExtensions.html#Apq_Cfg_Apollo_CfgBuilderExtensions_AddApollo_Apq_Cfg_CfgBuilder_System_String_System_String_System_String___System_Int32_System_Boolean_">CfgBuilderExtensions.AddApollo(CfgBuilder, string, string, string[]?, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Consul.CfgBuilderExtensions.html#Apq_Cfg_Consul_CfgBuilderExtensions_AddConsul_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Consul_ConsulCfgOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddConsul(CfgBuilder, Action&lt;ConsulCfgOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Consul.CfgBuilderExtensions.html#Apq_Cfg_Consul_CfgBuilderExtensions_AddConsul_Apq_Cfg_CfgBuilder_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddConsul(CfgBuilder, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesCbcEncryption_Apq_Cfg_CfgBuilder_System_String_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddAesCbcEncryption(CfgBuilder, string, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesGcmEncryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddAesGcmEncryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesGcmEncryptionFromEnv_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddAesGcmEncryptionFromEnv(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddChaCha20Encryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddChaCha20Encryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddEncryption_Apq_Cfg_CfgBuilder_Apq_Cfg_Crypto_ICryptoProvider_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddEncryption(CfgBuilder, ICryptoProvider, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddRsaEncryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddRsaEncryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddRsaEncryptionFromPem_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddRsaEncryptionFromPem(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddSensitiveMasking_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Crypto_MaskingOptions__">CfgBuilderExtensions.AddSensitiveMasking(CfgBuilder, Action&lt;MaskingOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddSm4Encryption_Apq_Cfg_CfgBuilder_System_String_Apq_Cfg_Crypto_Providers_Sm4Mode_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddSm4Encryption(CfgBuilder, string, Sm4Mode, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Crypto.CfgBuilderExtensions.html#Apq_Cfg_Crypto_CfgBuilderExtensions_AddTripleDesEncryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__">CfgBuilderExtensions.AddTripleDesEncryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Env.CfgBuilderExtensions.html#Apq_Cfg_Env_CfgBuilderExtensions_AddEnv_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_">CfgBuilderExtensions.AddEnv(CfgBuilder, string, int, bool, bool, bool, bool, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Etcd.CfgBuilderExtensions.html#Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Etcd_EtcdCfgOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddEtcd(CfgBuilder, Action&lt;EtcdCfgOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Etcd.CfgBuilderExtensions.html#Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_Apq_Cfg_CfgBuilder_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddEtcd(CfgBuilder, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Etcd.CfgBuilderExtensions.html#Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_Apq_Cfg_CfgBuilder_System_String___System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddEtcd(CfgBuilder, string[], string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Ini.CfgBuilderExtensions.html#Apq_Cfg_Ini_CfgBuilderExtensions_AddIni_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_">CfgBuilderExtensions.AddIni(CfgBuilder, string, int, bool, bool, bool, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Nacos.CfgBuilderExtensions.html#Apq_Cfg_Nacos_CfgBuilderExtensions_AddNacos_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Nacos_NacosCfgOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddNacos(CfgBuilder, Action&lt;NacosCfgOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Nacos.CfgBuilderExtensions.html#Apq_Cfg_Nacos_CfgBuilderExtensions_AddNacos_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddNacos(CfgBuilder, string, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Nacos.CfgBuilderExtensions.html#Apq_Cfg_Nacos_CfgBuilderExtensions_AddNacosJson_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddNacosJson(CfgBuilder, string, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Nacos.CfgBuilderExtensions.html#Apq_Cfg_Nacos_CfgBuilderExtensions_AddNacosProperties_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddNacosProperties(CfgBuilder, string, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Redis.CfgBuilderExtensions.html#Apq_Cfg_Redis_CfgBuilderExtensions_AddRedis_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Redis_RedisOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddRedis(CfgBuilder, Action&lt;RedisOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Toml.CfgBuilderExtensions.html#Apq_Cfg_Toml_CfgBuilderExtensions_AddToml_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_">CfgBuilderExtensions.AddToml(CfgBuilder, string, int, bool, bool, bool, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Vault.CfgBuilderExtensions.html#Apq_Cfg_Vault_CfgBuilderExtensions_AddVault_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Vault_VaultCfgOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddVault(CfgBuilder, Action&lt;VaultCfgOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Vault.CfgBuilderExtensions.html#Apq_Cfg_Vault_CfgBuilderExtensions_AddVaultAppRole_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_String_System_String_System_Int32_System_Int32_">CfgBuilderExtensions.AddVaultAppRole(CfgBuilder, string, string, string, string, string, int, int)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Vault.CfgBuilderExtensions.html#Apq_Cfg_Vault_CfgBuilderExtensions_AddVaultUserPass_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_String_System_String_System_Int32_System_Int32_">CfgBuilderExtensions.AddVaultUserPass(CfgBuilder, string, string, string, string, string, int, int)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Vault.CfgBuilderExtensions.html#Apq_Cfg_Vault_CfgBuilderExtensions_AddVaultV1_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddVaultV1(CfgBuilder, string, string, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Vault.CfgBuilderExtensions.html#Apq_Cfg_Vault_CfgBuilderExtensions_AddVaultV2_Apq_Cfg_CfgBuilder_System_String_System_String_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddVaultV2(CfgBuilder, string, string, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Yaml.CfgBuilderExtensions.html#Apq_Cfg_Yaml_CfgBuilderExtensions_AddYaml_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_">CfgBuilderExtensions.AddYaml(CfgBuilder, string, int, bool, bool, bool, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Zookeeper.CfgBuilderExtensions.html#Apq_Cfg_Zookeeper_CfgBuilderExtensions_AddZookeeper_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Zookeeper_ZookeeperCfgOptions__System_Int32_System_Boolean_">CfgBuilderExtensions.AddZookeeper(CfgBuilder, Action&lt;ZookeeperCfgOptions&gt;, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Zookeeper.CfgBuilderExtensions.html#Apq_Cfg_Zookeeper_CfgBuilderExtensions_AddZookeeper_Apq_Cfg_CfgBuilder_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddZookeeper(CfgBuilder, string, string, int, bool)</a>
+  </div>
+  <div>
+      <a class="xref" href="Apq.Cfg.Zookeeper.CfgBuilderExtensions.html#Apq_Cfg_Zookeeper_CfgBuilderExtensions_AddZookeeperJson_Apq_Cfg_CfgBuilder_System_String_System_String_System_Int32_System_Boolean_">CfgBuilderExtensions.AddZookeeperJson(CfgBuilder, string, string, int, bool)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_" data-uid="Apq.Cfg.CfgBuilder.AddEnvironmentVariables*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String_" data-uid="Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String)">
+  AddEnvironmentVariables(int, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加环境变量配置源</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddEnvironmentVariables(int level, string? prefix = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>配置层级，数值越大优先级越高</p>
+</dd>
+    <dt><code>prefix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>环境变量前缀，为null时加载所有环境变量</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddEnvironmentVariables(level: 1, prefix: "APP_")
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddJson_" data-uid="Apq.Cfg.CfgBuilder.AddJson*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_" data-uid="Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)">
+  AddJson(string, int, bool, bool, bool, bool, EncodingOptions?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加JSON文件配置源</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddJson(string path, int level, bool writeable, bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false, EncodingOptions? encoding = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>JSON文件路径</p>
+</dd>
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>配置层级，数值越大优先级越高</p>
+</dd>
+    <dt><code>writeable</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否可写</p>
+</dd>
+    <dt><code>optional</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否为可选文件，默认为true</p>
+</dd>
+    <dt><code>reloadOnChange</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>文件变更时是否自动重载，默认为true</p>
+</dd>
+    <dt><code>isPrimaryWriter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否为主要写入器，默认为false</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="Apq.Cfg.EncodingSupport.EncodingOptions.html">EncodingOptions</a></dt>
+    <dd><p>编码选项，默认为null</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions__examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddReadEncodingMapping_" data-uid="Apq.Cfg.CfgBuilder.AddReadEncodingMapping*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddReadEncodingMapping_System_String_System_Text_Encoding_System_Int32_" data-uid="Apq.Cfg.CfgBuilder.AddReadEncodingMapping(System.String,System.Text.Encoding,System.Int32)">
+  AddReadEncodingMapping(string, Encoding, int)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加读取编码映射（完整路径）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddReadEncodingMapping(string filePath, Encoding encoding, int priority = 100)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>文件完整路径</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd><p>编码</p>
+</dd>
+    <dt><code>priority</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>优先级（数值越大优先级越高，默认 100）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddReadEncodingMappingRegex_" data-uid="Apq.Cfg.CfgBuilder.AddReadEncodingMappingRegex*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddReadEncodingMappingRegex_System_String_System_Text_Encoding_System_Int32_" data-uid="Apq.Cfg.CfgBuilder.AddReadEncodingMappingRegex(System.String,System.Text.Encoding,System.Int32)">
+  AddReadEncodingMappingRegex(string, Encoding, int)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加读取编码映射（正则表达式）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddReadEncodingMappingRegex(string regexPattern, Encoding encoding, int priority = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>regexPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>正则表达式模式</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd><p>编码</p>
+</dd>
+    <dt><code>priority</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>优先级（数值越大优先级越高，默认 0）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddReadEncodingMappingWildcard_" data-uid="Apq.Cfg.CfgBuilder.AddReadEncodingMappingWildcard*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddReadEncodingMappingWildcard_System_String_System_Text_Encoding_System_Int32_" data-uid="Apq.Cfg.CfgBuilder.AddReadEncodingMappingWildcard(System.String,System.Text.Encoding,System.Int32)">
+  AddReadEncodingMappingWildcard(string, Encoding, int)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加读取编码映射（通配符）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddReadEncodingMappingWildcard(string pattern, Encoding encoding, int priority = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>pattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>通配符模式（如 &quot;<em>.json&quot;、&quot;config/</em>.xml&quot;、&quot;**/*.txt&quot;）</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd><p>编码</p>
+</dd>
+    <dt><code>priority</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>优先级（数值越大优先级越高，默认 0）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddSource_" data-uid="Apq.Cfg.CfgBuilder.AddSource*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource_" data-uid="Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource)">
+  AddSource(ICfgSource)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加自定义配置源（供扩展包使用）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddSource(ICfgSource source)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>source</code> <a class="xref" href="Apq.Cfg.Sources.ICfgSource.html">ICfgSource</a></dt>
+    <dd><p>配置源实例，实现 ICfgSource 接口</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource__examples">Examples</h4>
+  <pre><code class="lang-csharp">// 添加自定义配置源
+var customSource = new CustomCfgSource();
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddSource(customSource)
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddValueMasker_" data-uid="Apq.Cfg.CfgBuilder.AddValueMasker*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddValueMasker_Apq_Cfg_Security_IValueMasker_" data-uid="Apq.Cfg.CfgBuilder.AddValueMasker(Apq.Cfg.Security.IValueMasker)">
+  AddValueMasker(IValueMasker)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加值脱敏器（供扩展包使用）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddValueMasker(IValueMasker masker)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>masker</code> <a class="xref" href="Apq.Cfg.Security.IValueMasker.html">IValueMasker</a></dt>
+    <dd><p>值脱敏器实例</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddValueMasker_Apq_Cfg_Security_IValueMasker__examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddValueMasker(new SensitiveMasker())
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddValueTransformer_" data-uid="Apq.Cfg.CfgBuilder.AddValueTransformer*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddValueTransformer_Apq_Cfg_Security_IValueTransformer_" data-uid="Apq.Cfg.CfgBuilder.AddValueTransformer(Apq.Cfg.Security.IValueTransformer)">
+  AddValueTransformer(IValueTransformer)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加值转换器（供扩展包使用）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddValueTransformer(IValueTransformer transformer)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>transformer</code> <a class="xref" href="Apq.Cfg.Security.IValueTransformer.html">IValueTransformer</a></dt>
+    <dd><p>值转换器实例</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddValueTransformer_Apq_Cfg_Security_IValueTransformer__examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddValueTransformer(new EncryptionTransformer(provider))
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddWriteEncodingMapping_" data-uid="Apq.Cfg.CfgBuilder.AddWriteEncodingMapping*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddWriteEncodingMapping_System_String_System_Text_Encoding_System_Int32_" data-uid="Apq.Cfg.CfgBuilder.AddWriteEncodingMapping(System.String,System.Text.Encoding,System.Int32)">
+  AddWriteEncodingMapping(string, Encoding, int)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加写入编码映射（完整路径）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddWriteEncodingMapping(string filePath, Encoding encoding, int priority = 100)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>文件完整路径</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd><p>编码</p>
+</dd>
+    <dt><code>priority</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>优先级（数值越大优先级越高，默认 100）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddWriteEncodingMappingRegex_" data-uid="Apq.Cfg.CfgBuilder.AddWriteEncodingMappingRegex*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddWriteEncodingMappingRegex_System_String_System_Text_Encoding_System_Int32_" data-uid="Apq.Cfg.CfgBuilder.AddWriteEncodingMappingRegex(System.String,System.Text.Encoding,System.Int32)">
+  AddWriteEncodingMappingRegex(string, Encoding, int)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加写入编码映射（正则表达式）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddWriteEncodingMappingRegex(string regexPattern, Encoding encoding, int priority = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>regexPattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>正则表达式模式</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd><p>编码</p>
+</dd>
+    <dt><code>priority</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>优先级（数值越大优先级越高，默认 0）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_AddWriteEncodingMappingWildcard_" data-uid="Apq.Cfg.CfgBuilder.AddWriteEncodingMappingWildcard*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_AddWriteEncodingMappingWildcard_System_String_System_Text_Encoding_System_Int32_" data-uid="Apq.Cfg.CfgBuilder.AddWriteEncodingMappingWildcard(System.String,System.Text.Encoding,System.Int32)">
+  AddWriteEncodingMappingWildcard(string, Encoding, int)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加写入编码映射（通配符）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddWriteEncodingMappingWildcard(string pattern, Encoding encoding, int priority = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>pattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>通配符模式（如 &quot;<em>.json&quot;、&quot;config/</em>.xml&quot;、&quot;**/*.txt&quot;）</p>
+</dd>
+    <dt><code>encoding</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encoding">Encoding</a></dt>
+    <dd><p>编码</p>
+</dd>
+    <dt><code>priority</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>优先级（数值越大优先级越高，默认 0）</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_Build_" data-uid="Apq.Cfg.CfgBuilder.Build*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_Build" data-uid="Apq.Cfg.CfgBuilder.Build">
+  Build()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>构建配置根实例</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICfgRoot Build()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_ConfigureEncodingMapping_" data-uid="Apq.Cfg.CfgBuilder.ConfigureEncodingMapping*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_ConfigureEncodingMapping_System_Action_Apq_Cfg_EncodingSupport_EncodingMappingConfig__" data-uid="Apq.Cfg.CfgBuilder.ConfigureEncodingMapping(System.Action{Apq.Cfg.EncodingSupport.EncodingMappingConfig})">
+  ConfigureEncodingMapping(Action&lt;EncodingMappingConfig&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>配置编码映射（使用 Action 委托进行更复杂的配置）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder ConfigureEncodingMapping(Action&lt;EncodingMappingConfig&gt; configure)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.EncodingSupport.EncodingMappingConfig.html">EncodingMappingConfig</a>&gt;</dt>
+    <dd><p>配置委托</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_ConfigureValueTransformer_" data-uid="Apq.Cfg.CfgBuilder.ConfigureValueTransformer*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_ConfigureValueTransformer_System_Action_Apq_Cfg_Security_ValueTransformerOptions__" data-uid="Apq.Cfg.CfgBuilder.ConfigureValueTransformer(System.Action{Apq.Cfg.Security.ValueTransformerOptions})">
+  ConfigureValueTransformer(Action&lt;ValueTransformerOptions&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>配置值转换选项</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder ConfigureValueTransformer(Action&lt;ValueTransformerOptions&gt; configure)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Security.ValueTransformerOptions.html">ValueTransformerOptions</a>&gt;</dt>
+    <dd><p>配置委托</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_ConfigureValueTransformer_System_Action_Apq_Cfg_Security_ValueTransformerOptions___examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .ConfigureValueTransformer(options =&gt;
+    {
+        options.EncryptedPrefix = "[ENCRYPTED]";
+        options.SensitiveKeyPatterns.Add("*ApiSecret*");
+    })
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_WithEncodingConfidenceThreshold_" data-uid="Apq.Cfg.CfgBuilder.WithEncodingConfidenceThreshold*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_WithEncodingConfidenceThreshold_System_Single_" data-uid="Apq.Cfg.CfgBuilder.WithEncodingConfidenceThreshold(System.Single)">
+  WithEncodingConfidenceThreshold(float)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>设置编码检测置信度阈值（0.0-1.0）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder WithEncodingConfidenceThreshold(float threshold)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>threshold</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd><p>置信度阈值，范围 0.0-1.0，默认 0.6</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_CfgBuilder_WithEncodingDetectionLogging_" data-uid="Apq.Cfg.CfgBuilder.WithEncodingDetectionLogging*"></a>
+
+  <h3 id="Apq_Cfg_CfgBuilder_WithEncodingDetectionLogging_System_Action_Apq_Cfg_EncodingSupport_EncodingDetectionResult__" data-uid="Apq.Cfg.CfgBuilder.WithEncodingDetectionLogging(System.Action{Apq.Cfg.EncodingSupport.EncodingDetectionResult})">
+  WithEncodingDetectionLogging(Action&lt;EncodingDetectionResult&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>启用编码检测日志</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CfgBuilder WithEncodingDetectionLogging(Action&lt;EncodingDetectionResult&gt; handler)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>handler</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.EncodingSupport.EncodingDetectionResult.html">EncodingDetectionResult</a>&gt;</dt>
+    <dd><p>日志处理器</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
