@@ -24,6 +24,7 @@
 - [依赖注入集成](#依赖注入集成)
 - [配置验证](#配置验证)
 - [配置快照导出](#配置快照导出)
+- [配置模板与变量替换](#配置模板与变量替换)
 - [远程配置中心](#远程配置中心)
 - [源生成器（Native AOT 支持）](#源生成器native-aot-支持)
 - [构建与测试](#构建与测试)
@@ -499,6 +500,71 @@ await cfg.ExportSnapshotToFileAsync("config-snapshot.json");
 | `KeyValue` | 扁平键值对 | `App:Name=MyApp` |
 | `Env` | 环境变量格式 | `APP__NAME=MyApp` |
 
+### 配置模板与变量替换
+
+支持在配置值中使用变量引用，实现配置的动态组合和复用：
+
+```csharp
+using Apq.Cfg;
+
+// config.json
+// {
+//     "App": {
+//         "Name": "MyApp",
+//         "LogPath": "${App:Name}/logs",
+//         "DataPath": "${App:Name}/data"
+//     },
+//     "Paths": {
+//         "Home": "${ENV:USERPROFILE}",
+//         "Machine": "${SYS:MachineName}"
+//     }
+// }
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: false)
+    .Build();
+
+// 使用 GetResolved 获取解析后的值
+var logPath = cfg.GetResolved("App:LogPath");
+// 返回: "MyApp/logs"
+
+// 引用环境变量
+var homePath = cfg.GetResolved("Paths:Home");
+// 返回: "C:\Users\username"
+
+// 引用系统属性
+var machine = cfg.GetResolved("Paths:Machine");
+// 返回: "SERVER01"
+
+// 解析任意模板字符串
+var message = cfg.ResolveVariables("Application ${App:Name} running on ${SYS:MachineName}");
+// 返回: "Application MyApp running on SERVER01"
+
+// 类型转换
+var port = cfg.GetResolved<int>("Settings:Port");
+```
+
+#### 变量语法
+
+| 语法 | 说明 | 示例 |
+|------|------|------|
+| `${Key}` | 引用其他配置键 | `${App:Name}` |
+| `${ENV:Name}` | 引用环境变量 | `${ENV:USERPROFILE}` |
+| `${SYS:Property}` | 引用系统属性 | `${SYS:MachineName}` |
+
+#### 支持的系统属性
+
+| 属性名 | 说明 |
+|--------|------|
+| `MachineName` | 计算机名 |
+| `UserName` | 当前用户名 |
+| `ProcessId` | 当前进程 ID |
+| `Now` | 当前时间（ISO 8601 格式） |
+| `Today` | 当前日期（yyyy-MM-dd） |
+| `ProcessorCount` | 处理器数量 |
+
+> 详细文档见 [配置模板指南](docs/site/guide/template.md)
+
 ### 远程配置中心
 
 支持 Consul、Etcd、Nacos、Apollo、Zookeeper 等远程配置中心，支持热重载：
@@ -579,8 +645,8 @@ dotnet run -c Release
 
 | 框架       | 通过  | 失败  | 跳过  | 总计  | 状态   |
 | -------- | --- | --- | --- | --- | ---- |
-| .NET 8.0 | 435 | 0   | 41  | 476 | ✅ 通过 |
-| .NET 10.0 | 435 | 0   | 41  | 476 | ✅ 通过 |
+| .NET 8.0 | 456 | 0   | 41  | 497 | ✅ 通过 |
+| .NET 10.0 | 456 | 0   | 41  | 497 | ✅ 通过 |
 
 #### 跳过测试说明
 

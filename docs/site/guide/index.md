@@ -73,6 +73,25 @@ logger.LogInfo("密码: {0}", cfg.GetMasked("Database:Password"));
 // 输出: 密码: myS***ord
 ```
 
+### 📝 配置模板
+
+支持变量引用，实现配置的动态组合和复用：
+
+```csharp
+// config.json: { "App:Name": "MyApp", "App:LogPath": "${App:Name}/logs" }
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .Build();
+
+// 解析变量引用
+var logPath = cfg.GetResolved("App:LogPath");
+// 返回: "MyApp/logs"
+
+// 引用环境变量和系统属性
+var home = cfg.GetResolved("Paths:Home");     // ${ENV:USERPROFILE}
+var machine = cfg.GetResolved("Paths:Machine"); // ${SYS:MachineName}
+```
+
 ## 快速开始
 
 ### 安装
@@ -107,5 +126,6 @@ var typedValue = cfg.Get<int>("Section:IntKey");
 - [安装指南](/guide/installation) - 详细的安装说明
 - [快速开始](/guide/quick-start) - 5 分钟上手教程
 - [配置源](/config-sources/) - 了解所有支持的配置源
+- [配置模板](/guide/template) - 变量引用与动态配置
 - [加密脱敏](/guide/encryption-masking) - 保护敏感配置
 - [API 参考](/api/) - 完整的 API 文档

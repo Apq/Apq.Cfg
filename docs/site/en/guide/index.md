@@ -71,6 +71,25 @@ logger.LogInfo("Password: {0}", cfg.GetMasked("Database:Password"));
 // Output: Password: myS***ord
 ```
 
+### Config Templates
+
+Support variable references for dynamic configuration composition:
+
+```csharp
+// config.json: { "App:Name": "MyApp", "App:LogPath": "${App:Name}/logs" }
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .Build();
+
+// Resolve variable references
+var logPath = cfg.GetResolved("App:LogPath");
+// Returns: "MyApp/logs"
+
+// Reference environment variables and system properties
+var home = cfg.GetResolved("Paths:Home");     // ${ENV:USERPROFILE}
+var machine = cfg.GetResolved("Paths:Machine"); // ${SYS:MachineName}
+```
+
 ## Quick Start
 
 ### Installation
@@ -104,5 +123,6 @@ var port = cfg.Get<int>("App:Port");
 - [Installation Guide](/en/guide/installation) - Detailed installation instructions
 - [Quick Start](/en/guide/quick-start) - 5-minute tutorial
 - [Config Sources](/en/config-sources/) - Learn about all supported sources
+- [Config Templates](/en/guide/template) - Variable references and dynamic config
 - [Encryption & Masking](/en/guide/encryption-masking) - Protect sensitive configs
 - [API Reference](/en/api/) - Complete API documentation
