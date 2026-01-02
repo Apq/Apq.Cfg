@@ -4,6 +4,11 @@
 
 Apq.Cfg.WebUI 是一个**独立的配置管理工具**，用于连接多个使用 Apq.Cfg.WebApi 的应用，可视化查看和管理它们的配置内容。
 
+**核心特性：**
+- 查看**合并后**的配置（merged）- 所有配置源合并后的最终结果
+- 查看**合并前**的配置（sources）- 各个配置源的原始内容
+- 支持多应用管理
+
 ## 定位
 
 ```
@@ -23,6 +28,9 @@ Apq.Cfg.WebUI 是一个**独立的配置管理工具**，用于连接多个使�
 ## 功能特性
 
 - **多应用管理**：连接多个 WebApi 端点，统一管理
+- **合并后配置**：查看所有配置源合并后的最终结果
+- **合并前配置**：查看各个配置源的原始内容，了解配置来源
+- **配置源切换**：在合并后和各配置源之间切换查看
 - 树形结构展示配置
 - 搜索/过滤配置
 - 编辑配置值
@@ -80,6 +88,7 @@ Apq.Cfg.WebUI/
 │       │   ├── AppCard.vue        # 应用卡片
 │       │   ├── ConfigTree.vue     # 配置树
 │       │   ├── ConfigEditor.vue   # 编辑器
+│       │   ├── SourceList.vue     # 配置源列表（合并前配置）
 │       │   └── ConnectionDialog.vue
 │       ├── views/
 │       │   ├── HomeView.vue       # 首页（应用列表）
@@ -191,7 +200,7 @@ public class AppEndpoint
     public string Name { get; set; } = "";
 
     /// <summary>
-    /// WebApi 地址（如 http://app-a:5000/api/config）
+    /// WebApi 地址（如 http://app-a:5000/api/apqcfg）
     /// </summary>
     public string Url { get; set; } = "";
 
@@ -495,7 +504,9 @@ public class AppService : IAppService
 
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, app.Url);
+            // 测试 /merged 端点
+            var url = $"{app.Url.TrimEnd('/')}/merged";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
 
             // 添加认证头
             switch (app.AuthType)
@@ -706,6 +717,16 @@ export interface ConfigTreeNode {
   children: ConfigTreeNode[]
 }
 
+// 配置源信息（对应 Apq.Cfg.ConfigSourceInfo）
+export interface ConfigSourceInfo {
+  level: number
+  name: string
+  type: string
+  isWriteable: boolean
+  isPrimaryWriter: boolean
+  keyCount: number
+}
+
 // API 响应
 export interface ApiResponse<T> {
   success: boolean
@@ -790,29 +811,61 @@ export const appsApi = {
 
 ```typescript
 import request from '@/utils/request'
-import type { ApiResponse, ConfigTreeNode } from '@/types'
+import type { ApiResponse, ConfigTreeNode, ConfigSourceInfo } from '@/types'
 
 // 通过代理访问目标应用的配置 API
 export const createConfigApi = (appId: string) => ({
-  getAll(): Promise<ApiResponse<Record<string, string | null>>> {
-    return request.get(`/api/proxy/${appId}`)
+  // ========== 合并后配置（Merged）==========
+
+  getMerged(): Promise<ApiResponse<Record<string, string | null>>> {
+    return request.get(`/api/proxy/${appId}/merged`)
   },
 
-  getTree(): Promise<ApiResponse<ConfigTreeNode>> {
-    return request.get(`/api/proxy/${appId}/tree`)
+  getMergedTree(): Promise<ApiResponse<ConfigTreeNode>> {
+    return request.get(`/api/proxy/${appId}/merged/tree`)
   },
 
-  getValue(key: string): Promise<ApiResponse<any>> {
-    return request.get(`/api/proxy/${appId}/keys/${encodeURIComponent(key)}`)
+  getMergedValue(key: string): Promise<ApiResponse<any>> {
+    return request.get(`/api/proxy/${appId}/merged/keys/${encodeURIComponent(key)}`)
   },
+
+  // ========== 合并前配置（Sources）==========
+
+  getSources(): Promise<ApiResponse<ConfigSourceInfo[]>> {
+    return request.get(`/api/proxy/${appId}/sources`)
+  },
+
+  getSourceConfig(level: number, name: string): Promise<ApiResponse<Record<string, string | null>>> {
+    return request.get(`/api/proxy/${appId}/sources/${level}/${encodeURIComponent(name)}`)
+  },
+
+  getSourceTree(level: number, name: string): Promise<ApiResponse<ConfigTreeNode>> {
+    return request.get(`/api/proxy/${appId}/sources/${level}/${encodeURIComponent(name)}/tree`)
+  },
+
+  getSourceValue(level: number, name: string, key: string): Promise<ApiResponse<any>> {
+    return request.get(`/api/proxy/${appId}/sources/${level}/${encodeURIComponent(name)}/keys/${encodeURIComponent(key)}`)
+  },
+
+  // ========== 写入操作 ==========
 
   setValue(key: string, value: string | null): Promise<ApiResponse<boolean>> {
     return request.put(`/api/proxy/${appId}/keys/${encodeURIComponent(key)}`, value)
   },
 
-  delete(key: string): Promise<ApiResponse<boolean>> {
+  setSourceValue(level: number, name: string, key: string, value: string | null): Promise<ApiResponse<boolean>> {
+    return request.put(`/api/proxy/${appId}/sources/${level}/${encodeURIComponent(name)}/keys/${encodeURIComponent(key)}`, value)
+  },
+
+  deleteKey(key: string): Promise<ApiResponse<boolean>> {
     return request.delete(`/api/proxy/${appId}/keys/${encodeURIComponent(key)}`)
   },
+
+  deleteSourceKey(level: number, name: string, key: string): Promise<ApiResponse<boolean>> {
+    return request.delete(`/api/proxy/${appId}/sources/${level}/${encodeURIComponent(name)}/keys/${encodeURIComponent(key)}`)
+  },
+
+  // ========== 管理操作 ==========
 
   save(): Promise<ApiResponse<boolean>> {
     return request.post(`/api/proxy/${appId}/save`)
@@ -824,6 +877,12 @@ export const createConfigApi = (appId: string) => ({
 
   export(format: string = 'json'): Promise<string> {
     return request.get(`/api/proxy/${appId}/export/${format}`, {
+      responseType: 'text'
+    })
+  },
+
+  exportSource(level: number, name: string, format: string = 'json'): Promise<string> {
+    return request.get(`/api/proxy/${appId}/sources/${level}/${encodeURIComponent(name)}/export/${format}`, {
       responseType: 'text'
     })
   }
@@ -859,6 +918,9 @@ export const createConfigApi = (appId: string) => ({
 ┌─────────────────────────────────────────────────────────────────┐
 │  ← 返回  │  应用 A                    [刷新] [保存] [导出▼]     │
 ├─────────────────────────────────────────────────────────────────┤
+│ ┌───────────────────────────────────────────────────────────────┐
+│ │ 配置源: [合并后▼]  config.json | config.local.json | 环境变量 │
+│ └───────────────────────────────────────────────────────────────┘
 │ ┌───────────────────┐ ┌───────────────────────────────────────┐ │
 │ │ 🔍 搜索配置...     │ │ 配置详情                              │ │
 │ ├───────────────────┤ │                                       │ │
@@ -869,12 +931,20 @@ export const createConfigApi = (appId: string) => ({
 │ │ ▼ Database        │ │ │ MyApp                             │ │ │
 │ │   ├─ Host         │ │ └───────────────────────────────────┘ │ │
 │ │   ├─ Port         │ │                                       │ │
-│ │   └─ Password 🔒  │ │ [保存] [取消]                         │ │
+│ │   └─ Password 🔒  │ │ 来源: config.local.json (1/config.local.json)│ │
 │ │ ▼ Logging         │ │                                       │ │
-│ │   └─ Level        │ │                                       │ │
+│ │   └─ Level        │ │ [保存] [取消]                         │ │
 │ └───────────────────┘ └───────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+**配置源切换说明：**
+- **合并后**：显示所有配置源合并后的最终结果
+- **config.json (0/config.json)**：显示基础配置文件的原始内容
+- **config.local.json (1/config.local.json)**：显示本地覆盖配置的原始内容
+- **环境变量 (2/env)**：显示环境变量配置源的原始内容
+
+> **说明**：括号中的是配置源的层级和名称（level/name），用于 API 路由。同一层级内名称必须唯一。名称支持自动生成或手动指定。
 
 ---
 
@@ -968,11 +1038,12 @@ dotnet publish -c Release -r linux-x64 --self-contained -o ./publish
 14. 实现 HomeView（首页）
 15. 实现 ConfigTree 组件
 16. 实现 ConfigEditor 组件
-17. 实现 ConfigView（配置详情页）
+17. 实现 SourceList 组件（配置源列表/切换）
+18. 实现 ConfigView（配置详情页，支持合并前后切换）
 
 ### 第四阶段：集成和部署
 
-18. 配置 SPA 集成
-19. 编写 Dockerfile
-20. 测试 Docker 部署
-21. 编写 README 文档
+19. 配置 SPA 集成
+20. 编写 Dockerfile
+21. 测试 Docker 部署
+22. 编写 README 文档

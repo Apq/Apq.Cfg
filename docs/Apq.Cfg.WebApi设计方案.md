@@ -8,6 +8,150 @@ Apq.Cfg.WebApi 是一个 ASP.NET Core 扩展项目，用于通过 RESTful API �
 - 提供**合并后**的配置（merged）- 所有配置源合并后的最终结果
 - 提供**合并前**的配置（sources）- 各个配置源的原始内容
 
+## 前置依赖：Apq.Cfg 核心项目修改
+
+本项目依赖 Apq.Cfg 核心项目的以下修改：
+
+### 1. ICfgSource 接口添加 Name 属性
+
+```csharp
+public interface ICfgSource
+{
+    /// <summary>
+    /// 配置源名称（同一层级内唯一）
+    /// </summary>
+    string Name { get; }
+
+    // ... 其他现有属性
+}
+```
+
+### 2. CfgBuilder.AddSource 方法添加可选 name 参数
+
+```csharp
+public CfgBuilder AddSource(ICfgSource source, int level = 0, string? name = null)
+{
+    // 如果未指定名称，自动生成
+    var sourceName = name ?? GenerateSourceName(source);
+
+    // 验证同一层级内名称唯一
+    if (_sources.Any(s => s.Level == level && s.Name == sourceName))
+    {
+        throw new InvalidOperationException(
+            $"配置源名称 '{sourceName}' 在层级 {level} 中已存在");
+    }
+
+    source.Name = sourceName;
+    source.Level = level;
+    _sources.Add(source);
+    return this;
+}
+
+private string GenerateSourceName(ICfgSource source)
+{
+    return source switch
+    {
+        // 文件配置源：使用文件名（带后缀）
+        IFileCfgSource fileSource => Path.GetFileName(fileSource.FilePath),
+
+        // 环境变量
+        EnvVarsCfgSource => "env",
+
+        // 命令行参数
+        CommandLineCfgSource => "commandline",
+
+        // 内存配置源
+        MemoryCfgSource => "memory",
+
+        // 远程配置源：使用类型名小写（去掉 CfgSource 后缀）
+        _ when source.GetType().Name.EndsWith("CfgSource") =>
+            source.GetType().Name[..^9].ToLowerInvariant(),
+
+        // 其他：使用类型名小写
+        _ => source.GetType().Name.ToLowerInvariant()
+    };
+}
+```
+
+### 3. 名称自动生成规则
+
+| 配置源类型 | 自动生成名称 | 示例 |
+|-----------|-------------|------|
+| 文件配置源 | 文件名（带后缀） | `config.json`、`config.local.json` |
+| 环境变量 | 固定 `env` | `env` |
+| 命令行参数 | 固定 `commandline` | `commandline` |
+| 内存配置源 | 固定 `memory` | `memory` |
+| 远程配置源 | 类型名小写（去掉 CfgSource 后缀） | `redis`、`consul`、`nacos` |
+
+### 4. 名称唯一性验证
+
+- 同一层级（Level）内，配置源名称必须唯一
+- 添加配置源时如果名称重复，抛出 `InvalidOperationException`
+- 不同层级可以有相同名称的配置源
+
+### 5. ConfigSourceInfo 类
+
+```csharp
+namespace Apq.Cfg;
+
+/// <summary>
+/// 配置源信息（用于查询和展示）
+/// </summary>
+public sealed class ConfigSourceInfo
+{
+    /// <summary>
+    /// 配置源层级（优先级，数字越大优先级越高）
+    /// </summary>
+    public int Level { get; set; }
+
+    /// <summary>
+    /// 配置源名称（同一层级内唯一）
+    /// </summary>
+    public string Name { get; set; } = "";
+
+    /// <summary>
+    /// 配置源类型名称
+    /// </summary>
+    public string Type { get; set; } = "";
+
+    /// <summary>
+    /// 是否可写
+    /// </summary>
+    public bool IsWriteable { get; set; }
+
+    /// <summary>
+    /// 是否为主写入源
+    /// </summary>
+    public bool IsPrimaryWriter { get; set; }
+
+    /// <summary>
+    /// 配置项数量
+    /// </summary>
+    public int KeyCount { get; set; }
+}
+```
+
+### 6. ICfgRoot 添加获取配置源信息的方法
+
+```csharp
+public interface ICfgRoot
+{
+    // ... 现有成员
+
+    /// <summary>
+    /// 获取所有配置源信息
+    /// </summary>
+    IReadOnlyList<ConfigSourceInfo> GetSourceInfos();
+
+    /// <summary>
+    /// 根据层级和名称获取配置源
+    /// </summary>
+    ICfgSource? GetSource(int level, string name);
+}
+```
+
+---
+
 ## 功能特性
 
 - 提供 RESTful API 读写配置
@@ -39,7 +183,6 @@ Apq.Cfg.WebApi/
 ├── Models/
 │   ├── ConfigValueResponse.cs          # 配置值响应
 │   ├── ConfigTreeNode.cs               # 配置树节点
-│   ├── ConfigSourceInfo.cs             # 配置源信息
 │   ├── BatchUpdateRequest.cs           # 批量更新请求
 │   └── ApiResponse.cs                  # 统一响应格式
 ├── Services/
@@ -49,6 +192,8 @@ Apq.Cfg.WebApi/
 │   ├── ServiceCollectionExtensions.cs  # DI 扩展
 │   └── ApplicationBuilderExtensions.cs # 中间件扩展
 ```
+
+> **注意**：`ConfigSourceInfo` 类位于 Apq.Cfg 核心项目中。
 
 ## 项目文件
 
@@ -245,19 +390,21 @@ public sealed class JwtOptions
 | 方法 | 路由 | 说明 | 权限 |
 |------|------|------|------|
 | GET | `{prefix}/sources` | 获取所有配置源列表 | AllowRead |
-| GET | `{prefix}/sources/{level}` | 获取指定层级的配置源内容 | AllowRead |
-| GET | `{prefix}/sources/{level}/tree` | 获取指定层级的配置树结构 | AllowRead |
-| GET | `{prefix}/sources/{level}/keys/{*key}` | 获取指定层级的单个配置值 | AllowRead |
+| GET | `{prefix}/sources/{level}/{name}` | 获取指定配置源内容 | AllowRead |
+| GET | `{prefix}/sources/{level}/{name}/tree` | 获取指定配置源的配置树结构 | AllowRead |
+| GET | `{prefix}/sources/{level}/{name}/keys/{*key}` | 获取指定配置源的单个配置值 | AllowRead |
+
+> **说明**：`{level}` 是配置源层级，`{name}` 是配置源名称，两者组合作为唯一标识符。同一层级内名称必须唯一。
 
 ### 写入操作
 
 | 方法 | 路由 | 说明 | 权限 |
 |------|------|------|------|
 | PUT | `{prefix}/keys/{*key}` | 设置配置值（写入主写入源） | AllowWrite |
-| PUT | `{prefix}/sources/{level}/keys/{*key}` | 设置指定层级的配置值 | AllowWrite |
+| PUT | `{prefix}/sources/{level}/{name}/keys/{*key}` | 设置指定配置源的配置值 | AllowWrite |
 | PUT | `{prefix}/batch` | 批量设置配置 | AllowWrite |
 | DELETE | `{prefix}/keys/{*key}` | 删除配置 | AllowDelete |
-| DELETE | `{prefix}/sources/{level}/keys/{*key}` | 删除指定层级的配置 | AllowDelete |
+| DELETE | `{prefix}/sources/{level}/{name}/keys/{*key}` | 删除指定配置源的配置 | AllowDelete |
 
 ### 管理操作
 
@@ -266,7 +413,7 @@ public sealed class JwtOptions
 | POST | `{prefix}/save` | 保存配置到持久化存储 | AllowWrite |
 | POST | `{prefix}/reload` | 重新加载配置 | AllowWrite |
 | GET | `{prefix}/export/{format}` | 导出合并后配置（json/env/keyvalue） | AllowRead |
-| GET | `{prefix}/sources/{level}/export/{format}` | 导出指定层级配置 | AllowRead |
+| GET | `{prefix}/sources/{level}/{name}/export/{format}` | 导出指定配置源 | AllowRead |
 
 ---
 
@@ -328,47 +475,7 @@ public sealed class ConfigTreeNode
 }
 ```
 
-### ConfigSourceInfo
-
-```csharp
-namespace Apq.Cfg.WebApi.Models;
-
-/// <summary>
-/// 配置源信息
-/// </summary>
-public sealed class ConfigSourceInfo
-{
-    /// <summary>
-    /// 配置源层级
-    /// </summary>
-    public int Level { get; set; }
-
-    /// <summary>
-    /// 配置源名称
-    /// </summary>
-    public string Name { get; set; } = "";
-
-    /// <summary>
-    /// 配置源类型
-    /// </summary>
-    public string Type { get; set; } = "";
-
-    /// <summary>
-    /// 是否可写
-    /// </summary>
-    public bool IsWriteable { get; set; }
-
-    /// <summary>
-    /// 是否为主写入源
-    /// </summary>
-    public bool IsPrimaryWriter { get; set; }
-
-    /// <summary>
-    /// 配置项数量
-    /// </summary>
-    public int KeyCount { get; set; }
-}
-```
+> **注意**：`ConfigSourceInfo` 类已移至 Apq.Cfg 核心项目，WebApi 直接使用 `Apq.Cfg.ConfigSourceInfo`。
 
 ### BatchUpdateRequest
 
@@ -381,7 +488,222 @@ namespace Apq.Cfg.WebApi.Models;
 public sealed class BatchUpdateRequest
 {
     public Dictionary<string, string?> Values { get; set; } = new();
+
+    /// <summary>
+    /// 目标配置源的层级（可选，不指定则写入主写入源）
+    /// </summary>
     public int? TargetLevel { get; set; }
+
+    /// <summary>
+    /// 目标配置源的名称（可选，不指定则写入主写入源）
+    /// </summary>
+    public string? TargetName { get; set; }
+}
+```
+
+---
+
+## 服务层
+
+### IConfigApiService
+
+```csharp
+namespace Apq.Cfg.WebApi.Services;
+
+/// <summary>
+/// 配置 API 服务接口
+/// </summary>
+public interface IConfigApiService
+{
+    // ========== 合并后配置（Merged）==========
+
+    /// <summary>
+    /// 获取合并后的所有配置（扁平化键值对）
+    /// </summary>
+    Dictionary<string, string?> GetMergedConfig();
+
+    /// <summary>
+    /// 获取合并后的配置树结构
+    /// </summary>
+    ConfigTreeNode GetMergedTree();
+
+    /// <summary>
+    /// 获取合并后的单个配置值
+    /// </summary>
+    ConfigValueResponse GetMergedValue(string key);
+
+    /// <summary>
+    /// 获取合并后的配置节
+    /// </summary>
+    Dictionary<string, string?> GetMergedSection(string section);
+
+    // ========== 合并前配置（Sources）==========
+
+    /// <summary>
+    /// 获取所有配置源列表
+    /// </summary>
+    List<ConfigSourceInfo> GetSources();
+
+    /// <summary>
+    /// 获取指定配置源的内容
+    /// </summary>
+    Dictionary<string, string?>? GetSourceConfig(int level, string name);
+
+    /// <summary>
+    /// 获取指定配置源的配置树
+    /// </summary>
+    ConfigTreeNode? GetSourceTree(int level, string name);
+
+    /// <summary>
+    /// 获取指定配置源的单个配置值
+    /// </summary>
+    ConfigValueResponse? GetSourceValue(int level, string name, string key);
+
+    // ========== 写入操作 ==========
+
+    /// <summary>
+    /// 设置配置值（写入主写入源）
+    /// </summary>
+    bool SetValue(string key, string? value);
+
+    /// <summary>
+    /// 设置指定配置源的配置值
+    /// </summary>
+    bool SetSourceValue(int level, string name, string key, string? value);
+
+    /// <summary>
+    /// 批量设置配置
+    /// </summary>
+    bool BatchUpdate(BatchUpdateRequest request);
+
+    /// <summary>
+    /// 删除配置
+    /// </summary>
+    bool DeleteKey(string key);
+
+    /// <summary>
+    /// 删除指定配置源的配置
+    /// </summary>
+    bool DeleteSourceKey(int level, string name, string key);
+
+    // ========== 管理操作 ==========
+
+    /// <summary>
+    /// 保存配置到持久化存储
+    /// </summary>
+    Task<bool> SaveAsync();
+
+    /// <summary>
+    /// 重新加载配置
+    /// </summary>
+    Task<bool> ReloadAsync();
+
+    /// <summary>
+    /// 导出配置
+    /// </summary>
+    string Export(string format, int? level = null, string? name = null);
+}
+```
+
+### ConfigApiService
+
+```csharp
+namespace Apq.Cfg.WebApi.Services;
+
+/// <summary>
+/// 配置 API 服务实现
+/// </summary>
+public sealed class ConfigApiService : IConfigApiService
+{
+    private readonly ICfgRoot _cfgRoot;
+    private readonly IOptions<WebApiOptions> _options;
+
+    public ConfigApiService(ICfgRoot cfgRoot, IOptions<WebApiOptions> options)
+    {
+        _cfgRoot = cfgRoot;
+        _options = options;
+    }
+
+    // ========== 合并后配置（Merged）==========
+
+    public Dictionary<string, string?> GetMergedConfig()
+    {
+        var result = new Dictionary<string, string?>();
+        foreach (var (key, value) in _cfgRoot.GetAllValues())
+        {
+            result[key] = MaskIfSensitive(key, value);
+        }
+        return result;
+    }
+
+    public ConfigTreeNode GetMergedTree()
+    {
+        return BuildTree(_cfgRoot.GetAllValues());
+    }
+
+    public ConfigValueResponse GetMergedValue(string key)
+    {
+        var value = _cfgRoot[key];
+        return new ConfigValueResponse
+        {
+            Key = key,
+            Value = MaskIfSensitive(key, value),
+            Exists = value != null,
+            IsMasked = IsSensitiveKey(key) && value != null
+        };
+    }
+
+    // ========== 合并前配置（Sources）==========
+
+    public List<ConfigSourceInfo> GetSources()
+    {
+        // 直接使用核心项目提供的方法
+        return _cfgRoot.GetSourceInfos().ToList();
+    }
+
+    public Dictionary<string, string?>? GetSourceConfig(int level, string name)
+    {
+        var source = _cfgRoot.GetSource(level, name);
+        if (source == null) return null;
+
+        var result = new Dictionary<string, string?>();
+        foreach (var (key, value) in source.GetAllValues())
+        {
+            result[key] = MaskIfSensitive(key, value);
+        }
+        return result;
+    }
+
+    // ... 其他方法实现
+
+    // ========== 辅助方法 ==========
+
+    private bool IsSensitiveKey(string key)
+    {
+        if (!_options.Value.MaskSensitiveValues) return false;
+
+        return _options.Value.SensitiveKeyPatterns.Any(pattern =>
+            MatchWildcard(key, pattern));
+    }
+
+    private string? MaskIfSensitive(string key, string? value)
+    {
+        if (value == null || !IsSensitiveKey(key)) return value;
+        return "***";
+    }
+
+    private static bool MatchWildcard(string text, string pattern)
+    {
+        // 简单的通配符匹配实现
+        var regex = "^" + Regex.Escape(pattern).Replace("\\*", ".*") + "$";
+        return Regex.IsMatch(text, regex, RegexOptions.IgnoreCase);
+    }
+
+    private ConfigTreeNode BuildTree(IEnumerable<KeyValuePair<string, string?>> values)
+    {
+        // 构建配置树的实现
+        // ...
+    }
 }
 ```
 
@@ -691,7 +1013,7 @@ GET /api/apqcfg/sources HTTP/1.1
     },
     {
       "level": 2,
-      "name": "EnvironmentVariables",
+      "name": "env",
       "type": "EnvCfgSource",
       "isWriteable": false,
       "isPrimaryWriter": false,
@@ -701,10 +1023,10 @@ GET /api/apqcfg/sources HTTP/1.1
 }
 ```
 
-### 获取指定层级的配置
+### 获取指定配置源内容
 
 ```http
-GET /api/apqcfg/sources/1 HTTP/1.1
+GET /api/apqcfg/sources/1/config.local.json HTTP/1.1
 ```
 
 响应：
@@ -719,10 +1041,10 @@ GET /api/apqcfg/sources/1 HTTP/1.1
 }
 ```
 
-### 获取指定层级的配置树
+### 获取指定配置源的配置树
 
 ```http
-GET /api/apqcfg/sources/1/tree HTTP/1.1
+GET /api/apqcfg/sources/1/config.local.json/tree HTTP/1.1
 ```
 
 响应：
@@ -759,10 +1081,10 @@ X-Api-Key: my-secret-api-key
 "2.0.0"
 ```
 
-### 设置指定层级的配置值
+### 设置指定配置源的配置值
 
 ```http
-PUT /api/apqcfg/sources/1/keys/App:Version HTTP/1.1
+PUT /api/apqcfg/sources/1/config.local.json/keys/App:Version HTTP/1.1
 Content-Type: application/json
 X-Api-Key: my-secret-api-key
 
@@ -781,7 +1103,8 @@ X-Api-Key: my-secret-api-key
     "App:Name": "NewApp",
     "App:Version": "2.0.0"
   },
-  "targetLevel": 1
+  "targetLevel": 1,
+  "targetName": "config.local.json"
 }
 ```
 
@@ -806,10 +1129,10 @@ DATABASE__HOST=localhost
 DATABASE__PORT=5432
 ```
 
-### 导出指定层级配置
+### 导出指定配置源
 
 ```http
-GET /api/apqcfg/sources/1/export/json HTTP/1.1
+GET /api/apqcfg/sources/1/config.local.json/export/json HTTP/1.1
 ```
 
 响应：
