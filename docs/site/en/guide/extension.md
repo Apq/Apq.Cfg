@@ -1,4 +1,4 @@
-# Extension Development
+﻿# Extension Development
 
 Learn how to create custom configuration sources for Apq.Cfg.
 
@@ -78,7 +78,7 @@ public class MyWritableSource : ICfgSource, IWritableCfgSource
 
     private readonly Dictionary<string, string?> _pending = new();
 
-    public void Set(string key, string? value)
+    public void SetValue(string key, string? value)
     {
         _pending[key] = value;
     }

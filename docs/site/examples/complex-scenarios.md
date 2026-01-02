@@ -320,7 +320,7 @@ public class TenantConfigurationProvider
     private async Task<ICfgRoot> LoadTenantConfigurationAsync(string tenantId)
     {
         // 从数据库或其他存储加载租户配置
-        var connectionString = _baseCfg.Get("ConnectionStrings:TenantDb");
+        var connectionString = _baseCfg["ConnectionStrings:TenantDb"];
         
         // 这里可以实现自定义的租户配置源
         var builder = new CfgBuilder()
@@ -520,40 +520,43 @@ public class HighAvailabilityConfigurationProvider
         _healthCheckTimer = new Timer(CheckSourceHealth, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));
     }
 
-    public string? Get(string key)
+    public string? this[string key]
     {
-        var lastException = new List<Exception>();
-
-        // 尝试从每个配置源获取值
-        for (int i = 0; i < _configSources.Count; i++)
+        get
         {
-            try
-            {
-                var value = _configSources[i].Get(key);
-                if (value != null)
-                {
-                    // 更新主配置源索引（用于下次优先使用）
-                    if (i != _primaryIndex)
-                    {
-                        _logger.LogInformation("切换主配置源从 {OldIndex} 到 {NewIndex}", 
-                                         _primaryIndex, i);
-                        _primaryIndex = i;
-                    }
+            var lastException = new List<Exception>();
 
-                    return value;
+            // 尝试从每个配置源获取值
+            for (int i = 0; i < _configSources.Count; i++)
+            {
+                try
+                {
+                    var value = _configSources[i][key];
+                    if (value != null)
+                    {
+                        // 更新主配置源索引（用于下次优先使用）
+                        if (i != _primaryIndex)
+                        {
+                            _logger.LogInformation("切换主配置源从 {OldIndex} 到 {NewIndex}",
+                                             _primaryIndex, i);
+                            _primaryIndex = i;
+                        }
+
+                        return value;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lastException.Add(ex);
+                    _logger.LogWarning(ex, "从配置源 {Index} 获取配置 {Key} 失败", i, key);
                 }
             }
-            catch (Exception ex)
-            {
-                lastException.Add(ex);
-                _logger.LogWarning(ex, "从配置源 {Index} 获取配置 {Key} 失败", i, key);
-            }
-        }
 
-        // 所有配置源都失败
-        _logger.LogError("无法从任何配置源获取配置 {Key}，最后错误: {Error}", 
-                       key, string.Join("; ", lastException.Select(e => e.Message)));
-        return null;
+            // 所有配置源都失败
+            _logger.LogError("无法从任何配置源获取配置 {Key}，最后错误: {Error}",
+                           key, string.Join("; ", lastException.Select(e => e.Message)));
+            return null;
+        }
     }
 
     private async void CheckSourceHealth(object? state)
@@ -647,26 +650,28 @@ public class SecureConfigurationManager
         _logger = logger;
     }
 
-    public string Get(string key)
+    public string? this[string key]
     {
-        var value = _cfg.GetValue<string?>(key);
-
-        if (value == null)
-            return null;
-
-        // 检查是否为敏感键
-        if (IsSensitiveKey(key))
+        get
         {
-            try
+            var value = _cfg[key];
+
+            if (value == null)
+                return null;
+
+            // 检查是否为敏感键
+            if (IsSensitiveKey(key))
             {
-                // 尝试解密
-                var decryptedValue = _encryptionService.Decrypt(value);
-                _logger.LogDebug("已解密敏感配置 {Key}", key);
-                return decryptedValue;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "解密敏感配置 {Key} 失败", key);
+                try
+                {
+                    // 尝试解密
+                    var decryptedValue = _encryptionService.Decrypt(value);
+                    _logger.LogDebug("已解密敏感配置 {Key}", key);
+                    return decryptedValue;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "解密敏感配置 {Key} 失败", key);
                 throw new SecurityException($"无法解密配置: {key}", ex);
             }
         }
@@ -687,12 +692,12 @@ public class SecureConfigurationManager
         {
             // 加密敏感值
             var encryptedValue = _encryptionService.Encrypt(value);
-            await _cfg.Set(key, encryptedValue);
+            await _cfg.SetValue(key, encryptedValue);
             _logger.LogDebug("已加密并保存敏感配置 {Key}", key);
         }
         else
         {
-            await _cfg.Set(key, value);
+            await _cfg.SetValue(key, value);
         }
     }
 
@@ -814,7 +819,7 @@ public class ComplianceConfigurationManager
             // 只设置当前不存在的配置项
             if (!_cfg.Exists(kvp.Key))
             {
-                await _cfg.Set(kvp.Key, kvp.Value);
+                await _cfg.SetValue(kvp.Key, kvp.Value);
                 _logger.LogDebug("已应用合规性默认配置: {Key} = {Value}", kvp.Key, kvp.Value);
             }
         }

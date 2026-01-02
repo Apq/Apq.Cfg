@@ -8,7 +8,7 @@ This document describes the architecture design and core components of Apq.Cfg.
 ┌─────────────────────────────────────────────────────────────────┐
 │                        Application Layer                         │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │ cfg.Get()   │  │ cfg.Set()   │  │ cfg.ConfigChanges       │  │
+│  │ cfg["key"]  │  │ cfg.SetValue()   │  │ cfg.ConfigChanges       │  │
 │  │ cfg.GetSection() │ cfg.SaveAsync() │ (Rx Observable)    │  │
 │  └──────┬──────┘  └──────┬──────┘  └───────────┬─────────────┘  │
 └─────────┼────────────────┼─────────────────────┼────────────────┘
@@ -49,20 +49,22 @@ The main entry point for the configuration system.
 ```csharp
 public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
+    // Indexer
+    string? this[string key] { get; set; }
+
     // Read operations
-    string? Get(string key);
     T? GetValue<T>(string key);
     bool Exists(string key);
     ICfgSection GetSection(string key);
 
     // Write operations
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken ct = default);
 
     // Batch operations
     IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys);
-    void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
+    void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
 
     // Events
     IObservable<ConfigChangeEvent> ConfigChanges { get; }
@@ -84,7 +86,7 @@ public interface ICfgSource
 
 public interface IWritableCfgSource : ICfgSource
 {
-    void Set(string key, string? value);
+    void SetValue(string key, string? value);
     void Remove(string key);
     Task SaveAsync(CancellationToken ct = default);
 }

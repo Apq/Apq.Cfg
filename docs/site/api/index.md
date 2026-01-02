@@ -39,7 +39,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // 字符串值
-string? value = cfg.Get("App:Name");
+string? value = cfg["App:Name"];
 
 // 类型化值
 int port = cfg.GetValue<int>("App:Port");
@@ -55,7 +55,7 @@ ICfgSection section = cfg.GetSection("Database");
 
 ```csharp
 // 设置值
-cfg.Set("App:Name", "NewName");
+cfg.SetValue("App:Name", "NewName");
 
 // 删除值
 cfg.Remove("App:TempKey");
@@ -71,7 +71,7 @@ await cfg.SaveAsync();
 var values = cfg.GetMany(new[] { "Key1", "Key2", "Key3" });
 
 // 批量写入
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Key1"] = "Value1",
     ["Key2"] = "Value2"

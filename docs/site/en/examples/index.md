@@ -42,7 +42,7 @@ var cfg = new CfgBuilder()
     .AddJson("config.json")  // Uses default level 0
     .Build();
 
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 Console.WriteLine($"App Name: {appName}");
 ```
 
@@ -68,7 +68,7 @@ public class DatabaseConfig
 var dbSection = cfg.GetSection("Database");
 var dbConfig = new DatabaseConfig
 {
-    Host = dbSection.Get("Host") ?? "localhost",
+    Host = dbSection["Host"] ?? "localhost",
     Port = dbSection.GetValue<int>("Port")
 };
 Console.WriteLine($"Database: {dbConfig.Host}:{dbConfig.Port}");
@@ -116,7 +116,7 @@ var cfg = new CfgBuilder()
 
 // Encrypted value in config: { "Database": { "Password": "{ENC}base64..." } }
 // Auto-decrypt on read
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // Use masked value for logging
 Console.WriteLine($"Password: {cfg.GetMasked("Database:Password")}");
@@ -131,8 +131,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Modify configuration
-cfg.Set("App:Name", "NewName");
-cfg.Set("Database:Port", "5433");
+cfg.SetValue("App:Name", "NewName");
+cfg.SetValue("Database:Port", "5433");
 
 // Save to file
 await cfg.SaveAsync();

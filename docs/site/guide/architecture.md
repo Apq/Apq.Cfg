@@ -8,7 +8,7 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                        应用程序层                                │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │ cfg.Get()   │  │ cfg.Set()   │  │ cfg.ConfigChanges       │  │
+│  │ cfg["key"]  │  │ cfg.SetValue()   │  │ cfg.ConfigChanges       │  │
 │  │ cfg.GetSection() │ cfg.SaveAsync() │ (Rx Observable)    │  │
 │  └──────┬──────┘  └──────┬──────┘  └───────────┬─────────────┘  │
 └─────────┼────────────────┼─────────────────────┼────────────────┘
@@ -49,22 +49,24 @@
 ```csharp
 public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
+    // 索引器
+    string? this[string key] { get; set; }
+
     // 读取操作
-    string? Get(string key);
     T? GetValue<T>(string key);
     bool Exists(string key);
     ICfgSection GetSection(string key);
-    
+
     // 写入操作
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken ct = default);
-    
+
     // 批量操作
     IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys);
     void GetMany(IEnumerable<string> keys, Action<string, string?> onValue);
-    void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
-    
+    void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
+
     // 转换与事件
     IConfigurationRoot ToMicrosoftConfiguration();
     IObservable<ConfigChangeEvent> ConfigChanges { get; }
@@ -79,9 +81,9 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 public interface ICfgSection
 {
     string Path { get; }
-    string? Get(string key);
+    string? this[string key] { get; set; }
     T? GetValue<T>(string key);
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
     ICfgSection GetSection(string key);
     IEnumerable<string> GetChildKeys();
 }
@@ -102,7 +104,7 @@ public interface ICfgSource
 
 public interface IWritableCfgSource : ICfgSource
 {
-    void Set(string key, string? value);
+    void SetValue(string key, string? value);
     void Remove(string key);
     Task SaveAsync(CancellationToken ct = default);
 }
@@ -170,24 +172,28 @@ Level 20: 环境变量                   (最高优先级)
 ### 合并算法
 
 ```csharp
-public string? Get(string key)
+// 索引器实现
+public string? this[string key]
 {
-    // 1. 先检查待保存队列（从高层级到低层级）
-    foreach (var level in _levelsDescending)
+    get
     {
-        if (_levelData[level].Pending.TryGetValue(key, out var value))
-            return value;
+        // 1. 先检查待保存队列（从高层级到低层级）
+        foreach (var level in _levelsDescending)
+        {
+            if (_levelData[level].Pending.TryGetValue(key, out var value))
+                return value;
+        }
+
+        // 2. 从合并后的配置中获取
+        return _merged[key];
     }
-    
-    // 2. 从合并后的配置中获取
-    return _merged[key];
 }
 ```
 
 ### 写入策略
 
 ```csharp
-public void Set(string key, string? value, int? targetLevel = null)
+public void SetValue(string key, string? value, int? targetLevel = null)
 {
     // 1. 确定目标层级
     var level = targetLevel ?? GetDefaultWriteLevel();
@@ -386,7 +392,7 @@ public partial class AppConfig
     {
         return new AppConfig
         {
-            Name = section.Get("Name"),
+            Name = section["Name"],
             Port = section.GetValue<int>("Port")
         };
     }
@@ -437,7 +443,7 @@ public class CustomCfgSource : ICfgSource, IWritableCfgSource
     
     public IConfigurationSource BuildSource() => new CustomConfigurationSource(this);
     
-    public void Set(string key, string? value) { /* ... */ }
+    public void SetValue(string key, string? value) { /* ... */ }
     public void Remove(string key) { /* ... */ }
     public Task SaveAsync(CancellationToken ct) { /* ... */ }
 }

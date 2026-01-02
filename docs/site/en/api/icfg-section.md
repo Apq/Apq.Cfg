@@ -14,12 +14,19 @@ string Path { get; }
 
 ## Methods
 
-### Get
+### Indexer
 
-Get a value relative to this section.
+Get or set a value relative to this section.
 
 ```csharp
-string? Get(string key)
+string? this[string key] { get; set; }
+```
+
+### GetValue
+
+Get a typed value relative to this section.
+
+```csharp
 T? GetValue<T>(string key)
 ```
 
@@ -28,7 +35,7 @@ T? GetValue<T>(string key)
 Set a value relative to this section.
 
 ```csharp
-void Set(string key, string? value, int? targetLevel = null)
+void SetValue(string key, string? value, int? targetLevel = null)
 ```
 
 ### GetSection
@@ -53,7 +60,7 @@ IEnumerable<string> GetChildKeys()
 var dbSection = cfg.GetSection("Database");
 
 // Read values
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var port = dbSection.GetValue<int>("Port");
 
 // Nested section
@@ -63,7 +70,7 @@ var timeout = connSection.GetValue<int>("Timeout");
 // Enumerate children
 foreach (var key in dbSection.GetChildKeys())
 {
-    Console.WriteLine($"{key}: {dbSection.Get(key)}");
+    Console.WriteLine($"{key}: {dbSection[key]}");
 }
 ```
 

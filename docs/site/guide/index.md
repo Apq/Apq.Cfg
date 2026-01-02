@@ -66,7 +66,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取时自动解密
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // 日志输出时脱敏
 logger.LogInfo("密码: {0}", cfg.GetMasked("Database:Password"));
@@ -110,7 +110,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var value = cfg.Get("Section:Key");
+var value = cfg["Section:Key"];
 var typedValue = cfg.GetValue<int>("Section:IntKey");
 ```
 

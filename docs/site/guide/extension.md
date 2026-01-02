@@ -43,7 +43,7 @@ public interface IWritableCfgSource : ICfgSource
     /// <summary>
     /// 设置配置值
     /// </summary>
-    void Set(string key, string? value);
+    void SetValue(string key, string? value);
     
     /// <summary>
     /// 移除配置键
@@ -197,7 +197,7 @@ public class HttpApiCfgSource : ICfgSource, IWritableCfgSource, IDisposable
         return changes;
     }
     
-    public void Set(string key, string? value)
+    public void SetValue(string key, string? value)
     {
         _pendingChanges[key] = value;
         _data[key] = value;
@@ -334,10 +334,10 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var value = cfg.Get("SomeKey");
+var value = cfg["SomeKey"];
 
 // 写入配置
-cfg.Set("NewKey", "NewValue");
+cfg.SetValue("NewKey", "NewValue");
 await cfg.SaveAsync();
 ```
 
@@ -418,7 +418,7 @@ public abstract class RemoteCfgSourceBase : ICfgSource, IWritableCfgSource, IDis
     protected abstract Task SaveDataAsync(Dictionary<string, string?> changes);
     protected abstract void SetupWatcher();
     
-    public void Set(string key, string? value)
+    public void SetValue(string key, string? value)
     {
         PendingChanges[key] = value;
         Data[key] = value;
@@ -641,8 +641,8 @@ public class HttpApiCfgSourceTests
             .Build();
         
         // Act
-        var value1 = cfg.Get("Key1");
-        var value2 = cfg.Get("Key2");
+        var value1 = cfg["Key1"];
+        var value2 = cfg["Key2"];
         
         // Assert
         Assert.Equal("Value1", value1);
@@ -666,7 +666,7 @@ public class HttpApiCfgSourceTests
             .Build();
         
         // Act
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
         await cfg.SaveAsync();
         
         // Assert
@@ -709,7 +709,7 @@ public class HttpApiCfgSourceTests
         
         // Assert
         Assert.True(changeDetected);
-        Assert.Equal("UpdatedValue", cfg.Get("Key1"));
+        Assert.Equal("UpdatedValue", cfg["Key1"]);
     }
 }
 ```
@@ -740,7 +740,7 @@ public class HttpApiCfgSourceIntegrationTests : IClassFixture<ConfigServerFixtur
             .Build();
         
         // Act
-        cfg.Set("IntegrationTest:Key", "IntegrationTest:Value");
+        cfg.SetValue("IntegrationTest:Key", "IntegrationTest:Value");
         await cfg.SaveAsync();
         
         // 重新加载验证
@@ -754,7 +754,7 @@ public class HttpApiCfgSourceIntegrationTests : IClassFixture<ConfigServerFixtur
             .Build();
         
         // Assert
-        Assert.Equal("IntegrationTest:Value", newCfg.Get("IntegrationTest:Key"));
+        Assert.Equal("IntegrationTest:Value", newCfg["IntegrationTest:Key"]);
     }
 }
 ```

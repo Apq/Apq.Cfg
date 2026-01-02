@@ -140,7 +140,7 @@ cfg["Database:Host"] = "192.168.1.100";
 await cfg.SaveAsync();
 
 // 批量写入
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Database:Host"] = "192.168.1.100",
     ["Database:Port"] = "5433"

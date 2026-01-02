@@ -75,9 +75,9 @@ var host = cfg["Database:Host"];
 var port = cfg.GetValue<int>("Database:Port");
 
 // 使用配置节简化嵌套访问
-var db = cfg.GetSection("Database");
-var name = db["Name"];
-var timeout = db.GetValue<int>("Timeout");
+var dbSection = cfg.GetSection("Database");
+var name = dbSection["Name"];
+var timeout = dbSection.GetValue<int>("Timeout");
 
 // 修改配置
 cfg["App:LastRun"] = DateTime.Now.ToString();
@@ -176,7 +176,7 @@ cfg.GetMany<int>(new[] { "Port1", "Port2" }, (key, value) =>
 });
 
 // 批量设置
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Key1"] = "Value1",
     ["Key2"] = "Value2"
@@ -248,7 +248,7 @@ var cfg = new CfgBuilder()
 var password = cfg.Get("Database:Password");
 
 // 写入时自动加密（匹配敏感键模式的值）
-cfg.Set("Database:Password", "newPassword");
+cfg.SetValue("Database:Password", "newPassword");
 await cfg.SaveAsync();
 // 文件中保存的是: "Database:Password": "{ENC}base64ciphertext..."
 

@@ -1,4 +1,4 @@
-# 配置加密脱敏
+﻿# 配置加密脱敏
 
 Apq.Cfg 提供了完整的配置加密和脱敏功能，用于保护敏感配置信息的安全。
 
@@ -36,7 +36,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取时自动解密
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 ```
 
 ### 基本脱敏
@@ -282,7 +282,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取时自动解密
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // 日志输出时使用脱敏值
 logger.LogInformation("数据库密码: {Password}", cfg.GetMasked("Database:Password"));

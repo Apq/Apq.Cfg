@@ -66,7 +66,7 @@ var host = cfg["Database:Host"];
 
 ```csharp
 // JSON: { "Database": { "Host": "localhost" } }
-var host = cfg.Get("Database:Host");
+var host = cfg["Database:Host"];
 ```
 
 ### 泛型 Get 方法
@@ -163,7 +163,7 @@ if (cfg.Exists("OptionalFeature:Enabled"))
 }
 
 // 检查值是否为空
-var value = cfg.Get("SomeKey");
+var value = cfg["SomeKey"];
 if (!string.IsNullOrEmpty(value))
 {
     // 值存在且不为空
@@ -213,7 +213,7 @@ cfg.GetMany(new[] { "Database:Host", "Database:Port" }, (key, value) =>
 ### 批量设置
 
 ```csharp
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Database:Host"] = "newhost",
     ["Database:Port"] = "5433"
@@ -234,7 +234,7 @@ await cfg.SaveAsync();
 ### 使用 Set 方法
 
 ```csharp
-cfg.Set("Database:Timeout", "60");
+cfg.SetValue("Database:Timeout", "60");
 await cfg.SaveAsync();
 ```
 
@@ -249,7 +249,7 @@ await cfg.SaveAsync();
 
 ```csharp
 // 写入到特定层级
-cfg.Set("Database:Timeout", "60", targetLevel: 1);
+cfg.SetValue("Database:Timeout", "60", targetLevel: 1);
 await cfg.SaveAsync(targetLevel: 1);
 ```
 

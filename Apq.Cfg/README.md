@@ -118,7 +118,7 @@ cfg["Key"] = "Value";
 await cfg.SaveAsync();
 
 // 写入到指定层级
-cfg.Set("Key", "Value", targetLevel: 1);
+cfg.SetValue("Key", "Value", targetLevel: 1);
 await cfg.SaveAsync(targetLevel: 1);
 
 // 删除配置
@@ -411,8 +411,7 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     string? this[string key] { get; set; }
 
     // 读取
-    string? Get(string key);
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     bool Exists(string key);
 
     // 配置节
@@ -420,7 +419,7 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     IEnumerable<string> GetChildKeys();
 
     // 写入
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
 
@@ -444,10 +443,9 @@ public interface ICfgSection
     string? this[string key] { get; set; }
 
     string Path { get; }
-    string? Get(string key);
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     bool Exists(string key);
-    void Set(string key, string? value);
+    void SetValue(string key, string? value);
     void Remove(string key);
     ICfgSection GetSection(string path);
     IEnumerable<string> GetChildKeys();

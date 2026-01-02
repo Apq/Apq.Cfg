@@ -1,4 +1,4 @@
-# Config Merge
+﻿# Config Merge
 
 Apq.Cfg supports merging multiple configuration sources with level-based priority.
 
@@ -78,7 +78,7 @@ When writing values, you can specify the target level:
 cfg["App:Name"] = "NewName";
 
 // Write to specific level
-cfg.Set("App:Name", "NewName", targetLevel: 0);
+cfg.SetValue("App:Name", "NewName", targetLevel: 0);
 ```
 
 ## Best Practices

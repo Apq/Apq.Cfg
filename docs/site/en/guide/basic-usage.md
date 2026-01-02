@@ -129,7 +129,7 @@ var cfg = new CfgBuilder()
 cfg["App:Name"] = "NewName";
 
 // Set to specific level
-cfg.Set("App:Port", "9090", targetLevel: 0);
+cfg.SetValue("App:Port", "9090", targetLevel: 0);
 ```
 
 ### Remove Values
@@ -172,7 +172,7 @@ var updates = new Dictionary<string, string?>
     ["App:Debug"] = "false"
 };
 
-cfg.SetMany(updates);
+cfg.SetManyValues(updates);
 await cfg.SaveAsync();
 ```
 

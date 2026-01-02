@@ -1,4 +1,4 @@
-# Apq.Cfg.Apollo
+﻿# Apq.Cfg.Apollo
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Apollo)](https://www.nuget.org/packages/Apq.Cfg.Apollo)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -136,7 +136,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // 以下代码会抛出 NotSupportedException
-cfg.Set("Key", "Value");
+cfg.SetValue("Key", "Value");
 await cfg.SaveAsync();  // 抛出异常
 ```
 

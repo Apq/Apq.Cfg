@@ -1,4 +1,4 @@
-# Apq.Cfg.Nacos
+﻿# Apq.Cfg.Nacos
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Nacos)](https://www.nuget.org/packages/Apq.Cfg.Nacos)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -234,7 +234,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Version", "2.0.0");
+cfg.SetValue("App:Version", "2.0.0");
 await cfg.SaveAsync();  // 发布到 Nacos
 ```
 

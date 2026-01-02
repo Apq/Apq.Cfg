@@ -31,7 +31,7 @@ cfg.ConfigChanges.Subscribe(e =>
 Supports configuration modification and persistence:
 
 ```csharp
-cfg.Set("App:Name", "NewName");
+cfg.SetValue("App:Name", "NewName");
 await cfg.SaveAsync();
 ```
 
@@ -64,7 +64,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Auto-decrypt on read
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // Mask for logging
 logger.LogInfo("Password: {0}", cfg.GetMasked("Database:Password"));
@@ -107,7 +107,7 @@ var cfg = new CfgBuilder()
     .AddJson("config.json", level: 0, writeable: false)
     .Build();
 
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 var port = cfg.GetValue<int>("App:Port");
 ```
 

@@ -1,4 +1,4 @@
-# 环境变量配置源
+﻿# 环境变量配置源
 
 环境变量是一种常用的配置方式，特别适合容器化部署和 CI/CD 环境。
 
@@ -223,7 +223,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // .env 文件中的 DATABASE__HOST=localhost 会：
-// 1. 作为配置键 "DATABASE:HOST" 可通过 cfg.Get("DATABASE:HOST") 访问
+// 1. 作为配置键 "DATABASE:HOST" 可通过 cfg["DATABASE:HOST"] 访问
 // 2. 同时设置系统环境变量 DATABASE__HOST=localhost
 ```
 

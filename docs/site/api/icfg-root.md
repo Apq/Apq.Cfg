@@ -7,8 +7,10 @@
 ```csharp
 public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
+    // 索引器
+    string? this[string key] { get; set; }
+
     // 读取操作
-    string? Get(string key);
     T? GetValue<T>(string key);
     bool Exists(string key);
     ICfgSection GetSection(string key);
@@ -35,13 +37,13 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 
 ## 读取方法
 
-### Get
+### 索引器
 
 ```csharp
-string? Get(string key)
+string? this[string key] { get; set; }
 ```
 
-通过键路径获取配置值。
+通过键路径获取或设置配置值。
 
 **参数：**
 - `key`: 配置键路径，使用冒号 `:` 分隔层级
@@ -50,9 +52,13 @@ string? Get(string key)
 
 **示例：**
 ```csharp
-var host = cfg.Get("Database:Host");
-var port = cfg.Get("Database:Port");
-var nested = cfg.Get("Services:Api:Url");
+// 读取
+var host = cfg["Database:Host"];
+var port = cfg["Database:Port"];
+var nested = cfg["Services:Api:Url"];
+
+// 写入
+cfg["App:Name"] = "NewName";
 ```
 
 ### GetValue&lt;T&gt;
@@ -112,7 +118,7 @@ ICfgSection GetSection(string key)
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var port = dbSection.GetValue<int>("Port");
 ```
 
@@ -175,7 +181,7 @@ cfg.GetMany<int>(new[] { "Database:Port", "Database:Timeout" }, (key, value) =>
 ### Set
 
 ```csharp
-void Set(string key, string? value, int? targetLevel = null)
+void SetValue(string key, string? value, int? targetLevel = null)
 ```
 
 设置配置值。
@@ -187,8 +193,8 @@ void Set(string key, string? value, int? targetLevel = null)
 
 **示例：**
 ```csharp
-cfg.Set("App:Name", "NewName");
-cfg.Set("Database:Port", "5433", targetLevel: 2);
+cfg.SetValue("App:Name", "NewName");
+cfg.SetValue("Database:Port", "5433", targetLevel: 2);
 ```
 
 ### Remove
@@ -212,14 +218,14 @@ cfg.Remove("TempSetting", targetLevel: 1);
 ### SetMany
 
 ```csharp
-void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
+void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
 ```
 
 批量设置多个配置值，减少锁竞争。
 
 **示例：**
 ```csharp
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Database:Host"] = "new-host",
     ["Database:Port"] = "5433"
@@ -240,7 +246,7 @@ Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = de
 
 **示例：**
 ```csharp
-cfg.Set("App:Name", "NewName");
+cfg.SetValue("App:Name", "NewName");
 await cfg.SaveAsync();
 
 // 只保存特定层级
@@ -387,7 +393,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var host = cfg.Get("Database:Host");
+var host = cfg["Database:Host"];
 var port = cfg.GetValue<int>("Database:Port");
 
 // 检查配置是否存在
@@ -404,7 +410,7 @@ foreach (var key in cfg.GetChildKeys())
 
 // 获取配置节
 var dbSection = cfg.GetSection("Database");
-var connString = $"Host={dbSection.Get("Host")};Port={dbSection.Get("Port")}";
+var connString = $"Host={dbSection["Host"]};Port={dbSection["Port"]}";
 
 // 批量读取
 var values = cfg.GetMany(new[] { "App:Name", "App:Version" });
@@ -414,8 +420,8 @@ var timeout = cfg.GetOrDefault("Database:Timeout", 30);
 var connStr = cfg.GetRequired<string>("Database:ConnectionString");
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetValue("App:Name", "NewName");
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Database:Host"] = "new-host",
     ["Database:Port"] = "5433"

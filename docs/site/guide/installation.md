@@ -1,4 +1,4 @@
-# 安装
+﻿# 安装
 
 本页介绍如何安装 Apq.Cfg 及其扩展包。
 
@@ -133,7 +133,7 @@ var cfg = new CfgBuilder()
     .AddJson("test.json", level: 0, writeable: false)
     .Build();
 
-Console.WriteLine(cfg.Get("Test:Key"));
+Console.WriteLine(cfg["Test:Key"]);
 // 输出: Hello, Apq.Cfg!
 ```
 
@@ -149,7 +149,7 @@ var cfg = new CfgBuilder()
     .AddEnvironmentVariables(level: 0, prefix: "TEST_")
     .Build();
 
-Console.WriteLine(cfg.Get("KEY"));
+Console.WriteLine(cfg["KEY"]);
 // 输出: Hello, Apq.Cfg!
 ```
 

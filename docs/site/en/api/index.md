@@ -37,7 +37,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 // String value
-string? value = cfg.Get("App:Name");
+string? value = cfg["App:Name"];
 
 // Typed value
 int port = cfg.GetValue<int>("App:Port");
@@ -53,7 +53,7 @@ ICfgSection section = cfg.GetSection("Database");
 
 ```csharp
 // Set value
-cfg.Set("App:Name", "NewName");
+cfg.SetValue("App:Name", "NewName");
 
 // Remove value
 cfg.Remove("App:TempKey");
@@ -69,7 +69,7 @@ await cfg.SaveAsync();
 var values = cfg.GetMany(new[] { "Key1", "Key2", "Key3" });
 
 // Write multiple
-cfg.SetMany(new Dictionary<string, string?>
+cfg.SetManyValues(new Dictionary<string, string?>
 {
     ["Key1"] = "Value1",
     ["Key2"] = "Value2"

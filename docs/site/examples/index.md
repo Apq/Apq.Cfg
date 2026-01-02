@@ -42,7 +42,7 @@ var cfg = new CfgBuilder()
     .AddJson("config.json")  // 使用默认层级 0
     .Build();
 
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 Console.WriteLine($"应用名称: {appName}");
 ```
 
@@ -68,7 +68,7 @@ public class DatabaseConfig
 var dbSection = cfg.GetSection("Database");
 var dbConfig = new DatabaseConfig
 {
-    Host = dbSection.Get("Host") ?? "localhost",
+    Host = dbSection["Host"] ?? "localhost",
     Port = dbSection.GetValue<int>("Port")
 };
 Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
@@ -116,7 +116,7 @@ var cfg = new CfgBuilder()
 
 // 配置文件中的加密值: { "Database": { "Password": "{ENC}base64..." } }
 // 读取时自动解密
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // 日志输出时使用脱敏值
 Console.WriteLine($"密码: {cfg.GetMasked("Database:Password")}");
@@ -131,8 +131,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg.Set("App:Name", "NewName");
-cfg.Set("Database:Port", "5433");
+cfg.SetValue("App:Name", "NewName");
+cfg.SetValue("Database:Port", "5433");
 
 // 保存到文件
 await cfg.SaveAsync();

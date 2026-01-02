@@ -164,7 +164,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Auto-decrypt {ENC} prefixed values
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 ```
 
 ### Config Validation
@@ -206,7 +206,7 @@ cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
 | `config.GetChildren()` | `cfg.GetChildKeys()` | Returns key names |
 | `config.GetReloadToken()` | `cfg.ConfigChanges` | Rx subscription |
 | N/A | `cfg.GetResolved("Key")` | Variable substitution |
-| N/A | `cfg.Set("Key", "Value")` | Writable config |
+| N/A | `cfg.SetValue("Key", "Value")` | Writable config |
 | N/A | `cfg.SaveAsync()` | Persistence |
 | N/A | `cfg.GetMasked("Key")` | Masked output |
 | N/A | `cfg.ExportSnapshot()` | Snapshot export |

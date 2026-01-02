@@ -1,4 +1,4 @@
-# Apq.Cfg.Vault
+﻿# Apq.Cfg.Vault
 
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
@@ -139,9 +139,9 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 更新配置
-cfg.Set("Database:Host", "new-db-host");
-cfg.Set("Database:Port", "5433");
-cfg.Set("Feature:NewFeature", "true");
+cfg.SetValue("Database:Host", "new-db-host");
+cfg.SetValue("Database:Port", "5433");
+cfg.SetValue("Feature:NewFeature", "true");
 
 // 保存到 Vault
 await cfg.SaveAsync();

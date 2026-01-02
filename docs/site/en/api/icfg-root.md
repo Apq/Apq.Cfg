@@ -14,12 +14,19 @@ IObservable<ConfigChangeEvent> ConfigChanges { get; }
 
 ## Methods
 
-### Get
+### Indexer
 
-Get a configuration value.
+Get or set a configuration value using indexer syntax.
 
 ```csharp
-string? Get(string key)
+string? this[string key] { get; set; }
+```
+
+### GetValue
+
+Get a typed configuration value.
+
+```csharp
 T? GetValue<T>(string key)
 ```
 
@@ -44,7 +51,7 @@ ICfgSection GetSection(string key)
 Set a configuration value.
 
 ```csharp
-void Set(string key, string? value, int? targetLevel = null)
+void SetValue(string key, string? value, int? targetLevel = null)
 ```
 
 ### Remove
@@ -77,7 +84,7 @@ void GetMany(IEnumerable<string> keys, Action<string, string?> onValue)
 Set multiple values.
 
 ```csharp
-void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
+void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
 ```
 
 ### ToMicrosoftConfiguration
@@ -92,11 +99,11 @@ IConfigurationRoot ToMicrosoftConfiguration()
 
 ```csharp
 // Read
-var name = cfg.Get("App:Name");
+var name = cfg["App:Name"];
 var port = cfg.GetValue<int>("App:Port");
 
 // Write
-cfg.Set("App:Name", "NewName");
+cfg.SetValue("App:Name", "NewName");
 await cfg.SaveAsync();
 
 // Subscribe to changes

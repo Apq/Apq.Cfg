@@ -164,7 +164,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 自动解密 {ENC} 前缀的值
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 ```
 
 ### 配置验证
@@ -206,7 +206,7 @@ cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
 | `config.GetChildren()` | `cfg.GetChildKeys()` | 返回键名列表 |
 | `config.GetReloadToken()` | `cfg.ConfigChanges` | Rx 订阅方式 |
 | N/A | `cfg.GetResolved("Key")` | 变量替换 |
-| N/A | `cfg.Set("Key", "Value")` | 可写配置 |
+| N/A | `cfg.SetValue("Key", "Value")` | 可写配置 |
 | N/A | `cfg.SaveAsync()` | 持久化 |
 | N/A | `cfg.GetMasked("Key")` | 脱敏输出 |
 | N/A | `cfg.ExportSnapshot()` | 快照导出 |

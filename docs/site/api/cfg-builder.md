@@ -1,4 +1,4 @@
-# CfgBuilder API
+﻿# CfgBuilder API
 
 `CfgBuilder` 是配置构建器，用于组合多个配置源并创建配置实例。
 
@@ -354,7 +354,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取时自动解密
-var password = cfg.Get("Database:Password");
+var password = cfg["Database:Password"];
 
 // 日志输出时使用脱敏值
 var maskedPassword = cfg.GetMasked("Database:Password");

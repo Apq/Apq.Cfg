@@ -23,9 +23,9 @@
 
 ```csharp
 // 每次调用都有锁开销
-var host = cfg.Get("Database:Host");
+var host = cfg["Database:Host"];
 var port = cfg.GetValue<int>("Database:Port");
-var name = cfg.Get("Database:Name");
+var name = cfg["Database:Name"];
 var timeout = cfg.GetValue<int>("Database:Timeout");
 ```
 
@@ -65,18 +65,18 @@ cfg.GetMany(new[] { "Database:Host", "Database:Port", "Database:Name", "Database
 #### ❌ 低效方式：重复的长键路径
 
 ```csharp
-var host = cfg.Get("Application:Services:Database:Connection:Host");
+var host = cfg["Application:Services:Database:Connection:Host"];
 var port = cfg.GetValue<int>("Application:Services:Database:Connection:Port");
-var name = cfg.Get("Application:Services:Database:Connection:Name");
+var name = cfg["Application:Services:Database:Connection:Name"];
 ```
 
 #### ✅ 高效方式：使用配置节
 
 ```csharp
 var dbSection = cfg.GetSection("Application:Services:Database:Connection");
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var port = dbSection.GetValue<int>("Port");
-var name = dbSection.Get("Name");
+var name = dbSection["Name"];
 ```
 
 ### 3. 使用源生成器（Native AOT 支持）
@@ -177,7 +177,7 @@ public class ConfigCache
     
     private void RefreshCache()
     {
-        _cachedConnectionString = _cfg.Get("Database:ConnectionString");
+        _cachedConnectionString = _cfg["Database:ConnectionString"];
         _cachedTimeout = _cfg.GetValue<int>("Database:Timeout");
         _initialized = true;
     }
@@ -270,7 +270,7 @@ await using var cfg = new CfgBuilder()
 
 ```csharp
 var sw = Stopwatch.StartNew();
-var value = cfg.Get("SomeKey");
+var value = cfg["SomeKey"];
 sw.Stop();
 
 if (sw.ElapsedMilliseconds > 10)

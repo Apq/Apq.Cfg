@@ -1,4 +1,4 @@
-# 依赖注入集成示例
+﻿# 依赖注入集成示例
 
 本页展示如何将 Apq.Cfg 集成到 ASP.NET Core 依赖注入系统。
 
@@ -282,8 +282,8 @@ public class MultiDatabaseService
         _options = options;
     }
     
-    public DatabaseOptions GetPrimaryDb() => _options.Get("Primary");
-    public DatabaseOptions GetReadonlyDb() => _options.Get("Readonly");
+    public DatabaseOptions GetPrimaryDb() => _options["Primary"];
+    public DatabaseOptions GetReadonlyDb() => _options["Readonly"];
 }
 ```
 

@@ -419,7 +419,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 读取配置
-var host = cfg.Get("Database:Host");
+var host = cfg["Database:Host"];
 var port = cfg.GetValue<int>("Database:Port");
 
 // 使用扩展方法

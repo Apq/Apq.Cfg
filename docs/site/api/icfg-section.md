@@ -11,37 +11,37 @@ public interface ICfgSection
     /// 配置节的完整路径
     /// </summary>
     string Path { get; }
-    
+
     /// <summary>
-    /// 获取子配置值
+    /// 索引器：获取或设置子配置值
     /// </summary>
-    string? Get(string key);
-    
+    string? this[string key] { get; set; }
+
     /// <summary>
     /// 获取类型化的子配置值
     /// </summary>
     T? GetValue<T>(string key);
-    
+
     /// <summary>
     /// 检查配置键是否存在
     /// </summary>
     bool Exists(string key);
-    
+
     /// <summary>
     /// 设置子配置值
     /// </summary>
-    void Set(string key, string? value, int? targetLevel = null);
-    
+    void SetValue(string key, string? value, int? targetLevel = null);
+
     /// <summary>
     /// 移除配置键
     /// </summary>
     void Remove(string key, int? targetLevel = null);
-    
+
     /// <summary>
     /// 获取子配置节
     /// </summary>
     ICfgSection GetSection(string key);
-    
+
     /// <summary>
     /// 获取所有子键
     /// </summary>
@@ -65,13 +65,13 @@ Console.WriteLine(portSection.Path); // 输出: Database:Port
 
 ## 方法
 
-### Get
+### 索引器
 
 ```csharp
-string? Get(string key)
+string? this[string key] { get; set; }
 ```
 
-获取子配置的值。
+获取或设置子配置的值。
 
 **参数：**
 - `key`: 子配置键（相对于此节的键名）
@@ -81,8 +81,11 @@ string? Get(string key)
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host");      // 等同于 cfg.Get("Database:Host")
-var port = dbSection.Get("Port");      // 等同于 cfg.Get("Database:Port")
+// 读取
+var host = dbSection["Host"];      // 等同于 cfg["Database:Host"]
+var port = dbSection["Port"];      // 等同于 cfg["Database:Port"]
+// 写入
+dbSection["Host"] = "new-host";
 ```
 
 ### GetValue&lt;T&gt;
@@ -123,7 +126,7 @@ bool Exists(string key)
 var dbSection = cfg.GetSection("Database");
 if (dbSection.Exists("ConnectionString"))
 {
-    var connStr = dbSection.Get("ConnectionString");
+    var connStr = dbSection["ConnectionString"];
     // 处理连接字符串
 }
 
@@ -140,7 +143,7 @@ else
 ### Set
 
 ```csharp
-void Set(string key, string? value, int? targetLevel = null)
+void SetValue(string key, string? value, int? targetLevel = null)
 ```
 
 设置子配置值。
@@ -153,8 +156,8 @@ void Set(string key, string? value, int? targetLevel = null)
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-dbSection.Set("Host", "new-host");   // 等同于 cfg.Set("Database:Host", "new-host")
-dbSection.Set("Port", "5433");       // 等同于 cfg.Set("Database:Port", "5433")
+dbSection.SetValue("Host", "new-host");   // 等同于 cfg.SetValue("Database:Host", "new-host")
+dbSection.SetValue("Port", "5433");       // 等同于 cfg.SetValue("Database:Port", "5433")
 ```
 
 ### Remove
@@ -193,7 +196,7 @@ ICfgSection GetSection(string key)
 ```csharp
 var servicesSection = cfg.GetSection("Services");
 var apiSection = servicesSection.GetSection("Api");  // 等同于 cfg.GetSection("Services:Api")
-var url = apiSection.Get("Url");
+var url = apiSection["Url"];
 ```
 
 ### GetChildKeys
@@ -211,7 +214,7 @@ IEnumerable<string> GetChildKeys()
 var dbSection = cfg.GetSection("Database");
 foreach (var key in dbSection.GetChildKeys())
 {
-    Console.WriteLine($"{key} = {dbSection.Get(key)}");
+    Console.WriteLine($"{key} = {dbSection[key]}");
 }
 // 输出:
 // Host = localhost
@@ -232,19 +235,19 @@ var cfg = new CfgBuilder()
 var dbSection = cfg.GetSection("Database");
 
 // 读取值
-var host = dbSection.Get("Host");
+var host = dbSection["Host"];
 var port = dbSection.GetValue<int>("Port");
 
 // 检查键是否存在
 if (dbSection.Exists("Password"))
 {
-    var password = dbSection.Get("Password");
+    var password = dbSection["Password"];
 }
 
 // 遍历子键
 foreach (var key in dbSection.GetChildKeys())
 {
-    Console.WriteLine($"{key}: {dbSection.Get(key)}");
+    Console.WriteLine($"{key}: {dbSection[key]}");
 }
 ```
 
@@ -257,7 +260,7 @@ var apiSection = cfg.GetSection("Services:Api");
 // 或
 var apiSection = cfg.GetSection("Services").GetSection("Api");
 
-var url = apiSection.Get("Url");
+var url = apiSection["Url"];
 var timeout = apiSection.GetValue<int>("Timeout");
 ```
 
@@ -271,8 +274,8 @@ var cfg = new CfgBuilder()
 var dbSection = cfg.GetSection("Database");
 
 // 设置值
-dbSection.Set("Host", "new-host");
-dbSection.Set("Port", "5433");
+dbSection.SetValue("Host", "new-host");
+dbSection.SetValue("Port", "5433");
 
 // 移除旧配置
 dbSection.Remove("DeprecatedSetting");
@@ -287,7 +290,7 @@ await cfg.SaveAsync();
 var serversSection = cfg.GetSection("Servers");
 foreach (var key in serversSection.GetChildKeys())
 {
-    var server = serversSection.Get(key);
+    var server = serversSection[key];
     Console.WriteLine($"Server {key}: {server}");
 }
 // 输出:
@@ -304,8 +307,8 @@ var endpointsSection = cfg.GetSection("Endpoints");
 foreach (var key in endpointsSection.GetChildKeys())
 {
     var endpoint = endpointsSection.GetSection(key);
-    var name = endpoint.Get("Name");
-    var url = endpoint.Get("Url");
+    var name = endpoint["Name"];
+    var url = endpoint["Url"];
     Console.WriteLine($"Endpoint {name}: {url}");
 }
 ```
