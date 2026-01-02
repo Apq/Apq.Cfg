@@ -23,6 +23,7 @@
 - [编码处理](#编码处理)
 - [依赖注入集成](#依赖注入集成)
 - [配置验证](#配置验证)
+- [配置快照导出](#配置快照导出)
 - [远程配置中心](#远程配置中心)
 - [源生成器（Native AOT 支持）](#源生成器native-aot-支持)
 - [构建与测试](#构建与测试)
@@ -460,6 +461,44 @@ services.AddApqCfgWithValidation(cfg => cfg
 
 > 详细文档见 [配置验证指南](docs/site/guide/validation.md)
 
+### 配置快照导出
+
+支持将当前配置状态导出为多种格式，便于调试、备份和迁移：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Snapshot;
+
+// 导出为 JSON（默认）
+var json = cfg.ExportSnapshot();
+
+// 导出为环境变量格式
+var env = cfg.ExportSnapshotAsEnv(prefix: "MYAPP_");
+
+// 导出为字典
+var dict = cfg.ExportSnapshotAsDictionary();
+
+// 使用选项自定义导出
+var filtered = cfg.ExportSnapshot(new ExportOptions
+{
+    Format = ExportFormat.Json,
+    IncludeMetadata = true,
+    MaskSensitiveValues = true,
+    ExcludeKeys = new[] { "Secrets:*", "Database:Password" }
+});
+
+// 导出到文件
+await cfg.ExportSnapshotToFileAsync("config-snapshot.json");
+```
+
+#### 导出格式
+
+| 格式 | 说明 | 示例输出 |
+|------|------|----------|
+| `Json` | 嵌套 JSON 结构 | `{"App":{"Name":"MyApp"}}` |
+| `KeyValue` | 扁平键值对 | `App:Name=MyApp` |
+| `Env` | 环境变量格式 | `APP__NAME=MyApp` |
+
 ### 远程配置中心
 
 支持 Consul、Etcd、Nacos、Apollo、Zookeeper 等远程配置中心，支持热重载：
@@ -540,8 +579,8 @@ dotnet run -c Release
 
 | 框架       | 通过  | 失败  | 跳过  | 总计  | 状态   |
 | -------- | --- | --- | --- | --- | ---- |
-| .NET 8.0 | 418 | 0   | 41  | 459 | ✅ 通过 |
-| .NET 10.0 | 418 | 0   | 41  | 459 | ✅ 通过 |
+| .NET 8.0 | 435 | 0   | 41  | 476 | ✅ 通过 |
+| .NET 10.0 | 435 | 0   | 41  | 476 | ✅ 通过 |
 
 #### 跳过测试说明
 

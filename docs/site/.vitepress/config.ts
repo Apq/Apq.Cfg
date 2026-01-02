@@ -25,6 +25,7 @@ const zhSidebar = {
       items: [
         { text: '依赖注入', link: '/guide/dependency-injection' },
         { text: '配置验证', link: '/guide/validation' },
+        { text: '快照导出', link: '/guide/snapshot' },
         { text: '加密脱敏', link: '/guide/encryption-masking' },
         { text: '编码处理', link: '/guide/encoding' },
         { text: '性能优化', link: '/guide/performance' },
@@ -128,6 +129,7 @@ const enSidebar = {
       items: [
         { text: 'Dependency Injection', link: '/en/guide/dependency-injection' },
         { text: 'Validation', link: '/en/guide/validation' },
+        { text: 'Snapshot Export', link: '/en/guide/snapshot' },
         { text: 'Encryption & Masking', link: '/en/guide/encryption-masking' },
         { text: 'Encoding', link: '/en/guide/encoding' },
         { text: 'Performance', link: '/en/guide/performance' },

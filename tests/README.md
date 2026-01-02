@@ -30,7 +30,7 @@ dotnet test tests/Apq.Cfg.Tests.Net10/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 459 个测试，41 个需外部服务）
+## 测试统计（共 476 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
@@ -64,6 +64,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | SourceGeneratorTests | 8 | 0 | 源生成器测试（[CfgSection] 特性/BindFrom/BindTo）|
 | **CryptoTests** | **58** | **0** | **加密脱敏测试（AES-GCM/AES-CBC/ChaCha20/SM4/3DES/脱敏）**|
 | **ValidationTests** | **30** | **0** | **配置验证测试（Required/Range/Regex/OneOf/Length/DependsOn/Custom）**|
+| **SnapshotTests** | **17** | **0** | **配置快照导出测试（JSON/KeyValue/Env/过滤/脱敏）**|
 
 ### 跳过测试说明
 
@@ -197,6 +198,13 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `Length()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `DependsOn()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `Custom()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| **配置快照导出** |
+| `ExportSnapshot()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ExportSnapshotAsJson()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ExportSnapshotAsEnv()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ExportSnapshotAsDictionary()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ExportSnapshotToFileAsync()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ExportSnapshotAsync()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 
 > 说明：
 > - `✅` 表示已有测试覆盖
@@ -222,6 +230,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 源生成器 | SourceGeneratorTests | 8 | 0 |
 | **加密脱敏** | **CryptoTests** | **58** | **0** |
 | **配置验证** | **ValidationTests** | **30** | **0** |
+| **配置快照导出** | **SnapshotTests** | **17** | **0** |
 
 > 注：基本读写测试中 41 个跳过的测试需要外部服务（Zookeeper/Apollo/Consul/Etcd/Nacos/Vault），Redis 和 Database 已配置
 
