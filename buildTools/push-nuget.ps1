@@ -132,34 +132,36 @@ if (-not $SkipConfirm) {
 }
 
 Write-Host ''
-Write-ColorText '开始发布...' 'Cyan'
+Write-ColorText '开始并行发布...' 'Cyan'
 Write-Host ''
 
 $successCount = 0
 $failCount = 0
 
-foreach ($pkg in $packages) {
-    Write-ColorText "发布: $($pkg.Name)" 'White'
+# 使用 ForEach-Object -Parallel 并行发布（线程池，无额外进程）
+$results = $packages | ForEach-Object -Parallel {
+    $pkg = $_
+    $result = & dotnet nuget push $pkg.FullName -s $using:Source -k $using:ApiKey --skip-duplicate 2>&1
+    [PSCustomObject]@{
+        ExitCode = $LASTEXITCODE
+        Output = ($result | Out-String)
+        PkgName = $pkg.Name
+    }
+} -ThrottleLimit 8
 
-    try {
-        $result = & dotnet nuget push $pkg.FullName -s $Source -k $ApiKey --skip-duplicate 2>&1
-
-        if ($LASTEXITCODE -eq 0) {
-            Write-ColorText "  成功" 'Green'
+# 处理结果
+foreach ($result in $results) {
+    if ($result.ExitCode -eq 0) {
+        Write-ColorText "  $($result.PkgName) - 成功" 'Green'
+        $successCount++
+    } else {
+        if ($result.Output -match 'already exists') {
+            Write-ColorText "  $($result.PkgName) - 跳过 (已存在)" 'Yellow'
             $successCount++
         } else {
-            $errorMsg = $result | Out-String
-            if ($errorMsg -match 'already exists') {
-                Write-ColorText "  跳过 (已存在)" 'Yellow'
-                $successCount++
-            } else {
-                Write-ColorText "  失败: $errorMsg" 'Red'
-                $failCount++
-            }
+            Write-ColorText "  $($result.PkgName) - 失败: $($result.Output)" 'Red'
+            $failCount++
         }
-    } catch {
-        Write-ColorText "  失败: $($_.Exception.Message)" 'Red'
-        $failCount++
     }
 }
 

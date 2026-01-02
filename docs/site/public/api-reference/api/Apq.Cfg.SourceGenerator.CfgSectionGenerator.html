@@ -167,8 +167,7 @@ public class CfgSectionGenerator : IIncrementalGenerator</code></pre>
   
   </h3>
 
-  <div class="markdown level1 summary"><p>Called to initialize the generator and register generation steps via callbacks
-on the <code class="paramref">context</code></p>
+  <div class="markdown level1 summary"><p>初始化源生成器，注册特性和代码生成逻辑</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -179,7 +178,7 @@ on the <code class="paramref">context</code></p>
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>context</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.incrementalgeneratorinitializationcontext">IncrementalGeneratorInitializationContext</a></dt>
-    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.incrementalgeneratorinitializationcontext">IncrementalGeneratorInitializationContext</a> to register callbacks on</p>
+    <dd><p>增量生成器初始化上下文</p>
 </dd>
   </dl>
 

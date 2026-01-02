@@ -22,6 +22,10 @@ public class CfgSectionGenerator : IIncrementalGenerator
     /// </summary>
     private const string CfgSectionAttributeFullName = "Apq.Cfg.CfgSectionAttribute";
 
+    /// <summary>
+    /// 初始化源生成器，注册特性和代码生成逻辑
+    /// </summary>
+    /// <param name="context">增量生成器初始化上下文</param>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // 1. 注册特性源代码（注入到用户项目）

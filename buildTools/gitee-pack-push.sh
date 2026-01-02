@@ -63,17 +63,19 @@ for project in $PROJECTS; do
     dotnet pack "$project" -c Release -o "$OUTPUT_DIR"
 done
 
-# 发布到 NuGet
+# 发布到 NuGet（并发）
 echo ""
 echo "=========================================="
-echo "  步骤 3/3: 发布到 NuGet"
+echo "  步骤 3/3: 并发发布到 NuGet"
 echo "=========================================="
 for pkg in "$OUTPUT_DIR"/*.nupkg; do
     if [ -f "$pkg" ]; then
         echo "发布: $(basename "$pkg")"
-        dotnet nuget push "$pkg" -s "$NUGET_SOURCE" -k "$NUGET_API_KEY" --skip-duplicate
+        dotnet nuget push "$pkg" -s "$NUGET_SOURCE" -k "$NUGET_API_KEY" --skip-duplicate &
     fi
 done
+echo "等待所有发布任务完成..."
+wait
 
 echo ""
 echo "=========================================="
