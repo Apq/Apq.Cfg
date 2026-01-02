@@ -3975,15 +3975,22 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgRoot.GetSection
   nameWithType: ICfgRoot.GetSection
-- uid: Apq.Cfg.ICfgRoot.Get``1(System.String)
-  name: Get<T>(string)
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Get__1_System_String_
-  commentId: M:Apq.Cfg.ICfgRoot.Get``1(System.String)
-  name.vb: Get(Of T)(String)
-  fullName: Apq.Cfg.ICfgRoot.Get<T>(string)
-  fullName.vb: Apq.Cfg.ICfgRoot.Get(Of T)(String)
-  nameWithType: ICfgRoot.Get<T>(string)
-  nameWithType.vb: ICfgRoot.Get(Of T)(String)
+- uid: Apq.Cfg.ICfgRoot.GetValue*
+  name: GetValue
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetValue_
+  commentId: Overload:Apq.Cfg.ICfgRoot.GetValue
+  isSpec: "True"
+  fullName: Apq.Cfg.ICfgRoot.GetValue
+  nameWithType: ICfgRoot.GetValue
+- uid: Apq.Cfg.ICfgRoot.GetValue``1(System.String)
+  name: GetValue<T>(string)
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetValue__1_System_String_
+  commentId: M:Apq.Cfg.ICfgRoot.GetValue``1(System.String)
+  name.vb: GetValue(Of T)(String)
+  fullName: Apq.Cfg.ICfgRoot.GetValue<T>(string)
+  fullName.vb: Apq.Cfg.ICfgRoot.GetValue(Of T)(String)
+  nameWithType: ICfgRoot.GetValue<T>(string)
+  nameWithType.vb: ICfgRoot.GetValue(Of T)(String)
 - uid: Apq.Cfg.ICfgRoot.Item(System.String)
   name: this[string]
   href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Item_System_String_
@@ -4156,15 +4163,22 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgSection.GetSection
   nameWithType: ICfgSection.GetSection
-- uid: Apq.Cfg.ICfgSection.Get``1(System.String)
-  name: Get<T>(string)
-  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Get__1_System_String_
-  commentId: M:Apq.Cfg.ICfgSection.Get``1(System.String)
-  name.vb: Get(Of T)(String)
-  fullName: Apq.Cfg.ICfgSection.Get<T>(string)
-  fullName.vb: Apq.Cfg.ICfgSection.Get(Of T)(String)
-  nameWithType: ICfgSection.Get<T>(string)
-  nameWithType.vb: ICfgSection.Get(Of T)(String)
+- uid: Apq.Cfg.ICfgSection.GetValue*
+  name: GetValue
+  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_GetValue_
+  commentId: Overload:Apq.Cfg.ICfgSection.GetValue
+  isSpec: "True"
+  fullName: Apq.Cfg.ICfgSection.GetValue
+  nameWithType: ICfgSection.GetValue
+- uid: Apq.Cfg.ICfgSection.GetValue``1(System.String)
+  name: GetValue<T>(string)
+  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_GetValue__1_System_String_
+  commentId: M:Apq.Cfg.ICfgSection.GetValue``1(System.String)
+  name.vb: GetValue(Of T)(String)
+  fullName: Apq.Cfg.ICfgSection.GetValue<T>(string)
+  fullName.vb: Apq.Cfg.ICfgSection.GetValue(Of T)(String)
+  nameWithType: ICfgSection.GetValue<T>(string)
+  nameWithType.vb: ICfgSection.GetValue(Of T)(String)
 - uid: Apq.Cfg.ICfgSection.Item(System.String)
   name: this[string]
   href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Item_System_String_

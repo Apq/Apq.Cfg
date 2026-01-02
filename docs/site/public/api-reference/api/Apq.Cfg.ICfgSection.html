@@ -381,10 +381,10 @@ var connSection = dbSection.GetSection("Connection"); // 等同于 cfg.GetSectio
 
 
 
-  <a id="Apq_Cfg_ICfgSection_Get_" data-uid="Apq.Cfg.ICfgSection.Get*"></a>
+  <a id="Apq_Cfg_ICfgSection_GetValue_" data-uid="Apq.Cfg.ICfgSection.GetValue*"></a>
 
-  <h3 id="Apq_Cfg_ICfgSection_Get__1_System_String_" data-uid="Apq.Cfg.ICfgSection.Get``1(System.String)">
-  Get&lt;T&gt;(string)
+  <h3 id="Apq_Cfg_ICfgSection_GetValue__1_System_String_" data-uid="Apq.Cfg.ICfgSection.GetValue``1(System.String)">
+  GetValue&lt;T&gt;(string)
   
   </h3>
 
@@ -393,7 +393,7 @@ var connSection = dbSection.GetSection("Connection"); // 等同于 cfg.GetSectio
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">T? Get&lt;T&gt;(string key)</code></pre>
+    <pre><code class="lang-csharp hljs">T? GetValue&lt;T&gt;(string key)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -421,9 +421,9 @@ var connSection = dbSection.GetSection("Connection"); // 等同于 cfg.GetSectio
 
 
 
-  <h4 class="section" id="Apq_Cfg_ICfgSection_Get__1_System_String__examples">Examples</h4>
+  <h4 class="section" id="Apq_Cfg_ICfgSection_GetValue__1_System_String__examples">Examples</h4>
   <pre><code class="lang-csharp">var dbSection = cfg.GetSection("Database");
-var port = dbSection.Get&lt;int&gt;("Port"); // 等同于 cfg.Get&lt;int&gt;("Database:Port")</code></pre>
+var port = dbSection.GetValue&lt;int&gt;("Port"); // 等同于 cfg.GetValue&lt;int&gt;("Database:Port")</code></pre>
 
 
 
