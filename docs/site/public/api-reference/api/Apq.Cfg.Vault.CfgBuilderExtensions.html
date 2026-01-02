@@ -165,7 +165,7 @@ Class CfgBuilderExtensions
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVault(this CfgBuilder builder, Action&lt;VaultCfgOptions&gt; configure, int level = 0, bool isPrimaryWriter = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVault(this CfgBuilder builder, Action&lt;VaultCfgOptions&gt; configure, int level = 300, bool isPrimaryWriter = false)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -177,17 +177,17 @@ Class CfgBuilderExtensions
     <dd><p>配置选项</p>
 </dd>
     <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>配置层级，数值越大优先级越高</p>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Vault">Vault</a> (18)</p>
 </dd>
     <dt><code>isPrimaryWriter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd><p>是否为主写入源</p>
+    <dd><p>是否为主写入源，默认为false</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd><p>配置构建器</p>
+    <dd><p>配置构建器实例，支持链式调用</p>
 </dd>
   </dl>
 
@@ -213,7 +213,7 @@ Class CfgBuilderExtensions
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultAppRole(this CfgBuilder builder, string address, string roleId, string roleSecret, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int kvVersion = 2, int level = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultAppRole(this CfgBuilder builder, string address, string roleId, string roleSecret, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int kvVersion = 2, int level = 300)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -231,23 +231,23 @@ Class CfgBuilderExtensions
     <dd><p>Role Secret</p>
 </dd>
     <dt><code>enginePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>KV 引擎路径</p>
+    <dd><p>KV 引擎路径，默认为 &quot;kv&quot;</p>
 </dd>
     <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>密钥路径</p>
+    <dd><p>密钥路径，默认为空</p>
 </dd>
     <dt><code>kvVersion</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>KV 引擎版本 (1 或 2)</p>
+    <dd><p>KV 引擎版本 (1 或 2)，默认为 2</p>
 </dd>
     <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>配置层级</p>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Vault">Vault</a> (18)</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd><p>配置构建器</p>
+    <dd><p>配置构建器实例，支持链式调用</p>
 </dd>
   </dl>
 
@@ -273,7 +273,7 @@ Class CfgBuilderExtensions
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultUserPass(this CfgBuilder builder, string address, string username, string password, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int kvVersion = 2, int level = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultUserPass(this CfgBuilder builder, string address, string username, string password, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int kvVersion = 2, int level = 300)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -291,23 +291,23 @@ Class CfgBuilderExtensions
     <dd><p>密码</p>
 </dd>
     <dt><code>enginePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>KV 引擎路径</p>
+    <dd><p>KV 引擎路径，默认为 &quot;kv&quot;</p>
 </dd>
     <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>密钥路径</p>
+    <dd><p>密钥路径，默认为空</p>
 </dd>
     <dt><code>kvVersion</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>KV 引擎版本 (1 或 2)</p>
+    <dd><p>KV 引擎版本 (1 或 2)，默认为 2</p>
 </dd>
     <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>配置层级</p>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Vault">Vault</a> (18)</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd><p>配置构建器</p>
+    <dd><p>配置构建器实例，支持链式调用</p>
 </dd>
   </dl>
 
@@ -333,7 +333,7 @@ Class CfgBuilderExtensions
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultV1(this CfgBuilder builder, string address, string token, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int level = 0, bool enableHotReload = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultV1(this CfgBuilder builder, string address, string token, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int level = 300, bool enableHotReload = true)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -348,23 +348,23 @@ Class CfgBuilderExtensions
     <dd><p>Vault Token</p>
 </dd>
     <dt><code>enginePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>KV 引擎路径，默认 &quot;kv&quot;</p>
+    <dd><p>KV 引擎路径，默认为 &quot;kv&quot;</p>
 </dd>
     <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>密钥路径</p>
+    <dd><p>密钥路径，默认为空</p>
 </dd>
     <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>配置层级</p>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Vault">Vault</a> (18)</p>
 </dd>
     <dt><code>enableHotReload</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd><p>是否启用热重载</p>
+    <dd><p>是否启用热重载，默认为true</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd><p>配置构建器</p>
+    <dd><p>配置构建器实例，支持链式调用</p>
 </dd>
   </dl>
 
@@ -390,7 +390,7 @@ Class CfgBuilderExtensions
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultV2(this CfgBuilder builder, string address, string token, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int level = 0, bool enableHotReload = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddVaultV2(this CfgBuilder builder, string address, string token, string enginePath = &quot;kv&quot;, string path = &quot;&quot;, int level = 300, bool enableHotReload = true)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -405,23 +405,23 @@ Class CfgBuilderExtensions
     <dd><p>Vault Token</p>
 </dd>
     <dt><code>enginePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>KV 引擎路径，默认 &quot;kv&quot;</p>
+    <dd><p>KV 引擎路径，默认为 &quot;kv&quot;</p>
 </dd>
     <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>密钥路径</p>
+    <dd><p>密钥路径，默认为空</p>
 </dd>
     <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd><p>配置层级</p>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Vault">Vault</a> (18)</p>
 </dd>
     <dt><code>enableHotReload</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd><p>是否启用热重载</p>
+    <dd><p>是否启用热重载，默认为true</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd><p>配置构建器</p>
+    <dd><p>配置构建器实例，支持链式调用</p>
 </dd>
   </dl>
 

@@ -165,31 +165,39 @@ Class CfgBuilderExtensions
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CfgBuilder AddIni(this CfgBuilder builder, string path, int level, bool writeable = false, bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddIni(this CfgBuilder builder, string path, int level = 0, bool writeable = false, bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd></dd>
+    <dd><p>配置构建器</p>
+</dd>
     <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dd><p>INI 文件路径</p>
+</dd>
     <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Ini">Ini</a> (0)</p>
+</dd>
     <dt><code>writeable</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>是否可写，默认为false</p>
+</dd>
     <dt><code>optional</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>是否为可选文件，默认为true</p>
+</dd>
     <dt><code>reloadOnChange</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>文件变更时是否自动重载，默认为true</p>
+</dd>
     <dt><code>isPrimaryWriter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
+    <dd><p>是否为主要写入器，默认为false</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
-    <dd></dd>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
   </dl>
 
 

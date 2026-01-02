@@ -290,6 +290,35 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgBuilder.AddSource
   nameWithType: CfgBuilder.AddSource
+- uid: Apq.Cfg.CfgBuilder.AddValidation(System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name: AddValidation(Action<ConfigValidationBuilder>)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddValidation_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder__
+  commentId: M:Apq.Cfg.CfgBuilder.AddValidation(System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name.vb: AddValidation(Action(Of ConfigValidationBuilder))
+  fullName: Apq.Cfg.CfgBuilder.AddValidation(System.Action<Apq.Cfg.Validation.ConfigValidationBuilder>)
+  fullName.vb: Apq.Cfg.CfgBuilder.AddValidation(System.Action(Of Apq.Cfg.Validation.ConfigValidationBuilder))
+  nameWithType: CfgBuilder.AddValidation(Action<ConfigValidationBuilder>)
+  nameWithType.vb: CfgBuilder.AddValidation(Action(Of ConfigValidationBuilder))
+- uid: Apq.Cfg.CfgBuilder.AddValidation*
+  name: AddValidation
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddValidation_
+  commentId: Overload:Apq.Cfg.CfgBuilder.AddValidation
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgBuilder.AddValidation
+  nameWithType: CfgBuilder.AddValidation
+- uid: Apq.Cfg.CfgBuilder.AddValidator(Apq.Cfg.Validation.IConfigValidator)
+  name: AddValidator(IConfigValidator)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddValidator_Apq_Cfg_Validation_IConfigValidator_
+  commentId: M:Apq.Cfg.CfgBuilder.AddValidator(Apq.Cfg.Validation.IConfigValidator)
+  fullName: Apq.Cfg.CfgBuilder.AddValidator(Apq.Cfg.Validation.IConfigValidator)
+  nameWithType: CfgBuilder.AddValidator(IConfigValidator)
+- uid: Apq.Cfg.CfgBuilder.AddValidator*
+  name: AddValidator
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddValidator_
+  commentId: Overload:Apq.Cfg.CfgBuilder.AddValidator
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgBuilder.AddValidator
+  nameWithType: CfgBuilder.AddValidator
 - uid: Apq.Cfg.CfgBuilder.AddValueMasker(Apq.Cfg.Security.IValueMasker)
   name: AddValueMasker(IValueMasker)
   href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddValueMasker_Apq_Cfg_Security_IValueMasker_
@@ -377,6 +406,22 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgBuilder.Build
   nameWithType: CfgBuilder.Build
+- uid: Apq.Cfg.CfgBuilder.BuildAndValidate(System.Boolean)
+  name: BuildAndValidate(bool)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_BuildAndValidate_System_Boolean_
+  commentId: M:Apq.Cfg.CfgBuilder.BuildAndValidate(System.Boolean)
+  name.vb: BuildAndValidate(Boolean)
+  fullName: Apq.Cfg.CfgBuilder.BuildAndValidate(bool)
+  fullName.vb: Apq.Cfg.CfgBuilder.BuildAndValidate(Boolean)
+  nameWithType: CfgBuilder.BuildAndValidate(bool)
+  nameWithType.vb: CfgBuilder.BuildAndValidate(Boolean)
+- uid: Apq.Cfg.CfgBuilder.BuildAndValidate*
+  name: BuildAndValidate
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_BuildAndValidate_
+  commentId: Overload:Apq.Cfg.CfgBuilder.BuildAndValidate
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgBuilder.BuildAndValidate
+  nameWithType: CfgBuilder.BuildAndValidate
 - uid: Apq.Cfg.CfgBuilder.ConfigureEncodingMapping(System.Action{Apq.Cfg.EncodingSupport.EncodingMappingConfig})
   name: ConfigureEncodingMapping(Action<EncodingMappingConfig>)
   href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_ConfigureEncodingMapping_System_Action_Apq_Cfg_EncodingSupport_EncodingMappingConfig__
@@ -441,6 +486,41 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgBuilder.WithEncodingDetectionLogging
   nameWithType: CfgBuilder.WithEncodingDetectionLogging
+- uid: Apq.Cfg.CfgBuilderTemplateExtensions
+  name: CfgBuilderTemplateExtensions
+  href: api/Apq.Cfg.CfgBuilderTemplateExtensions.html
+  commentId: T:Apq.Cfg.CfgBuilderTemplateExtensions
+  fullName: Apq.Cfg.CfgBuilderTemplateExtensions
+  nameWithType: CfgBuilderTemplateExtensions
+- uid: Apq.Cfg.CfgBuilderTemplateExtensions.AddVariableResolver(Apq.Cfg.CfgBuilder,Apq.Cfg.Template.IVariableResolver)
+  name: AddVariableResolver(CfgBuilder, IVariableResolver)
+  href: api/Apq.Cfg.CfgBuilderTemplateExtensions.html#Apq_Cfg_CfgBuilderTemplateExtensions_AddVariableResolver_Apq_Cfg_CfgBuilder_Apq_Cfg_Template_IVariableResolver_
+  commentId: M:Apq.Cfg.CfgBuilderTemplateExtensions.AddVariableResolver(Apq.Cfg.CfgBuilder,Apq.Cfg.Template.IVariableResolver)
+  fullName: Apq.Cfg.CfgBuilderTemplateExtensions.AddVariableResolver(Apq.Cfg.CfgBuilder, Apq.Cfg.Template.IVariableResolver)
+  nameWithType: CfgBuilderTemplateExtensions.AddVariableResolver(CfgBuilder, IVariableResolver)
+- uid: Apq.Cfg.CfgBuilderTemplateExtensions.AddVariableResolver*
+  name: AddVariableResolver
+  href: api/Apq.Cfg.CfgBuilderTemplateExtensions.html#Apq_Cfg_CfgBuilderTemplateExtensions_AddVariableResolver_
+  commentId: Overload:Apq.Cfg.CfgBuilderTemplateExtensions.AddVariableResolver
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgBuilderTemplateExtensions.AddVariableResolver
+  nameWithType: CfgBuilderTemplateExtensions.AddVariableResolver
+- uid: Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution(Apq.Cfg.CfgBuilder,System.Action{Apq.Cfg.Template.VariableResolutionOptions})
+  name: ConfigureVariableResolution(CfgBuilder, Action<VariableResolutionOptions>)
+  href: api/Apq.Cfg.CfgBuilderTemplateExtensions.html#Apq_Cfg_CfgBuilderTemplateExtensions_ConfigureVariableResolution_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Template_VariableResolutionOptions__
+  commentId: M:Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution(Apq.Cfg.CfgBuilder,System.Action{Apq.Cfg.Template.VariableResolutionOptions})
+  name.vb: ConfigureVariableResolution(CfgBuilder, Action(Of VariableResolutionOptions))
+  fullName: Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution(Apq.Cfg.CfgBuilder, System.Action<Apq.Cfg.Template.VariableResolutionOptions>)
+  fullName.vb: Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution(Apq.Cfg.CfgBuilder, System.Action(Of Apq.Cfg.Template.VariableResolutionOptions))
+  nameWithType: CfgBuilderTemplateExtensions.ConfigureVariableResolution(CfgBuilder, Action<VariableResolutionOptions>)
+  nameWithType.vb: CfgBuilderTemplateExtensions.ConfigureVariableResolution(CfgBuilder, Action(Of VariableResolutionOptions))
+- uid: Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution*
+  name: ConfigureVariableResolution
+  href: api/Apq.Cfg.CfgBuilderTemplateExtensions.html#Apq_Cfg_CfgBuilderTemplateExtensions_ConfigureVariableResolution_
+  commentId: Overload:Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgBuilderTemplateExtensions.ConfigureVariableResolution
+  nameWithType: CfgBuilderTemplateExtensions.ConfigureVariableResolution
 - uid: Apq.Cfg.CfgRootExtensions
   name: CfgRootExtensions
   href: api/Apq.Cfg.CfgRootExtensions.html
@@ -575,6 +655,102 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgSectionAttribute.SectionPath
   nameWithType: CfgSectionAttribute.SectionPath
+- uid: Apq.Cfg.CfgSourceLevels
+  name: CfgSourceLevels
+  href: api/Apq.Cfg.CfgSourceLevels.html
+  commentId: T:Apq.Cfg.CfgSourceLevels
+  fullName: Apq.Cfg.CfgSourceLevels
+  nameWithType: CfgSourceLevels
+- uid: Apq.Cfg.CfgSourceLevels.Apollo
+  name: Apollo
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Apollo
+  commentId: F:Apq.Cfg.CfgSourceLevels.Apollo
+  fullName: Apq.Cfg.CfgSourceLevels.Apollo
+  nameWithType: CfgSourceLevels.Apollo
+- uid: Apq.Cfg.CfgSourceLevels.Consul
+  name: Consul
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Consul
+  commentId: F:Apq.Cfg.CfgSourceLevels.Consul
+  fullName: Apq.Cfg.CfgSourceLevels.Consul
+  nameWithType: CfgSourceLevels.Consul
+- uid: Apq.Cfg.CfgSourceLevels.Database
+  name: Database
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Database
+  commentId: F:Apq.Cfg.CfgSourceLevels.Database
+  fullName: Apq.Cfg.CfgSourceLevels.Database
+  nameWithType: CfgSourceLevels.Database
+- uid: Apq.Cfg.CfgSourceLevels.Env
+  name: Env
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Env
+  commentId: F:Apq.Cfg.CfgSourceLevels.Env
+  fullName: Apq.Cfg.CfgSourceLevels.Env
+  nameWithType: CfgSourceLevels.Env
+- uid: Apq.Cfg.CfgSourceLevels.EnvironmentVariables
+  name: EnvironmentVariables
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_EnvironmentVariables
+  commentId: F:Apq.Cfg.CfgSourceLevels.EnvironmentVariables
+  fullName: Apq.Cfg.CfgSourceLevels.EnvironmentVariables
+  nameWithType: CfgSourceLevels.EnvironmentVariables
+- uid: Apq.Cfg.CfgSourceLevels.Etcd
+  name: Etcd
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Etcd
+  commentId: F:Apq.Cfg.CfgSourceLevels.Etcd
+  fullName: Apq.Cfg.CfgSourceLevels.Etcd
+  nameWithType: CfgSourceLevels.Etcd
+- uid: Apq.Cfg.CfgSourceLevels.Ini
+  name: Ini
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Ini
+  commentId: F:Apq.Cfg.CfgSourceLevels.Ini
+  fullName: Apq.Cfg.CfgSourceLevels.Ini
+  nameWithType: CfgSourceLevels.Ini
+- uid: Apq.Cfg.CfgSourceLevels.Json
+  name: Json
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Json
+  commentId: F:Apq.Cfg.CfgSourceLevels.Json
+  fullName: Apq.Cfg.CfgSourceLevels.Json
+  nameWithType: CfgSourceLevels.Json
+- uid: Apq.Cfg.CfgSourceLevels.Nacos
+  name: Nacos
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Nacos
+  commentId: F:Apq.Cfg.CfgSourceLevels.Nacos
+  fullName: Apq.Cfg.CfgSourceLevels.Nacos
+  nameWithType: CfgSourceLevels.Nacos
+- uid: Apq.Cfg.CfgSourceLevels.Redis
+  name: Redis
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Redis
+  commentId: F:Apq.Cfg.CfgSourceLevels.Redis
+  fullName: Apq.Cfg.CfgSourceLevels.Redis
+  nameWithType: CfgSourceLevels.Redis
+- uid: Apq.Cfg.CfgSourceLevels.Toml
+  name: Toml
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Toml
+  commentId: F:Apq.Cfg.CfgSourceLevels.Toml
+  fullName: Apq.Cfg.CfgSourceLevels.Toml
+  nameWithType: CfgSourceLevels.Toml
+- uid: Apq.Cfg.CfgSourceLevels.Vault
+  name: Vault
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Vault
+  commentId: F:Apq.Cfg.CfgSourceLevels.Vault
+  fullName: Apq.Cfg.CfgSourceLevels.Vault
+  nameWithType: CfgSourceLevels.Vault
+- uid: Apq.Cfg.CfgSourceLevels.Xml
+  name: Xml
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Xml
+  commentId: F:Apq.Cfg.CfgSourceLevels.Xml
+  fullName: Apq.Cfg.CfgSourceLevels.Xml
+  nameWithType: CfgSourceLevels.Xml
+- uid: Apq.Cfg.CfgSourceLevels.Yaml
+  name: Yaml
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Yaml
+  commentId: F:Apq.Cfg.CfgSourceLevels.Yaml
+  fullName: Apq.Cfg.CfgSourceLevels.Yaml
+  nameWithType: CfgSourceLevels.Yaml
+- uid: Apq.Cfg.CfgSourceLevels.Zookeeper
+  name: Zookeeper
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Zookeeper
+  commentId: F:Apq.Cfg.CfgSourceLevels.Zookeeper
+  fullName: Apq.Cfg.CfgSourceLevels.Zookeeper
+  nameWithType: CfgSourceLevels.Zookeeper
 - uid: Apq.Cfg.Changes
   name: Apq.Cfg.Changes
   href: api/Apq.Cfg.Changes.html
@@ -4670,6 +4846,22 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ServiceCollectionExtensions.AddApqCfg
   nameWithType: ServiceCollectionExtensions.AddApqCfg
+- uid: Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder},System.Boolean)
+  name: AddApqCfgWithValidation(IServiceCollection, Action<CfgBuilder>, bool)
+  href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_AddApqCfgWithValidation_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_Boolean_
+  commentId: M:Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder},System.Boolean)
+  name.vb: AddApqCfgWithValidation(IServiceCollection, Action(Of CfgBuilder), Boolean)
+  fullName: Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Apq.Cfg.CfgBuilder>, bool)
+  fullName.vb: Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action(Of Apq.Cfg.CfgBuilder), Boolean)
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWithValidation(IServiceCollection, Action<CfgBuilder>, bool)
+  nameWithType.vb: ServiceCollectionExtensions.AddApqCfgWithValidation(IServiceCollection, Action(Of CfgBuilder), Boolean)
+- uid: Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation*
+  name: AddApqCfgWithValidation
+  href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_AddApqCfgWithValidation_
+  commentId: Overload:Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation
+  isSpec: "True"
+  fullName: Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWithValidation
 - uid: Apq.Cfg.ServiceCollectionExtensions.AddApqCfg``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder},System.String)
   name: AddApqCfg<TOptions>(IServiceCollection, Action<CfgBuilder>, string)
   href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_AddApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_String_
@@ -4679,6 +4871,28 @@ references:
   fullName.vb: Apq.Cfg.ServiceCollectionExtensions.AddApqCfg(Of TOptions)(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action(Of Apq.Cfg.CfgBuilder), String)
   nameWithType: ServiceCollectionExtensions.AddApqCfg<TOptions>(IServiceCollection, Action<CfgBuilder>, string)
   nameWithType.vb: ServiceCollectionExtensions.AddApqCfg(Of TOptions)(IServiceCollection, Action(Of CfgBuilder), String)
+- uid: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.Validation.IConfigValidator)
+  name: AddConfigValidator(IServiceCollection, IConfigValidator)
+  href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_Validation_IConfigValidator_
+  commentId: M:Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.Validation.IConfigValidator)
+  fullName: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.Validation.IConfigValidator)
+  nameWithType: ServiceCollectionExtensions.AddConfigValidator(IServiceCollection, IConfigValidator)
+- uid: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name: AddConfigValidator(IServiceCollection, Action<ConfigValidationBuilder>)
+  href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder__
+  commentId: M:Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name.vb: AddConfigValidator(IServiceCollection, Action(Of ConfigValidationBuilder))
+  fullName: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Apq.Cfg.Validation.ConfigValidationBuilder>)
+  fullName.vb: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action(Of Apq.Cfg.Validation.ConfigValidationBuilder))
+  nameWithType: ServiceCollectionExtensions.AddConfigValidator(IServiceCollection, Action<ConfigValidationBuilder>)
+  nameWithType.vb: ServiceCollectionExtensions.AddConfigValidator(IServiceCollection, Action(Of ConfigValidationBuilder))
+- uid: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator*
+  name: AddConfigValidator
+  href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_
+  commentId: Overload:Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator
+  isSpec: "True"
+  fullName: Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator
+  nameWithType: ServiceCollectionExtensions.AddConfigValidator
 - uid: Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg*
   name: ConfigureApqCfg
   href: api/Apq.Cfg.ServiceCollectionExtensions.html#Apq_Cfg_ServiceCollectionExtensions_ConfigureApqCfg_
@@ -4704,6 +4918,491 @@ references:
   fullName.vb: Apq.Cfg.ServiceCollectionExtensions.ConfigureApqCfg(Of TOptions)(Microsoft.Extensions.DependencyInjection.IServiceCollection, String, System.Action(Of TOptions))
   nameWithType: ServiceCollectionExtensions.ConfigureApqCfg<TOptions>(IServiceCollection, string, Action<TOptions>)
   nameWithType.vb: ServiceCollectionExtensions.ConfigureApqCfg(Of TOptions)(IServiceCollection, String, Action(Of TOptions))
+- uid: Apq.Cfg.Snapshot
+  name: Apq.Cfg.Snapshot
+  href: api/Apq.Cfg.Snapshot.html
+  commentId: N:Apq.Cfg.Snapshot
+  fullName: Apq.Cfg.Snapshot
+  nameWithType: Apq.Cfg.Snapshot
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions
+  name: CfgRootSnapshotExtensions
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html
+  commentId: T:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions
+  nameWithType: CfgRootSnapshotExtensions
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.ExportOptions)
+  name: ExportSnapshot(ICfgRoot, ExportOptions?)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshot_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_ExportOptions_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.ExportOptions)
+  name.vb: ExportSnapshot(ICfgRoot, ExportOptions)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.ExportOptions?)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.ExportOptions)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshot(ICfgRoot, ExportOptions?)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshot(ICfgRoot, ExportOptions)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,Apq.Cfg.Snapshot.ExportOptions)
+  name: ExportSnapshot(ICfgRoot, SnapshotExporter, ExportOptions?)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshot_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_SnapshotExporter_Apq_Cfg_Snapshot_ExportOptions_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,Apq.Cfg.Snapshot.ExportOptions)
+  name.vb: ExportSnapshot(ICfgRoot, SnapshotExporter, ExportOptions)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, Apq.Cfg.Snapshot.ExportOptions?)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, Apq.Cfg.Snapshot.ExportOptions)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshot(ICfgRoot, SnapshotExporter, ExportOptions?)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshot(ICfgRoot, SnapshotExporter, ExportOptions)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Snapshot.ExportOptions})
+  name: ExportSnapshot(ICfgRoot, Action<ExportOptions>)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshot_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_Snapshot_ExportOptions__
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Snapshot.ExportOptions})
+  name.vb: ExportSnapshot(ICfgRoot, Action(Of ExportOptions))
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot, System.Action<Apq.Cfg.Snapshot.ExportOptions>)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot(Apq.Cfg.ICfgRoot, System.Action(Of Apq.Cfg.Snapshot.ExportOptions))
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshot(ICfgRoot, Action<ExportOptions>)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshot(ICfgRoot, Action(Of ExportOptions))
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot*
+  name: ExportSnapshot
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshot_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshot
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshot
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary(Apq.Cfg.ICfgRoot,System.Boolean)
+  name: ExportSnapshotAsDictionary(ICfgRoot, bool)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsDictionary_Apq_Cfg_ICfgRoot_System_Boolean_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary(Apq.Cfg.ICfgRoot,System.Boolean)
+  name.vb: ExportSnapshotAsDictionary(ICfgRoot, Boolean)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary(Apq.Cfg.ICfgRoot, bool)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary(Apq.Cfg.ICfgRoot, Boolean)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsDictionary(ICfgRoot, bool)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotAsDictionary(ICfgRoot, Boolean)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary*
+  name: ExportSnapshotAsDictionary
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsDictionary_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsDictionary
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsDictionary
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv(Apq.Cfg.ICfgRoot,System.String,System.Boolean)
+  name: ExportSnapshotAsEnv(ICfgRoot, string?, bool)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsEnv_Apq_Cfg_ICfgRoot_System_String_System_Boolean_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv(Apq.Cfg.ICfgRoot,System.String,System.Boolean)
+  name.vb: ExportSnapshotAsEnv(ICfgRoot, String, Boolean)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv(Apq.Cfg.ICfgRoot, string?, bool)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv(Apq.Cfg.ICfgRoot, String, Boolean)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsEnv(ICfgRoot, string?, bool)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotAsEnv(ICfgRoot, String, Boolean)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv*
+  name: ExportSnapshotAsEnv
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsEnv_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsEnv
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsEnv
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson(Apq.Cfg.ICfgRoot,System.Boolean,System.Boolean)
+  name: ExportSnapshotAsJson(ICfgRoot, bool, bool)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsJson_Apq_Cfg_ICfgRoot_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson(Apq.Cfg.ICfgRoot,System.Boolean,System.Boolean)
+  name.vb: ExportSnapshotAsJson(ICfgRoot, Boolean, Boolean)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson(Apq.Cfg.ICfgRoot, bool, bool)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson(Apq.Cfg.ICfgRoot, Boolean, Boolean)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsJson(ICfgRoot, bool, bool)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotAsJson(ICfgRoot, Boolean, Boolean)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson*
+  name: ExportSnapshotAsJson
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsJson_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsJson
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsJson
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue(Apq.Cfg.ICfgRoot,System.Boolean)
+  name: ExportSnapshotAsKeyValue(ICfgRoot, bool)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsKeyValue_Apq_Cfg_ICfgRoot_System_Boolean_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue(Apq.Cfg.ICfgRoot,System.Boolean)
+  name.vb: ExportSnapshotAsKeyValue(ICfgRoot, Boolean)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue(Apq.Cfg.ICfgRoot, bool)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue(Apq.Cfg.ICfgRoot, Boolean)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue(ICfgRoot, bool)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue(ICfgRoot, Boolean)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue*
+  name: ExportSnapshotAsKeyValue
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsKeyValue_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsKeyValue
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportSnapshotAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsync_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_SnapshotExporter_System_IO_Stream_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportSnapshotAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions?, CancellationToken)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportSnapshotAsync(ICfgRoot, Stream, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsync_Apq_Cfg_ICfgRoot_System_IO_Stream_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportSnapshotAsync(ICfgRoot, Stream, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync(Apq.Cfg.ICfgRoot, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsync(ICfgRoot, Stream, ExportOptions?, CancellationToken)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotAsync(ICfgRoot, Stream, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync*
+  name: ExportSnapshotAsync
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotAsync_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotAsync
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotAsync
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportSnapshotToFileAsync(ICfgRoot, SnapshotExporter, string, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotToFileAsync_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_SnapshotExporter_System_String_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportSnapshotToFileAsync(ICfgRoot, SnapshotExporter, String, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, string, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, String, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(ICfgRoot, SnapshotExporter, string, ExportOptions?, CancellationToken)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(ICfgRoot, SnapshotExporter, String, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportSnapshotToFileAsync(ICfgRoot, string, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotToFileAsync_Apq_Cfg_ICfgRoot_System_String_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportSnapshotToFileAsync(ICfgRoot, String, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot, string, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(Apq.Cfg.ICfgRoot, String, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(ICfgRoot, string, ExportOptions?, CancellationToken)
+  nameWithType.vb: CfgRootSnapshotExtensions.ExportSnapshotToFileAsync(ICfgRoot, String, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync*
+  name: ExportSnapshotToFileAsync
+  href: api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html#Apq_Cfg_Snapshot_CfgRootSnapshotExtensions_ExportSnapshotToFileAsync_
+  commentId: Overload:Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.ExportSnapshotToFileAsync
+  nameWithType: CfgRootSnapshotExtensions.ExportSnapshotToFileAsync
+- uid: Apq.Cfg.Snapshot.ConfigExporter
+  name: ConfigExporter
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html
+  commentId: T:Apq.Cfg.Snapshot.ConfigExporter
+  fullName: Apq.Cfg.Snapshot.ConfigExporter
+  nameWithType: ConfigExporter
+- uid: Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.ExportOptions)
+  name: Export(ICfgRoot, ExportOptions?)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_Export_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_ExportOptions_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.ExportOptions)
+  name.vb: Export(ICfgRoot, ExportOptions)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.ExportOptions?)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.ExportOptions)
+  nameWithType: ConfigExporter.Export(ICfgRoot, ExportOptions?)
+  nameWithType.vb: ConfigExporter.Export(ICfgRoot, ExportOptions)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,Apq.Cfg.Snapshot.ExportOptions)
+  name: Export(ICfgRoot, SnapshotExporter, ExportOptions?)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_Export_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_SnapshotExporter_Apq_Cfg_Snapshot_ExportOptions_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,Apq.Cfg.Snapshot.ExportOptions)
+  name.vb: Export(ICfgRoot, SnapshotExporter, ExportOptions)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, Apq.Cfg.Snapshot.ExportOptions?)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.Export(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, Apq.Cfg.Snapshot.ExportOptions)
+  nameWithType: ConfigExporter.Export(ICfgRoot, SnapshotExporter, ExportOptions?)
+  nameWithType.vb: ConfigExporter.Export(ICfgRoot, SnapshotExporter, ExportOptions)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.Export*
+  name: Export
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_Export_
+  commentId: Overload:Apq.Cfg.Snapshot.ConfigExporter.Export
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.Export
+  nameWithType: ConfigExporter.Export
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportAsync_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_SnapshotExporter_System_IO_Stream_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: ConfigExporter.ExportAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions?, CancellationToken)
+  nameWithType.vb: ConfigExporter.ExportAsync(ICfgRoot, SnapshotExporter, Stream, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportAsync(ICfgRoot, Stream, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportAsync_Apq_Cfg_ICfgRoot_System_IO_Stream_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot,System.IO.Stream,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportAsync(ICfgRoot, Stream, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync(Apq.Cfg.ICfgRoot, System.IO.Stream, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: ConfigExporter.ExportAsync(ICfgRoot, Stream, ExportOptions?, CancellationToken)
+  nameWithType.vb: ConfigExporter.ExportAsync(ICfgRoot, Stream, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync*
+  name: ExportAsync
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportAsync_
+  commentId: Overload:Apq.Cfg.Snapshot.ConfigExporter.ExportAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportAsync
+  nameWithType: ConfigExporter.ExportAsync
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.ExportOptions)
+  name: ExportToDictionary(ICfgRoot, ExportOptions?)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportToDictionary_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_ExportOptions_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.ExportOptions)
+  name.vb: ExportToDictionary(ICfgRoot, ExportOptions)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.ExportOptions?)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.ExportOptions)
+  nameWithType: ConfigExporter.ExportToDictionary(ICfgRoot, ExportOptions?)
+  nameWithType.vb: ConfigExporter.ExportToDictionary(ICfgRoot, ExportOptions)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary*
+  name: ExportToDictionary
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportToDictionary_
+  commentId: Overload:Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportToDictionary
+  nameWithType: ConfigExporter.ExportToDictionary
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportToFileAsync(ICfgRoot, SnapshotExporter, string, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportToFileAsync_Apq_Cfg_ICfgRoot_Apq_Cfg_Snapshot_SnapshotExporter_System_String_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot,Apq.Cfg.Snapshot.SnapshotExporter,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportToFileAsync(ICfgRoot, SnapshotExporter, String, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, string, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot, Apq.Cfg.Snapshot.SnapshotExporter, String, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: ConfigExporter.ExportToFileAsync(ICfgRoot, SnapshotExporter, string, ExportOptions?, CancellationToken)
+  nameWithType.vb: ConfigExporter.ExportToFileAsync(ICfgRoot, SnapshotExporter, String, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name: ExportToFileAsync(ICfgRoot, string, ExportOptions?, CancellationToken)
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportToFileAsync_Apq_Cfg_ICfgRoot_System_String_Apq_Cfg_Snapshot_ExportOptions_System_Threading_CancellationToken_
+  commentId: M:Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Snapshot.ExportOptions,System.Threading.CancellationToken)
+  name.vb: ExportToFileAsync(ICfgRoot, String, ExportOptions, CancellationToken)
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot, string, Apq.Cfg.Snapshot.ExportOptions?, System.Threading.CancellationToken)
+  fullName.vb: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync(Apq.Cfg.ICfgRoot, String, Apq.Cfg.Snapshot.ExportOptions, System.Threading.CancellationToken)
+  nameWithType: ConfigExporter.ExportToFileAsync(ICfgRoot, string, ExportOptions?, CancellationToken)
+  nameWithType.vb: ConfigExporter.ExportToFileAsync(ICfgRoot, String, ExportOptions, CancellationToken)
+- uid: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync*
+  name: ExportToFileAsync
+  href: api/Apq.Cfg.Snapshot.ConfigExporter.html#Apq_Cfg_Snapshot_ConfigExporter_ExportToFileAsync_
+  commentId: Overload:Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ConfigExporter.ExportToFileAsync
+  nameWithType: ConfigExporter.ExportToFileAsync
+- uid: Apq.Cfg.Snapshot.ExportContext
+  name: ExportContext
+  href: api/Apq.Cfg.Snapshot.ExportContext.html
+  commentId: T:Apq.Cfg.Snapshot.ExportContext
+  fullName: Apq.Cfg.Snapshot.ExportContext
+  nameWithType: ExportContext
+- uid: Apq.Cfg.Snapshot.ExportContext.EnvPrefix
+  name: EnvPrefix
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_EnvPrefix
+  commentId: P:Apq.Cfg.Snapshot.ExportContext.EnvPrefix
+  fullName: Apq.Cfg.Snapshot.ExportContext.EnvPrefix
+  nameWithType: ExportContext.EnvPrefix
+- uid: Apq.Cfg.Snapshot.ExportContext.EnvPrefix*
+  name: EnvPrefix
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_EnvPrefix_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportContext.EnvPrefix
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportContext.EnvPrefix
+  nameWithType: ExportContext.EnvPrefix
+- uid: Apq.Cfg.Snapshot.ExportContext.ExportedAt
+  name: ExportedAt
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_ExportedAt
+  commentId: P:Apq.Cfg.Snapshot.ExportContext.ExportedAt
+  fullName: Apq.Cfg.Snapshot.ExportContext.ExportedAt
+  nameWithType: ExportContext.ExportedAt
+- uid: Apq.Cfg.Snapshot.ExportContext.ExportedAt*
+  name: ExportedAt
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_ExportedAt_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportContext.ExportedAt
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportContext.ExportedAt
+  nameWithType: ExportContext.ExportedAt
+- uid: Apq.Cfg.Snapshot.ExportContext.IncludeMetadata
+  name: IncludeMetadata
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_IncludeMetadata
+  commentId: P:Apq.Cfg.Snapshot.ExportContext.IncludeMetadata
+  fullName: Apq.Cfg.Snapshot.ExportContext.IncludeMetadata
+  nameWithType: ExportContext.IncludeMetadata
+- uid: Apq.Cfg.Snapshot.ExportContext.IncludeMetadata*
+  name: IncludeMetadata
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_IncludeMetadata_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportContext.IncludeMetadata
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportContext.IncludeMetadata
+  nameWithType: ExportContext.IncludeMetadata
+- uid: Apq.Cfg.Snapshot.ExportContext.Indented
+  name: Indented
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_Indented
+  commentId: P:Apq.Cfg.Snapshot.ExportContext.Indented
+  fullName: Apq.Cfg.Snapshot.ExportContext.Indented
+  nameWithType: ExportContext.Indented
+- uid: Apq.Cfg.Snapshot.ExportContext.Indented*
+  name: Indented
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_Indented_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportContext.Indented
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportContext.Indented
+  nameWithType: ExportContext.Indented
+- uid: Apq.Cfg.Snapshot.ExportContext.KeyCount
+  name: KeyCount
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_KeyCount
+  commentId: P:Apq.Cfg.Snapshot.ExportContext.KeyCount
+  fullName: Apq.Cfg.Snapshot.ExportContext.KeyCount
+  nameWithType: ExportContext.KeyCount
+- uid: Apq.Cfg.Snapshot.ExportContext.KeyCount*
+  name: KeyCount
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_KeyCount_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportContext.KeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportContext.KeyCount
+  nameWithType: ExportContext.KeyCount
+- uid: Apq.Cfg.Snapshot.ExportContext.Properties
+  name: Properties
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_Properties
+  commentId: P:Apq.Cfg.Snapshot.ExportContext.Properties
+  fullName: Apq.Cfg.Snapshot.ExportContext.Properties
+  nameWithType: ExportContext.Properties
+- uid: Apq.Cfg.Snapshot.ExportContext.Properties*
+  name: Properties
+  href: api/Apq.Cfg.Snapshot.ExportContext.html#Apq_Cfg_Snapshot_ExportContext_Properties_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportContext.Properties
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportContext.Properties
+  nameWithType: ExportContext.Properties
+- uid: Apq.Cfg.Snapshot.ExportOptions
+  name: ExportOptions
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html
+  commentId: T:Apq.Cfg.Snapshot.ExportOptions
+  fullName: Apq.Cfg.Snapshot.ExportOptions
+  nameWithType: ExportOptions
+- uid: Apq.Cfg.Snapshot.ExportOptions.EnvPrefix
+  name: EnvPrefix
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_EnvPrefix
+  commentId: P:Apq.Cfg.Snapshot.ExportOptions.EnvPrefix
+  fullName: Apq.Cfg.Snapshot.ExportOptions.EnvPrefix
+  nameWithType: ExportOptions.EnvPrefix
+- uid: Apq.Cfg.Snapshot.ExportOptions.EnvPrefix*
+  name: EnvPrefix
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_EnvPrefix_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportOptions.EnvPrefix
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportOptions.EnvPrefix
+  nameWithType: ExportOptions.EnvPrefix
+- uid: Apq.Cfg.Snapshot.ExportOptions.ExcludeKeys
+  name: ExcludeKeys
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_ExcludeKeys
+  commentId: P:Apq.Cfg.Snapshot.ExportOptions.ExcludeKeys
+  fullName: Apq.Cfg.Snapshot.ExportOptions.ExcludeKeys
+  nameWithType: ExportOptions.ExcludeKeys
+- uid: Apq.Cfg.Snapshot.ExportOptions.ExcludeKeys*
+  name: ExcludeKeys
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_ExcludeKeys_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportOptions.ExcludeKeys
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportOptions.ExcludeKeys
+  nameWithType: ExportOptions.ExcludeKeys
+- uid: Apq.Cfg.Snapshot.ExportOptions.IncludeKeys
+  name: IncludeKeys
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_IncludeKeys
+  commentId: P:Apq.Cfg.Snapshot.ExportOptions.IncludeKeys
+  fullName: Apq.Cfg.Snapshot.ExportOptions.IncludeKeys
+  nameWithType: ExportOptions.IncludeKeys
+- uid: Apq.Cfg.Snapshot.ExportOptions.IncludeKeys*
+  name: IncludeKeys
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_IncludeKeys_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportOptions.IncludeKeys
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportOptions.IncludeKeys
+  nameWithType: ExportOptions.IncludeKeys
+- uid: Apq.Cfg.Snapshot.ExportOptions.IncludeMetadata
+  name: IncludeMetadata
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_IncludeMetadata
+  commentId: P:Apq.Cfg.Snapshot.ExportOptions.IncludeMetadata
+  fullName: Apq.Cfg.Snapshot.ExportOptions.IncludeMetadata
+  nameWithType: ExportOptions.IncludeMetadata
+- uid: Apq.Cfg.Snapshot.ExportOptions.IncludeMetadata*
+  name: IncludeMetadata
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_IncludeMetadata_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportOptions.IncludeMetadata
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportOptions.IncludeMetadata
+  nameWithType: ExportOptions.IncludeMetadata
+- uid: Apq.Cfg.Snapshot.ExportOptions.Indented
+  name: Indented
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_Indented
+  commentId: P:Apq.Cfg.Snapshot.ExportOptions.Indented
+  fullName: Apq.Cfg.Snapshot.ExportOptions.Indented
+  nameWithType: ExportOptions.Indented
+- uid: Apq.Cfg.Snapshot.ExportOptions.Indented*
+  name: Indented
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_Indented_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportOptions.Indented
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportOptions.Indented
+  nameWithType: ExportOptions.Indented
+- uid: Apq.Cfg.Snapshot.ExportOptions.MaskSensitiveValues
+  name: MaskSensitiveValues
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_MaskSensitiveValues
+  commentId: P:Apq.Cfg.Snapshot.ExportOptions.MaskSensitiveValues
+  fullName: Apq.Cfg.Snapshot.ExportOptions.MaskSensitiveValues
+  nameWithType: ExportOptions.MaskSensitiveValues
+- uid: Apq.Cfg.Snapshot.ExportOptions.MaskSensitiveValues*
+  name: MaskSensitiveValues
+  href: api/Apq.Cfg.Snapshot.ExportOptions.html#Apq_Cfg_Snapshot_ExportOptions_MaskSensitiveValues_
+  commentId: Overload:Apq.Cfg.Snapshot.ExportOptions.MaskSensitiveValues
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.ExportOptions.MaskSensitiveValues
+  nameWithType: ExportOptions.MaskSensitiveValues
+- uid: Apq.Cfg.Snapshot.SnapshotExporter
+  name: SnapshotExporter
+  href: api/Apq.Cfg.Snapshot.SnapshotExporter.html
+  commentId: T:Apq.Cfg.Snapshot.SnapshotExporter
+  fullName: Apq.Cfg.Snapshot.SnapshotExporter
+  nameWithType: SnapshotExporter
+- uid: Apq.Cfg.Snapshot.SnapshotExporters
+  name: SnapshotExporters
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html
+  commentId: T:Apq.Cfg.Snapshot.SnapshotExporters
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters
+  nameWithType: SnapshotExporters
+- uid: Apq.Cfg.Snapshot.SnapshotExporters.Env(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},Apq.Cfg.Snapshot.ExportContext)
+  name: Env(IReadOnlyDictionary<string, string?>, ExportContext)
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html#Apq_Cfg_Snapshot_SnapshotExporters_Env_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__Apq_Cfg_Snapshot_ExportContext_
+  commentId: M:Apq.Cfg.Snapshot.SnapshotExporters.Env(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},Apq.Cfg.Snapshot.ExportContext)
+  name.vb: Env(IReadOnlyDictionary(Of String, String), ExportContext)
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters.Env(System.Collections.Generic.IReadOnlyDictionary<string, string?>, Apq.Cfg.Snapshot.ExportContext)
+  fullName.vb: Apq.Cfg.Snapshot.SnapshotExporters.Env(System.Collections.Generic.IReadOnlyDictionary(Of String, String), Apq.Cfg.Snapshot.ExportContext)
+  nameWithType: SnapshotExporters.Env(IReadOnlyDictionary<string, string?>, ExportContext)
+  nameWithType.vb: SnapshotExporters.Env(IReadOnlyDictionary(Of String, String), ExportContext)
+- uid: Apq.Cfg.Snapshot.SnapshotExporters.Env*
+  name: Env
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html#Apq_Cfg_Snapshot_SnapshotExporters_Env_
+  commentId: Overload:Apq.Cfg.Snapshot.SnapshotExporters.Env
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters.Env
+  nameWithType: SnapshotExporters.Env
+- uid: Apq.Cfg.Snapshot.SnapshotExporters.Json(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},Apq.Cfg.Snapshot.ExportContext)
+  name: Json(IReadOnlyDictionary<string, string?>, ExportContext)
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html#Apq_Cfg_Snapshot_SnapshotExporters_Json_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__Apq_Cfg_Snapshot_ExportContext_
+  commentId: M:Apq.Cfg.Snapshot.SnapshotExporters.Json(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},Apq.Cfg.Snapshot.ExportContext)
+  name.vb: Json(IReadOnlyDictionary(Of String, String), ExportContext)
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters.Json(System.Collections.Generic.IReadOnlyDictionary<string, string?>, Apq.Cfg.Snapshot.ExportContext)
+  fullName.vb: Apq.Cfg.Snapshot.SnapshotExporters.Json(System.Collections.Generic.IReadOnlyDictionary(Of String, String), Apq.Cfg.Snapshot.ExportContext)
+  nameWithType: SnapshotExporters.Json(IReadOnlyDictionary<string, string?>, ExportContext)
+  nameWithType.vb: SnapshotExporters.Json(IReadOnlyDictionary(Of String, String), ExportContext)
+- uid: Apq.Cfg.Snapshot.SnapshotExporters.Json*
+  name: Json
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html#Apq_Cfg_Snapshot_SnapshotExporters_Json_
+  commentId: Overload:Apq.Cfg.Snapshot.SnapshotExporters.Json
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters.Json
+  nameWithType: SnapshotExporters.Json
+- uid: Apq.Cfg.Snapshot.SnapshotExporters.KeyValue(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},Apq.Cfg.Snapshot.ExportContext)
+  name: KeyValue(IReadOnlyDictionary<string, string?>, ExportContext)
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html#Apq_Cfg_Snapshot_SnapshotExporters_KeyValue_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__Apq_Cfg_Snapshot_ExportContext_
+  commentId: M:Apq.Cfg.Snapshot.SnapshotExporters.KeyValue(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},Apq.Cfg.Snapshot.ExportContext)
+  name.vb: KeyValue(IReadOnlyDictionary(Of String, String), ExportContext)
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters.KeyValue(System.Collections.Generic.IReadOnlyDictionary<string, string?>, Apq.Cfg.Snapshot.ExportContext)
+  fullName.vb: Apq.Cfg.Snapshot.SnapshotExporters.KeyValue(System.Collections.Generic.IReadOnlyDictionary(Of String, String), Apq.Cfg.Snapshot.ExportContext)
+  nameWithType: SnapshotExporters.KeyValue(IReadOnlyDictionary<string, string?>, ExportContext)
+  nameWithType.vb: SnapshotExporters.KeyValue(IReadOnlyDictionary(Of String, String), ExportContext)
+- uid: Apq.Cfg.Snapshot.SnapshotExporters.KeyValue*
+  name: KeyValue
+  href: api/Apq.Cfg.Snapshot.SnapshotExporters.html#Apq_Cfg_Snapshot_SnapshotExporters_KeyValue_
+  commentId: Overload:Apq.Cfg.Snapshot.SnapshotExporters.KeyValue
+  isSpec: "True"
+  fullName: Apq.Cfg.Snapshot.SnapshotExporters.KeyValue
+  nameWithType: SnapshotExporters.KeyValue
 - uid: Apq.Cfg.SourceGenerator
   name: Apq.Cfg.SourceGenerator
   href: api/Apq.Cfg.SourceGenerator.html
@@ -5035,6 +5734,412 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.IWritableCfgSource.ApplyChangesAsync
   nameWithType: IWritableCfgSource.ApplyChangesAsync
+- uid: Apq.Cfg.Template
+  name: Apq.Cfg.Template
+  href: api/Apq.Cfg.Template.html
+  commentId: N:Apq.Cfg.Template
+  fullName: Apq.Cfg.Template
+  nameWithType: Apq.Cfg.Template
+- uid: Apq.Cfg.Template.IVariableResolver
+  name: IVariableResolver
+  href: api/Apq.Cfg.Template.IVariableResolver.html
+  commentId: T:Apq.Cfg.Template.IVariableResolver
+  fullName: Apq.Cfg.Template.IVariableResolver
+  nameWithType: IVariableResolver
+- uid: Apq.Cfg.Template.IVariableResolver.Prefix
+  name: Prefix
+  href: api/Apq.Cfg.Template.IVariableResolver.html#Apq_Cfg_Template_IVariableResolver_Prefix
+  commentId: P:Apq.Cfg.Template.IVariableResolver.Prefix
+  fullName: Apq.Cfg.Template.IVariableResolver.Prefix
+  nameWithType: IVariableResolver.Prefix
+- uid: Apq.Cfg.Template.IVariableResolver.Prefix*
+  name: Prefix
+  href: api/Apq.Cfg.Template.IVariableResolver.html#Apq_Cfg_Template_IVariableResolver_Prefix_
+  commentId: Overload:Apq.Cfg.Template.IVariableResolver.Prefix
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.IVariableResolver.Prefix
+  nameWithType: IVariableResolver.Prefix
+- uid: Apq.Cfg.Template.IVariableResolver.Resolve(System.String,Apq.Cfg.ICfgRoot)
+  name: Resolve(string, ICfgRoot)
+  href: api/Apq.Cfg.Template.IVariableResolver.html#Apq_Cfg_Template_IVariableResolver_Resolve_System_String_Apq_Cfg_ICfgRoot_
+  commentId: M:Apq.Cfg.Template.IVariableResolver.Resolve(System.String,Apq.Cfg.ICfgRoot)
+  name.vb: Resolve(String, ICfgRoot)
+  fullName: Apq.Cfg.Template.IVariableResolver.Resolve(string, Apq.Cfg.ICfgRoot)
+  fullName.vb: Apq.Cfg.Template.IVariableResolver.Resolve(String, Apq.Cfg.ICfgRoot)
+  nameWithType: IVariableResolver.Resolve(string, ICfgRoot)
+  nameWithType.vb: IVariableResolver.Resolve(String, ICfgRoot)
+- uid: Apq.Cfg.Template.IVariableResolver.Resolve*
+  name: Resolve
+  href: api/Apq.Cfg.Template.IVariableResolver.html#Apq_Cfg_Template_IVariableResolver_Resolve_
+  commentId: Overload:Apq.Cfg.Template.IVariableResolver.Resolve
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.IVariableResolver.Resolve
+  nameWithType: IVariableResolver.Resolve
+- uid: Apq.Cfg.Template.TemplateEngine
+  name: TemplateEngine
+  href: api/Apq.Cfg.Template.TemplateEngine.html
+  commentId: T:Apq.Cfg.Template.TemplateEngine
+  fullName: Apq.Cfg.Template.TemplateEngine
+  nameWithType: TemplateEngine
+- uid: Apq.Cfg.Template.TemplateEngine.#ctor(Apq.Cfg.Template.VariableResolutionOptions)
+  name: TemplateEngine(VariableResolutionOptions?)
+  href: api/Apq.Cfg.Template.TemplateEngine.html#Apq_Cfg_Template_TemplateEngine__ctor_Apq_Cfg_Template_VariableResolutionOptions_
+  commentId: M:Apq.Cfg.Template.TemplateEngine.#ctor(Apq.Cfg.Template.VariableResolutionOptions)
+  name.vb: New(VariableResolutionOptions)
+  fullName: Apq.Cfg.Template.TemplateEngine.TemplateEngine(Apq.Cfg.Template.VariableResolutionOptions?)
+  fullName.vb: Apq.Cfg.Template.TemplateEngine.New(Apq.Cfg.Template.VariableResolutionOptions)
+  nameWithType: TemplateEngine.TemplateEngine(VariableResolutionOptions?)
+  nameWithType.vb: TemplateEngine.New(VariableResolutionOptions)
+- uid: Apq.Cfg.Template.TemplateEngine.#ctor*
+  name: TemplateEngine
+  href: api/Apq.Cfg.Template.TemplateEngine.html#Apq_Cfg_Template_TemplateEngine__ctor_
+  commentId: Overload:Apq.Cfg.Template.TemplateEngine.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Template.TemplateEngine.TemplateEngine
+  fullName.vb: Apq.Cfg.Template.TemplateEngine.New
+  nameWithType: TemplateEngine.TemplateEngine
+  nameWithType.vb: TemplateEngine.New
+- uid: Apq.Cfg.Template.TemplateEngine.ClearCache
+  name: ClearCache()
+  href: api/Apq.Cfg.Template.TemplateEngine.html#Apq_Cfg_Template_TemplateEngine_ClearCache
+  commentId: M:Apq.Cfg.Template.TemplateEngine.ClearCache
+  fullName: Apq.Cfg.Template.TemplateEngine.ClearCache()
+  nameWithType: TemplateEngine.ClearCache()
+- uid: Apq.Cfg.Template.TemplateEngine.ClearCache*
+  name: ClearCache
+  href: api/Apq.Cfg.Template.TemplateEngine.html#Apq_Cfg_Template_TemplateEngine_ClearCache_
+  commentId: Overload:Apq.Cfg.Template.TemplateEngine.ClearCache
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.TemplateEngine.ClearCache
+  nameWithType: TemplateEngine.ClearCache
+- uid: Apq.Cfg.Template.TemplateEngine.Resolve(System.String,Apq.Cfg.ICfgRoot)
+  name: Resolve(string?, ICfgRoot)
+  href: api/Apq.Cfg.Template.TemplateEngine.html#Apq_Cfg_Template_TemplateEngine_Resolve_System_String_Apq_Cfg_ICfgRoot_
+  commentId: M:Apq.Cfg.Template.TemplateEngine.Resolve(System.String,Apq.Cfg.ICfgRoot)
+  name.vb: Resolve(String, ICfgRoot)
+  fullName: Apq.Cfg.Template.TemplateEngine.Resolve(string?, Apq.Cfg.ICfgRoot)
+  fullName.vb: Apq.Cfg.Template.TemplateEngine.Resolve(String, Apq.Cfg.ICfgRoot)
+  nameWithType: TemplateEngine.Resolve(string?, ICfgRoot)
+  nameWithType.vb: TemplateEngine.Resolve(String, ICfgRoot)
+- uid: Apq.Cfg.Template.TemplateEngine.Resolve*
+  name: Resolve
+  href: api/Apq.Cfg.Template.TemplateEngine.html#Apq_Cfg_Template_TemplateEngine_Resolve_
+  commentId: Overload:Apq.Cfg.Template.TemplateEngine.Resolve
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.TemplateEngine.Resolve
+  nameWithType: TemplateEngine.Resolve
+- uid: Apq.Cfg.Template.UnresolvedVariableBehavior
+  name: UnresolvedVariableBehavior
+  href: api/Apq.Cfg.Template.UnresolvedVariableBehavior.html
+  commentId: T:Apq.Cfg.Template.UnresolvedVariableBehavior
+  fullName: Apq.Cfg.Template.UnresolvedVariableBehavior
+  nameWithType: UnresolvedVariableBehavior
+- uid: Apq.Cfg.Template.UnresolvedVariableBehavior.Empty
+  name: Empty
+  href: api/Apq.Cfg.Template.UnresolvedVariableBehavior.html#Apq_Cfg_Template_UnresolvedVariableBehavior_Empty
+  commentId: F:Apq.Cfg.Template.UnresolvedVariableBehavior.Empty
+  fullName: Apq.Cfg.Template.UnresolvedVariableBehavior.Empty
+  nameWithType: UnresolvedVariableBehavior.Empty
+- uid: Apq.Cfg.Template.UnresolvedVariableBehavior.Keep
+  name: Keep
+  href: api/Apq.Cfg.Template.UnresolvedVariableBehavior.html#Apq_Cfg_Template_UnresolvedVariableBehavior_Keep
+  commentId: F:Apq.Cfg.Template.UnresolvedVariableBehavior.Keep
+  fullName: Apq.Cfg.Template.UnresolvedVariableBehavior.Keep
+  nameWithType: UnresolvedVariableBehavior.Keep
+- uid: Apq.Cfg.Template.UnresolvedVariableBehavior.Throw
+  name: Throw
+  href: api/Apq.Cfg.Template.UnresolvedVariableBehavior.html#Apq_Cfg_Template_UnresolvedVariableBehavior_Throw
+  commentId: F:Apq.Cfg.Template.UnresolvedVariableBehavior.Throw
+  fullName: Apq.Cfg.Template.UnresolvedVariableBehavior.Throw
+  nameWithType: UnresolvedVariableBehavior.Throw
+- uid: Apq.Cfg.Template.VariableResolutionOptions
+  name: VariableResolutionOptions
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html
+  commentId: T:Apq.Cfg.Template.VariableResolutionOptions
+  fullName: Apq.Cfg.Template.VariableResolutionOptions
+  nameWithType: VariableResolutionOptions
+- uid: Apq.Cfg.Template.VariableResolutionOptions.CacheResults
+  name: CacheResults
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_CacheResults
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.CacheResults
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.CacheResults
+  nameWithType: VariableResolutionOptions.CacheResults
+- uid: Apq.Cfg.Template.VariableResolutionOptions.CacheResults*
+  name: CacheResults
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_CacheResults_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.CacheResults
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.CacheResults
+  nameWithType: VariableResolutionOptions.CacheResults
+- uid: Apq.Cfg.Template.VariableResolutionOptions.Default
+  name: Default
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_Default
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.Default
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.Default
+  nameWithType: VariableResolutionOptions.Default
+- uid: Apq.Cfg.Template.VariableResolutionOptions.Default*
+  name: Default
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_Default_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.Default
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.Default
+  nameWithType: VariableResolutionOptions.Default
+- uid: Apq.Cfg.Template.VariableResolutionOptions.InvalidateCacheOnChange
+  name: InvalidateCacheOnChange
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_InvalidateCacheOnChange
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.InvalidateCacheOnChange
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.InvalidateCacheOnChange
+  nameWithType: VariableResolutionOptions.InvalidateCacheOnChange
+- uid: Apq.Cfg.Template.VariableResolutionOptions.InvalidateCacheOnChange*
+  name: InvalidateCacheOnChange
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_InvalidateCacheOnChange_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.InvalidateCacheOnChange
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.InvalidateCacheOnChange
+  nameWithType: VariableResolutionOptions.InvalidateCacheOnChange
+- uid: Apq.Cfg.Template.VariableResolutionOptions.MaxRecursionDepth
+  name: MaxRecursionDepth
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_MaxRecursionDepth
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.MaxRecursionDepth
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.MaxRecursionDepth
+  nameWithType: VariableResolutionOptions.MaxRecursionDepth
+- uid: Apq.Cfg.Template.VariableResolutionOptions.MaxRecursionDepth*
+  name: MaxRecursionDepth
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_MaxRecursionDepth_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.MaxRecursionDepth
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.MaxRecursionDepth
+  nameWithType: VariableResolutionOptions.MaxRecursionDepth
+- uid: Apq.Cfg.Template.VariableResolutionOptions.PrefixSeparator
+  name: PrefixSeparator
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_PrefixSeparator
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.PrefixSeparator
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.PrefixSeparator
+  nameWithType: VariableResolutionOptions.PrefixSeparator
+- uid: Apq.Cfg.Template.VariableResolutionOptions.PrefixSeparator*
+  name: PrefixSeparator
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_PrefixSeparator_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.PrefixSeparator
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.PrefixSeparator
+  nameWithType: VariableResolutionOptions.PrefixSeparator
+- uid: Apq.Cfg.Template.VariableResolutionOptions.Resolvers
+  name: Resolvers
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_Resolvers
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.Resolvers
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.Resolvers
+  nameWithType: VariableResolutionOptions.Resolvers
+- uid: Apq.Cfg.Template.VariableResolutionOptions.Resolvers*
+  name: Resolvers
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_Resolvers_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.Resolvers
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.Resolvers
+  nameWithType: VariableResolutionOptions.Resolvers
+- uid: Apq.Cfg.Template.VariableResolutionOptions.UnresolvedBehavior
+  name: UnresolvedBehavior
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_UnresolvedBehavior
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.UnresolvedBehavior
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.UnresolvedBehavior
+  nameWithType: VariableResolutionOptions.UnresolvedBehavior
+- uid: Apq.Cfg.Template.VariableResolutionOptions.UnresolvedBehavior*
+  name: UnresolvedBehavior
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_UnresolvedBehavior_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.UnresolvedBehavior
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.UnresolvedBehavior
+  nameWithType: VariableResolutionOptions.UnresolvedBehavior
+- uid: Apq.Cfg.Template.VariableResolutionOptions.VariablePrefix
+  name: VariablePrefix
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_VariablePrefix
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.VariablePrefix
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.VariablePrefix
+  nameWithType: VariableResolutionOptions.VariablePrefix
+- uid: Apq.Cfg.Template.VariableResolutionOptions.VariablePrefix*
+  name: VariablePrefix
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_VariablePrefix_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.VariablePrefix
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.VariablePrefix
+  nameWithType: VariableResolutionOptions.VariablePrefix
+- uid: Apq.Cfg.Template.VariableResolutionOptions.VariableSuffix
+  name: VariableSuffix
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_VariableSuffix
+  commentId: P:Apq.Cfg.Template.VariableResolutionOptions.VariableSuffix
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.VariableSuffix
+  nameWithType: VariableResolutionOptions.VariableSuffix
+- uid: Apq.Cfg.Template.VariableResolutionOptions.VariableSuffix*
+  name: VariableSuffix
+  href: api/Apq.Cfg.Template.VariableResolutionOptions.html#Apq_Cfg_Template_VariableResolutionOptions_VariableSuffix_
+  commentId: Overload:Apq.Cfg.Template.VariableResolutionOptions.VariableSuffix
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolutionOptions.VariableSuffix
+  nameWithType: VariableResolutionOptions.VariableSuffix
+- uid: Apq.Cfg.Template.VariableResolvers
+  name: VariableResolvers
+  href: api/Apq.Cfg.Template.VariableResolvers.html
+  commentId: T:Apq.Cfg.Template.VariableResolvers
+  fullName: Apq.Cfg.Template.VariableResolvers
+  nameWithType: VariableResolvers
+- uid: Apq.Cfg.Template.VariableResolvers.All
+  name: All
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_All
+  commentId: P:Apq.Cfg.Template.VariableResolvers.All
+  fullName: Apq.Cfg.Template.VariableResolvers.All
+  nameWithType: VariableResolvers.All
+- uid: Apq.Cfg.Template.VariableResolvers.All*
+  name: All
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_All_
+  commentId: Overload:Apq.Cfg.Template.VariableResolvers.All
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolvers.All
+  nameWithType: VariableResolvers.All
+- uid: Apq.Cfg.Template.VariableResolvers.Config
+  name: Config
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_Config
+  commentId: P:Apq.Cfg.Template.VariableResolvers.Config
+  fullName: Apq.Cfg.Template.VariableResolvers.Config
+  nameWithType: VariableResolvers.Config
+- uid: Apq.Cfg.Template.VariableResolvers.Config*
+  name: Config
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_Config_
+  commentId: Overload:Apq.Cfg.Template.VariableResolvers.Config
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolvers.Config
+  nameWithType: VariableResolvers.Config
+- uid: Apq.Cfg.Template.VariableResolvers.Environment
+  name: Environment
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_Environment
+  commentId: P:Apq.Cfg.Template.VariableResolvers.Environment
+  fullName: Apq.Cfg.Template.VariableResolvers.Environment
+  nameWithType: VariableResolvers.Environment
+- uid: Apq.Cfg.Template.VariableResolvers.Environment*
+  name: Environment
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_Environment_
+  commentId: Overload:Apq.Cfg.Template.VariableResolvers.Environment
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolvers.Environment
+  nameWithType: VariableResolvers.Environment
+- uid: Apq.Cfg.Template.VariableResolvers.System
+  name: System
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_System
+  commentId: P:Apq.Cfg.Template.VariableResolvers.System
+  fullName: Apq.Cfg.Template.VariableResolvers.System
+  nameWithType: VariableResolvers.System
+- uid: Apq.Cfg.Template.VariableResolvers.System*
+  name: System
+  href: api/Apq.Cfg.Template.VariableResolvers.html#Apq_Cfg_Template_VariableResolvers_System_
+  commentId: Overload:Apq.Cfg.Template.VariableResolvers.System
+  isSpec: "True"
+  fullName: Apq.Cfg.Template.VariableResolvers.System
+  nameWithType: VariableResolvers.System
+- uid: Apq.Cfg.TemplateExtensions
+  name: TemplateExtensions
+  href: api/Apq.Cfg.TemplateExtensions.html
+  commentId: T:Apq.Cfg.TemplateExtensions
+  fullName: Apq.Cfg.TemplateExtensions
+  nameWithType: TemplateExtensions
+- uid: Apq.Cfg.TemplateExtensions.GetManyResolved(Apq.Cfg.ICfgRoot,System.Collections.Generic.IEnumerable{System.String})
+  name: GetManyResolved(ICfgRoot, IEnumerable<string>)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_GetManyResolved_Apq_Cfg_ICfgRoot_System_Collections_Generic_IEnumerable_System_String__
+  commentId: M:Apq.Cfg.TemplateExtensions.GetManyResolved(Apq.Cfg.ICfgRoot,System.Collections.Generic.IEnumerable{System.String})
+  name.vb: GetManyResolved(ICfgRoot, IEnumerable(Of String))
+  fullName: Apq.Cfg.TemplateExtensions.GetManyResolved(Apq.Cfg.ICfgRoot, System.Collections.Generic.IEnumerable<string>)
+  fullName.vb: Apq.Cfg.TemplateExtensions.GetManyResolved(Apq.Cfg.ICfgRoot, System.Collections.Generic.IEnumerable(Of String))
+  nameWithType: TemplateExtensions.GetManyResolved(ICfgRoot, IEnumerable<string>)
+  nameWithType.vb: TemplateExtensions.GetManyResolved(ICfgRoot, IEnumerable(Of String))
+- uid: Apq.Cfg.TemplateExtensions.GetManyResolved*
+  name: GetManyResolved
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_GetManyResolved_
+  commentId: Overload:Apq.Cfg.TemplateExtensions.GetManyResolved
+  isSpec: "True"
+  fullName: Apq.Cfg.TemplateExtensions.GetManyResolved
+  nameWithType: TemplateExtensions.GetManyResolved
+- uid: Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot,System.String)
+  name: GetResolved(ICfgRoot, string)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_GetResolved_Apq_Cfg_ICfgRoot_System_String_
+  commentId: M:Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot,System.String)
+  name.vb: GetResolved(ICfgRoot, String)
+  fullName: Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot, string)
+  fullName.vb: Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot, String)
+  nameWithType: TemplateExtensions.GetResolved(ICfgRoot, string)
+  nameWithType.vb: TemplateExtensions.GetResolved(ICfgRoot, String)
+- uid: Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Template.VariableResolutionOptions)
+  name: GetResolved(ICfgRoot, string, VariableResolutionOptions)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_GetResolved_Apq_Cfg_ICfgRoot_System_String_Apq_Cfg_Template_VariableResolutionOptions_
+  commentId: M:Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Template.VariableResolutionOptions)
+  name.vb: GetResolved(ICfgRoot, String, VariableResolutionOptions)
+  fullName: Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot, string, Apq.Cfg.Template.VariableResolutionOptions)
+  fullName.vb: Apq.Cfg.TemplateExtensions.GetResolved(Apq.Cfg.ICfgRoot, String, Apq.Cfg.Template.VariableResolutionOptions)
+  nameWithType: TemplateExtensions.GetResolved(ICfgRoot, string, VariableResolutionOptions)
+  nameWithType.vb: TemplateExtensions.GetResolved(ICfgRoot, String, VariableResolutionOptions)
+- uid: Apq.Cfg.TemplateExtensions.GetResolved*
+  name: GetResolved
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_GetResolved_
+  commentId: Overload:Apq.Cfg.TemplateExtensions.GetResolved
+  isSpec: "True"
+  fullName: Apq.Cfg.TemplateExtensions.GetResolved
+  nameWithType: TemplateExtensions.GetResolved
+- uid: Apq.Cfg.TemplateExtensions.GetResolved``1(Apq.Cfg.ICfgRoot,System.String)
+  name: GetResolved<T>(ICfgRoot, string)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_GetResolved__1_Apq_Cfg_ICfgRoot_System_String_
+  commentId: M:Apq.Cfg.TemplateExtensions.GetResolved``1(Apq.Cfg.ICfgRoot,System.String)
+  name.vb: GetResolved(Of T)(ICfgRoot, String)
+  fullName: Apq.Cfg.TemplateExtensions.GetResolved<T>(Apq.Cfg.ICfgRoot, string)
+  fullName.vb: Apq.Cfg.TemplateExtensions.GetResolved(Of T)(Apq.Cfg.ICfgRoot, String)
+  nameWithType: TemplateExtensions.GetResolved<T>(ICfgRoot, string)
+  nameWithType.vb: TemplateExtensions.GetResolved(Of T)(ICfgRoot, String)
+- uid: Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot,System.String)
+  name: ResolveVariables(ICfgRoot, string?)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_ResolveVariables_Apq_Cfg_ICfgRoot_System_String_
+  commentId: M:Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot,System.String)
+  name.vb: ResolveVariables(ICfgRoot, String)
+  fullName: Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot, string?)
+  fullName.vb: Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot, String)
+  nameWithType: TemplateExtensions.ResolveVariables(ICfgRoot, string?)
+  nameWithType.vb: TemplateExtensions.ResolveVariables(ICfgRoot, String)
+- uid: Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Template.VariableResolutionOptions)
+  name: ResolveVariables(ICfgRoot, string?, VariableResolutionOptions)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_ResolveVariables_Apq_Cfg_ICfgRoot_System_String_Apq_Cfg_Template_VariableResolutionOptions_
+  commentId: M:Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot,System.String,Apq.Cfg.Template.VariableResolutionOptions)
+  name.vb: ResolveVariables(ICfgRoot, String, VariableResolutionOptions)
+  fullName: Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot, string?, Apq.Cfg.Template.VariableResolutionOptions)
+  fullName.vb: Apq.Cfg.TemplateExtensions.ResolveVariables(Apq.Cfg.ICfgRoot, String, Apq.Cfg.Template.VariableResolutionOptions)
+  nameWithType: TemplateExtensions.ResolveVariables(ICfgRoot, string?, VariableResolutionOptions)
+  nameWithType.vb: TemplateExtensions.ResolveVariables(ICfgRoot, String, VariableResolutionOptions)
+- uid: Apq.Cfg.TemplateExtensions.ResolveVariables*
+  name: ResolveVariables
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_ResolveVariables_
+  commentId: Overload:Apq.Cfg.TemplateExtensions.ResolveVariables
+  isSpec: "True"
+  fullName: Apq.Cfg.TemplateExtensions.ResolveVariables
+  nameWithType: TemplateExtensions.ResolveVariables
+- uid: Apq.Cfg.TemplateExtensions.TryGetResolved(Apq.Cfg.ICfgRoot,System.String,System.String@)
+  name: TryGetResolved(ICfgRoot, string, out string?)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_TryGetResolved_Apq_Cfg_ICfgRoot_System_String_System_String__
+  commentId: M:Apq.Cfg.TemplateExtensions.TryGetResolved(Apq.Cfg.ICfgRoot,System.String,System.String@)
+  name.vb: TryGetResolved(ICfgRoot, String, String)
+  fullName: Apq.Cfg.TemplateExtensions.TryGetResolved(Apq.Cfg.ICfgRoot, string, out string?)
+  fullName.vb: Apq.Cfg.TemplateExtensions.TryGetResolved(Apq.Cfg.ICfgRoot, String, String)
+  nameWithType: TemplateExtensions.TryGetResolved(ICfgRoot, string, out string?)
+  nameWithType.vb: TemplateExtensions.TryGetResolved(ICfgRoot, String, String)
+- uid: Apq.Cfg.TemplateExtensions.TryGetResolved*
+  name: TryGetResolved
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_TryGetResolved_
+  commentId: Overload:Apq.Cfg.TemplateExtensions.TryGetResolved
+  isSpec: "True"
+  fullName: Apq.Cfg.TemplateExtensions.TryGetResolved
+  nameWithType: TemplateExtensions.TryGetResolved
+- uid: Apq.Cfg.TemplateExtensions.TryGetResolved``1(Apq.Cfg.ICfgRoot,System.String,``0@)
+  name: TryGetResolved<T>(ICfgRoot, string, out T?)
+  href: api/Apq.Cfg.TemplateExtensions.html#Apq_Cfg_TemplateExtensions_TryGetResolved__1_Apq_Cfg_ICfgRoot_System_String___0__
+  commentId: M:Apq.Cfg.TemplateExtensions.TryGetResolved``1(Apq.Cfg.ICfgRoot,System.String,``0@)
+  name.vb: TryGetResolved(Of T)(ICfgRoot, String, T)
+  fullName: Apq.Cfg.TemplateExtensions.TryGetResolved<T>(Apq.Cfg.ICfgRoot, string, out T?)
+  fullName.vb: Apq.Cfg.TemplateExtensions.TryGetResolved(Of T)(Apq.Cfg.ICfgRoot, String, T)
+  nameWithType: TemplateExtensions.TryGetResolved<T>(ICfgRoot, string, out T?)
+  nameWithType.vb: TemplateExtensions.TryGetResolved(Of T)(ICfgRoot, String, T)
 - uid: Apq.Cfg.Toml
   name: Apq.Cfg.Toml
   href: api/Apq.Cfg.Toml.html
@@ -5063,6 +6168,1456 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Toml.CfgBuilderExtensions.AddToml
   nameWithType: CfgBuilderExtensions.AddToml
+- uid: Apq.Cfg.Validation
+  name: Apq.Cfg.Validation
+  href: api/Apq.Cfg.Validation.html
+  commentId: N:Apq.Cfg.Validation
+  fullName: Apq.Cfg.Validation
+  nameWithType: Apq.Cfg.Validation
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions
+  name: CfgRootValidationExtensions
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html
+  commentId: T:Apq.Cfg.Validation.CfgRootValidationExtensions
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions
+  nameWithType: CfgRootValidationExtensions
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot,Apq.Cfg.Validation.IConfigValidator,Apq.Cfg.Validation.ValidationResult@)
+  name: TryValidate(ICfgRoot, IConfigValidator, out ValidationResult)
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_TryValidate_Apq_Cfg_ICfgRoot_Apq_Cfg_Validation_IConfigValidator_Apq_Cfg_Validation_ValidationResult__
+  commentId: M:Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot,Apq.Cfg.Validation.IConfigValidator,Apq.Cfg.Validation.ValidationResult@)
+  name.vb: TryValidate(ICfgRoot, IConfigValidator, ValidationResult)
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot, Apq.Cfg.Validation.IConfigValidator, out Apq.Cfg.Validation.ValidationResult)
+  fullName.vb: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot, Apq.Cfg.Validation.IConfigValidator, Apq.Cfg.Validation.ValidationResult)
+  nameWithType: CfgRootValidationExtensions.TryValidate(ICfgRoot, IConfigValidator, out ValidationResult)
+  nameWithType.vb: CfgRootValidationExtensions.TryValidate(ICfgRoot, IConfigValidator, ValidationResult)
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder},Apq.Cfg.Validation.ValidationResult@)
+  name: TryValidate(ICfgRoot, Action<ConfigValidationBuilder>, out ValidationResult)
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_TryValidate_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder__Apq_Cfg_Validation_ValidationResult__
+  commentId: M:Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder},Apq.Cfg.Validation.ValidationResult@)
+  name.vb: TryValidate(ICfgRoot, Action(Of ConfigValidationBuilder), ValidationResult)
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot, System.Action<Apq.Cfg.Validation.ConfigValidationBuilder>, out Apq.Cfg.Validation.ValidationResult)
+  fullName.vb: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate(Apq.Cfg.ICfgRoot, System.Action(Of Apq.Cfg.Validation.ConfigValidationBuilder), Apq.Cfg.Validation.ValidationResult)
+  nameWithType: CfgRootValidationExtensions.TryValidate(ICfgRoot, Action<ConfigValidationBuilder>, out ValidationResult)
+  nameWithType.vb: CfgRootValidationExtensions.TryValidate(ICfgRoot, Action(Of ConfigValidationBuilder), ValidationResult)
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate*
+  name: TryValidate
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_TryValidate_
+  commentId: Overload:Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.TryValidate
+  nameWithType: CfgRootValidationExtensions.TryValidate
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot,Apq.Cfg.Validation.IConfigValidator)
+  name: Validate(ICfgRoot, IConfigValidator)
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_Validate_Apq_Cfg_ICfgRoot_Apq_Cfg_Validation_IConfigValidator_
+  commentId: M:Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot,Apq.Cfg.Validation.IConfigValidator)
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot, Apq.Cfg.Validation.IConfigValidator)
+  nameWithType: CfgRootValidationExtensions.Validate(ICfgRoot, IConfigValidator)
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name: Validate(ICfgRoot, Action<ConfigValidationBuilder>)
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_Validate_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder__
+  commentId: M:Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name.vb: Validate(ICfgRoot, Action(Of ConfigValidationBuilder))
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot, System.Action<Apq.Cfg.Validation.ConfigValidationBuilder>)
+  fullName.vb: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate(Apq.Cfg.ICfgRoot, System.Action(Of Apq.Cfg.Validation.ConfigValidationBuilder))
+  nameWithType: CfgRootValidationExtensions.Validate(ICfgRoot, Action<ConfigValidationBuilder>)
+  nameWithType.vb: CfgRootValidationExtensions.Validate(ICfgRoot, Action(Of ConfigValidationBuilder))
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_Validate_
+  commentId: Overload:Apq.Cfg.Validation.CfgRootValidationExtensions.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.Validate
+  nameWithType: CfgRootValidationExtensions.Validate
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot,Apq.Cfg.Validation.IConfigValidator)
+  name: ValidateAndThrow(ICfgRoot, IConfigValidator)
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_ValidateAndThrow_Apq_Cfg_ICfgRoot_Apq_Cfg_Validation_IConfigValidator_
+  commentId: M:Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot,Apq.Cfg.Validation.IConfigValidator)
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot, Apq.Cfg.Validation.IConfigValidator)
+  nameWithType: CfgRootValidationExtensions.ValidateAndThrow(ICfgRoot, IConfigValidator)
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name: ValidateAndThrow(ICfgRoot, Action<ConfigValidationBuilder>)
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_ValidateAndThrow_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder__
+  commentId: M:Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})
+  name.vb: ValidateAndThrow(ICfgRoot, Action(Of ConfigValidationBuilder))
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot, System.Action<Apq.Cfg.Validation.ConfigValidationBuilder>)
+  fullName.vb: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow(Apq.Cfg.ICfgRoot, System.Action(Of Apq.Cfg.Validation.ConfigValidationBuilder))
+  nameWithType: CfgRootValidationExtensions.ValidateAndThrow(ICfgRoot, Action<ConfigValidationBuilder>)
+  nameWithType.vb: CfgRootValidationExtensions.ValidateAndThrow(ICfgRoot, Action(Of ConfigValidationBuilder))
+- uid: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow*
+  name: ValidateAndThrow
+  href: api/Apq.Cfg.Validation.CfgRootValidationExtensions.html#Apq_Cfg_Validation_CfgRootValidationExtensions_ValidateAndThrow_
+  commentId: Overload:Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.CfgRootValidationExtensions.ValidateAndThrow
+  nameWithType: CfgRootValidationExtensions.ValidateAndThrow
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder
+  name: ConfigValidationBuilder
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html
+  commentId: T:Apq.Cfg.Validation.ConfigValidationBuilder
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder
+  nameWithType: ConfigValidationBuilder
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.AddRule(Apq.Cfg.Validation.IValidationRule)
+  name: AddRule(IValidationRule)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_AddRule_Apq_Cfg_Validation_IValidationRule_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.AddRule(Apq.Cfg.Validation.IValidationRule)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.AddRule(Apq.Cfg.Validation.IValidationRule)
+  nameWithType: ConfigValidationBuilder.AddRule(IValidationRule)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.AddRule*
+  name: AddRule
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_AddRule_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.AddRule
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.AddRule
+  nameWithType: ConfigValidationBuilder.AddRule
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.AddRules(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.IValidationRule})
+  name: AddRules(IEnumerable<IValidationRule>)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_AddRules_System_Collections_Generic_IEnumerable_Apq_Cfg_Validation_IValidationRule__
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.AddRules(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.IValidationRule})
+  name.vb: AddRules(IEnumerable(Of IValidationRule))
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.AddRules(System.Collections.Generic.IEnumerable<Apq.Cfg.Validation.IValidationRule>)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.AddRules(System.Collections.Generic.IEnumerable(Of Apq.Cfg.Validation.IValidationRule))
+  nameWithType: ConfigValidationBuilder.AddRules(IEnumerable<IValidationRule>)
+  nameWithType.vb: ConfigValidationBuilder.AddRules(IEnumerable(Of IValidationRule))
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.AddRules*
+  name: AddRules
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_AddRules_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.AddRules
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.AddRules
+  nameWithType: ConfigValidationBuilder.AddRules
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Build
+  name: Build()
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Build
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Build
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Build()
+  nameWithType: ConfigValidationBuilder.Build()
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Build*
+  name: Build
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Build_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.Build
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Build
+  nameWithType: ConfigValidationBuilder.Build
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Custom(System.String,System.Func{System.String,System.Boolean},System.String,System.String)
+  name: Custom(string, Func<string?, bool>, string, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Custom_System_String_System_Func_System_String_System_Boolean__System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Custom(System.String,System.Func{System.String,System.Boolean},System.String,System.String)
+  name.vb: Custom(String, Func(Of String, Boolean), String, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Custom(string, System.Func<string?, bool>, string, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Custom(String, System.Func(Of String, Boolean), String, String)
+  nameWithType: ConfigValidationBuilder.Custom(string, Func<string?, bool>, string, string?)
+  nameWithType.vb: ConfigValidationBuilder.Custom(String, Func(Of String, Boolean), String, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Custom*
+  name: Custom
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Custom_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.Custom
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Custom
+  nameWithType: ConfigValidationBuilder.Custom
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn(System.String,System.String,System.String)
+  name: DependsOn(string, string, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_DependsOn_System_String_System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn(System.String,System.String,System.String)
+  name.vb: DependsOn(String, String, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn(string, string, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn(String, String, String)
+  nameWithType: ConfigValidationBuilder.DependsOn(string, string, string?)
+  nameWithType.vb: ConfigValidationBuilder.DependsOn(String, String, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn*
+  name: DependsOn
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_DependsOn_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn
+  nameWithType: ConfigValidationBuilder.DependsOn
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Length(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name: Length(string, int?, int?, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Length_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Length(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name.vb: Length(String, Integer?, Integer?, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Length(string, int?, int?, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Length(String, Integer?, Integer?, String)
+  nameWithType: ConfigValidationBuilder.Length(string, int?, int?, string?)
+  nameWithType.vb: ConfigValidationBuilder.Length(String, Integer?, Integer?, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Length*
+  name: Length
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Length_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.Length
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Length
+  nameWithType: ConfigValidationBuilder.Length
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength(System.String,System.Int32,System.String)
+  name: MaxLength(string, int, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_MaxLength_System_String_System_Int32_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength(System.String,System.Int32,System.String)
+  name.vb: MaxLength(String, Integer, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength(string, int, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength(String, Integer, String)
+  nameWithType: ConfigValidationBuilder.MaxLength(string, int, string?)
+  nameWithType.vb: ConfigValidationBuilder.MaxLength(String, Integer, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength*
+  name: MaxLength
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_MaxLength_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength
+  nameWithType: ConfigValidationBuilder.MaxLength
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.MinLength(System.String,System.Int32,System.String)
+  name: MinLength(string, int, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_MinLength_System_String_System_Int32_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.MinLength(System.String,System.Int32,System.String)
+  name.vb: MinLength(String, Integer, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.MinLength(string, int, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.MinLength(String, Integer, String)
+  nameWithType: ConfigValidationBuilder.MinLength(string, int, string?)
+  nameWithType.vb: ConfigValidationBuilder.MinLength(String, Integer, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.MinLength*
+  name: MinLength
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_MinLength_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.MinLength
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.MinLength
+  nameWithType: ConfigValidationBuilder.MinLength
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)
+  name: OneOf(string, IEnumerable<string>, bool, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_System_String_System_Collections_Generic_IEnumerable_System_String__System_Boolean_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)
+  name.vb: OneOf(String, IEnumerable(Of String), Boolean, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(string, System.Collections.Generic.IEnumerable<string>, bool, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(String, System.Collections.Generic.IEnumerable(Of String), Boolean, String)
+  nameWithType: ConfigValidationBuilder.OneOf(string, IEnumerable<string>, bool, string?)
+  nameWithType.vb: ConfigValidationBuilder.OneOf(String, IEnumerable(Of String), Boolean, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(System.String,System.String[])
+  name: OneOf(string, params string[])
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_System_String_System_String___
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(System.String,System.String[])
+  name.vb: OneOf(String, ParamArray String())
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(string, params string[])
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(String, ParamArray String())
+  nameWithType: ConfigValidationBuilder.OneOf(string, params string[])
+  nameWithType.vb: ConfigValidationBuilder.OneOf(String, ParamArray String())
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf*
+  name: OneOf
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.OneOf
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.OneOf
+  nameWithType: ConfigValidationBuilder.OneOf
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.DateTime,System.DateTime,System.String)
+  name: Range(string, DateTime, DateTime, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_DateTime_System_DateTime_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.DateTime,System.DateTime,System.String)
+  name.vb: Range(String, Date, Date, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Range(string, System.DateTime, System.DateTime, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Range(String, Date, Date, String)
+  nameWithType: ConfigValidationBuilder.Range(string, DateTime, DateTime, string?)
+  nameWithType.vb: ConfigValidationBuilder.Range(String, Date, Date, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Decimal,System.Decimal,System.String)
+  name: Range(string, decimal, decimal, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Decimal_System_Decimal_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Decimal,System.Decimal,System.String)
+  name.vb: Range(String, Decimal, Decimal, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Range(string, decimal, decimal, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Range(String, Decimal, Decimal, String)
+  nameWithType: ConfigValidationBuilder.Range(string, decimal, decimal, string?)
+  nameWithType.vb: ConfigValidationBuilder.Range(String, Decimal, Decimal, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Double,System.Double,System.String)
+  name: Range(string, double, double, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Double_System_Double_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Double,System.Double,System.String)
+  name.vb: Range(String, Double, Double, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Range(string, double, double, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Range(String, Double, Double, String)
+  nameWithType: ConfigValidationBuilder.Range(string, double, double, string?)
+  nameWithType.vb: ConfigValidationBuilder.Range(String, Double, Double, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Int32,System.Int32,System.String)
+  name: Range(string, int, int, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Int32_System_Int32_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Int32,System.Int32,System.String)
+  name.vb: Range(String, Integer, Integer, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Range(string, int, int, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Range(String, Integer, Integer, String)
+  nameWithType: ConfigValidationBuilder.Range(string, int, int, string?)
+  nameWithType.vb: ConfigValidationBuilder.Range(String, Integer, Integer, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Int64,System.Int64,System.String)
+  name: Range(string, long, long, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Int64_System_Int64_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Int64,System.Int64,System.String)
+  name.vb: Range(String, Long, Long, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Range(string, long, long, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Range(String, Long, Long, String)
+  nameWithType: ConfigValidationBuilder.Range(string, long, long, string?)
+  nameWithType.vb: ConfigValidationBuilder.Range(String, Long, Long, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Range*
+  name: Range
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Range_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.Range
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Range
+  nameWithType: ConfigValidationBuilder.Range
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Regex(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)
+  name: Regex(string, string, string?, RegexOptions)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Regex_System_String_System_String_System_String_System_Text_RegularExpressions_RegexOptions_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Regex(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)
+  name.vb: Regex(String, String, String, RegexOptions)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Regex(string, string, string?, System.Text.RegularExpressions.RegexOptions)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Regex(String, String, String, System.Text.RegularExpressions.RegexOptions)
+  nameWithType: ConfigValidationBuilder.Regex(string, string, string?, RegexOptions)
+  nameWithType.vb: ConfigValidationBuilder.Regex(String, String, String, RegexOptions)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Regex*
+  name: Regex
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Regex_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.Regex
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Regex
+  nameWithType: ConfigValidationBuilder.Regex
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Required(System.String,System.String)
+  name: Required(string, string?)
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Required_System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Required(System.String,System.String)
+  name.vb: Required(String, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Required(string, string?)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Required(String, String)
+  nameWithType: ConfigValidationBuilder.Required(string, string?)
+  nameWithType.vb: ConfigValidationBuilder.Required(String, String)
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Required(System.String[])
+  name: Required(params string[])
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Required_System_String___
+  commentId: M:Apq.Cfg.Validation.ConfigValidationBuilder.Required(System.String[])
+  name.vb: Required(ParamArray String())
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Required(params string[])
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationBuilder.Required(ParamArray String())
+  nameWithType: ConfigValidationBuilder.Required(params string[])
+  nameWithType.vb: ConfigValidationBuilder.Required(ParamArray String())
+- uid: Apq.Cfg.Validation.ConfigValidationBuilder.Required*
+  name: Required
+  href: api/Apq.Cfg.Validation.ConfigValidationBuilder.html#Apq_Cfg_Validation_ConfigValidationBuilder_Required_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationBuilder.Required
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationBuilder.Required
+  nameWithType: ConfigValidationBuilder.Required
+- uid: Apq.Cfg.Validation.ConfigValidationException
+  name: ConfigValidationException
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html
+  commentId: T:Apq.Cfg.Validation.ConfigValidationException
+  fullName: Apq.Cfg.Validation.ConfigValidationException
+  nameWithType: ConfigValidationException
+- uid: Apq.Cfg.Validation.ConfigValidationException.#ctor(Apq.Cfg.Validation.ValidationResult)
+  name: ConfigValidationException(ValidationResult)
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException__ctor_Apq_Cfg_Validation_ValidationResult_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationException.#ctor(Apq.Cfg.Validation.ValidationResult)
+  name.vb: New(ValidationResult)
+  fullName: Apq.Cfg.Validation.ConfigValidationException.ConfigValidationException(Apq.Cfg.Validation.ValidationResult)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationException.New(Apq.Cfg.Validation.ValidationResult)
+  nameWithType: ConfigValidationException.ConfigValidationException(ValidationResult)
+  nameWithType.vb: ConfigValidationException.New(ValidationResult)
+- uid: Apq.Cfg.Validation.ConfigValidationException.#ctor(Apq.Cfg.Validation.ValidationResult,System.String)
+  name: ConfigValidationException(ValidationResult, string)
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException__ctor_Apq_Cfg_Validation_ValidationResult_System_String_
+  commentId: M:Apq.Cfg.Validation.ConfigValidationException.#ctor(Apq.Cfg.Validation.ValidationResult,System.String)
+  name.vb: New(ValidationResult, String)
+  fullName: Apq.Cfg.Validation.ConfigValidationException.ConfigValidationException(Apq.Cfg.Validation.ValidationResult, string)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationException.New(Apq.Cfg.Validation.ValidationResult, String)
+  nameWithType: ConfigValidationException.ConfigValidationException(ValidationResult, string)
+  nameWithType.vb: ConfigValidationException.New(ValidationResult, String)
+- uid: Apq.Cfg.Validation.ConfigValidationException.#ctor*
+  name: ConfigValidationException
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException__ctor_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationException.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.ConfigValidationException.ConfigValidationException
+  fullName.vb: Apq.Cfg.Validation.ConfigValidationException.New
+  nameWithType: ConfigValidationException.ConfigValidationException
+  nameWithType.vb: ConfigValidationException.New
+- uid: Apq.Cfg.Validation.ConfigValidationException.Errors
+  name: Errors
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException_Errors
+  commentId: P:Apq.Cfg.Validation.ConfigValidationException.Errors
+  fullName: Apq.Cfg.Validation.ConfigValidationException.Errors
+  nameWithType: ConfigValidationException.Errors
+- uid: Apq.Cfg.Validation.ConfigValidationException.Errors*
+  name: Errors
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException_Errors_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationException.Errors
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationException.Errors
+  nameWithType: ConfigValidationException.Errors
+- uid: Apq.Cfg.Validation.ConfigValidationException.ValidationResult
+  name: ValidationResult
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException_ValidationResult
+  commentId: P:Apq.Cfg.Validation.ConfigValidationException.ValidationResult
+  fullName: Apq.Cfg.Validation.ConfigValidationException.ValidationResult
+  nameWithType: ConfigValidationException.ValidationResult
+- uid: Apq.Cfg.Validation.ConfigValidationException.ValidationResult*
+  name: ValidationResult
+  href: api/Apq.Cfg.Validation.ConfigValidationException.html#Apq_Cfg_Validation_ConfigValidationException_ValidationResult_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidationException.ValidationResult
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidationException.ValidationResult
+  nameWithType: ConfigValidationException.ValidationResult
+- uid: Apq.Cfg.Validation.ConfigValidator
+  name: ConfigValidator
+  href: api/Apq.Cfg.Validation.ConfigValidator.html
+  commentId: T:Apq.Cfg.Validation.ConfigValidator
+  fullName: Apq.Cfg.Validation.ConfigValidator
+  nameWithType: ConfigValidator
+- uid: Apq.Cfg.Validation.ConfigValidator.#ctor(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.IValidationRule})
+  name: ConfigValidator(IEnumerable<IValidationRule>)
+  href: api/Apq.Cfg.Validation.ConfigValidator.html#Apq_Cfg_Validation_ConfigValidator__ctor_System_Collections_Generic_IEnumerable_Apq_Cfg_Validation_IValidationRule__
+  commentId: M:Apq.Cfg.Validation.ConfigValidator.#ctor(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.IValidationRule})
+  name.vb: New(IEnumerable(Of IValidationRule))
+  fullName: Apq.Cfg.Validation.ConfigValidator.ConfigValidator(System.Collections.Generic.IEnumerable<Apq.Cfg.Validation.IValidationRule>)
+  fullName.vb: Apq.Cfg.Validation.ConfigValidator.New(System.Collections.Generic.IEnumerable(Of Apq.Cfg.Validation.IValidationRule))
+  nameWithType: ConfigValidator.ConfigValidator(IEnumerable<IValidationRule>)
+  nameWithType.vb: ConfigValidator.New(IEnumerable(Of IValidationRule))
+- uid: Apq.Cfg.Validation.ConfigValidator.#ctor*
+  name: ConfigValidator
+  href: api/Apq.Cfg.Validation.ConfigValidator.html#Apq_Cfg_Validation_ConfigValidator__ctor_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidator.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.ConfigValidator.ConfigValidator
+  fullName.vb: Apq.Cfg.Validation.ConfigValidator.New
+  nameWithType: ConfigValidator.ConfigValidator
+  nameWithType.vb: ConfigValidator.New
+- uid: Apq.Cfg.Validation.ConfigValidator.Rules
+  name: Rules
+  href: api/Apq.Cfg.Validation.ConfigValidator.html#Apq_Cfg_Validation_ConfigValidator_Rules
+  commentId: P:Apq.Cfg.Validation.ConfigValidator.Rules
+  fullName: Apq.Cfg.Validation.ConfigValidator.Rules
+  nameWithType: ConfigValidator.Rules
+- uid: Apq.Cfg.Validation.ConfigValidator.Rules*
+  name: Rules
+  href: api/Apq.Cfg.Validation.ConfigValidator.html#Apq_Cfg_Validation_ConfigValidator_Rules_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidator.Rules
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidator.Rules
+  nameWithType: ConfigValidator.Rules
+- uid: Apq.Cfg.Validation.ConfigValidator.Validate(Apq.Cfg.ICfgRoot)
+  name: Validate(ICfgRoot)
+  href: api/Apq.Cfg.Validation.ConfigValidator.html#Apq_Cfg_Validation_ConfigValidator_Validate_Apq_Cfg_ICfgRoot_
+  commentId: M:Apq.Cfg.Validation.ConfigValidator.Validate(Apq.Cfg.ICfgRoot)
+  fullName: Apq.Cfg.Validation.ConfigValidator.Validate(Apq.Cfg.ICfgRoot)
+  nameWithType: ConfigValidator.Validate(ICfgRoot)
+- uid: Apq.Cfg.Validation.ConfigValidator.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.ConfigValidator.html#Apq_Cfg_Validation_ConfigValidator_Validate_
+  commentId: Overload:Apq.Cfg.Validation.ConfigValidator.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ConfigValidator.Validate
+  nameWithType: ConfigValidator.Validate
+- uid: Apq.Cfg.Validation.IConfigValidator
+  name: IConfigValidator
+  href: api/Apq.Cfg.Validation.IConfigValidator.html
+  commentId: T:Apq.Cfg.Validation.IConfigValidator
+  fullName: Apq.Cfg.Validation.IConfigValidator
+  nameWithType: IConfigValidator
+- uid: Apq.Cfg.Validation.IConfigValidator.Rules
+  name: Rules
+  href: api/Apq.Cfg.Validation.IConfigValidator.html#Apq_Cfg_Validation_IConfigValidator_Rules
+  commentId: P:Apq.Cfg.Validation.IConfigValidator.Rules
+  fullName: Apq.Cfg.Validation.IConfigValidator.Rules
+  nameWithType: IConfigValidator.Rules
+- uid: Apq.Cfg.Validation.IConfigValidator.Rules*
+  name: Rules
+  href: api/Apq.Cfg.Validation.IConfigValidator.html#Apq_Cfg_Validation_IConfigValidator_Rules_
+  commentId: Overload:Apq.Cfg.Validation.IConfigValidator.Rules
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.IConfigValidator.Rules
+  nameWithType: IConfigValidator.Rules
+- uid: Apq.Cfg.Validation.IConfigValidator.Validate(Apq.Cfg.ICfgRoot)
+  name: Validate(ICfgRoot)
+  href: api/Apq.Cfg.Validation.IConfigValidator.html#Apq_Cfg_Validation_IConfigValidator_Validate_Apq_Cfg_ICfgRoot_
+  commentId: M:Apq.Cfg.Validation.IConfigValidator.Validate(Apq.Cfg.ICfgRoot)
+  fullName: Apq.Cfg.Validation.IConfigValidator.Validate(Apq.Cfg.ICfgRoot)
+  nameWithType: IConfigValidator.Validate(ICfgRoot)
+- uid: Apq.Cfg.Validation.IConfigValidator.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.IConfigValidator.html#Apq_Cfg_Validation_IConfigValidator_Validate_
+  commentId: Overload:Apq.Cfg.Validation.IConfigValidator.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.IConfigValidator.Validate
+  nameWithType: IConfigValidator.Validate
+- uid: Apq.Cfg.Validation.IValidationRule
+  name: IValidationRule
+  href: api/Apq.Cfg.Validation.IValidationRule.html
+  commentId: T:Apq.Cfg.Validation.IValidationRule
+  fullName: Apq.Cfg.Validation.IValidationRule
+  nameWithType: IValidationRule
+- uid: Apq.Cfg.Validation.IValidationRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.IValidationRule.html#Apq_Cfg_Validation_IValidationRule_Key
+  commentId: P:Apq.Cfg.Validation.IValidationRule.Key
+  fullName: Apq.Cfg.Validation.IValidationRule.Key
+  nameWithType: IValidationRule.Key
+- uid: Apq.Cfg.Validation.IValidationRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.IValidationRule.html#Apq_Cfg_Validation_IValidationRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.IValidationRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.IValidationRule.Key
+  nameWithType: IValidationRule.Key
+- uid: Apq.Cfg.Validation.IValidationRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.IValidationRule.html#Apq_Cfg_Validation_IValidationRule_Name
+  commentId: P:Apq.Cfg.Validation.IValidationRule.Name
+  fullName: Apq.Cfg.Validation.IValidationRule.Name
+  nameWithType: IValidationRule.Name
+- uid: Apq.Cfg.Validation.IValidationRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.IValidationRule.html#Apq_Cfg_Validation_IValidationRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.IValidationRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.IValidationRule.Name
+  nameWithType: IValidationRule.Name
+- uid: Apq.Cfg.Validation.IValidationRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.IValidationRule.html#Apq_Cfg_Validation_IValidationRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.IValidationRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.IValidationRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.IValidationRule.Validate(String)
+  nameWithType: IValidationRule.Validate(string?)
+  nameWithType.vb: IValidationRule.Validate(String)
+- uid: Apq.Cfg.Validation.IValidationRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.IValidationRule.html#Apq_Cfg_Validation_IValidationRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.IValidationRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.IValidationRule.Validate
+  nameWithType: IValidationRule.Validate
+- uid: Apq.Cfg.Validation.Rules
+  name: Apq.Cfg.Validation.Rules
+  href: api/Apq.Cfg.Validation.Rules.html
+  commentId: N:Apq.Cfg.Validation.Rules
+  fullName: Apq.Cfg.Validation.Rules
+  nameWithType: Apq.Cfg.Validation.Rules
+- uid: Apq.Cfg.Validation.Rules.CustomRule
+  name: CustomRule
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.CustomRule
+  fullName: Apq.Cfg.Validation.Rules.CustomRule
+  nameWithType: CustomRule
+- uid: Apq.Cfg.Validation.Rules.CustomRule.#ctor(System.String,System.Func{System.String,System.Boolean},System.String,System.String)
+  name: CustomRule(string, Func<string?, bool>, string, string?)
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule__ctor_System_String_System_Func_System_String_System_Boolean__System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.CustomRule.#ctor(System.String,System.Func{System.String,System.Boolean},System.String,System.String)
+  name.vb: New(String, Func(Of String, Boolean), String, String)
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.CustomRule(string, System.Func<string?, bool>, string, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.CustomRule.New(String, System.Func(Of String, Boolean), String, String)
+  nameWithType: CustomRule.CustomRule(string, Func<string?, bool>, string, string?)
+  nameWithType.vb: CustomRule.New(String, Func(Of String, Boolean), String, String)
+- uid: Apq.Cfg.Validation.Rules.CustomRule.#ctor*
+  name: CustomRule
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.CustomRule.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.CustomRule
+  fullName.vb: Apq.Cfg.Validation.Rules.CustomRule.New
+  nameWithType: CustomRule.CustomRule
+  nameWithType.vb: CustomRule.New
+- uid: Apq.Cfg.Validation.Rules.CustomRule.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.CustomRule.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.ErrorMessage
+  nameWithType: CustomRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.CustomRule.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.CustomRule.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.ErrorMessage
+  nameWithType: CustomRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.CustomRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_Key
+  commentId: P:Apq.Cfg.Validation.Rules.CustomRule.Key
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.Key
+  nameWithType: CustomRule.Key
+- uid: Apq.Cfg.Validation.Rules.CustomRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.CustomRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.Key
+  nameWithType: CustomRule.Key
+- uid: Apq.Cfg.Validation.Rules.CustomRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_Name
+  commentId: P:Apq.Cfg.Validation.Rules.CustomRule.Name
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.Name
+  nameWithType: CustomRule.Name
+- uid: Apq.Cfg.Validation.Rules.CustomRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.CustomRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.Name
+  nameWithType: CustomRule.Name
+- uid: Apq.Cfg.Validation.Rules.CustomRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.CustomRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.CustomRule.Validate(String)
+  nameWithType: CustomRule.Validate(string?)
+  nameWithType.vb: CustomRule.Validate(String)
+- uid: Apq.Cfg.Validation.Rules.CustomRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.CustomRule.html#Apq_Cfg_Validation_Rules_CustomRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.CustomRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.CustomRule.Validate
+  nameWithType: CustomRule.Validate
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule
+  name: DependsOnRule
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.DependsOnRule
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule
+  nameWithType: DependsOnRule
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.#ctor(System.String,System.String,System.String)
+  name: DependsOnRule(string, string, string?)
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule__ctor_System_String_System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.DependsOnRule.#ctor(System.String,System.String,System.String)
+  name.vb: New(String, String, String)
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.DependsOnRule(string, string, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.DependsOnRule.New(String, String, String)
+  nameWithType: DependsOnRule.DependsOnRule(string, string, string?)
+  nameWithType.vb: DependsOnRule.New(String, String, String)
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.#ctor*
+  name: DependsOnRule
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.DependsOnRule.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.DependsOnRule
+  fullName.vb: Apq.Cfg.Validation.Rules.DependsOnRule.New
+  nameWithType: DependsOnRule.DependsOnRule
+  nameWithType.vb: DependsOnRule.New
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.DependencyKey
+  name: DependencyKey
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_DependencyKey
+  commentId: P:Apq.Cfg.Validation.Rules.DependsOnRule.DependencyKey
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.DependencyKey
+  nameWithType: DependsOnRule.DependencyKey
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.DependencyKey*
+  name: DependencyKey
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_DependencyKey_
+  commentId: Overload:Apq.Cfg.Validation.Rules.DependsOnRule.DependencyKey
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.DependencyKey
+  nameWithType: DependsOnRule.DependencyKey
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.DependsOnRule.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.ErrorMessage
+  nameWithType: DependsOnRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.DependsOnRule.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.ErrorMessage
+  nameWithType: DependsOnRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_Key
+  commentId: P:Apq.Cfg.Validation.Rules.DependsOnRule.Key
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.Key
+  nameWithType: DependsOnRule.Key
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.DependsOnRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.Key
+  nameWithType: DependsOnRule.Key
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_Name
+  commentId: P:Apq.Cfg.Validation.Rules.DependsOnRule.Name
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.Name
+  nameWithType: DependsOnRule.Name
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.DependsOnRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.Name
+  nameWithType: DependsOnRule.Name
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.DependsOnRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.DependsOnRule.Validate(String)
+  nameWithType: DependsOnRule.Validate(string?)
+  nameWithType.vb: DependsOnRule.Validate(String)
+- uid: Apq.Cfg.Validation.Rules.DependsOnRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.DependsOnRule.html#Apq_Cfg_Validation_Rules_DependsOnRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.DependsOnRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.DependsOnRule.Validate
+  nameWithType: DependsOnRule.Validate
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule
+  name: EnumValuesRule
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.EnumValuesRule
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule
+  nameWithType: EnumValuesRule
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)
+  name: EnumValuesRule(string, IEnumerable<string>, bool, string?)
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule__ctor_System_String_System_Collections_Generic_IEnumerable_System_String__System_Boolean_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.EnumValuesRule.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)
+  name.vb: New(String, IEnumerable(Of String), Boolean, String)
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.EnumValuesRule(string, System.Collections.Generic.IEnumerable<string>, bool, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.EnumValuesRule.New(String, System.Collections.Generic.IEnumerable(Of String), Boolean, String)
+  nameWithType: EnumValuesRule.EnumValuesRule(string, IEnumerable<string>, bool, string?)
+  nameWithType.vb: EnumValuesRule.New(String, IEnumerable(Of String), Boolean, String)
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.#ctor*
+  name: EnumValuesRule
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.EnumValuesRule.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.EnumValuesRule
+  fullName.vb: Apq.Cfg.Validation.Rules.EnumValuesRule.New
+  nameWithType: EnumValuesRule.EnumValuesRule
+  nameWithType.vb: EnumValuesRule.New
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.EnumValuesRule.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.ErrorMessage
+  nameWithType: EnumValuesRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.EnumValuesRule.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.ErrorMessage
+  nameWithType: EnumValuesRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_Key
+  commentId: P:Apq.Cfg.Validation.Rules.EnumValuesRule.Key
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.Key
+  nameWithType: EnumValuesRule.Key
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.EnumValuesRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.Key
+  nameWithType: EnumValuesRule.Key
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_Name
+  commentId: P:Apq.Cfg.Validation.Rules.EnumValuesRule.Name
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.Name
+  nameWithType: EnumValuesRule.Name
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.EnumValuesRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.Name
+  nameWithType: EnumValuesRule.Name
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.EnumValuesRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.EnumValuesRule.Validate(String)
+  nameWithType: EnumValuesRule.Validate(string?)
+  nameWithType.vb: EnumValuesRule.Validate(String)
+- uid: Apq.Cfg.Validation.Rules.EnumValuesRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.EnumValuesRule.html#Apq_Cfg_Validation_Rules_EnumValuesRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.EnumValuesRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.EnumValuesRule.Validate
+  nameWithType: EnumValuesRule.Validate
+- uid: Apq.Cfg.Validation.Rules.LengthRule
+  name: LengthRule
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.LengthRule
+  fullName: Apq.Cfg.Validation.Rules.LengthRule
+  nameWithType: LengthRule
+- uid: Apq.Cfg.Validation.Rules.LengthRule.#ctor(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name: LengthRule(string, int?, int?, string?)
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule__ctor_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.LengthRule.#ctor(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)
+  name.vb: New(String, Integer?, Integer?, String)
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.LengthRule(string, int?, int?, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.LengthRule.New(String, Integer?, Integer?, String)
+  nameWithType: LengthRule.LengthRule(string, int?, int?, string?)
+  nameWithType.vb: LengthRule.New(String, Integer?, Integer?, String)
+- uid: Apq.Cfg.Validation.Rules.LengthRule.#ctor*
+  name: LengthRule
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.LengthRule.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.LengthRule
+  fullName.vb: Apq.Cfg.Validation.Rules.LengthRule.New
+  nameWithType: LengthRule.LengthRule
+  nameWithType.vb: LengthRule.New
+- uid: Apq.Cfg.Validation.Rules.LengthRule.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.LengthRule.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.ErrorMessage
+  nameWithType: LengthRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.LengthRule.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.LengthRule.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.ErrorMessage
+  nameWithType: LengthRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.LengthRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_Key
+  commentId: P:Apq.Cfg.Validation.Rules.LengthRule.Key
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.Key
+  nameWithType: LengthRule.Key
+- uid: Apq.Cfg.Validation.Rules.LengthRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.LengthRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.Key
+  nameWithType: LengthRule.Key
+- uid: Apq.Cfg.Validation.Rules.LengthRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_Name
+  commentId: P:Apq.Cfg.Validation.Rules.LengthRule.Name
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.Name
+  nameWithType: LengthRule.Name
+- uid: Apq.Cfg.Validation.Rules.LengthRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.LengthRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.Name
+  nameWithType: LengthRule.Name
+- uid: Apq.Cfg.Validation.Rules.LengthRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.LengthRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.LengthRule.Validate(String)
+  nameWithType: LengthRule.Validate(string?)
+  nameWithType.vb: LengthRule.Validate(String)
+- uid: Apq.Cfg.Validation.Rules.LengthRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.LengthRule.html#Apq_Cfg_Validation_Rules_LengthRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.LengthRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.LengthRule.Validate
+  nameWithType: LengthRule.Validate
+- uid: Apq.Cfg.Validation.Rules.RangeRule
+  name: RangeRule
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.RangeRule
+  fullName: Apq.Cfg.Validation.Rules.RangeRule
+  nameWithType: RangeRule
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForDateTime(System.String,System.DateTime,System.DateTime,System.String)
+  name: ForDateTime(string, DateTime, DateTime, string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForDateTime_System_String_System_DateTime_System_DateTime_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule.ForDateTime(System.String,System.DateTime,System.DateTime,System.String)
+  name.vb: ForDateTime(String, Date, Date, String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForDateTime(string, System.DateTime, System.DateTime, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule.ForDateTime(String, Date, Date, String)
+  nameWithType: RangeRule.ForDateTime(string, DateTime, DateTime, string?)
+  nameWithType.vb: RangeRule.ForDateTime(String, Date, Date, String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForDateTime*
+  name: ForDateTime
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForDateTime_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule.ForDateTime
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForDateTime
+  nameWithType: RangeRule.ForDateTime
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForDecimal(System.String,System.Decimal,System.Decimal,System.String)
+  name: ForDecimal(string, decimal, decimal, string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForDecimal_System_String_System_Decimal_System_Decimal_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule.ForDecimal(System.String,System.Decimal,System.Decimal,System.String)
+  name.vb: ForDecimal(String, Decimal, Decimal, String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForDecimal(string, decimal, decimal, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule.ForDecimal(String, Decimal, Decimal, String)
+  nameWithType: RangeRule.ForDecimal(string, decimal, decimal, string?)
+  nameWithType.vb: RangeRule.ForDecimal(String, Decimal, Decimal, String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForDecimal*
+  name: ForDecimal
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForDecimal_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule.ForDecimal
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForDecimal
+  nameWithType: RangeRule.ForDecimal
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForDouble(System.String,System.Double,System.Double,System.String)
+  name: ForDouble(string, double, double, string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForDouble_System_String_System_Double_System_Double_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule.ForDouble(System.String,System.Double,System.Double,System.String)
+  name.vb: ForDouble(String, Double, Double, String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForDouble(string, double, double, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule.ForDouble(String, Double, Double, String)
+  nameWithType: RangeRule.ForDouble(string, double, double, string?)
+  nameWithType.vb: RangeRule.ForDouble(String, Double, Double, String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForDouble*
+  name: ForDouble
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForDouble_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule.ForDouble
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForDouble
+  nameWithType: RangeRule.ForDouble
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForInt(System.String,System.Int32,System.Int32,System.String)
+  name: ForInt(string, int, int, string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForInt_System_String_System_Int32_System_Int32_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule.ForInt(System.String,System.Int32,System.Int32,System.String)
+  name.vb: ForInt(String, Integer, Integer, String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForInt(string, int, int, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule.ForInt(String, Integer, Integer, String)
+  nameWithType: RangeRule.ForInt(string, int, int, string?)
+  nameWithType.vb: RangeRule.ForInt(String, Integer, Integer, String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForInt*
+  name: ForInt
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForInt_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule.ForInt
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForInt
+  nameWithType: RangeRule.ForInt
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForLong(System.String,System.Int64,System.Int64,System.String)
+  name: ForLong(string, long, long, string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForLong_System_String_System_Int64_System_Int64_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule.ForLong(System.String,System.Int64,System.Int64,System.String)
+  name.vb: ForLong(String, Long, Long, String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForLong(string, long, long, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule.ForLong(String, Long, Long, String)
+  nameWithType: RangeRule.ForLong(string, long, long, string?)
+  nameWithType.vb: RangeRule.ForLong(String, Long, Long, String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule.ForLong*
+  name: ForLong
+  href: api/Apq.Cfg.Validation.Rules.RangeRule.html#Apq_Cfg_Validation_Rules_RangeRule_ForLong_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule.ForLong
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule.ForLong
+  nameWithType: RangeRule.ForLong
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1
+  name: RangeRule<T>
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html
+  commentId: T:Apq.Cfg.Validation.Rules.RangeRule`1
+  name.vb: RangeRule(Of T)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T)
+  nameWithType: RangeRule<T>
+  nameWithType.vb: RangeRule(Of T)
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.#ctor(System.String,`0,`0,System.Func{System.String,System.Nullable{`0}},System.String)
+  name: RangeRule(string, T, T, Func<string, T?>, string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1__ctor_System_String__0__0_System_Func_System_String_System_Nullable__0___System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule`1.#ctor(System.String,`0,`0,System.Func{System.String,System.Nullable{`0}},System.String)
+  name.vb: New(String, T, T, Func(Of String, T?), String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.RangeRule(string, T, T, System.Func<string, T?>, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).New(String, T, T, System.Func(Of String, T?), String)
+  nameWithType: RangeRule<T>.RangeRule(string, T, T, Func<string, T?>, string?)
+  nameWithType.vb: RangeRule(Of T).New(String, T, T, Func(Of String, T?), String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.#ctor*
+  name: RangeRule
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule`1.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.RangeRule
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).New
+  nameWithType: RangeRule<T>.RangeRule
+  nameWithType.vb: RangeRule(Of T).New
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.RangeRule`1.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.ErrorMessage
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).ErrorMessage
+  nameWithType: RangeRule<T>.ErrorMessage
+  nameWithType.vb: RangeRule(Of T).ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule`1.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.ErrorMessage
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).ErrorMessage
+  nameWithType: RangeRule<T>.ErrorMessage
+  nameWithType.vb: RangeRule(Of T).ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_Key
+  commentId: P:Apq.Cfg.Validation.Rules.RangeRule`1.Key
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.Key
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).Key
+  nameWithType: RangeRule<T>.Key
+  nameWithType.vb: RangeRule(Of T).Key
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule`1.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.Key
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).Key
+  nameWithType: RangeRule<T>.Key
+  nameWithType.vb: RangeRule(Of T).Key
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_Name
+  commentId: P:Apq.Cfg.Validation.Rules.RangeRule`1.Name
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.Name
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).Name
+  nameWithType: RangeRule<T>.Name
+  nameWithType.vb: RangeRule(Of T).Name
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule`1.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.Name
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).Name
+  nameWithType: RangeRule<T>.Name
+  nameWithType.vb: RangeRule(Of T).Name
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RangeRule`1.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).Validate(String)
+  nameWithType: RangeRule<T>.Validate(string?)
+  nameWithType.vb: RangeRule(Of T).Validate(String)
+- uid: Apq.Cfg.Validation.Rules.RangeRule`1.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.RangeRule-1.html#Apq_Cfg_Validation_Rules_RangeRule_1_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RangeRule`1.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RangeRule<T>.Validate
+  fullName.vb: Apq.Cfg.Validation.Rules.RangeRule(Of T).Validate
+  nameWithType: RangeRule<T>.Validate
+  nameWithType.vb: RangeRule(Of T).Validate
+- uid: Apq.Cfg.Validation.Rules.RegexRule
+  name: RegexRule
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.RegexRule
+  fullName: Apq.Cfg.Validation.Rules.RegexRule
+  nameWithType: RegexRule
+- uid: Apq.Cfg.Validation.Rules.RegexRule.#ctor(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)
+  name: RegexRule(string, string, string?, RegexOptions)
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule__ctor_System_String_System_String_System_String_System_Text_RegularExpressions_RegexOptions_
+  commentId: M:Apq.Cfg.Validation.Rules.RegexRule.#ctor(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)
+  name.vb: New(String, String, String, RegexOptions)
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.RegexRule(string, string, string?, System.Text.RegularExpressions.RegexOptions)
+  fullName.vb: Apq.Cfg.Validation.Rules.RegexRule.New(String, String, String, System.Text.RegularExpressions.RegexOptions)
+  nameWithType: RegexRule.RegexRule(string, string, string?, RegexOptions)
+  nameWithType.vb: RegexRule.New(String, String, String, RegexOptions)
+- uid: Apq.Cfg.Validation.Rules.RegexRule.#ctor*
+  name: RegexRule
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RegexRule.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.RegexRule
+  fullName.vb: Apq.Cfg.Validation.Rules.RegexRule.New
+  nameWithType: RegexRule.RegexRule
+  nameWithType.vb: RegexRule.New
+- uid: Apq.Cfg.Validation.Rules.RegexRule.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.RegexRule.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.ErrorMessage
+  nameWithType: RegexRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.RegexRule.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RegexRule.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.ErrorMessage
+  nameWithType: RegexRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Key
+  commentId: P:Apq.Cfg.Validation.Rules.RegexRule.Key
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Key
+  nameWithType: RegexRule.Key
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RegexRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Key
+  nameWithType: RegexRule.Key
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Name
+  commentId: P:Apq.Cfg.Validation.Rules.RegexRule.Name
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Name
+  nameWithType: RegexRule.Name
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RegexRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Name
+  nameWithType: RegexRule.Name
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Pattern
+  name: Pattern
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Pattern
+  commentId: P:Apq.Cfg.Validation.Rules.RegexRule.Pattern
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Pattern
+  nameWithType: RegexRule.Pattern
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Pattern*
+  name: Pattern
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Pattern_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RegexRule.Pattern
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Pattern
+  nameWithType: RegexRule.Pattern
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RegexRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RegexRule.Validate(String)
+  nameWithType: RegexRule.Validate(string?)
+  nameWithType.vb: RegexRule.Validate(String)
+- uid: Apq.Cfg.Validation.Rules.RegexRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.RegexRule.html#Apq_Cfg_Validation_Rules_RegexRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RegexRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RegexRule.Validate
+  nameWithType: RegexRule.Validate
+- uid: Apq.Cfg.Validation.Rules.RequiredRule
+  name: RequiredRule
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html
+  commentId: T:Apq.Cfg.Validation.Rules.RequiredRule
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule
+  nameWithType: RequiredRule
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.#ctor(System.String,System.String)
+  name: RequiredRule(string, string?)
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule__ctor_System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RequiredRule.#ctor(System.String,System.String)
+  name.vb: New(String, String)
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.RequiredRule(string, string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RequiredRule.New(String, String)
+  nameWithType: RequiredRule.RequiredRule(string, string?)
+  nameWithType.vb: RequiredRule.New(String, String)
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.#ctor*
+  name: RequiredRule
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule__ctor_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RequiredRule.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.RequiredRule
+  fullName.vb: Apq.Cfg.Validation.Rules.RequiredRule.New
+  nameWithType: RequiredRule.RequiredRule
+  nameWithType.vb: RequiredRule.New
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.ErrorMessage
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_ErrorMessage
+  commentId: P:Apq.Cfg.Validation.Rules.RequiredRule.ErrorMessage
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.ErrorMessage
+  nameWithType: RequiredRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.ErrorMessage*
+  name: ErrorMessage
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_ErrorMessage_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RequiredRule.ErrorMessage
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.ErrorMessage
+  nameWithType: RequiredRule.ErrorMessage
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_Key
+  commentId: P:Apq.Cfg.Validation.Rules.RequiredRule.Key
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.Key
+  nameWithType: RequiredRule.Key
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_Key_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RequiredRule.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.Key
+  nameWithType: RequiredRule.Key
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.Name
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_Name
+  commentId: P:Apq.Cfg.Validation.Rules.RequiredRule.Name
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.Name
+  nameWithType: RequiredRule.Name
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.Name*
+  name: Name
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_Name_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RequiredRule.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.Name
+  nameWithType: RequiredRule.Name
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.Validate(System.String)
+  name: Validate(string?)
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_Validate_System_String_
+  commentId: M:Apq.Cfg.Validation.Rules.RequiredRule.Validate(System.String)
+  name.vb: Validate(String)
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.Validate(string?)
+  fullName.vb: Apq.Cfg.Validation.Rules.RequiredRule.Validate(String)
+  nameWithType: RequiredRule.Validate(string?)
+  nameWithType.vb: RequiredRule.Validate(String)
+- uid: Apq.Cfg.Validation.Rules.RequiredRule.Validate*
+  name: Validate
+  href: api/Apq.Cfg.Validation.Rules.RequiredRule.html#Apq_Cfg_Validation_Rules_RequiredRule_Validate_
+  commentId: Overload:Apq.Cfg.Validation.Rules.RequiredRule.Validate
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.Rules.RequiredRule.Validate
+  nameWithType: RequiredRule.Validate
+- uid: Apq.Cfg.Validation.ValidationError
+  name: ValidationError
+  href: api/Apq.Cfg.Validation.ValidationError.html
+  commentId: T:Apq.Cfg.Validation.ValidationError
+  fullName: Apq.Cfg.Validation.ValidationError
+  nameWithType: ValidationError
+- uid: Apq.Cfg.Validation.ValidationError.#ctor(System.String,System.String,System.String,System.String)
+  name: ValidationError(string, string, string, string?)
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError__ctor_System_String_System_String_System_String_System_String_
+  commentId: M:Apq.Cfg.Validation.ValidationError.#ctor(System.String,System.String,System.String,System.String)
+  name.vb: New(String, String, String, String)
+  fullName: Apq.Cfg.Validation.ValidationError.ValidationError(string, string, string, string?)
+  fullName.vb: Apq.Cfg.Validation.ValidationError.New(String, String, String, String)
+  nameWithType: ValidationError.ValidationError(string, string, string, string?)
+  nameWithType.vb: ValidationError.New(String, String, String, String)
+- uid: Apq.Cfg.Validation.ValidationError.#ctor*
+  name: ValidationError
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError__ctor_
+  commentId: Overload:Apq.Cfg.Validation.ValidationError.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.ValidationError.ValidationError
+  fullName.vb: Apq.Cfg.Validation.ValidationError.New
+  nameWithType: ValidationError.ValidationError
+  nameWithType.vb: ValidationError.New
+- uid: Apq.Cfg.Validation.ValidationError.ActualValue
+  name: ActualValue
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_ActualValue
+  commentId: P:Apq.Cfg.Validation.ValidationError.ActualValue
+  fullName: Apq.Cfg.Validation.ValidationError.ActualValue
+  nameWithType: ValidationError.ActualValue
+- uid: Apq.Cfg.Validation.ValidationError.ActualValue*
+  name: ActualValue
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_ActualValue_
+  commentId: Overload:Apq.Cfg.Validation.ValidationError.ActualValue
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationError.ActualValue
+  nameWithType: ValidationError.ActualValue
+- uid: Apq.Cfg.Validation.ValidationError.Key
+  name: Key
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_Key
+  commentId: P:Apq.Cfg.Validation.ValidationError.Key
+  fullName: Apq.Cfg.Validation.ValidationError.Key
+  nameWithType: ValidationError.Key
+- uid: Apq.Cfg.Validation.ValidationError.Key*
+  name: Key
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_Key_
+  commentId: Overload:Apq.Cfg.Validation.ValidationError.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationError.Key
+  nameWithType: ValidationError.Key
+- uid: Apq.Cfg.Validation.ValidationError.Message
+  name: Message
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_Message
+  commentId: P:Apq.Cfg.Validation.ValidationError.Message
+  fullName: Apq.Cfg.Validation.ValidationError.Message
+  nameWithType: ValidationError.Message
+- uid: Apq.Cfg.Validation.ValidationError.Message*
+  name: Message
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_Message_
+  commentId: Overload:Apq.Cfg.Validation.ValidationError.Message
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationError.Message
+  nameWithType: ValidationError.Message
+- uid: Apq.Cfg.Validation.ValidationError.RuleName
+  name: RuleName
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_RuleName
+  commentId: P:Apq.Cfg.Validation.ValidationError.RuleName
+  fullName: Apq.Cfg.Validation.ValidationError.RuleName
+  nameWithType: ValidationError.RuleName
+- uid: Apq.Cfg.Validation.ValidationError.RuleName*
+  name: RuleName
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_RuleName_
+  commentId: Overload:Apq.Cfg.Validation.ValidationError.RuleName
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationError.RuleName
+  nameWithType: ValidationError.RuleName
+- uid: Apq.Cfg.Validation.ValidationError.ToString
+  name: ToString()
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_ToString
+  commentId: M:Apq.Cfg.Validation.ValidationError.ToString
+  fullName: Apq.Cfg.Validation.ValidationError.ToString()
+  nameWithType: ValidationError.ToString()
+- uid: Apq.Cfg.Validation.ValidationError.ToString*
+  name: ToString
+  href: api/Apq.Cfg.Validation.ValidationError.html#Apq_Cfg_Validation_ValidationError_ToString_
+  commentId: Overload:Apq.Cfg.Validation.ValidationError.ToString
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationError.ToString
+  nameWithType: ValidationError.ToString
+- uid: Apq.Cfg.Validation.ValidationResult
+  name: ValidationResult
+  href: api/Apq.Cfg.Validation.ValidationResult.html
+  commentId: T:Apq.Cfg.Validation.ValidationResult
+  fullName: Apq.Cfg.Validation.ValidationResult
+  nameWithType: ValidationResult
+- uid: Apq.Cfg.Validation.ValidationResult.#ctor(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.ValidationError})
+  name: ValidationResult(IEnumerable<ValidationError>?)
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult__ctor_System_Collections_Generic_IEnumerable_Apq_Cfg_Validation_ValidationError__
+  commentId: M:Apq.Cfg.Validation.ValidationResult.#ctor(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.ValidationError})
+  name.vb: New(IEnumerable(Of ValidationError))
+  fullName: Apq.Cfg.Validation.ValidationResult.ValidationResult(System.Collections.Generic.IEnumerable<Apq.Cfg.Validation.ValidationError>?)
+  fullName.vb: Apq.Cfg.Validation.ValidationResult.New(System.Collections.Generic.IEnumerable(Of Apq.Cfg.Validation.ValidationError))
+  nameWithType: ValidationResult.ValidationResult(IEnumerable<ValidationError>?)
+  nameWithType.vb: ValidationResult.New(IEnumerable(Of ValidationError))
+- uid: Apq.Cfg.Validation.ValidationResult.#ctor*
+  name: ValidationResult
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult__ctor_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.Validation.ValidationResult.ValidationResult
+  fullName.vb: Apq.Cfg.Validation.ValidationResult.New
+  nameWithType: ValidationResult.ValidationResult
+  nameWithType.vb: ValidationResult.New
+- uid: Apq.Cfg.Validation.ValidationResult.ErrorCount
+  name: ErrorCount
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_ErrorCount
+  commentId: P:Apq.Cfg.Validation.ValidationResult.ErrorCount
+  fullName: Apq.Cfg.Validation.ValidationResult.ErrorCount
+  nameWithType: ValidationResult.ErrorCount
+- uid: Apq.Cfg.Validation.ValidationResult.ErrorCount*
+  name: ErrorCount
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_ErrorCount_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.ErrorCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.ErrorCount
+  nameWithType: ValidationResult.ErrorCount
+- uid: Apq.Cfg.Validation.ValidationResult.Errors
+  name: Errors
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Errors
+  commentId: P:Apq.Cfg.Validation.ValidationResult.Errors
+  fullName: Apq.Cfg.Validation.ValidationResult.Errors
+  nameWithType: ValidationResult.Errors
+- uid: Apq.Cfg.Validation.ValidationResult.Errors*
+  name: Errors
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Errors_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.Errors
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.Errors
+  nameWithType: ValidationResult.Errors
+- uid: Apq.Cfg.Validation.ValidationResult.Failure(Apq.Cfg.Validation.ValidationError[])
+  name: Failure(params ValidationError[])
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Failure_Apq_Cfg_Validation_ValidationError___
+  commentId: M:Apq.Cfg.Validation.ValidationResult.Failure(Apq.Cfg.Validation.ValidationError[])
+  name.vb: Failure(ParamArray ValidationError())
+  fullName: Apq.Cfg.Validation.ValidationResult.Failure(params Apq.Cfg.Validation.ValidationError[])
+  fullName.vb: Apq.Cfg.Validation.ValidationResult.Failure(ParamArray Apq.Cfg.Validation.ValidationError())
+  nameWithType: ValidationResult.Failure(params ValidationError[])
+  nameWithType.vb: ValidationResult.Failure(ParamArray ValidationError())
+- uid: Apq.Cfg.Validation.ValidationResult.Failure(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.ValidationError})
+  name: Failure(IEnumerable<ValidationError>)
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Failure_System_Collections_Generic_IEnumerable_Apq_Cfg_Validation_ValidationError__
+  commentId: M:Apq.Cfg.Validation.ValidationResult.Failure(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.ValidationError})
+  name.vb: Failure(IEnumerable(Of ValidationError))
+  fullName: Apq.Cfg.Validation.ValidationResult.Failure(System.Collections.Generic.IEnumerable<Apq.Cfg.Validation.ValidationError>)
+  fullName.vb: Apq.Cfg.Validation.ValidationResult.Failure(System.Collections.Generic.IEnumerable(Of Apq.Cfg.Validation.ValidationError))
+  nameWithType: ValidationResult.Failure(IEnumerable<ValidationError>)
+  nameWithType.vb: ValidationResult.Failure(IEnumerable(Of ValidationError))
+- uid: Apq.Cfg.Validation.ValidationResult.Failure*
+  name: Failure
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Failure_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.Failure
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.Failure
+  nameWithType: ValidationResult.Failure
+- uid: Apq.Cfg.Validation.ValidationResult.GetErrorsForKey(System.String)
+  name: GetErrorsForKey(string)
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_GetErrorsForKey_System_String_
+  commentId: M:Apq.Cfg.Validation.ValidationResult.GetErrorsForKey(System.String)
+  name.vb: GetErrorsForKey(String)
+  fullName: Apq.Cfg.Validation.ValidationResult.GetErrorsForKey(string)
+  fullName.vb: Apq.Cfg.Validation.ValidationResult.GetErrorsForKey(String)
+  nameWithType: ValidationResult.GetErrorsForKey(string)
+  nameWithType.vb: ValidationResult.GetErrorsForKey(String)
+- uid: Apq.Cfg.Validation.ValidationResult.GetErrorsForKey*
+  name: GetErrorsForKey
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_GetErrorsForKey_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.GetErrorsForKey
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.GetErrorsForKey
+  nameWithType: ValidationResult.GetErrorsForKey
+- uid: Apq.Cfg.Validation.ValidationResult.HasErrorsForKey(System.String)
+  name: HasErrorsForKey(string)
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_HasErrorsForKey_System_String_
+  commentId: M:Apq.Cfg.Validation.ValidationResult.HasErrorsForKey(System.String)
+  name.vb: HasErrorsForKey(String)
+  fullName: Apq.Cfg.Validation.ValidationResult.HasErrorsForKey(string)
+  fullName.vb: Apq.Cfg.Validation.ValidationResult.HasErrorsForKey(String)
+  nameWithType: ValidationResult.HasErrorsForKey(string)
+  nameWithType.vb: ValidationResult.HasErrorsForKey(String)
+- uid: Apq.Cfg.Validation.ValidationResult.HasErrorsForKey*
+  name: HasErrorsForKey
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_HasErrorsForKey_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.HasErrorsForKey
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.HasErrorsForKey
+  nameWithType: ValidationResult.HasErrorsForKey
+- uid: Apq.Cfg.Validation.ValidationResult.IsValid
+  name: IsValid
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_IsValid
+  commentId: P:Apq.Cfg.Validation.ValidationResult.IsValid
+  fullName: Apq.Cfg.Validation.ValidationResult.IsValid
+  nameWithType: ValidationResult.IsValid
+- uid: Apq.Cfg.Validation.ValidationResult.IsValid*
+  name: IsValid
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_IsValid_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.IsValid
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.IsValid
+  nameWithType: ValidationResult.IsValid
+- uid: Apq.Cfg.Validation.ValidationResult.Success
+  name: Success
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Success
+  commentId: P:Apq.Cfg.Validation.ValidationResult.Success
+  fullName: Apq.Cfg.Validation.ValidationResult.Success
+  nameWithType: ValidationResult.Success
+- uid: Apq.Cfg.Validation.ValidationResult.Success*
+  name: Success
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_Success_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.Success
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.Success
+  nameWithType: ValidationResult.Success
+- uid: Apq.Cfg.Validation.ValidationResult.ToString
+  name: ToString()
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_ToString
+  commentId: M:Apq.Cfg.Validation.ValidationResult.ToString
+  fullName: Apq.Cfg.Validation.ValidationResult.ToString()
+  nameWithType: ValidationResult.ToString()
+- uid: Apq.Cfg.Validation.ValidationResult.ToString*
+  name: ToString
+  href: api/Apq.Cfg.Validation.ValidationResult.html#Apq_Cfg_Validation_ValidationResult_ToString_
+  commentId: Overload:Apq.Cfg.Validation.ValidationResult.ToString
+  isSpec: "True"
+  fullName: Apq.Cfg.Validation.ValidationResult.ToString
+  nameWithType: ValidationResult.ToString
 - uid: Apq.Cfg.Vault
   name: Apq.Cfg.Vault
   href: api/Apq.Cfg.Vault.html

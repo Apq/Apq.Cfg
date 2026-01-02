@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ConfigValidationBuilder | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ConfigValidationBuilder | Apq.Cfg API ">
+      
+      <meta name="description" content="配置验证构建器，提供流式 API 构建验证规则">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.Validation.ConfigValidationBuilder">
+
+
+
+  <h1 id="Apq_Cfg_Validation_ConfigValidationBuilder" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder" class="text-break">
+Class ConfigValidationBuilder  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.Validation.html">Validation</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>配置验证构建器，提供流式 API 构建验证规则</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ConfigValidationBuilder</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ConfigValidationBuilder</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_AddRule_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.AddRule*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_AddRule_Apq_Cfg_Validation_IValidationRule_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.AddRule(Apq.Cfg.Validation.IValidationRule)">
+  AddRule(IValidationRule)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加自定义验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder AddRule(IValidationRule rule)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rule</code> <a class="xref" href="Apq.Cfg.Validation.IValidationRule.html">IValidationRule</a></dt>
+    <dd><p>验证规则</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_AddRules_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.AddRules*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_AddRules_System_Collections_Generic_IEnumerable_Apq_Cfg_Validation_IValidationRule__" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.AddRules(System.Collections.Generic.IEnumerable{Apq.Cfg.Validation.IValidationRule})">
+  AddRules(IEnumerable&lt;IValidationRule&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加多个自定义验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder AddRules(IEnumerable&lt;IValidationRule&gt; rules)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rules</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Apq.Cfg.Validation.IValidationRule.html">IValidationRule</a>&gt;</dt>
+    <dd><p>验证规则列表</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Build_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Build*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Build" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Build">
+  Build()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>构建配置验证器</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IConfigValidator Build()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.IConfigValidator.html">IConfigValidator</a></dt>
+    <dd><p>配置验证器</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Custom_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Custom*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Custom_System_String_System_Func_System_String_System_Boolean__System_String_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Custom(System.String,System.Func{System.String,System.Boolean},System.String,System.String)">
+  Custom(string, Func&lt;string?, bool&gt;, string, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加自定义验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Custom(string key, Func&lt;string?, bool&gt; validator, string errorMessage, string? ruleName = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>validator</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p>验证函数，返回 true 表示验证通过</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>错误消息</p>
+</dd>
+    <dt><code>ruleName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>规则名称</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_DependsOn_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_DependsOn_System_String_System_String_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.DependsOn(System.String,System.String,System.String)">
+  DependsOn(string, string, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加依赖验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder DependsOn(string key, string dependencyKey, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>dependencyKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>依赖的配置键</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Length_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Length*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Length_System_String_System_Nullable_System_Int32__System_Nullable_System_Int32__System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Length(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)">
+  Length(string, int?, int?, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加字符串长度验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Length(string key, int? minLength = null, int? maxLength = null, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>minLength</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd><p>最小长度（null 表示不限制）</p>
+</dd>
+    <dt><code>maxLength</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd><p>最大长度（null 表示不限制）</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_MaxLength_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_MaxLength_System_String_System_Int32_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.MaxLength(System.String,System.Int32,System.String)">
+  MaxLength(string, int, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加最大长度验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder MaxLength(string key, int maxLength, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>maxLength</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>最大长度</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_MinLength_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.MinLength*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_MinLength_System_String_System_Int32_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.MinLength(System.String,System.Int32,System.String)">
+  MinLength(string, int, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加最小长度验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder MinLength(string key, int minLength, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>minLength</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>最小长度</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.OneOf*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_System_String_System_Collections_Generic_IEnumerable_System_String__System_Boolean_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean,System.String)">
+  OneOf(string, IEnumerable&lt;string&gt;, bool, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加枚举值验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder OneOf(string key, IEnumerable&lt;string&gt; allowedValues, bool ignoreCase = false, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>allowedValues</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>允许的值列表</p>
+</dd>
+    <dt><code>ignoreCase</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否忽略大小写</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.OneOf*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_OneOf_System_String_System_String___" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.OneOf(System.String,System.String[])">
+  OneOf(string, params string[])
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加枚举值验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder OneOf(string key, params string[] allowedValues)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>allowedValues</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>允许的值列表</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_DateTime_System_DateTime_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.DateTime,System.DateTime,System.String)">
+  Range(string, DateTime, DateTime, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加日期时间范围验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Range(string key, DateTime min, DateTime max, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>min</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></dt>
+    <dd><p>最小值</p>
+</dd>
+    <dt><code>max</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></dt>
+    <dd><p>最大值</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Decimal_System_Decimal_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Decimal,System.Decimal,System.String)">
+  Range(string, decimal, decimal, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加十进制数范围验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Range(string key, decimal min, decimal max, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>min</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.decimal">decimal</a></dt>
+    <dd><p>最小值</p>
+</dd>
+    <dt><code>max</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.decimal">decimal</a></dt>
+    <dd><p>最大值</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Double_System_Double_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Double,System.Double,System.String)">
+  Range(string, double, double, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加双精度浮点数范围验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Range(string key, double min, double max, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>min</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>最小值</p>
+</dd>
+    <dt><code>max</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>最大值</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Int32_System_Int32_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Int32,System.Int32,System.String)">
+  Range(string, int, int, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加整数范围验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Range(string key, int min, int max, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>min</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>最小值</p>
+</dd>
+    <dt><code>max</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>最大值</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Range_System_String_System_Int64_System_Int64_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Range(System.String,System.Int64,System.Int64,System.String)">
+  Range(string, long, long, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加长整数范围验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Range(string key, long min, long max, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>min</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>最小值</p>
+</dd>
+    <dt><code>max</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd><p>最大值</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Regex_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Regex*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Regex_System_String_System_String_System_String_System_Text_RegularExpressions_RegexOptions_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Regex(System.String,System.String,System.String,System.Text.RegularExpressions.RegexOptions)">
+  Regex(string, string, string?, RegexOptions)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加正则表达式验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Regex(string key, string pattern, string? errorMessage = null, RegexOptions options = RegexOptions.None)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>pattern</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>正则表达式模式</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+    <dt><code>options</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.regularexpressions.regexoptions">RegexOptions</a></dt>
+    <dd><p>正则表达式选项</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Required_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Required*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Required_System_String_System_String_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Required(System.String,System.String)">
+  Required(string, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加必填验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Required(string key, string? errorMessage = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置键</p>
+</dd>
+    <dt><code>errorMessage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>自定义错误消息</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Validation_ConfigValidationBuilder_Required_" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Required*"></a>
+
+  <h3 id="Apq_Cfg_Validation_ConfigValidationBuilder_Required_System_String___" data-uid="Apq.Cfg.Validation.ConfigValidationBuilder.Required(System.String[])">
+  Required(params string[])
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加多个必填验证规则</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConfigValidationBuilder Required(params string[] keys)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>keys</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>配置键列表</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a></dt>
+    <dd><p>构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

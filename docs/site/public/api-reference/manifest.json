@@ -102,6 +102,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.CfgBuilderTemplateExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.CfgBuilderTemplateExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.CfgBuilderTemplateExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.CfgBuilderTemplateExtensions.yml\" sourcestartlinenumber=\"1\">CfgBuilder 模板扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.CfgRootExtensions.yml",
       "output": {
         ".html": {
@@ -127,6 +141,20 @@
       "IsMRef": true,
       "Title": "Apq.Cfg.CfgSectionAttribute",
       "Summary": "<p sourcefile=\"api/Apq.Cfg.CfgSectionAttribute.yml\" sourcestartlinenumber=\"1\">标记一个类为配置节，源生成器将为其生成零反射的绑定代码</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.CfgSourceLevels.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.CfgSourceLevels.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.CfgSourceLevels",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.CfgSourceLevels.yml\" sourcestartlinenumber=\"1\">配置源默认层级常量</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -1068,6 +1096,104 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot.CfgRootSnapshotExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Snapshot.CfgRootSnapshotExtensions.yml\" sourcestartlinenumber=\"1\">ICfgRoot 配置快照导出扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.ConfigExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.ConfigExporter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot.ConfigExporter",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Snapshot.ConfigExporter.yml\" sourcestartlinenumber=\"1\">配置快照导出器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.ExportContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.ExportContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot.ExportContext",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Snapshot.ExportContext.yml\" sourcestartlinenumber=\"1\">导出上下文，提供导出时的元数据和选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.ExportOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.ExportOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot.ExportOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Snapshot.ExportOptions.yml\" sourcestartlinenumber=\"1\">配置导出选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.SnapshotExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.SnapshotExporter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot.SnapshotExporter",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Snapshot.SnapshotExporter.yml\" sourcestartlinenumber=\"1\">配置快照导出委托</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.SnapshotExporters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.SnapshotExporters.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot.SnapshotExporters",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Snapshot.SnapshotExporters.yml\" sourcestartlinenumber=\"1\">内置配置快照导出器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Snapshot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Snapshot.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Snapshot",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.SourceGenerator.CfgSectionGenerator.yml",
       "output": {
         ".html": {
@@ -1166,6 +1292,104 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Template.IVariableResolver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Template.IVariableResolver.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Template.IVariableResolver",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Template.IVariableResolver.yml\" sourcestartlinenumber=\"1\">变量解析器接口</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Template.TemplateEngine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Template.TemplateEngine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Template.TemplateEngine",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Template.TemplateEngine.yml\" sourcestartlinenumber=\"1\">模板解析引擎</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Template.UnresolvedVariableBehavior.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Template.UnresolvedVariableBehavior.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Template.UnresolvedVariableBehavior",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Template.UnresolvedVariableBehavior.yml\" sourcestartlinenumber=\"1\">未解析变量的处理方式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Template.VariableResolutionOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Template.VariableResolutionOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Template.VariableResolutionOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Template.VariableResolutionOptions.yml\" sourcestartlinenumber=\"1\">变量解析选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Template.VariableResolvers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Template.VariableResolvers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Template.VariableResolvers",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Template.VariableResolvers.yml\" sourcestartlinenumber=\"1\">内置变量解析器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Template.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Template.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Template",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.TemplateExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.TemplateExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.TemplateExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.TemplateExtensions.yml\" sourcestartlinenumber=\"1\">配置模板扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.Toml.CfgBuilderExtensions.yml",
       "output": {
         ".html": {
@@ -1190,6 +1414,258 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "Apq.Cfg.Toml",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.CfgRootValidationExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.CfgRootValidationExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.CfgRootValidationExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.CfgRootValidationExtensions.yml\" sourcestartlinenumber=\"1\">ICfgRoot 验证扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.ConfigValidationBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.ConfigValidationBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.ConfigValidationBuilder",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.ConfigValidationBuilder.yml\" sourcestartlinenumber=\"1\">配置验证构建器，提供流式 API 构建验证规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.ConfigValidationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.ConfigValidationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.ConfigValidationException",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.ConfigValidationException.yml\" sourcestartlinenumber=\"1\">配置验证异常</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.ConfigValidator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.ConfigValidator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.ConfigValidator",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.ConfigValidator.yml\" sourcestartlinenumber=\"1\">配置验证器实现</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.IConfigValidator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.IConfigValidator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.IConfigValidator",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.IConfigValidator.yml\" sourcestartlinenumber=\"1\">配置验证器接口</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.IValidationRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.IValidationRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.IValidationRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.IValidationRule.yml\" sourcestartlinenumber=\"1\">配置验证规则接口</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.CustomRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.CustomRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.CustomRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.CustomRule.yml\" sourcestartlinenumber=\"1\">自定义验证规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.DependsOnRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.DependsOnRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.DependsOnRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.DependsOnRule.yml\" sourcestartlinenumber=\"1\">依赖验证规则 - 当依赖键存在时，当前键也必须存在</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.EnumValuesRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.EnumValuesRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.EnumValuesRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.EnumValuesRule.yml\" sourcestartlinenumber=\"1\">枚举值验证规则 - 验证值是否在允许的值列表中</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.LengthRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.LengthRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.LengthRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.LengthRule.yml\" sourcestartlinenumber=\"1\">字符串长度验证规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.RangeRule-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.RangeRule-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.RangeRule<T>",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.RangeRule-1.yml\" sourcestartlinenumber=\"1\">范围验证规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.RangeRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.RangeRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.RangeRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.RangeRule.yml\" sourcestartlinenumber=\"1\">范围验证规则工厂</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.RegexRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.RegexRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.RegexRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.RegexRule.yml\" sourcestartlinenumber=\"1\">正则表达式验证规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.RequiredRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.RequiredRule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules.RequiredRule",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.Rules.RequiredRule.yml\" sourcestartlinenumber=\"1\">必填验证规则</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.Rules.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.Rules.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.Rules",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.ValidationError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.ValidationError.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.ValidationError",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.ValidationError.yml\" sourcestartlinenumber=\"1\">配置验证错误</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.ValidationResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.ValidationResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation.ValidationResult",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Validation.ValidationResult.yml\" sourcestartlinenumber=\"1\">配置验证结果</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Validation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Validation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Validation",
       "Summary": null
     },
     {

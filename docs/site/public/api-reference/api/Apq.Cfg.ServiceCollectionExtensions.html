@@ -315,6 +315,64 @@ services.AddApqCfg((builder, sp) =&gt; builder
 
 
 
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfgWithValidation_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfgWithValidation_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_Boolean_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfgWithValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder},System.Boolean)">
+  AddApqCfgWithValidation(IServiceCollection, Action&lt;CfgBuilder&gt;, bool)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Apq.Cfg 配置服务并启用验证</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddApqCfgWithValidation(this IServiceCollection services, Action&lt;CfgBuilder&gt; configure, bool validateOnStartup = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a>&gt;</dt>
+    <dd><p>配置构建器委托</p>
+</dd>
+    <dt><code>validateOnStartup</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否在启动时验证配置，默认为 true</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfgWithValidation_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">services.AddApqCfgWithValidation(cfg =&gt; cfg
+    .AddJson("config.json", level: 0)
+    .AddValidation(v =&gt; v
+        .Required("Database:ConnectionString")
+        .Range("Database:Port", 1, 65535)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.Validation.ConfigValidationException.html">ConfigValidationException</a></dt>
+    <dd><p>当 validateOnStartup 为 true 且验证失败时抛出</p>
+</dd>
+  </dl>
+
+
+
   <a id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg*"></a>
 
   <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_String_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddApqCfg``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.CfgBuilder},System.String)">
@@ -383,6 +441,96 @@ var dbOptions = serviceProvider.GetRequiredService&lt;IOptions&lt;DatabaseOption
   <div class="markdown level1 remarks"><p>此方法会注册 ICfgRoot、IConfigurationRoot 和 IOptions&lt;TOptions&gt; 服务。
 配置选项类必须有无参构造函数。</p>
 </div>
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_Validation_IConfigValidator_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.Validation.IConfigValidator)">
+  AddConfigValidator(IServiceCollection, IConfigValidator)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加配置验证器到服务集合</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddConfigValidator(this IServiceCollection services, IConfigValidator validator)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>validator</code> <a class="xref" href="Apq.Cfg.Validation.IConfigValidator.html">IConfigValidator</a></dt>
+    <dd><p>验证器实例</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator*"></a>
+
+  <h3 id="Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder__" data-uid="Apq.Cfg.ServiceCollectionExtensions.AddConfigValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.Validation.ConfigValidationBuilder})">
+  AddConfigValidator(IServiceCollection, Action&lt;ConfigValidationBuilder&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加配置验证器到服务集合</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IServiceCollection AddConfigValidator(this IServiceCollection services, Action&lt;ConfigValidationBuilder&gt; configure)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Validation.ConfigValidationBuilder.html">ConfigValidationBuilder</a>&gt;</dt>
+    <dd><p>验证规则配置委托</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder___examples">Examples</h4>
+  <pre><code class="lang-csharp">services.AddApqCfg(cfg =&gt; cfg.AddJson("config.json", level: 0));
+services.AddConfigValidator(v =&gt; v
+    .Required("Database:ConnectionString")
+    .Range("Database:Port", 1, 65535));</code></pre>
+
+
 
 
 
