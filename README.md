@@ -22,6 +22,7 @@
 - [.env 文件支持](#env-文件支持)
 - [编码处理](#编码处理)
 - [依赖注入集成](#依赖注入集成)
+- [配置验证](#配置验证)
 - [远程配置中心](#远程配置中心)
 - [源生成器（Native AOT 支持）](#源生成器native-aot-支持)
 - [构建与测试](#构建与测试)
@@ -408,6 +409,57 @@ public class DatabaseOptions
 }
 ```
 
+### 配置验证
+
+支持在构建时或运行时验证配置值的有效性：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Validation;
+
+// 构建并验证配置
+var (cfg, result) = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddValidation(v => v
+        .Required("Database:ConnectionString")
+        .Range("Database:Port", 1, 65535)
+        .Regex("App:Email", @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")
+        .OneOf("App:Environment", "Development", "Staging", "Production"))
+    .BuildAndValidate(throwOnError: false);
+
+if (!result.IsValid)
+{
+    foreach (var error in result.Errors)
+    {
+        Console.WriteLine($"配置错误: {error}");
+    }
+}
+
+// 运行时验证
+cfg.ValidateAndThrow(v => v.Required("App:Name"));
+
+// 依赖注入集成
+services.AddApqCfgWithValidation(cfg => cfg
+    .AddJson("config.json", level: 0)
+    .AddValidation(v => v
+        .Required("Database:ConnectionString")
+        .Range("Database:Port", 1, 65535)));
+```
+
+#### 内置验证规则
+
+| 规则 | 说明 | 示例 |
+|------|------|------|
+| `Required` | 必填验证 | `.Required("Database:ConnectionString")` |
+| `Range` | 范围验证（支持 int/double/decimal） | `.Range("Server:Port", 1, 65535)` |
+| `Regex` | 正则表达式验证 | `.Regex("App:Email", @"^[\w-\.]+@...")` |
+| `OneOf` | 枚举值验证 | `.OneOf("App:Env", "Dev", "Prod")` |
+| `Length` | 长度验证 | `.Length("App:Name", 3, 50)` |
+| `DependsOn` | 依赖验证 | `.DependsOn("Db:Password", "Db:Username")` |
+| `Custom` | 自定义验证 | `.Custom("Key", v => v?.StartsWith("X"), "错误消息")` |
+
+> 详细文档见 [配置验证指南](docs/site/guide/validation.md)
+
 ### 远程配置中心
 
 支持 Consul、Etcd、Nacos、Apollo、Zookeeper 等远程配置中心，支持热重载：
@@ -484,12 +536,12 @@ dotnet run -c Release
 
 ### 单元测试通过情况
 
-**最后运行时间**: 2026-01-01
+**最后运行时间**: 2026-01-02
 
 | 框架       | 通过  | 失败  | 跳过  | 总计  | 状态   |
 | -------- | --- | --- | --- | --- | ---- |
-| .NET 8.0 | 388 | 0   | 41  | 429 | ✅ 通过 |
-| .NET 10.0 | 388 | 0   | 41  | 429 | ✅ 通过 |
+| .NET 8.0 | 418 | 0   | 41  | 459 | ✅ 通过 |
+| .NET 10.0 | 418 | 0   | 41  | 459 | ✅ 通过 |
 
 #### 跳过测试说明
 

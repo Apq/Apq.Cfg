@@ -5,6 +5,7 @@ using Apq.Cfg.Security;
 using Apq.Cfg.Sources;
 using Apq.Cfg.Sources.Environment;
 using Apq.Cfg.Sources.File;
+using Apq.Cfg.Validation;
 
 namespace Apq.Cfg;
 
@@ -256,6 +257,62 @@ public sealed class CfgBuilder
 
     #endregion
 
+    #region 配置验证
+
+    private readonly List<IValidationRule> _validationRules = new();
+    private IConfigValidator? _validator;
+
+    /// <summary>
+    /// 添加配置验证规则
+    /// </summary>
+    /// <param name="configure">验证规则配置委托</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddValidation(v => v
+    ///         .Required("Database:ConnectionString")
+    ///         .Range("Database:Port", 1, 65535)
+    ///         .Regex("App:Email", @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+    ///     .Build();
+    /// </code>
+    /// </example>
+    public CfgBuilder AddValidation(Action<ConfigValidationBuilder> configure)
+    {
+        var builder = new ConfigValidationBuilder();
+        configure(builder);
+        _validationRules.AddRange(builder.Rules);
+        return this;
+    }
+
+    /// <summary>
+    /// 添加自定义验证器
+    /// </summary>
+    /// <param name="validator">验证器实例</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
+    public CfgBuilder AddValidator(IConfigValidator validator)
+    {
+        _validator = validator;
+        return this;
+    }
+
+    /// <summary>
+    /// 获取配置验证器（内部使用）
+    /// </summary>
+    internal IConfigValidator? GetValidator()
+    {
+        if (_validator != null)
+            return _validator;
+
+        if (_validationRules.Count > 0)
+            return new ConfigValidator(_validationRules);
+
+        return null;
+    }
+
+    #endregion
+
     /// <summary>
     /// 构建配置根实例
     /// </summary>
@@ -269,5 +326,46 @@ public sealed class CfgBuilder
             : null;
 
         return new MergedCfgRoot(_sources, transformerChain, maskerChain);
+    }
+
+    /// <summary>
+    /// 构建配置根实例并验证
+    /// </summary>
+    /// <param name="throwOnError">验证失败时是否抛出异常，默认为 true</param>
+    /// <returns>配置根实例和验证结果的元组</returns>
+    /// <exception cref="ConfigValidationException">当 throwOnError 为 true 且验证失败时抛出</exception>
+    /// <example>
+    /// <code>
+    /// // 构建并验证，失败时抛出异常
+    /// var cfg = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddValidation(v => v.Required("Database:ConnectionString"))
+    ///     .BuildAndValidate();
+    ///
+    /// // 构建并验证，不抛出异常
+    /// var (cfg2, result) = new CfgBuilder()
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddValidation(v => v.Required("Database:ConnectionString"))
+    ///     .BuildAndValidate(throwOnError: false);
+    /// if (!result.IsValid)
+    /// {
+    ///     // 处理验证错误
+    /// }
+    /// </code>
+    /// </example>
+    public (ICfgRoot Config, ValidationResult Result) BuildAndValidate(bool throwOnError = true)
+    {
+        var cfg = Build();
+        var validator = GetValidator();
+
+        if (validator == null)
+            return (cfg, ValidationResult.Success);
+
+        var result = validator.Validate(cfg);
+
+        if (throwOnError && !result.IsValid)
+            throw new ConfigValidationException(result);
+
+        return (cfg, result);
     }
 }

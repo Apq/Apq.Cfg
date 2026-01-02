@@ -1,4 +1,5 @@
 using Apq.Cfg.DependencyInjection;
+using Apq.Cfg.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -281,4 +282,98 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    #region 配置验证
+
+    /// <summary>
+    /// 添加 Apq.Cfg 配置服务并启用验证
+    /// </summary>
+    /// <param name="services">服务集合</param>
+    /// <param name="configure">配置构建器委托</param>
+    /// <param name="validateOnStartup">是否在启动时验证配置，默认为 true</param>
+    /// <returns>服务集合，支持链式调用</returns>
+    /// <exception cref="ConfigValidationException">当 validateOnStartup 为 true 且验证失败时抛出</exception>
+    /// <example>
+    /// <code>
+    /// services.AddApqCfgWithValidation(cfg => cfg
+    ///     .AddJson("config.json", level: 0)
+    ///     .AddValidation(v => v
+    ///         .Required("Database:ConnectionString")
+    ///         .Range("Database:Port", 1, 65535)));
+    /// </code>
+    /// </example>
+    public static IServiceCollection AddApqCfgWithValidation(
+        this IServiceCollection services,
+        Action<CfgBuilder> configure,
+        bool validateOnStartup = true)
+    {
+        var builder = new CfgBuilder();
+        configure(builder);
+
+        if (validateOnStartup)
+        {
+            var (cfgRoot, _) = builder.BuildAndValidate(throwOnError: true);
+            services.TryAddSingleton<ICfgRoot>(cfgRoot);
+            services.TryAddSingleton(cfgRoot.ToMicrosoftConfiguration());
+
+            // 注册验证器
+            var validator = builder.GetValidator();
+            if (validator != null)
+                services.TryAddSingleton<IConfigValidator>(validator);
+        }
+        else
+        {
+            var cfgRoot = builder.Build();
+            services.TryAddSingleton<ICfgRoot>(cfgRoot);
+            services.TryAddSingleton(cfgRoot.ToMicrosoftConfiguration());
+
+            // 注册验证器
+            var validator = builder.GetValidator();
+            if (validator != null)
+                services.TryAddSingleton<IConfigValidator>(validator);
+        }
+
+        return services;
+    }
+
+    /// <summary>
+    /// 添加配置验证器到服务集合
+    /// </summary>
+    /// <param name="services">服务集合</param>
+    /// <param name="configure">验证规则配置委托</param>
+    /// <returns>服务集合，支持链式调用</returns>
+    /// <example>
+    /// <code>
+    /// services.AddApqCfg(cfg => cfg.AddJson("config.json", level: 0));
+    /// services.AddConfigValidator(v => v
+    ///     .Required("Database:ConnectionString")
+    ///     .Range("Database:Port", 1, 65535));
+    /// </code>
+    /// </example>
+    public static IServiceCollection AddConfigValidator(
+        this IServiceCollection services,
+        Action<ConfigValidationBuilder> configure)
+    {
+        var builder = new ConfigValidationBuilder();
+        configure(builder);
+        var validator = builder.Build();
+        services.TryAddSingleton<IConfigValidator>(validator);
+        return services;
+    }
+
+    /// <summary>
+    /// 添加配置验证器到服务集合
+    /// </summary>
+    /// <param name="services">服务集合</param>
+    /// <param name="validator">验证器实例</param>
+    /// <returns>服务集合，支持链式调用</returns>
+    public static IServiceCollection AddConfigValidator(
+        this IServiceCollection services,
+        IConfigValidator validator)
+    {
+        services.TryAddSingleton(validator);
+        return services;
+    }
+
+    #endregion
 }

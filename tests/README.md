@@ -30,7 +30,7 @@ dotnet test tests/Apq.Cfg.Tests.Net10/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 429 个测试，41 个需外部服务）
+## 测试统计（共 459 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
@@ -63,6 +63,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | PerformanceOptimizationTests | 30 | 0 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
 | SourceGeneratorTests | 8 | 0 | 源生成器测试（[CfgSection] 特性/BindFrom/BindTo）|
 | **CryptoTests** | **58** | **0** | **加密脱敏测试（AES-GCM/AES-CBC/ChaCha20/SM4/3DES/脱敏）**|
+| **ValidationTests** | **30** | **0** | **配置验证测试（Required/Range/Regex/OneOf/Length/DependsOn/Custom）**|
 
 ### 跳过测试说明
 
@@ -183,6 +184,19 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 枚举绑定 | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **多层级覆盖** |
 | 高层级覆盖低层级 | ✅ | ✅ | ✅ | - | - | - | - | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **配置验证** |
+| `AddValidation()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `BuildAndValidate()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Validate()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `ValidateAndThrow()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `TryValidate()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Required()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Range()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Regex()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `OneOf()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Length()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `DependsOn()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `Custom()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 
 > 说明：
 > - `✅` 表示已有测试覆盖
@@ -207,6 +221,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | 批量操作 | PerformanceOptimizationTests | 30 | 0 |
 | 源生成器 | SourceGeneratorTests | 8 | 0 |
 | **加密脱敏** | **CryptoTests** | **58** | **0** |
+| **配置验证** | **ValidationTests** | **30** | **0** |
 
 > 注：基本读写测试中 41 个跳过的测试需要外部服务（Zookeeper/Apollo/Consul/Etcd/Nacos/Vault），Redis 和 Database 已配置
 
