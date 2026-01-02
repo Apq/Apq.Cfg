@@ -2,13 +2,27 @@
 
 Environment variables configuration source, included in the core package.
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.EnvironmentVariables` (400).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 400
+.AddEnvironmentVariables(prefix: "APP_")
+
+// Specify custom level
+.AddEnvironmentVariables(prefix: "APP_", level: 450)
+```
+
 ## Basic Usage
 
 ```csharp
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    .AddEnvironmentVariables(prefix: "APP_")  // Uses default level 400
     .Build();
 ```
 
@@ -38,7 +52,7 @@ Environment variables use double underscore for hierarchy:
 
 ## Priority
 
-Environment variables typically have the highest priority (level 20+) to allow runtime overrides.
+Environment variables have the highest default priority (level 400) to allow runtime overrides.
 
 ## Next Steps
 

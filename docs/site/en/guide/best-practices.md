@@ -4,6 +4,16 @@ This guide covers best practices for using Apq.Cfg effectively.
 
 ## Configuration Organization
 
+### Recommended Level Planning
+
+| Level Range | Purpose | Example |
+|-------------|---------|---------|
+| 0-2 | Base configuration | config.json |
+| 3-5 | Environment config | config.Production.json |
+| 6-9 | Local overrides | config.local.json |
+| 10-19 | Remote config | Consul, Nacos, Apollo |
+| 20+ | Environment variables | Highest priority |
+
 ### Use Meaningful Levels
 
 ```csharp

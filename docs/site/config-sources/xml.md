@@ -8,6 +8,20 @@ XML 是一种经典的配置格式，适合需要严格结构验证的场景。
 dotnet add package Apq.Cfg.Xml
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Xml` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddXml("config.xml")
+
+// 指定自定义层级
+.AddXml("config.xml", level: 5)
+```
+
 ## 基本用法
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Xml;
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0)
+    .AddXml("config.xml")  // 使用默认层级 0
     .Build();
 ```
 
@@ -23,7 +37,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0, reloadOnChange: true)
+    .AddXml("config.xml", reloadOnChange: true)
     .AddXml("config.local.xml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
@@ -32,7 +46,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddXml("config.xml", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -141,7 +155,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0, encoding: options)
+    .AddXml("config.xml", encoding: options)
     .Build();
 ```
 
@@ -149,9 +163,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddXml("config.xml", level: 1, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

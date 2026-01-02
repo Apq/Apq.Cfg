@@ -8,6 +8,20 @@ Redis 是高性能的键值存储，适合作为配置中心使用。
 dotnet add package Apq.Cfg.Redis
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Redis` (100)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 100
+.AddRedis(options => { ... })
+
+// 指定自定义层级
+.AddRedis(options => { ... }, level: 150)
+```
+
 ## 基本用法
 
 ```csharp
@@ -19,7 +33,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "localhost:6379";
         options.KeyPrefix = "config:myapp:";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -32,7 +46,7 @@ var cfg = new CfgBuilder()
         options.ConnectionString = "localhost:6379";
         options.KeyPrefix = "config:myapp:";
         options.Channel = "config:myapp:changes";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -61,7 +75,7 @@ var cfg = new CfgBuilder()
         options.ConnectTimeoutMs = 5000;
         options.OperationTimeoutMs = 5000;
         options.ScanPageSize = 250;
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -126,7 +140,7 @@ var cfg = new CfgBuilder()
         options.ConnectionString = "localhost:6379";
         options.KeyPrefix = "config:myapp:";
         options.Channel = "config:myapp:changes";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -149,7 +163,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "sentinel1:26379,sentinel2:26379,serviceName=mymaster";
         options.KeyPrefix = "config:myapp:";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -161,7 +175,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "node1:6379,node2:6379,node3:6379";
         options.KeyPrefix = "config:myapp:";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -175,7 +189,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "localhost:6379,password=your-password";
         options.KeyPrefix = "config:myapp:";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -187,7 +201,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "localhost:6379,ssl=true,sslHost=redis.example.com";
         options.KeyPrefix = "config:myapp:";
-    }, level: 10)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -196,16 +210,16 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json", level: 0)
-    // Redis 远程配置（高优先级）
+    .AddJson("config.json")
+    // Redis 远程配置（使用默认层级 100）
     .AddRedis(options =>
     {
         options.ConnectionString = "localhost:6379";
         options.KeyPrefix = "config:myapp:";
         options.Channel = "config:myapp:changes";
-    }, level: 10)
-    // 环境变量（最高优先级）
-    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    })
+    // 环境变量（使用默认层级 400）
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

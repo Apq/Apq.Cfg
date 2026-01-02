@@ -8,6 +8,20 @@ Apollo 是携程开源的分布式配置中心，支持配置的集中管理、�
 dotnet add package Apq.Cfg.Apollo
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Apollo` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddApollo(options => { ... })
+
+// 指定自定义层级
+.AddApollo(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Apollo;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddApollo(options =>
     {
         options.AppId = "my-app";
@@ -23,7 +37,7 @@ var cfg = new CfgBuilder()
         options.Cluster = "default";
         options.Namespaces = new[] { "application" };
         options.EnableHotReload = true;
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 
 // 读取配置
@@ -110,13 +124,13 @@ Apollo 配置源可以与其他配置源组合使用：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)                              // 基础配置
-    .AddJson("config.local.json", level: 1)                        // 本地覆盖
-    .AddApollo(options =>                                          // Apollo 远程配置（最高优先级）
+    .AddJson("config.json")                              // 基础配置
+    .AddJson("config.local.json", level: 1)              // 本地覆盖
+    .AddApollo(options =>                                // Apollo 远程配置（使用默认层级 200）
     {
         options.AppId = "my-app";
         options.MetaServer = "http://apollo:8080";
-    }, level: 10)
+    })
     .Build();
 ```
 
@@ -126,8 +140,7 @@ var cfg = new CfgBuilder()
 // 使用简化的扩展方法
 var cfg = new CfgBuilder()
     .AddApollo("my-app", "http://localhost:8080",
-        namespaces: new[] { "application", "common" },
-        level: 10)
+        namespaces: new[] { "application", "common" })  // 使用默认层级 200
     .Build();
 ```
 

@@ -8,6 +8,20 @@ HashiCorp Consul integration for distributed configuration.
 dotnet add package Apq.Cfg.Consul
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Consul` (200).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 200
+.AddConsul(options => { ... })
+
+// Specify custom level
+.AddConsul(options => { ... }, level: 250)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -19,7 +33,7 @@ var cfg = new CfgBuilder()
     {
         options.Address = "http://localhost:8500";
         options.KeyPrefix = "app/config/";
-    }, level: 10, writeable: true, reloadOnChange: true)
+    }, writeable: true, reloadOnChange: true)  // Uses default level 200
     .Build();
 ```
 
@@ -37,7 +51,7 @@ var cfg = new CfgBuilder()
 Consul supports automatic reload via long polling:
 
 ```csharp
-.AddConsul(options => { }, level: 10, reloadOnChange: true)
+.AddConsul(options => { }, reloadOnChange: true)  // Uses default level 200
 ```
 
 ## Next Steps

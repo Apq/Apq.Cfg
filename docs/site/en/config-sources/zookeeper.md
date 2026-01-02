@@ -8,6 +8,20 @@ Apache Zookeeper integration for distributed configuration.
 dotnet add package Apq.Cfg.Zookeeper
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Zookeeper` (200).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 200
+.AddZookeeper(options => { ... })
+
+// Specify custom level
+.AddZookeeper(options => { ... }, level: 250)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -19,7 +33,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "localhost:2181";
         options.BasePath = "/config/myapp";
-    }, level: 10, writeable: true, reloadOnChange: true)
+    }, writeable: true, reloadOnChange: true)  // Uses default level 200
     .Build();
 ```
 

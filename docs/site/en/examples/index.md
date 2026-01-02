@@ -2,6 +2,18 @@
 
 This section provides various usage examples for Apq.Cfg.
 
+## Default Levels
+
+Each configuration source has a default level. If not specified, the default level is used:
+
+| Source Type | Default Level |
+|-------------|---------------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
+
 ## Example Categories
 
 ### Basic Examples
@@ -27,7 +39,7 @@ This section provides various usage examples for Apq.Cfg.
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json")  // Uses default level 0
     .Build();
 
 var appName = cfg.Get("App:Name");
@@ -38,9 +50,9 @@ Console.WriteLine($"App Name: {appName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddJson("config.json")                        // Uses default level 0
+    .AddYaml("config.yaml", level: 10, optional: true)
+    .AddEnvironmentVariables(prefix: "APP_")       // Uses default level 400
     .Build();
 ```
 
@@ -68,8 +80,8 @@ Console.WriteLine($"Database: {dbConfig.Host}:{dbConfig.Port}");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
+    .AddJson("config.json")                        // Uses default level 0
+    .AddEnvironmentVariables(prefix: "APP_"));    // Uses default level 400
 
 builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 ```
@@ -78,7 +90,7 @@ builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -97,9 +109,9 @@ cfg.ConfigChanges.Subscribe(e =>
 using Apq.Cfg.Crypto;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddAesGcmEncryptionFromEnv()  // Read key from environment variable
-    .AddSensitiveMasking()          // Add masking support
+    .AddJson("config.json")            // Uses default level 0
+    .AddAesGcmEncryptionFromEnv()      // Read key from environment variable
+    .AddSensitiveMasking()             // Add masking support
     .Build();
 
 // Encrypted value in config: { "Database": { "Password": "{ENC}base64..." } }
@@ -115,7 +127,7 @@ Console.WriteLine($"Password: {cfg.GetMasked("Database:Password")}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Modify configuration

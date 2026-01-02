@@ -8,6 +8,20 @@ XML configuration support for enterprise applications.
 dotnet add package Apq.Cfg.Xml
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Xml` (0).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 0
+.AddXml("config.xml")
+
+// Specify custom level
+.AddXml("config.xml", level: 10)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Xml;
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0)
+    .AddXml("config.xml")  // Uses default level 0
     .Build();
 ```
 

@@ -8,6 +8,20 @@ Redis-based configuration storage.
 dotnet add package Apq.Cfg.Redis
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Redis` (100).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 100
+.AddRedis(options => { ... })
+
+// Specify custom level
+.AddRedis(options => { ... }, level: 150)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -19,7 +33,7 @@ var cfg = new CfgBuilder()
     {
         options.ConnectionString = "localhost:6379";
         options.KeyPrefix = "config:";
-    }, level: 10, writeable: true)
+    }, writeable: true)  // Uses default level 100
     .Build();
 ```
 

@@ -14,6 +14,20 @@ YAML 文件配置源扩展包。
 - Apq.Cfg
 - YamlDotNet 16.3.0
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Yaml` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddYaml("config.yaml")
+
+// 指定自定义层级
+.AddYaml("config.yaml", level: 50)
+```
+
 ## 用法
 
 ```csharp

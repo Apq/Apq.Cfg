@@ -8,6 +8,20 @@ Zookeeper 是一个分布式协调服务，常用于配置管理和服务发现�
 dotnet add package Apq.Cfg.Zookeeper
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Zookeeper` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddZookeeper(options => { ... })
+
+// 指定自定义层级
+.AddZookeeper(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ### 基本用法（KeyValue 模式）
@@ -17,12 +31,12 @@ using Apq.Cfg;
 using Apq.Cfg.Zookeeper;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddZookeeper(options => {
         options.ConnectionString = "localhost:2181";
         options.RootPath = "/app/config";
         options.EnableHotReload = true;
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 
 // 读取配置
@@ -34,8 +48,8 @@ var dbPort = cfg.Get<int>("Database:Port");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddZookeeper("localhost:2181", "/app/config", level: 10)
+    .AddJson("config.json")
+    .AddZookeeper("localhost:2181", "/app/config")  // 使用默认层级 200
     .Build();
 ```
 
@@ -44,7 +58,7 @@ var cfg = new CfgBuilder()
 ```csharp
 // 从单个节点读取 JSON 配置
 var cfg = new CfgBuilder()
-    .AddZookeeperJson("localhost:2181", "/app/config.json", level: 10)
+    .AddZookeeperJson("localhost:2181", "/app/config.json")  // 使用默认层级 200
     .Build();
 ```
 
@@ -56,7 +70,7 @@ var cfg = new CfgBuilder()
         options.ConnectionString = "zk1:2181,zk2:2181,zk3:2181";
         options.RootPath = "/app/config";
         options.SessionTimeout = TimeSpan.FromSeconds(30);
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 ```
 
@@ -69,7 +83,7 @@ var cfg = new CfgBuilder()
         options.RootPath = "/app/config";
         options.AuthScheme = "digest";
         options.AuthInfo = "user:password";
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 ```
 
@@ -157,10 +171,10 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)                                         // 基础配置
-    .AddJson("config.local.json", level: 1, writeable: true)                  // 本地覆盖
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")                        // 环境变量
-    .AddZookeeper("localhost:2181", "/app/config", level: 10)                 // Zookeeper 最高优先级
+    .AddJson("config.json")                                         // 基础配置
+    .AddJson("config.local.json", level: 1, writeable: true)        // 本地覆盖
+    .AddEnvironmentVariables(level: 2, prefix: "APP_")              // 环境变量
+    .AddZookeeper("localhost:2181", "/app/config")                  // Zookeeper（使用默认层级 200）
     .Build();
 ```
 

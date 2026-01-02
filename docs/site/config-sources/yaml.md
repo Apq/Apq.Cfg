@@ -8,6 +8,20 @@ YAML 是一种人类友好的数据序列化格式，适合复杂配置。
 dotnet add package Apq.Cfg.Yaml
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Yaml` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddYaml("config.yaml")
+
+// 指定自定义层级
+.AddYaml("config.yaml", level: 5)
+```
+
 ## 基本用法
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0)
+    .AddYaml("config.yaml")  // 使用默认层级 0
     .Build();
 ```
 
@@ -23,7 +37,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, reloadOnChange: true)
+    .AddYaml("config.yaml", reloadOnChange: true)
     .AddYaml("config.local.yaml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
@@ -56,7 +70,7 @@ public static CfgBuilder AddYaml(
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddYaml("config.yaml", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -157,7 +171,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, encoding: options)
+    .AddYaml("config.yaml", encoding: options)
     .Build();
 ```
 
@@ -166,7 +180,7 @@ var cfg = new CfgBuilder()
 ```csharp
 using var stream = File.OpenRead("config.yaml");
 var cfg = new CfgBuilder()
-    .AddSource(new YamlStreamCfgSource(stream, level: 0))
+    .AddSource(new YamlStreamCfgSource(stream))
     .Build();
 ```
 
@@ -174,9 +188,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddYaml("config.yaml", level: 1, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

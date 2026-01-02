@@ -11,9 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 使用 AddApqCfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 默认层级 0
     .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_"));
+    .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 var app = builder.Build();
 ```
@@ -73,8 +73,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 注册配置
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
-    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
+    .AddJson("config.json")  // 默认层级 0
+    .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 // 绑定选项
 builder.Services.ConfigureApqCfg<DatabaseOptions>(DatabaseOptions.SectionName);
@@ -294,10 +294,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置 Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 默认层级 0
     .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
-    .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, watch: true, optional: true))
-    .AddEnvironmentVariables(level: 20, prefix: "APP_"));
+    .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true, optional: true)  // 默认层级 200
+    .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 // 配置选项
 builder.Services.AddOptions<DatabaseOptions>()

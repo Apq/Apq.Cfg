@@ -8,7 +8,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 使用默认层级 0
     .Build();
 ```
 
@@ -18,26 +18,35 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson("config.local.json", level: 1, writeable: true, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddJson("config.json")                                           // 默认层级 0
+    .AddJson("config.local.json", level: 50, writeable: true, optional: true)
+    .AddEnvironmentVariables(prefix: "APP_")                          // 默认层级 400
     .Build();
 ```
 
 ### 配置源优先级
 
-使用 `level` 参数控制优先级，数值越大优先级越高：
+使用 `level` 参数控制优先级，数值越大优先级越高。每种配置源都有默认层级，如果不指定则使用默认值：
+
+| 配置源类型 | 默认层级 |
+|------------|----------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
 
 ```csharp
 // config.json: { "Key": "value1" }
 // config.local.json: { "Key": "value2" }
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)        // 优先级低
-    .AddJson("config.local.json", level: 1)  // 优先级高
+    .AddJson("config.json")                    // 使用默认层级 0
+    .AddJson("config.local.json", level: 50)   // 自定义层级 50
+    .AddEnvironmentVariables()                 // 使用默认层级 400
     .Build();
 
-Console.WriteLine(cfg["Key"]); // 输出: value2
+Console.WriteLine(cfg["Key"]); // 输出: value2（来自 config.local.json）
 ```
 
 ## 读取配置值

@@ -44,7 +44,7 @@ using Apq.Cfg;
 
 // 1. 创建配置构建器并加载配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 使用默认层级 0
     .Build();
 
 // 2. 使用索引器读取配置
@@ -103,7 +103,7 @@ public class AppConfig
 ```csharp
 // 在 DI 容器中注册
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false));
+    .AddJson("config.json"));  // 使用默认层级 0
 
 services.ConfigureApqCfg<DatabaseConfig>("Database");
 services.ConfigureApqCfg<AppConfig>("App");
@@ -130,18 +130,26 @@ public class MyService
 
 ## 多配置源
 
-Apq.Cfg 支持从多个来源加载配置，数值越大的 level 优先级越高：
+Apq.Cfg 支持从多个来源加载配置，数值越大的 level 优先级越高。每种配置源都有默认层级：
+
+| 配置源类型 | 默认层级 |
+|------------|----------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
 
 ```csharp
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    // 基础配置（level: 0，最低优先级）
-    .AddJson("config.json", level: 0)
-    // 环境特定配置（level: 1，覆盖基础配置）
-    .AddJson($"config.{environment}.json", level: 1, optional: true)
-    // 环境变量（level: 2，最高优先级）
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    // 基础配置（使用默认层级 0）
+    .AddJson("config.json")
+    // 环境特定配置（自定义层级 10）
+    .AddJson($"config.{environment}.json", level: 10, optional: true)
+    // 环境变量（使用默认层级 400，最高优先级）
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

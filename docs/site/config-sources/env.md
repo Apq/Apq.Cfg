@@ -10,14 +10,30 @@
 dotnet add package Apq.Cfg
 ```
 
+## 默认层级
+
+环境变量和 .env 文件的默认层级为 `CfgSourceLevels.EnvironmentVariables` / `CfgSourceLevels.Env` (400)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 400
+.AddEnvironmentVariables(prefix: "APP_")
+.AddEnv(".env")
+
+// 指定自定义层级
+.AddEnvironmentVariables(level: 500, prefix: "APP_")
+.AddEnv(".env", level: 450)
+```
+
 ## 基本用法
 
 ### 读取系统环境变量
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddEnvironmentVariables(level: 1, prefix: "APP_")
+    .AddJson("config.json")
+    .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 ```
 
@@ -26,7 +42,7 @@ var cfg = new CfgBuilder()
 ```csharp
 // 只读取以 MYAPP_ 开头的环境变量
 var cfg = new CfgBuilder()
-    .AddEnvironmentVariables(level: 1, prefix: "MYAPP_")
+    .AddEnvironmentVariables(prefix: "MYAPP_")
     .Build();
 
 // 环境变量 MYAPP_DATABASE__HOST 映射为 Database:Host
@@ -46,8 +62,8 @@ using Apq.Cfg;
 using Apq.Cfg.Env;
 
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0)
-    .AddEnv(".env.local", level: 1, optional: true)
+    .AddEnv(".env")  // 使用默认层级 400
+    .AddEnv(".env.local", level: 401, optional: true)
     .Build();
 ```
 
@@ -136,11 +152,11 @@ public static CfgBuilder AddEnv(
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddJson("config.Development.json", level: 1, optional: true)
     .AddEnv(".env", level: 2, optional: true)
     .AddEnv(".env.local", level: 3, optional: true)
-    .AddEnvironmentVariables(level: 4, prefix: "APP_")
+    .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 ```
 
@@ -155,8 +171,8 @@ ENV APP_REDIS__HOST=redis
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddEnvironmentVariables(level: 1, prefix: "APP_")
+    .AddJson("config.json")
+    .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 ```
 
@@ -203,7 +219,7 @@ spec:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0, setEnvironmentVariables: true)
+    .AddEnv(".env", setEnvironmentVariables: true)  // 使用默认层级 400
     .Build();
 
 // .env 文件中的 DATABASE__HOST=localhost 会：
@@ -219,8 +235,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddEnvironmentVariables(level: 1, prefix: "APP_")
+    .AddJson("config.json")
+    .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 
 // 敏感信息通过环境变量注入

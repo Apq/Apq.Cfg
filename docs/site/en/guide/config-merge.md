@@ -6,12 +6,22 @@ Apq.Cfg supports merging multiple configuration sources with level-based priorit
 
 Configuration sources are merged by their `level` value. Higher levels override lower levels.
 
+Each configuration source has a default level. If not specified, the default level is used:
+
+| Source Type | Default Level |
+|-------------|---------------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
+
 ```
-Level 20: Environment Variables  ─┐
-Level 15: Vault                   │
-Level 10: Consul                  ├─► Merged Configuration
-Level 1:  config.local.json       │
-Level 0:  config.json            ─┘
+Level 400: Environment Variables  ─┐
+Level 300: Vault                   │
+Level 200: Consul                  ├─► Merged Configuration
+Level 50:  config.local.json       │
+Level 0:   config.json            ─┘
 ```
 
 ## Example
@@ -29,7 +39,7 @@ Level 0:  config.json            ─┘
 }
 ```
 
-**config.local.json** (Level 1):
+**config.local.json** (Level 50):
 ```json
 {
     "App": {
@@ -42,14 +52,14 @@ Level 0:  config.json            ─┘
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson("config.local.json", level: 1, optional: true)
+    .AddJson("config.json")                              // Uses default level 0
+    .AddJson("config.local.json", level: 50, optional: true)
     .Build();
 
 // Results:
 // App:Name = "MyApp"      (from level 0)
 // App:Port = 8080         (from level 0)
-// App:Debug = true        (from level 1, overrides level 0)
+// App:Debug = true        (from level 50, overrides level 0)
 ```
 
 ## Merge Rules
@@ -73,10 +83,63 @@ cfg.Set("App:Name", "NewName", targetLevel: 0);
 
 ## Best Practices
 
-1. **Use level 0 for defaults**: Base configuration that rarely changes
-2. **Use level 1-9 for environment-specific**: Development, staging, production
-3. **Use level 10+ for remote**: Dynamic configuration from config centers
-4. **Use highest levels for overrides**: Environment variables, command-line args
+### Recommended Level Design
+
+| Level Range | Purpose | Example |
+|-------------|---------|---------|
+| 0 | Base configuration | config.json |
+| 10-50 | Environment-specific | config.Production.json |
+| 50-99 | Local overrides | config.local.json |
+| 100 | Remote storage | Redis, Database |
+| 200 | Config centers | Consul, Nacos, Apollo |
+| 300 | Secret management | Vault |
+| 400 | Environment variables | Highest priority overrides |
+
+> Level intervals of 100 allow flexibility for custom levels in between.
+
+### Typical Scenarios
+
+#### Environment-Specific Configuration
+
+```csharp
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json")                                    // Uses default level 0
+    .AddJson($"config.{environment}.json", level: 10, optional: true)
+    .AddEnvironmentVariables(prefix: "APP_")                   // Uses default level 400
+    .Build();
+```
+
+#### Local Development Configuration
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json")                                                           // Uses default level 0
+    .AddJson("config.Development.json", level: 10, optional: true)
+    .AddJson("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)  // gitignore
+    .Build();
+```
+
+#### With Remote Config Center
+
+```csharp
+var cfg = new CfgBuilder()
+    // Base configuration (uses default level 0)
+    .AddJson("config.json")
+    .AddJson($"config.{env}.json", level: 10, optional: true)
+
+    // Local override
+    .AddJson("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)
+
+    // Remote configuration (uses default level 200)
+    .AddConsul(options => { ... })
+
+    // Environment variables (uses default level 400)
+    .AddEnvironmentVariables(prefix: "APP_")
+
+    .Build();
+```
 
 ## Next Steps
 

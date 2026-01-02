@@ -114,6 +114,20 @@ await cfg.SaveAsync();
 
 这确保下游项目不会被强制升级依赖，避免版本冲突。
 
+## 配置源默认层级
+
+配置源按 `level` 参数排序，数值越大优先级越高。相同键的配置值，高层级会覆盖低层级。
+
+| 层级范围 | 用途 | 配置源 | 默认值 |
+|----------|------|--------|--------|
+| 0-99 | 基础配置文件 | Json, Ini, Xml, Yaml, Toml | 0 |
+| 100-199 | 远程存储 | Redis, Database | 100 |
+| 200-299 | 配置中心 | Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| 300-399 | 密钥管理 | Vault | 300 |
+| 400+ | 环境相关 | .env, EnvironmentVariables | 400 |
+
+> 层级间隔 100，方便用户在中间插入自定义层级。例如：`config.json` (0) → `config.local.json` (50) → Redis (100)
+
 ## NuGet 包
 
 | 包名                                                                                | 说明                   |

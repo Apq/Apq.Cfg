@@ -8,6 +8,20 @@ INI 是一种简单的配置格式，适合简单的键值对配置。
 dotnet add package Apq.Cfg.Ini
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Ini` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddIni("config.ini")
+
+// 指定自定义层级
+.AddIni("config.ini", level: 5)
+```
+
 ## 基本用法
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0)
+    .AddIni("config.ini")  // 使用默认层级 0
     .Build();
 ```
 
@@ -23,7 +37,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, reloadOnChange: true)
+    .AddIni("config.ini", reloadOnChange: true)
     .AddIni("config.local.ini", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
@@ -32,7 +46,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddIni("config.ini", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -121,7 +135,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, encoding: options)
+    .AddIni("config.ini", encoding: options)
     .Build();
 ```
 
@@ -139,9 +153,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddIni("config.ini", level: 1, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

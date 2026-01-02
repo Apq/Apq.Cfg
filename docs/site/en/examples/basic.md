@@ -8,7 +8,7 @@ Basic configuration reading and type conversion examples.
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // Uses default level 0
     .Build();
 
 // String value

@@ -8,6 +8,20 @@
 dotnet add package Apq.Cfg.Database
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Database` (100)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 100
+.AddDatabase(options => { ... })
+
+// 指定自定义层级
+.AddDatabase(options => { ... }, level: 150)
+```
+
 ## 支持的数据库
 
 | 数据库 | Provider 值 |
@@ -32,7 +46,7 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
-    }, level: 1)
+    })  // 使用默认层级 100
     .Build();
 
 // 读取配置
@@ -64,7 +78,7 @@ var cfg = new CfgBuilder()
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
         options.CommandTimeoutMs = 5000;
-    }, level: 1, isPrimaryWriter: true)
+    }, isPrimaryWriter: true)  // 使用默认层级 100
     .Build();
 ```
 
@@ -130,7 +144,7 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "Key";
         options.ValueColumn = "Value";
-    }, level: 1)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -145,7 +159,7 @@ var cfg = new CfgBuilder()
         options.Table = "app_config";
         options.KeyColumn = "config_key";
         options.ValueColumn = "config_value";
-    }, level: 1)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -160,7 +174,7 @@ var cfg = new CfgBuilder()
         options.Table = "app_config";
         options.KeyColumn = "config_key";
         options.ValueColumn = "config_value";
-    }, level: 1)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -175,7 +189,7 @@ var cfg = new CfgBuilder()
         options.Table = "APP_CONFIG";
         options.KeyColumn = "CONFIG_KEY";
         options.ValueColumn = "CONFIG_VALUE";
-    }, level: 1)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -190,7 +204,7 @@ var cfg = new CfgBuilder()
         options.Table = "Config";
         options.KeyColumn = "Key";
         options.ValueColumn = "Value";
-    }, level: 1)
+    })  // 使用默认层级 100
     .Build();
 ```
 
@@ -207,7 +221,7 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
-    }, level: 1, isPrimaryWriter: true)
+    }, isPrimaryWriter: true)  // 使用默认层级 100
     .Build();
 
 // 写入配置
@@ -220,8 +234,8 @@ await cfg.SaveAsync();
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json", level: 0)
-    // 数据库配置（高优先级）
+    .AddJson("config.json")
+    // 数据库配置（使用默认层级 100）
     .AddDatabase(options =>
     {
         options.Provider = "SqlServer";
@@ -229,9 +243,9 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
-    }, level: 10, isPrimaryWriter: true)
-    // 环境变量（最高优先级）
-    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    }, isPrimaryWriter: true)
+    // 环境变量（使用默认层级 400）
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

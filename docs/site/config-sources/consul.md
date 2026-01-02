@@ -8,6 +8,20 @@ Consul 是 HashiCorp 的分布式服务发现和配置管理工具。
 dotnet add package Apq.Cfg.Consul
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Consul` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddConsul(options => { ... })
+
+// 指定自定义层级
+.AddConsul(options => { ... }, level: 250)
+```
+
 ## 基本用法
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Consul;
 
 var cfg = new CfgBuilder()
-    .AddConsul("http://localhost:8500", "myapp/config/", level: 10)
+    .AddConsul("http://localhost:8500", "myapp/config/", enableHotReload: true)  // 使用默认层级 200
     .Build();
 ```
 
@@ -23,7 +37,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddConsul("http://localhost:8500", "myapp/config/", level: 10, enableHotReload: true)
+    .AddConsul("http://localhost:8500", "myapp/config/", enableHotReload: true)  // 使用默认层级 200
     .Build();
 ```
 
@@ -65,7 +79,7 @@ var cfg = new CfgBuilder()
         options.WaitTime = TimeSpan.FromMinutes(5);
         options.EnableHotReload = true;
         options.DataFormat = ConsulDataFormat.KeyValue;
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 ```
 
@@ -116,7 +130,7 @@ var cfg = new CfgBuilder()
         options.KeyPrefix = "myapp/config/";
         options.DataFormat = ConsulDataFormat.Json;
         options.SingleKey = "app-config";
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 ```
 
@@ -134,8 +148,8 @@ Consul 键路径映射为配置键：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.fallback.json", level: 0)  // 本地回退配置
-    .AddConsul("http://consul:8500", "myapp/config/", level: 10, enableHotReload: true)
+    .AddJson("config.fallback.json")  // 本地回退配置
+    .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true)  // 使用默认层级 200
     .Build();
 ```
 
@@ -143,7 +157,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddConsul("http://localhost:8500", "myapp/config/", level: 10, enableHotReload: true)
+    .AddConsul("http://localhost:8500", "myapp/config/", enableHotReload: true)  // 使用默认层级 200
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -181,7 +195,7 @@ var cfg = new CfgBuilder()
         options.Address = "http://localhost:8500";
         options.KeyPrefix = "myapp/config/";
         options.Token = Environment.GetEnvironmentVariable("CONSUL_TOKEN");
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 ```
 
@@ -190,11 +204,11 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json", level: 0)
-    // Consul 远程配置（高优先级）
-    .AddConsul("http://consul:8500", "myapp/config/", level: 10, enableHotReload: true)
-    // 环境变量（最高优先级）
-    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    .AddJson("config.json")
+    // Consul 远程配置（使用默认层级 200）
+    .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true)
+    // 环境变量（使用默认层级 400）
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

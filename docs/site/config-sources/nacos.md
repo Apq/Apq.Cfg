@@ -8,6 +8,20 @@ Nacos 是阿里巴巴开源的动态服务发现、配置管理和服务管理�
 dotnet add package Apq.Cfg.Nacos
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Nacos` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddNacos(options => { ... })
+
+// 指定自定义层级
+.AddNacos(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Nacos;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json")
     .AddNacos(options =>
     {
         options.ServerAddresses = "localhost:8848";
@@ -23,7 +37,7 @@ var cfg = new CfgBuilder()
         options.DataId = "app-config";
         options.Group = "DEFAULT_GROUP";
         options.EnableHotReload = true;
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 
 // 读取配置
@@ -62,7 +76,7 @@ var cfg = new CfgBuilder()
         options.ServerAddresses = "localhost:8848";
         options.DataId = "app-config";
         options.EnableHotReload = true;
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 
 // 方式1：使用 Rx 订阅配置变更
@@ -189,14 +203,14 @@ Nacos 配置源可以与其他配置源组合使用：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)                              // 基础配置
-    .AddJson("config.local.json", level: 1)                        // 本地覆盖
-    .AddNacos(options =>                                           // Nacos 远程配置（最高优先级）
+    .AddJson("config.json")                              // 基础配置
+    .AddJson("config.local.json", level: 1)              // 本地覆盖
+    .AddNacos(options =>                                 // Nacos 远程配置（使用默认层级 200）
     {
         options.ServerAddresses = "nacos:8848";
         options.DataId = "myapp-config";
         options.EnableHotReload = true;
-    }, level: 10)
+    })
     .Build();
 ```
 
@@ -211,7 +225,7 @@ var cfg = new CfgBuilder()
         options.ServerAddresses = "localhost:8848";
         options.DataId = "app-config";
         options.EnableHotReload = true;
-    }, level: 0, isPrimaryWriter: true)
+    }, isPrimaryWriter: true)  // 使用默认层级 200
     .Build();
 
 // 修改配置
@@ -224,7 +238,7 @@ await cfg.SaveAsync();  // 发布到 Nacos
 ```csharp
 // 使用简化的扩展方法
 var cfg = new CfgBuilder()
-    .AddNacos("localhost:8848", "app-config", "DEFAULT_GROUP", level: 10, enableHotReload: true)
+    .AddNacos("localhost:8848", "app-config", "DEFAULT_GROUP", enableHotReload: true)  // 使用默认层级 200
     .Build();
 
 // JSON 格式简化方法

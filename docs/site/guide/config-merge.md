@@ -112,32 +112,59 @@ var cfg = new CfgBuilder()
     .Build();
 ```
 
+## 默认层级
+
+Apq.Cfg 为每种配置源定义了默认层级，如果不指定 `level` 参数，将使用默认值：
+
+| 层级范围 | 用途 | 配置源 | 默认值 |
+|----------|------|--------|--------|
+| 0-99 | 基础配置文件 | Json, Ini, Xml, Yaml, Toml | 0 |
+| 100-199 | 远程存储 | Redis, Database | 100 |
+| 200-299 | 配置中心 | Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| 300-399 | 密钥管理 | Vault | 300 |
+| 400+ | 环境相关 | .env, EnvironmentVariables | 400 |
+
+> 层级间隔 100，方便用户在中间插入自定义层级。
+
+### 使用默认层级
+
+```csharp
+var cfg = new CfgBuilder()
+    .AddJson("config.json")                    // 使用默认层级 0
+    .AddJson("config.local.json", level: 50)   // 自定义层级 50
+    .AddConsul(options => { ... })             // 使用默认层级 200
+    .AddEnvironmentVariables()                 // 使用默认层级 400
+    .Build();
+```
+
 ## 层级设计建议
 
 推荐的层级分配：
 
-| 层级范围 | 用途 | 示例 |
-|----------|------|------|
-| 0-2 | 基础配置 | config.json, config.{env}.json |
-| 3-5 | 本地覆盖 | config.local.json, .env |
-| 6-9 | 用户配置 | ~/.myapp/config.json |
-| 10-19 | 远程配置 | Consul, Nacos, Apollo |
-| 20+ | 环境变量 | 最高优先级覆盖 |
+| 层级 | 用途 | 示例 |
+|------|------|------|
+| 0 | 基础配置 | config.json |
+| 10-50 | 环境配置 | config.Production.json |
+| 50-99 | 本地覆盖 | config.local.json |
+| 100 | 远程存储 | Redis, Database |
+| 200 | 配置中心 | Consul, Nacos, Apollo |
+| 300 | 密钥管理 | Vault |
+| 400 | 环境变量 | 最高优先级覆盖 |
 
 ```csharp
 var cfg = new CfgBuilder()
-    // 基础配置
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{env}.json", level: 1, optional: true)
+    // 基础配置（使用默认层级 0）
+    .AddJson("config.json")
+    .AddJson($"config.{env}.json", level: 10, optional: true)
 
     // 本地覆盖
-    .AddJson("config.local.json", level: 3, writeable: true, optional: true, isPrimaryWriter: true)
+    .AddJson("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)
 
-    // 远程配置
-    .AddSource(new ConsulCfgSource(/* ... */, level: 10))
+    // 远程配置（使用默认层级 200）
+    .AddConsul(options => { ... })
 
-    // 环境变量
-    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    // 环境变量（使用默认层级 400）
+    .AddEnvironmentVariables(prefix: "APP_")
 
     .Build();
 ```

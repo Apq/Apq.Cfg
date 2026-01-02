@@ -8,7 +8,8 @@ const zhSidebar = {
       items: [
         { text: '简介', link: '/guide/' },
         { text: '快速开始', link: '/guide/quick-start' },
-        { text: '安装', link: '/guide/installation' }
+        { text: '安装', link: '/guide/installation' },
+        { text: '迁移指南', link: '/guide/migration' }
       ]
     },
     {
@@ -113,7 +114,8 @@ const enSidebar = {
       items: [
         { text: 'Introduction', link: '/en/guide/' },
         { text: 'Quick Start', link: '/en/guide/quick-start' },
-        { text: 'Installation', link: '/en/guide/installation' }
+        { text: 'Installation', link: '/en/guide/installation' },
+        { text: 'Migration Guide', link: '/en/guide/migration' }
       ]
     },
     {

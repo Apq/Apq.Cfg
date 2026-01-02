@@ -17,29 +17,27 @@ public static class ConfigurationBuilder
     {
         var builder = new CfgBuilder();
 
-        // 0层：基础配置，所有环境共享
-        builder.AddJson("config.json", level: 0, writeable: false, optional: true);
+        // 层级 0：基础配置，所有环境共享（默认层级）
+        builder.AddJson("config.json", optional: true);
 
-        // 1-3层：环境特定配置
-        builder.AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true);
+        // 层级 1：环境特定配置
+        builder.AddJson($"config.{environment}.json", level: 1, optional: true);
 
-        // 4层：机器特定配置（可选）
+        // 层级 4：机器特定配置（可选）
         builder.AddJson($"config.{environment}.{Environment.MachineName}.json",
-                     level: 4, writeable: false, optional: true);
+                     level: 4, optional: true);
 
-        // 5层：环境变量，可覆盖任何文件配置
-        builder.AddEnvironmentVariables(level: 5, prefix: "APP_");
-
-        // 7层：远程配置中心（生产环境）
+        // 层级 200：远程配置中心（生产环境，使用默认层级）
         if (environment.Equals("Production", StringComparison.OrdinalIgnoreCase))
         {
-            builder.AddSource(new ConsulCfgSource(
+            builder.AddConsul(
                 address: "https://consul.example.com",
                 keyPrefix: "myapp/config/",
-                level: 7,
-                writeable: false,
-                watch: true));
+                enableHotReload: true);
         }
+
+        // 层级 400：环境变量，可覆盖任何文件配置（默认层级）
+        builder.AddEnvironmentVariables(prefix: "APP_");
 
         return builder.Build();
     }

@@ -8,6 +8,20 @@ TOML configuration support with clear syntax.
 dotnet add package Apq.Cfg.Toml
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Toml` (0).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 0
+.AddToml("config.toml")
+
+// Specify custom level
+.AddToml("config.toml", level: 10)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Toml;
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0)
+    .AddToml("config.toml")  // Uses default level 0
     .Build();
 ```
 

@@ -6,32 +6,32 @@ Enterprise application configuration patterns.
 
 ```csharp
 var cfg = new CfgBuilder()
-    // Base configuration
-    .AddJson("config.json", level: 0)
+    // Base configuration (uses default level 0)
+    .AddJson("config.json")
 
-    // Service discovery
+    // Service discovery (uses default level 200)
     .AddConsul(options =>
     {
         options.Address = "http://consul:8500";
         options.KeyPrefix = $"services/{serviceName}/config/";
-    }, level: 10, reloadOnChange: true)
+    }, reloadOnChange: true)
 
-    // Shared configuration
+    // Shared configuration (custom level 150)
     .AddConsul(options =>
     {
         options.Address = "http://consul:8500";
         options.KeyPrefix = "shared/config/";
-    }, level: 5, reloadOnChange: true)
+    }, level: 150, reloadOnChange: true)
 
-    // Secrets
+    // Secrets (uses default level 300)
     .AddVault(options =>
     {
         options.Address = "http://vault:8200";
         options.SecretPath = $"secret/services/{serviceName}";
-    }, level: 15)
+    })
 
-    // Environment overrides
-    .AddEnvironmentVariables(level: 20, prefix: "SVC_")
+    // Environment overrides (uses default level 400)
+    .AddEnvironmentVariables(prefix: "SVC_")
     .Build();
 ```
 

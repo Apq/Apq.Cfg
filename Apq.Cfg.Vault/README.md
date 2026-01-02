@@ -21,6 +21,20 @@ Apq.Cfg 的 HashiCorp Vault 扩展，支持密钥管理和热重载功能。
 dotnet add package Apq.Cfg.Vault
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Vault` (300)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 300
+.AddVault(options => { ... })
+
+// 指定自定义层级
+.AddVault(options => { ... }, level: 350)
+```
+
 ## 快速开始
 
 ### 使用 Token 认证（KV V2）

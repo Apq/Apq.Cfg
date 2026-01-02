@@ -13,6 +13,20 @@ Consul 配置中心支持，为 Apq.Cfg 提供从 Consul KV 存储读取配置�
 dotnet add package Apq.Cfg.Consul
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Consul` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddConsul(options => { ... })
+
+// 指定自定义层级
+.AddConsul(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ```csharp

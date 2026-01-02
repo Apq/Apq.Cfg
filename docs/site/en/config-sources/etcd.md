@@ -8,6 +8,20 @@ Etcd distributed key-value store integration.
 dotnet add package Apq.Cfg.Etcd
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Etcd` (200).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 200
+.AddEtcd(options => { ... })
+
+// Specify custom level
+.AddEtcd(options => { ... }, level: 250)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -19,7 +33,7 @@ var cfg = new CfgBuilder()
     {
         options.Endpoints = new[] { "http://localhost:2379" };
         options.KeyPrefix = "/config/myapp/";
-    }, level: 10, writeable: true, reloadOnChange: true)
+    }, writeable: true, reloadOnChange: true)  // Uses default level 200
     .Build();
 ```
 

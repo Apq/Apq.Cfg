@@ -13,6 +13,20 @@ Apq.Cfg 的 Zookeeper 配置中心扩展，支持热重载。
 dotnet add package Apq.Cfg.Zookeeper
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Zookeeper` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddZookeeper(options => { ... })
+
+// 指定自定义层级
+.AddZookeeper(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ### 基本用法（KeyValue 模式）

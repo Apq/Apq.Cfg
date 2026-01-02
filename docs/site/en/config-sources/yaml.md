@@ -8,6 +8,20 @@ YAML provides a human-readable configuration format with support for complex hie
 dotnet add package Apq.Cfg.Yaml
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Yaml` (0).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 0
+.AddYaml("config.yaml")
+
+// Specify custom level
+.AddYaml("config.yaml", level: 10)
+```
+
 ## Basic Usage
 
 ### Configuration File
@@ -31,7 +45,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0)
+    .AddYaml("config.yaml")  // Uses default level 0
     .Build();
 
 var appName = cfg["App:Name"];
@@ -43,7 +57,7 @@ var port = cfg.Get<int>("App:Port");
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `path` | string | Required | File path |
-| `level` | int | Required | Priority level |
+| `level` | int | 0 | Priority level |
 | `writeable` | bool | `false` | Enable write support |
 | `optional` | bool | `false` | Allow missing file |
 | `reloadOnChange` | bool | `false` | Enable hot reload |

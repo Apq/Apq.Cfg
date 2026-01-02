@@ -14,6 +14,20 @@ TOML 文件配置源扩展包。
 - Apq.Cfg
 - Tomlyn 0.19.0
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Toml` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddToml("config.toml")
+
+// 指定自定义层级
+.AddToml("config.toml", level: 50)
+```
+
 ## 用法
 
 ```csharp

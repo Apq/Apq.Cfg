@@ -8,6 +8,20 @@ HashiCorp Vault 是一个密钥管理和数据保护工具，适合存储敏感�
 dotnet add package Apq.Cfg.Vault
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Vault` (300)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 300
+.AddVaultV2(address: "...", token: "...", enginePath: "kv", path: "myapp/config")
+
+// 指定自定义层级
+.AddVaultV2(address: "...", token: "...", enginePath: "kv", path: "myapp/config", level: 350)
+```
+
 ## 快速开始
 
 ### 使用 Token 认证（KV V2）
@@ -22,9 +36,8 @@ var cfg = new CfgBuilder()
         token: "s.1234567890abcdef",
         enginePath: "kv",
         path: "myapp/config",
-        level: 0,
         enableHotReload: true
-    )
+    )  // 使用默认层级 300
     .Build();
 
 // 读取配置
@@ -42,9 +55,8 @@ var cfg = new CfgBuilder()
         password: "secure-password",
         enginePath: "kv",
         path: "myapp/production",
-        kvVersion: 2,
-        level: 0
-    )
+        kvVersion: 2
+    )  // 使用默认层级 300
     .Build();
 ```
 
@@ -58,9 +70,8 @@ var cfg = new CfgBuilder()
         roleSecret: "role-secret-value",
         enginePath: "kv",
         path: "myapp/staging",
-        kvVersion: 2,
-        level: 0
-    )
+        kvVersion: 2
+    )  // 使用默认层级 300
     .Build();
 ```
 
@@ -72,9 +83,8 @@ var cfg = new CfgBuilder()
         address: "http://localhost:8200",
         token: "s.1234567890abcdef",
         enginePath: "secret",
-        path: "myapp",
-        level: 0
-    )
+        path: "myapp"
+    )  // 使用默认层级 300
     .Build();
 ```
 
@@ -112,7 +122,7 @@ var cfg = new CfgBuilder()
         options.EnableHotReload = true;
         options.PollInterval = TimeSpan.FromSeconds(30);
         options.ReconnectInterval = TimeSpan.FromSeconds(60);
-    }, level: 0)
+    })  // 使用默认层级 300
     .Build();
 ```
 
@@ -125,9 +135,8 @@ var cfg = new CfgBuilder()
         token: "s.1234567890abcdef",
         enginePath: "kv",
         path: "myapp/config",
-        level: 0,
         isPrimaryWriter: true
-    )
+    )  // 使用默认层级 300
     .Build();
 
 // 更新配置
@@ -148,9 +157,8 @@ var cfg = new CfgBuilder()
         token: "s.1234567890abcdef",
         enginePath: "kv",
         path: "myapp/config",
-        level: 0,
         enableHotReload: true
-    )
+    )  // 使用默认层级 300
     .Build();
 
 // 订阅配置变化事件

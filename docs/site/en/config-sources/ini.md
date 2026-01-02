@@ -8,6 +8,20 @@ INI file support for simple key-value configurations.
 dotnet add package Apq.Cfg.Ini
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Ini` (0).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 0
+.AddIni("config.ini")
+
+// Specify custom level
+.AddIni("config.ini", level: 10)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -15,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0)
+    .AddIni("config.ini")  // Uses default level 0
     .Build();
 ```
 

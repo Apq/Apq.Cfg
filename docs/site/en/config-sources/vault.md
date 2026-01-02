@@ -8,6 +8,20 @@ HashiCorp Vault secrets management integration.
 dotnet add package Apq.Cfg.Vault
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Vault` (300).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 300
+.AddVault(options => { ... })
+
+// Specify custom level
+.AddVault(options => { ... }, level: 350)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -20,7 +34,7 @@ var cfg = new CfgBuilder()
         options.Address = "http://localhost:8200";
         options.Token = Environment.GetEnvironmentVariable("VAULT_TOKEN");
         options.SecretPath = "secret/data/myapp";
-    }, level: 15)
+    })  // Uses default level 300
     .Build();
 ```
 

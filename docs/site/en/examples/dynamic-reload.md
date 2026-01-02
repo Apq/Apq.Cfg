@@ -6,7 +6,7 @@ Configuration hot reload examples.
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -58,7 +58,7 @@ var cfg = new CfgBuilder()
     {
         options.Address = "http://localhost:8500";
         options.KeyPrefix = "app/config/";
-    }, level: 10, reloadOnChange: true)
+    }, reloadOnChange: true)  // Uses default level 200
     .Build();
 ```
 

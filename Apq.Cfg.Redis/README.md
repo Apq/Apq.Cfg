@@ -14,6 +14,20 @@ Redis 配置源扩展包。
 - Apq.Cfg
 - StackExchange.Redis 2.10.1
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Redis` (100)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 100
+.AddRedis(options => { ... })
+
+// 指定自定义层级
+.AddRedis(options => { ... }, level: 150)
+```
+
 ## 用法
 
 ```csharp

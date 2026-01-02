@@ -19,6 +19,18 @@
 - [复杂场景](/examples/complex-scenarios) - 企业级应用配置
 - [加密脱敏](/guide/encryption-masking) - 配置加密与脱敏
 
+## 默认层级
+
+每种配置源都有默认层级，如果不指定 `level` 参数，将使用默认值：
+
+| 配置源类型 | 默认层级 |
+|------------|----------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
+
 ## 快速示例
 
 ### 最简单的用法
@@ -27,7 +39,7 @@
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json")  // 使用默认层级 0
     .Build();
 
 var appName = cfg.Get("App:Name");
@@ -38,9 +50,9 @@ Console.WriteLine($"应用名称: {appName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddJson("config.json")  // 默认层级 0
+    .AddYaml("config.yaml", optional: true)  // 默认层级 0
+    .AddEnvironmentVariables(prefix: "APP_")  // 默认层级 400
     .Build();
 ```
 
@@ -68,8 +80,8 @@ Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddEnvironmentVariables(level: 1, prefix: "APP_"));
+    .AddJson("config.json")  // 默认层级 0
+    .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 ```
@@ -78,7 +90,7 @@ builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true)
+    .AddJson("config.json", reloadOnChange: true)  // 默认层级 0
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -97,7 +109,7 @@ cfg.ConfigChanges.Subscribe(e =>
 using Apq.Cfg.Crypto;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJson("config.json")  // 默认层级 0
     .AddAesGcmEncryptionFromEnv()  // 从环境变量读取密钥
     .AddSensitiveMasking()          // 添加脱敏支持
     .Build();
@@ -115,7 +127,7 @@ Console.WriteLine($"密码: {cfg.GetMasked("Database:Password")}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // 默认层级 0
     .Build();
 
 // 修改配置

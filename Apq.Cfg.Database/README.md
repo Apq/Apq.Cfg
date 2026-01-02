@@ -14,6 +14,20 @@
 - Apq.Cfg
 - SqlSugarCore 5.1.4.210
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Database` (100)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 100
+.AddDatabase(options => { ... })
+
+// 指定自定义层级
+.AddDatabase(options => { ... }, level: 150)
+```
+
 ## 支持的数据库
 
 - SQL Server

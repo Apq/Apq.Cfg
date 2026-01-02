@@ -31,7 +31,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 使用默认层级 0
     .Build();
 
 // 使用索引器
@@ -231,7 +231,7 @@ foreach (var key in conn.GetChildKeys())
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // 使用默认层级 0
     .Build();
 
 // 修改配置
@@ -249,7 +249,7 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 使用默认层级 0
     .Build();
 
 // 读取应用配置

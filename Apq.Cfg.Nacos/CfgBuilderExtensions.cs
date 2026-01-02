@@ -10,13 +10,13 @@ public static class CfgBuilderExtensions
     /// </summary>
     /// <param name="builder">配置构建器</param>
     /// <param name="configure">配置选项</param>
-    /// <param name="level">配置层级，数值越大优先级越高</param>
-    /// <param name="isPrimaryWriter">是否为主写入源</param>
-    /// <returns>配置构建器</returns>
+    /// <param name="level">配置层级，数值越大优先级越高，默认为 <see cref="CfgSourceLevels.Nacos"/> (15)</param>
+    /// <param name="isPrimaryWriter">是否为主写入源，默认为false</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
     public static CfgBuilder AddNacos(
         this CfgBuilder builder,
         Action<NacosCfgOptions> configure,
-        int level,
+        int level = CfgSourceLevels.Nacos,
         bool isPrimaryWriter = false)
     {
         var options = new NacosCfgOptions();
@@ -31,16 +31,16 @@ public static class CfgBuilderExtensions
     /// <param name="builder">配置构建器</param>
     /// <param name="serverAddresses">Nacos 服务地址</param>
     /// <param name="dataId">配置的 DataId</param>
-    /// <param name="group">配置分组</param>
-    /// <param name="level">配置层级</param>
-    /// <param name="enableHotReload">是否启用热重载</param>
-    /// <returns>配置构建器</returns>
+    /// <param name="group">配置分组，默认为 "DEFAULT_GROUP"</param>
+    /// <param name="level">配置层级，数值越大优先级越高，默认为 <see cref="CfgSourceLevels.Nacos"/> (15)</param>
+    /// <param name="enableHotReload">是否启用热重载，默认为false</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
     public static CfgBuilder AddNacos(
         this CfgBuilder builder,
         string serverAddresses,
         string dataId,
         string group = "DEFAULT_GROUP",
-        int level = 0,
+        int level = CfgSourceLevels.Nacos,
         bool enableHotReload = false)
     {
         return builder.AddNacos(options =>
@@ -58,16 +58,16 @@ public static class CfgBuilderExtensions
     /// <param name="builder">配置构建器</param>
     /// <param name="serverAddresses">Nacos 服务地址</param>
     /// <param name="dataId">配置的 DataId</param>
-    /// <param name="group">配置分组</param>
-    /// <param name="level">配置层级</param>
-    /// <param name="enableHotReload">是否启用热重载</param>
-    /// <returns>配置构建器</returns>
+    /// <param name="group">配置分组，默认为 "DEFAULT_GROUP"</param>
+    /// <param name="level">配置层级，数值越大优先级越高，默认为 <see cref="CfgSourceLevels.Nacos"/> (15)</param>
+    /// <param name="enableHotReload">是否启用热重载，默认为false</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
     public static CfgBuilder AddNacosJson(
         this CfgBuilder builder,
         string serverAddresses,
         string dataId,
         string group = "DEFAULT_GROUP",
-        int level = 0,
+        int level = CfgSourceLevels.Nacos,
         bool enableHotReload = false)
     {
         return builder.AddNacos(options =>
@@ -86,16 +86,16 @@ public static class CfgBuilderExtensions
     /// <param name="builder">配置构建器</param>
     /// <param name="serverAddresses">Nacos 服务地址</param>
     /// <param name="dataId">配置的 DataId</param>
-    /// <param name="group">配置分组</param>
-    /// <param name="level">配置层级</param>
-    /// <param name="enableHotReload">是否启用热重载</param>
-    /// <returns>配置构建器</returns>
+    /// <param name="group">配置分组，默认为 "DEFAULT_GROUP"</param>
+    /// <param name="level">配置层级，数值越大优先级越高，默认为 <see cref="CfgSourceLevels.Nacos"/> (15)</param>
+    /// <param name="enableHotReload">是否启用热重载，默认为false</param>
+    /// <returns>配置构建器实例，支持链式调用</returns>
     public static CfgBuilder AddNacosProperties(
         this CfgBuilder builder,
         string serverAddresses,
         string dataId,
         string group = "DEFAULT_GROUP",
-        int level = 0,
+        int level = CfgSourceLevels.Nacos,
         bool enableHotReload = false)
     {
         return builder.AddNacos(options =>

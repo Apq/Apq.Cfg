@@ -86,11 +86,25 @@ await cfg.SaveAsync();
 
 配置源按 `level` 参数排序，数值越大优先级越高。相同键的配置值，高层级会覆盖低层级。
 
+### 默认层级
+
+| 层级范围 | 用途 | 配置源 | 默认值 |
+|----------|------|--------|--------|
+| 0-99 | 基础配置文件 | Json, Ini, Xml, Yaml, Toml | 0 |
+| 100-199 | 远程存储 | Redis, Database | 100 |
+| 200-299 | 配置中心 | Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| 300-399 | 密钥管理 | Vault | 300 |
+| 400+ | 环境相关 | .env, EnvironmentVariables | 400 |
+
+> 层级间隔 100，方便用户在中间插入自定义层级。
+
+### 使用示例
+
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)           // 基础配置（最低优先级）
-    .AddJson("config.local.json", level: 1)     // 本地覆盖
-    .AddEnvironmentVariables(level: 2)               // 环境变量（最高优先级）
+    .AddJson("config.json")                    // 使用默认层级 0
+    .AddJson("config.local.json", level: 50)   // 自定义层级 50
+    .AddEnvironmentVariables()                 // 使用默认层级 400
     .Build();
 ```
 

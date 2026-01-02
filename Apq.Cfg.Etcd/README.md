@@ -13,6 +13,20 @@ Etcd 配置中心支持，为 Apq.Cfg 提供从 Etcd KV 存储读取配置的能
 dotnet add package Apq.Cfg.Etcd
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Etcd` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddEtcd(options => { ... })
+
+// 指定自定义层级
+.AddEtcd(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ```csharp

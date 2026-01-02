@@ -34,7 +34,7 @@ using Apq.Cfg;
 
 // Build configuration
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // Uses default level 0
     .Build();
 
 // Read string value
@@ -66,21 +66,29 @@ Console.WriteLine($"Database: {host}:{dbPort}/{dbName}");
 
 ## Multi-Source Configuration
 
+Each configuration source has a default level. Higher level values override lower level values:
+
+| Source Type | Default Level |
+|-------------|---------------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
+
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson("config.local.json", level: 1, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddJson("config.json")                              // Uses default level 0
+    .AddJson("config.local.json", level: 50, optional: true)
+    .AddEnvironmentVariables(prefix: "APP_")             // Uses default level 400
     .Build();
 ```
-
-Higher level values override lower level values.
 
 ## Hot Reload
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 // Subscribe to configuration changes
@@ -98,7 +106,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Modify configuration

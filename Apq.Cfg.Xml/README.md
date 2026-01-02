@@ -14,6 +14,20 @@ XML 文件配置源扩展包。
 - Apq.Cfg
 - Microsoft.Extensions.Configuration.Xml（版本随目标框架：net8.0→8.0.0, net10.0→10.0.1）
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Xml` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddXml("config.xml")
+
+// 指定自定义层级
+.AddXml("config.xml", level: 50)
+```
+
 ## 用法
 
 ```csharp

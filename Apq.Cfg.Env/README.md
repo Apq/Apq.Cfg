@@ -13,6 +13,20 @@
 
 - Apq.Cfg
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Env` (400)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 400
+.AddEnv(".env")
+
+// 指定自定义层级
+.AddEnv(".env", level: 450)
+```
+
 ## 用法
 
 ```csharp

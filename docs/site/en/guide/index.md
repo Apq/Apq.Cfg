@@ -122,6 +122,7 @@ var port = cfg.Get<int>("App:Port");
 
 - [Installation Guide](/en/guide/installation) - Detailed installation instructions
 - [Quick Start](/en/guide/quick-start) - 5-minute tutorial
+- [Migration Guide](/en/guide/migration) - Migrate from Microsoft.Extensions.Configuration
 - [Config Sources](/en/config-sources/) - Learn about all supported sources
 - [Config Templates](/en/guide/template) - Variable references and dynamic config
 - [Encryption & Masking](/en/guide/encryption-masking) - Protect sensitive configs

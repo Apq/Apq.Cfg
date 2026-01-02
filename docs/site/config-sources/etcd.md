@@ -8,6 +8,20 @@ Etcd 是一个分布式键值存储系统，常用于服务发现和配置管理
 dotnet add package Apq.Cfg.Etcd
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Etcd` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddEtcd(options => { ... })
+
+// 指定自定义层级
+.AddEtcd(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ```csharp
@@ -15,13 +29,13 @@ using Apq.Cfg;
 using Apq.Cfg.Etcd;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddEtcd(options =>
     {
         options.Endpoints = new[] { "localhost:2379" };
         options.KeyPrefix = "/app/config/";
         options.EnableHotReload = true;
-    }, level: 10)
+    })  // 使用默认层级 200
     .Build();
 
 // 读取配置
@@ -159,13 +173,13 @@ Etcd 配置源可以与其他配置源组合使用：
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)                              // 基础配置
-    .AddJson("config.local.json", level: 1)                        // 本地覆盖
-    .AddEtcd(options =>                                            // Etcd 远程配置（最高优先级）
+    .AddJson("config.json")                              // 基础配置
+    .AddJson("config.local.json", level: 1)              // 本地覆盖
+    .AddEtcd(options =>                                  // Etcd 远程配置（使用默认层级 200）
     {
         options.Endpoints = new[] { "etcd:2379" };
         options.KeyPrefix = "/myapp/";
-    }, level: 10)
+    })
     .Build();
 ```
 

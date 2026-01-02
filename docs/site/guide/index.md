@@ -125,6 +125,7 @@ var typedValue = cfg.Get<int>("Section:IntKey");
 
 - [安装指南](/guide/installation) - 详细的安装说明
 - [快速开始](/guide/quick-start) - 5 分钟上手教程
+- [迁移指南](/guide/migration) - 从 Microsoft.Extensions.Configuration 迁移
 - [配置源](/config-sources/) - 了解所有支持的配置源
 - [配置模板](/guide/template) - 变量引用与动态配置
 - [加密脱敏](/guide/encryption-masking) - 保护敏感配置

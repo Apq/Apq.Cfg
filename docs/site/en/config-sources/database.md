@@ -8,6 +8,20 @@ The database configuration source supports reading and writing configuration fro
 dotnet add package Apq.Cfg.Database
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Database` (100).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 100
+.AddDatabase(options => { ... })
+
+// Specify custom level
+.AddDatabase(options => { ... }, level: 150)
+```
+
 ## Supported Databases
 
 | Database | Provider Value |
@@ -32,7 +46,7 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
-    }, level: 1)
+    })  // Uses default level 100
     .Build();
 
 // Read configuration
@@ -46,7 +60,7 @@ var timeout = cfg.Get<int>("Database:Timeout");
 public static CfgBuilder AddDatabase(
     this CfgBuilder builder,
     Action<DatabaseOptions> configure,
-    int level,
+    int? level = null,
     bool isPrimaryWriter = false)
 ```
 
@@ -64,7 +78,7 @@ var cfg = new CfgBuilder()
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
         options.CommandTimeoutMs = 5000;
-    }, level: 1, isPrimaryWriter: true)
+    }, isPrimaryWriter: true)  // Uses default level 100
     .Build();
 ```
 
@@ -130,7 +144,7 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "Key";
         options.ValueColumn = "Value";
-    }, level: 1)
+    })  // Uses default level 100
     .Build();
 ```
 
@@ -145,7 +159,7 @@ var cfg = new CfgBuilder()
         options.Table = "app_config";
         options.KeyColumn = "config_key";
         options.ValueColumn = "config_value";
-    }, level: 1)
+    })  // Uses default level 100
     .Build();
 ```
 
@@ -160,7 +174,7 @@ var cfg = new CfgBuilder()
         options.Table = "app_config";
         options.KeyColumn = "config_key";
         options.ValueColumn = "config_value";
-    }, level: 1)
+    })  // Uses default level 100
     .Build();
 ```
 
@@ -175,7 +189,7 @@ var cfg = new CfgBuilder()
         options.Table = "APP_CONFIG";
         options.KeyColumn = "CONFIG_KEY";
         options.ValueColumn = "CONFIG_VALUE";
-    }, level: 1)
+    })  // Uses default level 100
     .Build();
 ```
 
@@ -190,7 +204,7 @@ var cfg = new CfgBuilder()
         options.Table = "Config";
         options.KeyColumn = "Key";
         options.ValueColumn = "Value";
-    }, level: 1)
+    })  // Uses default level 100
     .Build();
 ```
 
@@ -207,7 +221,7 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
-    }, level: 1, isPrimaryWriter: true)
+    }, isPrimaryWriter: true)  // Uses default level 100
     .Build();
 
 // Write configuration
@@ -219,9 +233,9 @@ await cfg.SaveAsync();
 
 ```csharp
 var cfg = new CfgBuilder()
-    // Local base configuration
-    .AddJson("config.json", level: 0)
-    // Database configuration (higher priority)
+    // Local base configuration (uses default level 0)
+    .AddJson("config.json")
+    // Database configuration (uses default level 100)
     .AddDatabase(options =>
     {
         options.Provider = "SqlServer";
@@ -229,9 +243,9 @@ var cfg = new CfgBuilder()
         options.Table = "AppConfig";
         options.KeyColumn = "ConfigKey";
         options.ValueColumn = "ConfigValue";
-    }, level: 10, isPrimaryWriter: true)
-    // Environment variables (highest priority)
-    .AddEnvironmentVariables(level: 20, prefix: "APP_")
+    }, isPrimaryWriter: true)
+    // Environment variables (uses default level 400)
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

@@ -13,6 +13,20 @@ Apollo 配置中心支持，为 Apq.Cfg 提供从 Apollo 读取配置的能力�
 dotnet add package Apq.Cfg.Apollo
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Apollo` (200)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 200
+.AddApollo(options => { ... })
+
+// 指定自定义层级
+.AddApollo(options => { ... }, level: 250)
+```
+
 ## 快速开始
 
 ```csharp

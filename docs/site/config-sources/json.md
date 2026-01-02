@@ -10,13 +10,27 @@ JSON 配置源包含在核心包中，无需额外安装：
 dotnet add package Apq.Cfg
 ```
 
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Json` (0)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 0
+.AddJson("config.json")
+
+// 指定自定义层级
+.AddJson("config.json", level: 5)
+```
+
 ## 基本用法
 
 ### 加载 JSON 文件
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // 使用默认层级 0
     .Build();
 ```
 
@@ -24,7 +38,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddJson("config.local.json", level: 1, optional: true)
     .Build();
 ```
@@ -33,7 +47,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson("config.json", reloadOnChange: true)
     .Build();
 ```
 
@@ -41,7 +55,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -157,7 +171,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, encoding: options)
+    .AddJson("config.json", encoding: options)
     .Build();
 ```
 
@@ -166,7 +180,7 @@ var cfg = new CfgBuilder()
 ```csharp
 using var stream = File.OpenRead("config.json");
 var cfg = new CfgBuilder()
-    .AddSource(new JsonStreamCfgSource(stream, level: 0))
+    .AddSource(new JsonStreamCfgSource(stream))
     .Build();
 ```
 
@@ -178,9 +192,9 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")
     .AddJson($"config.{environment}.json", level: 1, optional: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
 

@@ -8,6 +8,20 @@ Alibaba Nacos configuration center integration.
 dotnet add package Apq.Cfg.Nacos
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Nacos` (200).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 200
+.AddNacos(options => { ... })
+
+// Specify custom level
+.AddNacos(options => { ... }, level: 250)
+```
+
 ## Basic Usage
 
 ```csharp
@@ -21,7 +35,7 @@ var cfg = new CfgBuilder()
         options.Namespace = "public";
         options.DataId = "myapp";
         options.Group = "DEFAULT_GROUP";
-    }, level: 10, reloadOnChange: true)
+    }, reloadOnChange: true)  // Uses default level 200
     .Build();
 ```
 

@@ -10,7 +10,7 @@ Use `CfgBuilder` to create configuration instances:
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // Uses default level 0
     .Build();
 ```
 
@@ -18,11 +18,36 @@ var cfg = new CfgBuilder()
 
 | Parameter | Description |
 |-----------|-------------|
-| `level` | Priority level (higher overrides lower) |
+| `level` | Priority level (higher overrides lower), uses default if not specified |
 | `writeable` | Whether the source supports writing |
 | `optional` | Whether the source is optional |
 | `reloadOnChange` | Enable hot reload |
 | `isPrimaryWriter` | Mark as primary write target |
+
+### Default Levels
+
+Each configuration source has a default level. Higher level values override lower level values:
+
+| Source Type | Default Level |
+|-------------|---------------|
+| Json, Ini, Xml, Yaml, Toml | 0 |
+| Redis, Database | 100 |
+| Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
+| Vault | 300 |
+| .env, EnvironmentVariables | 400 |
+
+```csharp
+// config.json: { "Key": "value1" }
+// config.local.json: { "Key": "value2" }
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json")                    // Uses default level 0
+    .AddJson("config.local.json", level: 50)   // Custom level 50
+    .AddEnvironmentVariables()                 // Uses default level 400
+    .Build();
+
+Console.WriteLine(cfg["Key"]); // Output: value2 (from config.local.json)
+```
 
 ## Reading Values
 
@@ -97,7 +122,7 @@ foreach (var key in section.GetChildKeys())
 ```csharp
 // Requires writeable source
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Set value

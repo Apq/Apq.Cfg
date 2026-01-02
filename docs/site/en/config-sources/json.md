@@ -8,6 +8,20 @@ JSON is the most commonly used configuration format, included in the core `Apq.C
 dotnet add package Apq.Cfg
 ```
 
+## Default Level
+
+The default level for this configuration source is `CfgSourceLevels.Json` (0).
+
+If you don't specify the `level` parameter, the default level will be used:
+
+```csharp
+// Uses default level 0
+.AddJson("config.json")
+
+// Specify custom level
+.AddJson("config.json", level: 10)
+```
+
 ## Basic Usage
 
 ### Configuration File
@@ -38,7 +52,7 @@ dotnet add package Apq.Cfg
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJson("config.json")  // Uses default level 0
     .Build();
 
 // Read values
@@ -52,7 +66,7 @@ var debug = cfg.Get<bool>("App:Debug");
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `path` | string | Required | File path |
-| `level` | int | Required | Priority level |
+| `level` | int | 0 | Priority level |
 | `writeable` | bool | `false` | Enable write support |
 | `optional` | bool | `false` | Allow missing file |
 | `reloadOnChange` | bool | `false` | Enable hot reload |
@@ -64,9 +78,9 @@ var debug = cfg.Get<bool>("App:Debug");
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{env}.json", level: 1, optional: true)
-    .AddJson("config.local.json", level: 2, optional: true)
+    .AddJson("config.json")                                    // Uses default level 0
+    .AddJson($"config.{env}.json", level: 10, optional: true)
+    .AddJson("config.local.json", level: 50, optional: true)
     .Build();
 ```
 
@@ -74,7 +88,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Modify values
@@ -89,7 +103,7 @@ await cfg.SaveAsync();
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 // Subscribe to changes
