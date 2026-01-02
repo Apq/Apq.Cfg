@@ -2,17 +2,22 @@
 
 ## 概述
 
-Apq.Cfg.WebApi 是一个 ASP.NET Core 扩展项目，用于通过 RESTful API 暴露合并后的配置内容。
+Apq.Cfg.WebApi 是一个 ASP.NET Core 扩展项目，用于通过 RESTful API 暴露配置内容。
+
+**核心特性：**
+- 提供**合并后**的配置（merged）- 所有配置源合并后的最终结果
+- 提供**合并前**的配置（sources）- 各个配置源的原始内容
 
 ## 功能特性
 
 - 提供 RESTful API 读写配置
+- **同时暴露合并后和合并前的配置**
 - 支持启用/禁用开关
 - 支持虚拟目录（自定义路由前缀）
 - 支持多种认证方式（无认证、API Key、JWT Bearer）
 - 支持敏感值脱敏
-- 支持嵌入式 WebUI
 - 支持 CORS 跨域
+- **支持从配置文件读取选项**
 
 ## 项目结构
 
@@ -34,6 +39,7 @@ Apq.Cfg.WebApi/
 ├── Models/
 │   ├── ConfigValueResponse.cs          # 配置值响应
 │   ├── ConfigTreeNode.cs               # 配置树节点
+│   ├── ConfigSourceInfo.cs             # 配置源信息
 │   ├── BatchUpdateRequest.cs           # 批量更新请求
 │   └── ApiResponse.cs                  # 统一响应格式
 ├── Services/
@@ -42,7 +48,6 @@ Apq.Cfg.WebApi/
 ├── Extensions/
 │   ├── ServiceCollectionExtensions.cs  # DI 扩展
 │   └── ApplicationBuilderExtensions.cs # 中间件扩展
-└── wwwroot/                            # 嵌入式 WebUI 静态文件
 ```
 
 ## 项目文件
@@ -51,6 +56,7 @@ Apq.Cfg.WebApi/
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
         <RootNamespace>Apq.Cfg.WebApi</RootNamespace>
         <Description>Apq.Cfg 的 Web API 扩展，提供 RESTful API 暴露配置内容</Description>
         <PackageTags>configuration;config;webapi;rest</PackageTags>
@@ -69,11 +75,6 @@ Apq.Cfg.WebApi/
         <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
     </ItemGroup>
 
-    <!-- 嵌入 wwwroot 静态文件 -->
-    <ItemGroup>
-        <EmbeddedResource Include="wwwroot\**\*" />
-    </ItemGroup>
-
 </Project>
 ```
 
@@ -90,14 +91,19 @@ namespace Apq.Cfg.WebApi;
 public sealed class WebApiOptions
 {
     /// <summary>
+    /// 配置节名称，用于从 IConfiguration 绑定
+    /// </summary>
+    public const string SectionName = "ApqCfg:WebApi";
+
+    /// <summary>
     /// 是否启用 API，默认 true
     /// </summary>
     public bool Enabled { get; set; } = true;
 
     /// <summary>
-    /// API 路由前缀，默认 "/api/config"
+    /// API 路由前缀，默认 "/api/apqcfg"
     /// </summary>
-    public string RoutePrefix { get; set; } = "/api/config";
+    public string RoutePrefix { get; set; } = "/api/apqcfg";
 
     /// <summary>
     /// 认证方式，默认无认证
@@ -144,16 +150,6 @@ public sealed class WebApiOptions
     /// </summary>
     public string[] SensitiveKeyPatterns { get; set; } =
         ["*Password*", "*Secret*", "*Key*", "*Token*", "*ConnectionString*"];
-
-    /// <summary>
-    /// 是否启用嵌入式 WebUI，默认 false
-    /// </summary>
-    public bool EnableWebUI { get; set; } = false;
-
-    /// <summary>
-    /// WebUI 路径前缀，默认 "/config-ui"
-    /// </summary>
-    public string WebUIPath { get; set; } = "/config-ui";
 
     /// <summary>
     /// 是否启用 CORS，默认 false
@@ -231,21 +227,48 @@ public sealed class JwtOptions
 }
 ```
 
+---
+
 ## API 端点设计
+
+### 合并后配置（Merged）
 
 | 方法 | 路由 | 说明 | 权限 |
 |------|------|------|------|
-| GET | `{prefix}` | 获取所有配置（扁平化键值对） | AllowRead |
-| GET | `{prefix}/tree` | 获取配置树结构 | AllowRead |
-| GET | `{prefix}/keys/{*key}` | 获取单个配置值 | AllowRead |
-| GET | `{prefix}/sections/{*section}` | 获取配置节 | AllowRead |
-| PUT | `{prefix}/keys/{*key}` | 设置单个配置值 | AllowWrite |
+| GET | `{prefix}/merged` | 获取合并后的所有配置（扁平化键值对） | AllowRead |
+| GET | `{prefix}/merged/tree` | 获取合并后的配置树结构 | AllowRead |
+| GET | `{prefix}/merged/keys/{*key}` | 获取合并后的单个配置值 | AllowRead |
+| GET | `{prefix}/merged/sections/{*section}` | 获取合并后的配置节 | AllowRead |
+
+### 合并前配置（Sources）
+
+| 方法 | 路由 | 说明 | 权限 |
+|------|------|------|------|
+| GET | `{prefix}/sources` | 获取所有配置源列表 | AllowRead |
+| GET | `{prefix}/sources/{level}` | 获取指定层级的配置源内容 | AllowRead |
+| GET | `{prefix}/sources/{level}/tree` | 获取指定层级的配置树结构 | AllowRead |
+| GET | `{prefix}/sources/{level}/keys/{*key}` | 获取指定层级的单个配置值 | AllowRead |
+
+### 写入操作
+
+| 方法 | 路由 | 说明 | 权限 |
+|------|------|------|------|
+| PUT | `{prefix}/keys/{*key}` | 设置配置值（写入主写入源） | AllowWrite |
+| PUT | `{prefix}/sources/{level}/keys/{*key}` | 设置指定层级的配置值 | AllowWrite |
 | PUT | `{prefix}/batch` | 批量设置配置 | AllowWrite |
 | DELETE | `{prefix}/keys/{*key}` | 删除配置 | AllowDelete |
+| DELETE | `{prefix}/sources/{level}/keys/{*key}` | 删除指定层级的配置 | AllowDelete |
+
+### 管理操作
+
+| 方法 | 路由 | 说明 | 权限 |
+|------|------|------|------|
 | POST | `{prefix}/save` | 保存配置到持久化存储 | AllowWrite |
 | POST | `{prefix}/reload` | 重新加载配置 | AllowWrite |
-| GET | `{prefix}/export` | 导出配置快照（JSON） | AllowRead |
-| GET | `{prefix}/export/{format}` | 导出指定格式（json/env/keyvalue） | AllowRead |
+| GET | `{prefix}/export/{format}` | 导出合并后配置（json/env/keyvalue） | AllowRead |
+| GET | `{prefix}/sources/{level}/export/{format}` | 导出指定层级配置 | AllowRead |
+
+---
 
 ## 响应模型
 
@@ -305,6 +328,48 @@ public sealed class ConfigTreeNode
 }
 ```
 
+### ConfigSourceInfo
+
+```csharp
+namespace Apq.Cfg.WebApi.Models;
+
+/// <summary>
+/// 配置源信息
+/// </summary>
+public sealed class ConfigSourceInfo
+{
+    /// <summary>
+    /// 配置源层级
+    /// </summary>
+    public int Level { get; set; }
+
+    /// <summary>
+    /// 配置源名称
+    /// </summary>
+    public string Name { get; set; } = "";
+
+    /// <summary>
+    /// 配置源类型
+    /// </summary>
+    public string Type { get; set; } = "";
+
+    /// <summary>
+    /// 是否可写
+    /// </summary>
+    public bool IsWriteable { get; set; }
+
+    /// <summary>
+    /// 是否为主写入源
+    /// </summary>
+    public bool IsPrimaryWriter { get; set; }
+
+    /// <summary>
+    /// 配置项数量
+    /// </summary>
+    public int KeyCount { get; set; }
+}
+```
+
 ### BatchUpdateRequest
 
 ```csharp
@@ -319,6 +384,8 @@ public sealed class BatchUpdateRequest
     public int? TargetLevel { get; set; }
 }
 ```
+
+---
 
 ## 扩展方法
 
@@ -337,10 +404,51 @@ public static class ServiceCollectionExtensions
         Action<WebApiOptions>? configure = null)
     {
         // 配置选项
+        var optionsBuilder = services.AddOptions<WebApiOptions>();
+
+        // 支持从配置文件绑定
+        services.AddOptions<WebApiOptions>()
+            .Configure<IConfiguration>((options, config) =>
+            {
+                config.GetSection(WebApiOptions.SectionName).Bind(options);
+            });
+
+        // 代码配置覆盖配置文件
+        if (configure != null)
+        {
+            services.Configure(configure);
+        }
+
         // 注册服务
-        // 配置认证
-        // 配置 CORS
+        services.AddSingleton<IConfigApiService, ConfigApiService>();
+
         // 添加控制器
+        services.AddControllers()
+            .AddApplicationPart(typeof(ConfigController).Assembly);
+
+        return services;
+    }
+
+    /// <summary>
+    /// 添加 Apq.Cfg Web API 服务（从配置节绑定）
+    /// </summary>
+    public static IServiceCollection AddApqCfgWebApi(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        Action<WebApiOptions>? configure = null)
+    {
+        services.Configure<WebApiOptions>(configuration.GetSection(WebApiOptions.SectionName));
+
+        if (configure != null)
+        {
+            services.PostConfigure(configure);
+        }
+
+        services.AddSingleton<IConfigApiService, ConfigApiService>();
+        services.AddControllers()
+            .AddApplicationPart(typeof(ConfigController).Assembly);
+
+        return services;
     }
 }
 ```
@@ -357,10 +465,29 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     public static IApplicationBuilder UseApqCfgWebApi(this IApplicationBuilder app)
     {
+        var options = app.ApplicationServices
+            .GetRequiredService<IOptions<WebApiOptions>>().Value;
+
+        if (!options.Enabled)
+            return app;
+
         // 启用检查中间件
+        app.UseMiddleware<ConfigApiMiddleware>();
+
         // CORS
+        if (options.EnableCors)
+        {
+            app.UseCors("ApqCfgWebApiCors");
+        }
+
         // 认证
-        // 嵌入式 WebUI
+        if (options.Authentication != AuthenticationType.None)
+        {
+            app.UseAuthentication();
+            app.UseAuthorization();
+        }
+
+        return app;
     }
 
     /// <summary>
@@ -368,14 +495,57 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     public static IEndpointRouteBuilder MapApqCfgWebApi(this IEndpointRouteBuilder endpoints)
     {
-        // 映射控制器路由
+        endpoints.MapControllers();
+        return endpoints;
     }
 }
 ```
 
+---
+
+## 配置文件示例
+
+### config.json
+
+```json
+{
+  "ApqCfg": {
+    "WebApi": {
+      "Enabled": true,
+      "RoutePrefix": "/api/apqcfg",
+      "Authentication": "ApiKey",
+      "ApiKey": "my-secret-api-key",
+      "ApiKeyHeaderName": "X-Api-Key",
+      "AllowRead": true,
+      "AllowWrite": true,
+      "AllowDelete": false,
+      "MaskSensitiveValues": true,
+      "SensitiveKeyPatterns": [
+        "*Password*",
+        "*Secret*",
+        "*Key*",
+        "*Token*",
+        "*ConnectionString*"
+      ],
+      "EnableCors": true,
+      "CorsOrigins": ["http://localhost:5173", "https://admin.example.com"],
+      "Jwt": {
+        "Authority": "https://auth.example.com",
+        "Audience": "config-api",
+        "RequireHttpsMetadata": true,
+        "ValidateIssuer": true,
+        "ValidateAudience": true
+      }
+    }
+  }
+}
+```
+
+---
+
 ## 使用示例
 
-### 基本使用
+### 基本使用（从配置文件读取）
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -385,7 +555,7 @@ builder.Services.AddApqCfg(cfg => cfg
     .AddJson("config.json")
     .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true));
 
-// 添加 Web API（只读，无认证）
+// 添加 Web API（从配置文件读取选项）
 builder.Services.AddApqCfgWebApi();
 
 var app = builder.Build();
@@ -396,16 +566,27 @@ app.MapApqCfgWebApi();
 app.Run();
 ```
 
-### 启用写入和 API Key 认证
+### 代码配置（覆盖配置文件）
 
 ```csharp
 builder.Services.AddApqCfgWebApi(options =>
 {
-    options.RoutePrefix = "/api/config";
+    options.RoutePrefix = "/api/apqcfg";
     options.Authentication = AuthenticationType.ApiKey;
     options.ApiKey = "my-secret-api-key";
     options.AllowWrite = true;
     options.AllowDelete = true;
+});
+```
+
+### 混合配置（配置文件 + 代码）
+
+```csharp
+// 先从配置文件读取，再用代码覆盖部分选项
+builder.Services.AddApqCfgWebApi(builder.Configuration, options =>
+{
+    // 覆盖 API Key（例如从环境变量）
+    options.ApiKey = Environment.GetEnvironmentVariable("APQCFG_API_KEY");
 });
 ```
 
@@ -424,33 +605,14 @@ builder.Services.AddApqCfgWebApi(options =>
 });
 ```
 
-### 启用嵌入式 WebUI
-
-```csharp
-builder.Services.AddApqCfgWebApi(options =>
-{
-    options.EnableWebUI = true;
-    options.WebUIPath = "/config-ui";
-    options.EnableCors = true;
-});
-```
-
-### 自定义虚拟目录
-
-```csharp
-builder.Services.AddApqCfgWebApi(options =>
-{
-    options.RoutePrefix = "/admin/configuration";
-    options.WebUIPath = "/admin/config-ui";
-});
-```
+---
 
 ## API 调用示例
 
-### 获取所有配置
+### 获取合并后的所有配置
 
 ```http
-GET /api/config HTTP/1.1
+GET /api/apqcfg/merged HTTP/1.1
 X-Api-Key: my-secret-api-key
 ```
 
@@ -468,10 +630,10 @@ X-Api-Key: my-secret-api-key
 }
 ```
 
-### 获取配置树
+### 获取合并后的配置树
 
 ```http
-GET /api/config/tree HTTP/1.1
+GET /api/apqcfg/merged/tree HTTP/1.1
 ```
 
 响应：
@@ -500,10 +662,107 @@ GET /api/config/tree HTTP/1.1
 }
 ```
 
-### 设置配置值
+### 获取所有配置源列表
 
 ```http
-PUT /api/config/keys/App:Version HTTP/1.1
+GET /api/apqcfg/sources HTTP/1.1
+```
+
+响应：
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "level": 0,
+      "name": "config.json",
+      "type": "JsonCfgSource",
+      "isWriteable": false,
+      "isPrimaryWriter": false,
+      "keyCount": 10
+    },
+    {
+      "level": 1,
+      "name": "config.local.json",
+      "type": "JsonCfgSource",
+      "isWriteable": true,
+      "isPrimaryWriter": true,
+      "keyCount": 3
+    },
+    {
+      "level": 2,
+      "name": "EnvironmentVariables",
+      "type": "EnvCfgSource",
+      "isWriteable": false,
+      "isPrimaryWriter": false,
+      "keyCount": 5
+    }
+  ]
+}
+```
+
+### 获取指定层级的配置
+
+```http
+GET /api/apqcfg/sources/1 HTTP/1.1
+```
+
+响应：
+```json
+{
+  "success": true,
+  "data": {
+    "App:Version": "2.0.0",
+    "Database:Host": "192.168.1.100",
+    "Feature:Debug": "true"
+  }
+}
+```
+
+### 获取指定层级的配置树
+
+```http
+GET /api/apqcfg/sources/1/tree HTTP/1.1
+```
+
+响应：
+```json
+{
+  "success": true,
+  "data": {
+    "key": "",
+    "children": [
+      {
+        "key": "App",
+        "children": [
+          { "key": "Version", "value": "2.0.0", "hasValue": true }
+        ]
+      },
+      {
+        "key": "Database",
+        "children": [
+          { "key": "Host", "value": "192.168.1.100", "hasValue": true }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 设置配置值（写入主写入源）
+
+```http
+PUT /api/apqcfg/keys/App:Version HTTP/1.1
+Content-Type: application/json
+X-Api-Key: my-secret-api-key
+
+"2.0.0"
+```
+
+### 设置指定层级的配置值
+
+```http
+PUT /api/apqcfg/sources/1/keys/App:Version HTTP/1.1
 Content-Type: application/json
 X-Api-Key: my-secret-api-key
 
@@ -513,7 +772,7 @@ X-Api-Key: my-secret-api-key
 ### 批量更新
 
 ```http
-PUT /api/config/batch HTTP/1.1
+PUT /api/apqcfg/batch HTTP/1.1
 Content-Type: application/json
 X-Api-Key: my-secret-api-key
 
@@ -529,14 +788,14 @@ X-Api-Key: my-secret-api-key
 ### 保存配置
 
 ```http
-POST /api/config/save HTTP/1.1
+POST /api/apqcfg/save HTTP/1.1
 X-Api-Key: my-secret-api-key
 ```
 
-### 导出配置
+### 导出合并后配置
 
 ```http
-GET /api/config/export/env HTTP/1.1
+GET /api/apqcfg/export/env HTTP/1.1
 ```
 
 响应：
@@ -545,4 +804,22 @@ APP__NAME=MyApp
 APP__VERSION=1.0.0
 DATABASE__HOST=localhost
 DATABASE__PORT=5432
+```
+
+### 导出指定层级配置
+
+```http
+GET /api/apqcfg/sources/1/export/json HTTP/1.1
+```
+
+响应：
+```json
+{
+  "App": {
+    "Version": "2.0.0"
+  },
+  "Database": {
+    "Host": "192.168.1.100"
+  }
+}
 ```
