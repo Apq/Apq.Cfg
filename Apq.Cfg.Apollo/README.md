@@ -79,13 +79,13 @@ Apollo 支持从多个命名空间读取配置：
 
 ```csharp
 // application 命名空间的配置
-var appName = cfg.Get("App:Name");
+var appName = cfg["App:Name"];
 
 // common 命名空间的配置
-var logLevel = cfg.Get("common:Logging:Level");
+var logLevel = cfg["common:Logging:Level"];
 
 // database 命名空间的配置
-var connStr = cfg.Get("database:ConnectionString");
+var connStr = cfg["database:ConnectionString"];
 ```
 
 ## 热重载

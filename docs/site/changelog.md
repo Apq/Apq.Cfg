@@ -1,5 +1,35 @@
 # 更新日志
 
+## v1.1.3 (2026-01-03)
+
+### 重大变更
+
+- **API 简化**：移除 `ICfgRoot` 和 `ICfgSection` 接口中的 `Get(string key)` 方法
+  - 使用索引器 `cfg["key"]` 或 `section["key"]` 替代
+  - 索引器现在同时支持读取和写入操作
+- **方法重命名**：
+  - `Set(string key, string? value, int? targetLevel)` → `SetValue(...)`
+  - `SetMany(...)` → `SetManyValues(...)`
+
+### 改进
+
+- 简化 `GetValue<T>` 实现，内部复用索引器
+- 更新源生成器（CodeEmitter）使用索引器语法
+
+### 迁移指南
+
+```csharp
+// 旧代码
+var value = cfg.Get("Key");
+cfg.Set("Key", "Value");
+cfg.SetMany(dict);
+
+// 新代码
+var value = cfg["Key"];
+cfg.SetValue("Key", "Value");
+cfg.SetManyValues(dict);
+```
+
 ## v1.1.2 (2026-01-02)
 
 ### 新功能

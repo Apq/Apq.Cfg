@@ -109,7 +109,7 @@ partial class AppConfig
 
         // Name: string?
         {
-            var __value = section.Get("Name");
+            var __value = section["Name"];
             if (__value != null)
             {
                 target.Name = __value;
@@ -118,7 +118,7 @@ partial class AppConfig
 
         // Port: int
         {
-            var __value = section.Get("Port");
+            var __value = section["Port"];
             if (__value != null)
             {
                 var __converted = int.TryParse(__value, out var __intVal) ? __intVal : (int?)null;

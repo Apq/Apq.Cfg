@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.3] - 2026-01-03
+
+### Breaking Changes
+
+- **API Simplification**: Removed `Get(string key)` method from `ICfgRoot` and `ICfgSection` interfaces
+  - Use indexer `cfg["key"]` or `section["key"]` instead
+  - Indexer now supports both read and write operations
+- **Method Renaming**:
+  - `Set(string key, string? value, int? targetLevel)` → `SetValue(...)`
+  - `SetMany(...)` → `SetManyValues(...)`
+
+### Changed
+
+- Simplified `GetValue<T>` implementation by reusing the indexer internally
+- Updated source generator (CodeEmitter) to use indexer syntax
+- Updated all documentation and code examples to reflect API changes
+
+### Migration Guide
+
+```csharp
+// Old code
+var value = cfg.Get("Key");
+cfg.Set("Key", "Value");
+cfg.SetMany(dict);
+
+// New code
+var value = cfg["Key"];
+cfg.SetValue("Key", "Value");
+cfg.SetManyValues(dict);
+```
+
 ## [1.1.2] - 2026-01-02
 
 ### Added
