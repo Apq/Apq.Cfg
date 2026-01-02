@@ -229,68 +229,11 @@ Write-Host ''
 
 # 生成 DocFX 文档（如果用户选择）
 if ($generateDocFx) {
-    Write-ColorText '生成 DocFX API 文档...' 'Cyan'
-
-    # 检查 DocFX 是否安装
-    $docfxInstalled = dotnet tool list -g | Select-String 'docfx'
-    if (-not $docfxInstalled) {
-        Write-ColorText '  安装 DocFX...' 'Yellow'
-        $installOutput = dotnet tool install -g docfx 2>&1
-        if ($LASTEXITCODE -ne 0) {
-            Write-ColorText '  ✗ DocFX 安装失败' 'Red'
-            Write-ColorText '    请手动运行: dotnet tool install -g docfx' 'Yellow'
-            Write-ColorText '    或检查网络连接后重试' 'Yellow'
-        }
-        # 重新检查是否安装成功
-        $docfxInstalled = dotnet tool list -g | Select-String 'docfx'
-    }
-
-    if ($docfxInstalled) {
-        $DocfxDir = Join-Path $RootDir 'docs\docfx'
-        Push-Location $DocfxDir
-        try {
-            # 生成元数据
-            Write-ColorText '  生成 API 元数据...' 'Gray'
-            docfx metadata 2>&1 | Out-Null
-            if ($LASTEXITCODE -eq 0) {
-                Write-ColorText '    ✓ 元数据生成完成' 'Green'
-
-                # 构建文档站点
-                Write-ColorText '  构建文档站点...' 'Gray'
-                docfx build 2>&1 | Out-Null
-                if ($LASTEXITCODE -eq 0) {
-                    Write-ColorText '    ✓ DocFX 文档生成完成' 'Green'
-                    $docfxOutputDir = Join-Path $RootDir 'docs\site\public\api-reference'
-
-                    # 复制 favicon（DocFX 不支持自定义 favicon 路径）
-                    $faviconSrc = Join-Path $DocfxDir 'favicon.svg'
-                    $faviconDest = Join-Path $docfxOutputDir 'favicon.svg'
-                    if (Test-Path $faviconSrc) {
-                        Copy-Item $faviconSrc $faviconDest -Force
-                        # 替换所有 HTML 文件中的 favicon.ico 引用为 favicon.svg
-                        Get-ChildItem -Path $docfxOutputDir -Filter '*.html' -Recurse | ForEach-Object {
-                            $content = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
-                            $newContent = $content -replace 'href="([^"]*?)favicon\.ico"', 'href="$1favicon.svg"'
-                            if ($content -ne $newContent) {
-                                [IO.File]::WriteAllText($_.FullName, $newContent, [Text.Encoding]::UTF8)
-                            }
-                        }
-                        Write-ColorText '    ✓ 已更新 favicon 引用' 'Green'
-                    }
-
-                    Write-ColorText "    输出目录: $docfxOutputDir" 'Gray'
-                } else {
-                    Write-ColorText '    ✗ DocFX 站点构建失败' 'Red'
-                }
-            } else {
-                Write-ColorText '    ✗ DocFX 元数据生成失败' 'Red'
-            }
-        }
-        finally {
-            Pop-Location
-        }
+    $docfxScript = Join-Path $ScriptDir 'build-docfx.ps1'
+    if (Test-Path $docfxScript) {
+        & $docfxScript
     } else {
-        Write-ColorText '  跳过 DocFX 文档生成（工具未安装）' 'Yellow'
+        Write-ColorText '错误: 找不到 build-docfx.ps1 脚本' 'Red'
     }
     Write-Host ''
 }

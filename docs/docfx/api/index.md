@@ -15,6 +15,19 @@
 - [Apq.Cfg.DependencyInjection](Apq.Cfg.DependencyInjection.html) - 依赖注入
 - [Apq.Cfg.EncodingSupport](Apq.Cfg.EncodingSupport.html) - 编码支持
 
+### 配置验证
+
+- [Apq.Cfg.Validation](Apq.Cfg.Validation.html) - 配置验证核心
+- [Apq.Cfg.Validation.Rules](Apq.Cfg.Validation.Rules.html) - 验证规则（Required、Range、Regex、OneOf、Length、DependsOn、Custom）
+
+### 模板引擎
+
+- [Apq.Cfg.Template](Apq.Cfg.Template.html) - 变量替换（支持 `${Key}`、`${ENV:Name}`、`${SYS:Property}` 语法）
+
+### 快照导出
+
+- [Apq.Cfg.Snapshot](Apq.Cfg.Snapshot.html) - 配置快照导出（JSON、YAML、TOML、INI、XML、Env）
+
 ### 加密脱敏
 
 - [Apq.Cfg.Crypto](Apq.Cfg.Crypto.html) - 加密脱敏核心
