@@ -75,7 +75,7 @@ logger.LogInfo("密码: {0}", cfg.GetMasked("Database:Password"));
 
 ### 📝 配置模板
 
-支持变量引用，实现配置的动态组合和复用：
+支持变量引用，实现配置的动态组合和复用（`Microsoft.Extensions.Configuration` 不支持此功能）：
 
 ```csharp
 // config.json: { "App:Name": "MyApp", "App:LogPath": "${App:Name}/logs" }

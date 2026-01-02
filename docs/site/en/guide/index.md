@@ -73,7 +73,7 @@ logger.LogInfo("Password: {0}", cfg.GetMasked("Database:Password"));
 
 ### Config Templates
 
-Support variable references for dynamic configuration composition:
+Support variable references for dynamic configuration composition (`Microsoft.Extensions.Configuration` does not support this feature):
 
 ```csharp
 // config.json: { "App:Name": "MyApp", "App:LogPath": "${App:Name}/logs" }

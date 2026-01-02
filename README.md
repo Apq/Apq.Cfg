@@ -502,7 +502,9 @@ await cfg.ExportSnapshotToFileAsync("config-snapshot.json");
 
 ### 配置模板与变量替换
 
-支持在配置值中使用变量引用，实现配置的动态组合和复用：
+支持在配置值中使用变量引用，实现配置的动态组合和复用。
+
+> **注意**：这是 Apq.Cfg 的差异化功能，`Microsoft.Extensions.Configuration` 不支持变量替换。
 
 ```csharp
 using Apq.Cfg;

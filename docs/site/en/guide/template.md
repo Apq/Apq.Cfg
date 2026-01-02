@@ -2,6 +2,8 @@
 
 Apq.Cfg supports variable references in configuration values, enabling dynamic composition and reuse of configurations.
 
+> **Comparison with Microsoft Configuration**: `Microsoft.Extensions.Configuration` does not support variable substitution. This is a differentiating feature of Apq.Cfg, particularly useful for avoiding configuration duplication and dynamic path composition.
+
 ## Basic Usage
 
 ### Referencing Other Configurations
