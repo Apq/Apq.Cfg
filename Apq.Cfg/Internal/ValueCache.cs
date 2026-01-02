@@ -26,7 +26,7 @@ internal sealed class ValueCache
     /// <param name="key">配置键</param>
     /// <param name="value">缓存的值</param>
     /// <returns>是否命中缓存</returns>
-    public bool TryGet<T>(string key, out T? value)
+    public bool TryGetValue<T>(string key, out T? value)
     {
         var cacheKey = (key, typeof(T).TypeHandle.Value);
         if (_cache.TryGetValue(cacheKey, out var cached))
@@ -44,7 +44,7 @@ internal sealed class ValueCache
     /// <typeparam name="T">目标类型</typeparam>
     /// <param name="key">配置键</param>
     /// <param name="value">要缓存的值</param>
-    public void Set<T>(string key, T? value)
+    public void SetValue<T>(string key, T? value)
     {
         var cacheKey = (key, typeof(T).TypeHandle.Value);
         _cache[cacheKey] = value;

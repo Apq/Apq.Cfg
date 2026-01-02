@@ -72,11 +72,11 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     /// <param name="targetLevel">目标层级，为null时使用可写的最高层级</param>
     /// <example>
     /// <code>
-    /// cfg.Set("Server:Port", "8080");
-    /// cfg.Set("Features:NewUI", "true");
+    /// cfg.SetValue("Server:Port", "8080");
+    /// cfg.SetValue("Features:NewUI", "true");
     /// </code>
     /// </example>
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
 
     /// <summary>
     /// 移除配置键
@@ -144,7 +144,7 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     /// </summary>
     /// <param name="values">要设置的键值对</param>
     /// <param name="targetLevel">目标层级</param>
-    void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
+    void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
 
     // 转换方法
     /// <summary>

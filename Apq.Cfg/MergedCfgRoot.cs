@@ -95,7 +95,7 @@ internal sealed class MergedCfgRoot : ICfgRoot
     public string? this[string key]
     {
         get => Get(key);
-        set => Set(key, value);
+        set => SetValue(key, value);
     }
 
     public string? Get(string key)
@@ -233,7 +233,7 @@ internal sealed class MergedCfgRoot : ICfgRoot
         data.Pending[key] = null;
     }
 
-    public void Set(string key, string? value, int? targetLevel = null)
+    public void SetValue(string key, string? value, int? targetLevel = null)
     {
         var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
         if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)
@@ -244,7 +244,7 @@ internal sealed class MergedCfgRoot : ICfgRoot
         data.Pending[key] = transformedValue;
     }
 
-    public void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
+    public void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
     {
         var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
         if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)

@@ -284,26 +284,26 @@ public class TypeConversionBenchmarks : IDisposable
 
     #endregion
 
-    #region TryGet 扩展方法
+    #region TryGetValue 扩展方法
 
     /// <summary>
-    /// TryGet 成功场景
+    /// TryGetValue 成功场景
     /// </summary>
     [Benchmark]
     [BenchmarkCategory("Extensions")]
-    public bool TryGet_Success()
+    public bool TryGetValue_Success()
     {
-        return _cfg.TryGet<int>("Types:Int", out _);
+        return _cfg.TryGetValue<int>("Types:Int", out _);
     }
 
     /// <summary>
-    /// TryGet 失败场景
+    /// TryGetValue 失败场景
     /// </summary>
     [Benchmark]
     [BenchmarkCategory("Extensions")]
-    public bool TryGet_Failure()
+    public bool TryGetValue_Failure()
     {
-        return _cfg.TryGet<int>("Types:NonExistent", out _);
+        return _cfg.TryGetValue<int>("Types:NonExistent", out _);
     }
 
     /// <summary>

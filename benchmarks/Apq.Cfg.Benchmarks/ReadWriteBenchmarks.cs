@@ -252,27 +252,27 @@ public class ReadWriteBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("Set")]
-    public void Json_Set() => _jsonCfg.Set("App:TempKey", "TempValue");
+    public void Json_Set() => _jsonCfg.SetValue("App:TempKey", "TempValue");
 
     [Benchmark]
     [BenchmarkCategory("Set")]
-    public void Env_Set() => _envCfg.Set("APP_TEMPKEY", "TempValue");
+    public void Env_Set() => _envCfg.SetValue("APP_TEMPKEY", "TempValue");
 
     [Benchmark]
     [BenchmarkCategory("Set")]
-    public void Ini_Set() => _iniCfg.Set("App:TempKey", "TempValue");
+    public void Ini_Set() => _iniCfg.SetValue("App:TempKey", "TempValue");
 
     [Benchmark]
     [BenchmarkCategory("Set")]
-    public void Xml_Set() => _xmlCfg.Set("App:TempKey", "TempValue");
+    public void Xml_Set() => _xmlCfg.SetValue("App:TempKey", "TempValue");
 
     [Benchmark]
     [BenchmarkCategory("Set")]
-    public void Yaml_Set() => _yamlCfg.Set("App:TempKey", "TempValue");
+    public void Yaml_Set() => _yamlCfg.SetValue("App:TempKey", "TempValue");
 
     [Benchmark]
     [BenchmarkCategory("Set")]
-    public void Toml_Set() => _tomlCfg.Set("App:TempKey", "TempValue");
+    public void Toml_Set() => _tomlCfg.SetValue("App:TempKey", "TempValue");
 
     #endregion
 }

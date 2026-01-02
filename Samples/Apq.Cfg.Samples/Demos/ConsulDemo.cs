@@ -181,10 +181,10 @@ public static class ConsulDemo
             Console.WriteLine("    ✓ 连接 Consul 成功");
 
             // 写入测试配置
-            cfg.Set("App:Name", "ConsulDemo");
-            cfg.Set("App:Version", "1.0.0");
-            cfg.Set("Database:Host", "localhost");
-            cfg.Set("Database:Port", "5432");
+            cfg.SetValue("App:Name", "ConsulDemo");
+            cfg.SetValue("App:Version", "1.0.0");
+            cfg.SetValue("Database:Host", "localhost");
+            cfg.SetValue("Database:Port", "5432");
             await cfg.SaveAsync();
             Console.WriteLine("    ✓ 写入配置成功");
 

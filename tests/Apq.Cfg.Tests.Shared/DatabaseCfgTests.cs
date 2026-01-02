@@ -65,7 +65,7 @@ public class DatabaseCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsDatabaseConfigured, "数据库连接字符串未配置，跳过测试");
 
         // Arrange & Act
-        _cfg!.Set("TestKey", "TestValue");
+        _cfg!.SetValue("TestKey", "TestValue");
         await _cfg.SaveAsync();
 
         // 重新创建配置实例来验证持久化
@@ -90,8 +90,8 @@ public class DatabaseCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsDatabaseConfigured, "数据库连接字符串未配置，跳过测试");
 
         // Arrange & Act
-        _cfg!.Set("Settings:Value1", "Value1");
-        _cfg.Set("Settings:Value2", "Value2");
+        _cfg!.SetValue("Settings:Value1", "Value1");
+        _cfg.SetValue("Settings:Value2", "Value2");
         await _cfg.SaveAsync();
 
         // Assert
@@ -116,7 +116,7 @@ public class DatabaseCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsDatabaseConfigured, "数据库连接字符串未配置，跳过测试");
 
         // Arrange
-        _cfg!.Set("ToRemove", "Value");
+        _cfg!.SetValue("ToRemove", "Value");
         await _cfg.SaveAsync();
 
         // Act
@@ -144,7 +144,7 @@ public class DatabaseCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsDatabaseConfigured, "数据库连接字符串未配置，跳过测试");
 
         // Arrange
-        _cfg!.Set("ExistsKey", "Value");
+        _cfg!.SetValue("ExistsKey", "Value");
         await _cfg.SaveAsync();
 
         // Assert
@@ -167,7 +167,7 @@ public class DatabaseCfgTests : IAsyncLifetime
             File.WriteAllText(jsonPath, """{"Setting": "JsonValue"}""");
 
             // 先设置数据库值
-            _cfg!.Set("Setting", "DatabaseValue");
+            _cfg!.SetValue("Setting", "DatabaseValue");
             _cfg.SaveAsync().Wait();
 
             using var cfg = new CfgBuilder()

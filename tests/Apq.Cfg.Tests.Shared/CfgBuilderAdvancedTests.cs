@@ -91,7 +91,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act - 写入到 level 0
-        cfg.Set("NewKey", "Level0Value", targetLevel: 0);
+        cfg.SetValue("NewKey", "Level0Value", targetLevel: 0);
         await cfg.SaveAsync(targetLevel: 0);
 
         // Assert - 验证写入到了正确的文件
@@ -146,8 +146,8 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act - 在两个层级都设置值，但只保存 level 1
-        cfg.Set("Level0Key", "Value0", targetLevel: 0);
-        cfg.Set("Level1Key", "Value1", targetLevel: 1);
+        cfg.SetValue("Level0Key", "Value0", targetLevel: 0);
+        cfg.SetValue("Level1Key", "Value1", targetLevel: 1);
         await cfg.SaveAsync(targetLevel: 1);
 
         // Assert - level 1 应该保存了，level 0 不应该保存
@@ -178,7 +178,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act - 不指定 targetLevel，应该写入最高层级
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
 
         // Assert - 通过 Get 验证值已设置（在 Pending 中）
         Assert.Equal("NewValue", cfg.Get("NewKey"));
@@ -232,7 +232,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act & Assert
-        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Set("NewKey", "NewValue"));
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.SetValue("NewKey", "NewValue"));
         Assert.Contains("没有可写的配置源", ex.Message);
     }
 
@@ -264,7 +264,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act & Assert - 指定不存在的层级
-        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Set("NewKey", "NewValue", targetLevel: 999));
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.SetValue("NewKey", "NewValue", targetLevel: 999));
         Assert.Contains("没有可写的配置源", ex.Message);
     }
 
@@ -394,7 +394,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("Database:Password", "MySecretPassword");
+        cfg.SetValue("Database:Password", "MySecretPassword");
         await cfg.SaveAsync();
 
         // Assert - 文件中应该是加密后的值
@@ -524,8 +524,8 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act - 设置自定义敏感键
-        cfg.Set("MyCustomSecret", "SecretValue");
-        cfg.Set("NormalKey", "NormalValue");
+        cfg.SetValue("MyCustomSecret", "SecretValue");
+        cfg.SetValue("NormalKey", "NormalValue");
 
         // Assert - 自定义敏感键应该被加密处理
         // 注意：这里只验证配置生效，实际加密在 SaveAsync 时发生
@@ -585,7 +585,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
-        cfg.Set("Key", "Value");
+        cfg.SetValue("Key", "Value");
 
         // Assert - 配置应该正常工作
         Assert.Equal("Value", cfg.Get("Key"));

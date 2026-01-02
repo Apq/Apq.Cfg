@@ -346,7 +346,7 @@ public class EncodingTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("Key", "Value");
+        cfg.SetValue("Key", "Value");
         await cfg.SaveAsync();
 
         // Assert - 检查文件是否有 BOM

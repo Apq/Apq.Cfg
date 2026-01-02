@@ -291,7 +291,7 @@ public class ConcurrencyBenchmarks : IDisposable
             {
                 for (int j = 0; j < 100; j++)
                 {
-                    _cfg.Set($"Temp:Thread{threadId}:Key{j}", $"Value{j}");
+                    _cfg.SetValue($"Temp:Thread{threadId}:Key{j}", $"Value{j}");
                 }
             });
         }
@@ -321,7 +321,7 @@ public class ConcurrencyBenchmarks : IDisposable
                     }
                     else
                     {
-                        _cfg.Set($"Temp:Thread{threadId}:Key{j}", $"Value{j}");
+                        _cfg.SetValue($"Temp:Thread{threadId}:Key{j}", $"Value{j}");
                     }
                 }
             });
@@ -366,7 +366,7 @@ public class ConcurrencyBenchmarks : IDisposable
             {
                 for (int j = 0; j < 100; j++)
                 {
-                    _cfg.Set("Temp:SharedKey", $"Thread{threadId}_Value{j}");
+                    _cfg.SetValue("Temp:SharedKey", $"Thread{threadId}_Value{j}");
                 }
             });
         }

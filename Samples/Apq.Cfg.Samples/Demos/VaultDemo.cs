@@ -247,10 +247,10 @@ public static class VaultDemo
             Console.WriteLine("    ✓ 连接 Vault 成功");
 
             // 写入测试配置
-            cfg.Set("App:Name", "VaultDemo");
-            cfg.Set("App:Version", "1.0.0");
-            cfg.Set("Database:Host", "localhost");
-            cfg.Set("Database:Password", "secret-password");
+            cfg.SetValue("App:Name", "VaultDemo");
+            cfg.SetValue("App:Version", "1.0.0");
+            cfg.SetValue("Database:Host", "localhost");
+            cfg.SetValue("Database:Password", "secret-password");
             await cfg.SaveAsync();
             Console.WriteLine("    ✓ 写入密钥成功");
 

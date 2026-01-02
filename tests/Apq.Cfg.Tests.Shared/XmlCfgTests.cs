@@ -94,7 +94,7 @@ public class XmlCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("App:NewKey", "NewValue");
+        cfg.SetValue("App:NewKey", "NewValue");
         await cfg.SaveAsync();
 
         // Assert

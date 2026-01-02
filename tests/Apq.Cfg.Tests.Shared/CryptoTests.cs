@@ -455,7 +455,7 @@ public class CryptoTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("Database:Password", "MyNewPassword");
+        cfg.SetValue("Database:Password", "MyNewPassword");
         await cfg.SaveAsync();
 
         // Assert - 读取原始文件验证已加密

@@ -99,7 +99,7 @@ public class ConcurrencyTests : IDisposable
                 {
                     for (int j = 0; j < 20; j++)
                     {
-                        cfg.Set($"Key_{index}_{j}", $"Value_{index}_{j}");
+                        cfg.SetValue($"Key_{index}_{j}", $"Value_{index}_{j}");
                     }
                 }
                 catch (Exception ex)
@@ -166,7 +166,7 @@ public class ConcurrencyTests : IDisposable
                 {
                     for (int j = 0; j < 50 && !cts.Token.IsCancellationRequested; j++)
                     {
-                        cfg.Set($"Dynamic_{index}", $"Value_{j}");
+                        cfg.SetValue($"Dynamic_{index}", $"Value_{j}");
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -200,7 +200,7 @@ public class ConcurrencyTests : IDisposable
         // 先设置一些值
         for (int i = 0; i < 10; i++)
         {
-            cfg.Set($"Key_{i}", $"Value_{i}");
+            cfg.SetValue($"Key_{i}", $"Value_{i}");
         }
 
         // Act - 顺序保存（并发保存文件会导致文件锁冲突，这是预期行为）
@@ -356,8 +356,8 @@ public class ConcurrencyTests : IDisposable
                         var ___ = cfg.Get("OverrideOnly");
 
                         // 写入到不同层级
-                        cfg.Set($"Level0Key_{index}_{j}", $"Value", targetLevel: 0);
-                        cfg.Set($"Level1Key_{index}_{j}", $"Value", targetLevel: 1);
+                        cfg.SetValue($"Level0Key_{index}_{j}", $"Value", targetLevel: 0);
+                        cfg.SetValue($"Level1Key_{index}_{j}", $"Value", targetLevel: 1);
                     }
                 }
                 catch (Exception ex)

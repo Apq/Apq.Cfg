@@ -190,7 +190,7 @@ public class MicrosoftConfigBenchmarks : IDisposable
         using var subscription = _cfg.ConfigChanges.Subscribe(_ => changeCount++);
 
         // 触发变更
-        _cfg.Set("Temp:Key", "Value");
+        _cfg.SetValue("Temp:Key", "Value");
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ public class MicrosoftConfigBenchmarks : IDisposable
             }
 
             // 触发变更
-            _cfg.Set("Temp:MultiKey", "Value");
+            _cfg.SetValue("Temp:MultiKey", "Value");
         }
         finally
         {

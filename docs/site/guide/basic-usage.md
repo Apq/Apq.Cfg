@@ -93,7 +93,7 @@ var timeout = cfg.GetOrDefault<int>("Database:Timeout", defaultValue: 30);
 var connectionString = cfg.GetRequired<string>("Database:ConnectionString");
 
 // 尝试获取
-if (cfg.TryGet<int>("Database:Port", out var port))
+if (cfg.TryGetValue<int>("Database:Port", out var port))
 {
     Console.WriteLine($"端口: {port}");
 }

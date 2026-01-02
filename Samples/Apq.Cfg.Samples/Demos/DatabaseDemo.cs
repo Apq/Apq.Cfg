@@ -39,9 +39,9 @@ public static class DatabaseDemo
 
             // 写入配置
             Console.WriteLine("\n10.2 写入配置到数据库:");
-            cfg.Set("App:Name", "DatabaseApp");
-            cfg.Set("App:Version", "1.0.0");
-            cfg.Set("Database:MaxConnections", "100");
+            cfg.SetValue("App:Name", "DatabaseApp");
+            cfg.SetValue("App:Version", "1.0.0");
+            cfg.SetValue("Database:MaxConnections", "100");
             await cfg.SaveAsync();
             Console.WriteLine("    已写入 3 个配置项");
 
@@ -53,7 +53,7 @@ public static class DatabaseDemo
 
             // 修改配置
             Console.WriteLine("\n10.4 修改配置:");
-            cfg.Set("App:Version", "2.0.0");
+            cfg.SetValue("App:Version", "2.0.0");
             await cfg.SaveAsync();
             Console.WriteLine($"    修改后 App:Version = {cfg.Get("App:Version")}");
 

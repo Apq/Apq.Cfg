@@ -198,7 +198,7 @@ public class KeyPathBenchmarks : IDisposable
     [BenchmarkCategory("DeepWrite")]
     public void Set_DeepKey()
     {
-        _cfg.Set(_deepKey, "NewDeepValue");
+        _cfg.SetValue(_deepKey, "NewDeepValue");
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ public class KeyPathBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set(_deepKey, $"NewDeepValue{i}");
+            _cfg.SetValue(_deepKey, $"NewDeepValue{i}");
         }
     }
 
@@ -224,7 +224,7 @@ public class KeyPathBenchmarks : IDisposable
         for (int i = 0; i < 100; i++)
         {
             var newKey = _deepKey.Replace(":Value", $":NewKey{i}");
-            _cfg.Set(newKey, $"NewValue{i}");
+            _cfg.SetValue(newKey, $"NewValue{i}");
         }
     }
 

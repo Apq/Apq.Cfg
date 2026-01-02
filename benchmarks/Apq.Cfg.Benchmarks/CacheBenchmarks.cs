@@ -263,7 +263,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set("Temp:Key", $"Value{i}");
+            _cfg.SetValue("Temp:Key", $"Value{i}");
             _ = _cfg.Get("Temp:Key");
         }
     }
@@ -277,7 +277,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set($"Temp:Key{i}", $"Value{i}");
+            _cfg.SetValue($"Temp:Key{i}", $"Value{i}");
             _ = _cfg.Get("HotKey");
         }
     }
@@ -292,7 +292,7 @@ public class CacheBenchmarks : IDisposable
         // 批量写入
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set($"Batch:Key{i}", $"Value{i}");
+            _cfg.SetValue($"Batch:Key{i}", $"Value{i}");
         }
 
         // 批量读取

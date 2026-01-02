@@ -218,7 +218,7 @@ public class BatchOperationBenchmarks : IDisposable
         {
             values[$"Batch:Key{i}"] = $"Value{i}";
         }
-        _cfg.SetMany(values);
+        _cfg.SetManyValues(values);
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         for (int i = 0; i < 10; i++)
         {
-            _cfg.Set($"Loop:Key{i}", $"Value{i}");
+            _cfg.SetValue($"Loop:Key{i}", $"Value{i}");
         }
     }
 
@@ -246,7 +246,7 @@ public class BatchOperationBenchmarks : IDisposable
         {
             values[$"Batch50:Key{i}"] = $"Value{i}";
         }
-        _cfg.SetMany(values);
+        _cfg.SetManyValues(values);
     }
 
     /// <summary>
@@ -258,7 +258,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         for (int i = 0; i < 50; i++)
         {
-            _cfg.Set($"Loop50:Key{i}", $"Value{i}");
+            _cfg.SetValue($"Loop50:Key{i}", $"Value{i}");
         }
     }
 
@@ -274,7 +274,7 @@ public class BatchOperationBenchmarks : IDisposable
         {
             values[$"Batch100:Key{i}"] = $"Value{i}";
         }
-        _cfg.SetMany(values);
+        _cfg.SetManyValues(values);
     }
 
     /// <summary>
@@ -286,7 +286,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set($"Loop100:Key{i}", $"Value{i}");
+            _cfg.SetValue($"Loop100:Key{i}", $"Value{i}");
         }
     }
 
@@ -310,7 +310,7 @@ public class BatchOperationBenchmarks : IDisposable
         {
             newValues[kv.Key + "_copy"] = kv.Value + "_modified";
         }
-        _cfg.SetMany(newValues);
+        _cfg.SetManyValues(newValues);
     }
 
     /// <summary>
@@ -330,7 +330,7 @@ public class BatchOperationBenchmarks : IDisposable
         // 循环写入
         foreach (var kv in values)
         {
-            _cfg.Set(kv.Key + "_copy2", kv.Value + "_modified");
+            _cfg.SetValue(kv.Key + "_copy2", kv.Value + "_modified");
         }
     }
 

@@ -53,7 +53,7 @@ public static class BatchOperationsDemo
             ["Settings:FontSize"] = "16",
             ["Settings:NewOption"] = "enabled"
         };
-        cfg.SetMany(newValues);
+        cfg.SetManyValues(newValues);
         await cfg.SaveAsync();
 
         Console.WriteLine("    批量设置后的值:");

@@ -64,7 +64,7 @@ public class EtcdCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsEtcdConfigured, "Etcd 服务未配置，跳过测试");
 
         // Arrange & Act
-        _cfg!.Set("TestKey", "TestValue");
+        _cfg!.SetValue("TestKey", "TestValue");
         await _cfg.SaveAsync();
 
         // 重新创建配置实例来验证持久化
@@ -89,8 +89,8 @@ public class EtcdCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsEtcdConfigured, "Etcd 服务未配置，跳过测试");
 
         // Arrange & Act
-        _cfg!.Set("Settings:Value1", "Value1");
-        _cfg.Set("Settings:Value2", "Value2");
+        _cfg!.SetValue("Settings:Value1", "Value1");
+        _cfg.SetValue("Settings:Value2", "Value2");
         await _cfg.SaveAsync();
 
         // Assert
@@ -115,7 +115,7 @@ public class EtcdCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsEtcdConfigured, "Etcd 服务未配置，跳过测试");
 
         // Arrange
-        _cfg!.Set("ToRemove", "Value");
+        _cfg!.SetValue("ToRemove", "Value");
         await _cfg.SaveAsync();
 
         // Act
@@ -143,7 +143,7 @@ public class EtcdCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsEtcdConfigured, "Etcd 服务未配置，跳过测试");
 
         // Arrange
-        _cfg!.Set("ExistsKey", "Value");
+        _cfg!.SetValue("ExistsKey", "Value");
         await _cfg.SaveAsync();
 
         // Assert
@@ -166,7 +166,7 @@ public class EtcdCfgTests : IAsyncLifetime
             File.WriteAllText(jsonPath, """{"Setting": "JsonValue"}""");
 
             // 先设置 Etcd 值
-            _cfg!.Set("Setting", "EtcdValue");
+            _cfg!.SetValue("Setting", "EtcdValue");
             _cfg.SaveAsync().Wait();
 
             using var cfg = new CfgBuilder()
@@ -196,9 +196,9 @@ public class EtcdCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsEtcdConfigured, "Etcd 服务未配置，跳过测试");
 
         // Arrange & Act
-        _cfg!.Set("IntValue", "42");
-        _cfg.Set("BoolValue", "true");
-        _cfg.Set("DoubleValue", "3.14");
+        _cfg!.SetValue("IntValue", "42");
+        _cfg.SetValue("BoolValue", "true");
+        _cfg.SetValue("DoubleValue", "3.14");
         await _cfg.SaveAsync();
 
         // Assert

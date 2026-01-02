@@ -213,17 +213,17 @@ public CfgBuilder ConfigureValueTransformer(Action<ValueTransformerOptions> conf
 
 ## ICfgRoot 扩展方法
 
-### TryGet
+### TryGetValue
 
 ```csharp
-public static bool TryGet<T>(this ICfgRoot root, string key, out T? value)
+public static bool TryGetValue<T>(this ICfgRoot root, string key, out T? value)
 ```
 
 尝试获取配置值。
 
 **示例：**
 ```csharp
-if (cfg.TryGet<int>("Database:Port", out var port))
+if (cfg.TryGetValue<int>("Database:Port", out var port))
 {
     Console.WriteLine($"端口: {port}");
 }

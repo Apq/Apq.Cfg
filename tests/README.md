@@ -49,7 +49,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | EtcdCfgTests | 6 | 6 | Etcd 配置中心测试（需要 Etcd 服务）|
 | NacosCfgTests | 9 | 9 | Nacos 配置中心测试（需要 Nacos 服务）|
 | VaultCfgTests | 8 | 8 | Vault 密钥管理测试（需要 Vault 服务）|
-| CfgRootExtensionsTests | 11 | 0 | 扩展方法测试（TryGet/GetRequired/GetMasked/GetMaskedSnapshot）|
+| CfgRootExtensionsTests | 11 | 0 | 扩展方法测试（TryGetValue/GetRequired/GetMasked/GetMaskedSnapshot）|
 | CfgBuilderAdvancedTests | 28 | 0 | 高级功能测试（编码映射/值转换器/脱敏器/编码检测日志）|
 | DynamicReloadTests | 22 | 0 | 动态配置重载测试 |
 | EncodingDetectionTests | 14 | 0 | 编码检测测试 |
@@ -143,7 +143,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | `WithEncodingDetectionLogging()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `Build()` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **CfgRootExtensions** |
-| `TryGet<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `TryGetValue<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetOrDefault<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetMasked()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |

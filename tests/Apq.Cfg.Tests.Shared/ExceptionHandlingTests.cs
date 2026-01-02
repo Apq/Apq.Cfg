@@ -72,7 +72,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Act & Assert
-        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Set("NewKey", "NewValue"));
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.SetValue("NewKey", "NewValue"));
         Assert.Contains("没有可写的配置源", ex.Message);
     }
 
@@ -104,7 +104,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Act & Assert - 指定不存在的层级
-        var ex = Assert.Throws<InvalidOperationException>(() => cfg.Set("Key", "Value", targetLevel: 999));
+        var ex = Assert.Throws<InvalidOperationException>(() => cfg.SetValue("Key", "Value", targetLevel: 999));
         Assert.Contains("没有可写的配置源", ex.Message);
     }
 
@@ -212,7 +212,7 @@ public class ExceptionHandlingTests : IDisposable
                 .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
                 .Build();
 
-            cfg.Set("NewKey", "NewValue");
+            cfg.SetValue("NewKey", "NewValue");
 
             // Act & Assert - 保存到只读文件应该抛出异常
             var exception = await Assert.ThrowsAnyAsync<Exception>(async () => await cfg.SaveAsync());
@@ -268,7 +268,7 @@ public class ExceptionHandlingTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
         cfg.Dispose();
 
         // Act & Assert
@@ -323,7 +323,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Assert - 应该使用最后一个
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
         Assert.Equal("NewValue", cfg.Get("NewKey"));
     }
 
@@ -343,7 +343,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
         await cfg.SaveAsync();
 
         // Assert - 验证写入到了正确的文件（最后一个 PrimaryWriter）
@@ -366,7 +366,7 @@ public class ExceptionHandlingTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
 
         var cts = new CancellationTokenSource();
         cts.Cancel();

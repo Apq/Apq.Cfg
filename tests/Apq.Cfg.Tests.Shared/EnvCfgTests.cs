@@ -180,7 +180,7 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("NEW_KEY", "NewValue");
+        cfg.SetValue("NEW_KEY", "NewValue");
         await cfg.SaveAsync();
 
         // Assert
@@ -204,8 +204,8 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("DATABASE:HOST", "localhost");
-        cfg.Set("DATABASE:PORT", "5432");
+        cfg.SetValue("DATABASE:HOST", "localhost");
+        cfg.SetValue("DATABASE:PORT", "5432");
         await cfg.SaveAsync();
 
         // Assert - 读取文件内容验证格式
@@ -304,8 +304,8 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("MESSAGE", "Hello World");  // 包含空格
-        cfg.Set("COMMENT", "Value # with hash");  // 包含 #
+        cfg.SetValue("MESSAGE", "Hello World");  // 包含空格
+        cfg.SetValue("COMMENT", "Value # with hash");  // 包含 #
         await cfg.SaveAsync();
 
         // Assert

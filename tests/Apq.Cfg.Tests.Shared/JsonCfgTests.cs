@@ -118,7 +118,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("NewKey", "NewValue");
+        cfg.SetValue("NewKey", "NewValue");
         await cfg.SaveAsync();
 
         // Assert - 重新读取验证

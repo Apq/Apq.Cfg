@@ -157,7 +157,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _jsonCfg.Set($"Data:Key{i}", $"Value{i}");
+            _jsonCfg.SetValue($"Data:Key{i}", $"Value{i}");
         }
         await _jsonCfg.SaveAsync();
     }
@@ -168,7 +168,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _iniCfg.Set($"Data:Key{i}", $"Value{i}");
+            _iniCfg.SetValue($"Data:Key{i}", $"Value{i}");
         }
         await _iniCfg.SaveAsync();
     }
@@ -179,7 +179,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _xmlCfg.Set($"Data:Key{i}", $"Value{i}");
+            _xmlCfg.SetValue($"Data:Key{i}", $"Value{i}");
         }
         await _xmlCfg.SaveAsync();
     }
@@ -190,7 +190,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _yamlCfg.Set($"Data:Key{i}", $"Value{i}");
+            _yamlCfg.SetValue($"Data:Key{i}", $"Value{i}");
         }
         await _yamlCfg.SaveAsync();
     }
@@ -201,7 +201,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _tomlCfg.Set($"Data:Key{i}", $"Value{i}");
+            _tomlCfg.SetValue($"Data:Key{i}", $"Value{i}");
         }
         await _tomlCfg.SaveAsync();
     }
@@ -217,7 +217,7 @@ public class SaveBenchmarks : IDisposable
         var largeValue = new string('X', 10000);
         for (int i = 0; i < ChangeCount / 10; i++)
         {
-            _jsonCfg.Set($"LargeData:Key{i}", largeValue);
+            _jsonCfg.SetValue($"LargeData:Key{i}", largeValue);
         }
         await _jsonCfg.SaveAsync();
     }
@@ -229,7 +229,7 @@ public class SaveBenchmarks : IDisposable
         var largeValue = new string('X', 10000);
         for (int i = 0; i < ChangeCount / 10; i++)
         {
-            _iniCfg.Set($"LargeData:Key{i}", largeValue);
+            _iniCfg.SetValue($"LargeData:Key{i}", largeValue);
         }
         await _iniCfg.SaveAsync();
     }
@@ -244,7 +244,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _jsonCfg.Set($"Frequent:Key{i}", $"Value{i}");
+            _jsonCfg.SetValue($"Frequent:Key{i}", $"Value{i}");
             if (i % 10 == 0)
             {
                 await _jsonCfg.SaveAsync();
@@ -259,7 +259,7 @@ public class SaveBenchmarks : IDisposable
     {
         for (int i = 0; i < ChangeCount; i++)
         {
-            _iniCfg.Set($"Frequent:Key{i}", $"Value{i}");
+            _iniCfg.SetValue($"Frequent:Key{i}", $"Value{i}");
             if (i % 10 == 0)
             {
                 await _iniCfg.SaveAsync();

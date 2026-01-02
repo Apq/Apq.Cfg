@@ -86,10 +86,10 @@ public interface ICfgSection
     /// <example>
     /// <code>
     /// var dbSection = cfg.GetSection("Database");
-    /// dbSection.Set("Timeout", "60"); // 等同于 cfg.Set("Database:Timeout", "60")
+    /// dbSection.SetValue("Timeout", "60"); // 等同于 cfg.SetValue("Database:Timeout", "60")
     /// </code>
     /// </example>
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
 
     /// <summary>
     /// 移除配置键

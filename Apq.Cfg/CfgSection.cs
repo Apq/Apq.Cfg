@@ -24,7 +24,7 @@ internal sealed class CfgSection : ICfgSection
     public string? this[string key]
     {
         get => Get(key);
-        set => Set(key, value);
+        set => SetValue(key, value);
     }
 
     /// <summary>
@@ -50,9 +50,9 @@ internal sealed class CfgSection : ICfgSection
         return _root.Exists(GetFullKey(key));
     }
 
-    public void Set(string key, string? value, int? targetLevel = null)
+    public void SetValue(string key, string? value, int? targetLevel = null)
     {
-        _root.Set(GetFullKey(key), value, targetLevel);
+        _root.SetValue(GetFullKey(key), value, targetLevel);
     }
 
     public void Remove(string key, int? targetLevel = null)

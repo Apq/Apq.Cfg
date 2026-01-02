@@ -74,7 +74,7 @@ var port = config.GetValue<int>("Server:Port", 8080);
 var port = cfg.GetOrDefault("Server:Port", 8080);
 ```
 
-### 安全读取（TryGet）
+### 安全读取（TryGetValue）
 
 ```csharp
 // 之前
@@ -85,7 +85,7 @@ if (value != null)
 }
 
 // 之后
-if (cfg.TryGet<int>("Key", out var value))
+if (cfg.TryGetValue<int>("Key", out var value))
 {
     // 使用 value
 }

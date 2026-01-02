@@ -34,10 +34,10 @@ public static class RedisDemo
 
             // 写入配置
             Console.WriteLine("\n9.2 写入配置到 Redis:");
-            cfg.Set("App:Name", "RedisApp");
-            cfg.Set("App:Version", "1.0.0");
-            cfg.Set("Database:Host", "db.example.com");
-            cfg.Set("Database:Port", "5432");
+            cfg.SetValue("App:Name", "RedisApp");
+            cfg.SetValue("App:Version", "1.0.0");
+            cfg.SetValue("Database:Host", "db.example.com");
+            cfg.SetValue("Database:Port", "5432");
             await cfg.SaveAsync();
             Console.WriteLine("    已写入 4 个配置项");
 

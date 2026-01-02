@@ -176,7 +176,7 @@ public class MultiSourceBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set($"NewData:Key{i}", $"Value{i}");
+            _cfg.SetValue($"NewData:Key{i}", $"Value{i}");
         }
     }
 
@@ -186,7 +186,7 @@ public class MultiSourceBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _cfg.Set("Shared:Key", $"NewValue{i}");
+            _cfg.SetValue("Shared:Key", $"NewValue{i}");
         }
     }
 

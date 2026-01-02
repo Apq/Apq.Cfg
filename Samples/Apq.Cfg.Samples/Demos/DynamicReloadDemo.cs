@@ -66,7 +66,7 @@ public static class DynamicReloadDemo
         // 模拟配置变更
         Console.WriteLine("\n6.4 模拟配置变更:");
         Console.WriteLine("    修改 App:RefreshInterval 为 60...");
-        cfg.Set("App:RefreshInterval", "60");
+        cfg.SetValue("App:RefreshInterval", "60");
         await cfg.SaveAsync();
 
         // 等待变更通知

@@ -35,7 +35,7 @@ public class ZookeeperBenchmarks
             // 初始化测试数据
             for (int i = 0; i < 100; i++)
             {
-                _cfg.Set($"Key{i}", $"Value{i}");
+                _cfg.SetValue($"Key{i}", $"Value{i}");
             }
             _cfg.SaveAsync().GetAwaiter().GetResult();
 
@@ -78,7 +78,7 @@ public class ZookeeperBenchmarks
     public void Zookeeper_Set()
     {
         if (!_isZookeeperAvailable) return;
-        _cfg!.Set("BenchmarkKey", "BenchmarkValue");
+        _cfg!.SetValue("BenchmarkKey", "BenchmarkValue");
     }
 
     [Benchmark]
@@ -104,7 +104,7 @@ public class ZookeeperBenchmarks
         if (!_isZookeeperAvailable) return;
         for (int i = 0; i < 10; i++)
         {
-            _cfg!.Set($"BenchmarkKey{i}", $"Value{i}");
+            _cfg!.SetValue($"BenchmarkKey{i}", $"Value{i}");
         }
     }
 
@@ -112,7 +112,7 @@ public class ZookeeperBenchmarks
     public int Zookeeper_Get_Int()
     {
         if (!_isZookeeperAvailable) return 0;
-        _cfg!.Set("IntKey", "42");
+        _cfg!.SetValue("IntKey", "42");
         return _cfg.GetValue<int>("IntKey");
     }
 }

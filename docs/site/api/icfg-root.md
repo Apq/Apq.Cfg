@@ -303,17 +303,17 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ICfgRoot 还提供了一些便捷的扩展方法：
 
-### TryGet
+### TryGetValue
 
 ```csharp
-bool TryGet<T>(this ICfgRoot root, string key, out T? value)
+bool TryGetValue<T>(this ICfgRoot root, string key, out T? value)
 ```
 
 尝试获取配置值。
 
 **示例：**
 ```csharp
-if (cfg.TryGet<int>("Database:Port", out var port))
+if (cfg.TryGetValue<int>("Database:Port", out var port))
 {
     Console.WriteLine($"端口: {port}");
 }

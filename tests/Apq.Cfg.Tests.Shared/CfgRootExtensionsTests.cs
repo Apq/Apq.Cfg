@@ -24,7 +24,7 @@ public class CfgRootExtensionsTests : IDisposable
     }
 
     [Fact]
-    public void TryGet_ExistingKey_ReturnsTrueAndValue()
+    public void TryGetValue_ExistingKey_ReturnsTrueAndValue()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -35,15 +35,15 @@ public class CfgRootExtensionsTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.True(cfg.TryGet<int>("IntValue", out var intValue));
+        Assert.True(cfg.TryGetValue<int>("IntValue", out var intValue));
         Assert.Equal(42, intValue);
 
-        Assert.True(cfg.TryGet<string>("StringValue", out var stringValue));
+        Assert.True(cfg.TryGetValue<string>("StringValue", out var stringValue));
         Assert.Equal("Hello", stringValue);
     }
 
     [Fact]
-    public void TryGet_NonExistingKey_ReturnsFalseAndDefault()
+    public void TryGetValue_NonExistingKey_ReturnsFalseAndDefault()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -54,10 +54,10 @@ public class CfgRootExtensionsTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.False(cfg.TryGet<int>("NonExistent", out var intValue));
+        Assert.False(cfg.TryGetValue<int>("NonExistent", out var intValue));
         Assert.Equal(default, intValue);
 
-        Assert.False(cfg.TryGet<string>("NonExistent", out var stringValue));
+        Assert.False(cfg.TryGetValue<string>("NonExistent", out var stringValue));
         Assert.Null(stringValue);
     }
 

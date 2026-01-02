@@ -74,7 +74,7 @@ var port = config.GetValue<int>("Server:Port", 8080);
 var port = cfg.GetOrDefault("Server:Port", 8080);
 ```
 
-### Safe Reading (TryGet)
+### Safe Reading (TryGetValue)
 
 ```csharp
 // Before
@@ -85,7 +85,7 @@ if (value != null)
 }
 
 // After
-if (cfg.TryGet<int>("Key", out var value))
+if (cfg.TryGetValue<int>("Key", out var value))
 {
     // use value
 }

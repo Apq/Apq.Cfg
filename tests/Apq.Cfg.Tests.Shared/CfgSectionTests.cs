@@ -169,7 +169,7 @@ public class CfgSectionTests : IDisposable
 
         // Act
         var section = cfg.GetSection("App");
-        section.Set("Name", "NewName");
+        section.SetValue("Name", "NewName");
         await cfg.SaveAsync();
 
         // Assert

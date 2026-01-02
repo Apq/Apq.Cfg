@@ -82,7 +82,7 @@ public class IniCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("App:NewKey", "NewValue");
+        cfg.SetValue("App:NewKey", "NewValue");
         await cfg.SaveAsync();
 
         // Assert

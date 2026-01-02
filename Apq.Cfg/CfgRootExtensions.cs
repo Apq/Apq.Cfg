@@ -10,7 +10,7 @@ public static class CfgRootExtensions
     /// <summary>
     /// 尝试获取配置值
     /// </summary>
-    public static bool TryGet<T>(this ICfgRoot root, string key, out T? value)
+    public static bool TryGetValue<T>(this ICfgRoot root, string key, out T? value)
     {
         var rawValue = root.Get(key);
         if (rawValue == null)

@@ -111,8 +111,8 @@ public class PerformanceOptimizationTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: true)
             .Build();
 
-        cfg.Set("Key1", "Modified");
-        cfg.Set("Key2", "NewValue");
+        cfg.SetValue("Key1", "Modified");
+        cfg.SetValue("Key2", "NewValue");
 
         // Act
         var result = cfg.GetMany(new[] { "Key1", "Key2" });
@@ -134,7 +134,7 @@ public class PerformanceOptimizationTests : IDisposable
             .Build();
 
         // Act
-        cfg.SetMany(new Dictionary<string, string?>
+        cfg.SetManyValues(new Dictionary<string, string?>
         {
             ["Key1"] = "Value1",
             ["Key2"] = "Value2",
@@ -159,7 +159,7 @@ public class PerformanceOptimizationTests : IDisposable
             .Build();
 
         // Act
-        cfg.SetMany(new Dictionary<string, string?>
+        cfg.SetManyValues(new Dictionary<string, string?>
         {
             ["Key1"] = "Value1",
             ["Key2"] = "Value2"
@@ -244,8 +244,8 @@ public class PerformanceOptimizationTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: true)
             .Build();
 
-        cfg.Set("Key1", "Modified");
-        cfg.Set("Key2", "NewValue");
+        cfg.SetValue("Key1", "Modified");
+        cfg.SetValue("Key2", "NewValue");
 
         var results = new Dictionary<string, string?>();
 
@@ -357,8 +357,8 @@ public class PerformanceOptimizationTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: true)
             .Build();
 
-        cfg.Set("Int1", "20");
-        cfg.Set("Int2", "30");
+        cfg.SetValue("Int1", "20");
+        cfg.SetValue("Int2", "30");
 
         var results = new Dictionary<string, int?>();
 
@@ -493,25 +493,25 @@ public class PerformanceOptimizationTests : IDisposable
         var cache = new ValueCache();
 
         // Act
-        cache.Set("Key1", 42);
-        cache.Set("Key2", "StringValue");
+        cache.SetValue("Key1", 42);
+        cache.SetValue("Key2", "StringValue");
 
         // Assert
-        Assert.True(cache.TryGet<int>("Key1", out var intValue));
+        Assert.True(cache.TryGetValue<int>("Key1", out var intValue));
         Assert.Equal(42, intValue);
 
-        Assert.True(cache.TryGet<string>("Key2", out var stringValue));
+        Assert.True(cache.TryGetValue<string>("Key2", out var stringValue));
         Assert.Equal("StringValue", stringValue);
     }
 
     [Fact]
-    public void ValueCache_TryGet_ReturnsFalseForMissingKey()
+    public void ValueCache_TryGetValue_ReturnsFalseForMissingKey()
     {
         // Arrange
         var cache = new ValueCache();
 
         // Act & Assert
-        Assert.False(cache.TryGet<int>("NonExistent", out _));
+        Assert.False(cache.TryGetValue<int>("NonExistent", out _));
     }
 
     [Fact]
@@ -521,14 +521,14 @@ public class PerformanceOptimizationTests : IDisposable
         var cache = new ValueCache();
 
         // Act
-        cache.Set<int>("Key", 42);
-        cache.Set<string>("Key", "42");
+        cache.SetValue<int>("Key", 42);
+        cache.SetValue<string>("Key", "42");
 
         // Assert
-        Assert.True(cache.TryGet<int>("Key", out var intValue));
+        Assert.True(cache.TryGetValue<int>("Key", out var intValue));
         Assert.Equal(42, intValue);
 
-        Assert.True(cache.TryGet<string>("Key", out var stringValue));
+        Assert.True(cache.TryGetValue<string>("Key", out var stringValue));
         Assert.Equal("42", stringValue);
     }
 
@@ -537,15 +537,15 @@ public class PerformanceOptimizationTests : IDisposable
     {
         // Arrange
         var cache = new ValueCache();
-        cache.Set("Key1", 42);
-        cache.Set("Key2", 100);
+        cache.SetValue("Key1", 42);
+        cache.SetValue("Key2", 100);
 
         // Act
         cache.Invalidate("Key1");
 
         // Assert
-        Assert.False(cache.TryGet<int>("Key1", out _));
-        Assert.True(cache.TryGet<int>("Key2", out _));
+        Assert.False(cache.TryGetValue<int>("Key1", out _));
+        Assert.True(cache.TryGetValue<int>("Key2", out _));
     }
 
     [Fact]
@@ -553,15 +553,15 @@ public class PerformanceOptimizationTests : IDisposable
     {
         // Arrange
         var cache = new ValueCache();
-        cache.Set("Key1", 42);
-        cache.Set("Key2", 100);
+        cache.SetValue("Key1", 42);
+        cache.SetValue("Key2", 100);
 
         // Act
         cache.Clear();
 
         // Assert
-        Assert.False(cache.TryGet<int>("Key1", out _));
-        Assert.False(cache.TryGet<int>("Key2", out _));
+        Assert.False(cache.TryGetValue<int>("Key1", out _));
+        Assert.False(cache.TryGetValue<int>("Key2", out _));
     }
 
     [Fact]
@@ -572,14 +572,14 @@ public class PerformanceOptimizationTests : IDisposable
         var initialVersion = cache.Version;
 
         // Act
-        cache.Set("Key", 42);
+        cache.SetValue("Key", 42);
         var afterSetVersion = cache.Version;
 
         cache.Invalidate("Key");
         var afterInvalidateVersion = cache.Version;
 
         // Assert
-        Assert.Equal(initialVersion, afterSetVersion); // Set 不改变版本
+        Assert.Equal(initialVersion, afterSetVersion); // SetValue 不改变版本
         Assert.Equal(initialVersion + 1, afterInvalidateVersion); // Invalidate 增加版本
     }
 

@@ -66,7 +66,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("EmptyValue", "");
+        cfg.SetValue("EmptyValue", "");
 
         // Assert
         Assert.Equal("", cfg.Get("EmptyValue"));
@@ -84,7 +84,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("NullValue", null);
+        cfg.SetValue("NullValue", null);
 
         // Assert
         Assert.Null(cfg.Get("NullValue"));
@@ -296,7 +296,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act
-        cfg.Set("LongKey", longValue);
+        cfg.SetValue("LongKey", longValue);
         await cfg.SaveAsync();
 
         // Assert

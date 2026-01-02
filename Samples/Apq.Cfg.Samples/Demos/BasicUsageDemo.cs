@@ -65,13 +65,13 @@ public static class BasicUsageDemo
 
         // 修改配置（写入到 isPrimaryWriter 的配置源，需要指定 targetLevel）
         Console.WriteLine("\n1.3 修改配置:");
-        cfg.Set("App:LastRun", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), targetLevel: 1);
+        cfg.SetValue("App:LastRun", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), targetLevel: 1);
         await cfg.SaveAsync(targetLevel: 1);
         Console.WriteLine($"    已设置 App:LastRun = {cfg.Get("App:LastRun")}");
 
         // 删除配置
         Console.WriteLine("\n1.4 删除配置:");
-        cfg.Set("App:TempKey", "临时值", targetLevel: 1);
+        cfg.SetValue("App:TempKey", "临时值", targetLevel: 1);
         Console.WriteLine($"    设置 App:TempKey = {cfg.Get("App:TempKey")}");
         cfg.Remove("App:TempKey", targetLevel: 1);
         await cfg.SaveAsync(targetLevel: 1);

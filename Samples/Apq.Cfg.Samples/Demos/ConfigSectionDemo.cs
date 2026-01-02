@@ -64,7 +64,7 @@ public static class ConfigSectionDemo
         // 通过配置节修改值
         Console.WriteLine("\n3.3 通过配置节修改值:");
         var replicaSection = dbSection.GetSection("Replica");
-        replicaSection.Set("Port", "3308");
+        replicaSection.SetValue("Port", "3308");
         await cfg.SaveAsync();
         Console.WriteLine($"    修改后 Database:Replica:Port = {replicaSection.Get("Port")}");
 
