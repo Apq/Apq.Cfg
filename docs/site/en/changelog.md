@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.2] - 2026-01-02
+
+### Added
+
+- **Default Levels Feature**: New `CfgSourceLevels` static class defining default levels for each configuration source
+  - Local file sources (Json, Ini, Xml, Yaml, Toml): Level 0
+  - Remote storage (Redis, Database): Level 100
+  - Configuration centers (Consul, Etcd, Nacos, Apollo, Zookeeper): Level 200
+  - Secret management (Vault): Level 300
+  - Environment-related (Env, EnvironmentVariables): Level 400
+- **Indexer Support**: `ICfgSection` now supports indexer access via `section[index]` for array elements
+- **Configuration Validation**: Support for multiple validation rules (Required, Range, Regex, OneOf, Length, DependsOn, Custom)
+- **Variable Substitution**: Template engine supporting `${Key}`, `${ENV:Name}`, `${SYS:Property}` syntax for configuration value references
+
+### Changed
+
+- Updated all configuration source documentation with default level information
+- Updated config-sources and examples directories in both Chinese and English documentation sites
+- Code examples now use default levels consistently
+
 ## [1.1.1] - 2026-01-01
 
 ### Changed

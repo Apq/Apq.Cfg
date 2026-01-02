@@ -1,5 +1,25 @@
 # 更新日志
 
+## v1.1.2 (2026-01-02)
+
+### 新功能
+
+- **默认层级功能**：新增 `CfgSourceLevels` 静态类，为每种配置源定义默认层级
+  - 本地文件配置源（Json、Ini、Xml、Yaml、Toml）：层级 0
+  - 远程存储（Redis、Database）：层级 100
+  - 配置中心（Consul、Etcd、Nacos、Apollo、Zookeeper）：层级 200
+  - 密钥管理（Vault）：层级 300
+  - 环境相关（Env、EnvironmentVariables）：层级 400
+- **索引器支持**：`ICfgSection` 新增索引器访问方式，支持通过 `section[index]` 访问数组元素
+- **配置验证功能**：支持多种验证规则（Required、Range、Regex、OneOf、Length、DependsOn、Custom）
+- **变量替换功能**：模板引擎支持 `${Key}`、`${ENV:Name}`、`${SYS:Property}` 语法引用配置值
+
+### 改进
+
+- 更新所有配置源文档，添加默认层级说明
+- 更新中英文文档站点的 config-sources 和 examples 目录
+- 代码示例统一使用默认层级
+
 ## v1.1.1 (2026-01-01)
 
 ### 改进
