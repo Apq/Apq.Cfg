@@ -39,11 +39,11 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     /// <returns>转换后的配置值，不存在或转换失败时返回默认值</returns>
     /// <example>
     /// <code>
-    /// var port = cfg.Get&lt;int&gt;("Server:Port");
-    /// var enabled = cfg.Get&lt;bool&gt;("Features:NewUI");
+    /// var port = cfg.GetValue&lt;int&gt;("Server:Port");
+    /// var enabled = cfg.GetValue&lt;bool&gt;("Features:NewUI");
     /// </code>
     /// </example>
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
 
     /// <summary>
     /// 检查配置键是否存在

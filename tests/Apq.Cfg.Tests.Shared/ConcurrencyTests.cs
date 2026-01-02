@@ -58,7 +58,7 @@ public class ConcurrencyTests : IDisposable
                     {
                         var _ = cfg.Get("Key1");
                         var __ = cfg.Get("Key2");
-                        var ___ = cfg.Get<int>("Nested:A");
+                        var ___ = cfg.GetValue<int>("Nested:A");
                         var ____ = cfg.Exists("Key3");
                     }
                 }

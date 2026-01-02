@@ -192,7 +192,7 @@ public static class ConsulDemo
             Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
             Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
             Console.WriteLine($"    Database:Host = {cfg.Get("Database:Host")}");
-            Console.WriteLine($"    Database:Port = {cfg.Get<int>("Database:Port")}");
+            Console.WriteLine($"    Database:Port = {cfg.GetValue<int>("Database:Port")}");
 
             // 枚举所有键
             var keys = cfg.GetChildKeys();

@@ -432,7 +432,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(int.MaxValue, cfg.Get<int>("MaxInt"));
+        Assert.Equal(int.MaxValue, cfg.GetValue<int>("MaxInt"));
     }
 
     [Fact]
@@ -447,7 +447,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(int.MinValue, cfg.Get<int>("MinInt"));
+        Assert.Equal(int.MinValue, cfg.GetValue<int>("MinInt"));
     }
 
     [Fact]
@@ -462,11 +462,11 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.True(cfg.Get<bool>("True1"));
-        Assert.True(cfg.Get<bool>("True2"));
-        Assert.True(cfg.Get<bool>("True3"));
-        Assert.False(cfg.Get<bool>("False1"));
-        Assert.False(cfg.Get<bool>("False2"));
+        Assert.True(cfg.GetValue<bool>("True1"));
+        Assert.True(cfg.GetValue<bool>("True2"));
+        Assert.True(cfg.GetValue<bool>("True3"));
+        Assert.False(cfg.GetValue<bool>("False1"));
+        Assert.False(cfg.GetValue<bool>("False2"));
     }
 
     [Fact]
@@ -481,8 +481,8 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(0.0, cfg.Get<double>("Zero"));
-        Assert.Equal(0.0000001, cfg.Get<double>("Small"), 10);
+        Assert.Equal(0.0, cfg.GetValue<double>("Zero"));
+        Assert.Equal(0.0000001, cfg.GetValue<double>("Small"), 10);
     }
 
     #endregion

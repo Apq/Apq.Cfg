@@ -121,7 +121,7 @@ internal sealed class MergedCfgRoot : ICfgRoot
         return _transformerChain?.TransformOnRead(key, value) ?? value;
     }
 
-    public T? Get<T>(string key)
+    public T? GetValue<T>(string key)
     {
         // Lazy 策略：访问前确保配置是最新的
         _coordinator?.EnsureLatest();

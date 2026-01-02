@@ -113,6 +113,6 @@ public class ZookeeperBenchmarks
     {
         if (!_isZookeeperAvailable) return 0;
         _cfg!.Set("IntKey", "42");
-        return _cfg.Get<int>("IntKey");
+        return _cfg.GetValue<int>("IntKey");
     }
 }

@@ -197,8 +197,8 @@ public class ConsulCfgTests : IAsyncLifetime
         await _cfg.SaveAsync();
 
         // Assert
-        Assert.Equal(42, _cfg.Get<int>("IntValue"));
-        Assert.True(_cfg.Get<bool>("BoolValue"));
-        Assert.Equal(3.14, _cfg.Get<double>("DoubleValue"));
+        Assert.Equal(42, _cfg.GetValue<int>("IntValue"));
+        Assert.True(_cfg.GetValue<bool>("BoolValue"));
+        Assert.Equal(3.14, _cfg.GetValue<double>("DoubleValue"));
     }
 }

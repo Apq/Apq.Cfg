@@ -62,9 +62,9 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(5, cfg.Get<int>("MAX_RETRIES"));
-        Assert.True(cfg.Get<bool>("ENABLED"));
-        Assert.Equal(30.5, cfg.Get<double>("TIMEOUT"));
+        Assert.Equal(5, cfg.GetValue<int>("MAX_RETRIES"));
+        Assert.True(cfg.GetValue<bool>("ENABLED"));
+        Assert.Equal(30.5, cfg.GetValue<double>("TIMEOUT"));
     }
 
     [Fact]

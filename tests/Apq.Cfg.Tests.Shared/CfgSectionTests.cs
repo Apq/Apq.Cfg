@@ -75,9 +75,9 @@ public class CfgSectionTests : IDisposable
         var section = cfg.GetSection("Settings");
 
         // Assert
-        Assert.Equal(3, section.Get<int>("MaxRetries"));
-        Assert.True(section.Get<bool>("Enabled"));
-        Assert.Equal(30.5, section.Get<double>("Timeout"));
+        Assert.Equal(3, section.GetValue<int>("MaxRetries"));
+        Assert.True(section.GetValue<bool>("Enabled"));
+        Assert.Equal(30.5, section.GetValue<double>("Timeout"));
     }
 
     [Fact]
@@ -112,11 +112,11 @@ public class CfgSectionTests : IDisposable
         // Assert
         Assert.Equal("Database:Connection", connSection.Path);
         Assert.Equal("localhost", connSection.Get("Host"));
-        Assert.Equal(5432, connSection.Get<int>("Port"));
+        Assert.Equal(5432, connSection.GetValue<int>("Port"));
 
         Assert.Equal("Database:Pool", poolSection.Path);
-        Assert.Equal(5, poolSection.Get<int>("MinSize"));
-        Assert.Equal(100, poolSection.Get<int>("MaxSize"));
+        Assert.Equal(5, poolSection.GetValue<int>("MinSize"));
+        Assert.Equal(100, poolSection.GetValue<int>("MaxSize"));
     }
 
     [Fact]

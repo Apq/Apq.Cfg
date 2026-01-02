@@ -85,9 +85,9 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(3, cfg.Get<int>("Settings:MaxRetries"));
-        Assert.True(cfg.Get<bool>("Settings:Enabled"));
-        Assert.Equal(30.5, cfg.Get<double>("Settings:Timeout"));
+        Assert.Equal(3, cfg.GetValue<int>("Settings:MaxRetries"));
+        Assert.True(cfg.GetValue<bool>("Settings:Enabled"));
+        Assert.Equal(30.5, cfg.GetValue<double>("Settings:Timeout"));
     }
 
     [Fact]
@@ -223,7 +223,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(9223372036854775807L, cfg.Get<long>("BigNumber"));
+        Assert.Equal(9223372036854775807L, cfg.GetValue<long>("BigNumber"));
     }
 
     [Fact]
@@ -238,7 +238,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(123.456m, cfg.Get<decimal>("Price"));
+        Assert.Equal(123.456m, cfg.GetValue<decimal>("Price"));
     }
 
     public enum TestLogLevel { Debug, Info, Warning, Error }
@@ -255,7 +255,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(TestLogLevel.Warning, cfg.Get<TestLogLevel>("LogLevel"));
+        Assert.Equal(TestLogLevel.Warning, cfg.GetValue<TestLogLevel>("LogLevel"));
     }
 
     [Fact]
@@ -270,7 +270,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(TestLogLevel.Warning, cfg.Get<TestLogLevel>("LogLevel"));
+        Assert.Equal(TestLogLevel.Warning, cfg.GetValue<TestLogLevel>("LogLevel"));
     }
 
     [Fact]
@@ -285,7 +285,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
-        Assert.Equal(default(int), cfg.Get<int>("NotANumber"));
+        Assert.Equal(default(int), cfg.GetValue<int>("NotANumber"));
     }
 
     [Fact]
@@ -301,8 +301,8 @@ public class JsonCfgTests : IDisposable
 
         // Act & Assert
         Assert.Null(cfg.Get("NonExistent"));
-        Assert.Equal(default, cfg.Get<int>("NonExistent"));
-        Assert.Null(cfg.Get<string>("NonExistent"));
+        Assert.Equal(default, cfg.GetValue<int>("NonExistent"));
+        Assert.Null(cfg.GetValue<string>("NonExistent"));
     }
 
     [Fact]
@@ -317,7 +317,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(42, cfg.Get<int?>("NullableInt"));
-        Assert.Null(cfg.Get<int?>("NonExistent"));
+        Assert.Equal(42, cfg.GetValue<int?>("NullableInt"));
+        Assert.Null(cfg.GetValue<int?>("NonExistent"));
     }
 }

@@ -45,7 +45,7 @@ public static class ConfigSectionDemo
         var primarySection = dbSection.GetSection("Primary");
 
         Console.WriteLine($"    Database:Primary:Host = {primarySection.Get("Host")}");
-        Console.WriteLine($"    Database:Primary:Port = {primarySection.Get<int>("Port")}");
+        Console.WriteLine($"    Database:Primary:Port = {primarySection.GetValue<int>("Port")}");
 
         // 枚举子键
         Console.WriteLine("\n3.2 枚举配置节的子键:");

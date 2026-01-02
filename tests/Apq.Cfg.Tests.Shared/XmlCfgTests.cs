@@ -71,8 +71,8 @@ public class XmlCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(5, cfg.Get<int>("Settings:MaxRetries"));
-        Assert.True(cfg.Get<bool>("Settings:Enabled"));
+        Assert.Equal(5, cfg.GetValue<int>("Settings:MaxRetries"));
+        Assert.True(cfg.GetValue<bool>("Settings:Enabled"));
     }
 
     [Fact]

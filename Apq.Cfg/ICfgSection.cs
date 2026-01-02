@@ -56,10 +56,10 @@ public interface ICfgSection
     /// <example>
     /// <code>
     /// var dbSection = cfg.GetSection("Database");
-    /// var port = dbSection.Get&lt;int&gt;("Port"); // 等同于 cfg.Get&lt;int&gt;("Database:Port")
+    /// var port = dbSection.GetValue&lt;int&gt;("Port"); // 等同于 cfg.GetValue&lt;int&gt;("Database:Port")
     /// </code>
     /// </example>
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
 
     /// <summary>
     /// 检查配置键是否存在

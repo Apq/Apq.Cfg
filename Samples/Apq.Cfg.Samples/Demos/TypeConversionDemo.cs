@@ -35,18 +35,18 @@ public static class TypeConversionDemo
             .Build();
 
         Console.WriteLine("5.1 各种类型转换:");
-        Console.WriteLine($"    int: {cfg.Get<int>("Types:IntValue")}");
-        Console.WriteLine($"    long: {cfg.Get<long>("Types:LongValue")}");
-        Console.WriteLine($"    double: {cfg.Get<double>("Types:DoubleValue")}");
-        Console.WriteLine($"    decimal: {cfg.Get<decimal>("Types:DecimalValue")}");
-        Console.WriteLine($"    bool (true): {cfg.Get<bool>("Types:BoolTrue")}");
-        Console.WriteLine($"    bool (false): {cfg.Get<bool>("Types:BoolFalse")}");
-        Console.WriteLine($"    DateTime: {cfg.Get<DateTime>("Types:DateValue"):yyyy-MM-dd}");
-        Console.WriteLine($"    Guid: {cfg.Get<Guid>("Types:GuidValue")}");
-        Console.WriteLine($"    Enum: {cfg.Get<LogLevel>("Types:EnumValue")}");
+        Console.WriteLine($"    int: {cfg.GetValue<int>("Types:IntValue")}");
+        Console.WriteLine($"    long: {cfg.GetValue<long>("Types:LongValue")}");
+        Console.WriteLine($"    double: {cfg.GetValue<double>("Types:DoubleValue")}");
+        Console.WriteLine($"    decimal: {cfg.GetValue<decimal>("Types:DecimalValue")}");
+        Console.WriteLine($"    bool (true): {cfg.GetValue<bool>("Types:BoolTrue")}");
+        Console.WriteLine($"    bool (false): {cfg.GetValue<bool>("Types:BoolFalse")}");
+        Console.WriteLine($"    DateTime: {cfg.GetValue<DateTime>("Types:DateValue"):yyyy-MM-dd}");
+        Console.WriteLine($"    Guid: {cfg.GetValue<Guid>("Types:GuidValue")}");
+        Console.WriteLine($"    Enum: {cfg.GetValue<LogLevel>("Types:EnumValue")}");
 
         Console.WriteLine("\n5.2 可空类型与默认值:");
-        Console.WriteLine($"    不存在的键 (int?): {cfg.Get<int?>("Types:NotExist") ?? -1}");
+        Console.WriteLine($"    不存在的键 (int?): {cfg.GetValue<int?>("Types:NotExist") ?? -1}");
         Console.WriteLine($"    不存在的键 (string): {cfg.Get("Types:NotExist") ?? "(null)"}");
 
         File.Delete(configPath);

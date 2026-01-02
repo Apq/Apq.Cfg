@@ -85,7 +85,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public string? Get_String_Generic()
     {
-        return _cfg.Get<string>("Types:String");
+        return _cfg.GetValue<string>("Types:String");
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public int Get_Int()
     {
-        return _cfg.Get<int>("Types:Int");
+        return _cfg.GetValue<int>("Types:Int");
     }
 
     /// <summary>
@@ -105,7 +105,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public long Get_Long()
     {
-        return _cfg.Get<long>("Types:Long");
+        return _cfg.GetValue<long>("Types:Long");
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public double Get_Double()
     {
-        return _cfg.Get<double>("Types:Double");
+        return _cfg.GetValue<double>("Types:Double");
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public decimal Get_Decimal()
     {
-        return _cfg.Get<decimal>("Types:Decimal");
+        return _cfg.GetValue<decimal>("Types:Decimal");
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public bool Get_Bool()
     {
-        return _cfg.Get<bool>("Types:Bool");
+        return _cfg.GetValue<bool>("Types:Bool");
     }
 
     #endregion
@@ -149,7 +149,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("ComplexTypes")]
     public Guid Get_Guid()
     {
-        return _cfg.Get<Guid>("Types:Guid");
+        return _cfg.GetValue<Guid>("Types:Guid");
     }
 
     /// <summary>
@@ -159,7 +159,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("ComplexTypes")]
     public DateTime Get_DateTime()
     {
-        return _cfg.Get<DateTime>("Types:DateTime");
+        return _cfg.GetValue<DateTime>("Types:DateTime");
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("ComplexTypes")]
     public LogLevel Get_Enum()
     {
-        return _cfg.Get<LogLevel>("Types:Enum");
+        return _cfg.GetValue<LogLevel>("Types:Enum");
     }
 
     /// <summary>
@@ -179,7 +179,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("ComplexTypes")]
     public int? Get_NullableInt()
     {
-        return _cfg.Get<int?>("Types:NullableInt");
+        return _cfg.GetValue<int?>("Types:NullableInt");
     }
 
     #endregion
@@ -195,7 +195,7 @@ public class TypeConversionBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get<int>("Types:Int");
+            _ = _cfg.GetValue<int>("Types:Int");
         }
     }
 
@@ -208,7 +208,7 @@ public class TypeConversionBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get<bool>("Types:Bool");
+            _ = _cfg.GetValue<bool>("Types:Bool");
         }
     }
 
@@ -221,7 +221,7 @@ public class TypeConversionBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get<double>("Types:Double");
+            _ = _cfg.GetValue<double>("Types:Double");
         }
     }
 
@@ -350,10 +350,10 @@ public class TypeConversionBenchmarks : IDisposable
         for (int i = 0; i < 100; i++)
         {
             _ = _cfg.Get("Types:String");
-            _ = _cfg.Get<int>("Types:Int");
-            _ = _cfg.Get<bool>("Types:Bool");
-            _ = _cfg.Get<double>("Types:Double");
-            _ = _cfg.Get<long>("Types:Long");
+            _ = _cfg.GetValue<int>("Types:Int");
+            _ = _cfg.GetValue<bool>("Types:Bool");
+            _ = _cfg.GetValue<double>("Types:Double");
+            _ = _cfg.GetValue<long>("Types:Long");
         }
     }
 

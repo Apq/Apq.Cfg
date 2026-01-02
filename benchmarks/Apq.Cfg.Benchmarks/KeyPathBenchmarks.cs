@@ -135,7 +135,7 @@ public class KeyPathBenchmarks : IDisposable
     public int Get_DeepKey_Int()
     {
         var numberKey = _deepKey.Replace(":Value", ":Number");
-        return _cfg.Get<int>(numberKey);
+        return _cfg.GetValue<int>(numberKey);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class KeyPathBenchmarks : IDisposable
     public bool Get_DeepKey_Bool()
     {
         var boolKey = _deepKey.Replace(":Value", ":Boolean");
-        return _cfg.Get<bool>(boolKey);
+        return _cfg.GetValue<bool>(boolKey);
     }
 
     #endregion

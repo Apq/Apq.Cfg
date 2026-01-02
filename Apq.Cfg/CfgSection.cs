@@ -40,9 +40,9 @@ internal sealed class CfgSection : ICfgSection
         return _root.Get(GetFullKey(key));
     }
 
-    public T? Get<T>(string key)
+    public T? GetValue<T>(string key)
     {
-        return _root.Get<T>(GetFullKey(key));
+        return _root.GetValue<T>(GetFullKey(key));
     }
 
     public bool Exists(string key)

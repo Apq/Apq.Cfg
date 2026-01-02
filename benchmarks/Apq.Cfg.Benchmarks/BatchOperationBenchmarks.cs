@@ -198,7 +198,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         foreach (var key in _keys10)
         {
-            _ = _cfg.Get<int>(key);
+            _ = _cfg.GetValue<int>(key);
         }
     }
 

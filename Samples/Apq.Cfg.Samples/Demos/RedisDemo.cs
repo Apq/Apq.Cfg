@@ -46,7 +46,7 @@ public static class RedisDemo
             Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
             Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
             Console.WriteLine($"    Database:Host = {cfg.Get("Database:Host")}");
-            Console.WriteLine($"    Database:Port = {cfg.Get<int>("Database:Port")}");
+            Console.WriteLine($"    Database:Port = {cfg.GetValue<int>("Database:Port")}");
 
             // 检查配置是否存在
             Console.WriteLine("\n9.4 检查配置是否存在:");

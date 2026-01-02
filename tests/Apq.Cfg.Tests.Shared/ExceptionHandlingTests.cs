@@ -140,7 +140,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
-        Assert.Equal(default(int), cfg.Get<int>("NotANumber"));
+        Assert.Equal(default(int), cfg.GetValue<int>("NotANumber"));
     }
 
     [Fact]
@@ -155,7 +155,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
-        Assert.Equal(default(bool), cfg.Get<bool>("NotABool"));
+        Assert.Equal(default(bool), cfg.GetValue<bool>("NotABool"));
     }
 
     [Fact]
@@ -171,7 +171,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Act & Assert - 溢出时返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
-        Assert.Equal(default(int), cfg.Get<int>("TooBig"));
+        Assert.Equal(default(int), cfg.GetValue<int>("TooBig"));
     }
 
     [Fact]

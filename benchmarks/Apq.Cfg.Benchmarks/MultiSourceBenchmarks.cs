@@ -198,7 +198,7 @@ public class MultiSourceBenchmarks : IDisposable
     [BenchmarkCategory("TypeConversion")]
     public int Get_Int()
     {
-        return _cfg.Get<int>("Shared:Priority");
+        return _cfg.GetValue<int>("Shared:Priority");
     }
 
     [Benchmark]
@@ -207,7 +207,7 @@ public class MultiSourceBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get<int>("Shared:Priority");
+            _ = _cfg.GetValue<int>("Shared:Priority");
         }
     }
 

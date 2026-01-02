@@ -49,7 +49,7 @@ public static class DatabaseDemo
             Console.WriteLine("\n10.3 从数据库读取配置:");
             Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
             Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
-            Console.WriteLine($"    Database:MaxConnections = {cfg.Get<int>("Database:MaxConnections")}");
+            Console.WriteLine($"    Database:MaxConnections = {cfg.GetValue<int>("Database:MaxConnections")}");
 
             // 修改配置
             Console.WriteLine("\n10.4 修改配置:");

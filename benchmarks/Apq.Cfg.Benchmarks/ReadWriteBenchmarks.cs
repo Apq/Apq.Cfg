@@ -196,27 +196,27 @@ public class ReadWriteBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
-    public int Json_GetInt() => _jsonCfg.Get<int>("Database:Port");
+    public int Json_GetInt() => _jsonCfg.GetValue<int>("Database:Port");
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
-    public int Env_GetInt() => _envCfg.Get<int>("DATABASE_PORT");
+    public int Env_GetInt() => _envCfg.GetValue<int>("DATABASE_PORT");
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
-    public int Ini_GetInt() => _iniCfg.Get<int>("Database:Port");
+    public int Ini_GetInt() => _iniCfg.GetValue<int>("Database:Port");
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
-    public int Xml_GetInt() => _xmlCfg.Get<int>("Database:Port");
+    public int Xml_GetInt() => _xmlCfg.GetValue<int>("Database:Port");
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
-    public int Yaml_GetInt() => _yamlCfg.Get<int>("Database:Port");
+    public int Yaml_GetInt() => _yamlCfg.GetValue<int>("Database:Port");
 
     [Benchmark]
     [BenchmarkCategory("GetTyped")]
-    public int Toml_GetInt() => _tomlCfg.Get<int>("Database:Port");
+    public int Toml_GetInt() => _tomlCfg.GetValue<int>("Database:Port");
 
     #endregion
 

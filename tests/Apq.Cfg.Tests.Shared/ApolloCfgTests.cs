@@ -76,7 +76,7 @@ public class ApolloCfgTests : IAsyncLifetime
         // 测试类型转换不抛异常
         try
         {
-            var intValue = _cfg!.Get<int>("IntValue");
+            var intValue = _cfg!.GetValue<int>("IntValue");
         }
         catch (Exception)
         {
