@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -87,7 +87,7 @@ public class MultiSourceBenchmarks : IDisposable
     [BenchmarkCategory("Read")]
     public string? Read_HighPriorityKey()
     {
-        return _cfg.Get("Source0:Name");
+        return _cfg["Source0:Name"];
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class MultiSourceBenchmarks : IDisposable
     public string? Read_LowPriorityKey()
     {
         var key = $"Source{SourceCount - 1}:Name";
-        return _cfg.Get(key);
+        return _cfg[key];
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public class MultiSourceBenchmarks : IDisposable
     [BenchmarkCategory("Read")]
     public string? Read_SharedKey()
     {
-        return _cfg.Get("Shared:Key");
+        return _cfg["Shared:Key"];
     }
 
     /// <summary>
@@ -120,11 +120,11 @@ public class MultiSourceBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get("Data:Key1");
-            _ = _cfg.Get("Data:Key2");
-            _ = _cfg.Get("Data:Key3");
-            _ = _cfg.Get("Data:Key4");
-            _ = _cfg.Get("Data:Key5");
+            _ = _cfg["Data:Key1"];
+            _ = _cfg["Data:Key2"];
+            _ = _cfg["Data:Key3"];
+            _ = _cfg["Data:Key4"];
+            _ = _cfg["Data:Key5"];
         }
     }
 

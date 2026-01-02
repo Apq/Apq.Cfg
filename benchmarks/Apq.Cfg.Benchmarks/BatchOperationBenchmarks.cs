@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -91,7 +91,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         foreach (var key in _keys10)
         {
-            _ = _cfg.Get(key);
+            _ = _cfg[key];
         }
     }
 
@@ -114,7 +114,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         foreach (var key in _keys50)
         {
-            _ = _cfg.Get(key);
+            _ = _cfg[key];
         }
     }
 
@@ -137,7 +137,7 @@ public class BatchOperationBenchmarks : IDisposable
     {
         foreach (var key in _keys100)
         {
-            _ = _cfg.Get(key);
+            _ = _cfg[key];
         }
     }
 
@@ -324,7 +324,7 @@ public class BatchOperationBenchmarks : IDisposable
         var values = new Dictionary<string, string?>();
         foreach (var key in _keys10)
         {
-            values[key] = _cfg.Get(key);
+            values[key] = _cfg[key];
         }
 
         // 循环写入

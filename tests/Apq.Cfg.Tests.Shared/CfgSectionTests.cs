@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Tests;
+﻿namespace Apq.Cfg.Tests;
 
 /// <summary>
 /// ICfgSection 配置节测试
@@ -47,9 +47,9 @@ public class CfgSectionTests : IDisposable
 
         // Assert
         Assert.Equal("Database", dbSection.Path);
-        Assert.Equal("localhost", dbSection.Get("Host"));
-        Assert.Equal("5432", dbSection.Get("Port"));
-        Assert.Equal("testdb", dbSection.Get("Name"));
+        Assert.Equal("localhost", dbSection["Host"]);
+        Assert.Equal("5432", dbSection["Port"]);
+        Assert.Equal("testdb", dbSection["Name"]);
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public class CfgSectionTests : IDisposable
 
         // Assert
         Assert.Equal("Database:Connection", connSection.Path);
-        Assert.Equal("localhost", connSection.Get("Host"));
+        Assert.Equal("localhost", connSection["Host"]);
         Assert.Equal(5432, connSection.GetValue<int>("Port"));
 
         Assert.Equal("Database:Pool", poolSection.Path);
@@ -173,8 +173,8 @@ public class CfgSectionTests : IDisposable
         await cfg.SaveAsync();
 
         // Assert
-        Assert.Equal("NewName", section.Get("Name"));
-        Assert.Equal("NewName", cfg.Get("App:Name"));
+        Assert.Equal("NewName", section["Name"]);
+        Assert.Equal("NewName", cfg["App:Name"]);
     }
 
     [Fact]
@@ -286,7 +286,7 @@ public class CfgSectionTests : IDisposable
 
         // Assert
         Assert.Equal("NonExistent", section.Path);
-        Assert.Null(section.Get("AnyKey"));
+        Assert.Null(section["AnyKey"]);
         Assert.False(section.Exists("AnyKey"));
     }
 
@@ -306,7 +306,7 @@ public class CfgSectionTests : IDisposable
 
         // Assert
         Assert.Equal("", section.Path);
-        Assert.Equal("Value", section.Get("TopLevel"));
+        Assert.Equal("Value", section["TopLevel"]);
     }
 
     [Fact]
@@ -340,7 +340,7 @@ public class CfgSectionTests : IDisposable
 
         // Assert
         Assert.Equal("Level1:Level2:Level3:Level4", section.Path);
-        Assert.Equal("Found", section.Get("DeepValue"));
+        Assert.Equal("Found", section["DeepValue"]);
     }
 
     #endregion

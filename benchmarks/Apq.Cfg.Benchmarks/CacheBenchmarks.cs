@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -78,7 +78,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get("HotKey");
+            _ = _cfg["HotKey"];
         }
     }
 
@@ -91,7 +91,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 10000; i++)
         {
-            _ = _cfg.Get("HotKey");
+            _ = _cfg["HotKey"];
         }
     }
 
@@ -104,8 +104,8 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get("HotKey");
-            _ = _cfg.Get("Data:Key0");
+            _ = _cfg["HotKey"];
+            _ = _cfg["Data:Key0"];
         }
     }
 
@@ -118,11 +118,11 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get("Data:Key0");
-            _ = _cfg.Get("Data:Key1");
-            _ = _cfg.Get("Data:Key2");
-            _ = _cfg.Get("Data:Key3");
-            _ = _cfg.Get("Data:Key4");
+            _ = _cfg["Data:Key0"];
+            _ = _cfg["Data:Key1"];
+            _ = _cfg["Data:Key2"];
+            _ = _cfg["Data:Key3"];
+            _ = _cfg["Data:Key4"];
         }
     }
 
@@ -139,7 +139,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get("NonExistent:Key");
+            _ = _cfg["NonExistent:Key"];
         }
     }
 
@@ -152,7 +152,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get(_nonExistingKeys[i]);
+            _ = _cfg[_nonExistingKeys[i]];
         }
     }
 
@@ -165,8 +165,8 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get(_existingKeys[i]);
-            _ = _cfg.Get(_nonExistingKeys[i]);
+            _ = _cfg[_existingKeys[i]];
+            _ = _cfg[_nonExistingKeys[i]];
         }
     }
 
@@ -183,7 +183,7 @@ public class CacheBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get(_existingKeys[i]);
+            _ = _cfg[_existingKeys[i]];
         }
     }
 
@@ -201,7 +201,7 @@ public class CacheBenchmarks : IDisposable
         {
             foreach (var idx in pattern)
             {
-                _ = _cfg.Get(_existingKeys[idx]);
+                _ = _cfg[_existingKeys[idx]];
             }
         }
     }
@@ -264,7 +264,7 @@ public class CacheBenchmarks : IDisposable
         for (int i = 0; i < 100; i++)
         {
             _cfg.SetValue("Temp:Key", $"Value{i}");
-            _ = _cfg.Get("Temp:Key");
+            _ = _cfg["Temp:Key"];
         }
     }
 
@@ -278,7 +278,7 @@ public class CacheBenchmarks : IDisposable
         for (int i = 0; i < 100; i++)
         {
             _cfg.SetValue($"Temp:Key{i}", $"Value{i}");
-            _ = _cfg.Get("HotKey");
+            _ = _cfg["HotKey"];
         }
     }
 
@@ -298,7 +298,7 @@ public class CacheBenchmarks : IDisposable
         // 批量读取
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get($"Batch:Key{i}");
+            _ = _cfg[$"Batch:Key{i}"];
         }
     }
 
@@ -313,7 +313,7 @@ public class CacheBenchmarks : IDisposable
     [BenchmarkCategory("FirstAccess")]
     public string? FirstAccess_NewKey()
     {
-        return _cfg.Get("Data:Key50");
+        return _cfg["Data:Key50"];
     }
 
     /// <summary>
@@ -324,12 +324,12 @@ public class CacheBenchmarks : IDisposable
     public void SubsequentAccess_Warmed()
     {
         // 预热
-        _ = _cfg.Get("Data:Key50");
+        _ = _cfg["Data:Key50"];
 
         // 后续访问
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get("Data:Key50");
+            _ = _cfg["Data:Key50"];
         }
     }
 

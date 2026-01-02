@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 
 namespace Apq.Cfg.Samples.Demos;
 
@@ -29,7 +29,7 @@ public static class EncodingMappingDemo
             .AddJson(configPath, level: 0, writeable: false)
             .Build();
         Console.WriteLine($"    置信度阈值设置为 0.7");
-        Console.WriteLine($"    App:Name = {cfg1.Get("App:Name")}");
+        Console.WriteLine($"    App:Name = {cfg1["App:Name"]}");
         cfg1.Dispose();
 
         Console.WriteLine("\n8.2 编码检测日志:");
@@ -60,7 +60,7 @@ public static class EncodingMappingDemo
             .AddJson(configPath, level: 0, writeable: false)
             .Build();
         Console.WriteLine("\n    已配置编码映射规则");
-        Console.WriteLine($"    App:Description = {cfg3.Get("App:Description")}");
+        Console.WriteLine($"    App:Description = {cfg3["App:Description"]}");
         cfg3.Dispose();
 
         File.Delete(configPath);

@@ -1,4 +1,4 @@
-#pragma warning disable CS0162 // 检测到无法访问的代码
+﻿#pragma warning disable CS0162 // 检测到无法访问的代码
 
 using Apq.Cfg;
 using Apq.Cfg.Vault;
@@ -255,10 +255,10 @@ public static class VaultDemo
             Console.WriteLine("    ✓ 写入密钥成功");
 
             // 读取配置
-            Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
-            Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
-            Console.WriteLine($"    Database:Host = {cfg.Get("Database:Host")}");
-            Console.WriteLine($"    Database:Password = {cfg.Get("Database:Password")}");
+            Console.WriteLine($"    App:Name = {cfg["App:Name"]}");
+            Console.WriteLine($"    App:Version = {cfg["App:Version"]}");
+            Console.WriteLine($"    Database:Host = {cfg["Database:Host"]}");
+            Console.WriteLine($"    Database:Password = {cfg["Database:Password"]}");
 
             // 枚举所有键
             var keys = cfg.GetChildKeys();

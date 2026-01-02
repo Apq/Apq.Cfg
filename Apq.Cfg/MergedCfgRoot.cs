@@ -94,57 +94,37 @@ internal sealed class MergedCfgRoot : ICfgRoot
     /// <inheritdoc />
     public string? this[string key]
     {
-        get => Get(key);
+        get
+        {
+            // Lazy 策略：访问前确保配置是最新的
+            _coordinator?.EnsureLatest();
+
+            string? value = null;
+
+            // 使用缓存的降序层级数组，避免每次排序
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    value = pendingValue;
+                    break;
+                }
+            }
+
+            value ??= _merged[key];
+
+            // 应用值转换（如解密）
+            return _transformerChain?.TransformOnRead(key, value) ?? value;
+        }
         set => SetValue(key, value);
     }
 
-    public string? Get(string key)
-    {
-        // Lazy 策略：访问前确保配置是最新的
-        _coordinator?.EnsureLatest();
-
-        string? value = null;
-
-        // 使用缓存的降序层级数组，避免每次排序
-        foreach (var level in _levelsDescending)
-        {
-            if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
-            {
-                value = pendingValue;
-                break;
-            }
-        }
-
-        value ??= _merged[key];
-
-        // 应用值转换（如解密）
-        return _transformerChain?.TransformOnRead(key, value) ?? value;
-    }
-
+    /// <inheritdoc />
     public T? GetValue<T>(string key)
     {
-        // Lazy 策略：访问前确保配置是最新的
-        _coordinator?.EnsureLatest();
-
-        string? rawValue = null;
-
-        // 先检查 Pending 中是否有待保存的值，与 Get(string) 行为一致
-        foreach (var level in _levelsDescending)
-        {
-            if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
-            {
-                rawValue = pendingValue;
-                break;
-            }
-        }
-
-        rawValue ??= _merged[key];
-
-        // 应用值转换（如解密）
-        var transformedValue = _transformerChain?.TransformOnRead(key, rawValue) ?? rawValue;
-
-        if (transformedValue == null) return default;
-        return ValueConverter.Convert<T>(transformedValue);
+        var rawValue = this[key];
+        if (rawValue == null) return default;
+        return ValueConverter.Convert<T>(rawValue);
     }
 
     /// <summary>
@@ -161,7 +141,7 @@ internal sealed class MergedCfgRoot : ICfgRoot
     /// </example>
     public string GetMasked(string key)
     {
-        var value = Get(key);
+        var value = this[key];
         return _maskerChain?.Mask(key, value) ?? value ?? "[null]";
     }
 

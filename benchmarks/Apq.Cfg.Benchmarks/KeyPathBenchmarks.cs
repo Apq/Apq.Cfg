@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -111,7 +111,7 @@ public class KeyPathBenchmarks : IDisposable
     [BenchmarkCategory("DeepRead")]
     public string? Get_DeepKey()
     {
-        return _cfg.Get(_deepKey);
+        return _cfg[_deepKey];
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class KeyPathBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get(_deepKey);
+            _ = _cfg[_deepKey];
         }
     }
 
@@ -239,7 +239,7 @@ public class KeyPathBenchmarks : IDisposable
     [BenchmarkCategory("Comparison")]
     public string? Get_ShallowKey()
     {
-        return _cfg.Get("Level1:Value");
+        return _cfg["Level1:Value"];
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ public class KeyPathBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get("Level1:Value");
+            _ = _cfg["Level1:Value"];
         }
     }
 

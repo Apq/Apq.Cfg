@@ -1,4 +1,4 @@
-using Apq.Cfg;
+﻿using Apq.Cfg;
 
 namespace Apq.Cfg.Samples.Demos;
 
@@ -342,9 +342,9 @@ partial class DatabaseConfig
         // 使用传统方式读取配置作为对比
         var section = cfg.GetSection("Database");
         Console.WriteLine("\n使用传统方式读取配置（对比）：");
-        Console.WriteLine($"  Host: {section.Get("Host") ?? "(未配置)"}");
-        Console.WriteLine($"  Port: {section.Get("Port") ?? "(未配置)"}");
-        Console.WriteLine($"  Name: {section.Get("Name") ?? "(未配置)"}");
+        Console.WriteLine($"  Host: {section["Host"] ?? "(未配置)"}");
+        Console.WriteLine($"  Port: {section["Port"] ?? "(未配置)"}");
+        Console.WriteLine($"  Name: {section["Name"] ?? "(未配置)"}");
 
         Console.WriteLine("\n源生成器的优势：");
         Console.WriteLine("  ✓ 零反射 - 编译时生成绑定代码");

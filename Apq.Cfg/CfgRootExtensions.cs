@@ -12,7 +12,7 @@ public static class CfgRootExtensions
     /// </summary>
     public static bool TryGetValue<T>(this ICfgRoot root, string key, out T? value)
     {
-        var rawValue = root.Get(key);
+        var rawValue = root[key];
         if (rawValue == null)
         {
             value = default;
@@ -28,7 +28,7 @@ public static class CfgRootExtensions
     /// </summary>
     public static T GetRequired<T>(this ICfgRoot root, string key)
     {
-        var rawValue = root.Get(key);
+        var rawValue = root[key];
         if (rawValue == null)
             throw new InvalidOperationException($"必需的配置键 '{key}' 不存在");
         // 直接转换已获取的字符串值，避免二次查询
@@ -40,7 +40,7 @@ public static class CfgRootExtensions
     /// </summary>
     public static T? GetOrDefault<T>(this ICfgRoot root, string key, T? defaultValue = default)
     {
-        var rawValue = root.Get(key);
+        var rawValue = root[key];
         if (rawValue == null)
             return defaultValue;
         return ValueConverter.Convert<T>(rawValue);
@@ -65,7 +65,7 @@ public static class CfgRootExtensions
         {
             return merged.GetMasked(key);
         }
-        return cfg.Get(key) ?? "[null]";
+        return cfg[key] ?? "[null]";
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public static class CfgRootExtensions
         var result = new Dictionary<string, string>();
         foreach (var key in cfg.GetChildKeys())
         {
-            result[key] = cfg.Get(key) ?? "[null]";
+            result[key] = cfg[key] ?? "[null]";
         }
         return result;
     }

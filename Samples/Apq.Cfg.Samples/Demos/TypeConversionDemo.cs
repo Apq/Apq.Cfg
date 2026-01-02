@@ -1,4 +1,4 @@
-using Apq.Cfg.Samples.Models;
+﻿using Apq.Cfg.Samples.Models;
 
 namespace Apq.Cfg.Samples.Demos;
 
@@ -47,7 +47,7 @@ public static class TypeConversionDemo
 
         Console.WriteLine("\n5.2 可空类型与默认值:");
         Console.WriteLine($"    不存在的键 (int?): {cfg.GetValue<int?>("Types:NotExist") ?? -1}");
-        Console.WriteLine($"    不存在的键 (string): {cfg.Get("Types:NotExist") ?? "(null)"}");
+        Console.WriteLine($"    不存在的键 (string): {cfg["Types:NotExist"] ?? "(null)"}");
 
         File.Delete(configPath);
 

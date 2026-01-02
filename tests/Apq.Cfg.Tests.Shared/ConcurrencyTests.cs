@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Tests;
+﻿namespace Apq.Cfg.Tests;
 
 /// <summary>
 /// 并发安全测试
@@ -56,8 +56,8 @@ public class ConcurrencyTests : IDisposable
                 {
                     for (int j = 0; j < 100; j++)
                     {
-                        var _ = cfg.Get("Key1");
-                        var __ = cfg.Get("Key2");
+                        var _ = cfg["Key1"];
+                        var __ = cfg["Key2"];
                         var ___ = cfg.GetValue<int>("Nested:A");
                         var ____ = cfg.Exists("Key3");
                     }
@@ -115,7 +115,7 @@ public class ConcurrencyTests : IDisposable
         Assert.Empty(exceptions);
 
         // 验证部分值已设置
-        Assert.NotNull(cfg.Get("Key_0_0"));
+        Assert.NotNull(cfg["Key_0_0"]);
     }
 
     [Fact]
@@ -143,8 +143,8 @@ public class ConcurrencyTests : IDisposable
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
-                        var _ = cfg.Get("Existing");
-                        var __ = cfg.Get("Dynamic_0");
+                        var _ = cfg["Existing"];
+                        var __ = cfg["Dynamic_0"];
                         var ___ = cfg.Exists("Existing");
                     }
                 }
@@ -213,7 +213,7 @@ public class ConcurrencyTests : IDisposable
 
         for (int i = 0; i < 10; i++)
         {
-            Assert.Equal($"Value_{i}", cfg2.Get($"Key_{i}"));
+            Assert.Equal($"Value_{i}", cfg2[$"Key_{i}"]);
         }
     }
 
@@ -351,9 +351,9 @@ public class ConcurrencyTests : IDisposable
                     for (int j = 0; j < 50; j++)
                     {
                         // 读取
-                        var _ = cfg.Get("Shared");
-                        var __ = cfg.Get("BaseOnly");
-                        var ___ = cfg.Get("OverrideOnly");
+                        var _ = cfg["Shared"];
+                        var __ = cfg["BaseOnly"];
+                        var ___ = cfg["OverrideOnly"];
 
                         // 写入到不同层级
                         cfg.SetValue($"Level0Key_{index}_{j}", $"Value", targetLevel: 0);
@@ -371,7 +371,7 @@ public class ConcurrencyTests : IDisposable
 
         // Assert
         Assert.Empty(exceptions);
-        Assert.Equal("Override", cfg.Get("Shared")); // 高层级覆盖
+        Assert.Equal("Override", cfg["Shared"]); // 高层级覆盖
     }
 
     [Fact]

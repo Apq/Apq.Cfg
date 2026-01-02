@@ -1,4 +1,4 @@
-using Apq.Cfg.Changes;
+﻿using Apq.Cfg.Changes;
 using Apq.Cfg.Crypto;
 using Apq.Cfg.Crypto.Providers;
 using Apq.Cfg.EncodingSupport;
@@ -49,7 +49,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     [Fact]
@@ -71,8 +71,8 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert - 不应抛出异常
-        Assert.Equal("Value", cfg1.Get("Key"));
-        Assert.Equal("Value", cfg2.Get("Key"));
+        Assert.Equal("Value", cfg1["Key"]);
+        Assert.Equal("Value", cfg2["Key"]);
     }
 
     [Fact]
@@ -99,7 +99,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .AddJson(basePath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("Level0Value", cfgBase.Get("NewKey"));
+        Assert.Equal("Level0Value", cfgBase["NewKey"]);
     }
 
     [Fact]
@@ -126,7 +126,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .AddJson(overridePath, level: 0, writeable: false)
             .Build();
 
-        var removedValue = cfgOverride.Get("OverrideKey");
+        var removedValue = cfgOverride["OverrideKey"];
         Assert.True(string.IsNullOrEmpty(removedValue));
     }
 
@@ -154,12 +154,12 @@ public class CfgBuilderAdvancedTests : IDisposable
         using var cfgOverride = new CfgBuilder()
             .AddJson(overridePath, level: 0, writeable: false)
             .Build();
-        Assert.Equal("Value1", cfgOverride.Get("Level1Key"));
+        Assert.Equal("Value1", cfgOverride["Level1Key"]);
 
         using var cfgBase = new CfgBuilder()
             .AddJson(basePath, level: 0, writeable: false)
             .Build();
-        Assert.Null(cfgBase.Get("Level0Key")); // 未保存
+        Assert.Null(cfgBase["Level0Key"]); // 未保存
     }
 
     [Fact]
@@ -181,7 +181,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         cfg.SetValue("NewKey", "NewValue");
 
         // Assert - 通过 Get 验证值已设置（在 Pending 中）
-        Assert.Equal("NewValue", cfg.Get("NewKey"));
+        Assert.Equal("NewValue", cfg["NewKey"]);
     }
 
     [Fact]
@@ -321,8 +321,8 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value1", cfg.Get("Key"));
-        Assert.Equal("Value2", cfg.Get("Key2"));
+        Assert.Equal("Value1", cfg["Key"]);
+        Assert.Equal("Value2", cfg["Key2"]);
     }
 
     #region AddValueTransformer 测试
@@ -347,7 +347,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act
-        var decryptedValue = cfg.Get("Database:Password");
+        var decryptedValue = cfg["Database:Password"];
 
         // Assert
         Assert.Equal("MySecretPassword", decryptedValue);
@@ -370,8 +370,8 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act & Assert - 非加密值应该原样返回
-        Assert.Equal("TestApp", cfg.Get("AppName"));
-        Assert.Equal("1.0.0", cfg.Get("Version"));
+        Assert.Equal("TestApp", cfg["AppName"]);
+        Assert.Equal("1.0.0", cfg["Version"]);
     }
 
     [Fact]
@@ -497,7 +497,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Act
-        var decryptedValue = cfg.Get("Secret");
+        var decryptedValue = cfg["Secret"];
 
         // Assert
         Assert.Equal("MySecret", decryptedValue);
@@ -529,8 +529,8 @@ public class CfgBuilderAdvancedTests : IDisposable
 
         // Assert - 自定义敏感键应该被加密处理
         // 注意：这里只验证配置生效，实际加密在 SaveAsync 时发生
-        Assert.Equal("SecretValue", cfg.Get("MyCustomSecret"));
-        Assert.Equal("NormalValue", cfg.Get("NormalKey"));
+        Assert.Equal("SecretValue", cfg["MyCustomSecret"]);
+        Assert.Equal("NormalValue", cfg["NormalKey"]);
     }
 
     #endregion
@@ -551,8 +551,8 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value", cfg.Get("Key"));
-        Assert.Equal("测试", cfg.Get("中文"));
+        Assert.Equal("Value", cfg["Key"]);
+        Assert.Equal("测试", cfg["中文"]);
     }
 
     [Fact]
@@ -569,7 +569,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     [Fact]
@@ -588,7 +588,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         cfg.SetValue("Key", "Value");
 
         // Assert - 配置应该正常工作
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     [Fact]
@@ -608,7 +608,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     #endregion
@@ -629,7 +629,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             .Build();
 
         // Assert - 配置应该正常构建
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     [Fact]

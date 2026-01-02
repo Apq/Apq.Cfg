@@ -1,4 +1,4 @@
-using Apq.Cfg.Yaml;
+﻿using Apq.Cfg.Yaml;
 
 namespace Apq.Cfg.Tests;
 
@@ -41,9 +41,9 @@ public class YamlCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("localhost", cfg.Get("Database:Host"));
-        Assert.Equal("5432", cfg.Get("Database:Port"));
-        Assert.Equal("TestApp", cfg.Get("App:Name"));
+        Assert.Equal("localhost", cfg["Database:Host"]);
+        Assert.Equal("5432", cfg["Database:Port"]);
+        Assert.Equal("TestApp", cfg["App:Name"]);
     }
 
     [Fact]
@@ -91,8 +91,8 @@ public class YamlCfgTests : IDisposable
             .AddYaml(yamlPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("NewValue", cfg2.Get("App:NewKey"));
-        Assert.Equal("Value", cfg2.Get("App:Original"));
+        Assert.Equal("NewValue", cfg2["App:NewKey"]);
+        Assert.Equal("Value", cfg2["App:Original"]);
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class YamlCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("DeepValue", cfg.Get("Level1:Level2:Level3:Value"));
+        Assert.Equal("DeepValue", cfg["Level1:Level2:Level3:Value"]);
     }
 
     [Fact]
@@ -158,8 +158,8 @@ public class YamlCfgTests : IDisposable
             .AddYaml(yamlPath, level: 0, writeable: false)
             .Build();
 
-        var removedValue = cfg2.Get("App:ToRemove");
+        var removedValue = cfg2["App:ToRemove"];
         Assert.True(string.IsNullOrEmpty(removedValue));
-        Assert.Equal("Value2", cfg2.Get("App:ToKeep"));
+        Assert.Equal("Value2", cfg2["App:ToKeep"]);
     }
 }

@@ -1,4 +1,4 @@
-using Apq.Cfg.Nacos;
+﻿using Apq.Cfg.Nacos;
 
 namespace Apq.Cfg.Tests;
 
@@ -44,7 +44,7 @@ public class NacosCfgTests : IAsyncLifetime
         Skip.If(!TestSettings.IsNacosConfigured, "Nacos 服务未配置，跳过测试");
 
         // Nacos 通常是只读的，测试读取功能
-        var value = _cfg!.Get("TestKey");
+        var value = _cfg!["TestKey"];
         // 值可能存在也可能不存在，主要测试不抛异常
         Assert.True(true);
     }
@@ -54,7 +54,7 @@ public class NacosCfgTests : IAsyncLifetime
     {
         Skip.If(!TestSettings.IsNacosConfigured, "Nacos 服务未配置，跳过测试");
 
-        var value = _cfg!.Get("Settings:Value1");
+        var value = _cfg!["Settings:Value1"];
         Assert.True(true);
     }
 
@@ -111,7 +111,7 @@ public class NacosCfgTests : IAsyncLifetime
                 .Build();
 
             // 如果 Nacos 中有 Setting 键，应该覆盖 JSON
-            var value = cfg.Get("Setting");
+            var value = cfg["Setting"];
             Assert.NotNull(value);
         }
         finally

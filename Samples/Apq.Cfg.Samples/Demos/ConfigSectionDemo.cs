@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Samples.Demos;
+﻿namespace Apq.Cfg.Samples.Demos;
 
 /// <summary>
 /// 示例 3: 配置节 (GetSection) 与子键枚举
@@ -44,7 +44,7 @@ public static class ConfigSectionDemo
         var dbSection = cfg.GetSection("Database");
         var primarySection = dbSection.GetSection("Primary");
 
-        Console.WriteLine($"    Database:Primary:Host = {primarySection.Get("Host")}");
+        Console.WriteLine($"    Database:Primary:Host = {primarySection["Host"]}");
         Console.WriteLine($"    Database:Primary:Port = {primarySection.GetValue<int>("Port")}");
 
         // 枚举子键
@@ -66,7 +66,7 @@ public static class ConfigSectionDemo
         var replicaSection = dbSection.GetSection("Replica");
         replicaSection.SetValue("Port", "3308");
         await cfg.SaveAsync();
-        Console.WriteLine($"    修改后 Database:Replica:Port = {replicaSection.Get("Port")}");
+        Console.WriteLine($"    修改后 Database:Replica:Port = {replicaSection["Port"]}");
 
         File.Delete(configPath);
 

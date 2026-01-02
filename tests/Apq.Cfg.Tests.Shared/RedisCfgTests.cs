@@ -1,4 +1,4 @@
-using Apq.Cfg.Redis;
+﻿using Apq.Cfg.Redis;
 
 namespace Apq.Cfg.Tests;
 
@@ -74,7 +74,7 @@ public class RedisCfgTests : IAsyncLifetime
             .Build();
 
         // Assert
-        Assert.Equal("TestValue", cfg2.Get("TestKey"));
+        Assert.Equal("TestValue", cfg2["TestKey"]);
     }
 
     [SkippableFact]
@@ -96,8 +96,8 @@ public class RedisCfgTests : IAsyncLifetime
             }, level: 0)
             .Build();
 
-        Assert.Equal("Value1", cfg2.Get("Settings:Value1"));
-        Assert.Equal("Value2", cfg2.Get("Settings:Value2"));
+        Assert.Equal("Value1", cfg2["Settings:Value1"]);
+        Assert.Equal("Value2", cfg2["Settings:Value2"]);
     }
 
     [SkippableFact]
@@ -167,7 +167,7 @@ public class RedisCfgTests : IAsyncLifetime
                 .Build();
 
             // Assert
-            Assert.Equal("RedisValue", cfg.Get("Setting"));
+            Assert.Equal("RedisValue", cfg["Setting"]);
         }
         finally
         {

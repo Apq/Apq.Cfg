@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using Apq.Cfg.Crypto;
 using Apq.Cfg.Crypto.Providers;
 using BenchmarkDotNet.Attributes;
@@ -426,7 +426,7 @@ public class CryptoBenchmarks : IDisposable
     [BenchmarkCategory("Integration")]
     public string? CfgRoot_GetEncrypted_FirstAccess()
     {
-        return _cfgWithEncryption.Get("Database:Password");
+        return _cfgWithEncryption["Database:Password"];
     }
 
     /// <summary>
@@ -438,7 +438,7 @@ public class CryptoBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfgWithEncryption.Get("Database:Password");
+            _ = _cfgWithEncryption["Database:Password"];
         }
     }
 
@@ -449,7 +449,7 @@ public class CryptoBenchmarks : IDisposable
     [BenchmarkCategory("Integration")]
     public string? CfgRoot_GetPlain()
     {
-        return _cfgPlain.Get("Database:Password");
+        return _cfgPlain["Database:Password"];
     }
 
     /// <summary>
@@ -461,7 +461,7 @@ public class CryptoBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfgPlain.Get("Database:Password");
+            _ = _cfgPlain["Database:Password"];
         }
     }
 

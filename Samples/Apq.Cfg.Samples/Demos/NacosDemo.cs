@@ -1,4 +1,4 @@
-#pragma warning disable CS0162 // 检测到无法访问的代码
+﻿#pragma warning disable CS0162 // 检测到无法访问的代码
 
 using Apq.Cfg;
 using Apq.Cfg.Nacos;
@@ -267,9 +267,9 @@ public static class NacosDemo
             Console.WriteLine("    ✓ 写入配置成功");
 
             // 读取配置
-            Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
-            Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
-            Console.WriteLine($"    Database:Host = {cfg.Get("Database:Host")}");
+            Console.WriteLine($"    App:Name = {cfg["App:Name"]}");
+            Console.WriteLine($"    App:Version = {cfg["App:Version"]}");
+            Console.WriteLine($"    Database:Host = {cfg["Database:Host"]}");
             Console.WriteLine($"    Database:Port = {cfg.GetValue<int>("Database:Port")}");
 
             // 枚举所有键

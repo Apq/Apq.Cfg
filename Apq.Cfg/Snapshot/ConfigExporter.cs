@@ -138,7 +138,7 @@ public static class ConfigExporter
             var fullKey = string.IsNullOrEmpty(prefix) ? childKey : $"{prefix}:{childKey}";
 
             // 尝试获取值
-            var value = useMasked ? cfg.GetMasked(fullKey) : cfg.Get(fullKey);
+            var value = useMasked ? cfg.GetMasked(fullKey) : cfg[fullKey];
 
             // 检查是否有子节点
             var childSection = cfg.GetSection(fullKey);

@@ -1,4 +1,4 @@
-using Apq.Cfg.Etcd;
+﻿using Apq.Cfg.Etcd;
 
 namespace Apq.Cfg.Tests;
 
@@ -80,7 +80,7 @@ public class EtcdCfgTests : IAsyncLifetime
             .Build();
 
         // Assert
-        Assert.Equal("TestValue", cfg2.Get("TestKey"));
+        Assert.Equal("TestValue", cfg2["TestKey"]);
     }
 
     [SkippableFact]
@@ -105,8 +105,8 @@ public class EtcdCfgTests : IAsyncLifetime
             }, level: 0)
             .Build();
 
-        Assert.Equal("Value1", cfg2.Get("Settings:Value1"));
-        Assert.Equal("Value2", cfg2.Get("Settings:Value2"));
+        Assert.Equal("Value1", cfg2["Settings:Value1"]);
+        Assert.Equal("Value2", cfg2["Settings:Value2"]);
     }
 
     [SkippableFact]
@@ -182,7 +182,7 @@ public class EtcdCfgTests : IAsyncLifetime
                 .Build();
 
             // Assert
-            Assert.Equal("EtcdValue", cfg.Get("Setting"));
+            Assert.Equal("EtcdValue", cfg["Setting"]);
         }
         finally
         {

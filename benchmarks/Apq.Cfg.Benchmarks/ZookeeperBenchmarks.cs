@@ -1,4 +1,4 @@
-using Apq.Cfg.Zookeeper;
+﻿using Apq.Cfg.Zookeeper;
 using BenchmarkDotNet.Attributes;
 
 namespace Apq.Cfg.Benchmarks;
@@ -71,7 +71,7 @@ public class ZookeeperBenchmarks
     public string? Zookeeper_Get()
     {
         if (!_isZookeeperAvailable) return null;
-        return _cfg!.Get("Key0");
+        return _cfg!["Key0"];
     }
 
     [Benchmark]
@@ -94,7 +94,7 @@ public class ZookeeperBenchmarks
         if (!_isZookeeperAvailable) return;
         for (int i = 0; i < 10; i++)
         {
-            _ = _cfg!.Get($"Key{i}");
+            _ = _cfg![$"Key{i}"];
         }
     }
 

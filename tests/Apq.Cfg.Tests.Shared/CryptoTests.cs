@@ -1,4 +1,4 @@
-using Apq.Cfg.Crypto;
+﻿using Apq.Cfg.Crypto;
 using Apq.Cfg.Crypto.Providers;
 using System.Security.Cryptography;
 
@@ -438,8 +438,8 @@ public class CryptoTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("localhost", cfg.Get("Database:Host"));
-        Assert.Equal("MySecretPassword", cfg.Get("Database:Password"));
+        Assert.Equal("localhost", cfg["Database:Host"]);
+        Assert.Equal("MySecretPassword", cfg["Database:Password"]);
     }
 
     [Fact]
@@ -464,7 +464,7 @@ public class CryptoTests : IDisposable
         Assert.DoesNotContain("MyNewPassword", rawContent);
 
         // 通过配置读取验证可以解密
-        Assert.Equal("MyNewPassword", cfg.Get("Database:Password"));
+        Assert.Equal("MyNewPassword", cfg["Database:Password"]);
     }
 
     [Fact]
@@ -547,7 +547,7 @@ public class CryptoTests : IDisposable
             .Build();
 
         // Act
-        var decrypted = cfg.Get("Database:Password");
+        var decrypted = cfg["Database:Password"];
         var masked = cfg.GetMasked("Database:Password");
 
         // Assert
@@ -580,7 +580,7 @@ public class CryptoTests : IDisposable
                 .Build();
 
             // Act & Assert
-            Assert.Equal("EnvKeyPassword", cfg.Get("Password"));
+            Assert.Equal("EnvKeyPassword", cfg["Password"]);
         }
         finally
         {
@@ -1005,7 +1005,7 @@ public class CryptoTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("AesCbcPassword", cfg.Get("Password"));
+        Assert.Equal("AesCbcPassword", cfg["Password"]);
     }
 
     [Fact]
@@ -1029,7 +1029,7 @@ public class CryptoTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("ChaCha20Password", cfg.Get("Password"));
+        Assert.Equal("ChaCha20Password", cfg["Password"]);
     }
 
     [Fact]
@@ -1057,7 +1057,7 @@ public class CryptoTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Sm4Password", cfg.Get("Password"));
+        Assert.Equal("Sm4Password", cfg["Password"]);
     }
 
     [Fact]
@@ -1089,7 +1089,7 @@ public class CryptoTests : IDisposable
 #pragma warning restore CS0618
 
         // Assert
-        Assert.Equal("TripleDesPassword", cfg.Get("Password"));
+        Assert.Equal("TripleDesPassword", cfg["Password"]);
     }
 
     #endregion

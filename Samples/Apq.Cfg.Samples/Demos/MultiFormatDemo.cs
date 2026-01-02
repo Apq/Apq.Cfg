@@ -1,4 +1,4 @@
-using Apq.Cfg.Ini;
+﻿using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
 using Apq.Cfg.Toml;
@@ -71,29 +71,29 @@ public static class MultiFormatDemo
         Console.WriteLine("2.1 INI 格式:");
         using (var iniCfg = new CfgBuilder().AddIni(iniPath, level: 0, writeable: true).Build())
         {
-            Console.WriteLine($"    App:Name = {iniCfg.Get("App:Name")}");
-            Console.WriteLine($"    Database:Port = {iniCfg.Get("Database:Port")}");
+            Console.WriteLine($"    App:Name = {iniCfg["App:Name"]}");
+            Console.WriteLine($"    Database:Port = {iniCfg["Database:Port"]}");
         }
 
         Console.WriteLine("\n2.2 XML 格式:");
         using (var xmlCfg = new CfgBuilder().AddXml(xmlPath, level: 0, writeable: true).Build())
         {
-            Console.WriteLine($"    App:Name = {xmlCfg.Get("App:Name")}");
-            Console.WriteLine($"    Database:Port = {xmlCfg.Get("Database:Port")}");
+            Console.WriteLine($"    App:Name = {xmlCfg["App:Name"]}");
+            Console.WriteLine($"    Database:Port = {xmlCfg["Database:Port"]}");
         }
 
         Console.WriteLine("\n2.3 YAML 格式:");
         using (var yamlCfg = new CfgBuilder().AddYaml(yamlPath, level: 0, writeable: true).Build())
         {
-            Console.WriteLine($"    App:Name = {yamlCfg.Get("App:Name")}");
-            Console.WriteLine($"    Database:Port = {yamlCfg.Get("Database:Port")}");
+            Console.WriteLine($"    App:Name = {yamlCfg["App:Name"]}");
+            Console.WriteLine($"    Database:Port = {yamlCfg["Database:Port"]}");
         }
 
         Console.WriteLine("\n2.4 TOML 格式:");
         using (var tomlCfg = new CfgBuilder().AddToml(tomlPath, level: 0, writeable: true).Build())
         {
-            Console.WriteLine($"    App:Name = {tomlCfg.Get("App:Name")}");
-            Console.WriteLine($"    Database:Port = {tomlCfg.Get("Database:Port")}");
+            Console.WriteLine($"    App:Name = {tomlCfg["App:Name"]}");
+            Console.WriteLine($"    Database:Port = {tomlCfg["Database:Port"]}");
         }
 
         // 混合多种格式
@@ -104,8 +104,8 @@ public static class MultiFormatDemo
             .AddToml(tomlPath, level: 2, writeable: true, isPrimaryWriter: true)
             .Build();
 
-        Console.WriteLine($"    App:Name = {mixedCfg.Get("App:Name")} (来自 TOML，最高优先级)");
-        Console.WriteLine($"    App:Version = {mixedCfg.Get("App:Version")} (来自 TOML)");
+        Console.WriteLine($"    App:Name = {mixedCfg["App:Name"]} (来自 TOML，最高优先级)");
+        Console.WriteLine($"    App:Version = {mixedCfg["App:Version"]} (来自 TOML)");
 
         File.Delete(iniPath);
         File.Delete(xmlPath);

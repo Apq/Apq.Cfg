@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Samples.Demos;
+﻿namespace Apq.Cfg.Samples.Demos;
 
 /// <summary>
 /// 示例 1: 基础用法 - JSON 配置与层级覆盖
@@ -52,11 +52,11 @@ public static class BasicUsageDemo
 
         // 读取配置
         Console.WriteLine("1.1 读取配置值:");
-        Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
-        Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
-        Console.WriteLine($"    App:Debug = {cfg.Get("App:Debug")} (被本地配置覆盖为 true)");
-        Console.WriteLine($"    Database:Host = {cfg.Get("Database:Host")} (被本地配置覆盖)");
-        Console.WriteLine($"    Database:Port = {cfg.Get("Database:Port")}");
+        Console.WriteLine($"    App:Name = {cfg["App:Name"]}");
+        Console.WriteLine($"    App:Version = {cfg["App:Version"]}");
+        Console.WriteLine($"    App:Debug = {cfg["App:Debug"]} (被本地配置覆盖为 true)");
+        Console.WriteLine($"    Database:Host = {cfg["Database:Host"]} (被本地配置覆盖)");
+        Console.WriteLine($"    Database:Port = {cfg["Database:Port"]}");
 
         // 检查配置是否存在
         Console.WriteLine("\n1.2 检查配置是否存在:");
@@ -67,15 +67,15 @@ public static class BasicUsageDemo
         Console.WriteLine("\n1.3 修改配置:");
         cfg.SetValue("App:LastRun", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), targetLevel: 1);
         await cfg.SaveAsync(targetLevel: 1);
-        Console.WriteLine($"    已设置 App:LastRun = {cfg.Get("App:LastRun")}");
+        Console.WriteLine($"    已设置 App:LastRun = {cfg["App:LastRun"]}");
 
         // 删除配置
         Console.WriteLine("\n1.4 删除配置:");
         cfg.SetValue("App:TempKey", "临时值", targetLevel: 1);
-        Console.WriteLine($"    设置 App:TempKey = {cfg.Get("App:TempKey")}");
+        Console.WriteLine($"    设置 App:TempKey = {cfg["App:TempKey"]}");
         cfg.Remove("App:TempKey", targetLevel: 1);
         await cfg.SaveAsync(targetLevel: 1);
-        Console.WriteLine($"    删除后 App:TempKey = {cfg.Get("App:TempKey") ?? "(null)"}");
+        Console.WriteLine($"    删除后 App:TempKey = {cfg["App:TempKey"] ?? "(null)"}");
 
         // 转换为 Microsoft.Extensions.Configuration
         Console.WriteLine("\n1.5 转换为 IConfigurationRoot:");

@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Microsoft.Extensions.Configuration;
 
 namespace Apq.Cfg.Benchmarks;
@@ -122,7 +122,7 @@ public class MicrosoftConfigBenchmarks : IDisposable
     [BenchmarkCategory("ReadComparison")]
     public string? Read_ViaApqCfg()
     {
-        return _cfg.Get("Database:Host");
+        return _cfg["Database:Host"];
     }
 
     /// <summary>
@@ -144,9 +144,9 @@ public class MicrosoftConfigBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get("Database:Host");
-            _ = _cfg.Get("Database:Port");
-            _ = _cfg.Get("App:Name");
+            _ = _cfg["Database:Host"];
+            _ = _cfg["Database:Port"];
+            _ = _cfg["App:Name"];
         }
     }
 

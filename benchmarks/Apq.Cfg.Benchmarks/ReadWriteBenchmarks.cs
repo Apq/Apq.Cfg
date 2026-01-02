@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Apq.Cfg.Env;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
@@ -168,27 +168,27 @@ public class ReadWriteBenchmarks : IDisposable
 
     [Benchmark(Baseline = true)]
     [BenchmarkCategory("Get")]
-    public string? Json_Get() => _jsonCfg.Get("Database:Host");
+    public string? Json_Get() => _jsonCfg["Database:Host"];
 
     [Benchmark]
     [BenchmarkCategory("Get")]
-    public string? Env_Get() => _envCfg.Get("DATABASE_HOST");
+    public string? Env_Get() => _envCfg["DATABASE_HOST"];
 
     [Benchmark]
     [BenchmarkCategory("Get")]
-    public string? Ini_Get() => _iniCfg.Get("Database:Host");
+    public string? Ini_Get() => _iniCfg["Database:Host"];
 
     [Benchmark]
     [BenchmarkCategory("Get")]
-    public string? Xml_Get() => _xmlCfg.Get("Database:Host");
+    public string? Xml_Get() => _xmlCfg["Database:Host"];
 
     [Benchmark]
     [BenchmarkCategory("Get")]
-    public string? Yaml_Get() => _yamlCfg.Get("Database:Host");
+    public string? Yaml_Get() => _yamlCfg["Database:Host"];
 
     [Benchmark]
     [BenchmarkCategory("Get")]
-    public string? Toml_Get() => _tomlCfg.Get("Database:Host");
+    public string? Toml_Get() => _tomlCfg["Database:Host"];
 
     #endregion
 

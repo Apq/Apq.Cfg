@@ -588,22 +588,22 @@ references:
   fullName.vb: Apq.Cfg.CfgRootExtensions.GetRequired(Of T)(Apq.Cfg.ICfgRoot, String)
   nameWithType: CfgRootExtensions.GetRequired<T>(ICfgRoot, string)
   nameWithType.vb: CfgRootExtensions.GetRequired(Of T)(ICfgRoot, String)
-- uid: Apq.Cfg.CfgRootExtensions.TryGet*
-  name: TryGet
-  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_TryGet_
-  commentId: Overload:Apq.Cfg.CfgRootExtensions.TryGet
+- uid: Apq.Cfg.CfgRootExtensions.TryGetValue*
+  name: TryGetValue
+  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_TryGetValue_
+  commentId: Overload:Apq.Cfg.CfgRootExtensions.TryGetValue
   isSpec: "True"
-  fullName: Apq.Cfg.CfgRootExtensions.TryGet
-  nameWithType: CfgRootExtensions.TryGet
-- uid: Apq.Cfg.CfgRootExtensions.TryGet``1(Apq.Cfg.ICfgRoot,System.String,``0@)
-  name: TryGet<T>(ICfgRoot, string, out T?)
-  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_TryGet__1_Apq_Cfg_ICfgRoot_System_String___0__
-  commentId: M:Apq.Cfg.CfgRootExtensions.TryGet``1(Apq.Cfg.ICfgRoot,System.String,``0@)
-  name.vb: TryGet(Of T)(ICfgRoot, String, T)
-  fullName: Apq.Cfg.CfgRootExtensions.TryGet<T>(Apq.Cfg.ICfgRoot, string, out T?)
-  fullName.vb: Apq.Cfg.CfgRootExtensions.TryGet(Of T)(Apq.Cfg.ICfgRoot, String, T)
-  nameWithType: CfgRootExtensions.TryGet<T>(ICfgRoot, string, out T?)
-  nameWithType.vb: CfgRootExtensions.TryGet(Of T)(ICfgRoot, String, T)
+  fullName: Apq.Cfg.CfgRootExtensions.TryGetValue
+  nameWithType: CfgRootExtensions.TryGetValue
+- uid: Apq.Cfg.CfgRootExtensions.TryGetValue``1(Apq.Cfg.ICfgRoot,System.String,``0@)
+  name: TryGetValue<T>(ICfgRoot, string, out T?)
+  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_TryGetValue__1_Apq_Cfg_ICfgRoot_System_String___0__
+  commentId: M:Apq.Cfg.CfgRootExtensions.TryGetValue``1(Apq.Cfg.ICfgRoot,System.String,``0@)
+  name.vb: TryGetValue(Of T)(ICfgRoot, String, T)
+  fullName: Apq.Cfg.CfgRootExtensions.TryGetValue<T>(Apq.Cfg.ICfgRoot, string, out T?)
+  fullName.vb: Apq.Cfg.CfgRootExtensions.TryGetValue(Of T)(Apq.Cfg.ICfgRoot, String, T)
+  nameWithType: CfgRootExtensions.TryGetValue<T>(ICfgRoot, string, out T?)
+  nameWithType.vb: CfgRootExtensions.TryGetValue(Of T)(ICfgRoot, String, T)
 - uid: Apq.Cfg.CfgSectionAttribute
   name: CfgSectionAttribute
   href: api/Apq.Cfg.CfgSectionAttribute.html
@@ -3887,22 +3887,6 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgRoot.Exists
   nameWithType: ICfgRoot.Exists
-- uid: Apq.Cfg.ICfgRoot.Get(System.String)
-  name: Get(string)
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Get_System_String_
-  commentId: M:Apq.Cfg.ICfgRoot.Get(System.String)
-  name.vb: Get(String)
-  fullName: Apq.Cfg.ICfgRoot.Get(string)
-  fullName.vb: Apq.Cfg.ICfgRoot.Get(String)
-  nameWithType: ICfgRoot.Get(string)
-  nameWithType.vb: ICfgRoot.Get(String)
-- uid: Apq.Cfg.ICfgRoot.Get*
-  name: Get
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Get_
-  commentId: Overload:Apq.Cfg.ICfgRoot.Get
-  isSpec: "True"
-  fullName: Apq.Cfg.ICfgRoot.Get
-  nameWithType: ICfgRoot.Get
 - uid: Apq.Cfg.ICfgRoot.GetChildKeys
   name: GetChildKeys()
   href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetChildKeys
@@ -4042,38 +4026,38 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgRoot.SaveAsync
   nameWithType: ICfgRoot.SaveAsync
-- uid: Apq.Cfg.ICfgRoot.Set(System.String,System.String,System.Nullable{System.Int32})
-  name: Set(string, string?, int?)
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Set_System_String_System_String_System_Nullable_System_Int32__
-  commentId: M:Apq.Cfg.ICfgRoot.Set(System.String,System.String,System.Nullable{System.Int32})
-  name.vb: Set(String, String, Integer?)
-  fullName: Apq.Cfg.ICfgRoot.Set(string, string?, int?)
-  fullName.vb: Apq.Cfg.ICfgRoot.Set(String, String, Integer?)
-  nameWithType: ICfgRoot.Set(string, string?, int?)
-  nameWithType.vb: ICfgRoot.Set(String, String, Integer?)
-- uid: Apq.Cfg.ICfgRoot.Set*
-  name: Set
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Set_
-  commentId: Overload:Apq.Cfg.ICfgRoot.Set
+- uid: Apq.Cfg.ICfgRoot.SetManyValues(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Nullable{System.Int32})
+  name: SetManyValues(IEnumerable<KeyValuePair<string, string?>>, int?)
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_SetManyValues_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___System_Nullable_System_Int32__
+  commentId: M:Apq.Cfg.ICfgRoot.SetManyValues(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Nullable{System.Int32})
+  name.vb: SetManyValues(IEnumerable(Of KeyValuePair(Of String, String)), Integer?)
+  fullName: Apq.Cfg.ICfgRoot.SetManyValues(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string?>>, int?)
+  fullName.vb: Apq.Cfg.ICfgRoot.SetManyValues(System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, String)), Integer?)
+  nameWithType: ICfgRoot.SetManyValues(IEnumerable<KeyValuePair<string, string?>>, int?)
+  nameWithType.vb: ICfgRoot.SetManyValues(IEnumerable(Of KeyValuePair(Of String, String)), Integer?)
+- uid: Apq.Cfg.ICfgRoot.SetManyValues*
+  name: SetManyValues
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_SetManyValues_
+  commentId: Overload:Apq.Cfg.ICfgRoot.SetManyValues
   isSpec: "True"
-  fullName: Apq.Cfg.ICfgRoot.Set
-  nameWithType: ICfgRoot.Set
-- uid: Apq.Cfg.ICfgRoot.SetMany(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Nullable{System.Int32})
-  name: SetMany(IEnumerable<KeyValuePair<string, string?>>, int?)
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_SetMany_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___System_Nullable_System_Int32__
-  commentId: M:Apq.Cfg.ICfgRoot.SetMany(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Nullable{System.Int32})
-  name.vb: SetMany(IEnumerable(Of KeyValuePair(Of String, String)), Integer?)
-  fullName: Apq.Cfg.ICfgRoot.SetMany(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string?>>, int?)
-  fullName.vb: Apq.Cfg.ICfgRoot.SetMany(System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String, String)), Integer?)
-  nameWithType: ICfgRoot.SetMany(IEnumerable<KeyValuePair<string, string?>>, int?)
-  nameWithType.vb: ICfgRoot.SetMany(IEnumerable(Of KeyValuePair(Of String, String)), Integer?)
-- uid: Apq.Cfg.ICfgRoot.SetMany*
-  name: SetMany
-  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_SetMany_
-  commentId: Overload:Apq.Cfg.ICfgRoot.SetMany
+  fullName: Apq.Cfg.ICfgRoot.SetManyValues
+  nameWithType: ICfgRoot.SetManyValues
+- uid: Apq.Cfg.ICfgRoot.SetValue(System.String,System.String,System.Nullable{System.Int32})
+  name: SetValue(string, string?, int?)
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_SetValue_System_String_System_String_System_Nullable_System_Int32__
+  commentId: M:Apq.Cfg.ICfgRoot.SetValue(System.String,System.String,System.Nullable{System.Int32})
+  name.vb: SetValue(String, String, Integer?)
+  fullName: Apq.Cfg.ICfgRoot.SetValue(string, string?, int?)
+  fullName.vb: Apq.Cfg.ICfgRoot.SetValue(String, String, Integer?)
+  nameWithType: ICfgRoot.SetValue(string, string?, int?)
+  nameWithType.vb: ICfgRoot.SetValue(String, String, Integer?)
+- uid: Apq.Cfg.ICfgRoot.SetValue*
+  name: SetValue
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_SetValue_
+  commentId: Overload:Apq.Cfg.ICfgRoot.SetValue
   isSpec: "True"
-  fullName: Apq.Cfg.ICfgRoot.SetMany
-  nameWithType: ICfgRoot.SetMany
+  fullName: Apq.Cfg.ICfgRoot.SetValue
+  nameWithType: ICfgRoot.SetValue
 - uid: Apq.Cfg.ICfgRoot.ToMicrosoftConfiguration
   name: ToMicrosoftConfiguration()
   href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_ToMicrosoftConfiguration
@@ -4118,22 +4102,6 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgSection.Exists
   nameWithType: ICfgSection.Exists
-- uid: Apq.Cfg.ICfgSection.Get(System.String)
-  name: Get(string)
-  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Get_System_String_
-  commentId: M:Apq.Cfg.ICfgSection.Get(System.String)
-  name.vb: Get(String)
-  fullName: Apq.Cfg.ICfgSection.Get(string)
-  fullName.vb: Apq.Cfg.ICfgSection.Get(String)
-  nameWithType: ICfgSection.Get(string)
-  nameWithType.vb: ICfgSection.Get(String)
-- uid: Apq.Cfg.ICfgSection.Get*
-  name: Get
-  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Get_
-  commentId: Overload:Apq.Cfg.ICfgSection.Get
-  isSpec: "True"
-  fullName: Apq.Cfg.ICfgSection.Get
-  nameWithType: ICfgSection.Get
 - uid: Apq.Cfg.ICfgSection.GetChildKeys
   name: GetChildKeys()
   href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_GetChildKeys
@@ -4227,22 +4195,22 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgSection.Remove
   nameWithType: ICfgSection.Remove
-- uid: Apq.Cfg.ICfgSection.Set(System.String,System.String,System.Nullable{System.Int32})
-  name: Set(string, string?, int?)
-  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Set_System_String_System_String_System_Nullable_System_Int32__
-  commentId: M:Apq.Cfg.ICfgSection.Set(System.String,System.String,System.Nullable{System.Int32})
-  name.vb: Set(String, String, Integer?)
-  fullName: Apq.Cfg.ICfgSection.Set(string, string?, int?)
-  fullName.vb: Apq.Cfg.ICfgSection.Set(String, String, Integer?)
-  nameWithType: ICfgSection.Set(string, string?, int?)
-  nameWithType.vb: ICfgSection.Set(String, String, Integer?)
-- uid: Apq.Cfg.ICfgSection.Set*
-  name: Set
-  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_Set_
-  commentId: Overload:Apq.Cfg.ICfgSection.Set
+- uid: Apq.Cfg.ICfgSection.SetValue(System.String,System.String,System.Nullable{System.Int32})
+  name: SetValue(string, string?, int?)
+  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_SetValue_System_String_System_String_System_Nullable_System_Int32__
+  commentId: M:Apq.Cfg.ICfgSection.SetValue(System.String,System.String,System.Nullable{System.Int32})
+  name.vb: SetValue(String, String, Integer?)
+  fullName: Apq.Cfg.ICfgSection.SetValue(string, string?, int?)
+  fullName.vb: Apq.Cfg.ICfgSection.SetValue(String, String, Integer?)
+  nameWithType: ICfgSection.SetValue(string, string?, int?)
+  nameWithType.vb: ICfgSection.SetValue(String, String, Integer?)
+- uid: Apq.Cfg.ICfgSection.SetValue*
+  name: SetValue
+  href: api/Apq.Cfg.ICfgSection.html#Apq_Cfg_ICfgSection_SetValue_
+  commentId: Overload:Apq.Cfg.ICfgSection.SetValue
   isSpec: "True"
-  fullName: Apq.Cfg.ICfgSection.Set
-  nameWithType: ICfgSection.Set
+  fullName: Apq.Cfg.ICfgSection.SetValue
+  nameWithType: ICfgSection.SetValue
 - uid: Apq.Cfg.Ini
   name: Apq.Cfg.Ini
   href: api/Apq.Cfg.Ini.html

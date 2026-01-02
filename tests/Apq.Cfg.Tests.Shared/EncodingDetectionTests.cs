@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using Apq.Cfg.EncodingSupport;
 using Apq.Cfg.Sources.File;
 
@@ -197,7 +197,7 @@ public class EncodingDetectionTests : IDisposable
             .Build();
 
         // Assert - 配置应该能正常读取
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     [Fact]

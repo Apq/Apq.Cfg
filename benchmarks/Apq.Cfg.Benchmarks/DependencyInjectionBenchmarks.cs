@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -197,7 +197,7 @@ public class DependencyInjectionBenchmarks
     public string? Resolve_ICfgRoot_ThenGet()
     {
         var cfg = _provider.GetRequiredService<ICfgRoot>();
-        return cfg.Get("Database:Host");
+        return cfg["Database:Host"];
     }
 
     // ========== 复杂对象解析性能 ==========

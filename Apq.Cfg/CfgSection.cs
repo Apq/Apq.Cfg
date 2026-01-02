@@ -23,7 +23,7 @@ internal sealed class CfgSection : ICfgSection
     /// <inheritdoc />
     public string? this[string key]
     {
-        get => Get(key);
+        get => _root[GetFullKey(key)];
         set => SetValue(key, value);
     }
 
@@ -33,11 +33,6 @@ internal sealed class CfgSection : ICfgSection
     private string GetFullKey(string key)
     {
         return string.IsNullOrEmpty(Path) ? key : $"{Path}:{key}";
-    }
-
-    public string? Get(string key)
-    {
-        return _root.Get(GetFullKey(key));
     }
 
     public T? GetValue<T>(string key)

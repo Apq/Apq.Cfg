@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Tests;
+﻿namespace Apq.Cfg.Tests;
 
 /// <summary>
 /// 异常场景测试
@@ -248,7 +248,7 @@ public class ExceptionHandlingTests : IDisposable
         // 可能抛出 ObjectDisposedException 或返回 null
         try
         {
-            var value = cfg.Get("Key");
+            var value = cfg["Key"];
             // 如果没有抛出异常，值可能是 null 或原值
         }
         catch (ObjectDisposedException)
@@ -298,7 +298,7 @@ public class ExceptionHandlingTests : IDisposable
         using var cfg = new CfgBuilder().Build();
 
         // Assert - 空配置应该正常工作
-        Assert.Null(cfg.Get("AnyKey"));
+        Assert.Null(cfg["AnyKey"]);
         Assert.False(cfg.Exists("AnyKey"));
     }
 
@@ -324,7 +324,7 @@ public class ExceptionHandlingTests : IDisposable
 
         // Assert - 应该使用最后一个
         cfg.SetValue("NewKey", "NewValue");
-        Assert.Equal("NewValue", cfg.Get("NewKey"));
+        Assert.Equal("NewValue", cfg["NewKey"]);
     }
 
     [Fact]
@@ -395,7 +395,7 @@ public class ExceptionHandlingTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     #endregion

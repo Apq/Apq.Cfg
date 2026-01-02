@@ -1,4 +1,4 @@
-using Apq.Cfg.Database;
+﻿using Apq.Cfg.Database;
 
 namespace Apq.Cfg.Tests;
 
@@ -81,7 +81,7 @@ public class DatabaseCfgTests : IAsyncLifetime
             .Build();
 
         // Assert
-        Assert.Equal("TestValue", cfg2.Get("TestKey"));
+        Assert.Equal("TestValue", cfg2["TestKey"]);
     }
 
     [SkippableFact]
@@ -106,8 +106,8 @@ public class DatabaseCfgTests : IAsyncLifetime
             }, level: 0)
             .Build();
 
-        Assert.Equal("Value1", cfg2.Get("Settings:Value1"));
-        Assert.Equal("Value2", cfg2.Get("Settings:Value2"));
+        Assert.Equal("Value1", cfg2["Settings:Value1"]);
+        Assert.Equal("Value2", cfg2["Settings:Value2"]);
     }
 
     [SkippableFact]
@@ -183,7 +183,7 @@ public class DatabaseCfgTests : IAsyncLifetime
                 .Build();
 
             // Assert
-            Assert.Equal("DatabaseValue", cfg.Get("Setting"));
+            Assert.Equal("DatabaseValue", cfg["Setting"]);
         }
         finally
         {

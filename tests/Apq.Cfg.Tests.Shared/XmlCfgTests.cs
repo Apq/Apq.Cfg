@@ -1,4 +1,4 @@
-using Apq.Cfg.Xml;
+﻿using Apq.Cfg.Xml;
 
 namespace Apq.Cfg.Tests;
 
@@ -46,9 +46,9 @@ public class XmlCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("localhost", cfg.Get("Database:Host"));
-        Assert.Equal("5432", cfg.Get("Database:Port"));
-        Assert.Equal("TestApp", cfg.Get("App:Name"));
+        Assert.Equal("localhost", cfg["Database:Host"]);
+        Assert.Equal("5432", cfg["Database:Port"]);
+        Assert.Equal("TestApp", cfg["App:Name"]);
     }
 
     [Fact]
@@ -102,8 +102,8 @@ public class XmlCfgTests : IDisposable
             .AddXml(xmlPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("NewValue", cfg2.Get("App:NewKey"));
-        Assert.Equal("Value", cfg2.Get("App:Original"));
+        Assert.Equal("NewValue", cfg2["App:NewKey"]);
+        Assert.Equal("Value", cfg2["App:Original"]);
     }
 
     [Fact]
@@ -153,8 +153,8 @@ public class XmlCfgTests : IDisposable
             .AddXml(xmlPath, level: 0, writeable: false)
             .Build();
 
-        var removedValue = cfg2.Get("ToRemove");
+        var removedValue = cfg2["ToRemove"];
         Assert.True(string.IsNullOrEmpty(removedValue));
-        Assert.Equal("Value2", cfg2.Get("ToKeep"));
+        Assert.Equal("Value2", cfg2["ToKeep"]);
     }
 }

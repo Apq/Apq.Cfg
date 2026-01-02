@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -45,7 +45,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
         // Assert
         var cfgRoot = provider.GetService<ICfgRoot>();
         Assert.NotNull(cfgRoot);
-        Assert.Equal("TestApp", cfgRoot.Get("AppName"));
+        Assert.Equal("TestApp", cfgRoot["AppName"]);
     }
 
     [Fact]
@@ -116,7 +116,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
         // Assert
         var cfgRoot = provider.GetService<ICfgRoot>();
         Assert.NotNull(cfgRoot);
-        Assert.Equal("Success", cfgRoot.Get("FactoryTest"));
+        Assert.Equal("Success", cfgRoot["FactoryTest"]);
     }
 
     #endregion
@@ -332,7 +332,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
         var cfgRoot = provider.GetRequiredService<ICfgRoot>();
 
         // Assert
-        Assert.Equal("First", cfgRoot.Get("Source"));
+        Assert.Equal("First", cfgRoot["Source"]);
     }
 
     #endregion

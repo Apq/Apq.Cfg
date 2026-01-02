@@ -255,49 +255,6 @@ if (dbSection.Exists("ConnectionString"))
 
 
 
-  <a id="Apq_Cfg_ICfgSection_Get_" data-uid="Apq.Cfg.ICfgSection.Get*"></a>
-
-  <h3 id="Apq_Cfg_ICfgSection_Get_System_String_" data-uid="Apq.Cfg.ICfgSection.Get(System.String)">
-  Get(string)
-  
-  </h3>
-
-  <div class="markdown level1 summary"><p>获取配置值（相对于此节的键）</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string? Get(string key)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>相对于此节的键名</p>
-</dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>配置值，不存在时返回null</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="Apq_Cfg_ICfgSection_Get_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">var dbSection = cfg.GetSection("Database");
-var host = dbSection.Get("Host"); // 等同于 cfg.Get("Database:Host")</code></pre>
-
-
-
-
-
-
   <a id="Apq_Cfg_ICfgSection_GetChildKeys_" data-uid="Apq.Cfg.ICfgSection.GetChildKeys*"></a>
 
   <h3 id="Apq_Cfg_ICfgSection_GetChildKeys" data-uid="Apq.Cfg.ICfgSection.GetChildKeys">
@@ -470,10 +427,10 @@ dbSection.Remove("OldSetting"); // 等同于 cfg.Remove("Database:OldSetting")</
 
 
 
-  <a id="Apq_Cfg_ICfgSection_Set_" data-uid="Apq.Cfg.ICfgSection.Set*"></a>
+  <a id="Apq_Cfg_ICfgSection_SetValue_" data-uid="Apq.Cfg.ICfgSection.SetValue*"></a>
 
-  <h3 id="Apq_Cfg_ICfgSection_Set_System_String_System_String_System_Nullable_System_Int32__" data-uid="Apq.Cfg.ICfgSection.Set(System.String,System.String,System.Nullable{System.Int32})">
-  Set(string, string?, int?)
+  <h3 id="Apq_Cfg_ICfgSection_SetValue_System_String_System_String_System_Nullable_System_Int32__" data-uid="Apq.Cfg.ICfgSection.SetValue(System.String,System.String,System.Nullable{System.Int32})">
+  SetValue(string, string?, int?)
   
   </h3>
 
@@ -482,7 +439,7 @@ dbSection.Remove("OldSetting"); // 等同于 cfg.Remove("Database:OldSetting")</
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void Set(string key, string? value, int? targetLevel = null)</code></pre>
+    <pre><code class="lang-csharp hljs">void SetValue(string key, string? value, int? targetLevel = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -504,9 +461,9 @@ dbSection.Remove("OldSetting"); // 等同于 cfg.Remove("Database:OldSetting")</
 
 
 
-  <h4 class="section" id="Apq_Cfg_ICfgSection_Set_System_String_System_String_System_Nullable_System_Int32___examples">Examples</h4>
+  <h4 class="section" id="Apq_Cfg_ICfgSection_SetValue_System_String_System_String_System_Nullable_System_Int32___examples">Examples</h4>
   <pre><code class="lang-csharp">var dbSection = cfg.GetSection("Database");
-dbSection.Set("Timeout", "60"); // 等同于 cfg.Set("Database:Timeout", "60")</code></pre>
+dbSection.SetValue("Timeout", "60"); // 等同于 cfg.SetValue("Database:Timeout", "60")</code></pre>
 
 
 

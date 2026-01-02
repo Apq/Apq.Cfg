@@ -1,4 +1,4 @@
-using Apq.Cfg.Zookeeper;
+﻿using Apq.Cfg.Zookeeper;
 
 namespace Apq.Cfg.Tests;
 
@@ -76,7 +76,7 @@ public class ZookeeperCfgTests : IAsyncLifetime
             .Build();
 
         // Assert
-        Assert.Equal("TestValue", cfg2.Get("TestKey"));
+        Assert.Equal("TestValue", cfg2["TestKey"]);
     }
 
     [SkippableFact]
@@ -99,8 +99,8 @@ public class ZookeeperCfgTests : IAsyncLifetime
             }, level: 0)
             .Build();
 
-        Assert.Equal("Value1", cfg2.Get("Settings:Value1"));
-        Assert.Equal("Value2", cfg2.Get("Settings:Value2"));
+        Assert.Equal("Value1", cfg2["Settings:Value1"]);
+        Assert.Equal("Value2", cfg2["Settings:Value2"]);
     }
 
     [SkippableFact]
@@ -172,7 +172,7 @@ public class ZookeeperCfgTests : IAsyncLifetime
                 .Build();
 
             // Assert
-            Assert.Equal("ZookeeperValue", cfg.Get("Setting"));
+            Assert.Equal("ZookeeperValue", cfg["Setting"]);
         }
         finally
         {

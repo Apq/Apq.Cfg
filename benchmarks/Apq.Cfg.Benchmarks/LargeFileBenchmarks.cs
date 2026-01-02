@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using BenchmarkDotNet.Attributes;
 using Apq.Cfg.Ini;
@@ -218,7 +218,7 @@ public class LargeFileBenchmarks : IDisposable
         using var cfg = new CfgBuilder()
             .AddJson(_jsonPath, level: 0, writeable: false)
             .Build();
-        return cfg.Get($"Section{ItemCount / 20}:Key{ItemCount / 2}");
+        return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
 
     [Benchmark]
@@ -228,7 +228,7 @@ public class LargeFileBenchmarks : IDisposable
         using var cfg = new CfgBuilder()
             .AddIni(_iniPath, level: 0, writeable: false)
             .Build();
-        return cfg.Get($"Section{ItemCount / 20}:Key{ItemCount / 2}");
+        return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
 
     [Benchmark]
@@ -238,7 +238,7 @@ public class LargeFileBenchmarks : IDisposable
         using var cfg = new CfgBuilder()
             .AddXml(_xmlPath, level: 0, writeable: false)
             .Build();
-        return cfg.Get($"Section{ItemCount / 20}:Key{ItemCount / 2}");
+        return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
 
     [Benchmark]
@@ -248,7 +248,7 @@ public class LargeFileBenchmarks : IDisposable
         using var cfg = new CfgBuilder()
             .AddYaml(_yamlPath, level: 0, writeable: false)
             .Build();
-        return cfg.Get($"Section{ItemCount / 20}:Key{ItemCount / 2}");
+        return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
 
     [Benchmark]
@@ -258,7 +258,7 @@ public class LargeFileBenchmarks : IDisposable
         using var cfg = new CfgBuilder()
             .AddToml(_tomlPath, level: 0, writeable: false)
             .Build();
-        return cfg.Get($"Section{ItemCount / 20}:Key{ItemCount / 2}");
+        return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
 
     #endregion

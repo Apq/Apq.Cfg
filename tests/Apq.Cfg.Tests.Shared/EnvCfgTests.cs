@@ -1,4 +1,4 @@
-using Apq.Cfg.Env;
+﻿using Apq.Cfg.Env;
 
 namespace Apq.Cfg.Tests;
 
@@ -40,10 +40,10 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("TestApp", cfg.Get("APP_NAME"));
-        Assert.Equal("true", cfg.Get("APP_DEBUG"));
-        Assert.Equal("localhost", cfg.Get("DATABASE:HOST"));
-        Assert.Equal("5432", cfg.Get("DATABASE:PORT"));
+        Assert.Equal("TestApp", cfg["APP_NAME"]);
+        Assert.Equal("true", cfg["APP_DEBUG"]);
+        Assert.Equal("localhost", cfg["DATABASE:HOST"]);
+        Assert.Equal("5432", cfg["DATABASE:PORT"]);
     }
 
     [Fact]
@@ -83,9 +83,9 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Hello, World!", cfg.Get("DOUBLE_QUOTED"));
-        Assert.Equal("Hello, World!", cfg.Get("SINGLE_QUOTED"));
-        Assert.Equal("  spaces  ", cfg.Get("WITH_SPACES"));
+        Assert.Equal("Hello, World!", cfg["DOUBLE_QUOTED"]);
+        Assert.Equal("Hello, World!", cfg["SINGLE_QUOTED"]);
+        Assert.Equal("  spaces  ", cfg["WITH_SPACES"]);
     }
 
     [Fact]
@@ -104,9 +104,9 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Line1\nLine2", cfg.Get("MULTILINE"));
-        Assert.Equal("Col1\tCol2", cfg.Get("WITH_TAB"));
-        Assert.Equal("Say \"Hello\"", cfg.Get("WITH_QUOTE"));
+        Assert.Equal("Line1\nLine2", cfg["MULTILINE"]);
+        Assert.Equal("Col1\tCol2", cfg["WITH_TAB"]);
+        Assert.Equal("Say \"Hello\"", cfg["WITH_QUOTE"]);
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert - 单引号不处理转义
-        Assert.Equal("Hello\\nWorld", cfg.Get("RAW_VALUE"));
+        Assert.Equal("Hello\\nWorld", cfg["RAW_VALUE"]);
     }
 
     [Fact]
@@ -141,8 +141,8 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("secret123", cfg.Get("API_KEY"));
-        Assert.Equal("postgres://localhost", cfg.Get("DATABASE:URL"));
+        Assert.Equal("secret123", cfg["API_KEY"]);
+        Assert.Equal("postgres://localhost", cfg["DATABASE:URL"]);
     }
 
     [Fact]
@@ -162,8 +162,8 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("TestApp", cfg.Get("APP_NAME"));
-        Assert.Equal("1.0.0", cfg.Get("APP_VERSION"));
+        Assert.Equal("TestApp", cfg["APP_NAME"]);
+        Assert.Equal("1.0.0", cfg["APP_VERSION"]);
     }
 
     [Fact]
@@ -188,8 +188,8 @@ public class EnvCfgTests : IDisposable
             .AddEnv(envPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("NewValue", cfg2.Get("NEW_KEY"));
-        Assert.Equal("Value", cfg2.Get("ORIGINAL"));
+        Assert.Equal("NewValue", cfg2["NEW_KEY"]);
+        Assert.Equal("Value", cfg2["ORIGINAL"]);
     }
 
     [Fact]
@@ -218,8 +218,8 @@ public class EnvCfgTests : IDisposable
             .AddEnv(envPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("localhost", cfg2.Get("DATABASE:HOST"));
-        Assert.Equal("5432", cfg2.Get("DATABASE:PORT"));
+        Assert.Equal("localhost", cfg2["DATABASE:HOST"]);
+        Assert.Equal("5432", cfg2["DATABASE:PORT"]);
     }
 
     [Fact]
@@ -263,9 +263,9 @@ public class EnvCfgTests : IDisposable
             .AddEnv(envPath, level: 0, writeable: false)
             .Build();
 
-        var removedValue = cfg2.Get("TO_REMOVE");
+        var removedValue = cfg2["TO_REMOVE"];
         Assert.True(string.IsNullOrEmpty(removedValue));
-        Assert.Equal("Value2", cfg2.Get("TO_KEEP"));
+        Assert.Equal("Value2", cfg2["TO_KEEP"]);
     }
 
     [Fact]
@@ -287,9 +287,9 @@ public class EnvCfgTests : IDisposable
         var dbSection = cfg.GetSection("DATABASE");
 
         // Assert
-        Assert.Equal("localhost", dbSection.Get("HOST"));
-        Assert.Equal("5432", dbSection.Get("PORT"));
-        Assert.Equal("mydb", dbSection.Get("NAME"));
+        Assert.Equal("localhost", dbSection["HOST"]);
+        Assert.Equal("5432", dbSection["PORT"]);
+        Assert.Equal("mydb", dbSection["NAME"]);
     }
 
     [Fact]
@@ -318,8 +318,8 @@ public class EnvCfgTests : IDisposable
             .AddEnv(envPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("Hello World", cfg2.Get("MESSAGE"));
-        Assert.Equal("Value # with hash", cfg2.Get("COMMENT"));
+        Assert.Equal("Hello World", cfg2["MESSAGE"]);
+        Assert.Equal("Value # with hash", cfg2["COMMENT"]);
     }
 
     [Fact]
@@ -333,7 +333,7 @@ public class EnvCfgTests : IDisposable
             .AddEnv(envPath, level: 0, writeable: false, optional: true)
             .Build();
 
-        Assert.Null(cfg.Get("ANY_KEY"));
+        Assert.Null(cfg["ANY_KEY"]);
     }
 
     [Fact]
@@ -351,8 +351,8 @@ public class EnvCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("", cfg.Get("EMPTY_VALUE"));
-        Assert.Equal("", cfg.Get("QUOTED_EMPTY"));
+        Assert.Equal("", cfg["EMPTY_VALUE"]);
+        Assert.Equal("", cfg["QUOTED_EMPTY"]);
     }
 
     [Fact]
@@ -404,7 +404,7 @@ public class EnvCfgTests : IDisposable
         // Assert - 验证系统环境变量未设置
         Assert.Null(Environment.GetEnvironmentVariable(uniqueKey));
         // 但配置值应该可以正常读取
-        Assert.Equal("TestValue", cfg.Get(uniqueKey));
+        Assert.Equal("TestValue", cfg[uniqueKey]);
     }
 
     [Fact]
@@ -425,7 +425,7 @@ public class EnvCfgTests : IDisposable
         // Assert - 验证系统环境变量未设置
         Assert.Null(Environment.GetEnvironmentVariable(uniqueKey));
         // 但配置值应该可以正常读取
-        Assert.Equal("TestValue", cfg.Get(uniqueKey));
+        Assert.Equal("TestValue", cfg[uniqueKey]);
     }
 
     [Fact]
@@ -449,7 +449,7 @@ public class EnvCfgTests : IDisposable
             // Assert - 环境变量使用原始格式（双下划线）
             Assert.Equal("localhost", Environment.GetEnvironmentVariable(nestedKey));
             // 配置键使用冒号分隔
-            Assert.Equal("localhost", cfg.Get($"{uniquePrefix}:HOST"));
+            Assert.Equal("localhost", cfg[$"{uniquePrefix}:HOST"]);
         }
         finally
         {

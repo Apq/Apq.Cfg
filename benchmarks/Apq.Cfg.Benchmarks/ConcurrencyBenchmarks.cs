@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -243,7 +243,7 @@ public class ConcurrencyBenchmarks : IDisposable
             {
                 for (int j = 0; j < 100; j++)
                 {
-                    _ = _cfg.Get("Database:Host");
+                    _ = _cfg["Database:Host"];
                 }
             });
         }
@@ -269,7 +269,7 @@ public class ConcurrencyBenchmarks : IDisposable
             {
                 for (int j = 0; j < 100; j++)
                 {
-                    _ = _cfg.Get(keys[keyIndex]);
+                    _ = _cfg[keys[keyIndex]];
                 }
             });
         }
@@ -316,7 +316,7 @@ public class ConcurrencyBenchmarks : IDisposable
                 {
                     if (isReader)
                     {
-                        _ = _cfg.Get("Database:Host");
+                        _ = _cfg["Database:Host"];
                         _ = _cfg.Exists("App:Name");
                     }
                     else

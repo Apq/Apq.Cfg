@@ -25,7 +25,7 @@ public static class TemplateExtensions
     /// </example>
     public static string? GetResolved(this ICfgRoot cfg, string key)
     {
-        var value = cfg.Get(key);
+        var value = cfg[key];
         return DefaultEngine.Resolve(value, cfg);
     }
 
@@ -39,7 +39,7 @@ public static class TemplateExtensions
     public static string? GetResolved(this ICfgRoot cfg, string key, VariableResolutionOptions options)
     {
         var engine = new TemplateEngine(options);
-        var value = cfg.Get(key);
+        var value = cfg[key];
         return engine.Resolve(value, cfg);
     }
 
@@ -114,7 +114,7 @@ public static class TemplateExtensions
     /// <returns>是否成功获取</returns>
     public static bool TryGetResolved(this ICfgRoot cfg, string key, out string? value)
     {
-        var rawValue = cfg.Get(key);
+        var rawValue = cfg[key];
         if (rawValue == null)
         {
             value = null;

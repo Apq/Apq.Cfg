@@ -1,4 +1,4 @@
-using Apq.Cfg.Samples.Models;
+﻿using Apq.Cfg.Samples.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -56,7 +56,7 @@ public static class DependencyInjectionDemo
         var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
         var logOptions = provider.GetRequiredService<IOptions<LoggingOptions>>().Value;
 
-        Console.WriteLine($"    ICfgRoot: Database:Host = {cfgRoot.Get("Database:Host")}");
+        Console.WriteLine($"    ICfgRoot: Database:Host = {cfgRoot["Database:Host"]}");
         Console.WriteLine($"    IConfigurationRoot: Database:Host = {msConfig["Database:Host"]}");
         Console.WriteLine($"    DatabaseOptions: Host={dbOptions.Host}, Port={dbOptions.Port}, Name={dbOptions.Name}");
         Console.WriteLine($"    LoggingOptions: Level={logOptions.Level}, EnableConsole={logOptions.EnableConsole}");

@@ -35,19 +35,6 @@ public interface ICfgSection
     string Path { get; }
 
     /// <summary>
-    /// 获取配置值（相对于此节的键）
-    /// </summary>
-    /// <param name="key">相对于此节的键名</param>
-    /// <returns>配置值，不存在时返回null</returns>
-    /// <example>
-    /// <code>
-    /// var dbSection = cfg.GetSection("Database");
-    /// var host = dbSection.Get("Host"); // 等同于 cfg.Get("Database:Host")
-    /// </code>
-    /// </example>
-    string? Get(string key);
-
-    /// <summary>
     /// 获取配置值并转换为指定类型
     /// </summary>
     /// <typeparam name="T">目标类型</typeparam>

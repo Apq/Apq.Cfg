@@ -25,13 +25,6 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     string? this[string key] { get; set; }
 
     /// <summary>
-    /// 获取配置值
-    /// </summary>
-    /// <param name="key">配置键</param>
-    /// <returns>配置值，不存在时返回null</returns>
-    string? Get(string key);
-
-    /// <summary>
     /// 获取配置值并转换为指定类型
     /// </summary>
     /// <typeparam name="T">目标类型</typeparam>

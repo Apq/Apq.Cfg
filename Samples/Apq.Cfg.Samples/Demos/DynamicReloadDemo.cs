@@ -1,4 +1,4 @@
-using Apq.Cfg.Changes;
+﻿using Apq.Cfg.Changes;
 using Microsoft.Extensions.Primitives;
 
 namespace Apq.Cfg.Samples.Demos;
@@ -72,7 +72,7 @@ public static class DynamicReloadDemo
         // 等待变更通知
         await Task.Delay(200);
 
-        Console.WriteLine($"\n    当前值: App:RefreshInterval = {cfg.Get("App:RefreshInterval")}");
+        Console.WriteLine($"\n    当前值: App:RefreshInterval = {cfg["App:RefreshInterval"]}");
 
         cfg.Dispose();
         File.Delete(configPath);

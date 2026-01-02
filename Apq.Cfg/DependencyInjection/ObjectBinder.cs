@@ -64,7 +64,7 @@ internal static class ObjectBinder
         // 1. 简单类型：直接从配置值转换
         if (IsSimpleType(underlyingType))
         {
-            var value = section.Get(prop.Name);
+            var value = section[prop.Name];
             if (value != null)
             {
                 var convertedValue = ValueConverter.ConvertToType(value, propType);
@@ -255,7 +255,7 @@ internal static class ObjectBinder
         // 简单类型
         if (IsSimpleType(underlyingType))
         {
-            var value = section.Get(key);
+            var value = section[key];
             if (value != null)
             {
                 return ValueConverter.ConvertToType(value, elementType);

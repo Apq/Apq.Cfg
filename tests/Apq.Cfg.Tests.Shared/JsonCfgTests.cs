@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Tests;
+﻿namespace Apq.Cfg.Tests;
 
 /// <summary>
 /// JSON 配置源测试
@@ -38,8 +38,8 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("TestApp", cfg.Get("AppName"));
-        Assert.Equal("1.0.0", cfg.Get("Version"));
+        Assert.Equal("TestApp", cfg["AppName"]);
+        Assert.Equal("1.0.0", cfg["Version"]);
     }
 
     [Fact]
@@ -61,8 +61,8 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("localhost", cfg.Get("Database:Host"));
-        Assert.Equal("5432", cfg.Get("Database:Port"));
+        Assert.Equal("localhost", cfg["Database:Host"]);
+        Assert.Equal("5432", cfg["Database:Port"]);
     }
 
     [Fact]
@@ -126,8 +126,8 @@ public class JsonCfgTests : IDisposable
             .AddJson(jsonPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("NewValue", cfg2.Get("NewKey"));
-        Assert.Equal("Value", cfg2.Get("Original"));
+        Assert.Equal("NewValue", cfg2["NewKey"]);
+        Assert.Equal("Value", cfg2["Original"]);
     }
 
     [Fact]
@@ -151,9 +151,9 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // 验证删除后值为 null 或空字符串
-        var removedValue = cfg2.Get("ToRemove");
+        var removedValue = cfg2["ToRemove"];
         Assert.True(string.IsNullOrEmpty(removedValue), $"Expected null or empty, but got: '{removedValue}'");
-        Assert.Equal("Value2", cfg2.Get("ToKeep"));
+        Assert.Equal("Value2", cfg2["ToKeep"]);
     }
 
     [Fact]
@@ -182,8 +182,8 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("OverrideValue1", cfg.Get("Setting1")); // 被覆盖
-        Assert.Equal("BaseValue2", cfg.Get("Setting2")); // 保持原值
+        Assert.Equal("OverrideValue1", cfg["Setting1"]); // 被覆盖
+        Assert.Equal("BaseValue2", cfg["Setting2"]); // 保持原值
     }
 
     [Fact]
@@ -300,7 +300,7 @@ public class JsonCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Null(cfg.Get("NonExistent"));
+        Assert.Null(cfg["NonExistent"]);
         Assert.Equal(default, cfg.GetValue<int>("NonExistent"));
         Assert.Null(cfg.GetValue<string>("NonExistent"));
     }

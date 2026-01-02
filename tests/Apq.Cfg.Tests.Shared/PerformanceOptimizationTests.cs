@@ -1,4 +1,4 @@
-using Apq.Cfg.Internal;
+﻿using Apq.Cfg.Internal;
 
 namespace Apq.Cfg.Tests;
 
@@ -142,9 +142,9 @@ public class PerformanceOptimizationTests : IDisposable
         });
 
         // Assert
-        Assert.Equal("Value1", cfg.Get("Key1"));
-        Assert.Equal("Value2", cfg.Get("Key2"));
-        Assert.Equal("Value3", cfg.Get("Key3"));
+        Assert.Equal("Value1", cfg["Key1"]);
+        Assert.Equal("Value2", cfg["Key2"]);
+        Assert.Equal("Value3", cfg["Key3"]);
     }
 
     [Fact]

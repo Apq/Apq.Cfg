@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Tests;
+﻿namespace Apq.Cfg.Tests;
 
 /// <summary>
 /// 边界条件测试
@@ -36,7 +36,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Null(cfg.Get(""));
+        Assert.Null(cfg[""]);
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public class BoundaryConditionTests : IDisposable
         cfg.SetValue("EmptyValue", "");
 
         // Assert
-        Assert.Equal("", cfg.Get("EmptyValue"));
+        Assert.Equal("", cfg["EmptyValue"]);
     }
 
     [Fact]
@@ -87,7 +87,7 @@ public class BoundaryConditionTests : IDisposable
         cfg.SetValue("NullValue", null);
 
         // Assert
-        Assert.Null(cfg.Get("NullValue"));
+        Assert.Null(cfg["NullValue"]);
     }
 
     #endregion
@@ -106,7 +106,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("NestedValue", cfg.Get("Parent:Child"));
+        Assert.Equal("NestedValue", cfg["Parent:Child"]);
     }
 
     [Fact]
@@ -121,9 +121,9 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Value1", cfg.Get("Key-With-Dashes"));
-        Assert.Equal("Value2", cfg.Get("Key_With_Underscores"));
-        Assert.Equal("Value3", cfg.Get("Key.With.Dots"));
+        Assert.Equal("Value1", cfg["Key-With-Dashes"]);
+        Assert.Equal("Value2", cfg["Key_With_Underscores"]);
+        Assert.Equal("Value3", cfg["Key.With.Dots"]);
     }
 
     [Fact]
@@ -138,9 +138,9 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("中文值", cfg.Get("中文键"));
-        Assert.Equal("日本語値", cfg.Get("日本語キー"));
-        Assert.Equal("한국어값", cfg.Get("한국어키"));
+        Assert.Equal("中文值", cfg["中文键"]);
+        Assert.Equal("日本語値", cfg["日本語キー"]);
+        Assert.Equal("한국어값", cfg["한국어키"]);
     }
 
     [Fact]
@@ -155,9 +155,9 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("NumericKey", cfg.Get("123"));
-        Assert.Equal("MixedKey", cfg.Get("Key123"));
-        Assert.Equal("NumericPrefix", cfg.Get("123Key"));
+        Assert.Equal("NumericKey", cfg["123"]);
+        Assert.Equal("MixedKey", cfg["Key123"]);
+        Assert.Equal("NumericPrefix", cfg["123Key"]);
     }
 
     #endregion
@@ -177,7 +177,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Null(cfg.Get("AnyKey"));
+        Assert.Null(cfg["AnyKey"]);
         Assert.False(cfg.Exists("AnyKey"));
     }
 
@@ -202,9 +202,9 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value0", cfg.Get("Key0"));
-        Assert.Equal("Value9999", cfg.Get("Key9999"));
-        Assert.Equal("Value5000", cfg.Get("Key5000"));
+        Assert.Equal("Value0", cfg["Key0"]);
+        Assert.Equal("Value9999", cfg["Key9999"]);
+        Assert.Equal("Value5000", cfg["Key5000"]);
     }
 
     [Fact]
@@ -244,7 +244,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("DeepValue", cfg.Get("L1:L2:L3:L4:L5:L6:L7:L8:L9:L10"));
+        Assert.Equal("DeepValue", cfg["L1:L2:L3:L4:L5:L6:L7:L8:L9:L10"]);
     }
 
     #endregion
@@ -264,7 +264,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Value", cfg.Get(longKey));
+        Assert.Equal("Value", cfg[longKey]);
     }
 
     [Fact]
@@ -280,7 +280,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(longValue, cfg.Get("Key"));
+        Assert.Equal(longValue, cfg["Key"]);
     }
 
     [Fact]
@@ -303,7 +303,7 @@ public class BoundaryConditionTests : IDisposable
         using var cfg2 = new CfgBuilder()
             .AddJson(jsonPath, level: 0, writeable: false)
             .Build();
-        Assert.Equal(longValue, cfg2.Get("LongKey"));
+        Assert.Equal(longValue, cfg2["LongKey"]);
     }
 
     #endregion
@@ -322,9 +322,9 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("First", cfg.Get("Items:0"));
-        Assert.Equal("Second", cfg.Get("Items:1"));
-        Assert.Equal("Third", cfg.Get("Items:2"));
+        Assert.Equal("First", cfg["Items:0"]);
+        Assert.Equal("Second", cfg["Items:1"]);
+        Assert.Equal("Third", cfg["Items:2"]);
     }
 
     [Fact]
@@ -346,10 +346,10 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Alice", cfg.Get("Users:0:Name"));
-        Assert.Equal("30", cfg.Get("Users:0:Age"));
-        Assert.Equal("Bob", cfg.Get("Users:1:Name"));
-        Assert.Equal("25", cfg.Get("Users:1:Age"));
+        Assert.Equal("Alice", cfg["Users:0:Name"]);
+        Assert.Equal("30", cfg["Users:0:Age"]);
+        Assert.Equal("Bob", cfg["Users:1:Name"]);
+        Assert.Equal("25", cfg["Users:1:Age"]);
     }
 
     #endregion
@@ -375,7 +375,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Level2", cfg.Get("Key"));
+        Assert.Equal("Level2", cfg["Key"]);
     }
 
     [Fact]
@@ -394,7 +394,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert - level 0 应该覆盖 level -1
-        Assert.Equal("Zero", cfg.Get("Key"));
+        Assert.Equal("Zero", cfg["Key"]);
     }
 
     [Fact]
@@ -413,7 +413,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("Level1000", cfg.Get("Key"));
+        Assert.Equal("Level1000", cfg["Key"]);
     }
 
     #endregion
@@ -504,7 +504,7 @@ public class BoundaryConditionTests : IDisposable
             .Build();
 
         // Assert
-        Assert.Equal("Value", cfg.Get("Key"));
+        Assert.Equal("Value", cfg["Key"]);
     }
 
     [Fact]

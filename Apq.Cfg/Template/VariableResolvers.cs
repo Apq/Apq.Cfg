@@ -52,7 +52,7 @@ internal sealed class ConfigVariableResolver : IVariableResolver
 
     public string? Resolve(string variableName, ICfgRoot cfg)
     {
-        return cfg.Get(variableName);
+        return cfg[variableName];
     }
 }
 

@@ -140,7 +140,7 @@ internal static class CodeEmitter
     {
         sb.AppendLine($"{indent}// {prop.Name}: {prop.TypeName}");
         sb.AppendLine($"{indent}{{");
-        sb.AppendLine($"{indent}    var __value = section.Get(\"{prop.Name}\");");
+        sb.AppendLine($"{indent}    var __value = section[\"{prop.Name}\"];");
         sb.AppendLine($"{indent}    if (__value != null)");
         sb.AppendLine($"{indent}    {{");
 
@@ -331,7 +331,7 @@ internal static class CodeEmitter
         if (IsSimpleTypeName(elementType))
         {
             var baseType = elementType.TrimEnd('?');
-            sb.AppendLine($"{indent}var __elemValue = {sectionVar}.Get({keyVar});");
+            sb.AppendLine($"{indent}var __elemValue = {sectionVar}[{keyVar}];");
             sb.AppendLine($"{indent}if (__elemValue != null)");
             sb.AppendLine($"{indent}{{");
             var convertCode = GetConvertCode(elementType, "__elemValue");
@@ -364,7 +364,7 @@ internal static class CodeEmitter
         if (IsSimpleTypeName(elementType))
         {
             var baseType = elementType.TrimEnd('?');
-            sb.AppendLine($"{indent}var __elemValue = {sectionVar}.Get({keyVar});");
+            sb.AppendLine($"{indent}var __elemValue = {sectionVar}[{keyVar}];");
             sb.AppendLine($"{indent}if (__elemValue != null)");
             sb.AppendLine($"{indent}{{");
             var convertCode = GetConvertCode(elementType, "__elemValue");
@@ -398,7 +398,7 @@ internal static class CodeEmitter
         if (IsSimpleTypeName(elementType))
         {
             var baseType = elementType.TrimEnd('?');
-            sb.AppendLine($"{indent}var __elemValue = {sectionVar}.Get({keyVar});");
+            sb.AppendLine($"{indent}var __elemValue = {sectionVar}[{keyVar}];");
             sb.AppendLine($"{indent}if (__elemValue != null)");
             sb.AppendLine($"{indent}{{");
             var convertCode = GetConvertCode(elementType, "__elemValue");
@@ -432,7 +432,7 @@ internal static class CodeEmitter
         if (IsSimpleTypeName(valueType))
         {
             var baseType = valueType.TrimEnd('?');
-            sb.AppendLine($"{indent}var __elemValue = {sectionVar}.Get({keyVar});");
+            sb.AppendLine($"{indent}var __elemValue = {sectionVar}[{keyVar}];");
             sb.AppendLine($"{indent}if (__elemValue != null)");
             sb.AppendLine($"{indent}{{");
             var convertCode = GetConvertCode(valueType, "__elemValue");

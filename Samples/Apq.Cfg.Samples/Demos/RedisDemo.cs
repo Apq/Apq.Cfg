@@ -1,4 +1,4 @@
-using Apq.Cfg.Redis;
+﻿using Apq.Cfg.Redis;
 
 namespace Apq.Cfg.Samples.Demos;
 
@@ -43,9 +43,9 @@ public static class RedisDemo
 
             // 读取配置
             Console.WriteLine("\n9.3 从 Redis 读取配置:");
-            Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
-            Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
-            Console.WriteLine($"    Database:Host = {cfg.Get("Database:Host")}");
+            Console.WriteLine($"    App:Name = {cfg["App:Name"]}");
+            Console.WriteLine($"    App:Version = {cfg["App:Version"]}");
+            Console.WriteLine($"    Database:Host = {cfg["Database:Host"]}");
             Console.WriteLine($"    Database:Port = {cfg.GetValue<int>("Database:Port")}");
 
             // 检查配置是否存在

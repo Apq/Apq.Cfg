@@ -1,4 +1,4 @@
-using Apq.Cfg.Database;
+﻿using Apq.Cfg.Database;
 
 namespace Apq.Cfg.Samples.Demos;
 
@@ -47,15 +47,15 @@ public static class DatabaseDemo
 
             // 读取配置
             Console.WriteLine("\n10.3 从数据库读取配置:");
-            Console.WriteLine($"    App:Name = {cfg.Get("App:Name")}");
-            Console.WriteLine($"    App:Version = {cfg.Get("App:Version")}");
+            Console.WriteLine($"    App:Name = {cfg["App:Name"]}");
+            Console.WriteLine($"    App:Version = {cfg["App:Version"]}");
             Console.WriteLine($"    Database:MaxConnections = {cfg.GetValue<int>("Database:MaxConnections")}");
 
             // 修改配置
             Console.WriteLine("\n10.4 修改配置:");
             cfg.SetValue("App:Version", "2.0.0");
             await cfg.SaveAsync();
-            Console.WriteLine($"    修改后 App:Version = {cfg.Get("App:Version")}");
+            Console.WriteLine($"    修改后 App:Version = {cfg["App:Version"]}");
 
             // 删除配置
             Console.WriteLine("\n10.5 删除配置:");

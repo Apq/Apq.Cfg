@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Apq.Cfg.Ini;
 using Apq.Cfg.Xml;
 using Apq.Cfg.Yaml;
@@ -255,23 +255,23 @@ public class GetSectionBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("GetSectionThenGet")]
-    public string? Json_GetSection_ThenGet() => _jsonCfg.GetSection("Database:Connection").Get("Host");
+    public string? Json_GetSection_ThenGet() => _jsonCfg.GetSection("Database:Connection")["Host"];
 
     [Benchmark]
     [BenchmarkCategory("GetSectionThenGet")]
-    public string? Ini_GetSection_ThenGet() => _iniCfg.GetSection("Database:Connection").Get("Host");
+    public string? Ini_GetSection_ThenGet() => _iniCfg.GetSection("Database:Connection")["Host"];
 
     [Benchmark]
     [BenchmarkCategory("GetSectionThenGet")]
-    public string? Xml_GetSection_ThenGet() => _xmlCfg.GetSection("Database:Connection").Get("Host");
+    public string? Xml_GetSection_ThenGet() => _xmlCfg.GetSection("Database:Connection")["Host"];
 
     [Benchmark]
     [BenchmarkCategory("GetSectionThenGet")]
-    public string? Yaml_GetSection_ThenGet() => _yamlCfg.GetSection("Database:Connection").Get("Host");
+    public string? Yaml_GetSection_ThenGet() => _yamlCfg.GetSection("Database:Connection")["Host"];
 
     [Benchmark]
     [BenchmarkCategory("GetSectionThenGet")]
-    public string? Toml_GetSection_ThenGet() => _tomlCfg.GetSection("Database:Connection").Get("Host");
+    public string? Toml_GetSection_ThenGet() => _tomlCfg.GetSection("Database:Connection")["Host"];
 
     #endregion
 
@@ -327,11 +327,11 @@ public class GetSectionBenchmarks : IDisposable
 
     [Benchmark]
     [BenchmarkCategory("DirectVsSection")]
-    public string? Json_DirectGet() => _jsonCfg.Get("Database:Connection:Host");
+    public string? Json_DirectGet() => _jsonCfg["Database:Connection:Host"];
 
     [Benchmark]
     [BenchmarkCategory("DirectVsSection")]
-    public string? Json_SectionGet() => _jsonCfg.GetSection("Database:Connection").Get("Host");
+    public string? Json_SectionGet() => _jsonCfg.GetSection("Database:Connection")["Host"];
 
     #endregion
 }

@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Apq.Cfg.Benchmarks;
 
@@ -75,7 +75,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("BasicTypes")]
     public string? Get_String()
     {
-        return _cfg.Get("Types:String");
+        return _cfg["Types:String"];
     }
 
     /// <summary>
@@ -234,7 +234,7 @@ public class TypeConversionBenchmarks : IDisposable
     {
         for (int i = 0; i < 1000; i++)
         {
-            _ = _cfg.Get("Types:String");
+            _ = _cfg["Types:String"];
         }
     }
 
@@ -249,7 +249,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("SpecialValues")]
     public string? Get_LongString()
     {
-        return _cfg.Get("Types:LongString");
+        return _cfg["Types:LongString"];
     }
 
     /// <summary>
@@ -259,7 +259,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("SpecialValues")]
     public string? Get_Unicode()
     {
-        return _cfg.Get("Types:Unicode");
+        return _cfg["Types:Unicode"];
     }
 
     /// <summary>
@@ -269,7 +269,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("SpecialValues")]
     public string? Get_SpecialChars()
     {
-        return _cfg.Get("Types:SpecialChars");
+        return _cfg["Types:SpecialChars"];
     }
 
     /// <summary>
@@ -279,7 +279,7 @@ public class TypeConversionBenchmarks : IDisposable
     [BenchmarkCategory("SpecialValues")]
     public string? Get_EmptyString()
     {
-        return _cfg.Get("Types:EmptyString");
+        return _cfg["Types:EmptyString"];
     }
 
     #endregion
@@ -349,7 +349,7 @@ public class TypeConversionBenchmarks : IDisposable
     {
         for (int i = 0; i < 100; i++)
         {
-            _ = _cfg.Get("Types:String");
+            _ = _cfg["Types:String"];
             _ = _cfg.GetValue<int>("Types:Int");
             _ = _cfg.GetValue<bool>("Types:Bool");
             _ = _cfg.GetValue<double>("Types:Double");

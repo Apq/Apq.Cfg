@@ -1,4 +1,4 @@
-namespace Apq.Cfg.Tests;
+﻿namespace Apq.Cfg.Tests;
 
 /// <summary>
 /// 环境变量配置源测试
@@ -41,8 +41,8 @@ public class EnvVarsCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("TestApp", cfg.Get("APP_NAME"));
-        Assert.Equal("2.0.0", cfg.Get("APP_VERSION"));
+        Assert.Equal("TestApp", cfg["APP_NAME"]);
+        Assert.Equal("2.0.0", cfg["APP_VERSION"]);
     }
 
     [Fact]
@@ -57,8 +57,8 @@ public class EnvVarsCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("localhost", cfg.Get("Database:Host"));
-        Assert.Equal("5432", cfg.Get("Database:Port"));
+        Assert.Equal("localhost", cfg["Database:Host"]);
+        Assert.Equal("5432", cfg["Database:Port"]);
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class EnvVarsCfgTests : IDisposable
                 .Build();
 
             // Act & Assert
-            Assert.Equal("EnvValue", cfg.Get("Setting"));
+            Assert.Equal("EnvValue", cfg["Setting"]);
         }
         finally
         {
