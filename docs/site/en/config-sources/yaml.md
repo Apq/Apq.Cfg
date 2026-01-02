@@ -1,4 +1,4 @@
-# YAML Configuration Source
+﻿# YAML Configuration Source
 
 YAML provides a human-readable configuration format with support for complex hierarchies.
 
@@ -49,7 +49,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 var appName = cfg["App:Name"];
-var port = cfg.Get<int>("App:Port");
+var port = cfg.GetValue<int>("App:Port");
 ```
 
 ## Configuration Options

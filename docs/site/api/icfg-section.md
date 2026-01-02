@@ -1,4 +1,4 @@
-# ICfgSection API
+﻿# ICfgSection API
 
 `ICfgSection` 是配置节接口，表示配置的一个子节。
 
@@ -20,7 +20,7 @@ public interface ICfgSection
     /// <summary>
     /// 获取类型化的子配置值
     /// </summary>
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     
     /// <summary>
     /// 检查配置键是否存在
@@ -85,10 +85,10 @@ var host = dbSection.Get("Host");      // 等同于 cfg.Get("Database:Host")
 var port = dbSection.Get("Port");      // 等同于 cfg.Get("Database:Port")
 ```
 
-### Get&lt;T&gt;
+### GetValue&lt;T&gt;
 
 ```csharp
-T? Get<T>(string key)
+T? GetValue<T>(string key)
 ```
 
 获取子配置的类型化值。
@@ -101,8 +101,8 @@ T? Get<T>(string key)
 **示例：**
 ```csharp
 var dbSection = cfg.GetSection("Database");
-var port = dbSection.Get<int>("Port");       // 等同于 cfg.Get<int>("Database:Port")
-var timeout = dbSection.Get<int>("Timeout"); // 等同于 cfg.Get<int>("Database:Timeout")
+var port = dbSection.GetValue<int>("Port");       // 等同于 cfg.GetValue<int>("Database:Port")
+var timeout = dbSection.GetValue<int>("Timeout"); // 等同于 cfg.GetValue<int>("Database:Timeout")
 ```
 
 ### Exists
@@ -233,7 +233,7 @@ var dbSection = cfg.GetSection("Database");
 
 // 读取值
 var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
+var port = dbSection.GetValue<int>("Port");
 
 // 检查键是否存在
 if (dbSection.Exists("Password"))
@@ -258,7 +258,7 @@ var apiSection = cfg.GetSection("Services:Api");
 var apiSection = cfg.GetSection("Services").GetSection("Api");
 
 var url = apiSection.Get("Url");
-var timeout = apiSection.Get<int>("Timeout");
+var timeout = apiSection.GetValue<int>("Timeout");
 ```
 
 ### 修改配置节
@@ -327,14 +327,14 @@ if (childKeys.Count > 0 || optionalSection.Exists("Value"))
 var featureSection = cfg.GetSection("Features");
 
 // 检查功能是否启用
-if (featureSection.Exists("NewUI") && featureSection.Get<bool>("NewUI"))
+if (featureSection.Exists("NewUI") && featureSection.GetValue<bool>("NewUI"))
 {
     // 启用新 UI
 }
 
 // 获取可选配置，带默认值
 var maxRetries = featureSection.Exists("MaxRetries") 
-    ? featureSection.Get<int>("MaxRetries") 
+    ? featureSection.GetValue<int>("MaxRetries") 
     : 3;
 ```
 

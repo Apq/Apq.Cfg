@@ -1,4 +1,4 @@
-# 扩展方法
+﻿# 扩展方法
 
 本页列出 Apq.Cfg 提供的所有扩展方法。
 
@@ -420,7 +420,7 @@ var cfg = new CfgBuilder()
 
 // 读取配置
 var host = cfg.Get("Database:Host");
-var port = cfg.Get<int>("Database:Port");
+var port = cfg.GetValue<int>("Database:Port");
 
 // 使用扩展方法
 var timeout = cfg.GetOrDefault("Database:Timeout", 30);

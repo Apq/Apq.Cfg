@@ -1,4 +1,4 @@
-# Database Configuration Source
+﻿# Database Configuration Source
 
 The database configuration source supports reading and writing configuration from relational databases, suitable for scenarios requiring centralized configuration management.
 
@@ -51,7 +51,7 @@ var cfg = new CfgBuilder()
 
 // Read configuration
 var connStr = cfg["Database:ConnectionString"];
-var timeout = cfg.Get<int>("Database:Timeout");
+var timeout = cfg.GetValue<int>("Database:Timeout");
 ```
 
 ## Method Signature

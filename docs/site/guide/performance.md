@@ -1,4 +1,4 @@
-# 性能优化
+﻿# 性能优化
 
 本指南介绍 Apq.Cfg 的性能优化策略和最佳实践。
 
@@ -24,9 +24,9 @@
 ```csharp
 // 每次调用都有锁开销
 var host = cfg.Get("Database:Host");
-var port = cfg.Get<int>("Database:Port");
+var port = cfg.GetValue<int>("Database:Port");
 var name = cfg.Get("Database:Name");
-var timeout = cfg.Get<int>("Database:Timeout");
+var timeout = cfg.GetValue<int>("Database:Timeout");
 ```
 
 #### ✅ 高效方式：批量获取（返回字典）
@@ -66,7 +66,7 @@ cfg.GetMany(new[] { "Database:Host", "Database:Port", "Database:Name", "Database
 
 ```csharp
 var host = cfg.Get("Application:Services:Database:Connection:Host");
-var port = cfg.Get<int>("Application:Services:Database:Connection:Port");
+var port = cfg.GetValue<int>("Application:Services:Database:Connection:Port");
 var name = cfg.Get("Application:Services:Database:Connection:Name");
 ```
 
@@ -75,7 +75,7 @@ var name = cfg.Get("Application:Services:Database:Connection:Name");
 ```csharp
 var dbSection = cfg.GetSection("Application:Services:Database:Connection");
 var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
+var port = dbSection.GetValue<int>("Port");
 var name = dbSection.Get("Name");
 ```
 
@@ -85,7 +85,7 @@ var name = dbSection.Get("Name");
 
 ```csharp
 // 运行时反射，性能较差
-var options = cfg.GetSection("Database").Get<DatabaseOptions>();
+var options = cfg.GetSection("Database").GetValue<DatabaseOptions>();
 ```
 
 #### ✅ 高效方式：源生成器（编译时生成）
@@ -178,7 +178,7 @@ public class ConfigCache
     private void RefreshCache()
     {
         _cachedConnectionString = _cfg.Get("Database:ConnectionString");
-        _cachedTimeout = _cfg.Get<int>("Database:Timeout");
+        _cachedTimeout = _cfg.GetValue<int>("Database:Timeout");
         _initialized = true;
     }
     

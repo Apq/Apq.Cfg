@@ -1,4 +1,4 @@
-# Apq.Cfg.Zookeeper
+﻿# Apq.Cfg.Zookeeper
 
 [![NuGet](https://img.shields.io/nuget/v/Apq.Cfg.Zookeeper)](https://www.nuget.org/packages/Apq.Cfg.Zookeeper)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -46,7 +46,7 @@ var cfg = new CfgBuilder()
 
 // 使用索引器访问
 var dbHost = cfg["Database:Host"];
-var dbPort = cfg.Get<int>("Database:Port");
+var dbPort = cfg.GetValue<int>("Database:Port");
 ```
 
 ### 简化用法

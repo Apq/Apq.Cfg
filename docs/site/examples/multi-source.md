@@ -1,4 +1,4 @@
-# 多配置源示例
+﻿# 多配置源示例
 
 本页展示如何组合使用多个配置源。
 
@@ -246,7 +246,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 // 使用配置
 var db = cfg.GetSection("Database");
-Console.WriteLine($"数据库: {db["Host"]}:{db.Get<int>("Port")}");
+Console.WriteLine($"数据库: {db["Host"]}:{db.GetValue<int>("Port")}");
 ```
 
 ## 下一步

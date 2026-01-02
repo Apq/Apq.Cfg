@@ -1,4 +1,4 @@
-# DI Integration Examples
+﻿# DI Integration Examples
 
 ASP.NET Core dependency injection integration.
 
@@ -32,7 +32,7 @@ public class MyController : ControllerBase
         return Ok(new
         {
             AppName = _cfg["App:Name"],
-            Port = _cfg.Get<int>("App:Port")
+            Port = _cfg.GetValue<int>("App:Port")
         });
     }
 }

@@ -1,4 +1,4 @@
-# 快速开始
+﻿# 快速开始
 
 本教程将帮助您在 5 分钟内上手 Apq.Cfg。
 
@@ -52,8 +52,8 @@ var appName = cfg["App:Name"];
 Console.WriteLine($"应用名称: {appName}");
 
 // 3. 读取类型化值
-var maxConnections = cfg.Get<int>("Database:MaxConnections");
-var enableConsole = cfg.Get<bool>("Logging:EnableConsole");
+var maxConnections = cfg.GetValue<int>("Database:MaxConnections");
+var enableConsole = cfg.GetValue<bool>("Logging:EnableConsole");
 Console.WriteLine($"最大连接数: {maxConnections}");
 Console.WriteLine($"启用控制台日志: {enableConsole}");
 

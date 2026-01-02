@@ -1,4 +1,4 @@
-# Basic Usage
+﻿# Basic Usage
 
 This guide covers the fundamental usage patterns of Apq.Cfg.
 
@@ -65,16 +65,16 @@ string name = cfg["App:Name"] ?? "DefaultApp";
 
 ```csharp
 // Integer
-int port = cfg.Get<int>("App:Port");
+int port = cfg.GetValue<int>("App:Port");
 
 // Boolean
-bool debug = cfg.Get<bool>("App:Debug");
+bool debug = cfg.GetValue<bool>("App:Debug");
 
 // Double
-double rate = cfg.Get<double>("App:Rate");
+double rate = cfg.GetValue<double>("App:Rate");
 
 // DateTime
-DateTime date = cfg.Get<DateTime>("App:StartDate");
+DateTime date = cfg.GetValue<DateTime>("App:StartDate");
 ```
 
 ### Check Existence
@@ -94,14 +94,14 @@ if (cfg.Exists("App:Name"))
 var dbSection = cfg.GetSection("Database");
 
 var host = dbSection["Host"];
-var port = dbSection.Get<int>("Port");
+var port = dbSection.GetValue<int>("Port");
 ```
 
 ### Nested Sections
 
 ```csharp
 var connSection = cfg.GetSection("Database:Connection");
-var timeout = connSection.Get<int>("Timeout");
+var timeout = connSection.GetValue<int>("Timeout");
 ```
 
 ### Enumerate Child Keys

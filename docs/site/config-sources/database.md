@@ -1,4 +1,4 @@
-# Database 配置源
+﻿# Database 配置源
 
 数据库配置源支持从关系型数据库读取和写入配置，适合需要集中管理配置的场景。
 
@@ -51,7 +51,7 @@ var cfg = new CfgBuilder()
 
 // 读取配置
 var connStr = cfg["Database:ConnectionString"];
-var timeout = cfg.Get<int>("Database:Timeout");
+var timeout = cfg.GetValue<int>("Database:Timeout");
 ```
 
 ## 方法签名

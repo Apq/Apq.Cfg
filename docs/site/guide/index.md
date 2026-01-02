@@ -1,4 +1,4 @@
-# 简介
+﻿# 简介
 
 Apq.Cfg 是一个高性能的 .NET 配置组件库，旨在提供统一、灵活、高效的配置管理解决方案。
 
@@ -111,7 +111,7 @@ var cfg = new CfgBuilder()
 
 // 读取配置
 var value = cfg.Get("Section:Key");
-var typedValue = cfg.Get<int>("Section:IntKey");
+var typedValue = cfg.GetValue<int>("Section:IntKey");
 ```
 
 ## 兼容性

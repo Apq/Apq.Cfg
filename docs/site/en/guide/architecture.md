@@ -1,4 +1,4 @@
-# Architecture
+﻿# Architecture
 
 This document describes the architecture design and core components of Apq.Cfg.
 
@@ -51,7 +51,7 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
     // Read operations
     string? Get(string key);
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     bool Exists(string key);
     ICfgSection GetSection(string key);
 

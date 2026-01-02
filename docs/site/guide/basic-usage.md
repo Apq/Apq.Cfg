@@ -1,4 +1,4 @@
-# 基础用法
+﻿# 基础用法
 
 本页详细介绍 Apq.Cfg 的基础用法。
 
@@ -75,12 +75,12 @@ var host = cfg.Get("Database:Host");
 
 ```csharp
 // 基本类型
-var port = cfg.Get<int>("Database:Port");
-var enabled = cfg.Get<bool>("Feature:Enabled");
-var ratio = cfg.Get<double>("Settings:Ratio");
+var port = cfg.GetValue<int>("Database:Port");
+var enabled = cfg.GetValue<bool>("Feature:Enabled");
+var ratio = cfg.GetValue<double>("Settings:Ratio");
 
 // 可空类型
-var maxSize = cfg.Get<int?>("Cache:MaxSize");
+var maxSize = cfg.GetValue<int?>("Cache:MaxSize");
 ```
 
 ### 扩展方法
@@ -124,7 +124,7 @@ var db = cfg.GetSection("Database");
 
 // 使用索引器读取子节的值
 var host = db["Host"];
-var port = db.Get<int>("Port");
+var port = db.GetValue<int>("Port");
 ```
 
 ### 嵌套配置节

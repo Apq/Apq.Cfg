@@ -51,7 +51,7 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
     // 读取操作
     string? Get(string key);
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     bool Exists(string key);
     ICfgSection GetSection(string key);
     
@@ -80,7 +80,7 @@ public interface ICfgSection
 {
     string Path { get; }
     string? Get(string key);
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     void Set(string key, string? value, int? targetLevel = null);
     ICfgSection GetSection(string key);
     IEnumerable<string> GetChildKeys();
@@ -387,7 +387,7 @@ public partial class AppConfig
         return new AppConfig
         {
             Name = section.Get("Name"),
-            Port = section.Get<int>("Port")
+            Port = section.GetValue<int>("Port")
         };
     }
 }

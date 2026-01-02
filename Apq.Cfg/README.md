@@ -1,4 +1,4 @@
-# Apq.Cfg
+﻿# Apq.Cfg
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -70,12 +70,12 @@ var cfg = new CfgBuilder()
 
 // 读取配置（使用索引器）
 var host = cfg["Database:Host"];
-var port = cfg.Get<int>("Database:Port");
+var port = cfg.GetValue<int>("Database:Port");
 
 // 使用配置节简化嵌套访问
 var db = cfg.GetSection("Database");
 var name = db["Name"];
-var timeout = db.Get<int>("Timeout");
+var timeout = db.GetValue<int>("Timeout");
 
 // 修改配置
 cfg["App:LastRun"] = DateTime.Now.ToString();

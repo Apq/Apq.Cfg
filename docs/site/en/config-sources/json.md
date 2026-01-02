@@ -1,4 +1,4 @@
-# JSON Configuration Source
+﻿# JSON Configuration Source
 
 JSON is the most commonly used configuration format, included in the core `Apq.Cfg` package.
 
@@ -57,8 +57,8 @@ var cfg = new CfgBuilder()
 
 // Read values
 var appName = cfg["App:Name"];
-var port = cfg.Get<int>("App:Port");
-var debug = cfg.Get<bool>("App:Debug");
+var port = cfg.GetValue<int>("App:Port");
+var debug = cfg.GetValue<bool>("App:Debug");
 ```
 
 ## Configuration Options
@@ -135,14 +135,14 @@ cfg.ConfigChanges.Subscribe(e =>
 ```csharp
 // Access by index
 var host1 = cfg["Servers:0:Host"];
-var port1 = cfg.Get<int>("Servers:0:Port");
+var port1 = cfg.GetValue<int>("Servers:0:Port");
 
 // Enumerate
 var serversSection = cfg.GetSection("Servers");
 foreach (var key in serversSection.GetChildKeys())
 {
     var server = serversSection.GetSection(key);
-    Console.WriteLine($"{server["Host"]}:{server.Get<int>("Port")}");
+    Console.WriteLine($"{server["Host"]}:{server.GetValue<int>("Port")}");
 }
 ```
 

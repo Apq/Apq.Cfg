@@ -1,4 +1,4 @@
-# 示例概述
+﻿# 示例概述
 
 本节提供 Apq.Cfg 的各种使用示例。
 
@@ -69,7 +69,7 @@ var dbSection = cfg.GetSection("Database");
 var dbConfig = new DatabaseConfig
 {
     Host = dbSection.Get("Host") ?? "localhost",
-    Port = dbSection.Get<int>("Port")
+    Port = dbSection.GetValue<int>("Port")
 };
 Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
 ```

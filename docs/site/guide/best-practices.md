@@ -1,4 +1,4 @@
-# 最佳实践
+﻿# 最佳实践
 
 本指南提供了使用 Apq.Cfg 进行配置管理的最佳实践，帮助开发者构建更加健壮、安全和可维护的配置系统。
 
@@ -191,7 +191,7 @@ public class ConfigurationHealthCheck : IHealthCheck
         try
         {
             // 验证数据库连接
-            var connectionString = _cfg.Get<string>("ConnectionStrings:DefaultConnection");
+            var connectionString = _cfg.GetValue<string>("ConnectionStrings:DefaultConnection");
             using var connection = new SqlConnection(connectionString);
             await connection.OpenAsync(cancellationToken);
 
@@ -278,7 +278,7 @@ public class CachedConfigurationService
     {
         var cacheKey = $"cfg_{key}";
 
-        return _cache.GetOrCreate(cacheKey, () => _cfg.Get<T>(key), _cacheDuration);
+        return _cache.GetOrCreate(cacheKey, () => _cfg.GetValue<T>(key), _cacheDuration);
     }
 }
 ```
@@ -293,9 +293,9 @@ var keys = new[] { "FeatureA:Enabled", "FeatureB:Enabled", "FeatureC:Enabled" };
 var features = cfg.GetMany(keys);
 
 // 避免：多次单独获取
-var featureA = cfg.Get<bool>("FeatureA:Enabled");
-var featureB = cfg.Get<bool>("FeatureB:Enabled");
-var featureC = cfg.Get<bool>("FeatureC:Enabled");
+var featureA = cfg.GetValue<bool>("FeatureA:Enabled");
+var featureB = cfg.GetValue<bool>("FeatureB:Enabled");
+var featureC = cfg.GetValue<bool>("FeatureC:Enabled");
 ```
 
 ## 7. 监控和诊断

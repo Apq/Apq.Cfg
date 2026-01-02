@@ -1,4 +1,4 @@
-# Basic Examples
+﻿# Basic Examples
 
 Basic configuration reading and type conversion examples.
 
@@ -15,13 +15,13 @@ var cfg = new CfgBuilder()
 var name = cfg["App:Name"];
 
 // Integer value
-var port = cfg.Get<int>("App:Port");
+var port = cfg.GetValue<int>("App:Port");
 
 // Boolean value
-var debug = cfg.Get<bool>("App:Debug");
+var debug = cfg.GetValue<bool>("App:Debug");
 
 // With default value
-var timeout = cfg.Get<int?>("App:Timeout") ?? 30;
+var timeout = cfg.GetValue<int?>("App:Timeout") ?? 30;
 ```
 
 ## Configuration Sections
@@ -30,7 +30,7 @@ var timeout = cfg.Get<int?>("App:Timeout") ?? 30;
 var dbSection = cfg.GetSection("Database");
 
 var host = dbSection["Host"];
-var port = dbSection.Get<int>("Port");
+var port = dbSection.GetValue<int>("Port");
 var name = dbSection["Name"];
 
 Console.WriteLine($"Database: {host}:{port}/{name}");

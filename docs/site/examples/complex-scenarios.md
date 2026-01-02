@@ -79,7 +79,7 @@ public class ConfigurationMigrator
 
     public async Task<bool> MigrateIfNeededAsync()
     {
-        var currentVersion = _cfg.Get<string?>("ConfigVersion");
+        var currentVersion = _cfg.GetValue<string?>("ConfigVersion");
         var targetVersion = "2.0";
 
         if (currentVersion == targetVersion)
@@ -113,7 +113,7 @@ public class ConfigurationMigrator
     private async Task MigrateFrom1To2Async()
     {
         // 示例：迁移数据库连接字符串格式
-        var oldConnectionString = _cfg.Get<string>("ConnectionStrings:DefaultConnection");
+        var oldConnectionString = _cfg.GetValue<string>("ConnectionStrings:DefaultConnection");
         if (oldConnectionString.StartsWith("Server="))
         {
             // 解析旧格式
@@ -146,7 +146,7 @@ public class ConfigurationMigrator
 
             foreach (var key in oldFlags.GetChildKeys())
             {
-                var value = oldFlags.Get<bool>(key);
+                var value = oldFlags.GetValue<bool>(key);
                 newFlags[$"Features:{key}:Enabled"] = value;
             }
 
@@ -192,7 +192,7 @@ public class DynamicConfigurationManager : IDisposable
 
         return (bool)_featureCache.GetOrAdd(cacheKey, _ =>
         {
-            var value = _cfg.Get<bool>($"Features:{featureName}:Enabled");
+            var value = _cfg.GetValue<bool>($"Features:{featureName}:Enabled");
             _logger.LogDebug("功能 {FeatureName} 状态: {IsEnabled}", featureName, value);
             return (object)value;
         });
@@ -386,7 +386,7 @@ public class ConfigurationCenterIntegration
             var changes = new Dictionary<string, string?>();
             foreach (var config in centerConfigs)
             {
-                var localValue = _cfg.Get<string?>(config.Key);
+                var localValue = _cfg.GetValue<string?>(config.Key);
 
                 // 如果本地不存在或值不同，则更新
                 if (localValue == null || localValue != config.Value)
@@ -649,7 +649,7 @@ public class SecureConfigurationManager
 
     public string Get(string key)
     {
-        var value = _cfg.Get<string?>(key);
+        var value = _cfg.GetValue<string?>(key);
 
         if (value == null)
             return null;
@@ -749,7 +749,7 @@ public class ComplianceConfigurationManager
         var violations = new List<ComplianceViolation>();
 
         // 检查密码复杂度要求
-        var password = _cfg.Get<string>("Security:PasswordPolicy");
+        var password = _cfg.GetValue<string>("Security:PasswordPolicy");
         if (!string.IsNullOrEmpty(password))
         {
             var passwordViolation = await _complianceChecker.CheckPasswordComplianceAsync(password);
@@ -760,7 +760,7 @@ public class ComplianceConfigurationManager
         }
 
         // 检查数据加密要求
-        var encryptionEnabled = _cfg.Get<bool>("Security:EncryptionEnabled");
+        var encryptionEnabled = _cfg.GetValue<bool>("Security:EncryptionEnabled");
         if (!encryptionEnabled)
         {
             violations.Add(new ComplianceViolation
@@ -772,8 +772,8 @@ public class ComplianceConfigurationManager
         }
 
         // 检查审计日志要求
-        var auditLogEnabled = _cfg.Get<bool>("Audit:Enabled");
-        var auditLogRetentionDays = _cfg.Get<int>("Audit:RetentionDays");
+        var auditLogEnabled = _cfg.GetValue<bool>("Audit:Enabled");
+        var auditLogRetentionDays = _cfg.GetValue<int>("Audit:RetentionDays");
         if (!auditLogEnabled || auditLogRetentionDays < 365)
         {
             violations.Add(new ComplianceViolation

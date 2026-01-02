@@ -1,4 +1,4 @@
-# Complex Scenarios
+﻿# Complex Scenarios
 
 Enterprise application configuration patterns.
 
@@ -49,7 +49,7 @@ public class FeatureService
 
     public bool IsEnabled(string feature)
     {
-        return _cfg.Get<bool>($"Features:{feature}:Enabled");
+        return _cfg.GetValue<bool>($"Features:{feature}:Enabled");
     }
 
     public T GetFeatureConfig<T>(string feature) where T : new()

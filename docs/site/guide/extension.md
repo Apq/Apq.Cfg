@@ -552,7 +552,7 @@ public class ConnectionString
 }
 
 // 使用
-var connStr = cfg.Get<ConnectionString>("Database:ConnectionString");
+var connStr = cfg.GetValue<ConnectionString>("Database:ConnectionString");
 ```
 
 ## 开发 CfgBuilder 扩展

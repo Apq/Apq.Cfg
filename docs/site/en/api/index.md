@@ -1,4 +1,4 @@
-# API Overview
+﻿# API Overview
 
 This section provides the complete API reference for Apq.Cfg.
 
@@ -40,7 +40,7 @@ var cfg = new CfgBuilder()
 string? value = cfg.Get("App:Name");
 
 // Typed value
-int port = cfg.Get<int>("App:Port");
+int port = cfg.GetValue<int>("App:Port");
 
 // Check existence
 bool exists = cfg.Exists("App:Name");

@@ -1,4 +1,4 @@
-# Zookeeper 配置源
+﻿# Zookeeper 配置源
 
 Zookeeper 是一个分布式协调服务，常用于配置管理和服务发现。
 
@@ -41,7 +41,7 @@ var cfg = new CfgBuilder()
 
 // 读取配置
 var dbHost = cfg["Database:Host"];
-var dbPort = cfg.Get<int>("Database:Port");
+var dbPort = cfg.GetValue<int>("Database:Port");
 ```
 
 ### 简化用法

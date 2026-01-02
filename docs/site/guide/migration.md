@@ -1,4 +1,4 @@
-# 从 Microsoft.Extensions.Configuration 迁移
+﻿# 从 Microsoft.Extensions.Configuration 迁移
 
 本指南帮助您从 `Microsoft.Extensions.Configuration` 迁移到 Apq.Cfg。
 
@@ -60,7 +60,7 @@ var section = config.GetSection("Section");
 
 // 之后
 var value = cfg["Section:Key"];
-var typedValue = cfg.Get<int>("Section:Key");
+var typedValue = cfg.GetValue<int>("Section:Key");
 var section = cfg.GetSection("Section");
 ```
 
@@ -200,7 +200,7 @@ cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
 | Microsoft.Extensions.Configuration | Apq.Cfg | 说明 |
 |-----------------------------------|---------|------|
 | `config["Key"]` | `cfg["Key"]` | 相同 |
-| `config.GetValue<T>("Key")` | `cfg.Get<T>("Key")` | 方法名更简洁 |
+| `config.GetValue<T>("Key")` | `cfg.GetValue<T>("Key")` | 方法名更简洁 |
 | `config.GetValue<T>("Key", default)` | `cfg.GetOrDefault("Key", default)` | 更明确的语义 |
 | `config.GetSection("Path")` | `cfg.GetSection("Path")` | 相同 |
 | `config.GetChildren()` | `cfg.GetChildKeys()` | 返回键名列表 |

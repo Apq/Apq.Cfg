@@ -1,4 +1,4 @@
-# ICfgSection
+﻿# ICfgSection
 
 Configuration section interface for accessing sub-trees.
 
@@ -20,7 +20,7 @@ Get a value relative to this section.
 
 ```csharp
 string? Get(string key)
-T? Get<T>(string key)
+T? GetValue<T>(string key)
 ```
 
 ### Set
@@ -54,11 +54,11 @@ var dbSection = cfg.GetSection("Database");
 
 // Read values
 var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
+var port = dbSection.GetValue<int>("Port");
 
 // Nested section
 var connSection = dbSection.GetSection("Connection");
-var timeout = connSection.Get<int>("Timeout");
+var timeout = connSection.GetValue<int>("Timeout");
 
 // Enumerate children
 foreach (var key in dbSection.GetChildKeys())

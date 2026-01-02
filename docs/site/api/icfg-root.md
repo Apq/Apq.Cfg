@@ -1,4 +1,4 @@
-# ICfgRoot API
+﻿# ICfgRoot API
 
 `ICfgRoot` 是配置根接口，提供配置读写的核心功能。
 
@@ -9,23 +9,23 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
 {
     // 读取操作
     string? Get(string key);
-    T? Get<T>(string key);
+    T? GetValue<T>(string key);
     bool Exists(string key);
     ICfgSection GetSection(string key);
     IEnumerable<string> GetChildKeys();
-    
+
     // 写入操作
-    void Set(string key, string? value, int? targetLevel = null);
+    void SetValue(string key, string? value, int? targetLevel = null);
     void Remove(string key, int? targetLevel = null);
     Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default);
-    
+
     // 批量操作
     IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys);
     IReadOnlyDictionary<string, T?> GetMany<T>(IEnumerable<string> keys);
     void GetMany(IEnumerable<string> keys, Action<string, string?> onValue);
     void GetMany<T>(IEnumerable<string> keys, Action<string, T?> onValue);
-    void SetMany(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
-    
+    void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null);
+
     // 转换与事件
     IConfigurationRoot ToMicrosoftConfiguration();
     IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options);
@@ -55,10 +55,10 @@ var port = cfg.Get("Database:Port");
 var nested = cfg.Get("Services:Api:Url");
 ```
 
-### Get&lt;T&gt;
+### GetValue&lt;T&gt;
 
 ```csharp
-T? Get<T>(string key)
+T? GetValue<T>(string key)
 ```
 
 获取类型化的配置值。
@@ -70,9 +70,9 @@ T? Get<T>(string key)
 
 **示例：**
 ```csharp
-var port = cfg.Get<int>("Database:Port");
-var timeout = cfg.Get<int>("Database:Timeout");
-var enabled = cfg.Get<bool>("Feature:Enabled");
+var port = cfg.GetValue<int>("Database:Port");
+var timeout = cfg.GetValue<int>("Database:Timeout");
+var enabled = cfg.GetValue<bool>("Feature:Enabled");
 ```
 
 ### Exists
@@ -113,7 +113,7 @@ ICfgSection GetSection(string key)
 ```csharp
 var dbSection = cfg.GetSection("Database");
 var host = dbSection.Get("Host");
-var port = dbSection.Get<int>("Port");
+var port = dbSection.GetValue<int>("Port");
 ```
 
 ### GetChildKeys
@@ -388,12 +388,12 @@ var cfg = new CfgBuilder()
 
 // 读取配置
 var host = cfg.Get("Database:Host");
-var port = cfg.Get<int>("Database:Port");
+var port = cfg.GetValue<int>("Database:Port");
 
 // 检查配置是否存在
 if (cfg.Exists("OptionalFeature:Enabled"))
 {
-    var enabled = cfg.Get<bool>("OptionalFeature:Enabled");
+    var enabled = cfg.GetValue<bool>("OptionalFeature:Enabled");
 }
 
 // 获取所有顶级键

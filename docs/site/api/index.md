@@ -1,4 +1,4 @@
-# API 参考
+﻿# API 参考
 
 本节包含 Apq.Cfg 所有公开 API 的详细文档。
 
@@ -42,7 +42,7 @@ var cfg = new CfgBuilder()
 string? value = cfg.Get("App:Name");
 
 // 类型化值
-int port = cfg.Get<int>("App:Port");
+int port = cfg.GetValue<int>("App:Port");
 
 // 检查是否存在
 bool exists = cfg.Exists("App:Name");

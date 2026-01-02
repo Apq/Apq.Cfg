@@ -1,4 +1,4 @@
-# Apq.Cfg.Env
+﻿# Apq.Cfg.Env
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -43,7 +43,7 @@ var dbHost = cfg["DATABASE:HOST"];
 // 使用配置节
 var db = cfg.GetSection("DATABASE");
 var host = db["HOST"];
-var port = db.Get<int>("PORT");
+var port = db.GetValue<int>("PORT");
 ```
 
 ## 方法签名

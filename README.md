@@ -1,4 +1,4 @@
-# Apq.Cfg
+﻿# Apq.Cfg
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -72,12 +72,12 @@ var cfg = new CfgBuilder()
 
 // 读取配置（使用索引器）
 var host = cfg["Database:Host"];
-var port = cfg.Get<int>("Database:Port");
+var port = cfg.GetValue<int>("Database:Port");
 
 // 使用配置节简化嵌套访问
 var db = cfg.GetSection("Database");
 var name = db["Name"];
-var timeout = db.Get<int>("Timeout");
+var timeout = db.GetValue<int>("Timeout");
 
 // 修改配置
 cfg["App:LastRun"] = DateTime.Now.ToString();
@@ -91,7 +91,7 @@ await cfg.SaveAsync();
 | 问题        | 原因                 | 解决方案                                                       |
 | --------- | ------------------ | ---------------------------------------------------------- |
 | 配置返回 null | 路径错误/文件不存在         | 使用 `Path.Combine(AppContext.BaseDirectory, "config.json")` |
-| 类型转换失败    | 值格式不正确             | 使用 `cfg.Get<int?>("Key") ?? 默认值` 或 `TryGet<T>()`           |
+| 类型转换失败    | 值格式不正确             | 使用 `cfg.GetValue<int?>("Key") ?? 默认值` 或 `TryGetValue<T>()`           |
 | 远程配置连接失败  | 网络/认证问题            | 添加 `OnConnectFailed` 回调，使用 try-catch 降级到本地配置               |
 | 热重载不生效    | 未启用 reloadOnChange | 添加 `reloadOnChange: true` 参数                               |
 | 编码乱码      | 非 UTF-8 文件         | 使用 `AddReadEncodingMapping()` 指定编码                         |
@@ -348,7 +348,7 @@ var cfg = new CfgBuilder()
 
 // 读取配置（DATABASE__HOST 自动转换为 DATABASE:HOST）
 var dbHost = cfg["DATABASE:HOST"];
-var dbPort = cfg.Get<int>("DATABASE:PORT");
+var dbPort = cfg.GetValue<int>("DATABASE:PORT");
 ```
 
 .env 文件示例：

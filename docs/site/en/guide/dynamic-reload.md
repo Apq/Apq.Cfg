@@ -1,4 +1,4 @@
-# Dynamic Reload
+﻿# Dynamic Reload
 
 Apq.Cfg supports hot reloading configuration without restarting your application.
 
@@ -94,8 +94,8 @@ public class MyService
     {
         return new ServiceConfig
         {
-            Timeout = _cfg.Get<int>("Service:Timeout"),
-            RetryCount = _cfg.Get<int>("Service:RetryCount")
+            Timeout = _cfg.GetValue<int>("Service:Timeout"),
+            RetryCount = _cfg.GetValue<int>("Service:RetryCount")
         };
     }
 }

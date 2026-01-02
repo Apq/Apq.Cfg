@@ -1,4 +1,4 @@
-# Introduction
+﻿# Introduction
 
 Apq.Cfg is a powerful, flexible, and high-performance .NET configuration library.
 
@@ -108,7 +108,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 var appName = cfg.Get("App:Name");
-var port = cfg.Get<int>("App:Port");
+var port = cfg.GetValue<int>("App:Port");
 ```
 
 ## Supported Platforms

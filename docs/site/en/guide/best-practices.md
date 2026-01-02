@@ -1,4 +1,4 @@
-# Best Practices
+﻿# Best Practices
 
 This guide covers best practices for using Apq.Cfg effectively.
 
@@ -78,7 +78,7 @@ logger.LogInfo($"Password: {cfg.GetMasked("Database:Password")}");
 ### Handle Missing Configuration
 
 ```csharp
-var timeout = cfg.Get<int?>("Service:Timeout") ?? 30;
+var timeout = cfg.GetValue<int?>("Service:Timeout") ?? 30;
 ```
 
 ### Validate Required Configuration

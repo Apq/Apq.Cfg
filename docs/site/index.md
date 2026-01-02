@@ -79,7 +79,7 @@ var connectionString = cfg["Database:ConnectionString"];
 var timeout = cfg.GetValue<int>("Database:Timeout");
 
 // 绑定到强类型对象
-var dbConfig = cfg.GetSection("Database").Get<DatabaseConfig>();
+var dbConfig = cfg.GetSection("Database").GetValue<DatabaseConfig>();
 ```
 
 ## 支持的配置源

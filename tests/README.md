@@ -292,7 +292,7 @@ CryptoTests 包含 58 个测试，覆盖所有加密脱敏公开功能：
 |--------------|------|
 | ReadWriteBenchmarks | 不同配置源的 Get/Set/Exists 性能对比 |
 | CacheBenchmarks | 缓存效果测试（热路径、缓存命中/未命中）|
-| TypeConversionBenchmarks | 类型转换性能测试（含 TryGet/GetRequired/GetOrDefault）|
+| TypeConversionBenchmarks | 类型转换性能测试（含 TryGetValue/GetRequired/GetOrDefault）|
 | ConcurrencyBenchmarks | 并发读写性能测试 |
 | GetSectionBenchmarks | GetSection/GetChildKeys 性能测试 |
 | SaveBenchmarks | SaveAsync 持久化性能测试 |

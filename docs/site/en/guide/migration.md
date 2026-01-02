@@ -1,4 +1,4 @@
-# Migrating from Microsoft.Extensions.Configuration
+﻿# Migrating from Microsoft.Extensions.Configuration
 
 This guide helps you migrate from `Microsoft.Extensions.Configuration` to Apq.Cfg.
 
@@ -60,7 +60,7 @@ var section = config.GetSection("Section");
 
 // After
 var value = cfg["Section:Key"];
-var typedValue = cfg.Get<int>("Section:Key");
+var typedValue = cfg.GetValue<int>("Section:Key");
 var section = cfg.GetSection("Section");
 ```
 
@@ -200,7 +200,7 @@ cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
 | Microsoft.Extensions.Configuration | Apq.Cfg | Notes |
 |-----------------------------------|---------|-------|
 | `config["Key"]` | `cfg["Key"]` | Same |
-| `config.GetValue<T>("Key")` | `cfg.Get<T>("Key")` | Shorter method name |
+| `config.GetValue<T>("Key")` | `cfg.GetValue<T>("Key")` | Shorter method name |
 | `config.GetValue<T>("Key", default)` | `cfg.GetOrDefault("Key", default)` | Clearer semantics |
 | `config.GetSection("Path")` | `cfg.GetSection("Path")` | Same |
 | `config.GetChildren()` | `cfg.GetChildKeys()` | Returns key names |

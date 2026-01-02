@@ -1,4 +1,4 @@
-# Dependency Injection
+﻿# Dependency Injection
 
 Apq.Cfg integrates seamlessly with ASP.NET Core dependency injection.
 
@@ -96,7 +96,7 @@ builder.Services.AddScoped<RequestConfig>(sp =>
     var cfg = sp.GetRequiredService<ICfgRoot>();
     return new RequestConfig
     {
-        Timeout = cfg.Get<int>("Request:Timeout")
+        Timeout = cfg.GetValue<int>("Request:Timeout")
     };
 });
 ```

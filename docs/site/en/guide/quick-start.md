@@ -1,4 +1,4 @@
-# Quick Start
+﻿# Quick Start
 
 This guide will help you get started with Apq.Cfg in 5 minutes.
 
@@ -42,11 +42,11 @@ var appName = cfg["App:Name"];
 Console.WriteLine($"App Name: {appName}");
 
 // Read typed value
-var port = cfg.Get<int>("App:Port");
+var port = cfg.GetValue<int>("App:Port");
 Console.WriteLine($"Port: {port}");
 
 // Read boolean value
-var debug = cfg.Get<bool>("App:Debug");
+var debug = cfg.GetValue<bool>("App:Debug");
 Console.WriteLine($"Debug: {debug}");
 ```
 
@@ -58,7 +58,7 @@ var dbSection = cfg.GetSection("Database");
 
 // Read values from section
 var host = dbSection["Host"];
-var dbPort = dbSection.Get<int>("Port");
+var dbPort = dbSection.GetValue<int>("Port");
 var dbName = dbSection["Name"];
 
 Console.WriteLine($"Database: {host}:{dbPort}/{dbName}");

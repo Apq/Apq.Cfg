@@ -1,4 +1,4 @@
-# 基础示例
+﻿# 基础示例
 
 本页展示 Apq.Cfg 的基础用法示例。
 
@@ -47,15 +47,15 @@ Console.WriteLine($"数据库主机: {dbHost}");
 
 ```csharp
 // 整数
-var port = cfg.Get<int>("Database:Port");
+var port = cfg.GetValue<int>("Database:Port");
 Console.WriteLine($"端口: {port}");
 
 // 布尔值
-var debug = cfg.Get<bool>("App:Debug");
+var debug = cfg.GetValue<bool>("App:Debug");
 Console.WriteLine($"调试模式: {debug}");
 
 // 超时
-var timeout = cfg.Get<int>("Database:Timeout");
+var timeout = cfg.GetValue<int>("Database:Timeout");
 Console.WriteLine($"超时: {timeout}秒");
 ```
 
@@ -67,7 +67,7 @@ Console.WriteLine($"超时: {timeout}秒");
 var db = cfg.GetSection("Database");
 
 Console.WriteLine($"主机: {db["Host"]}");
-Console.WriteLine($"端口: {db.Get<int>("Port")}");
+Console.WriteLine($"端口: {db.GetValue<int>("Port")}");
 Console.WriteLine($"数据库: {db["Database"]}");
 ```
 
@@ -131,16 +131,16 @@ var appConfig = new AppConfig
 {
     Name = app["Name"] ?? "",
     Version = app["Version"] ?? "",
-    Debug = app.Get<bool>("Debug")
+    Debug = app.GetValue<bool>("Debug")
 };
 
 var db = cfg.GetSection("Database");
 var dbConfig = new DatabaseConfig
 {
     Host = db["Host"] ?? "localhost",
-    Port = db.Get<int>("Port"),
+    Port = db.GetValue<int>("Port"),
     Database = db["Database"] ?? "",
-    Timeout = db.Get<int>("Timeout")
+    Timeout = db.GetValue<int>("Timeout")
 };
 
 Console.WriteLine($"应用: {appConfig.Name} v{appConfig.Version}");
@@ -258,13 +258,13 @@ Console.WriteLine($"=== {app["Name"]} v{app["Version"]} ===");
 
 // 读取数据库配置
 var db = cfg.GetSection("Database");
-Console.WriteLine($"数据库: {db["Host"]}:{db.Get<int>("Port")}");
+Console.WriteLine($"数据库: {db["Host"]}:{db.GetValue<int>("Port")}");
 
 // 读取功能配置
 var features = cfg.GetSection("Features");
-if (features.Get<bool>("EnableCache"))
+if (features.GetValue<bool>("EnableCache"))
 {
-    Console.WriteLine($"缓存已启用，大小: {features.Get<int>("CacheSize")}");
+    Console.WriteLine($"缓存已启用，大小: {features.GetValue<int>("CacheSize")}");
 }
 
 // 遍历所有顶级配置

@@ -1,4 +1,4 @@
-# Apq.Cfg.Database
+﻿# Apq.Cfg.Database
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -55,7 +55,7 @@ var cfg = new CfgBuilder()
 
 // 使用索引器访问
 var connStr = cfg["Database:ConnectionString"];
-var timeout = cfg.Get<int>("Database:Timeout");
+var timeout = cfg.GetValue<int>("Database:Timeout");
 ```
 
 ## 方法签名

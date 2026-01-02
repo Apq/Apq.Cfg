@@ -1,4 +1,4 @@
-# ICfgRoot
+﻿# ICfgRoot
 
 The main configuration root interface.
 
@@ -20,7 +20,7 @@ Get a configuration value.
 
 ```csharp
 string? Get(string key)
-T? Get<T>(string key)
+T? GetValue<T>(string key)
 ```
 
 ### Exists
@@ -93,7 +93,7 @@ IConfigurationRoot ToMicrosoftConfiguration()
 ```csharp
 // Read
 var name = cfg.Get("App:Name");
-var port = cfg.Get<int>("App:Port");
+var port = cfg.GetValue<int>("App:Port");
 
 // Write
 cfg.Set("App:Name", "NewName");
