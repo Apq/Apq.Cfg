@@ -21,7 +21,7 @@ export default defineConfig({
       // 匹配任意虚拟目录下的 /api 请求
       // 例如: /api/*, /xxx/api/*, /a/b/api/*
       '^(/[^/]+)*/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:38678',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^(\/[^/]+)*\/api/, '/api')
       }
