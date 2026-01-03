@@ -1,4 +1,7 @@
 <Project>
+  <!-- 导入解决方案级别的版本定义 -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
   <!-- 禁用 NuGet 包生成，WebUI 只发布为 Docker 镜像 -->
   <PropertyGroup>
     <IsPackable>false</IsPackable>
