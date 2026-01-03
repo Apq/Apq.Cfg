@@ -30,7 +30,7 @@ dotnet test tests/Apq.Cfg.Tests.Net10/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 532 个测试，41 个需外部服务）
+## 测试统计（共 552 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
