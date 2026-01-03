@@ -16,7 +16,7 @@ COPY *.csproj ./
 RUN dotnet restore
 COPY . ./
 COPY --from=frontend /wwwroot ./wwwroot
-RUN dotnet publish -c Release -o /app --no-restore
+RUN dotnet publish -c Release -o /app --no-restore -f net10.0
 
 # 运行时
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine
