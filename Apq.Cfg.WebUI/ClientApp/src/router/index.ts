@@ -12,8 +12,10 @@ function getBasePath(): string {
   const knownRoutes = ['/self', '/app/']
   for (const route of knownRoutes) {
     const idx = base.indexOf(route)
-    if (idx > 0) {
-      base = base.substring(0, idx + 1)
+    if (idx >= 0) {
+      // idx === 0 表示从根目录访问，base 应该是 /
+      // idx > 0 表示有虚拟目录前缀，base 应该是前缀部分
+      base = idx === 0 ? '/' : base.substring(0, idx + 1)
       break
     }
   }

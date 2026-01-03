@@ -4,21 +4,26 @@ import { ElMessage } from 'element-plus'
 // 动态获取基础路径，支持任意虚拟目录部署
 // 从当前页面 URL 推断 API 基础路径
 function getBaseUrl(): string {
-  // 获取当前页面的路径，去掉最后的文件名或路由部分
   const pathname = window.location.pathname
-  // 找到最后一个 / 的位置（排除 hash 路由的部分）
-  // 例如：/apqcfg/ -> /apqcfg/
-  // 例如：/apqcfg/self -> /apqcfg/
-  // 例如：/ -> /
 
   // 如果路径以 index.html 结尾，去掉它
   let base = pathname.replace(/\/index\.html$/, '/')
 
+  // 检查是否是已知的路由路径，如果是则去掉
+  const knownRoutes = ['/self', '/app/']
+  for (const route of knownRoutes) {
+    const idx = base.indexOf(route)
+    if (idx >= 0) {
+      // idx === 0 表示从根目录访问，base 应该是 /
+      // idx > 0 表示有虚拟目录前缀，base 应该是前缀部分
+      base = idx === 0 ? '/' : base.substring(0, idx + 1)
+      break
+    }
+  }
+
   // 确保以 / 结尾
   if (!base.endsWith('/')) {
-    // 去掉最后一段路由路径
-    const lastSlash = base.lastIndexOf('/')
-    base = base.substring(0, lastSlash + 1)
+    base += '/'
   }
 
   return base
