@@ -30,7 +30,7 @@ dotnet test tests/Apq.Cfg.Tests.Net10/
 dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 ```
 
-## 测试统计（共 497 个测试，41 个需外部服务）
+## 测试统计（共 532 个测试，41 个需外部服务）
 
 | 测试类 | 测试数量 | 跳过 | 说明 |
 |--------|----------|------|------|
@@ -66,6 +66,8 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | **ValidationTests** | **30** | **0** | **配置验证测试（Required/Range/Regex/OneOf/Length/DependsOn/Custom）**|
 | **SnapshotTests** | **17** | **0** | **配置快照导出测试（JSON/KeyValue/Env/过滤/脱敏）**|
 | **TemplateTests** | **21** | **0** | **配置模板与变量替换测试（变量引用/环境变量/系统属性/循环检测）**|
+| **WebApiOptionsTests** | **7** | **0** | **WebApi 配置选项测试（默认值/属性/JWT/敏感键模式）**|
+| **ConfigApiServiceTests** | **28** | **0** | **WebApi 服务测试（读取/写入/导出/敏感值脱敏/多层级）**|
 
 ### 跳过测试说明
 
@@ -241,8 +243,43 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | **配置验证** | **ValidationTests** | **30** | **0** |
 | **配置快照导出** | **SnapshotTests** | **17** | **0** |
 | **配置模板** | **TemplateTests** | **21** | **0** |
+| **Web API** | **WebApiOptionsTests, ConfigApiServiceTests** | **35** | **0** |
 
 > 注：基本读写测试中 41 个跳过的测试需要外部服务（Zookeeper/Apollo/Consul/Etcd/Nacos/Vault），Redis 和 Database 已配置
+
+## Web API 测试详情
+
+WebApiOptionsTests 和 ConfigApiServiceTests 共 35 个测试，覆盖 WebApi 公开功能：
+
+### WebApiOptionsTests（7 个测试）
+
+| 测试 | 覆盖功能 |
+|------|----------|
+| DefaultValues_AreCorrect | 验证所有默认值 |
+| SectionName_IsCorrect | 配置节名称 |
+| SensitiveKeyPatterns_HasDefaultPatterns | 默认敏感键模式 |
+| OpenApiOptions_HasDefaultValues | OpenAPI 默认配置 |
+| Properties_CanBeModified | 属性可修改 |
+| JwtOptions_CanBeConfigured | JWT 配置 |
+| SensitiveKeyPatterns_CanBeCustomized | 自定义敏感键模式 |
+
+### ConfigApiServiceTests（28 个测试）
+
+| 测试类别 | 测试数 | 覆盖功能 |
+|----------|--------|----------|
+| GetMergedConfig | 1 | 获取合并后的所有配置 |
+| GetMergedValue | 4 | 获取单个值（存在/不存在/敏感值脱敏/禁用脱敏）|
+| GetMergedSection | 1 | 获取配置节 |
+| GetMergedTree | 1 | 获取配置树结构 |
+| GetSources | 1 | 获取配置源列表 |
+| SetValue | 1 | 设置配置值 |
+| BatchUpdate | 1 | 批量更新配置 |
+| DeleteKey | 1 | 删除配置键 |
+| Reload | 1 | 重新加载配置 |
+| Export | 3 | 导出配置（JSON/Env/KeyValue 格式）|
+| SensitiveKeyDetection | 11 | 敏感键检测（参数化测试）|
+| CustomSensitivePatterns | 1 | 自定义敏感模式 |
+| MultiLevel | 1 | 多层级配置覆盖 |
 
 ## 加密脱敏测试详情
 

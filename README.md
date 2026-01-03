@@ -62,18 +62,23 @@ var cfg = new CfgBuilder()
     .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     .Build();
 
-// 注册配置 API
-builder.Services.AddApqCfgWebApi(cfg, options =>
+// 注册配置和 API 服务
+builder.Services.AddSingleton<ICfgRoot>(cfg);
+builder.Services.AddApqCfgWebApi(options =>
 {
-    options.RoutePrefix = "api/apqcfg";
-    options.AuthenticationType = AuthenticationType.ApiKey;
+    options.Authentication = AuthenticationType.ApiKey;
     options.ApiKey = "your-secret-key";
 });
 
 var app = builder.Build();
 app.UseApqCfgWebApi();
+app.MapApqCfgWebApi();
 app.Run();
 ```
+
+API 文档 UI 根据目标框架自动选择：
+- .NET 8：Swagger UI (`/swagger`)
+- .NET 10+：Scalar (`/scalar/v1`)
 
 ## 配置源层级
 
