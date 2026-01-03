@@ -109,7 +109,7 @@ Write-Host ''
 if ([string]::IsNullOrWhiteSpace($ApiKey)) {
     # 从文件读取 API Key
     if (Test-Path $ApiKeyFile) {
-        $ApiKey = (Get-Content $ApiKeyFile -Raw -Encoding UTF8).Trim()
+        $ApiKey = (Get-Content $ApiKeyFile -First 1 -Encoding UTF8).Trim()
         if ([string]::IsNullOrWhiteSpace($ApiKey)) {
             Write-ColorText '错误: API Key 文件内容为空' 'Red'
             Write-ColorText "路径: $ApiKeyFile" 'Red'
