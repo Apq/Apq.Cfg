@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Apq.Cfg.Vault</RootNamespace>
+    <Description>Apq.Cfg HashiCorp Vault 扩展，支持密钥管理和热重载</Description>
+    <PackageTags>configuration;vault;hashicorp;secrets;key-value</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+  </ItemGroup>
+
+</Project>

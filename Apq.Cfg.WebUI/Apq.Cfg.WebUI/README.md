@@ -1,0 +1,119 @@
+# Apq.Cfg.WebUI
+
+[![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
+
+Apq.Cfg 配置管理 Web 界面，集中管理多个应用的配置。
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
+
+## 功能特性
+
+- 多应用管理、配置树视图、实时编辑
+- 敏感值脱敏、多格式导出（JSON/ENV/KV）
+- 支持 API Key / JWT Bearer 认证
+
+## 技术栈
+
+- **后端**：ASP.NET Core 8.0/10.0
+- **前端**：Vue 3 + TypeScript + Element Plus
+
+## 快速开始
+
+### Docker
+
+```bash
+# 使用阿里云镜像（推荐）
+docker run -d -p 8080:80 --name apqcfg-webui registry.cn-chengdu.aliyuncs.com/apq/apqcfg-webui
+
+# 访问 http://localhost:8080
+```
+
+### 本地开发
+
+```bash
+# 前端
+cd ClientApp && npm install && npm run dev
+
+# 后端
+dotnet run -f net10.0
+```
+
+## 应用端点配置
+
+WebUI 转发请求到各应用的配置 API：
+
+```json
+{
+    "id": "app-1",
+    "name": "订单服务",
+    "url": "http://localhost:5000/api/apqcfg",
+    "authType": "ApiKey",
+    "apiKey": "your-api-key"
+}
+```
+
+## API 端点
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET/POST/PUT/DELETE | `/api/apps` | 应用管理 |
+| GET | `/api/proxy/{appId}/tree` | 获取配置树 |
+| PUT | `/api/proxy/{appId}/values/{key}` | 设置配置值 |
+| POST | `/api/proxy/{appId}/save` | 保存配置 |
+| GET | `/api/proxy/{appId}/export` | 导出配置 |
+| GET | `/api/apqcfg/*` | 本机配置 API |
+
+## 反向代理部署
+
+WebUI **无需任何配置**即可支持任意虚拟目录部署。同一个实例可以同时通过多个不同的反向代理路径访问。
+
+### 工作原理
+
+- 前端使用相对路径构建，运行时动态检测当前访问路径
+- 后端自动处理转发头，支持任意 PathBase
+
+### 部署示例
+
+同一个 WebUI 实例可以同时通过以下路径访问：
+
+```
+http://example.com/                    # 根目录
+http://example.com/apqcfg/             # 虚拟目录
+http://example.com/admin/config/       # 多级虚拟目录
+```
+
+### Nginx 配置示例
+
+```nginx
+# 根目录访问
+location / {
+    proxy_pass http://localhost:5000/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+}
+
+# 虚拟目录访问（可配置多个）
+location /apqcfg/ {
+    proxy_pass http://localhost:5000/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+}
+```
+
+### Docker 部署
+
+```bash
+# 无需任何环境变量配置
+docker run -p 8080:80 apqcfg-webui
+```
+
+## 许可证
+
+MIT License

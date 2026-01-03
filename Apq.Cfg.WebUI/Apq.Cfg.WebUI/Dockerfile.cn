@@ -1,0 +1,38 @@
+# 国内构建版本 - 使用镜像加速
+# 注意：构建上下文必须是 Apq.Cfg.WebUI 解决方案目录
+# docker build -f src/Apq.Cfg.WebUI/Dockerfile.cn .
+ARG DOCKER_MIRROR=docker.m.daocloud.io
+
+# 构建前端
+FROM ${DOCKER_MIRROR}/node:24-alpine AS frontend
+WORKDIR /build
+COPY src/Apq.Cfg.WebUI/ClientApp/package*.json ./
+RUN npm config set registry https://registry.npmmirror.com && npm ci --silent
+COPY src/Apq.Cfg.WebUI/ClientApp/ ./
+RUN npm run build
+
+# 构建后端
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS backend
+WORKDIR /src
+
+# 1. 先复制依赖相关文件（变化频率低，利于缓存）
+COPY Directory.Build.props ./
+COPY src/Apq.Cfg.WebUI/Directory.Build.props src/Apq.Cfg.WebUI/
+COPY src/Apq.Cfg.WebUI/Apq.Cfg.WebUI.csproj src/Apq.Cfg.WebUI/
+
+# 2. 还原依赖（仅当 csproj 或 props 变化时才重新执行）
+RUN dotnet restore src/Apq.Cfg.WebUI/Apq.Cfg.WebUI.csproj
+
+# 3. 复制源代码和前端构建输出
+COPY src/Apq.Cfg.WebUI/ ./src/Apq.Cfg.WebUI/
+COPY --from=frontend /wwwroot ./src/Apq.Cfg.WebUI/wwwroot
+
+# 4. 发布
+RUN dotnet publish src/Apq.Cfg.WebUI/Apq.Cfg.WebUI.csproj -c Release -o /app --no-restore -f net10.0
+
+# 运行时
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine
+WORKDIR /app
+COPY --from=backend /app ./
+EXPOSE 80
+ENTRYPOINT ["dotnet", "Apq.Cfg.WebUI.dll"]

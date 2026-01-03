@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg</RootNamespace>
+        <Description>统一配置组件核心库，支持 JSON、环境变量，多层级配置合并，智能编码检测，依赖注入</Description>
+        <PackageTags>configuration;config;json</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Apq.Cfg.Tests.Net6" />
+        <InternalsVisibleTo Include="Apq.Cfg.Tests.Net8" />
+        <InternalsVisibleTo Include="Apq.Cfg.Tests.Net10" />
+        <InternalsVisibleTo Include="Apq.Cfg.Benchmarks" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="$(MicrosoftExtensionsVersion)" />
+        <PackageReference Include="System.Reactive" Version="6.1.0" />
+        <PackageReference Include="UTF.Unknown" Version="2.6.0" />
+    </ItemGroup>
+
+</Project>

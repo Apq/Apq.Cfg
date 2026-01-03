@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Redis</RootNamespace>
+        <Description>Apq.Cfg 的 Redis 配置源扩展</Description>
+        <PackageTags>configuration;config;redis</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StackExchange.Redis" Version="2.10.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+    </ItemGroup>
+
+</Project>

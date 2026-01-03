@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Crypto</RootNamespace>
+        <Description>Apq.Cfg 的加密脱敏核心包，提供 ICryptoProvider 接口和所有常用加密算法实现</Description>
+        <PackageTags>configuration;config;encryption;crypto;security</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+    </ItemGroup>
+
+</Project>

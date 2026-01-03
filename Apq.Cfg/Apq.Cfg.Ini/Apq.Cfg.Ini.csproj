@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Ini</RootNamespace>
+        <Description>Apq.Cfg 的 INI 文件配置源扩展</Description>
+        <PackageTags>configuration;config;ini</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="$(MicrosoftExtensionsVersion)"/>
+    </ItemGroup>
+
+</Project>

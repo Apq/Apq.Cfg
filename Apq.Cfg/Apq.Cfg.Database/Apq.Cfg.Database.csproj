@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Database</RootNamespace>
+        <Description>Apq.Cfg 的数据库配置源扩展，支持 SqlServer、MySQL、PostgreSQL、Oracle、SQLite</Description>
+        <PackageTags>configuration;config;database</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SqlSugarCore" Version="5.1.4.211" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,5 +1,0 @@
-# 前端构建输出
-wwwroot/
-
-# npm 依赖
-ClientApp/node_modules/

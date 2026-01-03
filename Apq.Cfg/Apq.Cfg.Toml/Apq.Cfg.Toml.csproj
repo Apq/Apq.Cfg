@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Toml</RootNamespace>
+        <Description>Apq.Cfg 的 TOML 文件配置源扩展</Description>
+        <PackageTags>configuration;config;toml</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Tomlyn" Version="0.19.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+    </ItemGroup>
+
+</Project>
