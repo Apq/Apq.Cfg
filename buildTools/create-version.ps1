@@ -22,7 +22,8 @@ $projects = @(
     'Apq.Cfg.Crypto',
     'Apq.Cfg.Crypto.DataProtection',
     'Apq.Cfg.Crypto.Tool',
-    'Apq.Cfg.SourceGenerator'
+    'Apq.Cfg.SourceGenerator',
+    'Apq.Cfg.WebApi'
 )
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -108,7 +109,11 @@ Write-Host "将创建版本: v$Version" -ForegroundColor Cyan
 Write-Host ""
 
 foreach ($proj in $projects) {
-    $path = Join-Path $VersionsDir "$proj\v$Version.md"
+    $projDir = Join-Path $VersionsDir $proj
+    if (-not (Test-Path $projDir)) {
+        New-Item -ItemType Directory -Path $projDir -Force | Out-Null
+    }
+    $path = Join-Path $projDir "v$Version.md"
     [System.IO.File]::WriteAllText($path, '', [System.Text.Encoding]::UTF8)
     Write-Host "  已创建: $proj\v$Version.md" -ForegroundColor Green
 }

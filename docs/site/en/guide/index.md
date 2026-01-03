@@ -42,13 +42,16 @@ Clean interface design for easy custom configuration source implementation:
 ```csharp
 public class MyCustomSource : ICfgSource
 {
+    public string Name { get; set; } = "Custom";
     public int Level { get; }
+    public string Type => "Custom";
     public bool IsWriteable { get; }
+    public bool IsPrimaryWriter { get; }
+    public int KeyCount => /* ... */;
+    public int TopLevelKeyCount => /* ... */;
 
-    public Task<IDictionary<string, string?>> LoadAsync(CancellationToken cancellationToken)
-    {
-        // Implement custom loading logic
-    }
+    public IConfigurationSource BuildSource() => /* ... */;
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues() => /* ... */;
 }
 ```
 
@@ -115,8 +118,7 @@ var port = cfg.GetValue<int>("App:Port");
 
 | Platform | Versions |
 |----------|----------|
-| .NET | 6.0, 7.0, 8.0, 9.0 |
-| .NET Standard | 2.0, 2.1 |
+| .NET | 8.0, 10.0 (LTS) |
 
 ## Next Steps
 

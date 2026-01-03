@@ -1,5 +1,27 @@
 # 更新日志
 
+## v1.1.4 (2026-01-03)
+
+### 新功能
+
+- **Web API 项目**：新增 `Apq.Cfg.WebApi` NuGet 包，提供 RESTful API 接口用于远程配置管理
+- **Web 管理界面**：新增 `Apq.Cfg.WebUI` 项目，提供集中管理多个应用配置的 Web 界面（Docker 部署）
+
+### 改进
+
+- **ICfgSource 接口增强**：
+  - 新增 `Name` 属性（配置源名称，同一层级内唯一）
+  - 新增 `Type` 属性（配置源类型名称）
+  - 新增 `KeyCount` 属性（配置项数量）
+  - 新增 `TopLevelKeyCount` 属性（顶级配置键数量）
+  - 新增 `GetAllValues()` 方法（获取所有配置值）
+- **IWritableCfgSource 接口重构**：
+  - 移除 `SetValue`、`Remove`、`SaveAsync` 方法
+  - 新增 `ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken ct)` 方法
+- **ConfigSourceInfo 类**：移动到 `Apq.Cfg.Sources` 命名空间
+- 更新文档站点，添加 WebApi 和 WebUI 项目说明
+- 更新构建脚本，支持 WebApi 项目的 NuGet 打包
+
 ## v1.1.3 (2026-01-03)
 
 ### 重大变更

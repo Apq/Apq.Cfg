@@ -118,8 +118,7 @@ var typedValue = cfg.GetValue<int>("Section:IntKey");
 
 | 框架 | 版本 |
 |------|------|
-| .NET | 6.0, 7.0, 8.0, 9.0 |
-| .NET Standard | 2.0, 2.1 |
+| .NET | 8.0, 10.0 (LTS) |
 
 ## 下一步
 

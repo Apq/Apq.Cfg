@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.4] - 2026-01-03
+
+### Added
+
+- **Web API Project**: New `Apq.Cfg.WebApi` NuGet package providing RESTful API for remote configuration management
+- **Web Management UI**: New `Apq.Cfg.WebUI` project providing a web interface for centralized multi-application configuration management (Docker deployment)
+
+### Changed
+
+- **ICfgSource Interface Enhancement**:
+  - Added `Name` property (source name, unique within the same level)
+  - Added `Type` property (source type name)
+  - Added `KeyCount` property (total configuration key count)
+  - Added `TopLevelKeyCount` property (top-level key count)
+  - Added `GetAllValues()` method (get all configuration values)
+- **IWritableCfgSource Interface Refactoring**:
+  - Removed `SetValue`, `Remove`, `SaveAsync` methods
+  - Added `ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken ct)` method
+- **ConfigSourceInfo Class**: Moved to `Apq.Cfg.Sources` namespace
+- Updated documentation site with WebApi and WebUI project information
+- Updated build scripts to support WebApi project NuGet packaging
+
 ## [1.1.3] - 2026-01-03
 
 ### Breaking Changes

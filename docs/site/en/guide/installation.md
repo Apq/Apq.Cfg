@@ -52,8 +52,7 @@ dotnet add package Apq.Cfg.Crypto
 
 | Platform | Versions |
 |----------|----------|
-| .NET | 6.0, 7.0, 8.0, 9.0 |
-| .NET Standard | 2.0, 2.1 |
+| .NET | 8.0, 10.0 (LTS) |
 
 ## IDE Support
 

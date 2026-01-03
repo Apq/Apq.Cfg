@@ -96,17 +96,20 @@ public interface ICfgSection
 ```csharp
 public interface ICfgSource
 {
+    string Name { get; set; }       // 配置源名称
     int Level { get; }              // 层级优先级
+    string Type { get; }            // 配置源类型
     bool IsWriteable { get; }       // 是否可写
     bool IsPrimaryWriter { get; }   // 是否为主写入源
+    int KeyCount { get; }           // 配置项数量
+    int TopLevelKeyCount { get; }   // 顶级键数量
     IConfigurationSource BuildSource();
+    IEnumerable<KeyValuePair<string, string?>> GetAllValues();
 }
 
 public interface IWritableCfgSource : ICfgSource
 {
-    void SetValue(string key, string? value);
-    void Remove(string key);
-    Task SaveAsync(CancellationToken ct = default);
+    Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken ct);
 }
 ```
 
@@ -437,15 +440,17 @@ public void GetMany(IEnumerable<string> keys, Action<string, string?> onValue)
 ```csharp
 public class CustomCfgSource : ICfgSource, IWritableCfgSource
 {
+    public string Name { get; set; } = "Custom";
     public int Level { get; }
+    public string Type => "Custom";
     public bool IsWriteable => true;
     public bool IsPrimaryWriter { get; }
-    
+    public int KeyCount => /* ... */;
+    public int TopLevelKeyCount => /* ... */;
+
     public IConfigurationSource BuildSource() => new CustomConfigurationSource(this);
-    
-    public void SetValue(string key, string? value) { /* ... */ }
-    public void Remove(string key) { /* ... */ }
-    public Task SaveAsync(CancellationToken ct) { /* ... */ }
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues() => /* ... */;
+    public Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken ct) => /* ... */;
 }
 ```
 

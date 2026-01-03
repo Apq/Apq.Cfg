@@ -12,24 +12,49 @@
 public interface ICfgSource
 {
     /// <summary>
+    /// 配置源名称（同一层级内唯一）
+    /// </summary>
+    string Name { get; set; }
+
+    /// <summary>
     /// 配置源层级，数值越大优先级越高
     /// </summary>
     int Level { get; }
-    
+
+    /// <summary>
+    /// 配置源类型名称
+    /// </summary>
+    string Type { get; }
+
     /// <summary>
     /// 是否支持写入
     /// </summary>
     bool IsWriteable { get; }
-    
+
     /// <summary>
     /// 是否为主写入源（同层级只能有一个）
     /// </summary>
     bool IsPrimaryWriter { get; }
-    
+
+    /// <summary>
+    /// 配置项数量（所有叶子节点的总数）
+    /// </summary>
+    int KeyCount { get; }
+
+    /// <summary>
+    /// 顶级配置键数量（只统计第一层节点）
+    /// </summary>
+    int TopLevelKeyCount { get; }
+
     /// <summary>
     /// 构建 Microsoft.Extensions.Configuration 配置源
     /// </summary>
     IConfigurationSource BuildSource();
+
+    /// <summary>
+    /// 获取该配置源的所有配置值
+    /// </summary>
+    IEnumerable<KeyValuePair<string, string?>> GetAllValues();
 }
 ```
 
@@ -41,19 +66,11 @@ public interface ICfgSource
 public interface IWritableCfgSource : ICfgSource
 {
     /// <summary>
-    /// 设置配置值
+    /// 应用配置更改
     /// </summary>
-    void SetValue(string key, string? value);
-    
-    /// <summary>
-    /// 移除配置键
-    /// </summary>
-    void Remove(string key);
-    
-    /// <summary>
-    /// 保存配置到持久化存储
-    /// </summary>
-    Task SaveAsync(CancellationToken cancellationToken = default);
+    /// <param name="changes">要应用的配置更改</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken);
 }
 ```
 
@@ -85,10 +102,9 @@ public class HttpApiCfgSource : ICfgSource, IWritableCfgSource, IDisposable
     private readonly bool _isPrimaryWriter;
     private readonly HttpClient _httpClient;
     private readonly ConcurrentDictionary<string, string?> _data = new();
-    private readonly ConcurrentDictionary<string, string?> _pendingChanges = new();
     private Timer? _pollTimer;
     private Action<Dictionary<string, string?>>? _onReload;
-    
+
     public HttpApiCfgSource(HttpApiCfgOptions options, int level, bool isPrimaryWriter = false)
     {
         _options = options;
@@ -99,41 +115,51 @@ public class HttpApiCfgSource : ICfgSource, IWritableCfgSource, IDisposable
             BaseAddress = new Uri(options.BaseUrl),
             Timeout = options.Timeout
         };
-        
+
         if (!string.IsNullOrEmpty(options.ApiKey))
         {
             _httpClient.DefaultRequestHeaders.Add("X-Api-Key", options.ApiKey);
         }
     }
-    
+
+    // ICfgSource 实现
+    public string Name { get; set; } = "HttpApi";
     public int Level => _level;
+    public string Type => "HttpApi";
     public bool IsWriteable => true;
     public bool IsPrimaryWriter => _isPrimaryWriter;
-    
+    public int KeyCount => _data.Count;
+    public int TopLevelKeyCount => _data.Keys
+        .Select(k => k.Split(':')[0])
+        .Distinct()
+        .Count();
+
     public IConfigurationSource BuildSource()
     {
         // 初始加载配置
         LoadConfigAsync().GetAwaiter().GetResult();
-        
+
         // 启动热重载
         if (_options.EnableHotReload)
         {
             StartPolling();
         }
-        
+
         return new HttpApiConfigurationSource(this);
     }
-    
+
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues() => _data;
+
     private async Task LoadConfigAsync()
     {
         try
         {
             var response = await _httpClient.GetAsync(_options.Endpoint);
             response.EnsureSuccessStatusCode();
-            
+
             var json = await response.Content.ReadAsStringAsync();
             var config = JsonSerializer.Deserialize<Dictionary<string, string?>>(json);
-            
+
             if (config != null)
             {
                 _data.Clear();
@@ -149,87 +175,59 @@ public class HttpApiCfgSource : ICfgSource, IWritableCfgSource, IDisposable
             Console.WriteLine($"加载配置失败: {ex.Message}");
         }
     }
-    
+
     private void StartPolling()
     {
         _pollTimer = new Timer(async _ =>
         {
             var oldData = new Dictionary<string, string?>(_data);
             await LoadConfigAsync();
-            
+
             // 检测变更
-            var changes = DetectChanges(oldData, _data);
-            if (changes.Count > 0)
+            if (HasChanges(oldData, _data))
             {
                 _onReload?.Invoke(new Dictionary<string, string?>(_data));
             }
         }, null, _options.PollInterval, _options.PollInterval);
     }
-    
-    private Dictionary<string, ConfigChange> DetectChanges(
-        IDictionary<string, string?> oldData,
-        IDictionary<string, string?> newData)
+
+    private bool HasChanges(IDictionary<string, string?> oldData, IDictionary<string, string?> newData)
     {
-        var changes = new Dictionary<string, ConfigChange>();
-        
-        // 检测新增和修改
+        if (oldData.Count != newData.Count) return true;
         foreach (var kvp in newData)
         {
-            if (!oldData.TryGetValue(kvp.Key, out var oldValue))
-            {
-                changes[kvp.Key] = new ConfigChange(ChangeType.Added, null, kvp.Value);
-            }
-            else if (oldValue != kvp.Value)
-            {
-                changes[kvp.Key] = new ConfigChange(ChangeType.Modified, oldValue, kvp.Value);
-            }
+            if (!oldData.TryGetValue(kvp.Key, out var oldValue) || oldValue != kvp.Value)
+                return true;
         }
-        
-        // 检测删除
-        foreach (var kvp in oldData)
+        return false;
+    }
+
+    // IWritableCfgSource 实现
+    public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
+    {
+        // 更新本地缓存
+        foreach (var kvp in changes)
         {
-            if (!newData.ContainsKey(kvp.Key))
-            {
-                changes[kvp.Key] = new ConfigChange(ChangeType.Removed, kvp.Value, null);
-            }
+            if (kvp.Value == null)
+                _data.TryRemove(kvp.Key, out _);
+            else
+                _data[kvp.Key] = kvp.Value;
         }
-        
-        return changes;
-    }
-    
-    public void SetValue(string key, string? value)
-    {
-        _pendingChanges[key] = value;
-        _data[key] = value;
-    }
-    
-    public void Remove(string key)
-    {
-        _pendingChanges[key] = null;
-        _data.TryRemove(key, out _);
-    }
-    
-    public async Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        if (_pendingChanges.IsEmpty) return;
-        
-        var changes = new Dictionary<string, string?>(_pendingChanges);
-        _pendingChanges.Clear();
-        
+
+        // 保存到远程
         var json = JsonSerializer.Serialize(changes);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        
         var response = await _httpClient.PostAsync(_options.Endpoint, content, cancellationToken);
         response.EnsureSuccessStatusCode();
     }
-    
+
     internal IReadOnlyDictionary<string, string?> GetData() => _data;
-    
+
     internal void SetOnReload(Action<Dictionary<string, string?>> onReload)
     {
         _onReload = onReload;
     }
-    
+
     public void Dispose()
     {
         _pollTimer?.Dispose();
@@ -403,48 +401,50 @@ public class CustomFileCfgSource : FileCfgSourceBase
 public abstract class RemoteCfgSourceBase : ICfgSource, IWritableCfgSource, IDisposable
 {
     protected readonly ConcurrentDictionary<string, string?> Data = new();
-    protected readonly ConcurrentDictionary<string, string?> PendingChanges = new();
-    protected Action<Dictionary<string, string?>>? OnReload;
-    
+    protected Action<Dictionary<string, string?>>? OnReloadCallback;
+
+    // ICfgSource 实现
+    public string Name { get; set; } = "";
     public abstract int Level { get; }
+    public abstract string Type { get; }
     public abstract bool IsWriteable { get; }
     public abstract bool IsPrimaryWriter { get; }
-    
+    public int KeyCount => Data.Count;
+    public int TopLevelKeyCount => Data.Keys
+        .Select(k => k.Split(':')[0])
+        .Distinct()
+        .Count();
+
     public abstract IConfigurationSource BuildSource();
-    
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues() => Data;
+
     protected abstract Task ConnectAsync();
     protected abstract Task DisconnectAsync();
     protected abstract Task LoadDataAsync();
-    protected abstract Task SaveDataAsync(Dictionary<string, string?> changes);
+    protected abstract Task SaveDataAsync(IReadOnlyDictionary<string, string?> changes);
     protected abstract void SetupWatcher();
-    
-    public void SetValue(string key, string? value)
+
+    // IWritableCfgSource 实现
+    public async Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken)
     {
-        PendingChanges[key] = value;
-        Data[key] = value;
-    }
-    
-    public void Remove(string key)
-    {
-        PendingChanges[key] = null;
-        Data.TryRemove(key, out _);
-    }
-    
-    public async Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        if (PendingChanges.IsEmpty) return;
-        
-        var changes = new Dictionary<string, string?>(PendingChanges);
-        PendingChanges.Clear();
-        
+        // 更新本地缓存
+        foreach (var kvp in changes)
+        {
+            if (kvp.Value == null)
+                Data.TryRemove(kvp.Key, out _);
+            else
+                Data[kvp.Key] = kvp.Value;
+        }
+
+        // 保存到远程
         await SaveDataAsync(changes);
     }
-    
+
     protected void NotifyReload()
     {
-        OnReload?.Invoke(new Dictionary<string, string?>(Data));
+        OnReloadCallback?.Invoke(new Dictionary<string, string?>(Data));
     }
-    
+
     public virtual void Dispose()
     {
         DisconnectAsync().GetAwaiter().GetResult();

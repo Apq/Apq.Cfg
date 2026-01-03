@@ -78,17 +78,20 @@ Base interface for all configuration sources.
 ```csharp
 public interface ICfgSource
 {
-    int Level { get; }
-    bool IsWriteable { get; }
-    bool IsPrimaryWriter { get; }
+    string Name { get; set; }       // Source name
+    int Level { get; }              // Level priority
+    string Type { get; }            // Source type
+    bool IsWriteable { get; }       // Is writable
+    bool IsPrimaryWriter { get; }   // Is primary writer
+    int KeyCount { get; }           // Total key count
+    int TopLevelKeyCount { get; }   // Top-level key count
     IConfigurationSource BuildSource();
+    IEnumerable<KeyValuePair<string, string?>> GetAllValues();
 }
 
 public interface IWritableCfgSource : ICfgSource
 {
-    void SetValue(string key, string? value);
-    void Remove(string key);
-    Task SaveAsync(CancellationToken ct = default);
+    Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken ct);
 }
 ```
 
