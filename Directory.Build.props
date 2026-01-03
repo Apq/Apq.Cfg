@@ -34,51 +34,11 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
-  <!-- 导入中央版本管理 -->
+  <!-- 导入版本管理和 NuGet 元数据 -->
   <Import Project="Directory.Build.Version.props" />
-  
-  <!-- 导入共享的版本检测逻辑 -->
-  <PropertyGroup>
-    <VersionsDir>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'versions'))</VersionsDir>
-  </PropertyGroup>
-  <Import Project="buildTools/Version.props" />
 
-  <!--
-    README 默认策略（修改 ReadmeStrategy 的值可改变默认策略）：
-    - Static：始终使用项目目录下的 README.md
-    - VersionFile：优先使用版本文件，内容不足5字符时回退到项目 README
-  -->
-  <PropertyGroup>
-    <ReadmeStrategy Condition="'$(ReadmeStrategy)' == ''">Static</ReadmeStrategy>
-  </PropertyGroup>
-
-  <!-- Static 策略：始终使用项目目录下的 README.md -->
-  <ItemGroup Condition="'$(ReadmeStrategy)' == 'Static'">
+  <!-- README 打包 -->
+  <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
-
-  <!-- VersionFile 策略：优先使用版本文件，内容不足5字符时回退到项目 README -->
-  <Target Name="SelectReadmeFile" BeforeTargets="_GetPackageFiles" DependsOnTargets="DetectVersionFromFiles"
-          Condition="'$(ReadmeStrategy)' == 'VersionFile'">
-    <CheckFileLength FilePath="$(DetectedVersionFile)" MinLength="5">
-      <Output TaskParameter="IsLongEnough" PropertyName="UseVersionFileAsReadme" />
-    </CheckFileLength>
-
-    <ItemGroup Condition="'$(UseVersionFileAsReadme)' == 'true'">
-      <_PackageFiles Include="$(DetectedVersionFile)">
-        <PackagePath>README.md</PackagePath>
-        <BuildAction>None</BuildAction>
-      </_PackageFiles>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(UseVersionFileAsReadme)' != 'true'">
-      <_PackageFiles Include="README.md">
-        <PackagePath>README.md</PackagePath>
-        <BuildAction>None</BuildAction>
-      </_PackageFiles>
-    </ItemGroup>
-
-    <Message Text="README 来源: $(DetectedVersionFile) (版本文件)" Importance="high" Condition="'$(UseVersionFileAsReadme)' == 'true'" />
-    <Message Text="README 来源: README.md (项目目录)" Importance="high" Condition="'$(UseVersionFileAsReadme)' != 'true'" />
-  </Target>
 </Project>

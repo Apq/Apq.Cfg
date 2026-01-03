@@ -1,13 +1,8 @@
 <Project>
   <!-- 源生成器项目：继承版本号和 NuGet 元数据，但不继承多目标框架 -->
 
-  <!-- 设置版本目录路径（在导入前设置） -->
-  <PropertyGroup>
-    <VersionsDir>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), '..', 'versions'))</VersionsDir>
-  </PropertyGroup>
-
-  <!-- 导入共享的版本检测逻辑 -->
-  <Import Project="../buildTools/Version.props" />
+  <!-- 导入版本管理和 NuGet 元数据 -->
+  <Import Project="../Directory.Build.Version.props" />
 
   <!-- 源生成器特定的 NuGet 包标签 -->
   <PropertyGroup>
