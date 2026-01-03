@@ -107,7 +107,8 @@ $AllProjects = @(
     'Apq.Cfg.Crypto',
     'Apq.Cfg.Crypto.DataProtection',
     'Apq.Cfg.Crypto.Tool',
-    'Apq.Cfg.SourceGenerator'
+    'Apq.Cfg.SourceGenerator',
+    'Apq.Cfg.WebApi'
 )
 
 # 如果指定了项目，则只打包指定的项目

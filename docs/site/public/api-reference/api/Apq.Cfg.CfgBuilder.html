@@ -255,8 +255,8 @@ Class CfgBuilder
 
   <a id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_" data-uid="Apq.Cfg.CfgBuilder.AddEnvironmentVariables*"></a>
 
-  <h3 id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String_" data-uid="Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String)">
-  AddEnvironmentVariables(int, string?)
+  <h3 id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String_System_String_" data-uid="Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String,System.String)">
+  AddEnvironmentVariables(int, string?, string?)
   
   </h3>
 
@@ -265,7 +265,7 @@ Class CfgBuilder
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CfgBuilder AddEnvironmentVariables(int level = 400, string? prefix = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddEnvironmentVariables(int level = 400, string? prefix = null, string? name = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -275,6 +275,9 @@ Class CfgBuilder
 </dd>
     <dt><code>prefix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>环境变量前缀，为null时加载所有环境变量</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置源名称，为 null 时自动生成</p>
 </dd>
   </dl>
 
@@ -290,7 +293,7 @@ Class CfgBuilder
 
 
 
-  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String__examples">Examples</h4>
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String_System_String__examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
     .AddJson("config.json")
     .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 20
@@ -303,8 +306,8 @@ Class CfgBuilder
 
   <a id="Apq_Cfg_CfgBuilder_AddJson_" data-uid="Apq.Cfg.CfgBuilder.AddJson*"></a>
 
-  <h3 id="Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_" data-uid="Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)">
-  AddJson(string, int, bool, bool, bool, bool, EncodingOptions?)
+  <h3 id="Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String_" data-uid="Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)">
+  AddJson(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
   
   </h3>
 
@@ -313,7 +316,7 @@ Class CfgBuilder
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CfgBuilder AddJson(string path, int level = 0, bool writeable = false, bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false, EncodingOptions? encoding = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddJson(string path, int level = 0, bool writeable = false, bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false, EncodingOptions? encoding = null, string? name = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -339,6 +342,9 @@ Class CfgBuilder
     <dt><code>encoding</code> <a class="xref" href="Apq.Cfg.EncodingSupport.EncodingOptions.html">EncodingOptions</a></dt>
     <dd><p>编码选项，默认为null</p>
 </dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置源名称，为 null 时使用文件名</p>
+</dd>
   </dl>
 
   <h4 class="section">Returns</h4>
@@ -353,7 +359,7 @@ Class CfgBuilder
 
 
 
-  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions__examples">Examples</h4>
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String__examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
     .AddJson("config.json")  // 使用默认层级 0
     .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
@@ -498,8 +504,8 @@ Class CfgBuilder
 
   <a id="Apq_Cfg_CfgBuilder_AddSource_" data-uid="Apq.Cfg.CfgBuilder.AddSource*"></a>
 
-  <h3 id="Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource_" data-uid="Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource)">
-  AddSource(ICfgSource)
+  <h3 id="Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource_System_String_" data-uid="Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource,System.String)">
+  AddSource(ICfgSource, string?)
   
   </h3>
 
@@ -508,13 +514,16 @@ Class CfgBuilder
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CfgBuilder AddSource(ICfgSource source)</code></pre>
+    <pre><code class="lang-csharp hljs">public CfgBuilder AddSource(ICfgSource source, string? name = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>source</code> <a class="xref" href="Apq.Cfg.Sources.ICfgSource.html">ICfgSource</a></dt>
     <dd><p>配置源实例，实现 ICfgSource 接口</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>配置源名称，为 null 时使用配置源自身的 Name 属性</p>
 </dd>
   </dl>
 
@@ -530,7 +539,7 @@ Class CfgBuilder
 
 
 
-  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource__examples">Examples</h4>
+  <h4 class="section" id="Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource_System_String__examples">Examples</h4>
   <pre><code class="lang-csharp">// 添加自定义配置源
 var customSource = new CustomCfgSource();
 var cfg = new CfgBuilder()

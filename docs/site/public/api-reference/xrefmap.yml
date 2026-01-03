@@ -197,15 +197,15 @@ references:
   commentId: T:Apq.Cfg.CfgBuilder
   fullName: Apq.Cfg.CfgBuilder
   nameWithType: CfgBuilder
-- uid: Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String)
-  name: AddEnvironmentVariables(int, string?)
-  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String_
-  commentId: M:Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String)
-  name.vb: AddEnvironmentVariables(Integer, String)
-  fullName: Apq.Cfg.CfgBuilder.AddEnvironmentVariables(int, string?)
-  fullName.vb: Apq.Cfg.CfgBuilder.AddEnvironmentVariables(Integer, String)
-  nameWithType: CfgBuilder.AddEnvironmentVariables(int, string?)
-  nameWithType.vb: CfgBuilder.AddEnvironmentVariables(Integer, String)
+- uid: Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String,System.String)
+  name: AddEnvironmentVariables(int, string?, string?)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddEnvironmentVariables_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.CfgBuilder.AddEnvironmentVariables(System.Int32,System.String,System.String)
+  name.vb: AddEnvironmentVariables(Integer, String, String)
+  fullName: Apq.Cfg.CfgBuilder.AddEnvironmentVariables(int, string?, string?)
+  fullName.vb: Apq.Cfg.CfgBuilder.AddEnvironmentVariables(Integer, String, String)
+  nameWithType: CfgBuilder.AddEnvironmentVariables(int, string?, string?)
+  nameWithType.vb: CfgBuilder.AddEnvironmentVariables(Integer, String, String)
 - uid: Apq.Cfg.CfgBuilder.AddEnvironmentVariables*
   name: AddEnvironmentVariables
   href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddEnvironmentVariables_
@@ -213,15 +213,15 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgBuilder.AddEnvironmentVariables
   nameWithType: CfgBuilder.AddEnvironmentVariables
-- uid: Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)
-  name: AddJson(string, int, bool, bool, bool, bool, EncodingOptions?)
-  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_
-  commentId: M:Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)
-  name.vb: AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions)
-  fullName: Apq.Cfg.CfgBuilder.AddJson(string, int, bool, bool, bool, bool, Apq.Cfg.EncodingSupport.EncodingOptions?)
-  fullName.vb: Apq.Cfg.CfgBuilder.AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, Apq.Cfg.EncodingSupport.EncodingOptions)
-  nameWithType: CfgBuilder.AddJson(string, int, bool, bool, bool, bool, EncodingOptions?)
-  nameWithType.vb: CfgBuilder.AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions)
+- uid: Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
+  name: AddJson(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String_
+  commentId: M:Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
+  name.vb: AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
+  fullName: Apq.Cfg.CfgBuilder.AddJson(string, int, bool, bool, bool, bool, Apq.Cfg.EncodingSupport.EncodingOptions?, string?)
+  fullName.vb: Apq.Cfg.CfgBuilder.AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, Apq.Cfg.EncodingSupport.EncodingOptions, String)
+  nameWithType: CfgBuilder.AddJson(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
+  nameWithType.vb: CfgBuilder.AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
 - uid: Apq.Cfg.CfgBuilder.AddJson*
   name: AddJson
   href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJson_
@@ -277,12 +277,15 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgBuilder.AddReadEncodingMappingWildcard
   nameWithType: CfgBuilder.AddReadEncodingMappingWildcard
-- uid: Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource)
-  name: AddSource(ICfgSource)
-  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource_
-  commentId: M:Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource)
-  fullName: Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource)
-  nameWithType: CfgBuilder.AddSource(ICfgSource)
+- uid: Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource,System.String)
+  name: AddSource(ICfgSource, string?)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddSource_Apq_Cfg_Sources_ICfgSource_System_String_
+  commentId: M:Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource,System.String)
+  name.vb: AddSource(ICfgSource, String)
+  fullName: Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource, string?)
+  fullName.vb: Apq.Cfg.CfgBuilder.AddSource(Apq.Cfg.Sources.ICfgSource, String)
+  nameWithType: CfgBuilder.AddSource(ICfgSource, string?)
+  nameWithType.vb: CfgBuilder.AddSource(ICfgSource, String)
 - uid: Apq.Cfg.CfgBuilder.AddSource*
   name: AddSource
   href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddSource_
@@ -3959,6 +3962,35 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.ICfgRoot.GetSection
   nameWithType: ICfgRoot.GetSection
+- uid: Apq.Cfg.ICfgRoot.GetSource(System.Int32,System.String)
+  name: GetSource(int, string)
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetSource_System_Int32_System_String_
+  commentId: M:Apq.Cfg.ICfgRoot.GetSource(System.Int32,System.String)
+  name.vb: GetSource(Integer, String)
+  fullName: Apq.Cfg.ICfgRoot.GetSource(int, string)
+  fullName.vb: Apq.Cfg.ICfgRoot.GetSource(Integer, String)
+  nameWithType: ICfgRoot.GetSource(int, string)
+  nameWithType.vb: ICfgRoot.GetSource(Integer, String)
+- uid: Apq.Cfg.ICfgRoot.GetSource*
+  name: GetSource
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetSource_
+  commentId: Overload:Apq.Cfg.ICfgRoot.GetSource
+  isSpec: "True"
+  fullName: Apq.Cfg.ICfgRoot.GetSource
+  nameWithType: ICfgRoot.GetSource
+- uid: Apq.Cfg.ICfgRoot.GetSources
+  name: GetSources()
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetSources
+  commentId: M:Apq.Cfg.ICfgRoot.GetSources
+  fullName: Apq.Cfg.ICfgRoot.GetSources()
+  nameWithType: ICfgRoot.GetSources()
+- uid: Apq.Cfg.ICfgRoot.GetSources*
+  name: GetSources
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetSources_
+  commentId: Overload:Apq.Cfg.ICfgRoot.GetSources
+  isSpec: "True"
+  fullName: Apq.Cfg.ICfgRoot.GetSources
+  nameWithType: ICfgRoot.GetSources
 - uid: Apq.Cfg.ICfgRoot.GetValue*
   name: GetValue
   href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetValue_
@@ -3994,6 +4026,19 @@ references:
   fullName.vb: Apq.Cfg.ICfgRoot.this[]
   nameWithType: ICfgRoot.this
   nameWithType.vb: ICfgRoot.this[]
+- uid: Apq.Cfg.ICfgRoot.Reload
+  name: Reload()
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Reload
+  commentId: M:Apq.Cfg.ICfgRoot.Reload
+  fullName: Apq.Cfg.ICfgRoot.Reload()
+  nameWithType: ICfgRoot.Reload()
+- uid: Apq.Cfg.ICfgRoot.Reload*
+  name: Reload
+  href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Reload_
+  commentId: Overload:Apq.Cfg.ICfgRoot.Reload
+  isSpec: "True"
+  fullName: Apq.Cfg.ICfgRoot.Reload
+  nameWithType: ICfgRoot.Reload
 - uid: Apq.Cfg.ICfgRoot.Remove(System.String,System.Nullable{System.Int32})
   name: Remove(string, int?)
   href: api/Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_Remove_System_String_System_Nullable_System_Int32__
@@ -5416,6 +5461,122 @@ references:
   commentId: N:Apq.Cfg.Sources
   fullName: Apq.Cfg.Sources
   nameWithType: Apq.Cfg.Sources
+- uid: Apq.Cfg.Sources.CfgSourceExtensions
+  name: CfgSourceExtensions
+  href: api/Apq.Cfg.Sources.CfgSourceExtensions.html
+  commentId: T:Apq.Cfg.Sources.CfgSourceExtensions
+  fullName: Apq.Cfg.Sources.CfgSourceExtensions
+  nameWithType: CfgSourceExtensions
+- uid: Apq.Cfg.Sources.CfgSourceExtensions.ToInfo(Apq.Cfg.Sources.ICfgSource)
+  name: ToInfo(ICfgSource)
+  href: api/Apq.Cfg.Sources.CfgSourceExtensions.html#Apq_Cfg_Sources_CfgSourceExtensions_ToInfo_Apq_Cfg_Sources_ICfgSource_
+  commentId: M:Apq.Cfg.Sources.CfgSourceExtensions.ToInfo(Apq.Cfg.Sources.ICfgSource)
+  fullName: Apq.Cfg.Sources.CfgSourceExtensions.ToInfo(Apq.Cfg.Sources.ICfgSource)
+  nameWithType: CfgSourceExtensions.ToInfo(ICfgSource)
+- uid: Apq.Cfg.Sources.CfgSourceExtensions.ToInfo*
+  name: ToInfo
+  href: api/Apq.Cfg.Sources.CfgSourceExtensions.html#Apq_Cfg_Sources_CfgSourceExtensions_ToInfo_
+  commentId: Overload:Apq.Cfg.Sources.CfgSourceExtensions.ToInfo
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.CfgSourceExtensions.ToInfo
+  nameWithType: CfgSourceExtensions.ToInfo
+- uid: Apq.Cfg.Sources.ConfigSourceInfo
+  name: ConfigSourceInfo
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html
+  commentId: T:Apq.Cfg.Sources.ConfigSourceInfo
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo
+  nameWithType: ConfigSourceInfo
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter
+  name: IsPrimaryWriter
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_IsPrimaryWriter
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter
+  nameWithType: ConfigSourceInfo.IsPrimaryWriter
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter*
+  name: IsPrimaryWriter
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_IsPrimaryWriter_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter
+  nameWithType: ConfigSourceInfo.IsPrimaryWriter
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable
+  name: IsWriteable
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_IsWriteable
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable
+  nameWithType: ConfigSourceInfo.IsWriteable
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable*
+  name: IsWriteable
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_IsWriteable_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable
+  nameWithType: ConfigSourceInfo.IsWriteable
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.KeyCount
+  name: KeyCount
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_KeyCount
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.KeyCount
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.KeyCount
+  nameWithType: ConfigSourceInfo.KeyCount
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.KeyCount*
+  name: KeyCount
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_KeyCount_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.KeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.KeyCount
+  nameWithType: ConfigSourceInfo.KeyCount
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.Level
+  name: Level
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_Level
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.Level
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.Level
+  nameWithType: ConfigSourceInfo.Level
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.Level*
+  name: Level
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_Level_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.Level
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.Level
+  nameWithType: ConfigSourceInfo.Level
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.Name
+  name: Name
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_Name
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.Name
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.Name
+  nameWithType: ConfigSourceInfo.Name
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.Name*
+  name: Name
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_Name_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.Name
+  nameWithType: ConfigSourceInfo.Name
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount
+  name: TopLevelKeyCount
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_TopLevelKeyCount
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount
+  nameWithType: ConfigSourceInfo.TopLevelKeyCount
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount*
+  name: TopLevelKeyCount
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_TopLevelKeyCount_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount
+  nameWithType: ConfigSourceInfo.TopLevelKeyCount
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.Type
+  name: Type
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_Type
+  commentId: P:Apq.Cfg.Sources.ConfigSourceInfo.Type
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.Type
+  nameWithType: ConfigSourceInfo.Type
+- uid: Apq.Cfg.Sources.ConfigSourceInfo.Type*
+  name: Type
+  href: api/Apq.Cfg.Sources.ConfigSourceInfo.html#Apq_Cfg_Sources_ConfigSourceInfo_Type_
+  commentId: Overload:Apq.Cfg.Sources.ConfigSourceInfo.Type
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ConfigSourceInfo.Type
+  nameWithType: ConfigSourceInfo.Type
 - uid: Apq.Cfg.Sources.File
   name: Apq.Cfg.Sources.File
   href: api/Apq.Cfg.Sources.File.html
@@ -5428,15 +5589,15 @@ references:
   commentId: T:Apq.Cfg.Sources.File.FileCfgSourceBase
   fullName: Apq.Cfg.Sources.File.FileCfgSourceBase
   nameWithType: FileCfgSourceBase
-- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)
-  name: FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?)
-  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_
-  commentId: M:Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)
-  name.vb: New(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions)
-  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.FileCfgSourceBase(string, int, bool, bool, bool, bool, Apq.Cfg.EncodingSupport.EncodingOptions?)
-  fullName.vb: Apq.Cfg.Sources.File.FileCfgSourceBase.New(String, Integer, Boolean, Boolean, Boolean, Boolean, Apq.Cfg.EncodingSupport.EncodingOptions)
-  nameWithType: FileCfgSourceBase.FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?)
-  nameWithType.vb: FileCfgSourceBase.New(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions)
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
+  name: FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String_
+  commentId: M:Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
+  name.vb: New(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.FileCfgSourceBase(string, int, bool, bool, bool, bool, Apq.Cfg.EncodingSupport.EncodingOptions?, string?)
+  fullName.vb: Apq.Cfg.Sources.File.FileCfgSourceBase.New(String, Integer, Boolean, Boolean, Boolean, Boolean, Apq.Cfg.EncodingSupport.EncodingOptions, String)
+  nameWithType: FileCfgSourceBase.FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
+  nameWithType.vb: FileCfgSourceBase.New(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
 - uid: Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor*
   name: FileCfgSourceBase
   href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_
@@ -5560,6 +5721,32 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.EnsureDirectoryFor
   nameWithType: FileCfgSourceBase.EnsureDirectoryFor
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath
+  name: FilePath
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_FilePath
+  commentId: P:Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath
+  nameWithType: FileCfgSourceBase.FilePath
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath*
+  name: FilePath
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_FilePath_
+  commentId: Overload:Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath
+  nameWithType: FileCfgSourceBase.FilePath
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues
+  name: GetAllValues()
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_GetAllValues
+  commentId: M:Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues()
+  nameWithType: FileCfgSourceBase.GetAllValues()
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues*
+  name: GetAllValues
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_GetAllValues_
+  commentId: Overload:Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues
+  nameWithType: FileCfgSourceBase.GetAllValues
 - uid: Apq.Cfg.Sources.File.FileCfgSourceBase.GetWriteEncoding
   name: GetWriteEncoding()
   href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_GetWriteEncoding
@@ -5599,6 +5786,19 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.IsWriteable
   nameWithType: FileCfgSourceBase.IsWriteable
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount
+  name: KeyCount
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_KeyCount
+  commentId: P:Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount
+  nameWithType: FileCfgSourceBase.KeyCount
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount*
+  name: KeyCount
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_KeyCount_
+  commentId: Overload:Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount
+  nameWithType: FileCfgSourceBase.KeyCount
 - uid: Apq.Cfg.Sources.File.FileCfgSourceBase.Level
   name: Level
   href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_Level
@@ -5612,6 +5812,45 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.Level
   nameWithType: FileCfgSourceBase.Level
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.Name
+  name: Name
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_Name
+  commentId: P:Apq.Cfg.Sources.File.FileCfgSourceBase.Name
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.Name
+  nameWithType: FileCfgSourceBase.Name
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.Name*
+  name: Name
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_Name_
+  commentId: Overload:Apq.Cfg.Sources.File.FileCfgSourceBase.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.Name
+  nameWithType: FileCfgSourceBase.Name
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount
+  name: TopLevelKeyCount
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_TopLevelKeyCount
+  commentId: P:Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount
+  nameWithType: FileCfgSourceBase.TopLevelKeyCount
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount*
+  name: TopLevelKeyCount
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_TopLevelKeyCount_
+  commentId: Overload:Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount
+  nameWithType: FileCfgSourceBase.TopLevelKeyCount
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.Type
+  name: Type
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_Type
+  commentId: P:Apq.Cfg.Sources.File.FileCfgSourceBase.Type
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.Type
+  nameWithType: FileCfgSourceBase.Type
+- uid: Apq.Cfg.Sources.File.FileCfgSourceBase.Type*
+  name: Type
+  href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase_Type_
+  commentId: Overload:Apq.Cfg.Sources.File.FileCfgSourceBase.Type
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.File.FileCfgSourceBase.Type
+  nameWithType: FileCfgSourceBase.Type
 - uid: Apq.Cfg.Sources.File.FileCfgSourceBase._encodingOptions
   name: _encodingOptions
   href: api/Apq.Cfg.Sources.File.FileCfgSourceBase.html#Apq_Cfg_Sources_File_FileCfgSourceBase__encodingOptions
@@ -5655,6 +5894,19 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.ICfgSource.BuildSource
   nameWithType: ICfgSource.BuildSource
+- uid: Apq.Cfg.Sources.ICfgSource.GetAllValues
+  name: GetAllValues()
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_GetAllValues
+  commentId: M:Apq.Cfg.Sources.ICfgSource.GetAllValues
+  fullName: Apq.Cfg.Sources.ICfgSource.GetAllValues()
+  nameWithType: ICfgSource.GetAllValues()
+- uid: Apq.Cfg.Sources.ICfgSource.GetAllValues*
+  name: GetAllValues
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_GetAllValues_
+  commentId: Overload:Apq.Cfg.Sources.ICfgSource.GetAllValues
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ICfgSource.GetAllValues
+  nameWithType: ICfgSource.GetAllValues
 - uid: Apq.Cfg.Sources.ICfgSource.IsPrimaryWriter
   name: IsPrimaryWriter
   href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_IsPrimaryWriter
@@ -5681,6 +5933,19 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.ICfgSource.IsWriteable
   nameWithType: ICfgSource.IsWriteable
+- uid: Apq.Cfg.Sources.ICfgSource.KeyCount
+  name: KeyCount
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_KeyCount
+  commentId: P:Apq.Cfg.Sources.ICfgSource.KeyCount
+  fullName: Apq.Cfg.Sources.ICfgSource.KeyCount
+  nameWithType: ICfgSource.KeyCount
+- uid: Apq.Cfg.Sources.ICfgSource.KeyCount*
+  name: KeyCount
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_KeyCount_
+  commentId: Overload:Apq.Cfg.Sources.ICfgSource.KeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ICfgSource.KeyCount
+  nameWithType: ICfgSource.KeyCount
 - uid: Apq.Cfg.Sources.ICfgSource.Level
   name: Level
   href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_Level
@@ -5694,6 +5959,64 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Sources.ICfgSource.Level
   nameWithType: ICfgSource.Level
+- uid: Apq.Cfg.Sources.ICfgSource.Name
+  name: Name
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_Name
+  commentId: P:Apq.Cfg.Sources.ICfgSource.Name
+  fullName: Apq.Cfg.Sources.ICfgSource.Name
+  nameWithType: ICfgSource.Name
+- uid: Apq.Cfg.Sources.ICfgSource.Name*
+  name: Name
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_Name_
+  commentId: Overload:Apq.Cfg.Sources.ICfgSource.Name
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ICfgSource.Name
+  nameWithType: ICfgSource.Name
+- uid: Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount
+  name: TopLevelKeyCount
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_TopLevelKeyCount
+  commentId: P:Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount
+  fullName: Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount
+  nameWithType: ICfgSource.TopLevelKeyCount
+- uid: Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount*
+  name: TopLevelKeyCount
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_TopLevelKeyCount_
+  commentId: Overload:Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount
+  nameWithType: ICfgSource.TopLevelKeyCount
+- uid: Apq.Cfg.Sources.ICfgSource.Type
+  name: Type
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_Type
+  commentId: P:Apq.Cfg.Sources.ICfgSource.Type
+  fullName: Apq.Cfg.Sources.ICfgSource.Type
+  nameWithType: ICfgSource.Type
+- uid: Apq.Cfg.Sources.ICfgSource.Type*
+  name: Type
+  href: api/Apq.Cfg.Sources.ICfgSource.html#Apq_Cfg_Sources_ICfgSource_Type_
+  commentId: Overload:Apq.Cfg.Sources.ICfgSource.Type
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.ICfgSource.Type
+  nameWithType: ICfgSource.Type
+- uid: Apq.Cfg.Sources.IFileCfgSource
+  name: IFileCfgSource
+  href: api/Apq.Cfg.Sources.IFileCfgSource.html
+  commentId: T:Apq.Cfg.Sources.IFileCfgSource
+  fullName: Apq.Cfg.Sources.IFileCfgSource
+  nameWithType: IFileCfgSource
+- uid: Apq.Cfg.Sources.IFileCfgSource.FilePath
+  name: FilePath
+  href: api/Apq.Cfg.Sources.IFileCfgSource.html#Apq_Cfg_Sources_IFileCfgSource_FilePath
+  commentId: P:Apq.Cfg.Sources.IFileCfgSource.FilePath
+  fullName: Apq.Cfg.Sources.IFileCfgSource.FilePath
+  nameWithType: IFileCfgSource.FilePath
+- uid: Apq.Cfg.Sources.IFileCfgSource.FilePath*
+  name: FilePath
+  href: api/Apq.Cfg.Sources.IFileCfgSource.html#Apq_Cfg_Sources_IFileCfgSource_FilePath_
+  commentId: Overload:Apq.Cfg.Sources.IFileCfgSource.FilePath
+  isSpec: "True"
+  fullName: Apq.Cfg.Sources.IFileCfgSource.FilePath
+  nameWithType: IFileCfgSource.FilePath
 - uid: Apq.Cfg.Sources.IWritableCfgSource
   name: IWritableCfgSource
   href: api/Apq.Cfg.Sources.IWritableCfgSource.html
@@ -7904,6 +8227,1673 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.Vault.VaultCfgOptions.Username
   nameWithType: VaultCfgOptions.Username
+- uid: Apq.Cfg.WebApi
+  name: Apq.Cfg.WebApi
+  href: api/Apq.Cfg.WebApi.html
+  commentId: N:Apq.Cfg.WebApi
+  fullName: Apq.Cfg.WebApi
+  nameWithType: Apq.Cfg.WebApi
+- uid: Apq.Cfg.WebApi.ApplicationBuilderExtensions
+  name: ApplicationBuilderExtensions
+  href: api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.html
+  commentId: T:Apq.Cfg.WebApi.ApplicationBuilderExtensions
+  fullName: Apq.Cfg.WebApi.ApplicationBuilderExtensions
+  nameWithType: ApplicationBuilderExtensions
+- uid: Apq.Cfg.WebApi.ApplicationBuilderExtensions.MapApqCfgWebApi(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+  name: MapApqCfgWebApi(IEndpointRouteBuilder)
+  href: api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.html#Apq_Cfg_WebApi_ApplicationBuilderExtensions_MapApqCfgWebApi_Microsoft_AspNetCore_Routing_IEndpointRouteBuilder_
+  commentId: M:Apq.Cfg.WebApi.ApplicationBuilderExtensions.MapApqCfgWebApi(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+  fullName: Apq.Cfg.WebApi.ApplicationBuilderExtensions.MapApqCfgWebApi(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+  nameWithType: ApplicationBuilderExtensions.MapApqCfgWebApi(IEndpointRouteBuilder)
+- uid: Apq.Cfg.WebApi.ApplicationBuilderExtensions.MapApqCfgWebApi*
+  name: MapApqCfgWebApi
+  href: api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.html#Apq_Cfg_WebApi_ApplicationBuilderExtensions_MapApqCfgWebApi_
+  commentId: Overload:Apq.Cfg.WebApi.ApplicationBuilderExtensions.MapApqCfgWebApi
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.ApplicationBuilderExtensions.MapApqCfgWebApi
+  nameWithType: ApplicationBuilderExtensions.MapApqCfgWebApi
+- uid: Apq.Cfg.WebApi.ApplicationBuilderExtensions.UseApqCfgWebApi(Microsoft.AspNetCore.Builder.IApplicationBuilder)
+  name: UseApqCfgWebApi(IApplicationBuilder)
+  href: api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.html#Apq_Cfg_WebApi_ApplicationBuilderExtensions_UseApqCfgWebApi_Microsoft_AspNetCore_Builder_IApplicationBuilder_
+  commentId: M:Apq.Cfg.WebApi.ApplicationBuilderExtensions.UseApqCfgWebApi(Microsoft.AspNetCore.Builder.IApplicationBuilder)
+  fullName: Apq.Cfg.WebApi.ApplicationBuilderExtensions.UseApqCfgWebApi(Microsoft.AspNetCore.Builder.IApplicationBuilder)
+  nameWithType: ApplicationBuilderExtensions.UseApqCfgWebApi(IApplicationBuilder)
+- uid: Apq.Cfg.WebApi.ApplicationBuilderExtensions.UseApqCfgWebApi*
+  name: UseApqCfgWebApi
+  href: api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.html#Apq_Cfg_WebApi_ApplicationBuilderExtensions_UseApqCfgWebApi_
+  commentId: Overload:Apq.Cfg.WebApi.ApplicationBuilderExtensions.UseApqCfgWebApi
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.ApplicationBuilderExtensions.UseApqCfgWebApi
+  nameWithType: ApplicationBuilderExtensions.UseApqCfgWebApi
+- uid: Apq.Cfg.WebApi.Authentication
+  name: Apq.Cfg.WebApi.Authentication
+  href: api/Apq.Cfg.WebApi.Authentication.html
+  commentId: N:Apq.Cfg.WebApi.Authentication
+  fullName: Apq.Cfg.WebApi.Authentication
+  nameWithType: Apq.Cfg.WebApi.Authentication
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler
+  name: ApiKeyAuthenticationHandler
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.html
+  commentId: T:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler
+  nameWithType: ApiKeyAuthenticationHandler
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder)
+  name: ApiKeyAuthenticationHandler(IOptionsMonitor<ApiKeyAuthenticationOptions>, ILoggerFactory, UrlEncoder)
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationHandler__ctor_Microsoft_Extensions_Options_IOptionsMonitor_Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationOptions__Microsoft_Extensions_Logging_ILoggerFactory_System_Text_Encodings_Web_UrlEncoder_
+  commentId: M:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder)
+  name.vb: New(IOptionsMonitor(Of ApiKeyAuthenticationOptions), ILoggerFactory, UrlEncoder)
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.ApiKeyAuthenticationHandler(Microsoft.Extensions.Options.IOptionsMonitor<Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions>, Microsoft.Extensions.Logging.ILoggerFactory, System.Text.Encodings.Web.UrlEncoder)
+  fullName.vb: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.New(Microsoft.Extensions.Options.IOptionsMonitor(Of Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions), Microsoft.Extensions.Logging.ILoggerFactory, System.Text.Encodings.Web.UrlEncoder)
+  nameWithType: ApiKeyAuthenticationHandler.ApiKeyAuthenticationHandler(IOptionsMonitor<ApiKeyAuthenticationOptions>, ILoggerFactory, UrlEncoder)
+  nameWithType.vb: ApiKeyAuthenticationHandler.New(IOptionsMonitor(Of ApiKeyAuthenticationOptions), ILoggerFactory, UrlEncoder)
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.#ctor*
+  name: ApiKeyAuthenticationHandler
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationHandler__ctor_
+  commentId: Overload:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.ApiKeyAuthenticationHandler
+  fullName.vb: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.New
+  nameWithType: ApiKeyAuthenticationHandler.ApiKeyAuthenticationHandler
+  nameWithType.vb: ApiKeyAuthenticationHandler.New
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.HandleAuthenticateAsync
+  name: HandleAuthenticateAsync()
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationHandler_HandleAuthenticateAsync
+  commentId: M:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.HandleAuthenticateAsync
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.HandleAuthenticateAsync()
+  nameWithType: ApiKeyAuthenticationHandler.HandleAuthenticateAsync()
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.HandleAuthenticateAsync*
+  name: HandleAuthenticateAsync
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationHandler_HandleAuthenticateAsync_
+  commentId: Overload:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.HandleAuthenticateAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.HandleAuthenticateAsync
+  nameWithType: ApiKeyAuthenticationHandler.HandleAuthenticateAsync
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions
+  name: ApiKeyAuthenticationOptions
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.html
+  commentId: T:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions
+  nameWithType: ApiKeyAuthenticationOptions
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.ApiKey
+  name: ApiKey
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationOptions_ApiKey
+  commentId: P:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.ApiKey
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.ApiKey
+  nameWithType: ApiKeyAuthenticationOptions.ApiKey
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.ApiKey*
+  name: ApiKey
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationOptions_ApiKey_
+  commentId: Overload:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.ApiKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.ApiKey
+  nameWithType: ApiKeyAuthenticationOptions.ApiKey
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.HeaderName
+  name: HeaderName
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationOptions_HeaderName
+  commentId: P:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.HeaderName
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.HeaderName
+  nameWithType: ApiKeyAuthenticationOptions.HeaderName
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.HeaderName*
+  name: HeaderName
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.html#Apq_Cfg_WebApi_Authentication_ApiKeyAuthenticationOptions_HeaderName_
+  commentId: Overload:Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.HeaderName
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.HeaderName
+  nameWithType: ApiKeyAuthenticationOptions.HeaderName
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyDefaults
+  name: ApiKeyDefaults
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.html
+  commentId: T:Apq.Cfg.WebApi.Authentication.ApiKeyDefaults
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyDefaults
+  nameWithType: ApiKeyDefaults
+- uid: Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.AuthenticationScheme
+  name: AuthenticationScheme
+  href: api/Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.html#Apq_Cfg_WebApi_Authentication_ApiKeyDefaults_AuthenticationScheme
+  commentId: F:Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.AuthenticationScheme
+  fullName: Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.AuthenticationScheme
+  nameWithType: ApiKeyDefaults.AuthenticationScheme
+- uid: Apq.Cfg.WebApi.AuthenticationType
+  name: AuthenticationType
+  href: api/Apq.Cfg.WebApi.AuthenticationType.html
+  commentId: T:Apq.Cfg.WebApi.AuthenticationType
+  fullName: Apq.Cfg.WebApi.AuthenticationType
+  nameWithType: AuthenticationType
+- uid: Apq.Cfg.WebApi.AuthenticationType.ApiKey
+  name: ApiKey
+  href: api/Apq.Cfg.WebApi.AuthenticationType.html#Apq_Cfg_WebApi_AuthenticationType_ApiKey
+  commentId: F:Apq.Cfg.WebApi.AuthenticationType.ApiKey
+  fullName: Apq.Cfg.WebApi.AuthenticationType.ApiKey
+  nameWithType: AuthenticationType.ApiKey
+- uid: Apq.Cfg.WebApi.AuthenticationType.JwtBearer
+  name: JwtBearer
+  href: api/Apq.Cfg.WebApi.AuthenticationType.html#Apq_Cfg_WebApi_AuthenticationType_JwtBearer
+  commentId: F:Apq.Cfg.WebApi.AuthenticationType.JwtBearer
+  fullName: Apq.Cfg.WebApi.AuthenticationType.JwtBearer
+  nameWithType: AuthenticationType.JwtBearer
+- uid: Apq.Cfg.WebApi.AuthenticationType.None
+  name: None
+  href: api/Apq.Cfg.WebApi.AuthenticationType.html#Apq_Cfg_WebApi_AuthenticationType_None
+  commentId: F:Apq.Cfg.WebApi.AuthenticationType.None
+  fullName: Apq.Cfg.WebApi.AuthenticationType.None
+  nameWithType: AuthenticationType.None
+- uid: Apq.Cfg.WebApi.Controllers
+  name: Apq.Cfg.WebApi.Controllers
+  href: api/Apq.Cfg.WebApi.Controllers.html
+  commentId: N:Apq.Cfg.WebApi.Controllers
+  fullName: Apq.Cfg.WebApi.Controllers
+  nameWithType: Apq.Cfg.WebApi.Controllers
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController
+  name: ConfigController
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html
+  commentId: T:Apq.Cfg.WebApi.Controllers.ConfigController
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController
+  nameWithType: ConfigController
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
+  name: ConfigController(IConfigApiService, IOptions<WebApiOptions>)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController__ctor_Apq_Cfg_WebApi_Services_IConfigApiService_Microsoft_Extensions_Options_IOptions_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: New(IConfigApiService, IOptions(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.ConfigController(Apq.Cfg.WebApi.Services.IConfigApiService, Microsoft.Extensions.Options.IOptions<Apq.Cfg.WebApi.WebApiOptions>)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.New(Apq.Cfg.WebApi.Services.IConfigApiService, Microsoft.Extensions.Options.IOptions(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: ConfigController.ConfigController(IConfigApiService, IOptions<WebApiOptions>)
+  nameWithType.vb: ConfigController.New(IConfigApiService, IOptions(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.#ctor*
+  name: ConfigController
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController__ctor_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.ConfigController
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.New
+  nameWithType: ConfigController.ConfigController
+  nameWithType.vb: ConfigController.New
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  name: BatchUpdate(BatchUpdateRequest)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_BatchUpdate_Apq_Cfg_WebApi_Models_BatchUpdateRequest_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  nameWithType: ConfigController.BatchUpdate(BatchUpdateRequest)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.BatchUpdate*
+  name: BatchUpdate
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_BatchUpdate_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.BatchUpdate
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.BatchUpdate
+  nameWithType: ConfigController.BatchUpdate
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey(System.String)
+  name: DeleteKey(string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_DeleteKey_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey(System.String)
+  name.vb: DeleteKey(String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey(string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey(String)
+  nameWithType: ConfigController.DeleteKey(string)
+  nameWithType.vb: ConfigController.DeleteKey(String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey*
+  name: DeleteKey
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_DeleteKey_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteKey
+  nameWithType: ConfigController.DeleteKey
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey(System.Int32,System.String,System.String)
+  name: DeleteSourceKey(int, string, string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_DeleteSourceKey_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey(System.Int32,System.String,System.String)
+  name.vb: DeleteSourceKey(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey(Integer, String, String)
+  nameWithType: ConfigController.DeleteSourceKey(int, string, string)
+  nameWithType.vb: ConfigController.DeleteSourceKey(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey*
+  name: DeleteSourceKey
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_DeleteSourceKey_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.DeleteSourceKey
+  nameWithType: ConfigController.DeleteSourceKey
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.Export(System.String)
+  name: Export(string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_Export_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.Export(System.String)
+  name.vb: Export(String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.Export(string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.Export(String)
+  nameWithType: ConfigController.Export(string)
+  nameWithType.vb: ConfigController.Export(String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.Export*
+  name: Export
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_Export_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.Export
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.Export
+  nameWithType: ConfigController.Export
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource(System.Int32,System.String,System.String)
+  name: ExportSource(int, string, string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_ExportSource_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource(System.Int32,System.String,System.String)
+  name.vb: ExportSource(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource(Integer, String, String)
+  nameWithType: ConfigController.ExportSource(int, string, string)
+  nameWithType.vb: ConfigController.ExportSource(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource*
+  name: ExportSource
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_ExportSource_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.ExportSource
+  nameWithType: ConfigController.ExportSource
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMerged
+  name: GetMerged()
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMerged
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetMerged
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMerged()
+  nameWithType: ConfigController.GetMerged()
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMerged*
+  name: GetMerged
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMerged_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetMerged
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMerged
+  nameWithType: ConfigController.GetMerged
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection(System.String)
+  name: GetMergedSection(string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMergedSection_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection(System.String)
+  name.vb: GetMergedSection(String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection(string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection(String)
+  nameWithType: ConfigController.GetMergedSection(string)
+  nameWithType.vb: ConfigController.GetMergedSection(String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection*
+  name: GetMergedSection
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMergedSection_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedSection
+  nameWithType: ConfigController.GetMergedSection
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedTree
+  name: GetMergedTree()
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMergedTree
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedTree
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedTree()
+  nameWithType: ConfigController.GetMergedTree()
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedTree*
+  name: GetMergedTree
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMergedTree_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedTree
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedTree
+  nameWithType: ConfigController.GetMergedTree
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue(System.String)
+  name: GetMergedValue(string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMergedValue_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue(System.String)
+  name.vb: GetMergedValue(String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue(string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue(String)
+  nameWithType: ConfigController.GetMergedValue(string)
+  nameWithType.vb: ConfigController.GetMergedValue(String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue*
+  name: GetMergedValue
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetMergedValue_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetMergedValue
+  nameWithType: ConfigController.GetMergedValue
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig(System.Int32,System.String)
+  name: GetSourceConfig(int, string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSourceConfig_System_Int32_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig(System.Int32,System.String)
+  name.vb: GetSourceConfig(Integer, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig(int, string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig(Integer, String)
+  nameWithType: ConfigController.GetSourceConfig(int, string)
+  nameWithType.vb: ConfigController.GetSourceConfig(Integer, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig*
+  name: GetSourceConfig
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSourceConfig_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceConfig
+  nameWithType: ConfigController.GetSourceConfig
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree(System.Int32,System.String)
+  name: GetSourceTree(int, string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSourceTree_System_Int32_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree(System.Int32,System.String)
+  name.vb: GetSourceTree(Integer, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree(int, string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree(Integer, String)
+  nameWithType: ConfigController.GetSourceTree(int, string)
+  nameWithType.vb: ConfigController.GetSourceTree(Integer, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree*
+  name: GetSourceTree
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSourceTree_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceTree
+  nameWithType: ConfigController.GetSourceTree
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue(System.Int32,System.String,System.String)
+  name: GetSourceValue(int, string, string)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSourceValue_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue(System.Int32,System.String,System.String)
+  name.vb: GetSourceValue(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue(Integer, String, String)
+  nameWithType: ConfigController.GetSourceValue(int, string, string)
+  nameWithType.vb: ConfigController.GetSourceValue(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue*
+  name: GetSourceValue
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSourceValue_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSourceValue
+  nameWithType: ConfigController.GetSourceValue
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSources
+  name: GetSources()
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSources
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.GetSources
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSources()
+  nameWithType: ConfigController.GetSources()
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.GetSources*
+  name: GetSources
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_GetSources_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.GetSources
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.GetSources
+  nameWithType: ConfigController.GetSources
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.Reload
+  name: Reload()
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_Reload
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.Reload
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.Reload()
+  nameWithType: ConfigController.Reload()
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.Reload*
+  name: Reload
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_Reload_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.Reload
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.Reload
+  nameWithType: ConfigController.Reload
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.Save
+  name: Save()
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_Save
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.Save
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.Save()
+  nameWithType: ConfigController.Save()
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.Save*
+  name: Save
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_Save_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.Save
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.Save
+  nameWithType: ConfigController.Save
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue(System.Int32,System.String,System.String,System.String)
+  name: SetSourceValue(int, string, string, string?)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_SetSourceValue_System_Int32_System_String_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue(System.Int32,System.String,System.String,System.String)
+  name.vb: SetSourceValue(Integer, String, String, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue(int, string, string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue(Integer, String, String, String)
+  nameWithType: ConfigController.SetSourceValue(int, string, string, string?)
+  nameWithType.vb: ConfigController.SetSourceValue(Integer, String, String, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue*
+  name: SetSourceValue
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_SetSourceValue_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.SetSourceValue
+  nameWithType: ConfigController.SetSourceValue
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.SetValue(System.String,System.String)
+  name: SetValue(string, string?)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_SetValue_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.SetValue(System.String,System.String)
+  name.vb: SetValue(String, String)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.SetValue(string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.SetValue(String, String)
+  nameWithType: ConfigController.SetValue(string, string?)
+  nameWithType.vb: ConfigController.SetValue(String, String)
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.SetValue*
+  name: SetValue
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController_SetValue_
+  commentId: Overload:Apq.Cfg.WebApi.Controllers.ConfigController.SetValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.SetValue
+  nameWithType: ConfigController.SetValue
+- uid: Apq.Cfg.WebApi.JwtOptions
+  name: JwtOptions
+  href: api/Apq.Cfg.WebApi.JwtOptions.html
+  commentId: T:Apq.Cfg.WebApi.JwtOptions
+  fullName: Apq.Cfg.WebApi.JwtOptions
+  nameWithType: JwtOptions
+- uid: Apq.Cfg.WebApi.JwtOptions.Audience
+  name: Audience
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_Audience
+  commentId: P:Apq.Cfg.WebApi.JwtOptions.Audience
+  fullName: Apq.Cfg.WebApi.JwtOptions.Audience
+  nameWithType: JwtOptions.Audience
+- uid: Apq.Cfg.WebApi.JwtOptions.Audience*
+  name: Audience
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_Audience_
+  commentId: Overload:Apq.Cfg.WebApi.JwtOptions.Audience
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.JwtOptions.Audience
+  nameWithType: JwtOptions.Audience
+- uid: Apq.Cfg.WebApi.JwtOptions.Authority
+  name: Authority
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_Authority
+  commentId: P:Apq.Cfg.WebApi.JwtOptions.Authority
+  fullName: Apq.Cfg.WebApi.JwtOptions.Authority
+  nameWithType: JwtOptions.Authority
+- uid: Apq.Cfg.WebApi.JwtOptions.Authority*
+  name: Authority
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_Authority_
+  commentId: Overload:Apq.Cfg.WebApi.JwtOptions.Authority
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.JwtOptions.Authority
+  nameWithType: JwtOptions.Authority
+- uid: Apq.Cfg.WebApi.JwtOptions.RequireHttpsMetadata
+  name: RequireHttpsMetadata
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_RequireHttpsMetadata
+  commentId: P:Apq.Cfg.WebApi.JwtOptions.RequireHttpsMetadata
+  fullName: Apq.Cfg.WebApi.JwtOptions.RequireHttpsMetadata
+  nameWithType: JwtOptions.RequireHttpsMetadata
+- uid: Apq.Cfg.WebApi.JwtOptions.RequireHttpsMetadata*
+  name: RequireHttpsMetadata
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_RequireHttpsMetadata_
+  commentId: Overload:Apq.Cfg.WebApi.JwtOptions.RequireHttpsMetadata
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.JwtOptions.RequireHttpsMetadata
+  nameWithType: JwtOptions.RequireHttpsMetadata
+- uid: Apq.Cfg.WebApi.JwtOptions.ValidateAudience
+  name: ValidateAudience
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_ValidateAudience
+  commentId: P:Apq.Cfg.WebApi.JwtOptions.ValidateAudience
+  fullName: Apq.Cfg.WebApi.JwtOptions.ValidateAudience
+  nameWithType: JwtOptions.ValidateAudience
+- uid: Apq.Cfg.WebApi.JwtOptions.ValidateAudience*
+  name: ValidateAudience
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_ValidateAudience_
+  commentId: Overload:Apq.Cfg.WebApi.JwtOptions.ValidateAudience
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.JwtOptions.ValidateAudience
+  nameWithType: JwtOptions.ValidateAudience
+- uid: Apq.Cfg.WebApi.JwtOptions.ValidateIssuer
+  name: ValidateIssuer
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_ValidateIssuer
+  commentId: P:Apq.Cfg.WebApi.JwtOptions.ValidateIssuer
+  fullName: Apq.Cfg.WebApi.JwtOptions.ValidateIssuer
+  nameWithType: JwtOptions.ValidateIssuer
+- uid: Apq.Cfg.WebApi.JwtOptions.ValidateIssuer*
+  name: ValidateIssuer
+  href: api/Apq.Cfg.WebApi.JwtOptions.html#Apq_Cfg_WebApi_JwtOptions_ValidateIssuer_
+  commentId: Overload:Apq.Cfg.WebApi.JwtOptions.ValidateIssuer
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.JwtOptions.ValidateIssuer
+  nameWithType: JwtOptions.ValidateIssuer
+- uid: Apq.Cfg.WebApi.Middleware
+  name: Apq.Cfg.WebApi.Middleware
+  href: api/Apq.Cfg.WebApi.Middleware.html
+  commentId: N:Apq.Cfg.WebApi.Middleware
+  fullName: Apq.Cfg.WebApi.Middleware
+  nameWithType: Apq.Cfg.WebApi.Middleware
+- uid: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware
+  name: ConfigApiMiddleware
+  href: api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.html
+  commentId: T:Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware
+  fullName: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware
+  nameWithType: ConfigApiMiddleware
+- uid: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
+  name: ConfigApiMiddleware(RequestDelegate, IOptions<WebApiOptions>)
+  href: api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.html#Apq_Cfg_WebApi_Middleware_ConfigApiMiddleware__ctor_Microsoft_AspNetCore_Http_RequestDelegate_Microsoft_Extensions_Options_IOptions_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: New(RequestDelegate, IOptions(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.ConfigApiMiddleware(Microsoft.AspNetCore.Http.RequestDelegate, Microsoft.Extensions.Options.IOptions<Apq.Cfg.WebApi.WebApiOptions>)
+  fullName.vb: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.New(Microsoft.AspNetCore.Http.RequestDelegate, Microsoft.Extensions.Options.IOptions(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: ConfigApiMiddleware.ConfigApiMiddleware(RequestDelegate, IOptions<WebApiOptions>)
+  nameWithType.vb: ConfigApiMiddleware.New(RequestDelegate, IOptions(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.#ctor*
+  name: ConfigApiMiddleware
+  href: api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.html#Apq_Cfg_WebApi_Middleware_ConfigApiMiddleware__ctor_
+  commentId: Overload:Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.ConfigApiMiddleware
+  fullName.vb: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.New
+  nameWithType: ConfigApiMiddleware.ConfigApiMiddleware
+  nameWithType.vb: ConfigApiMiddleware.New
+- uid: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)
+  name: InvokeAsync(HttpContext)
+  href: api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.html#Apq_Cfg_WebApi_Middleware_ConfigApiMiddleware_InvokeAsync_Microsoft_AspNetCore_Http_HttpContext_
+  commentId: M:Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)
+  fullName: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)
+  nameWithType: ConfigApiMiddleware.InvokeAsync(HttpContext)
+- uid: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.InvokeAsync*
+  name: InvokeAsync
+  href: api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.html#Apq_Cfg_WebApi_Middleware_ConfigApiMiddleware_InvokeAsync_
+  commentId: Overload:Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.InvokeAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.InvokeAsync
+  nameWithType: ConfigApiMiddleware.InvokeAsync
+- uid: Apq.Cfg.WebApi.Models
+  name: Apq.Cfg.WebApi.Models
+  href: api/Apq.Cfg.WebApi.Models.html
+  commentId: N:Apq.Cfg.WebApi.Models
+  fullName: Apq.Cfg.WebApi.Models
+  nameWithType: Apq.Cfg.WebApi.Models
+- uid: Apq.Cfg.WebApi.Models.ApiResponse
+  name: ApiResponse
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html
+  commentId: T:Apq.Cfg.WebApi.Models.ApiResponse
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse
+  nameWithType: ApiResponse
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Error
+  name: Error
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Error
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse.Error
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Error
+  nameWithType: ApiResponse.Error
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Error*
+  name: Error
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Error_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse.Error
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Error
+  nameWithType: ApiResponse.Error
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.ErrorCode
+  name: ErrorCode
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_ErrorCode
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse.ErrorCode
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.ErrorCode
+  nameWithType: ApiResponse.ErrorCode
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.ErrorCode*
+  name: ErrorCode
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_ErrorCode_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse.ErrorCode
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.ErrorCode
+  nameWithType: ApiResponse.ErrorCode
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Fail(System.String,System.String)
+  name: Fail(string, string?)
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Fail_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Models.ApiResponse.Fail(System.String,System.String)
+  name.vb: Fail(String, String)
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Fail(string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse.Fail(String, String)
+  nameWithType: ApiResponse.Fail(string, string?)
+  nameWithType.vb: ApiResponse.Fail(String, String)
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Fail*
+  name: Fail
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Fail_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse.Fail
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Fail
+  nameWithType: ApiResponse.Fail
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Ok
+  name: Ok()
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Ok
+  commentId: M:Apq.Cfg.WebApi.Models.ApiResponse.Ok
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Ok()
+  nameWithType: ApiResponse.Ok()
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Ok*
+  name: Ok
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Ok_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse.Ok
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Ok
+  nameWithType: ApiResponse.Ok
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Success
+  name: Success
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Success
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse.Success
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Success
+  nameWithType: ApiResponse.Success
+- uid: Apq.Cfg.WebApi.Models.ApiResponse.Success*
+  name: Success
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse.html#Apq_Cfg_WebApi_Models_ApiResponse_Success_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse.Success
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse.Success
+  nameWithType: ApiResponse.Success
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1
+  name: ApiResponse<T>
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html
+  commentId: T:Apq.Cfg.WebApi.Models.ApiResponse`1
+  name.vb: ApiResponse(Of T)
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T)
+  nameWithType: ApiResponse<T>
+  nameWithType.vb: ApiResponse(Of T)
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Data
+  name: Data
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Data
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse`1.Data
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Data
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Data
+  nameWithType: ApiResponse<T>.Data
+  nameWithType.vb: ApiResponse(Of T).Data
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Data*
+  name: Data
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Data_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse`1.Data
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Data
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Data
+  nameWithType: ApiResponse<T>.Data
+  nameWithType.vb: ApiResponse(Of T).Data
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Error
+  name: Error
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Error
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse`1.Error
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Error
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Error
+  nameWithType: ApiResponse<T>.Error
+  nameWithType.vb: ApiResponse(Of T).Error
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Error*
+  name: Error
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Error_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse`1.Error
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Error
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Error
+  nameWithType: ApiResponse<T>.Error
+  nameWithType.vb: ApiResponse(Of T).Error
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.ErrorCode
+  name: ErrorCode
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_ErrorCode
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse`1.ErrorCode
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.ErrorCode
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).ErrorCode
+  nameWithType: ApiResponse<T>.ErrorCode
+  nameWithType.vb: ApiResponse(Of T).ErrorCode
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.ErrorCode*
+  name: ErrorCode
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_ErrorCode_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse`1.ErrorCode
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.ErrorCode
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).ErrorCode
+  nameWithType: ApiResponse<T>.ErrorCode
+  nameWithType.vb: ApiResponse(Of T).ErrorCode
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Fail(System.String,System.String)
+  name: Fail(string, string?)
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Fail_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Models.ApiResponse`1.Fail(System.String,System.String)
+  name.vb: Fail(String, String)
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Fail(string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Fail(String, String)
+  nameWithType: ApiResponse<T>.Fail(string, string?)
+  nameWithType.vb: ApiResponse(Of T).Fail(String, String)
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Fail*
+  name: Fail
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Fail_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse`1.Fail
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Fail
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Fail
+  nameWithType: ApiResponse<T>.Fail
+  nameWithType.vb: ApiResponse(Of T).Fail
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Ok(`0)
+  name: Ok(T)
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Ok__0_
+  commentId: M:Apq.Cfg.WebApi.Models.ApiResponse`1.Ok(`0)
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Ok(T)
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Ok(T)
+  nameWithType: ApiResponse<T>.Ok(T)
+  nameWithType.vb: ApiResponse(Of T).Ok(T)
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Ok*
+  name: Ok
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Ok_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse`1.Ok
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Ok
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Ok
+  nameWithType: ApiResponse<T>.Ok
+  nameWithType.vb: ApiResponse(Of T).Ok
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Success
+  name: Success
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Success
+  commentId: P:Apq.Cfg.WebApi.Models.ApiResponse`1.Success
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Success
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Success
+  nameWithType: ApiResponse<T>.Success
+  nameWithType.vb: ApiResponse(Of T).Success
+- uid: Apq.Cfg.WebApi.Models.ApiResponse`1.Success*
+  name: Success
+  href: api/Apq.Cfg.WebApi.Models.ApiResponse-1.html#Apq_Cfg_WebApi_Models_ApiResponse_1_Success_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ApiResponse`1.Success
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ApiResponse<T>.Success
+  fullName.vb: Apq.Cfg.WebApi.Models.ApiResponse(Of T).Success
+  nameWithType: ApiResponse<T>.Success
+  nameWithType.vb: ApiResponse(Of T).Success
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest
+  name: BatchUpdateRequest
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html
+  commentId: T:Apq.Cfg.WebApi.Models.BatchUpdateRequest
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest
+  nameWithType: BatchUpdateRequest
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetLevel
+  name: TargetLevel
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html#Apq_Cfg_WebApi_Models_BatchUpdateRequest_TargetLevel
+  commentId: P:Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetLevel
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetLevel
+  nameWithType: BatchUpdateRequest.TargetLevel
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetLevel*
+  name: TargetLevel
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html#Apq_Cfg_WebApi_Models_BatchUpdateRequest_TargetLevel_
+  commentId: Overload:Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetLevel
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetLevel
+  nameWithType: BatchUpdateRequest.TargetLevel
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetName
+  name: TargetName
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html#Apq_Cfg_WebApi_Models_BatchUpdateRequest_TargetName
+  commentId: P:Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetName
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetName
+  nameWithType: BatchUpdateRequest.TargetName
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetName*
+  name: TargetName
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html#Apq_Cfg_WebApi_Models_BatchUpdateRequest_TargetName_
+  commentId: Overload:Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetName
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest.TargetName
+  nameWithType: BatchUpdateRequest.TargetName
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest.Values
+  name: Values
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html#Apq_Cfg_WebApi_Models_BatchUpdateRequest_Values
+  commentId: P:Apq.Cfg.WebApi.Models.BatchUpdateRequest.Values
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest.Values
+  nameWithType: BatchUpdateRequest.Values
+- uid: Apq.Cfg.WebApi.Models.BatchUpdateRequest.Values*
+  name: Values
+  href: api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html#Apq_Cfg_WebApi_Models_BatchUpdateRequest_Values_
+  commentId: Overload:Apq.Cfg.WebApi.Models.BatchUpdateRequest.Values
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.BatchUpdateRequest.Values
+  nameWithType: BatchUpdateRequest.Values
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode
+  name: ConfigTreeNode
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html
+  commentId: T:Apq.Cfg.WebApi.Models.ConfigTreeNode
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode
+  nameWithType: ConfigTreeNode
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.Children
+  name: Children
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_Children
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigTreeNode.Children
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.Children
+  nameWithType: ConfigTreeNode.Children
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.Children*
+  name: Children
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_Children_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigTreeNode.Children
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.Children
+  nameWithType: ConfigTreeNode.Children
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.HasValue
+  name: HasValue
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_HasValue
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigTreeNode.HasValue
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.HasValue
+  nameWithType: ConfigTreeNode.HasValue
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.HasValue*
+  name: HasValue
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_HasValue_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigTreeNode.HasValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.HasValue
+  nameWithType: ConfigTreeNode.HasValue
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.IsMasked
+  name: IsMasked
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_IsMasked
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigTreeNode.IsMasked
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.IsMasked
+  nameWithType: ConfigTreeNode.IsMasked
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.IsMasked*
+  name: IsMasked
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_IsMasked_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigTreeNode.IsMasked
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.IsMasked
+  nameWithType: ConfigTreeNode.IsMasked
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.Key
+  name: Key
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_Key
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigTreeNode.Key
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.Key
+  nameWithType: ConfigTreeNode.Key
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.Key*
+  name: Key
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_Key_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigTreeNode.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.Key
+  nameWithType: ConfigTreeNode.Key
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.Value
+  name: Value
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_Value
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigTreeNode.Value
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.Value
+  nameWithType: ConfigTreeNode.Value
+- uid: Apq.Cfg.WebApi.Models.ConfigTreeNode.Value*
+  name: Value
+  href: api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html#Apq_Cfg_WebApi_Models_ConfigTreeNode_Value_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigTreeNode.Value
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigTreeNode.Value
+  nameWithType: ConfigTreeNode.Value
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse
+  name: ConfigValueResponse
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html
+  commentId: T:Apq.Cfg.WebApi.Models.ConfigValueResponse
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse
+  nameWithType: ConfigValueResponse
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.Exists
+  name: Exists
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_Exists
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigValueResponse.Exists
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.Exists
+  nameWithType: ConfigValueResponse.Exists
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.Exists*
+  name: Exists
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_Exists_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigValueResponse.Exists
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.Exists
+  nameWithType: ConfigValueResponse.Exists
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.IsMasked
+  name: IsMasked
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_IsMasked
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigValueResponse.IsMasked
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.IsMasked
+  nameWithType: ConfigValueResponse.IsMasked
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.IsMasked*
+  name: IsMasked
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_IsMasked_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigValueResponse.IsMasked
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.IsMasked
+  nameWithType: ConfigValueResponse.IsMasked
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.Key
+  name: Key
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_Key
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigValueResponse.Key
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.Key
+  nameWithType: ConfigValueResponse.Key
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.Key*
+  name: Key
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_Key_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigValueResponse.Key
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.Key
+  nameWithType: ConfigValueResponse.Key
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.Value
+  name: Value
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_Value
+  commentId: P:Apq.Cfg.WebApi.Models.ConfigValueResponse.Value
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.Value
+  nameWithType: ConfigValueResponse.Value
+- uid: Apq.Cfg.WebApi.Models.ConfigValueResponse.Value*
+  name: Value
+  href: api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html#Apq_Cfg_WebApi_Models_ConfigValueResponse_Value_
+  commentId: Overload:Apq.Cfg.WebApi.Models.ConfigValueResponse.Value
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Models.ConfigValueResponse.Value
+  nameWithType: ConfigValueResponse.Value
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions
+  name: ServiceCollectionExtensions
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html
+  commentId: T:Apq.Cfg.WebApi.ServiceCollectionExtensions
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions
+  nameWithType: ServiceCollectionExtensions
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name: AddApqCfgWebApi(IServiceCollection, IConfiguration, Action<WebApiOptions>?)
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_Microsoft_Extensions_Configuration_IConfiguration_System_Action_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: AddApqCfgWebApi(IServiceCollection, IConfiguration, Action(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, Microsoft.Extensions.Configuration.IConfiguration, System.Action<Apq.Cfg.WebApi.WebApiOptions>?)
+  fullName.vb: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, Microsoft.Extensions.Configuration.IConfiguration, System.Action(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, IConfiguration, Action<WebApiOptions>?)
+  nameWithType.vb: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, IConfiguration, Action(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name: AddApqCfgWebApi(IServiceCollection, Action<WebApiOptions>?)
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: AddApqCfgWebApi(IServiceCollection, Action(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Apq.Cfg.WebApi.WebApiOptions>?)
+  fullName.vb: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, Action<WebApiOptions>?)
+  nameWithType.vb: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, Action(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi*
+  name: AddApqCfgWebApi
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_
+  commentId: Overload:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
+  name: AddApqCfgWebApiAuthentication(IServiceCollection, WebApiOptions)
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiAuthentication_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_WebApi_WebApiOptions_
+  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.WebApi.WebApiOptions)
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(IServiceCollection, WebApiOptions)
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication*
+  name: AddApqCfgWebApiAuthentication
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiAuthentication_
+  commentId: Overload:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiAuthentication
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
+  name: AddApqCfgWebApiCors(IServiceCollection, WebApiOptions)
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiCors_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_WebApi_WebApiOptions_
+  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.WebApi.WebApiOptions)
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiCors(IServiceCollection, WebApiOptions)
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors*
+  name: AddApqCfgWebApiCors
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiCors_
+  commentId: Overload:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiCors
+- uid: Apq.Cfg.WebApi.Services
+  name: Apq.Cfg.WebApi.Services
+  href: api/Apq.Cfg.WebApi.Services.html
+  commentId: N:Apq.Cfg.WebApi.Services
+  fullName: Apq.Cfg.WebApi.Services
+  nameWithType: Apq.Cfg.WebApi.Services
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService
+  name: ConfigApiService
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html
+  commentId: T:Apq.Cfg.WebApi.Services.ConfigApiService
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService
+  nameWithType: ConfigApiService
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.#ctor(Apq.Cfg.ICfgRoot,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
+  name: ConfigApiService(ICfgRoot, IOptions<WebApiOptions>)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService__ctor_Apq_Cfg_ICfgRoot_Microsoft_Extensions_Options_IOptions_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.#ctor(Apq.Cfg.ICfgRoot,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: New(ICfgRoot, IOptions(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.ConfigApiService(Apq.Cfg.ICfgRoot, Microsoft.Extensions.Options.IOptions<Apq.Cfg.WebApi.WebApiOptions>)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.New(Apq.Cfg.ICfgRoot, Microsoft.Extensions.Options.IOptions(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: ConfigApiService.ConfigApiService(ICfgRoot, IOptions<WebApiOptions>)
+  nameWithType.vb: ConfigApiService.New(ICfgRoot, IOptions(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.#ctor*
+  name: ConfigApiService
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService__ctor_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.ConfigApiService
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.New
+  nameWithType: ConfigApiService.ConfigApiService
+  nameWithType.vb: ConfigApiService.New
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  name: BatchUpdate(BatchUpdateRequest)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_BatchUpdate_Apq_Cfg_WebApi_Models_BatchUpdateRequest_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  nameWithType: ConfigApiService.BatchUpdate(BatchUpdateRequest)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.BatchUpdate*
+  name: BatchUpdate
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_BatchUpdate_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.BatchUpdate
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.BatchUpdate
+  nameWithType: ConfigApiService.BatchUpdate
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey(System.String)
+  name: DeleteKey(string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_DeleteKey_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey(System.String)
+  name.vb: DeleteKey(String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey(string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey(String)
+  nameWithType: ConfigApiService.DeleteKey(string)
+  nameWithType.vb: ConfigApiService.DeleteKey(String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey*
+  name: DeleteKey
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_DeleteKey_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteKey
+  nameWithType: ConfigApiService.DeleteKey
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey(System.Int32,System.String,System.String)
+  name: DeleteSourceKey(int, string, string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_DeleteSourceKey_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey(System.Int32,System.String,System.String)
+  name.vb: DeleteSourceKey(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey(Integer, String, String)
+  nameWithType: ConfigApiService.DeleteSourceKey(int, string, string)
+  nameWithType.vb: ConfigApiService.DeleteSourceKey(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey*
+  name: DeleteSourceKey
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_DeleteSourceKey_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.DeleteSourceKey
+  nameWithType: ConfigApiService.DeleteSourceKey
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.Export(System.String,System.Nullable{System.Int32},System.String)
+  name: Export(string, int?, string?)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_Export_System_String_System_Nullable_System_Int32__System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.Export(System.String,System.Nullable{System.Int32},System.String)
+  name.vb: Export(String, Integer?, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.Export(string, int?, string?)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.Export(String, Integer?, String)
+  nameWithType: ConfigApiService.Export(string, int?, string?)
+  nameWithType.vb: ConfigApiService.Export(String, Integer?, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.Export*
+  name: Export
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_Export_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.Export
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.Export
+  nameWithType: ConfigApiService.Export
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedConfig
+  name: GetMergedConfig()
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedConfig
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedConfig
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedConfig()
+  nameWithType: ConfigApiService.GetMergedConfig()
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedConfig*
+  name: GetMergedConfig
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedConfig_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedConfig
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedConfig
+  nameWithType: ConfigApiService.GetMergedConfig
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection(System.String)
+  name: GetMergedSection(string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedSection_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection(System.String)
+  name.vb: GetMergedSection(String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection(string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection(String)
+  nameWithType: ConfigApiService.GetMergedSection(string)
+  nameWithType.vb: ConfigApiService.GetMergedSection(String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection*
+  name: GetMergedSection
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedSection_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedSection
+  nameWithType: ConfigApiService.GetMergedSection
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedTree
+  name: GetMergedTree()
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedTree
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedTree
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedTree()
+  nameWithType: ConfigApiService.GetMergedTree()
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedTree*
+  name: GetMergedTree
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedTree_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedTree
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedTree
+  nameWithType: ConfigApiService.GetMergedTree
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue(System.String)
+  name: GetMergedValue(string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedValue_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue(System.String)
+  name.vb: GetMergedValue(String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue(string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue(String)
+  nameWithType: ConfigApiService.GetMergedValue(string)
+  nameWithType.vb: ConfigApiService.GetMergedValue(String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue*
+  name: GetMergedValue
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetMergedValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetMergedValue
+  nameWithType: ConfigApiService.GetMergedValue
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig(System.Int32,System.String)
+  name: GetSourceConfig(int, string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSourceConfig_System_Int32_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig(System.Int32,System.String)
+  name.vb: GetSourceConfig(Integer, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig(int, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig(Integer, String)
+  nameWithType: ConfigApiService.GetSourceConfig(int, string)
+  nameWithType.vb: ConfigApiService.GetSourceConfig(Integer, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig*
+  name: GetSourceConfig
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSourceConfig_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceConfig
+  nameWithType: ConfigApiService.GetSourceConfig
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree(System.Int32,System.String)
+  name: GetSourceTree(int, string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSourceTree_System_Int32_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree(System.Int32,System.String)
+  name.vb: GetSourceTree(Integer, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree(int, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree(Integer, String)
+  nameWithType: ConfigApiService.GetSourceTree(int, string)
+  nameWithType.vb: ConfigApiService.GetSourceTree(Integer, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree*
+  name: GetSourceTree
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSourceTree_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceTree
+  nameWithType: ConfigApiService.GetSourceTree
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue(System.Int32,System.String,System.String)
+  name: GetSourceValue(int, string, string)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSourceValue_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue(System.Int32,System.String,System.String)
+  name.vb: GetSourceValue(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue(Integer, String, String)
+  nameWithType: ConfigApiService.GetSourceValue(int, string, string)
+  nameWithType.vb: ConfigApiService.GetSourceValue(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue*
+  name: GetSourceValue
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSourceValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSourceValue
+  nameWithType: ConfigApiService.GetSourceValue
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSources
+  name: GetSources()
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSources
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.GetSources
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSources()
+  nameWithType: ConfigApiService.GetSources()
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.GetSources*
+  name: GetSources
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_GetSources_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.GetSources
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.GetSources
+  nameWithType: ConfigApiService.GetSources
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.Reload
+  name: Reload()
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_Reload
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.Reload
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.Reload()
+  nameWithType: ConfigApiService.Reload()
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.Reload*
+  name: Reload
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_Reload_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.Reload
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.Reload
+  nameWithType: ConfigApiService.Reload
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.SaveAsync
+  name: SaveAsync()
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_SaveAsync
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.SaveAsync
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.SaveAsync()
+  nameWithType: ConfigApiService.SaveAsync()
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.SaveAsync*
+  name: SaveAsync
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_SaveAsync_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.SaveAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.SaveAsync
+  nameWithType: ConfigApiService.SaveAsync
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue(System.Int32,System.String,System.String,System.String)
+  name: SetSourceValue(int, string, string, string?)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_SetSourceValue_System_Int32_System_String_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue(System.Int32,System.String,System.String,System.String)
+  name.vb: SetSourceValue(Integer, String, String, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue(int, string, string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue(Integer, String, String, String)
+  nameWithType: ConfigApiService.SetSourceValue(int, string, string, string?)
+  nameWithType.vb: ConfigApiService.SetSourceValue(Integer, String, String, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue*
+  name: SetSourceValue
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_SetSourceValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.SetSourceValue
+  nameWithType: ConfigApiService.SetSourceValue
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.SetValue(System.String,System.String)
+  name: SetValue(string, string?)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_SetValue_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.SetValue(System.String,System.String)
+  name.vb: SetValue(String, String)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.SetValue(string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.SetValue(String, String)
+  nameWithType: ConfigApiService.SetValue(string, string?)
+  nameWithType.vb: ConfigApiService.SetValue(String, String)
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.SetValue*
+  name: SetValue
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService_SetValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.ConfigApiService.SetValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.SetValue
+  nameWithType: ConfigApiService.SetValue
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService
+  name: IConfigApiService
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html
+  commentId: T:Apq.Cfg.WebApi.Services.IConfigApiService
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService
+  nameWithType: IConfigApiService
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  name: BatchUpdate(BatchUpdateRequest)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_BatchUpdate_Apq_Cfg_WebApi_Models_BatchUpdateRequest_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)
+  nameWithType: IConfigApiService.BatchUpdate(BatchUpdateRequest)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate*
+  name: BatchUpdate
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_BatchUpdate_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate
+  nameWithType: IConfigApiService.BatchUpdate
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey(System.String)
+  name: DeleteKey(string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_DeleteKey_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey(System.String)
+  name.vb: DeleteKey(String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey(string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey(String)
+  nameWithType: IConfigApiService.DeleteKey(string)
+  nameWithType.vb: IConfigApiService.DeleteKey(String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey*
+  name: DeleteKey
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_DeleteKey_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey
+  nameWithType: IConfigApiService.DeleteKey
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey(System.Int32,System.String,System.String)
+  name: DeleteSourceKey(int, string, string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_DeleteSourceKey_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey(System.Int32,System.String,System.String)
+  name.vb: DeleteSourceKey(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey(Integer, String, String)
+  nameWithType: IConfigApiService.DeleteSourceKey(int, string, string)
+  nameWithType.vb: IConfigApiService.DeleteSourceKey(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey*
+  name: DeleteSourceKey
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_DeleteSourceKey_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey
+  nameWithType: IConfigApiService.DeleteSourceKey
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.Export(System.String,System.Nullable{System.Int32},System.String)
+  name: Export(string, int?, string?)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_Export_System_String_System_Nullable_System_Int32__System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.Export(System.String,System.Nullable{System.Int32},System.String)
+  name.vb: Export(String, Integer?, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.Export(string, int?, string?)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.Export(String, Integer?, String)
+  nameWithType: IConfigApiService.Export(string, int?, string?)
+  nameWithType.vb: IConfigApiService.Export(String, Integer?, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.Export*
+  name: Export
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_Export_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.Export
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.Export
+  nameWithType: IConfigApiService.Export
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig
+  name: GetMergedConfig()
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedConfig
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig()
+  nameWithType: IConfigApiService.GetMergedConfig()
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig*
+  name: GetMergedConfig
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedConfig_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig
+  nameWithType: IConfigApiService.GetMergedConfig
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection(System.String)
+  name: GetMergedSection(string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedSection_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection(System.String)
+  name.vb: GetMergedSection(String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection(string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection(String)
+  nameWithType: IConfigApiService.GetMergedSection(string)
+  nameWithType.vb: IConfigApiService.GetMergedSection(String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection*
+  name: GetMergedSection
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedSection_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection
+  nameWithType: IConfigApiService.GetMergedSection
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree
+  name: GetMergedTree()
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedTree
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree()
+  nameWithType: IConfigApiService.GetMergedTree()
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree*
+  name: GetMergedTree
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedTree_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree
+  nameWithType: IConfigApiService.GetMergedTree
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue(System.String)
+  name: GetMergedValue(string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedValue_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue(System.String)
+  name.vb: GetMergedValue(String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue(string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue(String)
+  nameWithType: IConfigApiService.GetMergedValue(string)
+  nameWithType.vb: IConfigApiService.GetMergedValue(String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue*
+  name: GetMergedValue
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue
+  nameWithType: IConfigApiService.GetMergedValue
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig(System.Int32,System.String)
+  name: GetSourceConfig(int, string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceConfig_System_Int32_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig(System.Int32,System.String)
+  name.vb: GetSourceConfig(Integer, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig(int, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig(Integer, String)
+  nameWithType: IConfigApiService.GetSourceConfig(int, string)
+  nameWithType.vb: IConfigApiService.GetSourceConfig(Integer, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig*
+  name: GetSourceConfig
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceConfig_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig
+  nameWithType: IConfigApiService.GetSourceConfig
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree(System.Int32,System.String)
+  name: GetSourceTree(int, string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceTree_System_Int32_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree(System.Int32,System.String)
+  name.vb: GetSourceTree(Integer, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree(int, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree(Integer, String)
+  nameWithType: IConfigApiService.GetSourceTree(int, string)
+  nameWithType.vb: IConfigApiService.GetSourceTree(Integer, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree*
+  name: GetSourceTree
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceTree_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree
+  nameWithType: IConfigApiService.GetSourceTree
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue(System.Int32,System.String,System.String)
+  name: GetSourceValue(int, string, string)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceValue_System_Int32_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue(System.Int32,System.String,System.String)
+  name.vb: GetSourceValue(Integer, String, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue(int, string, string)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue(Integer, String, String)
+  nameWithType: IConfigApiService.GetSourceValue(int, string, string)
+  nameWithType.vb: IConfigApiService.GetSourceValue(Integer, String, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue*
+  name: GetSourceValue
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue
+  nameWithType: IConfigApiService.GetSourceValue
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSources
+  name: GetSources()
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSources
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.GetSources
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSources()
+  nameWithType: IConfigApiService.GetSources()
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.GetSources*
+  name: GetSources
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_GetSources_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.GetSources
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.GetSources
+  nameWithType: IConfigApiService.GetSources
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.Reload
+  name: Reload()
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_Reload
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.Reload
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.Reload()
+  nameWithType: IConfigApiService.Reload()
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.Reload*
+  name: Reload
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_Reload_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.Reload
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.Reload
+  nameWithType: IConfigApiService.Reload
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync
+  name: SaveAsync()
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_SaveAsync
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync()
+  nameWithType: IConfigApiService.SaveAsync()
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync*
+  name: SaveAsync
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_SaveAsync_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync
+  nameWithType: IConfigApiService.SaveAsync
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue(System.Int32,System.String,System.String,System.String)
+  name: SetSourceValue(int, string, string, string?)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_SetSourceValue_System_Int32_System_String_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue(System.Int32,System.String,System.String,System.String)
+  name.vb: SetSourceValue(Integer, String, String, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue(int, string, string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue(Integer, String, String, String)
+  nameWithType: IConfigApiService.SetSourceValue(int, string, string, string?)
+  nameWithType.vb: IConfigApiService.SetSourceValue(Integer, String, String, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue*
+  name: SetSourceValue
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_SetSourceValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue
+  nameWithType: IConfigApiService.SetSourceValue
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.SetValue(System.String,System.String)
+  name: SetValue(string, string?)
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_SetValue_System_String_System_String_
+  commentId: M:Apq.Cfg.WebApi.Services.IConfigApiService.SetValue(System.String,System.String)
+  name.vb: SetValue(String, String)
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.SetValue(string, string?)
+  fullName.vb: Apq.Cfg.WebApi.Services.IConfigApiService.SetValue(String, String)
+  nameWithType: IConfigApiService.SetValue(string, string?)
+  nameWithType.vb: IConfigApiService.SetValue(String, String)
+- uid: Apq.Cfg.WebApi.Services.IConfigApiService.SetValue*
+  name: SetValue
+  href: api/Apq.Cfg.WebApi.Services.IConfigApiService.html#Apq_Cfg_WebApi_Services_IConfigApiService_SetValue_
+  commentId: Overload:Apq.Cfg.WebApi.Services.IConfigApiService.SetValue
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.Services.IConfigApiService.SetValue
+  nameWithType: IConfigApiService.SetValue
+- uid: Apq.Cfg.WebApi.WebApiOptions
+  name: WebApiOptions
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html
+  commentId: T:Apq.Cfg.WebApi.WebApiOptions
+  fullName: Apq.Cfg.WebApi.WebApiOptions
+  nameWithType: WebApiOptions
+- uid: Apq.Cfg.WebApi.WebApiOptions.AllowDelete
+  name: AllowDelete
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowDelete
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.AllowDelete
+  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowDelete
+  nameWithType: WebApiOptions.AllowDelete
+- uid: Apq.Cfg.WebApi.WebApiOptions.AllowDelete*
+  name: AllowDelete
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowDelete_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.AllowDelete
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowDelete
+  nameWithType: WebApiOptions.AllowDelete
+- uid: Apq.Cfg.WebApi.WebApiOptions.AllowRead
+  name: AllowRead
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowRead
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.AllowRead
+  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowRead
+  nameWithType: WebApiOptions.AllowRead
+- uid: Apq.Cfg.WebApi.WebApiOptions.AllowRead*
+  name: AllowRead
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowRead_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.AllowRead
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowRead
+  nameWithType: WebApiOptions.AllowRead
+- uid: Apq.Cfg.WebApi.WebApiOptions.AllowWrite
+  name: AllowWrite
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowWrite
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.AllowWrite
+  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowWrite
+  nameWithType: WebApiOptions.AllowWrite
+- uid: Apq.Cfg.WebApi.WebApiOptions.AllowWrite*
+  name: AllowWrite
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowWrite_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.AllowWrite
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowWrite
+  nameWithType: WebApiOptions.AllowWrite
+- uid: Apq.Cfg.WebApi.WebApiOptions.ApiKey
+  name: ApiKey
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_ApiKey
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.ApiKey
+  fullName: Apq.Cfg.WebApi.WebApiOptions.ApiKey
+  nameWithType: WebApiOptions.ApiKey
+- uid: Apq.Cfg.WebApi.WebApiOptions.ApiKey*
+  name: ApiKey
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_ApiKey_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.ApiKey
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.ApiKey
+  nameWithType: WebApiOptions.ApiKey
+- uid: Apq.Cfg.WebApi.WebApiOptions.ApiKeyHeaderName
+  name: ApiKeyHeaderName
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_ApiKeyHeaderName
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.ApiKeyHeaderName
+  fullName: Apq.Cfg.WebApi.WebApiOptions.ApiKeyHeaderName
+  nameWithType: WebApiOptions.ApiKeyHeaderName
+- uid: Apq.Cfg.WebApi.WebApiOptions.ApiKeyHeaderName*
+  name: ApiKeyHeaderName
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_ApiKeyHeaderName_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.ApiKeyHeaderName
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.ApiKeyHeaderName
+  nameWithType: WebApiOptions.ApiKeyHeaderName
+- uid: Apq.Cfg.WebApi.WebApiOptions.Authentication
+  name: Authentication
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_Authentication
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.Authentication
+  fullName: Apq.Cfg.WebApi.WebApiOptions.Authentication
+  nameWithType: WebApiOptions.Authentication
+- uid: Apq.Cfg.WebApi.WebApiOptions.Authentication*
+  name: Authentication
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_Authentication_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.Authentication
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.Authentication
+  nameWithType: WebApiOptions.Authentication
+- uid: Apq.Cfg.WebApi.WebApiOptions.CorsOrigins
+  name: CorsOrigins
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_CorsOrigins
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.CorsOrigins
+  fullName: Apq.Cfg.WebApi.WebApiOptions.CorsOrigins
+  nameWithType: WebApiOptions.CorsOrigins
+- uid: Apq.Cfg.WebApi.WebApiOptions.CorsOrigins*
+  name: CorsOrigins
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_CorsOrigins_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.CorsOrigins
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.CorsOrigins
+  nameWithType: WebApiOptions.CorsOrigins
+- uid: Apq.Cfg.WebApi.WebApiOptions.EnableCors
+  name: EnableCors
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_EnableCors
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.EnableCors
+  fullName: Apq.Cfg.WebApi.WebApiOptions.EnableCors
+  nameWithType: WebApiOptions.EnableCors
+- uid: Apq.Cfg.WebApi.WebApiOptions.EnableCors*
+  name: EnableCors
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_EnableCors_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.EnableCors
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.EnableCors
+  nameWithType: WebApiOptions.EnableCors
+- uid: Apq.Cfg.WebApi.WebApiOptions.Enabled
+  name: Enabled
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_Enabled
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.Enabled
+  fullName: Apq.Cfg.WebApi.WebApiOptions.Enabled
+  nameWithType: WebApiOptions.Enabled
+- uid: Apq.Cfg.WebApi.WebApiOptions.Enabled*
+  name: Enabled
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_Enabled_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.Enabled
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.Enabled
+  nameWithType: WebApiOptions.Enabled
+- uid: Apq.Cfg.WebApi.WebApiOptions.Jwt
+  name: Jwt
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_Jwt
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.Jwt
+  fullName: Apq.Cfg.WebApi.WebApiOptions.Jwt
+  nameWithType: WebApiOptions.Jwt
+- uid: Apq.Cfg.WebApi.WebApiOptions.Jwt*
+  name: Jwt
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_Jwt_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.Jwt
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.Jwt
+  nameWithType: WebApiOptions.Jwt
+- uid: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
+  name: MaskSensitiveValues
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_MaskSensitiveValues
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
+  fullName: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
+  nameWithType: WebApiOptions.MaskSensitiveValues
+- uid: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues*
+  name: MaskSensitiveValues
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_MaskSensitiveValues_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
+  nameWithType: WebApiOptions.MaskSensitiveValues
+- uid: Apq.Cfg.WebApi.WebApiOptions.RoutePrefix
+  name: RoutePrefix
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_RoutePrefix
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.RoutePrefix
+  fullName: Apq.Cfg.WebApi.WebApiOptions.RoutePrefix
+  nameWithType: WebApiOptions.RoutePrefix
+- uid: Apq.Cfg.WebApi.WebApiOptions.RoutePrefix*
+  name: RoutePrefix
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_RoutePrefix_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.RoutePrefix
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.RoutePrefix
+  nameWithType: WebApiOptions.RoutePrefix
+- uid: Apq.Cfg.WebApi.WebApiOptions.SectionName
+  name: SectionName
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_SectionName
+  commentId: F:Apq.Cfg.WebApi.WebApiOptions.SectionName
+  fullName: Apq.Cfg.WebApi.WebApiOptions.SectionName
+  nameWithType: WebApiOptions.SectionName
+- uid: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
+  name: SensitiveKeyPatterns
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_SensitiveKeyPatterns
+  commentId: P:Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
+  fullName: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
+  nameWithType: WebApiOptions.SensitiveKeyPatterns
+- uid: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns*
+  name: SensitiveKeyPatterns
+  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_SensitiveKeyPatterns_
+  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
+  nameWithType: WebApiOptions.SensitiveKeyPatterns
 - uid: Apq.Cfg.Xml
   name: Apq.Cfg.Xml
   href: api/Apq.Cfg.Xml.html

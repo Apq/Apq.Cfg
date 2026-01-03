@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Namespace Apq.Cfg.Sources | Apq.Cfg API </title>
+      <title>Enum AuthenticationType | Apq.Cfg API </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Namespace Apq.Cfg.Sources | Apq.Cfg API ">
+      <meta name="title" content="Enum AuthenticationType | Apq.Cfg API ">
       
-      
+      <meta name="description" content="认证类型">
       <link rel="icon" href="../favicon.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -84,44 +84,53 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Apq.Cfg.Sources">
+        <article data-uid="Apq.Cfg.WebApi.AuthenticationType">
 
-  <h1 id="Apq_Cfg_Sources" data-uid="Apq.Cfg.Sources" class="text-break">Namespace Apq.Cfg.Sources</h1>
-  <div class="markdown level0 summary"></div>
-  <div class="markdown level0 conceptual"></div>
-  <div class="markdown level0 remarks"></div>
 
-    <h3 id="classes">
-Classes
-</h3>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Apq.Cfg.Sources.CfgSourceExtensions.html">CfgSourceExtensions</a></dt>
-      <dd><p>ICfgSource 扩展方法</p>
+
+
+  <h1 id="Apq_Cfg_WebApi_AuthenticationType" data-uid="Apq.Cfg.WebApi.AuthenticationType" class="text-break">
+Enum AuthenticationType  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.WebApi.html">WebApi</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.WebApi.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>认证类型</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum AuthenticationType</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="Apq_Cfg_WebApi_AuthenticationType_ApiKey"><code>ApiKey = 1</code></dt>
+  
+  <dd><p>API Key 认证</p>
 </dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Apq.Cfg.Sources.ConfigSourceInfo.html">ConfigSourceInfo</a></dt>
-      <dd><p>配置源信息（用于序列化和 API 响应）</p>
+    <dt id="Apq_Cfg_WebApi_AuthenticationType_JwtBearer"><code>JwtBearer = 2</code></dt>
+  
+  <dd><p>JWT Bearer 认证</p>
 </dd>
-    </dl>
-    <h3 id="interfaces">
-Interfaces
-</h3>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Apq.Cfg.Sources.ICfgSource.html">ICfgSource</a></dt>
-      <dd><p>配置源接口，定义了配置源的基本行为</p>
+    <dt id="Apq_Cfg_WebApi_AuthenticationType_None"><code>None = 0</code></dt>
+  
+  <dd><p>无认证</p>
 </dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Apq.Cfg.Sources.IFileCfgSource.html">IFileCfgSource</a></dt>
-      <dd><p>文件配置源接口，用于标识基于文件的配置源</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Apq.Cfg.Sources.IWritableCfgSource.html">IWritableCfgSource</a></dt>
-      <dd><p>可写配置源接口，继承自 ICfgSource，增加了写入配置的能力</p>
-</dd>
-    </dl>
+  </dl>
+
 
 
 </article>

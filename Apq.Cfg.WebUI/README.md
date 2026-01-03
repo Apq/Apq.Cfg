@@ -23,8 +23,12 @@ Apq.Cfg 配置管理 Web 界面，集中管理多个应用的配置。
 ### Docker
 
 ```bash
-docker build -t apq-cfg-webui .
-docker run -p 8080:80 apq-cfg-webui
+# 本地构建
+docker build -t apqcfg-webui .
+docker run -p 8080:80 apqcfg-webui
+
+# 或使用阿里云镜像
+docker run -p 8080:80 registry.cn-chengdu.aliyuncs.com/apq/apqcfg-webui
 ```
 
 ### 本地开发

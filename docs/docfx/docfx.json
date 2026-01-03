@@ -22,7 +22,8 @@
             "Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj",
             "Apq.Cfg.Zookeeper/Apq.Cfg.Zookeeper.csproj",
             "Apq.Cfg.Vault/Apq.Cfg.Vault.csproj",
-            "Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj"
+            "Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj",
+            "Apq.Cfg.WebApi/Apq.Cfg.WebApi.csproj"
           ],
           "src": "../.."
         }

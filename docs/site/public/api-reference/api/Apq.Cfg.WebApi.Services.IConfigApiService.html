@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IConfigApiService | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IConfigApiService | Apq.Cfg API ">
+      
+      <meta name="description" content="配置 API 服务接口">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.WebApi.Services.IConfigApiService">
+
+
+
+  <h1 id="Apq_Cfg_WebApi_Services_IConfigApiService" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService" class="text-break">
+Interface IConfigApiService  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.WebApi.html">WebApi</a>.<a class="xref" href="Apq.Cfg.WebApi.Services.html">Services</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.WebApi.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>配置 API 服务接口</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IConfigApiService</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_BatchUpdate_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_BatchUpdate_Apq_Cfg_WebApi_Models_BatchUpdateRequest_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.BatchUpdate(Apq.Cfg.WebApi.Models.BatchUpdateRequest)">
+  BatchUpdate(BatchUpdateRequest)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>批量设置配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool BatchUpdate(BatchUpdateRequest request)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>request</code> <a class="xref" href="Apq.Cfg.WebApi.Models.BatchUpdateRequest.html">BatchUpdateRequest</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_DeleteKey_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_DeleteKey_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.DeleteKey(System.String)">
+  DeleteKey(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>删除配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool DeleteKey(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_DeleteSourceKey_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_DeleteSourceKey_System_Int32_System_String_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.DeleteSourceKey(System.Int32,System.String,System.String)">
+  DeleteSourceKey(int, string, string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>删除指定配置源的配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool DeleteSourceKey(int level, string name, string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_Export_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.Export*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_Export_System_String_System_Nullable_System_Int32__System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.Export(System.String,System.Nullable{System.Int32},System.String)">
+  Export(string, int?, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>导出配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Export(string format, int? level = null, string? name = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>?</dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedConfig_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedConfig" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedConfig">
+  GetMergedConfig()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取合并后的所有配置（扁平化键值对）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Dictionary&lt;string, string?&gt; GetMergedConfig()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedSection_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedSection_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedSection(System.String)">
+  GetMergedSection(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取合并后的配置节</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Dictionary&lt;string, string?&gt; GetMergedSection(string section)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>section</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedTree_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedTree" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedTree">
+  GetMergedTree()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取合并后的配置树结构</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ConfigTreeNode GetMergedTree()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.WebApi.Models.ConfigTreeNode.html">ConfigTreeNode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedValue_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetMergedValue_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetMergedValue(System.String)">
+  GetMergedValue(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取合并后的单个配置值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ConfigValueResponse GetMergedValue(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.WebApi.Models.ConfigValueResponse.html">ConfigValueResponse</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceConfig_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceConfig_System_Int32_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceConfig(System.Int32,System.String)">
+  GetSourceConfig(int, string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取指定配置源的内容</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Dictionary&lt;string, string?&gt;? GetSourceConfig(int level, string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceTree_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceTree_System_Int32_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceTree(System.Int32,System.String)">
+  GetSourceTree(int, string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取指定配置源的配置树</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ConfigTreeNode? GetSourceTree(int level, string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.WebApi.Models.ConfigTreeNode.html">ConfigTreeNode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceValue_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSourceValue_System_Int32_System_String_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSourceValue(System.Int32,System.String,System.String)">
+  GetSourceValue(int, string, string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取指定配置源的单个配置值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ConfigValueResponse? GetSourceValue(int level, string name, string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.WebApi.Models.ConfigValueResponse.html">ConfigValueResponse</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSources_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSources*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_GetSources" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.GetSources">
+  GetSources()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取所有配置源列表</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;ConfigSourceInfo&gt; GetSources()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Apq.Cfg.Sources.ConfigSourceInfo.html">ConfigSourceInfo</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_Reload_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.Reload*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_Reload" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.Reload">
+  Reload()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>重新加载配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Reload()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_SaveAsync_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_SaveAsync" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.SaveAsync">
+  SaveAsync()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>保存配置到持久化存储</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; SaveAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_SetSourceValue_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_SetSourceValue_System_Int32_System_String_System_String_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.SetSourceValue(System.Int32,System.String,System.String,System.String)">
+  SetSourceValue(int, string, string, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>设置指定配置源的配置值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SetSourceValue(int level, string name, string key, string? value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_WebApi_Services_IConfigApiService_SetValue_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.SetValue*"></a>
+
+  <h3 id="Apq_Cfg_WebApi_Services_IConfigApiService_SetValue_System_String_System_String_" data-uid="Apq.Cfg.WebApi.Services.IConfigApiService.SetValue(System.String,System.String)">
+  SetValue(string, string?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>设置配置值（写入主写入源）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SetValue(string key, string? value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

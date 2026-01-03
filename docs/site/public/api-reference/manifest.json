@@ -1222,6 +1222,34 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.CfgSourceExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.CfgSourceExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.CfgSourceExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.CfgSourceExtensions.yml\" sourcestartlinenumber=\"1\">ICfgSource 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.ConfigSourceInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.ConfigSourceInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.ConfigSourceInfo",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.ConfigSourceInfo.yml\" sourcestartlinenumber=\"1\">配置源信息（用于序列化和 API 响应）</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.Sources.File.FileCfgSourceBase.yml",
       "output": {
         ".html": {
@@ -1261,6 +1289,20 @@
       "IsMRef": true,
       "Title": "Apq.Cfg.Sources.ICfgSource",
       "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.ICfgSource.yml\" sourcestartlinenumber=\"1\">配置源接口，定义了配置源的基本行为</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Sources.IFileCfgSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Sources.IFileCfgSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Sources.IFileCfgSource",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.Sources.IFileCfgSource.yml\" sourcestartlinenumber=\"1\">文件配置源接口，用于标识基于文件的配置源</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -1722,6 +1764,328 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "Apq.Cfg.Vault",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.ApplicationBuilderExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.ApplicationBuilderExtensions.yml\" sourcestartlinenumber=\"1\">应用程序构建器扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationHandler.yml\" sourcestartlinenumber=\"1\">API Key 认证处理器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Authentication.ApiKeyAuthenticationOptions.yml\" sourcestartlinenumber=\"1\">API Key 认证选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Authentication.ApiKeyDefaults",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Authentication.ApiKeyDefaults.yml\" sourcestartlinenumber=\"1\">API Key 认证方案常量</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Authentication.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Authentication.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Authentication",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.AuthenticationType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.AuthenticationType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.AuthenticationType",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.AuthenticationType.yml\" sourcestartlinenumber=\"1\">认证类型</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Controllers.ConfigController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Controllers.ConfigController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Controllers.ConfigController",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Controllers.ConfigController.yml\" sourcestartlinenumber=\"1\">配置 API 控制器</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Controllers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Controllers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Controllers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.JwtOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.JwtOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.JwtOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.JwtOptions.yml\" sourcestartlinenumber=\"1\">JWT 认证配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Middleware.ConfigApiMiddleware.yml\" sourcestartlinenumber=\"1\">配置 API 启用检查中间件</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Middleware.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Middleware.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Middleware",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Models.ApiResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Models.ApiResponse-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Models.ApiResponse<T>",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Models.ApiResponse-1.yml\" sourcestartlinenumber=\"1\">统一 API 响应格式</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Models.ApiResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Models.ApiResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Models.ApiResponse",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Models.ApiResponse.yml\" sourcestartlinenumber=\"1\">非泛型 API 响应</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Models.BatchUpdateRequest",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Models.BatchUpdateRequest.yml\" sourcestartlinenumber=\"1\">批量更新请求</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Models.ConfigTreeNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Models.ConfigTreeNode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Models.ConfigTreeNode",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Models.ConfigTreeNode.yml\" sourcestartlinenumber=\"1\">配置树节点</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Models.ConfigValueResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Models.ConfigValueResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Models.ConfigValueResponse",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Models.ConfigValueResponse.yml\" sourcestartlinenumber=\"1\">配置值响应</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">服务集合扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Services.ConfigApiService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Services.ConfigApiService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Services.ConfigApiService",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Services.ConfigApiService.yml\" sourcestartlinenumber=\"1\">配置 API 服务实现</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Services.IConfigApiService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Services.IConfigApiService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Services.IConfigApiService",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.Services.IConfigApiService.yml\" sourcestartlinenumber=\"1\">配置 API 服务接口</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.Services.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.Services",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.WebApiOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.WebApiOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.WebApiOptions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.WebApiOptions.yml\" sourcestartlinenumber=\"1\">Web API 配置选项</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi",
       "Summary": null
     },
     {

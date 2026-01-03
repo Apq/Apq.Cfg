@@ -110,5 +110,7 @@ var dbConfig = cfg.GetSection("Database").GetValue<DatabaseConfig>();
 | Data Protection | ASP.NET Core Data Protection 集成 | Apq.Cfg.Crypto.DataProtection |
 | 加密工具 | 命令行加密工具 (dotnet tool) | Apq.Cfg.Crypto.Tool |
 | 源生成器 | 编译时生成零反射绑定代码，支持 Native AOT | Apq.Cfg.SourceGenerator |
+| Web API | RESTful API 接口，支持远程配置管理 | Apq.Cfg.WebApi |
+| Web 管理界面 | 集中管理多个应用的配置 | Apq.Cfg.WebUI |
 
 </div>

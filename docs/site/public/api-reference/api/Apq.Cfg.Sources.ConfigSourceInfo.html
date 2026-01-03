@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Interface ICfgSource | Apq.Cfg API </title>
+      <title>Class ConfigSourceInfo | Apq.Cfg API </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Interface ICfgSource | Apq.Cfg API ">
+      <meta name="title" content="Class ConfigSourceInfo | Apq.Cfg API ">
       
-      <meta name="description" content="配置源接口，定义了配置源的基本行为">
+      <meta name="description" content="配置源信息（用于序列化和 API 响应）">
       <link rel="icon" href="../favicon.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -84,12 +84,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Apq.Cfg.Sources.ICfgSource">
+        <article data-uid="Apq.Cfg.Sources.ConfigSourceInfo">
 
 
 
-  <h1 id="Apq_Cfg_Sources_ICfgSource" data-uid="Apq.Cfg.Sources.ICfgSource" class="text-break">
-Interface ICfgSource  
+  <h1 id="Apq_Cfg_Sources_ConfigSourceInfo" data-uid="Apq.Cfg.Sources.ConfigSourceInfo" class="text-break">
+Class ConfigSourceInfo  
   </h1>
 
   <div class="facts text-secondary">
@@ -97,28 +97,50 @@ Interface ICfgSource
   <dl><dt>Assembly</dt><dd>Apq.Cfg.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>配置源接口，定义了配置源的基本行为</p>
+  <div class="markdown summary"><p>配置源信息（用于序列化和 API 响应）</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ICfgSource</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class ConfigSourceInfo</code></pre>
   </div>
 
 
 
 
-
-
-
-
-  <dl class="typelist extensionMethods">
-    <dt>Extension Methods</dt>
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
     <dd>
-  <div>
-      <a class="xref" href="Apq.Cfg.Sources.CfgSourceExtensions.html#Apq_Cfg_Sources_CfgSourceExtensions_ToInfo_Apq_Cfg_Sources_ICfgSource_">CfgSourceExtensions.ToInfo(ICfgSource)</a>
-  </div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ConfigSourceInfo</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
   </dd></dl>
+
 
 
 
@@ -128,19 +150,19 @@ Interface ICfgSource
 </h2>
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_IsPrimaryWriter_" data-uid="Apq.Cfg.Sources.ICfgSource.IsPrimaryWriter*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_IsPrimaryWriter_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_IsPrimaryWriter" data-uid="Apq.Cfg.Sources.ICfgSource.IsPrimaryWriter">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_IsPrimaryWriter" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.IsPrimaryWriter">
   IsPrimaryWriter
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标</p>
+  <div class="markdown level1 summary"><p>是否为主写入源</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool IsPrimaryWriter { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsPrimaryWriter { get; init; }</code></pre>
   </div>
 
 
@@ -160,19 +182,19 @@ Interface ICfgSource
 
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_IsWriteable_" data-uid="Apq.Cfg.Sources.ICfgSource.IsWriteable*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_IsWriteable_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_IsWriteable" data-uid="Apq.Cfg.Sources.ICfgSource.IsWriteable">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_IsWriteable" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.IsWriteable">
   IsWriteable
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取是否可写，指示该配置源是否支持写入操作</p>
+  <div class="markdown level1 summary"><p>是否可写</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool IsWriteable { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsWriteable { get; init; }</code></pre>
   </div>
 
 
@@ -192,19 +214,19 @@ Interface ICfgSource
 
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_KeyCount_" data-uid="Apq.Cfg.Sources.ICfgSource.KeyCount*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_KeyCount_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.KeyCount*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_KeyCount" data-uid="Apq.Cfg.Sources.ICfgSource.KeyCount">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_KeyCount" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.KeyCount">
   KeyCount
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取配置项数量（所有叶子节点的总数）</p>
+  <div class="markdown level1 summary"><p>配置项数量（所有叶子节点的总数）</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int KeyCount { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int KeyCount { get; init; }</code></pre>
   </div>
 
 
@@ -224,19 +246,19 @@ Interface ICfgSource
 
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_Level_" data-uid="Apq.Cfg.Sources.ICfgSource.Level*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_Level_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.Level*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_Level" data-uid="Apq.Cfg.Sources.ICfgSource.Level">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_Level" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.Level">
   Level
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取配置层级，数值越大优先级越高</p>
+  <div class="markdown level1 summary"><p>配置源层级（优先级，数字越大优先级越高）</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int Level { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int Level { get; init; }</code></pre>
   </div>
 
 
@@ -256,19 +278,19 @@ Interface ICfgSource
 
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_Name_" data-uid="Apq.Cfg.Sources.ICfgSource.Name*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_Name_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.Name*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_Name" data-uid="Apq.Cfg.Sources.ICfgSource.Name">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_Name" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.Name">
   Name
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取或设置配置源名称（同一层级内唯一）</p>
+  <div class="markdown level1 summary"><p>配置源名称（同一层级内唯一）</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string Name { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; init; }</code></pre>
   </div>
 
 
@@ -288,19 +310,19 @@ Interface ICfgSource
 
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_TopLevelKeyCount_" data-uid="Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_TopLevelKeyCount_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_TopLevelKeyCount" data-uid="Apq.Cfg.Sources.ICfgSource.TopLevelKeyCount">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_TopLevelKeyCount" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.TopLevelKeyCount">
   TopLevelKeyCount
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取顶级配置键数量（只统计第一层节点）</p>
+  <div class="markdown level1 summary"><p>顶级配置键数量（只统计第一层节点）</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int TopLevelKeyCount { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int TopLevelKeyCount { get; init; }</code></pre>
   </div>
 
 
@@ -320,19 +342,19 @@ Interface ICfgSource
 
 
 
-  <a id="Apq_Cfg_Sources_ICfgSource_Type_" data-uid="Apq.Cfg.Sources.ICfgSource.Type*"></a>
+  <a id="Apq_Cfg_Sources_ConfigSourceInfo_Type_" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.Type*"></a>
 
-  <h3 id="Apq_Cfg_Sources_ICfgSource_Type" data-uid="Apq.Cfg.Sources.ICfgSource.Type">
+  <h3 id="Apq_Cfg_Sources_ConfigSourceInfo_Type" data-uid="Apq.Cfg.Sources.ConfigSourceInfo.Type">
   Type
   
   </h3>
 
-  <div class="markdown level1 summary"><p>获取配置源类型名称</p>
+  <div class="markdown level1 summary"><p>配置源类型名称</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string Type { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Type { get; init; }</code></pre>
   </div>
 
 
@@ -344,76 +366,6 @@ Interface ICfgSource
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
-
-
-
-
-
-
-
-
-  <h2 class="section" id="methods">Methods
-</h2>
-
-
-  <a id="Apq_Cfg_Sources_ICfgSource_BuildSource_" data-uid="Apq.Cfg.Sources.ICfgSource.BuildSource*"></a>
-
-  <h3 id="Apq_Cfg_Sources_ICfgSource_BuildSource" data-uid="Apq.Cfg.Sources.ICfgSource.BuildSource">
-  BuildSource()
-  
-  </h3>
-
-  <div class="markdown level1 summary"><p>构建 Microsoft.Extensions.Configuration 的配置源</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IConfigurationSource BuildSource()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfigurationsource">IConfigurationSource</a></dt>
-    <dd><p>Microsoft.Extensions.Configuration.IConfigurationSource 实例</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Apq_Cfg_Sources_ICfgSource_GetAllValues_" data-uid="Apq.Cfg.Sources.ICfgSource.GetAllValues*"></a>
-
-  <h3 id="Apq_Cfg_Sources_ICfgSource_GetAllValues" data-uid="Apq.Cfg.Sources.ICfgSource.GetAllValues">
-  GetAllValues()
-  
-  </h3>
-
-  <div class="markdown level1 summary"><p>获取该配置源的所有配置值</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IEnumerable&lt;KeyValuePair&lt;string, string?&gt;&gt; GetAllValues()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
-    <dd><p>配置键值对集合</p>
-</dd>
-  </dl>
-
-
-
 
 
 

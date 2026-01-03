@@ -151,6 +151,13 @@ Class FileCfgSourceBase
     </div>
   </dd></dl>
 
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Apq.Cfg.Sources.CfgSourceExtensions.html#Apq_Cfg_Sources_CfgSourceExtensions_ToInfo_Apq_Cfg_Sources_ICfgSource_">CfgSourceExtensions.ToInfo(ICfgSource)</a>
+  </div>
+  </dd></dl>
 
 
 
@@ -162,8 +169,8 @@ Class FileCfgSourceBase
 
   <a id="Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor*"></a>
 
-  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions)">
-  FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?)
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase__ctor_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.#ctor(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)">
+  FileCfgSourceBase(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
   
   </h3>
 
@@ -171,7 +178,7 @@ Class FileCfgSourceBase
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected FileCfgSourceBase(string path, int level, bool writeable, bool optional, bool reloadOnChange, bool isPrimaryWriter, EncodingOptions? encodingOptions = null)</code></pre>
+    <pre><code class="lang-csharp hljs">protected FileCfgSourceBase(string path, int level, bool writeable, bool optional, bool reloadOnChange, bool isPrimaryWriter, EncodingOptions? encodingOptions = null, string? name = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -189,6 +196,8 @@ Class FileCfgSourceBase
     <dt><code>isPrimaryWriter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
     <dt><code>encodingOptions</code> <a class="xref" href="Apq.Cfg.EncodingSupport.EncodingOptions.html">EncodingOptions</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
 
@@ -428,6 +437,38 @@ Class FileCfgSourceBase
 
 
 
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_FilePath_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_FilePath" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.FilePath">
+  FilePath
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取文件路径</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FilePath { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_IsPrimaryWriter_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.IsPrimaryWriter*"></a>
 
   <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_IsPrimaryWriter" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.IsPrimaryWriter">
@@ -492,6 +533,38 @@ Class FileCfgSourceBase
 
 
 
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_KeyCount_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_KeyCount" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.KeyCount">
+  KeyCount
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置项数量（所有叶子节点的总数）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int KeyCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_Level_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Level*"></a>
 
   <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_Level" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Level">
@@ -514,6 +587,102 @@ Class FileCfgSourceBase
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_Name_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Name*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_Name" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Name">
+  Name
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取或设置配置源名称（同一层级内唯一）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_TopLevelKeyCount_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_TopLevelKeyCount" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.TopLevelKeyCount">
+  TopLevelKeyCount
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取顶级配置键数量（只统计第一层节点）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int TopLevelKeyCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_Type_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Type*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_Type" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.Type">
+  Type
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置源类型名称</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string Type { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
 
@@ -682,6 +851,39 @@ Class FileCfgSourceBase
     <dd></dd>
   </dl>
 
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Sources_File_FileCfgSourceBase_GetAllValues_" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues*"></a>
+
+  <h3 id="Apq_Cfg_Sources_File_FileCfgSourceBase_GetAllValues" data-uid="Apq.Cfg.Sources.File.FileCfgSourceBase.GetAllValues">
+  GetAllValues()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取该配置源的所有配置值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract IEnumerable&lt;KeyValuePair&lt;string, string?&gt;&gt; GetAllValues()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dd><p>配置键值对集合</p>
+</dd>
+  </dl>
 
 
 
