@@ -2,7 +2,7 @@
 ARG DOCKER_MIRROR=docker.m.daocloud.io
 
 # 构建前端
-FROM node:24-alpine AS frontend
+FROM ${DOCKER_MIRROR}/node:24-alpine AS frontend
 WORKDIR /build
 COPY ClientApp/package*.json ./
 RUN npm config set registry https://registry.npmmirror.com && npm ci --silent
