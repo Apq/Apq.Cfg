@@ -102,13 +102,10 @@ cd $repoDir
 echo "正在拉取最新代码..."
 git pull
 
-# 进入项目目录
-cd $projectDir
-
-# 构建并推送 Docker 镜像
+# 构建并推送 Docker 镜像（从仓库根目录构建）
 echo "正在构建并推送 Docker 镜像..."
 echo "使用 Docker 镜像源: $dockerMirror"
-docker buildx build -f Dockerfile.cn \
+docker buildx build -f $projectDir/Dockerfile.cn \
     --build-arg DOCKER_MIRROR=$dockerMirror \
     --platform linux/amd64,linux/arm64 \
     $tagParams \

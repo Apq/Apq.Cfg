@@ -12,8 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Apq.Cfg" Version="1.1.6" />
-        <PackageReference Include="Apq.Cfg.WebApi" Version="1.1.6" />
+        <PackageReference Include="Apq.Cfg" Version="$(ApqCfgVersion)" />
+        <PackageReference Include="Apq.Cfg.WebApi" Version="$(ApqCfgVersion)" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
