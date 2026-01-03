@@ -38,7 +38,7 @@ docker run -p 8080:80 registry.cn-chengdu.aliyuncs.com/apq/apqcfg-webui
 cd ClientApp && npm install && npm run dev
 
 # 后端
-dotnet run
+dotnet run -f net10.0
 ```
 
 ## 应用端点配置
