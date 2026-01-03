@@ -4,7 +4,9 @@ using Apq.Cfg.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+#if NET8_0
 using Microsoft.OpenApi.Models;
+#endif
 
 namespace Apq.Cfg.WebApi;
 
@@ -40,10 +42,10 @@ public static class ServiceCollectionExtensions
         services.AddControllers()
             .AddApplicationPart(typeof(ConfigController).Assembly);
 
-        // 默认启用 Swagger（使用默认选项，可通过 configure 回调禁用）
+        // 默认启用 API 文档（使用默认选项，可通过 configure 回调禁用）
         var defaultOptions = new WebApiOptions();
         configure?.Invoke(defaultOptions);
-        ConfigureSwagger(services, defaultOptions);
+        ConfigureOpenApi(services, defaultOptions);
 
         return services;
     }
@@ -67,11 +69,11 @@ public static class ServiceCollectionExtensions
         services.AddControllers()
             .AddApplicationPart(typeof(ConfigController).Assembly);
 
-        // 默认启用 Swagger（从配置绑定，可通过 configure 回调覆盖）
+        // 默认启用 API 文档（从配置绑定，可通过 configure 回调覆盖）
         var options = new WebApiOptions();
         configuration.GetSection(WebApiOptions.SectionName).Bind(options);
         configure?.Invoke(options);
-        ConfigureSwagger(services, options);
+        ConfigureOpenApi(services, options);
 
         return services;
     }
@@ -149,21 +151,23 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 内部方法：配置 Swagger 服务
+    /// 内部方法：配置 OpenAPI 文档服务
     /// </summary>
-    private static void ConfigureSwagger(IServiceCollection services, WebApiOptions options)
+    private static void ConfigureOpenApi(IServiceCollection services, WebApiOptions options)
     {
-        if (!options.SwaggerEnabled)
+        if (!options.OpenApiEnabled)
             return;
 
+#if NET8_0
+        // .NET 8: 使用 Swashbuckle (Swagger UI)
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc(options.SwaggerVersion, new OpenApiInfo
+            c.SwaggerDoc(options.OpenApiVersion, new OpenApiInfo
             {
-                Title = options.SwaggerTitle,
-                Description = options.SwaggerDescription,
-                Version = options.SwaggerVersion,
+                Title = options.OpenApiTitle,
+                Description = options.OpenApiDescription,
+                Version = options.OpenApiVersion,
                 Contact = new OpenApiContact
                 {
                     Name = "Apq.Cfg",
@@ -172,7 +176,7 @@ public static class ServiceCollectionExtensions
             });
 
             // 添加认证支持
-            if (options.SwaggerShowAuthorizationButton)
+            if (options.OpenApiShowAuthorizationButton)
             {
                 switch (options.Authentication)
                 {
@@ -234,5 +238,18 @@ public static class ServiceCollectionExtensions
                 c.IncludeXmlComments(xmlPath);
             }
         });
+#else
+        // .NET 10+: 使用 Microsoft.AspNetCore.OpenApi + Scalar
+        services.AddOpenApi(options.OpenApiVersion, openApiOptions =>
+        {
+            openApiOptions.AddDocumentTransformer((document, _, _) =>
+            {
+                document.Info.Title = options.OpenApiTitle;
+                document.Info.Description = options.OpenApiDescription;
+                document.Info.Version = options.OpenApiVersion;
+                return Task.CompletedTask;
+            });
+        });
+#endif
     }
 }

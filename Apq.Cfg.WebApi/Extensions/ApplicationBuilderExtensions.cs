@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+#if NET10_0_OR_GREATER
+using Scalar.AspNetCore;
+#endif
 
 namespace Apq.Cfg.WebApi;
 
@@ -22,17 +25,19 @@ public static class ApplicationBuilderExtensions
         if (!options.Enabled)
             return app;
 
-        // Swagger（内置支持）
-        if (options.SwaggerEnabled)
+#if NET8_0
+        // .NET 8: 使用 Swagger UI
+        if (options.OpenApiEnabled)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/{options.SwaggerVersion}/swagger.json", options.SwaggerTitle);
-                c.RoutePrefix = options.SwaggerRoutePrefix;
-                c.DocumentTitle = options.SwaggerTitle;
+                c.SwaggerEndpoint($"/swagger/{options.OpenApiVersion}/swagger.json", options.OpenApiTitle);
+                c.RoutePrefix = options.OpenApiRoutePrefix;
+                c.DocumentTitle = options.OpenApiTitle;
             });
         }
+#endif
 
         // 启用检查中间件
         app.UseMiddleware<ConfigApiMiddleware>();
@@ -58,7 +63,23 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     public static IEndpointRouteBuilder MapApqCfgWebApi(this IEndpointRouteBuilder endpoints)
     {
+        var options = endpoints.ServiceProvider
+            .GetRequiredService<IOptions<WebApiOptions>>().Value;
+
         endpoints.MapControllers();
+
+#if NET10_0_OR_GREATER
+        // .NET 10+: 使用 Scalar UI
+        if (options.OpenApiEnabled)
+        {
+            endpoints.MapOpenApi();
+            endpoints.MapScalarApiReference(options.OpenApiRoutePrefix, scalarOptions =>
+            {
+                scalarOptions.WithTitle(options.OpenApiTitle);
+            });
+        }
+#endif
+
         return endpoints;
     }
 }

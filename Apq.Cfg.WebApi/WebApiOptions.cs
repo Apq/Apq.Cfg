@@ -76,37 +76,44 @@ public sealed class WebApiOptions
     /// </summary>
     public string[] CorsOrigins { get; set; } = ["*"];
 
-    #region Swagger 配置
+    #region OpenAPI 文档配置
 
     /// <summary>
-    /// 是否启用 Swagger，默认 true
+    /// 是否启用 OpenAPI 文档，默认 true
+    /// （.NET 8 使用 Swagger UI，.NET 10+ 使用 Scalar）
     /// </summary>
-    public bool SwaggerEnabled { get; set; } = true;
+    public bool OpenApiEnabled { get; set; } = true;
 
     /// <summary>
-    /// Swagger 文档标题
+    /// API 文档标题
     /// </summary>
-    public string SwaggerTitle { get; set; } = "Apq.Cfg Web API";
+    public string OpenApiTitle { get; set; } = "Apq.Cfg Web API";
 
     /// <summary>
-    /// Swagger 文档描述
+    /// API 文档描述
     /// </summary>
-    public string SwaggerDescription { get; set; } = "Apq.Cfg 配置管理 RESTful API";
+    public string OpenApiDescription { get; set; } = "Apq.Cfg 配置管理 RESTful API";
 
     /// <summary>
-    /// Swagger API 版本
+    /// API 版本
     /// </summary>
-    public string SwaggerVersion { get; set; } = "v1";
+    public string OpenApiVersion { get; set; } = "v1";
 
     /// <summary>
-    /// Swagger UI 路由前缀，默认 "swagger"
+    /// API 文档 UI 路由前缀
+    /// （.NET 8 默认 "swagger"，.NET 10+ 默认 "scalar"）
     /// </summary>
-    public string SwaggerRoutePrefix { get; set; } = "swagger";
+    public string OpenApiRoutePrefix { get; set; } =
+#if NET8_0
+        "swagger";
+#else
+        "scalar/v1";
+#endif
 
     /// <summary>
-    /// 是否在 Swagger UI 中显示认证按钮
+    /// 是否在文档 UI 中显示认证按钮
     /// </summary>
-    public bool SwaggerShowAuthorizationButton { get; set; } = true;
+    public bool OpenApiShowAuthorizationButton { get; set; } = true;
 
     #endregion
 }

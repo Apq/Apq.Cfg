@@ -3,7 +3,7 @@
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
-为 Apq.Cfg 提供 RESTful API 接口，支持远程配置管理，内置 Swagger 文档。
+为 Apq.Cfg 提供 RESTful API 接口，支持远程配置管理，内置 OpenAPI 文档。
 
 **📖 在线文档**：https://apq-cfg.vercel.app/
 
@@ -12,6 +12,15 @@
 ```bash
 dotnet add package Apq.Cfg.WebApi
 ```
+
+## API 文档 UI
+
+根据目标框架自动选择最适合的 API 文档 UI：
+
+| 目标框架 | UI 库 | 访问路径 |
+|---------|-------|---------|
+| .NET 8 | Swagger UI | `/swagger` |
+| .NET 10+ | Scalar | `/scalar/v1` |
 
 ## 快速开始
 
@@ -27,7 +36,7 @@ var cfg = new CfgBuilder()
     .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     .Build();
 
-// 添加服务（默认启用 Swagger）
+// 添加服务（默认启用 API 文档）
 builder.Services.AddSingleton<ICfgRoot>(cfg);
 builder.Services.AddApqCfgWebApi(options =>
 {
@@ -37,28 +46,28 @@ builder.Services.AddApqCfgWebApi(options =>
 
 var app = builder.Build();
 
-// 启用中间件（包含 Swagger）
+// 启用中间件（包含 API 文档）
 app.UseApqCfgWebApi();
 app.MapApqCfgWebApi();
 
 app.Run();
 ```
 
-启动后访问 `/swagger` 即可查看 API 文档。
+启动后访问 API 文档 UI 即可查看接口文档。
 
-## Swagger 配置
+## OpenAPI 文档配置
 
-Swagger 默认启用，可通过 `WebApiOptions` 配置：
+API 文档默认启用，可通过 `WebApiOptions` 配置：
 
 ```csharp
 builder.Services.AddApqCfgWebApi(options =>
 {
-    options.SwaggerEnabled = true;              // 是否启用 Swagger（默认 true）
-    options.SwaggerTitle = "My Config API";     // 文档标题
-    options.SwaggerDescription = "配置管理 API"; // 文档描述
-    options.SwaggerVersion = "v1";              // API 版本
-    options.SwaggerRoutePrefix = "swagger";     // Swagger UI 路由前缀
-    options.SwaggerShowAuthorizationButton = true; // 显示认证按钮
+    options.OpenApiEnabled = true;              // 是否启用 API 文档（默认 true）
+    options.OpenApiTitle = "My Config API";     // 文档标题
+    options.OpenApiDescription = "配置管理 API"; // 文档描述
+    options.OpenApiVersion = "v1";              // API 版本
+    options.OpenApiRoutePrefix = "swagger";     // UI 路由前缀（.NET 8 默认 swagger，.NET 10+ 默认 scalar/v1）
+    options.OpenApiShowAuthorizationButton = true; // 显示认证按钮
 });
 ```
 
@@ -113,9 +122,9 @@ options.Authentication = AuthenticationType.None;
 | `MaskSensitiveValues` | bool | true | 是否脱敏敏感值 |
 | `SensitiveKeyPatterns` | string[] | `*Password*`, `*Secret*`... | 敏感键模式 |
 | `EnableCors` | bool | false | 是否启用 CORS |
-| `SwaggerEnabled` | bool | true | 是否启用 Swagger |
-| `SwaggerTitle` | string | `Apq.Cfg Web API` | Swagger 文档标题 |
-| `SwaggerRoutePrefix` | string | `swagger` | Swagger UI 路由前缀 |
+| `OpenApiEnabled` | bool | true | 是否启用 API 文档 |
+| `OpenApiTitle` | string | `Apq.Cfg Web API` | API 文档标题 |
+| `OpenApiRoutePrefix` | string | `swagger` / `scalar/v1` | API 文档 UI 路由前缀 |
 
 ## 许可证
 
