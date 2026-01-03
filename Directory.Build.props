@@ -34,6 +34,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <!-- 导入中央版本管理 -->
+  <Import Project="Directory.Build.Version.props" />
+  
   <!-- 导入共享的版本检测逻辑 -->
   <PropertyGroup>
     <VersionsDir>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'versions'))</VersionsDir>
