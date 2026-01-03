@@ -1,15 +1,14 @@
 <template>
   <div class="home-container">
-    <el-header class="header">
-      <h1>Apq.Cfg 配置管理中心</h1>
+    <div class="page-header">
+      <h2>应用管理</h2>
       <el-button type="primary" @click="showAddDialog = true">
         <el-icon><Plus /></el-icon>
         添加应用
       </el-button>
-    </el-header>
+    </div>
 
-    <el-main class="main">
-      <el-row :gutter="20" v-loading="appsStore.loading">
+    <el-row :gutter="20" v-loading="appsStore.loading">
         <el-col :xs="24" :sm="12" :md="8" :lg="6" v-for="app in appsStore.apps" :key="app.id">
           <el-card class="app-card" shadow="hover">
             <template #header>
@@ -45,10 +44,9 @@
         </el-col>
 
         <el-col :xs="24" :sm="12" :md="8" :lg="6" v-if="appsStore.apps.length === 0 && !appsStore.loading">
-          <el-empty description="暂无应用，点击右上角添加" />
+          <el-empty description="暂无应用，点击上方按钮添加" />
         </el-col>
       </el-row>
-    </el-main>
 
     <!-- 添加/编辑对话框 -->
     <el-dialog
@@ -222,25 +220,19 @@ function resetForm() {
 
 <style scoped>
 .home-container {
-  min-height: 100vh;
+  height: 100%;
 }
 
-.header {
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  padding: 0 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-.header h1 {
-  font-size: 20px;
+.page-header h2 {
   margin: 0;
-}
-
-.main {
-  padding: 20px;
+  font-size: 20px;
 }
 
 .app-card {

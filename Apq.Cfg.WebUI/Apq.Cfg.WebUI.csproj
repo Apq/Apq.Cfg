@@ -16,6 +16,11 @@
                           Version="$(MicrosoftExtensionsVersion)" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+        <ProjectReference Include="..\Apq.Cfg.WebApi\Apq.Cfg.WebApi.csproj" />
+    </ItemGroup>
+
     <!-- 发布时包含前端构建输出 -->
     <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
         <ItemGroup>

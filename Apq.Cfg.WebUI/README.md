@@ -64,6 +64,57 @@ WebUI 转发请求到各应用的配置 API：
 | PUT | `/api/proxy/{appId}/values/{key}` | 设置配置值 |
 | POST | `/api/proxy/{appId}/save` | 保存配置 |
 | GET | `/api/proxy/{appId}/export` | 导出配置 |
+| GET | `/api/apqcfg/*` | 本机配置 API |
+
+## 反向代理部署
+
+WebUI **无需任何配置**即可支持任意虚拟目录部署。同一个实例可以同时通过多个不同的反向代理路径访问。
+
+### 工作原理
+
+- 前端使用相对路径构建，运行时动态检测当前访问路径
+- 后端自动处理转发头，支持任意 PathBase
+
+### 部署示例
+
+同一个 WebUI 实例可以同时通过以下路径访问：
+
+```
+http://example.com/                    # 根目录
+http://example.com/apqcfg/             # 虚拟目录
+http://example.com/admin/config/       # 多级虚拟目录
+```
+
+### Nginx 配置示例
+
+```nginx
+# 根目录访问
+location / {
+    proxy_pass http://localhost:5000/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+}
+
+# 虚拟目录访问（可配置多个）
+location /apqcfg/ {
+    proxy_pass http://localhost:5000/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+}
+```
+
+### Docker 部署
+
+```bash
+# 无需任何环境变量配置
+docker run -p 8080:80 apqcfg-webui
+```
 
 ## 许可证
 
