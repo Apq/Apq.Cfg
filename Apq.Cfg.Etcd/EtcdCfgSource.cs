@@ -23,11 +23,12 @@ internal sealed class EtcdCfgSource : IWritableCfgSource, IDisposable
     private ConfigurationReloadToken _reloadToken;
     private readonly object _reloadTokenLock = new();
 
-    public EtcdCfgSource(EtcdCfgOptions options, int level, bool isPrimaryWriter)
+    public EtcdCfgSource(EtcdCfgOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Etcd:{options.KeyPrefix ?? "/config/"}";
         _data = new ConcurrentDictionary<string, string?>();
         _watchCts = new CancellationTokenSource();
         _reloadToken = new ConfigurationReloadToken();
@@ -57,8 +58,18 @@ internal sealed class EtcdCfgSource : IWritableCfgSource, IDisposable
     }
 
     public int Level { get; }
+
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     public bool IsWriteable => true;
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        return _data.ToArray();
+    }
 
     public void Dispose()
     {

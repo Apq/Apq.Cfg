@@ -24,11 +24,12 @@ internal sealed class VaultCfgSource : IWritableCfgSource, IDisposable
     private ConfigurationReloadToken _reloadToken;
     private readonly object _reloadTokenLock = new();
 
-    public VaultCfgSource(VaultCfgOptions options, int level, bool isPrimaryWriter)
+    public VaultCfgSource(VaultCfgOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Vault:{options.Path ?? "config"}";
         _data = new ConcurrentDictionary<string, string?>();
         _watchCts = new CancellationTokenSource();
         _reloadToken = new ConfigurationReloadToken();
@@ -46,8 +47,18 @@ internal sealed class VaultCfgSource : IWritableCfgSource, IDisposable
     }
 
     public int Level { get; }
+
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     public bool IsWriteable => true;
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        return _data.ToArray();
+    }
 
     public void Dispose()
     {

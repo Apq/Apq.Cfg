@@ -19,11 +19,54 @@ internal sealed class YamlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     /// <param name="optional">是否为可选文件</param>
     /// <param name="reloadOnChange">文件变更时是否自动重载</param>
     /// <param name="isPrimaryWriter">是否为主要写入源</param>
+    /// <param name="name">配置源名称（可选，默认使用文件名）</param>
     public YamlFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter)
-        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+        bool isPrimaryWriter, string? name = null)
+        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, name: name)
     {
     }
+
+    /// <inheritdoc />
+    public override IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        if (!File.Exists(_path))
+            return Enumerable.Empty<KeyValuePair<string, string?>>();
+
+        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+        var readEncoding = DetectEncodingEnhanced(_path);
+        using var sr = new StreamReader(_path, readEncoding, true);
+        var yaml = new YamlStream();
+        yaml.Load(sr);
+
+        if (yaml.Documents.Count == 0)
+            return data;
+
+        var root = (YamlMappingNode)yaml.Documents[0].RootNode;
+        VisitNodeStatic(root, null, data);
+        return data;
+    }
+
+    private static void VisitNodeStatic(YamlNode node, string? prefix, IDictionary<string, string?> data)
+    {
+        switch (node)
+        {
+            case YamlMappingNode map:
+                foreach (var kv in map.Children)
+                    VisitNodeStatic(kv.Value, CombineKeyStatic(prefix, kv.Key.ToString()), data);
+                break;
+            case YamlSequenceNode seq:
+                var idx = 0;
+                foreach (var item in seq.Children)
+                    VisitNodeStatic(item, CombineKeyStatic(prefix, (idx++).ToString()), data);
+                break;
+            default:
+                data[prefix ?? string.Empty] = node.ToString();
+                break;
+        }
+    }
+
+    private static string CombineKeyStatic(string? prefix, string key)
+        => string.IsNullOrEmpty(prefix) ? key : prefix + ":" + key;
 
     /// <summary>
     /// 构建 Microsoft.Extensions.Configuration 的 YAML 配置源

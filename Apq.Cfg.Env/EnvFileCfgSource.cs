@@ -14,10 +14,38 @@ internal sealed class EnvFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     private readonly bool _setEnvironmentVariables;
 
     public EnvFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter, bool setEnvironmentVariables = false)
-        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+        bool isPrimaryWriter, bool setEnvironmentVariables = false, string? name = null)
+        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, name: name)
     {
         _setEnvironmentVariables = setEnvironmentVariables;
+    }
+
+    /// <inheritdoc />
+    public override IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        if (!File.Exists(_path))
+            return Enumerable.Empty<KeyValuePair<string, string?>>();
+
+        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+        var readEncoding = DetectEncodingEnhanced(_path);
+        var lines = File.ReadAllLines(_path, readEncoding);
+
+        foreach (var line in lines)
+        {
+            var trimmed = line.Trim();
+            if (string.IsNullOrWhiteSpace(trimmed) || trimmed.StartsWith("#"))
+                continue;
+
+            var (key, value) = ParseEnvLine(trimmed);
+            if (key != null)
+            {
+                // 将 __ 转换为 : 以支持嵌套配置
+                var configKey = key.Replace("__", ConfigurationPath.KeyDelimiter);
+                data[configKey] = value;
+            }
+        }
+
+        return data;
     }
 
     public override IConfigurationSource BuildSource()

@@ -51,7 +51,7 @@ public abstract class FileCfgSourceBase : ICfgSource, IDisposable
     private System.Text.Encoding? _detectedEncoding;
 
     protected FileCfgSourceBase(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter, EncodingOptions? encodingOptions = null)
+        bool isPrimaryWriter, EncodingOptions? encodingOptions = null, string? name = null)
     {
         _path = path;
         Level = level;
@@ -60,11 +60,21 @@ public abstract class FileCfgSourceBase : ICfgSource, IDisposable
         _reloadOnChange = reloadOnChange;
         IsPrimaryWriter = isPrimaryWriter;
         _encodingOptions = encodingOptions ?? EncodingOptions.Default;
+        // 默认使用文件名作为配置源名称
+        Name = name ?? Path.GetFileName(path);
     }
+
+    /// <inheritdoc />
+    public string Name { get; set; }
 
     public int Level { get; }
     public bool IsWriteable { get; }
     public bool IsPrimaryWriter { get; }
+
+    /// <summary>
+    /// 获取文件路径
+    /// </summary>
+    public string FilePath => _path;
 
     /// <summary>
     /// 编码选项
@@ -72,6 +82,9 @@ public abstract class FileCfgSourceBase : ICfgSource, IDisposable
     public EncodingOptions EncodingOptionsValue => _encodingOptions;
 
     public abstract IConfigurationSource BuildSource();
+
+    /// <inheritdoc />
+    public abstract IEnumerable<KeyValuePair<string, string?>> GetAllValues();
 
     /// <summary>
     /// 创建 PhysicalFileProvider 并跟踪以便后续释放

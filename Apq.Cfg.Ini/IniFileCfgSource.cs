@@ -20,10 +20,46 @@ internal sealed class IniFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     /// <param name="optional">是否为可选文件</param>
     /// <param name="reloadOnChange">文件变更时是否自动重载</param>
     /// <param name="isPrimaryWriter">是否为主要写入源</param>
+    /// <param name="name">配置源名称（可选，默认使用文件名）</param>
     public IniFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter)
-        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+        bool isPrimaryWriter, string? name = null)
+        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, name: name)
     {
+    }
+
+    /// <inheritdoc />
+    public override IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        if (!File.Exists(_path))
+            return Enumerable.Empty<KeyValuePair<string, string?>>();
+
+        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+        var readEncoding = DetectEncodingEnhanced(_path);
+        var lines = File.ReadAllLines(_path, readEncoding);
+        string? currentSection = null;
+
+        foreach (var line in lines)
+        {
+            var trimmed = line.Trim();
+            if (string.IsNullOrWhiteSpace(trimmed) || trimmed.StartsWith(";")) continue;
+
+            if (trimmed.StartsWith("[") && trimmed.EndsWith("]"))
+            {
+                currentSection = trimmed.Substring(1, trimmed.Length - 2);
+                continue;
+            }
+
+            var idx = trimmed.IndexOf('=');
+            if (idx > 0)
+            {
+                var key = trimmed.Substring(0, idx).Trim();
+                var value = trimmed.Substring(idx + 1);
+                var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}:{key}";
+                data[configKey] = value;
+            }
+        }
+
+        return data;
     }
 
     /// <summary>

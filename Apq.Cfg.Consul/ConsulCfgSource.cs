@@ -24,11 +24,12 @@ internal sealed class ConsulCfgSource : IWritableCfgSource, IDisposable
     private ConfigurationReloadToken _reloadToken;
     private readonly object _reloadTokenLock = new();
 
-    public ConsulCfgSource(ConsulCfgOptions options, int level, bool isPrimaryWriter)
+    public ConsulCfgSource(ConsulCfgOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Consul:{options.KeyPrefix ?? options.Address}";
         _data = new ConcurrentDictionary<string, string?>();
         _watchCts = new CancellationTokenSource();
         _reloadToken = new ConfigurationReloadToken();
@@ -58,6 +59,9 @@ internal sealed class ConsulCfgSource : IWritableCfgSource, IDisposable
     /// </summary>
     public int Level { get; }
 
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     /// <summary>
     /// 获取是否可写，Consul 支持通过 API 写入配置，因此始终为 true
     /// </summary>
@@ -67,6 +71,12 @@ internal sealed class ConsulCfgSource : IWritableCfgSource, IDisposable
     /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
     /// </summary>
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        return _data.ToArray();
+    }
 
     /// <summary>
     /// 释放资源，取消所有异步操作并释放 Consul 客户端

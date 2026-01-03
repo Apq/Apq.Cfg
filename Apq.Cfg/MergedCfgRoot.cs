@@ -667,4 +667,36 @@ internal sealed class MergedCfgRoot : ICfgRoot
                 cb.Add(src.BuildSource());
         return cb.Build();
     }
+
+    /// <inheritdoc />
+    public IReadOnlyList<ConfigSourceInfo> GetSourceInfos()
+    {
+        var result = new List<ConfigSourceInfo>();
+        foreach (var level in _levelsAscending)
+        {
+            var data = _levelData[level];
+            foreach (var source in data.Sources)
+            {
+                result.Add(new ConfigSourceInfo
+                {
+                    Level = source.Level,
+                    Name = source.Name,
+                    Type = source.GetType().Name,
+                    IsWriteable = source.IsWriteable,
+                    IsPrimaryWriter = source.IsPrimaryWriter,
+                    KeyCount = source.GetAllValues().Count()
+                });
+            }
+        }
+        return result;
+    }
+
+    /// <inheritdoc />
+    public ICfgSource? GetSource(int level, string name)
+    {
+        if (!_levelData.TryGetValue(level, out var data))
+            return null;
+
+        return data.Sources.FirstOrDefault(s => s.Name == name);
+    }
 }

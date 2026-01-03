@@ -23,11 +23,13 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
     /// <param name="options">Redis 连接选项</param>
     /// <param name="level">配置层级，数值越大优先级越高</param>
     /// <param name="isPrimaryWriter">是否为主要写入源</param>
-    public RedisCfgSource(RedisOptions options, int level, bool isPrimaryWriter)
+    /// <param name="name">配置源名称（可选）</param>
+    public RedisCfgSource(RedisOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Redis:{options.KeyPrefix ?? "config"}";
 
         var conn = EnsureAllowAdmin(options.ConnectionString!);
         if (_options.ConnectTimeoutMs > 0) conn += $",connectTimeout={_options.ConnectTimeoutMs}";
@@ -41,6 +43,9 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
     /// </summary>
     public int Level { get; }
 
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     /// <summary>
     /// 获取是否可写，Redis 支持通过 API 写入配置，因此始终为 true
     /// </summary>
@@ -50,6 +55,42 @@ internal sealed class RedisCfgSource : IWritableCfgSource, IDisposable
     /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
     /// </summary>
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        ThrowIfDisposed();
+        var data = new List<KeyValuePair<string, string?>>();
+
+        if (string.IsNullOrWhiteSpace(_options.ConnectionString))
+            return data;
+
+        try
+        {
+            var db = _multiplexer.GetDatabase(_options.Database ?? -1);
+            var endpoints = _multiplexer.GetEndPoints();
+            var server = endpoints.Length > 0 ? _multiplexer.GetServer(endpoints[0]) : null;
+            if (server != null)
+            {
+                var pattern = string.IsNullOrEmpty(_options.KeyPrefix) ? "*" : _options.KeyPrefix + "*";
+                var pageSize = Math.Clamp(_options.ScanPageSize, MinScanPageSize, MaxScanPageSize);
+                var prefixLen = _options.KeyPrefix?.Length ?? 0;
+                foreach (var key in server.Keys(db.Database, pattern, pageSize))
+                {
+                    var val = db.StringGet(key);
+                    var keyStr = key.ToString();
+                    if (!string.IsNullOrEmpty(keyStr))
+                    {
+                        var configKey = prefixLen > 0 ? keyStr.Substring(prefixLen) : keyStr;
+                        data.Add(new KeyValuePair<string, string?>(configKey, val.HasValue ? val.ToString() : null));
+                    }
+                }
+            }
+        }
+        catch { }
+
+        return data;
+    }
 
     /// <summary>
     /// 释放资源，关闭 Redis 连接

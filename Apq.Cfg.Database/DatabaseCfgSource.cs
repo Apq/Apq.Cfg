@@ -19,11 +19,13 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
     /// <param name="options">数据库连接选项</param>
     /// <param name="level">配置层级，数值越大优先级越高</param>
     /// <param name="isPrimaryWriter">是否为主要写入源</param>
-    public DatabaseCfgSource(DatabaseOptions options, int level, bool isPrimaryWriter)
+    /// <param name="name">配置源名称（可选）</param>
+    public DatabaseCfgSource(DatabaseOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Database:{options.Table}";
         _databaseProvider = CreateProvider(options.Provider!);
     }
 
@@ -52,6 +54,9 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
     /// </summary>
     public int Level { get; }
 
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     /// <summary>
     /// 获取是否可写，数据库支持通过 API 写入配置，因此始终为 true
     /// </summary>
@@ -61,6 +66,23 @@ internal sealed class DatabaseCfgSource : IWritableCfgSource
     /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
     /// </summary>
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        try
+        {
+            using var cts = new CancellationTokenSource(_options.CommandTimeoutMs);
+            var configData = _databaseProvider.LoadConfigurationAsync(
+                _options.ConnectionString!, _options.Table!, _options.KeyColumn!, _options.ValueColumn!,
+                cts.Token).GetAwaiter().GetResult();
+            return configData.Select(kv => new KeyValuePair<string, string?>(kv.Key, kv.Value)).ToList();
+        }
+        catch
+        {
+            return Enumerable.Empty<KeyValuePair<string, string?>>();
+        }
+    }
 
     /// <summary>
     /// 构建 Microsoft.Extensions.Configuration 的内存配置源，从数据库加载数据

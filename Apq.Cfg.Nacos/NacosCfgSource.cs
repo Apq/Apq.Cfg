@@ -24,11 +24,12 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
     private readonly object _reloadTokenLock = new();
     private volatile bool _disposed;
 
-    public NacosCfgSource(NacosCfgOptions options, int level, bool isPrimaryWriter)
+    public NacosCfgSource(NacosCfgOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Nacos:{options.DataId}@{options.Group}";
         _data = new ConcurrentDictionary<string, string?>();
         _reloadToken = new ConfigurationReloadToken();
 
@@ -54,6 +55,9 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
     /// </summary>
     public int Level { get; }
 
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     /// <summary>
     /// 获取是否可写，Nacos 支持通过 API 写入配置，因此始终为 true
     /// </summary>
@@ -63,6 +67,12 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
     /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
     /// </summary>
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        return _data.ToArray();
+    }
 
     private static void ConfigureNacosServices(IServiceCollection services, NacosCfgOptions options)
     {

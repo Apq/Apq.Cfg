@@ -11,7 +11,7 @@ namespace Apq.Cfg.Sources;
 /// <summary>
 /// JSON 文件配置源
 /// </summary>
-internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
+internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource, IFileCfgSource
 {
     // 缓存 JsonSerializerOptions，避免每次序列化都创建新实例
     private static readonly JsonSerializerOptions s_writeOptions = new() { WriteIndented = true };
@@ -26,9 +26,10 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     /// <param name="reloadOnChange">文件变更时是否自动重载</param>
     /// <param name="isPrimaryWriter">是否为主要写入源</param>
     /// <param name="encodingOptions">编码选项</param>
+    /// <param name="name">配置源名称，为 null 时使用文件名</param>
     public JsonFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter, EncodingOptions? encodingOptions = null)
-        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encodingOptions)
+        bool isPrimaryWriter, EncodingOptions? encodingOptions = null, string? name = null)
+        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encodingOptions, name)
     {
     }
 
@@ -120,6 +121,57 @@ internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                     current[part] = nextObj;
                 }
                 current = nextObj;
+            }
+        }
+    }
+
+    /// <inheritdoc />
+    public override IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        if (!System.IO.File.Exists(_path))
+            return [];
+
+        var readEncoding = DetectEncodingEnhanced(_path);
+        var text = System.IO.File.ReadAllText(_path, readEncoding);
+        if (string.IsNullOrWhiteSpace(text))
+            return [];
+
+        var root = JsonNode.Parse(text);
+        if (root is not JsonObject rootObj)
+            return [];
+
+        var result = new List<KeyValuePair<string, string?>>();
+        CollectValues(rootObj, string.Empty, result);
+        return result;
+    }
+
+    private static void CollectValues(JsonObject obj, string prefix, List<KeyValuePair<string, string?>> result)
+    {
+        foreach (var prop in obj)
+        {
+            var key = string.IsNullOrEmpty(prefix) ? prop.Key : $"{prefix}:{prop.Key}";
+            if (prop.Value is JsonObject childObj)
+            {
+                CollectValues(childObj, key, result);
+            }
+            else if (prop.Value is JsonArray arr)
+            {
+                for (var i = 0; i < arr.Count; i++)
+                {
+                    var itemKey = $"{key}:{i}";
+                    if (arr[i] is JsonObject arrObj)
+                    {
+                        CollectValues(arrObj, itemKey, result);
+                    }
+                    else
+                    {
+                        result.Add(new KeyValuePair<string, string?>(itemKey, arr[i]?.ToString()));
+                    }
+                }
+            }
+            else
+            {
+                result.Add(new KeyValuePair<string, string?>(key, prop.Value?.ToString()));
             }
         }
     }

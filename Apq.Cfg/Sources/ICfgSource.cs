@@ -8,6 +8,11 @@ namespace Apq.Cfg.Sources;
 public interface ICfgSource
 {
     /// <summary>
+    /// 获取或设置配置源名称（同一层级内唯一）
+    /// </summary>
+    string Name { get; set; }
+
+    /// <summary>
     /// 获取配置层级，数值越大优先级越高
     /// </summary>
     int Level { get; }
@@ -27,6 +32,23 @@ public interface ICfgSource
     /// </summary>
     /// <returns>Microsoft.Extensions.Configuration.IConfigurationSource 实例</returns>
     IConfigurationSource BuildSource();
+
+    /// <summary>
+    /// 获取该配置源的所有配置值
+    /// </summary>
+    /// <returns>配置键值对集合</returns>
+    IEnumerable<KeyValuePair<string, string?>> GetAllValues();
+}
+
+/// <summary>
+/// 文件配置源接口，用于标识基于文件的配置源
+/// </summary>
+public interface IFileCfgSource : ICfgSource
+{
+    /// <summary>
+    /// 获取文件路径
+    /// </summary>
+    string FilePath { get; }
 }
 
 /// <summary>

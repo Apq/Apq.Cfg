@@ -29,6 +29,7 @@ public sealed class CfgBuilder
     /// <param name="reloadOnChange">文件变更时是否自动重载，默认为true</param>
     /// <param name="isPrimaryWriter">是否为主要写入器，默认为false</param>
     /// <param name="encoding">编码选项，默认为null</param>
+    /// <param name="name">配置源名称，为 null 时使用文件名</param>
     /// <returns>配置构建器实例，支持链式调用</returns>
     /// <example>
     /// <code>
@@ -39,9 +40,9 @@ public sealed class CfgBuilder
     /// </code>
     /// </example>
     public CfgBuilder AddJson(string path, int level = CfgSourceLevels.Json, bool writeable = false, bool optional = true, bool reloadOnChange = true,
-        bool isPrimaryWriter = false, EncodingOptions? encoding = null)
+        bool isPrimaryWriter = false, EncodingOptions? encoding = null, string? name = null)
     {
-        _sources.Add(new JsonFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encoding));
+        _sources.Add(new JsonFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encoding, name));
         return this;
     }
 
@@ -50,6 +51,7 @@ public sealed class CfgBuilder
     /// </summary>
     /// <param name="level">配置层级，数值越大优先级越高，默认为 <see cref="CfgSourceLevels.EnvironmentVariables"/> (20)</param>
     /// <param name="prefix">环境变量前缀，为null时加载所有环境变量</param>
+    /// <param name="name">配置源名称，为 null 时自动生成</param>
     /// <returns>配置构建器实例，支持链式调用</returns>
     /// <example>
     /// <code>
@@ -59,9 +61,9 @@ public sealed class CfgBuilder
     ///     .Build();
     /// </code>
     /// </example>
-    public CfgBuilder AddEnvironmentVariables(int level = CfgSourceLevels.EnvironmentVariables, string? prefix = null)
+    public CfgBuilder AddEnvironmentVariables(int level = CfgSourceLevels.EnvironmentVariables, string? prefix = null, string? name = null)
     {
-        _sources.Add(new EnvVarsCfgSource(prefix, level));
+        _sources.Add(new EnvVarsCfgSource(prefix, level, name));
         return this;
     }
 
@@ -69,6 +71,7 @@ public sealed class CfgBuilder
     /// 添加自定义配置源（供扩展包使用）
     /// </summary>
     /// <param name="source">配置源实例，实现 ICfgSource 接口</param>
+    /// <param name="name">配置源名称，为 null 时使用配置源自身的 Name 属性</param>
     /// <returns>配置构建器实例，支持链式调用</returns>
     /// <example>
     /// <code>
@@ -80,8 +83,10 @@ public sealed class CfgBuilder
     ///     .Build();
     /// </code>
     /// </example>
-    public CfgBuilder AddSource(ICfgSource source)
+    public CfgBuilder AddSource(ICfgSource source, string? name = null)
     {
+        if (name != null)
+            source.Name = name;
         _sources.Add(source);
         return this;
     }

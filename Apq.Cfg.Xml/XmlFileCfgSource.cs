@@ -21,10 +21,48 @@ internal sealed class XmlFileCfgSource : FileCfgSourceBase, IWritableCfgSource
     /// <param name="optional">是否为可选文件</param>
     /// <param name="reloadOnChange">文件变更时是否自动重载</param>
     /// <param name="isPrimaryWriter">是否为主要写入源</param>
+    /// <param name="name">配置源名称（可选，默认使用文件名）</param>
     public XmlFileCfgSource(string path, int level, bool writeable, bool optional, bool reloadOnChange,
-        bool isPrimaryWriter)
-        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+        bool isPrimaryWriter, string? name = null)
+        : base(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, name: name)
     {
+    }
+
+    /// <inheritdoc />
+    public override IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        if (!File.Exists(_path))
+            return Enumerable.Empty<KeyValuePair<string, string?>>();
+
+        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+        var doc = new XmlDocument();
+        var readEncoding = DetectEncodingEnhanced(_path);
+        using var sr = new StreamReader(_path, readEncoding, true);
+        doc.Load(sr);
+
+        if (doc.DocumentElement != null)
+            VisitXmlNode(doc.DocumentElement, null, data);
+
+        return data;
+    }
+
+    private static void VisitXmlNode(XmlNode node, string? prefix, IDictionary<string, string?> data)
+    {
+        foreach (XmlNode child in node.ChildNodes)
+        {
+            if (child.NodeType != XmlNodeType.Element) continue;
+
+            var key = string.IsNullOrEmpty(prefix) ? child.Name : $"{prefix}:{child.Name}";
+
+            if (child.HasChildNodes && child.ChildNodes.Count == 1 && child.FirstChild?.NodeType == XmlNodeType.Text)
+            {
+                data[key] = child.InnerText;
+            }
+            else if (child.HasChildNodes)
+            {
+                VisitXmlNode(child, key, data);
+            }
+        }
     }
 
     /// <summary>

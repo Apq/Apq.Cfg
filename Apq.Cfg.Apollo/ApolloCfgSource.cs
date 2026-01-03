@@ -26,11 +26,12 @@ internal sealed class ApolloCfgSource : IWritableCfgSource, IDisposable
     private readonly object _reloadTokenLock = new();
     private Task? _watchTask;
 
-    public ApolloCfgSource(ApolloCfgOptions options, int level, bool isPrimaryWriter)
+    public ApolloCfgSource(ApolloCfgOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Apollo:{options.AppId}";
         _data = new ConcurrentDictionary<string, string?>();
         _notificationIds = new ConcurrentDictionary<string, long>();
         _disposeCts = new CancellationTokenSource();
@@ -67,6 +68,9 @@ internal sealed class ApolloCfgSource : IWritableCfgSource, IDisposable
     /// </summary>
     public int Level { get; }
 
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     /// <summary>
     /// 获取是否可写，Apollo 不支持通过 API 写入配置，因此始终为 false
     /// </summary>
@@ -76,6 +80,12 @@ internal sealed class ApolloCfgSource : IWritableCfgSource, IDisposable
     /// 获取是否为主要写入源，Apollo 不支持写入，此值用于标识
     /// </summary>
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        return _data.ToArray();
+    }
 
     /// <summary>
     /// 释放资源，取消所有异步操作并释放 HTTP 客户端

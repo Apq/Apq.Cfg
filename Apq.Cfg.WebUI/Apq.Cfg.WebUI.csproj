@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+        <RootNamespace>Apq.Cfg.WebUI</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <SpaRoot>ClientApp\</SpaRoot>
+        <SpaProxyServerUrl>http://localhost:5173</SpaProxyServerUrl>
+        <Description>Apq.Cfg 配置管理 Web UI，独立部署的配置管理中心</Description>
+        <PackageTags>configuration;config;webui;management</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions"
+                          Version="$(MicrosoftExtensionsVersion)" />
+    </ItemGroup>
+
+    <!-- 发布时包含前端构建输出 -->
+    <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+        <ItemGroup>
+            <DistFiles Include="$(SpaRoot)dist\**" />
+            <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')"
+                                   RelativePath="wwwroot\%(RecursiveDir)%(FileName)%(Extension)" />
+        </ItemGroup>
+    </Target>
+
+</Project>

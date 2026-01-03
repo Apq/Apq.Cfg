@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+        <RootNamespace>Apq.Cfg.WebApi</RootNamespace>
+        <Description>Apq.Cfg 的 Web API 扩展，提供 RESTful API 暴露配置内容</Description>
+        <PackageTags>configuration;config;webapi;rest</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"
+                          Version="$(MicrosoftAspNetCoreVersion)" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+    </ItemGroup>
+
+</Project>

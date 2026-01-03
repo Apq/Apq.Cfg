@@ -23,11 +23,12 @@ internal sealed class ZookeeperCfgSource : IWritableCfgSource, IDisposable
     private readonly SemaphoreSlim _connectLock = new(1, 1);
     private readonly ZookeeperWatcher _watcher;
 
-    public ZookeeperCfgSource(ZookeeperCfgOptions options, int level, bool isPrimaryWriter)
+    public ZookeeperCfgSource(ZookeeperCfgOptions options, int level, bool isPrimaryWriter, string? name = null)
     {
         _options = options;
         Level = level;
         IsPrimaryWriter = isPrimaryWriter;
+        Name = name ?? $"Zookeeper:{options.RootPath}";
         _data = new ConcurrentDictionary<string, string?>();
         _disposeCts = new CancellationTokenSource();
         _reloadToken = new ConfigurationReloadToken();
@@ -38,8 +39,18 @@ internal sealed class ZookeeperCfgSource : IWritableCfgSource, IDisposable
     }
 
     public int Level { get; }
+
+    /// <inheritdoc />
+    public string Name { get; set; }
+
     public bool IsWriteable => true;
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public IEnumerable<KeyValuePair<string, string?>> GetAllValues()
+    {
+        return _data.ToArray();
+    }
 
     public void Dispose()
     {

@@ -15,6 +15,7 @@
 - **多层级合并**：高层级覆盖低层级，支持可写配置
 - **热重载**：文件变更自动检测、防抖、增量更新
 - **源生成器**：Native AOT 支持，零反射绑定
+- **Web 管理**：RESTful API 和 Web 界面，支持远程配置管理
 
 ## 安装
 
@@ -44,6 +45,34 @@ var name = db["Name"];
 // 修改并保存
 cfg["App:LastRun"] = DateTime.Now.ToString();
 await cfg.SaveAsync();
+```
+
+## Web API 集成
+
+为应用添加配置管理 API：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.WebApi;
+
+var builder = WebApplication.CreateBuilder(args);
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json")
+    .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 注册配置 API
+builder.Services.AddApqCfgWebApi(cfg, options =>
+{
+    options.RoutePrefix = "api/apqcfg";
+    options.AuthenticationType = AuthenticationType.ApiKey;
+    options.ApiKey = "your-secret-key";
+});
+
+var app = builder.Build();
+app.UseApqCfgWebApi();
+app.Run();
 ```
 
 ## 配置源层级
@@ -76,6 +105,8 @@ await cfg.SaveAsync();
 | `Apq.Cfg.Vault` | HashiCorp Vault |
 | `Apq.Cfg.Crypto` | 配置加密脱敏 |
 | `Apq.Cfg.SourceGenerator` | 源生成器 (Native AOT) |
+| `Apq.Cfg.WebApi` | RESTful API 接口 |
+| `Apq.Cfg.WebUI` | Web 管理界面 |
 
 ## 支持的框架
 

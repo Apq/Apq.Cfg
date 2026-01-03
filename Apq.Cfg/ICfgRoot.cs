@@ -1,4 +1,5 @@
 using Apq.Cfg.Changes;
+using Apq.Cfg.Sources;
 using Microsoft.Extensions.Configuration;
 
 namespace Apq.Cfg;
@@ -155,4 +156,45 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     /// 获取配置变更的可观察序列
     /// </summary>
     IObservable<ConfigChangeEvent> ConfigChanges { get; }
+
+    /// <summary>
+    /// 手动触发配置重载
+    /// </summary>
+    /// <remarks>
+    /// 对于 Manual 和 Lazy 策略，此方法会立即检查所有配置源并应用更改。
+    /// 对于 Automatic 策略，此方法不会产生额外效果，因为配置会自动重载。
+    /// </remarks>
+    void Reload();
+
+    /// <summary>
+    /// 获取所有配置源的信息列表
+    /// </summary>
+    /// <returns>配置源信息列表，按层级升序排列</returns>
+    /// <example>
+    /// <code>
+    /// var sources = cfg.GetSourceInfos();
+    /// foreach (var source in sources)
+    /// {
+    ///     Console.WriteLine($"[{source.Level}] {source.Name} ({source.Type})");
+    /// }
+    /// </code>
+    /// </example>
+    IReadOnlyList<ConfigSourceInfo> GetSourceInfos();
+
+    /// <summary>
+    /// 根据层级和名称获取配置源
+    /// </summary>
+    /// <param name="level">配置源层级</param>
+    /// <param name="name">配置源名称</param>
+    /// <returns>配置源实例，不存在时返回 null</returns>
+    /// <example>
+    /// <code>
+    /// var source = cfg.GetSource(5, "config.local.json");
+    /// if (source != null)
+    /// {
+    ///     var values = source.GetAllValues();
+    /// }
+    /// </code>
+    /// </example>
+    ICfgSource? GetSource(int level, string name);
 }
