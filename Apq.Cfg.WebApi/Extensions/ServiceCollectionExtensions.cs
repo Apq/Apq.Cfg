@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 #if NET8_0
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 #endif
 
 namespace Apq.Cfg.WebApi;
@@ -188,18 +188,11 @@ public static class ServiceCollectionExtensions
                             Name = options.ApiKeyHeaderName,
                             Description = "API Key 认证，请在请求头中添加 API Key"
                         });
-                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        c.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
                         {
                             {
-                                new OpenApiSecurityScheme
-                                {
-                                    Reference = new OpenApiReference
-                                    {
-                                        Type = ReferenceType.SecurityScheme,
-                                        Id = "ApiKey"
-                                    }
-                                },
-                                Array.Empty<string>()
+                                new OpenApiSecuritySchemeReference("ApiKey", doc),
+                                new List<string>()
                             }
                         });
                         break;
@@ -212,18 +205,11 @@ public static class ServiceCollectionExtensions
                             BearerFormat = "JWT",
                             Description = "JWT Bearer 认证，请输入 Token"
                         });
-                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        c.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
                         {
                             {
-                                new OpenApiSecurityScheme
-                                {
-                                    Reference = new OpenApiReference
-                                    {
-                                        Type = ReferenceType.SecurityScheme,
-                                        Id = "Bearer"
-                                    }
-                                },
-                                Array.Empty<string>()
+                                new OpenApiSecuritySchemeReference("Bearer", doc),
+                                new List<string>()
                             }
                         });
                         break;
