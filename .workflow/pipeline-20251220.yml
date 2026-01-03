@@ -23,7 +23,7 @@ stages:
         certificate: ''
         image: registry.cn-chengdu.aliyuncs.com/apq/dotnet_sdk:10.0_amd64
         command:
-          - sh buildTools/gitee-pack-push.sh
+          - sh Apq.Cfg/buildTools/gitee-pack-push.sh
         notify: []
         strategy:
           retry: '0'
