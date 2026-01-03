@@ -12,17 +12,19 @@ RUN npm run build
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS backend
 WORKDIR /src
 
-# 复制 Directory.Build.* 文件（版本号和公共配置）
+# 1. 先复制依赖相关文件（变化频率低，利于缓存）
 COPY Directory.Build.props Directory.Build.Version.props ./
+COPY Apq.Cfg.WebUI/Directory.Build.props Apq.Cfg.WebUI/
+COPY Apq.Cfg.WebUI/Apq.Cfg.WebUI.csproj Apq.Cfg.WebUI/
 
-# 复制项目文件
-COPY Apq.Cfg.WebUI/ ./Apq.Cfg.WebUI/
+# 2. 还原依赖（仅当 csproj 或 props 变化时才重新执行）
 RUN dotnet restore Apq.Cfg.WebUI/Apq.Cfg.WebUI.csproj
 
-# 复制前端构建输出
+# 3. 复制源代码和前端构建输出
+COPY Apq.Cfg.WebUI/ ./Apq.Cfg.WebUI/
 COPY --from=frontend /wwwroot ./Apq.Cfg.WebUI/wwwroot
 
-# 发布
+# 4. 发布
 RUN dotnet publish Apq.Cfg.WebUI/Apq.Cfg.WebUI.csproj -c Release -o /app --no-restore -f net10.0
 
 # 运行时
