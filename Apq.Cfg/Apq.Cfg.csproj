@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <RootNamespace>Apq.Cfg</RootNamespace>
-        <Description>统一配置管理核心库，支持 JSON、环境变量，多层级配置合并，智能编码检测，依赖注入</Description>
+        <Description>统一配置组件核心库，支持 JSON、环境变量，多层级配置合并，智能编码检测，依赖注入</Description>
         <PackageTags>configuration;config;json</PackageTags>
     </PropertyGroup>
 
