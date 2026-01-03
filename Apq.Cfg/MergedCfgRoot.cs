@@ -71,8 +71,19 @@ internal sealed class MergedCfgRoot : ICfgRoot
         foreach (var group in groups)
         {
             var list = group.ToList();
+
             var primary = list.LastOrDefault(s => s.IsPrimaryWriter && s is IWritableCfgSource) as IWritableCfgSource
                           ?? list.LastOrDefault(s => s.IsWriteable && s is IWritableCfgSource) as IWritableCfgSource;
+
+            // 检查同一层级是否有多个主写入源
+            var primaryWriters = list.Where(s => s.IsPrimaryWriter && s is IWritableCfgSource).ToList();
+            if (primaryWriters.Count > 1)
+            {
+                var allNames = string.Join(", ", primaryWriters.Select(s => s.Name));
+                var effectiveName = primary?.Name ?? "(none)";
+                Console.Error.WriteLine($"[Apq.Cfg] Warning: Level {group.Key} has {primaryWriters.Count} primary writers ({allNames}). Effective: '{effectiveName}'.");
+            }
+
             _levelData[group.Key] = new LevelData(list, primary);
         }
 

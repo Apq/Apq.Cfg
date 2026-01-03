@@ -22,6 +22,18 @@ public static class ApplicationBuilderExtensions
         if (!options.Enabled)
             return app;
 
+        // Swagger（内置支持）
+        if (options.SwaggerEnabled)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{options.SwaggerVersion}/swagger.json", options.SwaggerTitle);
+                c.RoutePrefix = options.SwaggerRoutePrefix;
+                c.DocumentTitle = options.SwaggerTitle;
+            });
+        }
+
         // 启用检查中间件
         app.UseMiddleware<ConfigApiMiddleware>();
 

@@ -75,4 +75,38 @@ public sealed class WebApiOptions
     /// CORS 允许的源
     /// </summary>
     public string[] CorsOrigins { get; set; } = ["*"];
+
+    #region Swagger 配置
+
+    /// <summary>
+    /// 是否启用 Swagger，默认 true
+    /// </summary>
+    public bool SwaggerEnabled { get; set; } = true;
+
+    /// <summary>
+    /// Swagger 文档标题
+    /// </summary>
+    public string SwaggerTitle { get; set; } = "Apq.Cfg Web API";
+
+    /// <summary>
+    /// Swagger 文档描述
+    /// </summary>
+    public string SwaggerDescription { get; set; } = "Apq.Cfg 配置管理 RESTful API";
+
+    /// <summary>
+    /// Swagger API 版本
+    /// </summary>
+    public string SwaggerVersion { get; set; } = "v1";
+
+    /// <summary>
+    /// Swagger UI 路由前缀，默认 "swagger"
+    /// </summary>
+    public string SwaggerRoutePrefix { get; set; } = "swagger";
+
+    /// <summary>
+    /// 是否在 Swagger UI 中显示认证按钮
+    /// </summary>
+    public bool SwaggerShowAuthorizationButton { get; set; } = true;
+
+    #endregion
 }

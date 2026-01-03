@@ -4,6 +4,7 @@ using Apq.Cfg.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace Apq.Cfg.WebApi;
 
@@ -39,6 +40,11 @@ public static class ServiceCollectionExtensions
         services.AddControllers()
             .AddApplicationPart(typeof(ConfigController).Assembly);
 
+        // 默认启用 Swagger（使用默认选项，可通过 configure 回调禁用）
+        var defaultOptions = new WebApiOptions();
+        configure?.Invoke(defaultOptions);
+        ConfigureSwagger(services, defaultOptions);
+
         return services;
     }
 
@@ -60,6 +66,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConfigApiService, ConfigApiService>();
         services.AddControllers()
             .AddApplicationPart(typeof(ConfigController).Assembly);
+
+        // 默认启用 Swagger（从配置绑定，可通过 configure 回调覆盖）
+        var options = new WebApiOptions();
+        configuration.GetSection(WebApiOptions.SectionName).Bind(options);
+        configure?.Invoke(options);
+        ConfigureSwagger(services, options);
 
         return services;
     }
@@ -134,5 +146,93 @@ public static class ServiceCollectionExtensions
         }
 
         return services;
+    }
+
+    /// <summary>
+    /// 内部方法：配置 Swagger 服务
+    /// </summary>
+    private static void ConfigureSwagger(IServiceCollection services, WebApiOptions options)
+    {
+        if (!options.SwaggerEnabled)
+            return;
+
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc(options.SwaggerVersion, new OpenApiInfo
+            {
+                Title = options.SwaggerTitle,
+                Description = options.SwaggerDescription,
+                Version = options.SwaggerVersion,
+                Contact = new OpenApiContact
+                {
+                    Name = "Apq.Cfg",
+                    Url = new Uri("https://github.com/AiPuZi/Apq.Cfg")
+                }
+            });
+
+            // 添加认证支持
+            if (options.SwaggerShowAuthorizationButton)
+            {
+                switch (options.Authentication)
+                {
+                    case AuthenticationType.ApiKey:
+                        c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+                        {
+                            Type = SecuritySchemeType.ApiKey,
+                            In = ParameterLocation.Header,
+                            Name = options.ApiKeyHeaderName,
+                            Description = "API Key 认证，请在请求头中添加 API Key"
+                        });
+                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        {
+                            {
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                    {
+                                        Type = ReferenceType.SecurityScheme,
+                                        Id = "ApiKey"
+                                    }
+                                },
+                                Array.Empty<string>()
+                            }
+                        });
+                        break;
+
+                    case AuthenticationType.JwtBearer:
+                        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                        {
+                            Type = SecuritySchemeType.Http,
+                            Scheme = "bearer",
+                            BearerFormat = "JWT",
+                            Description = "JWT Bearer 认证，请输入 Token"
+                        });
+                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        {
+                            {
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                    {
+                                        Type = ReferenceType.SecurityScheme,
+                                        Id = "Bearer"
+                                    }
+                                },
+                                Array.Empty<string>()
+                            }
+                        });
+                        break;
+                }
+            }
+
+            // 包含 XML 注释
+            var xmlFile = $"{typeof(ConfigController).Assembly.GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            if (File.Exists(xmlPath))
+            {
+                c.IncludeXmlComments(xmlPath);
+            }
+        });
     }
 }

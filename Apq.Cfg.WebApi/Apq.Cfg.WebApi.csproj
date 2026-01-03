@@ -4,7 +4,7 @@
         <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
         <RootNamespace>Apq.Cfg.WebApi</RootNamespace>
         <Description>Apq.Cfg 的 Web API 扩展，提供 RESTful API 暴露配置内容</Description>
-        <PackageTags>configuration;config;webapi;rest</PackageTags>
+        <PackageTags>configuration;config;webapi;rest;swagger</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +14,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"
                           Version="$(MicrosoftAspNetCoreVersion)" />
+        <PackageReference Include="Swashbuckle.AspNetCore"
+                          Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
