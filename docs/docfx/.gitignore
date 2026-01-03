@@ -1,0 +1,4 @@
+# DocFX 生成的 API 元数据（保留 index.md）
+/api/**/*.yml
+/api/**/*.json
+!/api/index.md

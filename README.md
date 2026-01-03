@@ -1,53 +1,121 @@
-# Apq.Cfg
+﻿# Apq.Cfg
 
-统一配置管理系统，支持多种配置格式和多层级配置合并。
+[![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
-## 项目结构
+.NET 统一配置组件库，支持多种配置格式和远程配置中心。
 
-```text
-Apq.Cfg/
-├── Apq.Cfg/                 # 核心库（JSON + 环境变量）
-├── Apq.Cfg.Ini/             # INI 文件扩展
-├── Apq.Cfg.Xml/             # XML 文件扩展
-├── Apq.Cfg.Yaml/            # YAML 文件扩展
-├── Apq.Cfg.Toml/            # TOML 文件扩展
-├── Apq.Cfg.Redis/           # Redis 扩展
-├── Apq.Cfg.Database/        # 数据库扩展
-├── Apq.Cfg.Tests.Net6/      # .NET 6 测试项目
-├── Apq.Cfg.Tests.Net8/      # .NET 8 测试项目
-└── Apq.Cfg.Tests.Net9/      # .NET 9 测试项目
-```
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 特性
 
-- 多格式支持（JSON、INI、XML、YAML、TOML、Redis、数据库）
-- 智能编码检测与统一 UTF-8 写入
-- 多层级配置合并
-- 可写配置与热重载
-- Microsoft.Extensions.Configuration 兼容
+- **多格式支持**：JSON、INI、XML、YAML、TOML、Env
+- **远程配置中心**：Consul、Etcd、Nacos、Apollo、Zookeeper、Vault
+- **配置加密脱敏**：AES-GCM、ChaCha20、RSA、SM4 等多种算法
+- **多层级合并**：高层级覆盖低层级，支持可写配置
+- **热重载**：文件变更自动检测、防抖、增量更新
+- **源生成器**：Native AOT 支持，零反射绑定
+- **Web 管理**：RESTful API 和 Web 界面，支持远程配置管理
 
-## 支持的框架
+## 安装
 
-.NET 6.0 / 7.0 / 8.0 / 9.0
+```bash
+dotnet add package Apq.Cfg
+```
 
 ## 快速开始
 
 ```csharp
 using Apq.Cfg;
 
+// 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("appsettings.json", level: 0)
-    .AddJson("appsettings.local.json", level: 1, writeable: true, isPrimaryWriter: true)
-    .AddEnvironmentVariables(level: 2, prefix: "APP_")
+    .AddJson("config.json")
+    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 读取配置
-var value = cfg.Get("Database:ConnectionString");
+var host = cfg["Database:Host"];
+var port = cfg.GetValue<int>("Database:Port");
 
-// 修改配置
-cfg.Set("App:LastRun", DateTime.Now.ToString());
+// 使用配置节
+var db = cfg.GetSection("Database");
+var name = db["Name"];
+
+// 修改并保存
+cfg["App:LastRun"] = DateTime.Now.ToString();
 await cfg.SaveAsync();
 ```
+
+## Web API 集成
+
+为应用添加配置管理 API：
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.WebApi;
+
+var builder = WebApplication.CreateBuilder(args);
+
+var cfg = new CfgBuilder()
+    .AddJson("config.json")
+    .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    .Build();
+
+// 注册配置和 API 服务
+builder.Services.AddSingleton<ICfgRoot>(cfg);
+builder.Services.AddApqCfgWebApi(options =>
+{
+    options.Authentication = AuthenticationType.ApiKey;
+    options.ApiKey = "your-secret-key";
+});
+
+var app = builder.Build();
+app.UseApqCfgWebApi();
+app.MapApqCfgWebApi();
+app.Run();
+```
+
+API 文档 UI 根据目标框架自动选择：
+- .NET 8：Swagger UI (`/swagger`)
+- .NET 10+：Scalar (`/scalar/v1`)
+
+## 配置源层级
+
+| 层级 | 用途 | 配置源 |
+|------|------|--------|
+| 0-99 | 本地文件 | Json, Ini, Xml, Yaml, Toml |
+| 100-199 | 远程存储 | Redis, Database |
+| 200-299 | 配置中心 | Consul, Etcd, Nacos, Apollo, Zookeeper |
+| 300-399 | 密钥管理 | Vault |
+| 400+ | 环境变量 | Env, EnvironmentVariables |
+
+## NuGet 包
+
+| 包名 | 说明 |
+|------|------|
+| `Apq.Cfg` | 核心库（JSON、环境变量） |
+| `Apq.Cfg.Ini` | INI 格式 |
+| `Apq.Cfg.Xml` | XML 格式 |
+| `Apq.Cfg.Yaml` | YAML 格式 |
+| `Apq.Cfg.Toml` | TOML 格式 |
+| `Apq.Cfg.Env` | .env 文件 |
+| `Apq.Cfg.Redis` | Redis 存储 |
+| `Apq.Cfg.Database` | 数据库存储 |
+| `Apq.Cfg.Consul` | Consul 配置中心 |
+| `Apq.Cfg.Etcd` | Etcd 配置中心 |
+| `Apq.Cfg.Nacos` | Nacos 配置中心 |
+| `Apq.Cfg.Apollo` | Apollo 配置中心 |
+| `Apq.Cfg.Zookeeper` | Zookeeper 配置中心 |
+| `Apq.Cfg.Vault` | HashiCorp Vault |
+| `Apq.Cfg.Crypto` | 配置加密脱敏 |
+| `Apq.Cfg.SourceGenerator` | 源生成器 (Native AOT) |
+| `Apq.Cfg.WebApi` | RESTful API 接口 |
+| `Apq.Cfg.WebUI` | Web 管理界面 |
+
+## 支持的框架
+
+.NET 8.0 / 10.0 (LTS)
 
 ## 构建与测试
 
@@ -63,3 +131,4 @@ MIT License
 ## 作者
 
 - 邮箱：amwpfiqvy@163.com
+- Gitee：https://gitee.com/apq/Apq.Cfg

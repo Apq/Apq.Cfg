@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class CfgBuilderExtensions | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CfgBuilderExtensions | Apq.Cfg API ">
+      
+      <meta name="description" content="CfgBuilder 的 Etcd 扩展方法">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions">
+
+
+
+  <h1 id="Apq_Cfg_Etcd_CfgBuilderExtensions" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions" class="text-break">
+Class CfgBuilderExtensions  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.Etcd.html">Etcd</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.Etcd.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>CfgBuilder 的 Etcd 扩展方法</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class CfgBuilderExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">CfgBuilderExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions.AddEtcd*"></a>
+
+  <h3 id="Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Etcd_EtcdCfgOptions__System_Int32_System_Boolean_" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions.AddEtcd(Apq.Cfg.CfgBuilder,System.Action{Apq.Cfg.Etcd.EtcdCfgOptions},System.Int32,System.Boolean)">
+  AddEtcd(CfgBuilder, Action&lt;EtcdCfgOptions&gt;, int, bool)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Etcd 配置源</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddEtcd(this CfgBuilder builder, Action&lt;EtcdCfgOptions&gt; configure, int level = 200, bool isPrimaryWriter = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Etcd.EtcdCfgOptions.html">EtcdCfgOptions</a>&gt;</dt>
+    <dd><p>配置选项</p>
+</dd>
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Etcd">Etcd</a> (15)</p>
+</dd>
+    <dt><code>isPrimaryWriter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否为主写入源，默认为false</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions.AddEtcd*"></a>
+
+  <h3 id="Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_Apq_Cfg_CfgBuilder_System_String_System_String_System_Int32_System_Boolean_" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions.AddEtcd(Apq.Cfg.CfgBuilder,System.String,System.String,System.Int32,System.Boolean)">
+  AddEtcd(CfgBuilder, string, string, int, bool)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Etcd 配置源（单端点）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddEtcd(this CfgBuilder builder, string endpoint, string keyPrefix = &quot;/config/&quot;, int level = 200, bool enableHotReload = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器</p>
+</dd>
+    <dt><code>endpoint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Etcd 服务端点</p>
+</dd>
+    <dt><code>keyPrefix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>KV 键前缀，默认为 &quot;/config/&quot;</p>
+</dd>
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Etcd">Etcd</a> (15)</p>
+</dd>
+    <dt><code>enableHotReload</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否启用热重载，默认为true</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions.AddEtcd*"></a>
+
+  <h3 id="Apq_Cfg_Etcd_CfgBuilderExtensions_AddEtcd_Apq_Cfg_CfgBuilder_System_String___System_String_System_Int32_System_Boolean_" data-uid="Apq.Cfg.Etcd.CfgBuilderExtensions.AddEtcd(Apq.Cfg.CfgBuilder,System.String[],System.String,System.Int32,System.Boolean)">
+  AddEtcd(CfgBuilder, string[], string, int, bool)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Etcd 配置源（使用默认选项）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddEtcd(this CfgBuilder builder, string[] endpoints, string keyPrefix = &quot;/config/&quot;, int level = 200, bool enableHotReload = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器</p>
+</dd>
+    <dt><code>endpoints</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p>Etcd 服务端点列表</p>
+</dd>
+    <dt><code>keyPrefix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>KV 键前缀，默认为 &quot;/config/&quot;</p>
+</dd>
+    <dt><code>level</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>配置层级，数值越大优先级越高，默认为 <a class="xref" href="Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Etcd">Etcd</a> (15)</p>
+</dd>
+    <dt><code>enableHotReload</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>是否启用热重载，默认为true</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

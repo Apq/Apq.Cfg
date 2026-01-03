@@ -1,0 +1,59 @@
+/* 自定义样式 */
+
+:root {
+  --vp-c-brand-1: #3eaf7c;
+  --vp-c-brand-2: #42b983;
+  --vp-c-brand-3: #35a06e;
+  --vp-c-brand-soft: rgba(66, 185, 131, 0.14);
+}
+
+.dark {
+  --vp-c-brand-1: #42b983;
+  --vp-c-brand-2: #3eaf7c;
+  --vp-c-brand-3: #4dc990;
+}
+
+/* 首页样式 */
+.VPHero .name {
+  background: linear-gradient(120deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 代码块样式 */
+.vp-doc div[class*='language-'] {
+  border-radius: 8px;
+}
+
+/* 表格样式 */
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+
+.vp-doc th,
+.vp-doc td {
+  padding: 12px 16px;
+}
+
+/* 特性卡片样式 */
+.VPFeature {
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.VPFeature:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 侧边栏样式 */
+.VPSidebar {
+  scrollbar-width: thin;
+}
+
+/* 搜索框样式 */
+.DocSearch-Button {
+  border-radius: 8px !important;
+}

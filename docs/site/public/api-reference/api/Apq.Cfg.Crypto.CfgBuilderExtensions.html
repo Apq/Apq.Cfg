@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class CfgBuilderExtensions | Apq.Cfg API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CfgBuilderExtensions | Apq.Cfg API ">
+      
+      <meta name="description" content="CfgBuilder 的加密脱敏扩展方法">
+      <link rel="icon" href="../favicon.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo-small.svg" alt="Apq.Cfg">
+            Apq.Cfg
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions">
+
+
+
+  <h1 id="Apq_Cfg_Crypto_CfgBuilderExtensions" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions" class="text-break">
+Class CfgBuilderExtensions  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Apq.html">Apq</a>.<a class="xref" href="Apq.Cfg.html">Cfg</a>.<a class="xref" href="Apq.Cfg.Crypto.html">Crypto</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Apq.Cfg.Crypto.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>CfgBuilder 的加密脱敏扩展方法</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class CfgBuilderExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">CfgBuilderExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesCbcEncryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddAesCbcEncryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesCbcEncryption_Apq_Cfg_CfgBuilder_System_String_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddAesCbcEncryption(Apq.Cfg.CfgBuilder,System.String,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddAesCbcEncryption(CfgBuilder, string, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 AES-CBC 加密支持</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddAesCbcEncryption(this CfgBuilder builder, string base64EncryptionKey, string base64HmacKey, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>base64EncryptionKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>base64HmacKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesGcmEncryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddAesGcmEncryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesGcmEncryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddAesGcmEncryption(Apq.Cfg.CfgBuilder,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddAesGcmEncryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 AES-GCM 加密支持</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddAesGcmEncryption(this CfgBuilder builder, string base64Key, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>base64Key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesGcmEncryptionFromEnv_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddAesGcmEncryptionFromEnv*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddAesGcmEncryptionFromEnv_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddAesGcmEncryptionFromEnv(Apq.Cfg.CfgBuilder,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddAesGcmEncryptionFromEnv(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 AES-GCM 加密支持（从环境变量读取密钥）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddAesGcmEncryptionFromEnv(this CfgBuilder builder, string envVarName = &quot;APQ_CFG_ENCRYPTION_KEY&quot;, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>envVarName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddChaCha20Encryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddChaCha20Encryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddChaCha20Encryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddChaCha20Encryption(Apq.Cfg.CfgBuilder,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddChaCha20Encryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 ChaCha20-Poly1305 加密支持</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddChaCha20Encryption(this CfgBuilder builder, string base64Key, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>base64Key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddEncryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddEncryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddEncryption_Apq_Cfg_CfgBuilder_Apq_Cfg_Crypto_ICryptoProvider_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddEncryption(Apq.Cfg.CfgBuilder,Apq.Cfg.Crypto.ICryptoProvider,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddEncryption(CfgBuilder, ICryptoProvider, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加加密支持</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddEncryption(this CfgBuilder builder, ICryptoProvider provider, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="Apq.Cfg.Crypto.ICryptoProvider.html">ICryptoProvider</a></dt>
+    <dd><p>加密提供者</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd><p>加密选项配置委托</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddEncryption_Apq_Cfg_CfgBuilder_Apq_Cfg_Crypto_ICryptoProvider_System_Action_Apq_Cfg_Crypto_EncryptionOptions___examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddEncryption(new AesGcmCryptoProvider(key), options =&gt;
+    {
+        options.EncryptedPrefix = "[ENCRYPTED]";
+    })
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddRsaEncryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddRsaEncryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddRsaEncryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddRsaEncryption(Apq.Cfg.CfgBuilder,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddRsaEncryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 RSA 加密支持（从 PEM 文件）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddRsaEncryption(this CfgBuilder builder, string pemFilePath, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>pemFilePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddRsaEncryptionFromPem_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddRsaEncryptionFromPem*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddRsaEncryptionFromPem_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddRsaEncryptionFromPem(Apq.Cfg.CfgBuilder,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddRsaEncryptionFromPem(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 RSA 加密支持（从 PEM 字符串）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddRsaEncryptionFromPem(this CfgBuilder builder, string pem, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>pem</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddSensitiveMasking_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddSensitiveMasking*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddSensitiveMasking_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Crypto_MaskingOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddSensitiveMasking(Apq.Cfg.CfgBuilder,System.Action{Apq.Cfg.Crypto.MaskingOptions})">
+  AddSensitiveMasking(CfgBuilder, Action&lt;MaskingOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加敏感值脱敏</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddSensitiveMasking(this CfgBuilder builder, Action&lt;MaskingOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器</p>
+</dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.MaskingOptions.html">MaskingOptions</a>&gt;</dt>
+    <dd><p>脱敏选项配置委托</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd><p>配置构建器实例，支持链式调用</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddSensitiveMasking_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Crypto_MaskingOptions___examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0)
+    .AddSensitiveMasking(options =&gt;
+    {
+        options.MaskString = "****";
+        options.VisibleChars = 2;
+    })
+    .Build();</code></pre>
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddSm4Encryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddSm4Encryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddSm4Encryption_Apq_Cfg_CfgBuilder_System_String_Apq_Cfg_Crypto_Providers_Sm4Mode_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddSm4Encryption(Apq.Cfg.CfgBuilder,System.String,Apq.Cfg.Crypto.Providers.Sm4Mode,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddSm4Encryption(CfgBuilder, string, Sm4Mode, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 SM4 国密加密支持</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CfgBuilder AddSm4Encryption(this CfgBuilder builder, string base64Key, Sm4Mode mode = Sm4Mode.CBC, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>base64Key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>mode</code> <a class="xref" href="Apq.Cfg.Crypto.Providers.Sm4Mode.html">Sm4Mode</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddTripleDesEncryption_" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddTripleDesEncryption*"></a>
+
+  <h3 id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddTripleDesEncryption_Apq_Cfg_CfgBuilder_System_String_System_Action_Apq_Cfg_Crypto_EncryptionOptions__" data-uid="Apq.Cfg.Crypto.CfgBuilderExtensions.AddTripleDesEncryption(Apq.Cfg.CfgBuilder,System.String,System.Action{Apq.Cfg.Crypto.EncryptionOptions})">
+  AddTripleDesEncryption(CfgBuilder, string, Action&lt;EncryptionOptions&gt;?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加 Triple DES 加密支持（仅用于遗留系统兼容）</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Triple DES is considered weak. Use AES-GCM for new projects.&quot;)]
+public static CfgBuilder AddTripleDesEncryption(this CfgBuilder builder, string base64Key, Action&lt;EncryptionOptions&gt;? configure = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+    <dt><code>base64Key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.Crypto.EncryptionOptions.html">EncryptionOptions</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Apq.Cfg.CfgBuilder.html">CfgBuilder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

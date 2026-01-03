@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "Apq.Cfg/Apq.Cfg.csproj",
+            "Apq.Cfg.Crypto/Apq.Cfg.Crypto.csproj",
+            "Apq.Cfg.Crypto.DataProtection/Apq.Cfg.Crypto.DataProtection.csproj",
+            "Apq.Cfg.Crypto.Tool/Apq.Cfg.Crypto.Tool.csproj",
+            "Apq.Cfg.Ini/Apq.Cfg.Ini.csproj",
+            "Apq.Cfg.Xml/Apq.Cfg.Xml.csproj",
+            "Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj",
+            "Apq.Cfg.Toml/Apq.Cfg.Toml.csproj",
+            "Apq.Cfg.Env/Apq.Cfg.Env.csproj",
+            "Apq.Cfg.Redis/Apq.Cfg.Redis.csproj",
+            "Apq.Cfg.Database/Apq.Cfg.Database.csproj",
+            "Apq.Cfg.Consul/Apq.Cfg.Consul.csproj",
+            "Apq.Cfg.Etcd/Apq.Cfg.Etcd.csproj",
+            "Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj",
+            "Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj",
+            "Apq.Cfg.Zookeeper/Apq.Cfg.Zookeeper.csproj",
+            "Apq.Cfg.Vault/Apq.Cfg.Vault.csproj",
+            "Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj",
+            "Apq.Cfg.WebApi/Apq.Cfg.WebApi.csproj"
+          ],
+          "src": "../.."
+        }
+      ],
+      "dest": "api",
+      "includePrivateMembers": false,
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false,
+      "noRestore": true,
+      "namespaceLayout": "flattened",
+      "memberLayout": "samePage",
+      "allowCompilationErrors": false
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": ["api/**.yml", "api/index.md"]
+      },
+      {
+        "files": ["toc.yml", "*.md"]
+      }
+    ],
+    "resource": [
+      {
+        "files": ["logo.svg", "logo-small.svg"],
+        "src": "../site/public",
+        "dest": "images"
+      },
+      {
+        "files": ["favicon.svg"]
+      }
+    ],
+    "output": "../site/public/api-reference",
+    "template": ["default", "modern", "templates/custom"],
+    "globalMetadata": {
+      "_appTitle": "Apq.Cfg API",
+      "_appName": "Apq.Cfg",
+      "_appFooter": "Apq.Cfg - .NET 统一配置组件库 (基于 .NET 10.0，兼容 .NET 8.0)",
+      "_enableSearch": true,
+      "_disableContribution": true,
+      "_appLogoPath": "images/logo-small.svg",
+      "_appFaviconPath": "favicon.svg",
+      "_displayAssembly": true
+    },
+    "fileMetadata": {},
+    "postProcessors": [],
+    "keepFileLink": false,
+    "disableGitFeatures": false
+  }
+}

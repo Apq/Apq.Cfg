@@ -1,0 +1,131 @@
+```
+
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.26200.7462)
+Unknown processor
+.NET SDK 9.0.308
+  [Host]   : .NET 9.0.11 (9.0.1125.51716), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  .NET 6.0 : .NET 6.0.36 (6.0.3624.51421), X64 RyuJIT AVX2
+  .NET 8.0 : .NET 8.0.22 (8.0.2225.52707), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+  .NET 9.0 : .NET 9.0.11 (9.0.1125.51716), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
+
+IterationCount=10  LaunchCount=1  WarmupCount=5  
+
+```
+| Method                    | Job      | Runtime  | PathDepth | Mean          | Error        | StdDev       | Ratio            | RatioSD | Gen0   | Gen1   | Allocated | Alloc Ratio |
+|-------------------------- |--------- |--------- |---------- |--------------:|-------------:|-------------:|-----------------:|--------:|-------:|-------:|----------:|------------:|
+| **Get_ShallowKey**            | **.NET 6.0** | **.NET 6.0** | **1**         |      **24.43 ns** |     **0.611 ns** |     **0.404 ns** |     **1.01x slower** |   **0.02x** |      **-** |      **-** |         **-** |          **NA** |
+| Get_ShallowKey_Multiple   | .NET 6.0 | .NET 6.0 | 1         |  25,293.35 ns |   555.687 ns |   367.553 ns | 1,046.69x slower |  17.15x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 6.0 | .NET 6.0 | 1         |      24.18 ns |     0.136 ns |     0.090 ns |     1.00x slower |   0.01x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 6.0 | .NET 6.0 | 1         |      25.83 ns |     0.301 ns |     0.199 ns |     1.07x slower |   0.01x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 6.0 | .NET 6.0 | 1         |  50,761.62 ns |   261.824 ns |   155.807 ns | 2,100.62x slower |  19.37x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 6.0 | .NET 6.0 | 1         |      24.17 ns |     0.335 ns |     0.222 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 6.0 | .NET 6.0 | 1         |  25,570.01 ns | 1,475.588 ns |   976.010 ns | 1,058.14x slower |  39.61x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 6.0 | .NET 6.0 | 1         |     135.52 ns |     2.961 ns |     1.959 ns |     5.61x slower |   0.09x | 0.0036 |      - |     176 B |          NA |
+| Get_DeepKey_Bool          | .NET 6.0 | .NET 6.0 | 1         |     125.91 ns |     1.363 ns |     0.901 ns |     5.21x slower |   0.06x | 0.0036 |      - |     184 B |          NA |
+| Set_DeepKey               | .NET 6.0 | .NET 6.0 | 1         |      26.11 ns |     0.430 ns |     0.284 ns |     1.08x slower |   0.01x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 6.0 | .NET 6.0 | 1         |   4,572.81 ns |    63.754 ns |    42.169 ns |   189.23x slower |   2.35x | 0.1144 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 6.0 | .NET 6.0 | 1         |   8,356.59 ns |    77.567 ns |    40.569 ns |   345.81x slower |   3.42x | 0.2899 |      - |   14320 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| Get_ShallowKey            | .NET 8.0 | .NET 8.0 | 1         |      16.28 ns |     0.743 ns |     0.492 ns |     1.02x slower |   0.03x |      - |      - |         - |          NA |
+| Get_ShallowKey_Multiple   | .NET 8.0 | .NET 8.0 | 1         |  15,584.27 ns |   483.307 ns |   252.779 ns |   975.36x slower |  18.11x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 8.0 | .NET 8.0 | 1         |      16.28 ns |     0.873 ns |     0.578 ns |     1.02x slower |   0.04x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 8.0 | .NET 8.0 | 1         |      14.96 ns |     0.125 ns |     0.074 ns |     1.07x faster |   0.01x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 8.0 | .NET 8.0 | 1         |  29,589.60 ns |   331.410 ns |   219.207 ns | 1,851.90x slower |  23.53x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 8.0 | .NET 8.0 | 1         |      15.98 ns |     0.267 ns |     0.177 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 8.0 | .NET 8.0 | 1         |  15,345.15 ns |   194.091 ns |   101.513 ns |   960.39x slower |  11.78x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 8.0 | .NET 8.0 | 1         |      98.00 ns |     1.394 ns |     0.830 ns |     6.13x slower |   0.08x | 0.0066 | 0.0066 |     136 B |          NA |
+| Get_DeepKey_Bool          | .NET 8.0 | .NET 8.0 | 1         |      90.65 ns |     0.659 ns |     0.436 ns |     5.67x slower |   0.07x | 0.0029 |      - |     144 B |          NA |
+| Set_DeepKey               | .NET 8.0 | .NET 8.0 | 1         |      19.71 ns |     0.153 ns |     0.091 ns |     1.23x slower |   0.01x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 8.0 | .NET 8.0 | 1         |   3,643.26 ns |    60.594 ns |    40.079 ns |   228.02x slower |   3.39x | 0.1106 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 8.0 | .NET 8.0 | 1         |   8,268.64 ns |   230.277 ns |   137.034 ns |   517.50x slower |   9.80x | 0.6866 | 0.6866 |   14320 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| Get_ShallowKey            | .NET 9.0 | .NET 9.0 | 1         |      15.04 ns |     0.234 ns |     0.139 ns |     1.04x faster |   0.01x |      - |      - |         - |          NA |
+| Get_ShallowKey_Multiple   | .NET 9.0 | .NET 9.0 | 1         |  14,929.59 ns |   334.939 ns |   221.542 ns |   956.50x slower |  16.81x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 9.0 | .NET 9.0 | 1         |      15.19 ns |     0.239 ns |     0.158 ns |     1.03x faster |   0.01x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 9.0 | .NET 9.0 | 1         |      16.05 ns |     0.229 ns |     0.136 ns |     1.03x slower |   0.01x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 9.0 | .NET 9.0 | 1         |  30,997.49 ns |   365.249 ns |   241.590 ns | 1,985.94x slower |  25.42x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 9.0 | .NET 9.0 | 1         |      15.61 ns |     0.256 ns |     0.170 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 9.0 | .NET 9.0 | 1         |  15,339.07 ns |   173.083 ns |   102.999 ns |   982.74x slower |  12.01x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 9.0 | .NET 9.0 | 1         |      92.15 ns |     1.078 ns |     0.713 ns |     5.90x slower |   0.08x | 0.0023 |      - |     112 B |          NA |
+| Get_DeepKey_Bool          | .NET 9.0 | .NET 9.0 | 1         |      84.84 ns |     1.071 ns |     0.708 ns |     5.44x slower |   0.07x | 0.0024 |      - |     120 B |          NA |
+| Set_DeepKey               | .NET 9.0 | .NET 9.0 | 1         |      19.77 ns |     0.273 ns |     0.181 ns |     1.27x slower |   0.02x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 9.0 | .NET 9.0 | 1         |   3,047.24 ns |    83.283 ns |    55.086 ns |   195.23x slower |   3.93x | 0.1106 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 9.0 | .NET 9.0 | 1         |   8,252.32 ns |   872.479 ns |   519.198 ns |   528.71x slower |  32.02x | 0.2823 |      - |   14320 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| **Get_ShallowKey**            | **.NET 6.0** | **.NET 6.0** | **5**         |      **20.00 ns** |     **0.231 ns** |     **0.153 ns** |     **2.34x faster** |   **0.03x** |      **-** |      **-** |         **-** |          **NA** |
+| Get_ShallowKey_Multiple   | .NET 6.0 | .NET 6.0 | 5         |  20,326.14 ns |   254.956 ns |   168.638 ns |   433.92x slower |   5.46x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 6.0 | .NET 6.0 | 5         |      46.72 ns |     0.820 ns |     0.542 ns |     1.00x faster |   0.01x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 6.0 | .NET 6.0 | 5         |      56.46 ns |     3.772 ns |     2.495 ns |     1.21x slower |   0.05x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 6.0 | .NET 6.0 | 5         | 120,380.88 ns | 8,702.298 ns | 5,756.031 ns | 2,569.90x slower | 119.84x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 6.0 | .NET 6.0 | 5         |      46.85 ns |     0.727 ns |     0.481 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 6.0 | .NET 6.0 | 5         |  47,038.29 ns |   678.830 ns |   449.004 ns | 1,004.18x slower |  13.43x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 6.0 | .NET 6.0 | 5         |     180.62 ns |     3.023 ns |     1.999 ns |     3.86x slower |   0.06x | 0.0045 |      - |     232 B |          NA |
+| Get_DeepKey_Bool          | .NET 6.0 | .NET 6.0 | 5         |     162.84 ns |     1.328 ns |     0.790 ns |     3.48x slower |   0.04x | 0.0048 |      - |     240 B |          NA |
+| Set_DeepKey               | .NET 6.0 | .NET 6.0 | 5         |      34.98 ns |     0.421 ns |     0.278 ns |     1.34x faster |   0.02x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 6.0 | .NET 6.0 | 5         |   5,258.68 ns |    56.253 ns |    37.208 ns |   112.26x slower |   1.34x | 0.1144 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 6.0 | .NET 6.0 | 5         |  11,185.78 ns |   180.343 ns |   119.286 ns |   238.79x slower |   3.37x | 0.3967 |      - |   19920 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| Get_ShallowKey            | .NET 8.0 | .NET 8.0 | 5         |      11.51 ns |     0.189 ns |     0.125 ns |     2.01x faster |   0.03x |      - |      - |         - |          NA |
+| Get_ShallowKey_Multiple   | .NET 8.0 | .NET 8.0 | 5         |  12,109.14 ns |   500.252 ns |   330.886 ns |   524.57x slower |  14.77x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 8.0 | .NET 8.0 | 5         |      27.20 ns |     4.566 ns |     3.020 ns |     1.18x slower |   0.13x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 8.0 | .NET 8.0 | 5         |      23.71 ns |     3.152 ns |     1.875 ns |     1.03x slower |   0.08x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 8.0 | .NET 8.0 | 5         |  53,461.36 ns | 7,072.585 ns | 4,678.077 ns | 2,315.94x slower | 194.81x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 8.0 | .NET 8.0 | 5         |      23.09 ns |     0.392 ns |     0.259 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 8.0 | .NET 8.0 | 5         |  22,433.71 ns |   145.360 ns |    76.026 ns |   971.83x slower |  10.85x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 8.0 | .NET 8.0 | 5         |     109.58 ns |     1.922 ns |     1.005 ns |     4.75x slower |   0.07x | 0.0038 |      - |     192 B |          NA |
+| Get_DeepKey_Bool          | .NET 8.0 | .NET 8.0 | 5         |     103.04 ns |     2.035 ns |     1.346 ns |     4.46x slower |   0.07x | 0.0097 | 0.0097 |     200 B |          NA |
+| Set_DeepKey               | .NET 8.0 | .NET 8.0 | 5         |      21.57 ns |     0.476 ns |     0.283 ns |     1.07x faster |   0.02x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 8.0 | .NET 8.0 | 5         |   3,981.76 ns |    78.784 ns |    46.883 ns |   172.49x slower |   2.67x | 0.1144 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 8.0 | .NET 8.0 | 5         |   8,662.30 ns |   170.675 ns |   101.566 ns |   375.25x slower |   5.79x | 0.3967 |      - |   19920 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| Get_ShallowKey            | .NET 9.0 | .NET 9.0 | 5         |      12.46 ns |     0.090 ns |     0.054 ns |     1.82x faster |   0.02x |      - |      - |         - |          NA |
+| Get_ShallowKey_Multiple   | .NET 9.0 | .NET 9.0 | 5         |  12,132.32 ns |   134.158 ns |    88.737 ns |   536.31x slower |   5.74x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 9.0 | .NET 9.0 | 5         |      25.46 ns |     2.282 ns |     1.510 ns |     1.13x slower |   0.06x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 9.0 | .NET 9.0 | 5         |      23.61 ns |     1.028 ns |     0.680 ns |     1.04x slower |   0.03x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 9.0 | .NET 9.0 | 5         |  45,834.28 ns |   764.801 ns |   505.869 ns | 2,026.12x slower |  26.93x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 9.0 | .NET 9.0 | 5         |      22.62 ns |     0.293 ns |     0.194 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 9.0 | .NET 9.0 | 5         |  22,839.72 ns |   294.448 ns |   194.759 ns | 1,009.64x slower |  11.60x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 9.0 | .NET 9.0 | 5         |     110.97 ns |     1.781 ns |     1.060 ns |     4.91x slower |   0.06x | 0.0033 |      - |     168 B |          NA |
+| Get_DeepKey_Bool          | .NET 9.0 | .NET 9.0 | 5         |      94.24 ns |     1.129 ns |     0.747 ns |     4.17x slower |   0.05x | 0.0085 | 0.0085 |     176 B |          NA |
+| Set_DeepKey               | .NET 9.0 | .NET 9.0 | 5         |      21.61 ns |     0.334 ns |     0.221 ns |     1.05x faster |   0.01x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 9.0 | .NET 9.0 | 5         |   3,225.51 ns |    37.205 ns |    24.609 ns |   142.58x slower |   1.55x | 0.1106 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 9.0 | .NET 9.0 | 5         |   7,404.21 ns |   107.328 ns |    70.991 ns |   327.31x slower |   4.00x | 0.3967 |      - |   19920 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| **Get_ShallowKey**            | **.NET 6.0** | **.NET 6.0** | **10**        |      **20.00 ns** |     **0.310 ns** |     **0.184 ns** |     **3.68x faster** |   **0.04x** |      **-** |      **-** |         **-** |          **NA** |
+| Get_ShallowKey_Multiple   | .NET 6.0 | .NET 6.0 | 10        |  20,470.26 ns |   185.307 ns |    96.919 ns |   277.89x slower |   2.02x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 6.0 | .NET 6.0 | 10        |      72.99 ns |     0.729 ns |     0.381 ns |     1.01x faster |   0.01x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 6.0 | .NET 6.0 | 10        |      61.86 ns |     0.393 ns |     0.260 ns |     1.19x faster |   0.01x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 6.0 | .NET 6.0 | 10        | 137,308.64 ns | 1,898.481 ns | 1,255.728 ns | 1,863.98x slower |  19.43x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 6.0 | .NET 6.0 | 10        |      73.67 ns |     0.669 ns |     0.442 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 6.0 | .NET 6.0 | 10        |  74,425.89 ns |   957.721 ns |   633.473 ns | 1,010.34x slower |  10.03x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 6.0 | .NET 6.0 | 10        |     228.50 ns |     2.564 ns |     1.696 ns |     3.10x slower |   0.03x | 0.0060 |      - |     304 B |          NA |
+| Get_DeepKey_Bool          | .NET 6.0 | .NET 6.0 | 10        |     217.67 ns |     3.550 ns |     2.348 ns |     2.95x slower |   0.03x | 0.0062 |      - |     312 B |          NA |
+| Set_DeepKey               | .NET 6.0 | .NET 6.0 | 10        |      49.27 ns |     0.540 ns |     0.283 ns |     1.50x faster |   0.01x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 6.0 | .NET 6.0 | 10        |   7,258.91 ns |   822.219 ns |   543.847 ns |    98.54x slower |   7.06x | 0.1068 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 6.0 | .NET 6.0 | 10        |  15,136.66 ns |   190.004 ns |   125.676 ns |   205.48x slower |   2.01x | 0.5493 |      - |   27120 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| Get_ShallowKey            | .NET 8.0 | .NET 8.0 | 10        |      11.94 ns |     0.173 ns |     0.103 ns |     2.86x faster |   0.03x |      - |      - |         - |          NA |
+| Get_ShallowKey_Multiple   | .NET 8.0 | .NET 8.0 | 10        |  11,884.06 ns |   350.539 ns |   208.600 ns |   348.37x slower |   6.12x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 8.0 | .NET 8.0 | 10        |      34.19 ns |     0.439 ns |     0.290 ns |     1.00x slower |   0.01x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 8.0 | .NET 8.0 | 10        |      29.45 ns |     0.309 ns |     0.204 ns |     1.16x faster |   0.01x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 8.0 | .NET 8.0 | 10        |  63,720.39 ns | 1,132.253 ns |   748.915 ns | 1,867.90x slower |  23.43x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 8.0 | .NET 8.0 | 10        |      34.11 ns |     0.304 ns |     0.201 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 8.0 | .NET 8.0 | 10        |  34,676.93 ns |   433.663 ns |   258.066 ns | 1,016.52x slower |   9.18x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 8.0 | .NET 8.0 | 10        |     125.03 ns |     1.192 ns |     0.788 ns |     3.67x slower |   0.03x | 0.0052 |      - |     264 B |          NA |
+| Get_DeepKey_Bool          | .NET 8.0 | .NET 8.0 | 10        |     118.08 ns |     1.860 ns |     1.230 ns |     3.46x slower |   0.04x | 0.0055 |      - |     272 B |          NA |
+| Set_DeepKey               | .NET 8.0 | .NET 8.0 | 10        |      24.19 ns |     0.551 ns |     0.364 ns |     1.41x faster |   0.02x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 8.0 | .NET 8.0 | 10        |   4,706.94 ns |    82.929 ns |    54.852 ns |   137.98x slower |   1.72x | 0.1144 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 8.0 | .NET 8.0 | 10        |   9,611.80 ns |   125.686 ns |    74.794 ns |   281.76x slower |   2.62x | 0.5493 |      - |   27120 B |          NA |
+|                           |          |          |           |               |              |              |                  |         |        |        |           |             |
+| Get_ShallowKey            | .NET 9.0 | .NET 9.0 | 10        |      12.84 ns |     0.146 ns |     0.087 ns |     2.53x faster |   0.03x |      - |      - |         - |          NA |
+| Get_ShallowKey_Multiple   | .NET 9.0 | .NET 9.0 | 10        |  12,698.91 ns |    93.240 ns |    55.486 ns |   391.74x slower |   4.27x |      - |      - |         - |          NA |
+| Exists_DeepKey            | .NET 9.0 | .NET 9.0 | 10        |      32.39 ns |     0.583 ns |     0.386 ns |     1.00x faster |   0.02x |      - |      - |         - |          NA |
+| Exists_NonExistentDeepKey | .NET 9.0 | .NET 9.0 | 10        |      32.41 ns |     0.814 ns |     0.539 ns |     1.00x faster |   0.02x |      - |      - |         - |          NA |
+| Exists_DeepKey_Multiple   | .NET 9.0 | .NET 9.0 | 10        |  65,386.18 ns |   939.235 ns |   558.923 ns | 2,017.07x slower |  26.09x |      - |      - |         - |          NA |
+| Get_DeepKey               | .NET 9.0 | .NET 9.0 | 10        |      32.42 ns |     0.519 ns |     0.343 ns |         baseline |         |      - |      - |         - |          NA |
+| Get_DeepKey_Multiple      | .NET 9.0 | .NET 9.0 | 10        |  32,733.02 ns |   612.533 ns |   405.153 ns | 1,009.77x slower |  15.67x |      - |      - |         - |          NA |
+| Get_DeepKey_Int           | .NET 9.0 | .NET 9.0 | 10        |     118.17 ns |     3.262 ns |     1.941 ns |     3.65x slower |   0.07x | 0.0048 |      - |     240 B |          NA |
+| Get_DeepKey_Bool          | .NET 9.0 | .NET 9.0 | 10        |     111.49 ns |     0.665 ns |     0.348 ns |     3.44x slower |   0.04x | 0.0050 |      - |     248 B |          NA |
+| Set_DeepKey               | .NET 9.0 | .NET 9.0 | 10        |      25.70 ns |     0.190 ns |     0.113 ns |     1.26x faster |   0.01x |      - |      - |         - |          NA |
+| Set_DeepKey_Multiple      | .NET 9.0 | .NET 9.0 | 10        |   3,605.69 ns |    21.652 ns |    12.885 ns |   111.23x slower |   1.18x | 0.1106 |      - |    5520 B |          NA |
+| Set_NewDeepKey            | .NET 9.0 | .NET 9.0 | 10        |   8,709.96 ns |    89.821 ns |    59.411 ns |   268.69x slower |   3.22x | 0.5493 |      - |   27120 B |          NA |

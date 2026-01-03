@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Etcd</RootNamespace>
+        <Description>Apq.Cfg 的 Etcd 配置中心扩展，支持热重载</Description>
+        <PackageTags>configuration;config;etcd</PackageTags>
+    </PropertyGroup>
+
+    <!-- .NET 8.0+ 使用最新版本 -->
+    <ItemGroup>
+        <PackageReference Include="dotnet-etcd" Version="8.1.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj" />
+    </ItemGroup>
+
+</Project>

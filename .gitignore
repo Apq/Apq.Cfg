@@ -116,6 +116,7 @@ StyleCopReport.xml
 *.tmp_proj
 *_wpftmp.csproj
 *.log
+!benchmarks/**/BenchmarkDotNet.Artifacts/**/*.log
 *.tlog
 *.vspscc
 *.vssscc
@@ -402,3 +403,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+NuGet_Apq_Key.txt
+nul
+/.playwright-mcp

@@ -1,11 +1,32 @@
-# Apq.Cfg.Database
+﻿# Apq.Cfg.Database
+
+[![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
+[![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
 
 数据库配置源扩展包，支持多种数据库。
+
+**仓库地址**：https://gitee.com/apq/Apq.Cfg
+
+**📖 在线文档**：https://apq-cfg.vercel.app/
 
 ## 依赖
 
 - Apq.Cfg
-- SqlSugarCore 5.1.4.187
+- SqlSugarCore 5.1.4.210
+
+## 默认层级
+
+该配置源的默认层级为 `CfgSourceLevels.Database` (100)。
+
+如果不指定 `level` 参数，将使用默认层级：
+
+```csharp
+// 使用默认层级 100
+.AddDatabase(options => { ... })
+
+// 指定自定义层级
+.AddDatabase(options => { ... }, level: 150)
+```
 
 ## 支持的数据库
 
@@ -31,6 +52,10 @@ var cfg = new CfgBuilder()
         options.ValueColumn = "ConfigValue";
     }, level: 1, isPrimaryWriter: true)
     .Build();
+
+// 使用索引器访问
+var connStr = cfg["Database:ConnectionString"];
+var timeout = cfg.GetValue<int>("Database:Timeout");
 ```
 
 ## 方法签名
@@ -39,7 +64,7 @@ var cfg = new CfgBuilder()
 public static CfgBuilder AddDatabase(
     this CfgBuilder builder,
     Action<DatabaseOptions> configure,
-    int level,
+    int level = CfgSourceLevels.Database,  // 默认 100
     bool isPrimaryWriter = false)
 ```
 
@@ -121,3 +146,7 @@ MIT License
 ## 作者
 
 - 邮箱：amwpfiqvy@163.com
+
+## 仓库
+
+- Gitee：https://gitee.com/apq/Apq.Cfg

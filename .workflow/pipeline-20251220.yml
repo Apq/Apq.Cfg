@@ -1,0 +1,29 @@
+version: '1.0'
+name: pipeline-20251220
+displayName: 发布到NuGet
+triggers:
+  trigger: auto
+  push:
+    tags:
+      include:
+        - ^publish.*
+variables:
+  global:
+    - NUGET_API_KEY
+stages:
+  - name: stage-1549ccd4
+    displayName: 打包并发布
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: execute@docker
+        name: execute_by_docker
+        displayName: 打包并发布到NuGet
+        certificate: ''
+        image: registry.cn-chengdu.aliyuncs.com/apq/dotnet_sdk:10.0_amd64
+        command:
+          - sh buildTools/gitee-pack-push.sh
+        notify: []
+        strategy:
+          retry: '0'

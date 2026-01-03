@@ -83,6 +83,9 @@ internal sealed partial class SqlSugarDatabaseProvider
 
         await Task.Run(() =>
         {
+            // 确保表存在
+            EnsureTableExists(db, tableName, keyColumn, valueColumn);
+
             db.Ado.BeginTran();
             try
             {
@@ -121,6 +124,46 @@ internal sealed partial class SqlSugarDatabaseProvider
             DbType = _dbType,
             IsAutoCloseConnection = false
         });
+    }
+
+    private void EnsureTableExists(SqlSugarClient db, string tableName, string keyColumn, string valueColumn)
+    {
+        var createSql = _dbType switch
+        {
+            DbType.SqlServer => $@"
+                IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = '{tableName}')
+                CREATE TABLE [{tableName}] (
+                    [{keyColumn}] NVARCHAR(512) NOT NULL PRIMARY KEY,
+                    [{valueColumn}] NVARCHAR(MAX) NULL
+                )",
+            DbType.MySql => $@"
+                CREATE TABLE IF NOT EXISTS `{tableName}` (
+                    `{keyColumn}` VARCHAR(512) NOT NULL PRIMARY KEY,
+                    `{valueColumn}` TEXT NULL
+                )",
+            DbType.PostgreSQL => $@"
+                CREATE TABLE IF NOT EXISTS ""{tableName}"" (
+                    ""{keyColumn}"" VARCHAR(512) NOT NULL PRIMARY KEY,
+                    ""{valueColumn}"" TEXT NULL
+                )",
+            DbType.Sqlite => $@"
+                CREATE TABLE IF NOT EXISTS ""{tableName}"" (
+                    ""{keyColumn}"" TEXT NOT NULL PRIMARY KEY,
+                    ""{valueColumn}"" TEXT NULL
+                )",
+            DbType.Oracle => $@"
+                BEGIN
+                    EXECUTE IMMEDIATE 'CREATE TABLE ""{tableName.ToUpperInvariant()}"" (
+                        ""{keyColumn.ToUpperInvariant()}"" VARCHAR2(512) NOT NULL PRIMARY KEY,
+                        ""{valueColumn.ToUpperInvariant()}"" CLOB NULL
+                    )';
+                EXCEPTION WHEN OTHERS THEN
+                    IF SQLCODE != -955 THEN RAISE; END IF;
+                END;",
+            _ => throw new NotSupportedException($"不支持的数据库类型: {_dbType}")
+        };
+
+        db.Ado.ExecuteCommand(createSql);
     }
 
     private string Quote(string identifier)

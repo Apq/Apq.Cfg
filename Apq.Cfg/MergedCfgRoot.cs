@@ -1,78 +1,635 @@
+using System.Collections.Concurrent;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Apq.Cfg.Changes;
+using Apq.Cfg.Internal;
 using Apq.Cfg.Sources;
 using Microsoft.Extensions.Configuration;
 
 namespace Apq.Cfg;
 
 /// <summary>
+/// 层级数据结构，避免元组解构开销
+/// </summary>
+internal sealed class LevelData
+{
+    public readonly List<ICfgSource> Sources;
+    public readonly IWritableCfgSource? Primary;
+    public readonly ConcurrentDictionary<string, string?> Pending;
+
+    public LevelData(List<ICfgSource> sources, IWritableCfgSource? primary)
+    {
+        Sources = sources;
+        Primary = primary;
+        Pending = new ConcurrentDictionary<string, string?>();
+    }
+}
+
+/// <summary>
 /// 合并配置根实现
 /// </summary>
 internal sealed class MergedCfgRoot : ICfgRoot
 {
-    private readonly Dictionary<int, (List<ICfgSource> Sources, IWritableCfgSource? Primary, Dictionary<string, string?> Pending)> _levelData;
-    private volatile bool _disposed;
+    private readonly Dictionary<int, LevelData> _levelData;
+    private int _disposed; // 改为 int 以支持 Interlocked
     private readonly IConfigurationRoot _merged;
+    private readonly Subject<ConfigChangeEvent> _configChangesSubject;
+    private readonly Subject<ReloadErrorEvent> _reloadErrorSubject;
+    private ChangeCoordinator? _coordinator;
+    private IConfigurationRoot? _dynamicConfig;
+    private readonly object _dynamicConfigLock = new();
+    private DynamicReloadOptions? _dynamicReloadOptions;
+
+    // 缓存排序后的层级列表，避免每次 Get() 都排序
+    private readonly int[] _levelsDescending;
+    private readonly int[] _levelsAscending;
+    private readonly IConfigurationProvider[] _providersArray;
+
+    // 值转换器和脱敏器
+    private readonly ValueTransformerChain? _transformerChain;
+    private readonly ValueMaskerChain? _maskerChain;
 
     public MergedCfgRoot(IEnumerable<ICfgSource> sources)
+        : this(sources, null, null)
     {
-        var sortedSources = sources.OrderBy(s => s.Level).ThenBy(s => s.IsPrimaryWriter ? 1 : 0).ToList();
-        _levelData = new Dictionary<int, (List<ICfgSource>, IWritableCfgSource?, Dictionary<string, string?>)>();
+    }
 
-        foreach (var group in sortedSources.GroupBy(s => s.Level))
+    public MergedCfgRoot(
+        IEnumerable<ICfgSource> sources,
+        ValueTransformerChain? transformerChain,
+        ValueMaskerChain? maskerChain)
+    {
+        _transformerChain = transformerChain;
+        _maskerChain = maskerChain;
+
+        var sortedSources = sources.OrderBy(s => s.Level).ThenBy(s => s.IsPrimaryWriter ? 1 : 0).ToList();
+        var groups = sortedSources.GroupBy(s => s.Level).ToList();
+        _levelData = new Dictionary<int, LevelData>(groups.Count);
+        _configChangesSubject = new Subject<ConfigChangeEvent>();
+        _reloadErrorSubject = new Subject<ReloadErrorEvent>();
+
+        foreach (var group in groups)
         {
             var list = group.ToList();
+
             var primary = list.LastOrDefault(s => s.IsPrimaryWriter && s is IWritableCfgSource) as IWritableCfgSource
                           ?? list.LastOrDefault(s => s.IsWriteable && s is IWritableCfgSource) as IWritableCfgSource;
-            _levelData[group.Key] = (list, primary, new Dictionary<string, string?>());
+
+            // 检查同一层级是否有多个主写入源
+            var primaryWriters = list.Where(s => s.IsPrimaryWriter && s is IWritableCfgSource).ToList();
+            if (primaryWriters.Count > 1)
+            {
+                var allNames = string.Join(", ", primaryWriters.Select(s => s.Name));
+                var effectiveName = primary?.Name ?? "(none)";
+                Console.Error.WriteLine($"[Apq.Cfg] Warning: Level {group.Key} has {primaryWriters.Count} primary writers ({allNames}). Effective: '{effectiveName}'.");
+            }
+
+            _levelData[group.Key] = new LevelData(list, primary);
         }
 
         _merged = BuildMergedConfiguration();
+
+        // 预先计算并缓存排序后的层级列表
+        _levelsDescending = _levelData.Keys.OrderByDescending(k => k).ToArray();
+        _levelsAscending = _levelData.Keys.OrderBy(k => k).ToArray();
+        _providersArray = _merged.Providers.ToArray();
     }
 
-    public string? Get(string key) => _merged[key];
+    public IObservable<ConfigChangeEvent> ConfigChanges => _configChangesSubject.AsObservable();
 
-    public T? Get<T>(string key) => _merged.GetValue<T>(key);
+    /// <summary>
+    /// 重载错误事件（Rx 可观察序列）
+    /// </summary>
+    public IObservable<ReloadErrorEvent> ReloadErrors => _reloadErrorSubject.AsObservable();
 
-    public bool Exists(string key) => _merged[key] != null;
+    /// <inheritdoc />
+    public string? this[string key]
+    {
+        get
+        {
+            // Lazy 策略：访问前确保配置是最新的
+            _coordinator?.EnsureLatest();
+
+            string? value = null;
+
+            // 使用缓存的降序层级数组，避免每次排序
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    value = pendingValue;
+                    break;
+                }
+            }
+
+            value ??= _merged[key];
+
+            // 应用值转换（如解密）
+            return _transformerChain?.TransformOnRead(key, value) ?? value;
+        }
+        set => SetValue(key, value);
+    }
+
+    /// <inheritdoc />
+    public T? GetValue<T>(string key)
+    {
+        var rawValue = this[key];
+        if (rawValue == null) return default;
+        return ValueConverter.Convert<T>(rawValue);
+    }
+
+    /// <summary>
+    /// 获取脱敏后的配置值（用于日志输出）
+    /// </summary>
+    /// <param name="key">配置键</param>
+    /// <returns>脱敏后的值</returns>
+    /// <example>
+    /// <code>
+    /// // 日志输出时使用脱敏值
+    /// logger.LogInformation("连接字符串: {ConnectionString}", cfg.GetMasked("Database:ConnectionString"));
+    /// // 输出: 连接字符串: Ser***ion
+    /// </code>
+    /// </example>
+    public string GetMasked(string key)
+    {
+        var value = this[key];
+        return _maskerChain?.Mask(key, value) ?? value ?? "[null]";
+    }
+
+    /// <summary>
+    /// 获取所有配置的脱敏快照（用于调试）
+    /// </summary>
+    /// <returns>脱敏后的配置键值对字典</returns>
+    /// <example>
+    /// <code>
+    /// // 获取脱敏快照用于调试
+    /// var snapshot = cfg.GetMaskedSnapshot();
+    /// foreach (var (key, value) in snapshot)
+    /// {
+    ///     Console.WriteLine($"{key}: {value}");
+    /// }
+    /// </code>
+    /// </example>
+    public IReadOnlyDictionary<string, string> GetMaskedSnapshot()
+    {
+        var result = new Dictionary<string, string>();
+        CollectAllKeysMasked(_merged, string.Empty, result);
+        return result;
+    }
+
+    private void CollectAllKeysMasked(IConfiguration config, string parentPath, Dictionary<string, string> result)
+    {
+        foreach (var child in config.GetChildren())
+        {
+            var fullKey = string.IsNullOrEmpty(parentPath) ? child.Key : string.Concat(parentPath, ":", child.Key);
+
+            if (child.Value != null)
+            {
+                result[fullKey] = GetMasked(fullKey);
+            }
+
+            CollectAllKeysMasked(child, fullKey, result);
+        }
+    }
+
+    public bool Exists(string key)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        // 使用缓存的层级数组
+        foreach (var level in _levelsDescending)
+        {
+            if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                return pendingValue != null;
+        }
+        return _merged[key] != null;
+    }
+
+    public ICfgSection GetSection(string key)
+    {
+        return new CfgSection(this, _merged, key);
+    }
+
+    public IEnumerable<string> GetChildKeys()
+    {
+        return _merged.GetChildren().Select(c => c.Key);
+    }
 
     public void Remove(string key, int? targetLevel = null)
     {
-        var level = targetLevel ?? _levelData.Keys.DefaultIfEmpty().Max();
+        var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
         if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)
             throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
         data.Pending[key] = null;
     }
 
-    public void Set(string key, string? value, int? targetLevel = null)
+    public void SetValue(string key, string? value, int? targetLevel = null)
     {
-        var level = targetLevel ?? _levelData.Keys.DefaultIfEmpty().Max();
+        var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
         if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)
             throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
-        data.Pending[key] = value;
+
+        // 应用值转换（如加密）
+        var transformedValue = _transformerChain?.TransformOnWrite(key, value) ?? value;
+        data.Pending[key] = transformedValue;
+    }
+
+    public void SetManyValues(IEnumerable<KeyValuePair<string, string?>> values, int? targetLevel = null)
+    {
+        var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
+        if (!_levelData.TryGetValue(level, out var data) || data.Primary == null)
+            throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
+
+        foreach (var kvp in values)
+        {
+            // 应用值转换（如加密）
+            var transformedValue = _transformerChain?.TransformOnWrite(kvp.Key, kvp.Value) ?? kvp.Value;
+            data.Pending[kvp.Key] = transformedValue;
+        }
+    }
+
+    public IReadOnlyDictionary<string, string?> GetMany(IEnumerable<string> keys)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        var result = new Dictionary<string, string?>();
+        foreach (var key in keys)
+        {
+            string? value = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    value = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                value = _merged[key];
+            }
+
+            result[key] = value;
+        }
+        return result;
+    }
+
+    public IReadOnlyDictionary<string, T?> GetMany<T>(IEnumerable<string> keys)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        var result = new Dictionary<string, T?>();
+        foreach (var key in keys)
+        {
+            string? rawValue = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    rawValue = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                rawValue = _merged[key];
+            }
+
+            if (rawValue == null)
+            {
+                result[key] = default;
+            }
+            else
+            {
+                result[key] = ValueConverter.Convert<T>(rawValue);
+            }
+        }
+        return result;
+    }
+
+    public void GetMany(IEnumerable<string> keys, Action<string, string?> onValue)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        foreach (var key in keys)
+        {
+            string? value = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    value = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                value = _merged[key];
+            }
+
+            onValue(key, value);
+        }
+    }
+
+    public void GetMany<T>(IEnumerable<string> keys, Action<string, T?> onValue)
+    {
+        // Lazy 策略：访问前确保配置是最新的
+        _coordinator?.EnsureLatest();
+
+        foreach (var key in keys)
+        {
+            string? rawValue = null;
+            var found = false;
+
+            // 先检查 Pending
+            foreach (var level in _levelsDescending)
+            {
+                if (_levelData[level].Pending.TryGetValue(key, out var pendingValue))
+                {
+                    rawValue = pendingValue;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                rawValue = _merged[key];
+            }
+
+            T? value = rawValue == null ? default : ValueConverter.Convert<T>(rawValue);
+            onValue(key, value);
+        }
     }
 
     public async Task SaveAsync(int? targetLevel = null, CancellationToken cancellationToken = default)
     {
-        var level = targetLevel ?? _levelData.Keys.DefaultIfEmpty().Max();
-        if (!_levelData.TryGetValue(level, out var data) || data.Pending.Count == 0)
+        var level = targetLevel ?? (_levelsDescending.Length > 0 ? _levelsDescending[0] : throw new InvalidOperationException("没有配置源"));
+        if (!_levelData.TryGetValue(level, out var data) || data.Pending.IsEmpty)
             return;
 
         if (data.Primary == null)
             throw new InvalidOperationException($"层级 {level} 没有可写的配置源");
 
-        var changes = new Dictionary<string, string?>(data.Pending);
-        data.Pending.Clear();
+        // 原子地获取并移除所有待保存的更改
+        // 使用快照遍历避免 ToArray() 分配，预估容量减少扩容
+        var changes = new Dictionary<string, string?>(data.Pending.Count);
+        foreach (var kvp in data.Pending)
+        {
+            if (data.Pending.TryRemove(kvp.Key, out var value))
+                changes[kvp.Key] = value;
+        }
+
+        if (changes.Count == 0)
+            return;
+
         await data.Primary.ApplyChangesAsync(changes, cancellationToken).ConfigureAwait(false);
+
+        // 保存后更新内存中的配置
+        foreach (var (key, value) in changes)
+            _merged[key] = value;
     }
 
+    /// <summary>
+    /// 手动触发配置重载（用于 Manual 和 Lazy 策略）
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// // 手动重载配置
+    /// cfg.Reload();
+    /// 
+    /// // 在特定条件下重载
+    /// if (ShouldReload())
+    /// {
+    ///     cfg.Reload();
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 对于 Manual 和 Lazy 策略，此方法会立即检查所有配置源并应用更改。
+    /// 对于 Automatic 策略，此方法不会产生额外效果，因为配置会自动重载。
+    /// </remarks>
+    public void Reload()
+    {
+        _coordinator?.Reload();
+        // 重载后清除解密缓存，确保下次读取时重新解密
+        _transformerChain?.ClearCache();
+    }
+
+    /// <summary>
+    /// 检查是否有待处理的配置变更
+    /// </summary>
+    /// <returns>如果有待处理的配置变更返回true，否则返回false</returns>
+    /// <example>
+    /// <code>
+    /// // 检查是否有待保存的更改
+    /// if (cfg.HasPendingChanges)
+    /// {
+    ///     await cfg.SaveAsync();
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 待处理的配置变更是指通过 Set 或 SetMany 方法设置但尚未通过 SaveAsync 保存的更改。
+    /// 此属性在检查前会确保配置是最新的（Lazy 策略）。
+    /// </remarks>
+    public bool HasPendingChanges => _coordinator?.HasPendingChanges ?? false;
+
+    /// <summary>
+    /// 获取配置变更历史记录
+    /// </summary>
+    /// <returns>配置变更事件的只读列表，按时间顺序排列</returns>
+    /// <example>
+    /// <code>
+    /// // 获取最近的配置变更
+    /// var changes = cfg.GetChangeHistory();
+    /// foreach (var change in changes.Take(10))
+    /// {
+    ///     Console.WriteLine($"[{change.Timestamp}] {change.Key}: {change.OldValue} -> {change.NewValue}");
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 变更历史记录包含所有已应用的配置更改，包括通过 SaveAsync 保存的更改和自动重载的更改。
+    /// 历史记录的数量受 DynamicReloadOptions.HistoryLimit 限制。
+    /// </remarks>
+    public IReadOnlyList<ConfigChangeEvent> GetChangeHistory()
+    {
+        return _coordinator?.GetHistory() ?? Array.Empty<ConfigChangeEvent>();
+    }
+
+    /// <summary>
+    /// 清空配置变更历史记录
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// // 在特定条件下清空历史记录
+    /// if (historyTooLarge)
+    /// {
+    ///     cfg.ClearChangeHistory();
+    /// }
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 清空历史记录不会影响当前配置值，只是删除变更事件的记录。
+    /// 此操作不可逆，清空后无法恢复历史记录。
+    /// </remarks>
+    public void ClearChangeHistory()
+    {
+        _coordinator?.ClearHistory();
+    }
+
+    /// <summary>
+    /// 转换为 Microsoft Configuration（静态快照）
+    /// </summary>
+    /// <returns>Microsoft.Extensions.Configuration.IConfigurationRoot 实例</returns>
+    /// <example>
+    /// <code>
+    /// // 转换为 Microsoft Configuration 并使用
+    /// var msConfig = cfg.ToMicrosoftConfiguration();
+    /// var connectionString = msConfig.GetConnectionString("DefaultConnection");
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 返回的配置根是静态快照，不会自动更新配置变更。
+    /// 如需支持动态重载，请使用带 DynamicReloadOptions 参数的重载方法。
+    /// </remarks>
     public IConfigurationRoot ToMicrosoftConfiguration() => _merged;
+
+    /// <summary>
+    /// 转换为支持动态重载的 Microsoft Configuration
+    /// </summary>
+    /// <param name="options">动态重载选项，为 null 时使用默认选项</param>
+    /// <returns>Microsoft.Extensions.Configuration.IConfigurationRoot 实例</returns>
+    /// <example>
+    /// <code>
+    /// // 创建支持动态重载的配置
+    /// var options = new DynamicReloadOptions
+    /// {
+    ///     EnableDynamicReload = true,
+    ///     DebounceMs = 500,
+    ///     HistoryLimit = 100
+    /// };
+    /// 
+    /// var msConfig = cfg.ToMicrosoftConfiguration(options);
+    /// 
+    /// // 监听配置变更
+    /// ChangeToken.OnChange(
+    ///     () => msConfig.GetReloadToken(),
+    ///     () => Console.WriteLine("配置已更新"));
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// 当 EnableDynamicReload 为 true 时，返回的配置根会自动跟踪配置变更。
+    /// 配置变更会通过 Microsoft.Extensions.Configuration 的重载机制传播。
+    /// 此方法只会创建一个动态配置实例，多次调用会返回相同的实例。
+    /// </remarks>
+    public IConfigurationRoot ToMicrosoftConfiguration(DynamicReloadOptions? options)
+    {
+        options ??= new DynamicReloadOptions();
+
+        if (!options.EnableDynamicReload)
+            return _merged;
+
+        lock (_dynamicConfigLock)
+        {
+            if (_dynamicConfig != null)
+                return _dynamicConfig;
+
+            _dynamicReloadOptions = options;
+
+            // 使用缓存的 providers 数组和层级数组，避免 LINQ 开销
+            var providers = new List<(int Level, IConfigurationProvider Provider)>();
+            var providerIndex = 0;
+            foreach (var level in _levelsAscending)
+            {
+                var sourceCount = _levelData[level].Sources.Count;
+                for (var i = 0; i < sourceCount; i++)
+                {
+                    // 使用缓存的数组进行索引访问
+                    if (providerIndex < _providersArray.Length)
+                    {
+                        providers.Add((level, _providersArray[providerIndex]));
+                        providerIndex++;
+                    }
+                }
+            }
+
+            // 从 _merged 配置中获取所有键值对作为初始快照
+            var initialSnapshot = new Dictionary<string, string?>();
+            CollectAllKeys(_merged, string.Empty, initialSnapshot);
+
+            // 创建协调器，传递完整选项
+            _coordinator = new ChangeCoordinator(providers, options.DebounceMs, initialSnapshot, options);
+            _coordinator.OnMergedChanges += changes =>
+            {
+                _configChangesSubject.OnNext(new ConfigChangeEvent(changes));
+            };
+            _coordinator.OnReloadError += errorEvent =>
+            {
+                _reloadErrorSubject.OnNext(errorEvent);
+            };
+
+            // 创建动态配置
+            var builder = new ConfigurationBuilder();
+            builder.Add(new MergedConfigurationSource(_coordinator));
+            _dynamicConfig = builder.Build();
+
+            return _dynamicConfig;
+        }
+    }
+
+    private static void CollectAllKeys(IConfiguration config, string parentPath, Dictionary<string, string?> result)
+    {
+        foreach (var child in config.GetChildren())
+        {
+            // 优化字符串拼接：使用 string.Concat 避免插值分配
+            var fullKey = string.IsNullOrEmpty(parentPath) ? child.Key : string.Concat(parentPath, ":", child.Key);
+
+            // 如果有值，添加到结果
+            if (child.Value != null)
+            {
+                result[fullKey] = child.Value;
+            }
+
+            // 递归处理子节点
+            CollectAllKeys(child, fullKey, result);
+        }
+    }
 
     public void Dispose()
     {
-        if (_disposed) return;
-        _disposed = true;
+        // 使用 Interlocked 确保原子性，避免竞态条件
+        if (Interlocked.CompareExchange(ref _disposed, 1, 0) != 0)
+            return;
 
-        foreach (var (_, (sources, _, _)) in _levelData)
-        foreach (var source in sources)
+        _coordinator?.Dispose();
+        _configChangesSubject.OnCompleted();
+        _configChangesSubject.Dispose();
+        _reloadErrorSubject.OnCompleted();
+        _reloadErrorSubject.Dispose();
+
+        foreach (var levelData in _levelData.Values)
+        foreach (var source in levelData.Sources)
         {
             try
             {
@@ -85,11 +642,18 @@ internal sealed class MergedCfgRoot : ICfgRoot
 
     public async ValueTask DisposeAsync()
     {
-        if (_disposed) return;
-        _disposed = true;
+        // 使用 Interlocked 确保原子性，避免竞态条件
+        if (Interlocked.CompareExchange(ref _disposed, 1, 0) != 0)
+            return;
 
-        foreach (var (_, (sources, _, _)) in _levelData)
-        foreach (var source in sources)
+        _coordinator?.Dispose();
+        _configChangesSubject.OnCompleted();
+        _configChangesSubject.Dispose();
+        _reloadErrorSubject.OnCompleted();
+        _reloadErrorSubject.Dispose();
+
+        foreach (var levelData in _levelData.Values)
+        foreach (var source in levelData.Sources)
         {
             try
             {
@@ -102,12 +666,40 @@ internal sealed class MergedCfgRoot : ICfgRoot
         }
     }
 
-    private IConfigurationRoot BuildMergedConfiguration()
+    private IConfigurationRoot BuildMergedConfiguration(int[]? levelsAscending = null)
     {
         var cb = new ConfigurationBuilder();
-        foreach (var level in _levelData.Keys.OrderBy(k => k))
+        // 使用传入的排序数组或直接排序（初始化时缓存尚未创建）
+        IEnumerable<int> levels = levelsAscending != null
+            ? levelsAscending
+            : _levelData.Keys.OrderBy(k => k);
+        foreach (var level in levels)
             foreach (var src in _levelData[level].Sources)
                 cb.Add(src.BuildSource());
         return cb.Build();
+    }
+
+    /// <inheritdoc />
+    public IReadOnlyList<ICfgSource> GetSources()
+    {
+        var result = new List<ICfgSource>();
+        foreach (var level in _levelsAscending)
+        {
+            var data = _levelData[level];
+            foreach (var source in data.Sources)
+            {
+                result.Add(source);
+            }
+        }
+        return result;
+    }
+
+    /// <inheritdoc />
+    public ICfgSource? GetSource(int level, string name)
+    {
+        if (!_levelData.TryGetValue(level, out var data))
+            return null;
+
+        return data.Sources.FirstOrDefault(s => s.Name == name);
     }
 }

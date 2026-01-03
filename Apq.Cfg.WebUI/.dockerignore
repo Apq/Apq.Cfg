@@ -1,0 +1,12 @@
+bin/
+obj/
+wwwroot/
+ClientApp/node_modules/
+ClientApp/dist/
+*.user
+*.log
+.git/
+.vs/
+Dockerfile
+.dockerignore
+README.md

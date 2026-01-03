@@ -1,0 +1,31 @@
+<Project>
+  <!-- 中央版本管理 -->
+  <PropertyGroup>
+    <ApqCfgVersion>1.1.6</ApqCfgVersion>
+  </PropertyGroup>
+
+  <!-- 版本号映射 -->
+  <PropertyGroup>
+    <Version>$(ApqCfgVersion)</Version>
+    <PackageVersion>$(ApqCfgVersion)</PackageVersion>
+    <AssemblyVersion>$(ApqCfgVersion).0</AssemblyVersion>
+    <FileVersion>$(ApqCfgVersion).0</FileVersion>
+  </PropertyGroup>
+
+  <!-- NuGet 包公共元数据 -->
+  <PropertyGroup>
+    <Authors>Apq</Authors>
+    <Company>Apq</Company>
+    <Copyright>Copyright © Apq $([System.DateTime]::Now.Year)</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- 启用包生成 -->
+    <IsPackable>true</IsPackable>
+
+    <!-- 源码链接支持 -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+</Project>

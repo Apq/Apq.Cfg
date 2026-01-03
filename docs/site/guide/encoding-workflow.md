@@ -1,0 +1,324 @@
+﻿# 编码处理流程
+
+本文档描述 Apq.Cfg 库在读取和写入配置文件时的完整编码处理流程。
+
+## 概述
+
+Apq.Cfg 提供了灵活的编码处理机制，支持：
+- 自动检测文件编码（BOM 优先，UTF.Unknown 库辅助）
+- 自定义编码映射（完整路径、通配符、正则表达式）
+- 多种写入策略（UTF-8 无 BOM、UTF-8 带 BOM、保持原编码、指定编码）
+
+## 核心类
+
+| 类名 | 职责 |
+|------|------|
+| `EncodingDetector` | 编码检测器，管理映射规则和缓存 |
+| `EncodingMappingConfig` | 编码映射配置，存储读取/写入规则 |
+| `EncodingMappingRule` | 单条映射规则 |
+| `EncodingOptions` | 单个配置源的编码选项 |
+| `FileCfgSourceBase` | 文件配置源基类，调用编码检测和写入 |
+
+## 读取流程
+
+### 流程图
+
+```
+读取文件
+    │
+    ▼
+┌─────────────────────────────────────┐
+│ 1. 检查 EncodingOptions.ReadStrategy │
+│    是否为 Specified？                │
+└─────────────────────────────────────┘
+    │ 是                    │ 否
+    ▼                       ▼
+┌─────────────┐    ┌─────────────────────────┐
+│ 返回指定编码 │    │ 2. 检查读取映射配置      │
+└─────────────┘    │    (MappingConfig)       │
+                   └─────────────────────────┘
+                       │ 匹配              │ 不匹配
+                       ▼                   │
+               ┌─────────────────────┐     │
+               │ 3. 验证映射编码      │     │
+               │    能否正确读取文件  │     │
+               └─────────────────────┘     │
+                   │ 成功        │ 失败    │
+                   ▼             └────┬────┘
+           ┌─────────────┐            │
+           │ 返回映射编码 │            │
+           └─────────────┘            │
+                                      ▼
+                          ┌─────────────────────┐
+                          │ 4. 检查缓存          │
+                          │    (如果启用)        │
+                          └─────────────────────┘
+                              │ 命中        │ 未命中
+                              ▼             ▼
+                      ┌─────────────┐  ┌─────────────────┐
+                      │ 返回缓存结果 │  │ 5. BOM 检测      │
+                      └─────────────┘  └─────────────────┘
+                                           │ 有 BOM    │ 无 BOM
+                                           ▼           ▼
+                                   ┌───────────┐  ┌─────────────────┐
+                                   │ 返回 BOM  │  │ 6. UTF.Unknown  │
+                                   │ 对应编码  │  │    库检测       │
+                                   └───────────┘  └─────────────────┘
+                                                      │ 置信度 ≥ 阈值  │ < 阈值
+                                                      ▼                ▼
+                                              ┌─────────────┐  ┌─────────────┐
+                                              │ 返回检测编码 │  │ 返回回退编码 │
+                                              └─────────────┘  │ (默认 UTF-8) │
+                                                               └─────────────┘
+```
+
+### 代码路径
+
+1. **入口**: `FileCfgSourceBase.DetectEncodingEnhanced(path)`
+2. **调用**: `EncodingDetector.Detect(path, options)`
+3. **返回**: `EncodingOptions.GetReadEncoding(detectedEncoding)`
+
+### 映射规则优先级
+
+映射规则按优先级降序排列，返回第一个匹配的规则：
+
+| 匹配类型 | 默认优先级 | 说明 |
+|---------|-----------|------|
+| ExactPath | 100 | 完整路径精确匹配 |
+| Wildcard | 0 | 通配符匹配 |
+| Regex | 0 | 正则表达式匹配 |
+| 内置 PowerShell | -100 | `*.ps1`, `*.psm1`, `*.psd1` |
+
+### 映射编码验证
+
+当读取映射匹配成功后，系统会验证该编码是否能正确读取文件：
+
+1. **验证方式**: 使用 `DecoderFallback.ExceptionFallback` 尝试解码文件前 4KB
+2. **验证成功**: 使用映射编码
+3. **验证失败**: 回退到自动检测流程（BOM 检测 → UTF.Unknown → 回退编码）
+
+这确保了即使配置了错误的编码映射，系统也能自动回退到正确的编码检测。
+
+### BOM 检测
+
+支持的 BOM 类型：
+
+| BOM 字节 | 编码 |
+|---------|------|
+| `EF BB BF` | UTF-8 |
+| `FF FE` | UTF-16 LE |
+| `FE FF` | UTF-16 BE |
+| `FF FE 00 00` | UTF-32 LE |
+| `00 00 FE FF` | UTF-32 BE |
+
+## 写入流程
+
+### 流程图
+
+```
+写入文件
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│ 1. 检查 EncodingOptions.WriteStrategy   │
+└─────────────────────────────────────────┘
+    │
+    ├─── Utf8NoBom ──────► 返回 UTF-8 无 BOM
+    │
+    ├─── Utf8WithBom ────► 返回 UTF-8 带 BOM
+    │
+    ├─── Specified ──────► 返回 EncodingOptions.WriteEncoding
+    │
+    └─── Preserve ───────┐
+                         ▼
+              ┌─────────────────────────┐
+              │ 2. 检查已检测的原编码    │
+              │    (_detectedEncoding)  │
+              └─────────────────────────┘
+                  │ 有                │ 无
+                  ▼                   ▼
+          ┌─────────────┐    ┌─────────────────────┐
+          │ 返回原编码   │    │ 3. 检查写入映射配置  │
+          └─────────────┘    │    (MappingConfig)   │
+                             └─────────────────────┘
+                                 │ 匹配         │ 不匹配
+                                 ▼              ▼
+                         ┌─────────────┐  ┌─────────────────┐
+                         │ 返回映射编码 │  │ 返回 UTF-8 无 BOM │
+                         └─────────────┘  │ (默认)           │
+                                          └─────────────────┘
+```
+
+### 代码路径
+
+1. **入口**: `FileCfgSourceBase.GetWriteEncoding()`
+2. **策略判断**: 根据 `EncodingOptions.WriteStrategy` 分支
+3. **映射查询**: `EncodingDetector.GetWriteEncoding(path)`
+
+### 写入策略
+
+| 策略 | 说明 |
+|------|------|
+| `Utf8NoBom` | 统一转换为 UTF-8 无 BOM（默认） |
+| `Utf8WithBom` | 统一转换为 UTF-8 带 BOM |
+| `Preserve` | 保持原文件编码 |
+| `Specified` | 使用指定的编码 |
+
+## 配置示例
+
+### 基本用法
+
+```csharp
+// 默认配置：自动检测读取，UTF-8 无 BOM 写入
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true)
+    .Build();
+```
+
+### 指定写入编码
+
+```csharp
+// PowerShell 文件使用 UTF-8 带 BOM
+var cfg = new CfgBuilder()
+    .AddJson("config.json", level: 0, writeable: true,
+        encoding: EncodingOptions.PowerShell)
+    .Build();
+```
+
+### 保持原编码
+
+```csharp
+var options = new EncodingOptions
+{
+    WriteStrategy = EncodingWriteStrategy.Preserve
+};
+
+var cfg = new CfgBuilder()
+    .AddJson("legacy.json", level: 0, writeable: true, encoding: options)
+    .Build();
+```
+
+### 全局编码映射
+
+```csharp
+var cfg = new CfgBuilder()
+    // 特定文件使用 GB2312 读取
+    .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
+
+    // 所有 PS1 文件写入时使用 UTF-8 BOM
+    .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
+
+    // 正则匹配
+    .AddWriteEncodingMappingRegex(@"logs[/\\].*\.log$", Encoding.Unicode)
+
+    .AddJson("config.json", level: 0, writeable: true)
+    .Build();
+```
+
+### 高级配置
+
+```csharp
+var cfg = new CfgBuilder()
+    .ConfigureEncodingMapping(config =>
+    {
+        // 添加多条规则
+        config.AddReadMapping("*.xml", EncodingMappingType.Wildcard,
+            Encoding.UTF8, priority: 50);
+        config.AddWriteMapping("**/*.txt", EncodingMappingType.Wildcard,
+            new UTF8Encoding(true), priority: 10);
+
+        // 清除默认规则
+        config.ClearWriteMappings();
+    })
+    .WithEncodingConfidenceThreshold(0.8f)  // 提高检测置信度阈值
+    .WithEncodingDetectionLogging(result =>  // 启用日志
+    {
+        Console.WriteLine($"检测到编码: {result}");
+    })
+    .AddJson("config.json", level: 0, writeable: true)
+    .Build();
+```
+
+## 通配符语法
+
+| 符号 | 含义 | 示例 |
+|------|------|------|
+| `*` | 匹配任意字符（不含路径分隔符） | `*.json` 匹配 `config.json` |
+| `**` | 匹配任意字符（含路径分隔符） | `**/*.txt` 匹配 `a/b/c.txt` |
+| `?` | 匹配单个字符 | `config?.json` 匹配 `config1.json` |
+
+## 缓存机制
+
+编码检测结果会被缓存以提高性能：
+
+- **缓存键**: 文件完整路径
+- **失效条件**: 文件修改时间变化
+- **手动清除**: `EncodingDetector.ClearCache()` 或 `InvalidateCache(path)`
+
+```csharp
+// 禁用缓存
+var options = new EncodingOptions { EnableCache = false };
+
+// 手动清除缓存
+FileCfgSourceBase.EncodingDetector.ClearCache();
+```
+
+## 内置默认映射
+
+`EncodingDetector` 构造时自动添加以下写入映射：
+
+| 模式 | 编码 | 优先级 |
+|------|------|--------|
+| `*.ps1` | UTF-8 BOM | -100 |
+| `*.psm1` | UTF-8 BOM | -100 |
+| `*.psd1` | UTF-8 BOM | -100 |
+
+这些默认映射优先级最低，可被用户配置覆盖。
+
+## 环境变量
+
+| 变量名 | 说明 | 默认值 |
+|--------|------|--------|
+| `APQ_CFG_ENCODING_CONFIDENCE` | 编码检测置信度阈值 | 0.6 |
+
+## API 参考
+
+### CfgBuilder 方法
+
+| 方法 | 说明 |
+|------|------|
+| `AddReadEncodingMapping(path, encoding, priority)` | 添加读取映射（完整路径） |
+| `AddReadEncodingMappingWildcard(pattern, encoding, priority)` | 添加读取映射（通配符） |
+| `AddReadEncodingMappingRegex(pattern, encoding, priority)` | 添加读取映射（正则） |
+| `AddWriteEncodingMapping(path, encoding, priority)` | 添加写入映射（完整路径） |
+| `AddWriteEncodingMappingWildcard(pattern, encoding, priority)` | 添加写入映射（通配符） |
+| `AddWriteEncodingMappingRegex(pattern, encoding, priority)` | 添加写入映射（正则） |
+| `ConfigureEncodingMapping(Action<EncodingMappingConfig>)` | 高级配置 |
+| `WithEncodingConfidenceThreshold(float)` | 设置置信度阈值 |
+| `WithEncodingDetectionLogging(Action<EncodingDetectionResult>)` | 启用检测日志 |
+
+### EncodingOptions 属性
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `ReadStrategy` | `EncodingReadStrategy` | `AutoDetect` | 读取策略 |
+| `WriteStrategy` | `EncodingWriteStrategy` | `Utf8NoBom` | 写入策略 |
+| `ReadEncoding` | `Encoding?` | `null` | 指定读取编码 |
+| `WriteEncoding` | `Encoding?` | `null` | 指定写入编码 |
+| `FallbackEncoding` | `Encoding` | `UTF8` | 回退编码 |
+| `ConfidenceThreshold` | `float` | `0.6` | 置信度阈值 |
+| `EnableCache` | `bool` | `true` | 启用缓存 |
+| `EnableLogging` | `bool` | `false` | 启用日志 |
+
+### 预定义 EncodingOptions
+
+| 名称 | 说明 |
+|------|------|
+| `EncodingOptions.Default` | 默认配置 |
+| `EncodingOptions.PowerShell` | PowerShell 脚本配置（UTF-8 BOM） |
+
+## 下一步
+
+- [编码处理](/guide/encoding) - 编码处理基础
+- [性能优化](/guide/performance) - 性能调优指南
+- [最佳实践](/guide/best-practices) - 最佳实践指南

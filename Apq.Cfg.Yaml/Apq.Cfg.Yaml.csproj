@@ -3,6 +3,7 @@
     <PropertyGroup>
         <RootNamespace>Apq.Cfg.Yaml</RootNamespace>
         <Description>Apq.Cfg 的 YAML 文件配置源扩展</Description>
+        <PackageTags>configuration;config;yaml</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,10 +12,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>
