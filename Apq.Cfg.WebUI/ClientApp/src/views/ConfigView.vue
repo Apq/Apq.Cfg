@@ -74,7 +74,7 @@
               highlight-current
               @node-click="handleNodeClick"
             >
-              <template #default="{ node, data }">
+              <template #default="{ data }">
                 <span class="tree-node">
                   <span>{{ data.key }}</span>
                   <el-icon v-if="data.isMasked" class="masked-icon"><Lock /></el-icon>
