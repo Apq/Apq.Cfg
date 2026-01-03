@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.5] - 2026-01-04
+
+### Added
+
+- **OpenAPI Support**: WebApi project integrates OpenAPI (Swagger) documentation for easier API debugging and integration
+- **Virtual Directory Deployment**: WebUI supports access from any virtual directory without additional configuration; same build artifact can be deployed to different paths
+
+### Changed
+
+- **API Method Renaming**: `GetOrDefault` method renamed to `GetValue` for clearer semantics
+- **Build Process Optimization**: Use a text file to centrally manage the list of projects to be packaged
+- **Unit Tests**: Test cases increased to 552, improving code coverage
+- **Frontend Dependencies Update**: Updated WebUI frontend dependencies to latest versions
+
 ## [1.1.4] - 2026-01-03
 
 ### Added
