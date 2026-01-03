@@ -118,7 +118,9 @@ docker buildx build -f Dockerfile.cn \
 "@
 
 # 将脚本内容转为 base64，避免特殊字符问题
-$scriptBase64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($scriptContent))
+# 注意：需要将 CRLF 转换为 LF，否则 Linux 无法执行
+$scriptContentLF = $scriptContent -replace "`r`n", "`n"
+$scriptBase64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($scriptContentLF))
 
 # tmux 命令：解码并执行脚本
 $remoteCmd = "tmux has-session -t $tmuxSession 2>/dev/null || tmux new-session -d -s $tmuxSession; " +
