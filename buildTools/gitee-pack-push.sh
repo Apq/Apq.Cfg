@@ -5,31 +5,33 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECTS_FILE="$SCRIPT_DIR/projects.txt"
+
 echo "=========================================="
 echo "  Apq.Cfg CI/CD 打包发布脚本"
 echo "=========================================="
 
-# 项目列表（POSIX 兼容写法）
-PROJECTS="
-Apq.Cfg/Apq.Cfg.csproj
-Apq.Cfg.Ini/Apq.Cfg.Ini.csproj
-Apq.Cfg.Xml/Apq.Cfg.Xml.csproj
-Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj
-Apq.Cfg.Toml/Apq.Cfg.Toml.csproj
-Apq.Cfg.Env/Apq.Cfg.Env.csproj
-Apq.Cfg.Redis/Apq.Cfg.Redis.csproj
-Apq.Cfg.Database/Apq.Cfg.Database.csproj
-Apq.Cfg.Consul/Apq.Cfg.Consul.csproj
-Apq.Cfg.Etcd/Apq.Cfg.Etcd.csproj
-Apq.Cfg.Apollo/Apq.Cfg.Apollo.csproj
-Apq.Cfg.Nacos/Apq.Cfg.Nacos.csproj
-Apq.Cfg.Zookeeper/Apq.Cfg.Zookeeper.csproj
-Apq.Cfg.Vault/Apq.Cfg.Vault.csproj
-Apq.Cfg.Crypto/Apq.Cfg.Crypto.csproj
-Apq.Cfg.Crypto.DataProtection/Apq.Cfg.Crypto.DataProtection.csproj
-Apq.Cfg.Crypto.Tool/Apq.Cfg.Crypto.Tool.csproj
-Apq.Cfg.SourceGenerator/Apq.Cfg.SourceGenerator.csproj
-"
+# 检查 projects.txt 是否存在
+if [ ! -f "$PROJECTS_FILE" ]; then
+    echo "错误: 找不到 projects.txt 文件"
+    echo "路径: $PROJECTS_FILE"
+    exit 1
+fi
+
+# 从 projects.txt 读取项目列表（过滤注释和空行，转换为 csproj 路径）
+PROJECTS=""
+while IFS= read -r line || [ -n "$line" ]; do
+    # 跳过注释和空行
+    case "$line" in
+        \#*|"") continue ;;
+    esac
+    # 去除首尾空格
+    project=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    if [ -n "$project" ]; then
+        PROJECTS="$PROJECTS $project/$project.csproj"
+    fi
+done < "$PROJECTS_FILE"
 
 OUTPUT_DIR="./nupkgs"
 NUGET_SOURCE="https://api.nuget.org/v3/index.json"

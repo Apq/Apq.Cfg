@@ -88,28 +88,14 @@ if (-not (Test-Path $VersionsDir)) {
     exit 1
 }
 
-# 定义所有可打包的项目
-$AllProjects = @(
-    'Apq.Cfg',
-    'Apq.Cfg.Ini',
-    'Apq.Cfg.Xml',
-    'Apq.Cfg.Yaml',
-    'Apq.Cfg.Toml',
-    'Apq.Cfg.Env',
-    'Apq.Cfg.Redis',
-    'Apq.Cfg.Database',
-    'Apq.Cfg.Consul',
-    'Apq.Cfg.Etcd',
-    'Apq.Cfg.Nacos',
-    'Apq.Cfg.Apollo',
-    'Apq.Cfg.Zookeeper',
-    'Apq.Cfg.Vault',
-    'Apq.Cfg.Crypto',
-    'Apq.Cfg.Crypto.DataProtection',
-    'Apq.Cfg.Crypto.Tool',
-    'Apq.Cfg.SourceGenerator',
-    'Apq.Cfg.WebApi'
-)
+# 从 projects.txt 读取项目列表
+$ProjectsFile = Join-Path $ScriptDir 'projects.txt'
+if (-not (Test-Path $ProjectsFile)) {
+    Write-ColorText '错误: 找不到 projects.txt 文件' 'Red'
+    Write-ColorText "路径: $ProjectsFile" 'Red'
+    exit 1
+}
+$AllProjects = @(Get-Content $ProjectsFile | Where-Object { $_ -and $_ -notmatch '^\s*#' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 # 如果指定了项目，则只打包指定的项目
 if ($Projects -and $Projects.Count -gt 0) {

@@ -1,0 +1,40 @@
+# Apq.Cfg 项目列表
+# 用于打包发布脚本的统一项目定义
+# 每行一个项目名称，# 开头的行为注释
+
+# 核心库
+Apq.Cfg
+
+# 文件格式扩展
+Apq.Cfg.Ini
+Apq.Cfg.Xml
+Apq.Cfg.Yaml
+Apq.Cfg.Toml
+Apq.Cfg.Env
+
+# 远程存储
+Apq.Cfg.Redis
+Apq.Cfg.Database
+
+# 配置中心
+Apq.Cfg.Consul
+Apq.Cfg.Etcd
+Apq.Cfg.Apollo
+Apq.Cfg.Nacos
+Apq.Cfg.Zookeeper
+
+# 密钥管理
+Apq.Cfg.Vault
+
+# 加密脱敏
+Apq.Cfg.Crypto
+Apq.Cfg.Crypto.DataProtection
+Apq.Cfg.Crypto.Tool
+
+# 源生成器
+Apq.Cfg.SourceGenerator
+
+# Web 管理
+Apq.Cfg.WebApi
+# 这是通过Docker镜像去发布的,所以不需要单独打包
+# Apq.Cfg.WebUI
