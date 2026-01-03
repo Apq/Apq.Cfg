@@ -128,14 +128,14 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddVaultV2(
-        address: "http://localhost:8200",
-        token: "s.1234567890abcdef",
-        enginePath: "kv",
-        path: "myapp/config",
-        level: 0,
-        isPrimaryWriter: true
-    )
+    .AddVault(options =>
+    {
+        options.Address = "http://localhost:8200";
+        options.Token = "s.1234567890abcdef";
+        options.EnginePath = "kv";
+        options.Path = "myapp/config";
+        options.KvVersion = 2;
+    }, level: 0, isPrimaryWriter: true)
     .Build();
 
 // 更新配置

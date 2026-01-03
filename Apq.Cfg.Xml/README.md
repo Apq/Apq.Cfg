@@ -53,7 +53,7 @@ var timeout = db.GetValue<int>("Timeout");
 public static CfgBuilder AddXml(
     this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Xml,  // 默认 0
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
@@ -62,14 +62,14 @@ public static CfgBuilder AddXml(
 
 ## 参数说明
 
-| 参数 | 说明 |
-|------|------|
-| `path` | XML 文件路径 |
-| `level` | 配置层级，数值越大优先级越高 |
-| `writeable` | 是否可写 |
-| `optional` | 文件不存在时是否忽略 |
-| `reloadOnChange` | 文件变更时是否自动重载 |
-| `isPrimaryWriter` | 是否为默认写入目标 |
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `path` | XML 文件路径 | - |
+| `level` | 配置层级，数值越大优先级越高 | 0 |
+| `writeable` | 是否可写 | false |
+| `optional` | 文件不存在时是否忽略 | true |
+| `reloadOnChange` | 文件变更时是否自动重载 | true |
+| `isPrimaryWriter` | 是否为默认写入目标 | false |
 
 ## XML 格式示例
 

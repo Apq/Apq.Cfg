@@ -53,7 +53,7 @@ var timeout = cfg.GetValue<int>("Database:Timeout");
 public static CfgBuilder AddRedis(
     this CfgBuilder builder,
     Action<RedisOptions> configure,
-    int level,
+    int level = CfgSourceLevels.Redis,  // 默认 100
     bool isPrimaryWriter = false)
 ```
 

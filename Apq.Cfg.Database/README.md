@@ -64,7 +64,7 @@ var timeout = cfg.GetValue<int>("Database:Timeout");
 public static CfgBuilder AddDatabase(
     this CfgBuilder builder,
     Action<DatabaseOptions> configure,
-    int level,
+    int level = CfgSourceLevels.Database,  // 默认 100
     bool isPrimaryWriter = false)
 ```
 

@@ -52,7 +52,7 @@ var port = db.GetValue<int>("PORT");
 public static CfgBuilder AddEnv(
     this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Env,  // 默认 400
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
@@ -62,15 +62,15 @@ public static CfgBuilder AddEnv(
 
 ## 参数说明
 
-| 参数 | 说明 |
-|------|------|
-| `path` | .env 文件路径 |
-| `level` | 配置层级，数值越大优先级越高 |
-| `writeable` | 是否可写 |
-| `optional` | 文件不存在时是否忽略 |
-| `reloadOnChange` | 文件变更时是否自动重载 |
-| `isPrimaryWriter` | 是否为默认写入目标 |
-| `setEnvironmentVariables` | 是否将配置写入系统环境变量（默认为 false） |
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `path` | .env 文件路径 | - |
+| `level` | 配置层级，数值越大优先级越高 | 400 |
+| `writeable` | 是否可写 | false |
+| `optional` | 文件不存在时是否忽略 | true |
+| `reloadOnChange` | 文件变更时是否自动重载 | true |
+| `isPrimaryWriter` | 是否为默认写入目标 | false |
+| `setEnvironmentVariables` | 是否将配置写入系统环境变量 | false |
 
 ## .env 格式示例
 

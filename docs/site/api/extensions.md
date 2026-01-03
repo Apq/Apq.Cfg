@@ -13,24 +13,26 @@
 ```csharp
 public CfgBuilder AddJson(
     string path,
-    int level,
-    bool writeable,
+    int level = CfgSourceLevels.Json,  // 默认 0
+    bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
     bool isPrimaryWriter = false,
-    EncodingOptions? encoding = null)
+    EncodingOptions? encoding = null,
+    string? name = null)
 ```
 
 添加 JSON 文件配置源。这是 `CfgBuilder` 的实例方法。
 
 **参数：**
 - `path`: JSON 文件路径
-- `level`: 配置层级，数值越大优先级越高
-- `writeable`: 是否可写
+- `level`: 配置层级，数值越大优先级越高（默认 0）
+- `writeable`: 是否可写（默认 `false`）
 - `optional`: 是否为可选文件（默认 `true`）
 - `reloadOnChange`: 文件变更时是否自动重载（默认 `true`）
 - `isPrimaryWriter`: 是否为主要写入器（默认 `false`）
 - `encoding`: 编码选项（默认 `null`）
+- `name`: 配置源名称（默认 `null`）
 
 #### AddYaml（扩展方法）
 
@@ -38,7 +40,7 @@ public CfgBuilder AddJson(
 public static CfgBuilder AddYaml(
     this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Yaml,  // 默认 0
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
@@ -53,7 +55,7 @@ public static CfgBuilder AddYaml(
 public static CfgBuilder AddXml(
     this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Xml,  // 默认 0
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
@@ -68,7 +70,7 @@ public static CfgBuilder AddXml(
 public static CfgBuilder AddIni(
     this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Ini,  // 默认 0
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
@@ -83,7 +85,7 @@ public static CfgBuilder AddIni(
 public static CfgBuilder AddToml(
     this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Toml,  // 默认 0
     bool writeable = false,
     bool optional = true,
     bool reloadOnChange = true,
@@ -96,20 +98,22 @@ public static CfgBuilder AddToml(
 
 ```csharp
 public CfgBuilder AddEnvironmentVariables(
-    int level,
-    string? prefix = null)
+    int level = CfgSourceLevels.EnvironmentVariables,  // 默认 400
+    string? prefix = null,
+    string? name = null)
 ```
 
 添加环境变量配置源。
 
 **参数：**
-- `level`: 配置层级，数值越大优先级越高
+- `level`: 配置层级，数值越大优先级越高（默认 400）
 - `prefix`: 环境变量前缀，为 `null` 时加载所有环境变量
+- `name`: 配置源名称（默认 `null`）
 
 #### AddSource
 
 ```csharp
-public CfgBuilder AddSource(ICfgSource source)
+public CfgBuilder AddSource(ICfgSource source, string? name = null)
 ```
 
 添加自定义配置源。

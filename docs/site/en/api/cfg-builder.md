@@ -17,12 +17,13 @@ Add a JSON configuration source.
 ```csharp
 public CfgBuilder AddJson(
     string path,
-    int level,
+    int level = CfgSourceLevels.Json,  // default 0
     bool writeable = false,
-    bool optional = false,
-    bool reloadOnChange = false,
+    bool optional = true,
+    bool reloadOnChange = true,
     bool isPrimaryWriter = false,
-    Encoding? encoding = null)
+    EncodingOptions? encoding = null,
+    string? name = null)
 ```
 
 ### AddYaml
@@ -30,12 +31,13 @@ public CfgBuilder AddJson(
 Add a YAML configuration source (requires `Apq.Cfg.Yaml`).
 
 ```csharp
-public CfgBuilder AddYaml(
+public static CfgBuilder AddYaml(
+    this CfgBuilder builder,
     string path,
-    int level,
+    int level = CfgSourceLevels.Yaml,  // default 0
     bool writeable = false,
-    bool optional = false,
-    bool reloadOnChange = false,
+    bool optional = true,
+    bool reloadOnChange = true,
     bool isPrimaryWriter = false)
 ```
 
@@ -45,8 +47,9 @@ Add environment variables as a configuration source.
 
 ```csharp
 public CfgBuilder AddEnvironmentVariables(
-    int level,
-    string? prefix = null)
+    int level = CfgSourceLevels.EnvironmentVariables,  // default 400
+    string? prefix = null,
+    string? name = null)
 ```
 
 ### AddSource
@@ -54,7 +57,7 @@ public CfgBuilder AddEnvironmentVariables(
 Add a custom configuration source.
 
 ```csharp
-public CfgBuilder AddSource(ICfgSource source)
+public CfgBuilder AddSource(ICfgSource source, string? name = null)
 ```
 
 ### ConfigureEncodingMapping
