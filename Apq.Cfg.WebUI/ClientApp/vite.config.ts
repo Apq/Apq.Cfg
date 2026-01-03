@@ -22,13 +22,13 @@ export default defineConfig(({ command }) => ({
   server: {
     port: 38690,
     proxy: {
-      // 匹配任意虚拟目录下的 /api/ 请求，但排除 /src/ 开头的源文件路径
+      // 匹配任意虚拟目录下的 /api/ 请求
       // 例如: /api/*, /xxx/api/*, /a/b/api/*
-      // 不匹配: /src/api/*, /@fs/*, /@vite/*
-      '^(?!/src/|/@).*(/api/)': {
+      // 排除源文件路径（包含 /src/ 或以 @ 开头的段）
+      '^(?!.*/src/)(?!.*/@).*/api/': {
         target: 'http://localhost:38678',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^(.*)(\/api\/)/, '/api/')
+        rewrite: (path) => path.replace(/^.*\/api\//, '/api/')
       }
     }
   }
