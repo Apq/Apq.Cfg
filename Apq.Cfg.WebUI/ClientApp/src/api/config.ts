@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import type { ApiResponse, ConfigTreeNode, ConfigSourceInfo } from '@/types'
+import type { ApiResponse, ConfigTreeNode, ConfigSourceDto } from '@/types'
 
 // 通过代理访问目标应用的配置 API
 export const createConfigApi = (appId: string) => ({
@@ -19,7 +19,7 @@ export const createConfigApi = (appId: string) => ({
 
   // ========== 合并前配置（Sources）==========
 
-  getSources(): Promise<ApiResponse<ConfigSourceInfo[]>> {
+  getSources(): Promise<ApiResponse<ConfigSourceDto[]>> {
     return request.get(`/api/proxy/${appId}/sources`)
   },
 

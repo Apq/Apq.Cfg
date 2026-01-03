@@ -27,20 +27,26 @@ internal sealed class EnvVarsCfgSource : ICfgSource
     /// <inheritdoc />
     public string Name { get; set; }
 
-    /// <summary>
-    /// 获取配置层级，数值越大优先级越高
-    /// </summary>
+    /// <inheritdoc />
     public int Level { get; }
 
-    /// <summary>
-    /// 获取是否可写，环境变量配置源不支持写入，因此始终为 false
-    /// </summary>
+    /// <inheritdoc />
+    public string Type => nameof(EnvVarsCfgSource);
+
+    /// <inheritdoc />
     public bool IsWriteable => false;
 
-    /// <summary>
-    /// 获取是否为主要写入源，环境变量配置源不支持写入，因此始终为 false
-    /// </summary>
+    /// <inheritdoc />
     public bool IsPrimaryWriter => false;
+
+    /// <inheritdoc />
+    public int KeyCount => GetAllValues().Count();
+
+    /// <inheritdoc />
+    public int TopLevelKeyCount => GetAllValues()
+        .Select(kv => kv.Key.Split(':')[0])
+        .Distinct()
+        .Count();
 
     /// <summary>
     /// 构建 Microsoft.Extensions.Configuration 的环境变量配置源

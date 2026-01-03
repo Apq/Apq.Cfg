@@ -129,7 +129,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useAppsStore } from '@/stores/apps'
 import { createConfigApi } from '@/api/config'
-import type { ConfigTreeNode, ConfigSourceInfo, AppEndpoint } from '@/types'
+import type { ConfigTreeNode, ConfigSourceDto, AppEndpoint } from '@/types'
 
 interface TreeNodeData extends ConfigTreeNode {
   fullKey: string
@@ -147,7 +147,7 @@ const loading = ref(false)
 const saving = ref(false)
 const reloading = ref(false)
 
-const sources = ref<ConfigSourceInfo[]>([])
+const sources = ref<ConfigSourceDto[]>([])
 const currentSource = ref('merged')
 const treeData = ref<TreeNodeData[]>([])
 const searchKey = ref('')

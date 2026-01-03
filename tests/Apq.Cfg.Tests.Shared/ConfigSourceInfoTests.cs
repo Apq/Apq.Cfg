@@ -22,7 +22,7 @@ public class ConfigSourceInfoTests : IDisposable
     }
 
     [Fact]
-    public void GetSourceInfos_ReturnsAllSources()
+    public void GetSources_ReturnsAllSources()
     {
         // Arrange
         var jsonPath1 = Path.Combine(_testDir, "config.json");
@@ -37,7 +37,7 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
 
         // Assert
         Assert.Equal(3, sources.Count);
@@ -49,7 +49,7 @@ public class ConfigSourceInfoTests : IDisposable
     }
 
     [Fact]
-    public void GetSourceInfos_ReturnsCorrectNames()
+    public void GetSources_ReturnsCorrectNames()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -61,7 +61,7 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
 
         // Assert
         Assert.Equal("config.json", sources[0].Name);
@@ -69,7 +69,7 @@ public class ConfigSourceInfoTests : IDisposable
     }
 
     [Fact]
-    public void GetSourceInfos_ReturnsCorrectWriteableStatus()
+    public void GetSources_ReturnsCorrectWriteableStatus()
     {
         // Arrange
         var jsonPath1 = Path.Combine(_testDir, "config.json");
@@ -83,7 +83,7 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
 
         // Assert
         Assert.False(sources[0].IsWriteable);
@@ -92,7 +92,27 @@ public class ConfigSourceInfoTests : IDisposable
     }
 
     [Fact]
-    public void GetSourceInfos_ReturnsCorrectKeyCount()
+    public void GetSources_ReturnsCorrectType()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "config.json");
+        File.WriteAllText(jsonPath, """{"App": "Test"}""");
+
+        using var cfg = new CfgBuilder()
+            .AddJson(jsonPath, level: 0)
+            .AddEnvironmentVariables(level: 20, prefix: "TEST_")
+            .Build();
+
+        // Act
+        var sources = cfg.GetSources();
+
+        // Assert
+        Assert.Equal("JsonFileCfgSource", sources[0].Type);
+        Assert.Equal("EnvVarsCfgSource", sources[1].Type);
+    }
+
+    [Fact]
+    public void GetSources_GetAllValues_ReturnsKeyCount()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -109,10 +129,11 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
+        var keyCount = sources[0].GetAllValues().Count();
 
         // Assert
-        Assert.Equal(3, sources[0].KeyCount);
+        Assert.Equal(3, keyCount);
     }
 
     [Fact]
@@ -194,7 +215,7 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
         var source = cfg.GetSource(0, "custom-config");
 
         // Assert
@@ -211,7 +232,7 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
 
         // Assert
         Assert.Equal("my-env-vars", sources[0].Name);
@@ -232,7 +253,7 @@ public class ConfigSourceInfoTests : IDisposable
             .Build();
 
         // Act
-        var sources = cfg.GetSourceInfos();
+        var sources = cfg.GetSources();
 
         // Assert
         Assert.Equal("overridden-name", sources[0].Name);

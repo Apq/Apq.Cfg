@@ -167,19 +167,19 @@ public interface ICfgRoot : IDisposable, IAsyncDisposable
     void Reload();
 
     /// <summary>
-    /// 获取所有配置源的信息列表
+    /// 获取所有配置源列表
     /// </summary>
-    /// <returns>配置源信息列表，按层级升序排列</returns>
+    /// <returns>配置源列表，按层级升序排列</returns>
     /// <example>
     /// <code>
-    /// var sources = cfg.GetSourceInfos();
+    /// var sources = cfg.GetSources();
     /// foreach (var source in sources)
     /// {
     ///     Console.WriteLine($"[{source.Level}] {source.Name} ({source.Type})");
     /// }
     /// </code>
     /// </example>
-    IReadOnlyList<ConfigSourceInfo> GetSourceInfos();
+    IReadOnlyList<ICfgSource> GetSources();
 
     /// <summary>
     /// 根据层级和名称获取配置源

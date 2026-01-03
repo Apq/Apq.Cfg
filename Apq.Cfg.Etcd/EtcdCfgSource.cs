@@ -57,13 +57,29 @@ internal sealed class EtcdCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
+    /// <inheritdoc />
     public int Level { get; }
 
     /// <inheritdoc />
     public string Name { get; set; }
 
+    /// <inheritdoc />
+    public string Type => nameof(EtcdCfgSource);
+
+    /// <inheritdoc />
     public bool IsWriteable => true;
+
+    /// <inheritdoc />
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public int KeyCount => GetAllValues().Count();
+
+    /// <inheritdoc />
+    public int TopLevelKeyCount => GetAllValues()
+        .Select(kv => kv.Key.Split(':')[0])
+        .Distinct()
+        .Count();
 
     /// <inheritdoc />
     public IEnumerable<KeyValuePair<string, string?>> GetAllValues()

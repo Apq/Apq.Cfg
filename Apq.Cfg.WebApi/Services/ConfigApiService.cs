@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Apq.Cfg.Sources;
 using Apq.Cfg.WebApi.Models;
 using Microsoft.Extensions.Options;
 
@@ -62,7 +63,7 @@ public sealed class ConfigApiService : IConfigApiService
 
     public List<ConfigSourceInfo> GetSources()
     {
-        return _cfgRoot.GetSourceInfos().ToList();
+        return _cfgRoot.GetSources().Select(s => s.ToInfo()).ToList();
     }
 
     public Dictionary<string, string?>? GetSourceConfig(int level, string name)

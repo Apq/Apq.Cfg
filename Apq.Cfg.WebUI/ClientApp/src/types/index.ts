@@ -19,8 +19,8 @@ export interface ConfigTreeNode {
   children: ConfigTreeNode[]
 }
 
-// 配置源信息（对应 Apq.Cfg.ConfigSourceInfo）
-export interface ConfigSourceInfo {
+// 配置源 DTO
+export interface ConfigSourceDto {
   level: number
   name: string
   type: string

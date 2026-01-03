@@ -67,9 +67,26 @@ public abstract class FileCfgSourceBase : ICfgSource, IDisposable
     /// <inheritdoc />
     public string Name { get; set; }
 
+    /// <inheritdoc />
     public int Level { get; }
+
+    /// <inheritdoc />
+    public virtual string Type => GetType().Name;
+
+    /// <inheritdoc />
     public bool IsWriteable { get; }
+
+    /// <inheritdoc />
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public int KeyCount => GetAllValues().Count();
+
+    /// <inheritdoc />
+    public int TopLevelKeyCount => GetAllValues()
+        .Select(kv => kv.Key.Split(':')[0])
+        .Distinct()
+        .Count();
 
     /// <summary>
     /// 获取文件路径

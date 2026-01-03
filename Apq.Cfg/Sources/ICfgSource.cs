@@ -18,6 +18,11 @@ public interface ICfgSource
     int Level { get; }
 
     /// <summary>
+    /// 获取配置源类型名称
+    /// </summary>
+    string Type { get; }
+
+    /// <summary>
     /// 获取是否可写，指示该配置源是否支持写入操作
     /// </summary>
     bool IsWriteable { get; }
@@ -26,6 +31,16 @@ public interface ICfgSource
     /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
     /// </summary>
     bool IsPrimaryWriter { get; }
+
+    /// <summary>
+    /// 获取配置项数量（所有叶子节点的总数）
+    /// </summary>
+    int KeyCount { get; }
+
+    /// <summary>
+    /// 获取顶级配置键数量（只统计第一层节点）
+    /// </summary>
+    int TopLevelKeyCount { get; }
 
     /// <summary>
     /// 构建 Microsoft.Extensions.Configuration 的配置源
@@ -63,4 +78,27 @@ public interface IWritableCfgSource : ICfgSource
     /// <param name="cancellationToken">取消令牌</param>
     /// <returns>表示异步操作的任务</returns>
     Task ApplyChangesAsync(IReadOnlyDictionary<string, string?> changes, CancellationToken cancellationToken);
+}
+
+/// <summary>
+/// ICfgSource 扩展方法
+/// </summary>
+public static class CfgSourceExtensions
+{
+    /// <summary>
+    /// 将配置源转换为可序列化的信息对象
+    /// </summary>
+    public static ConfigSourceInfo ToInfo(this ICfgSource source)
+    {
+        return new ConfigSourceInfo
+        {
+            Level = source.Level,
+            Name = source.Name,
+            Type = source.Type,
+            IsWriteable = source.IsWriteable,
+            IsPrimaryWriter = source.IsPrimaryWriter,
+            KeyCount = source.KeyCount,
+            TopLevelKeyCount = source.TopLevelKeyCount
+        };
+    }
 }

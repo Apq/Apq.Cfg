@@ -50,23 +50,29 @@ internal sealed class NacosCfgSource : IWritableCfgSource, IDisposable
         }
     }
 
-    /// <summary>
-    /// 获取配置层级，数值越大优先级越高
-    /// </summary>
+    /// <inheritdoc />
     public int Level { get; }
 
     /// <inheritdoc />
     public string Name { get; set; }
 
-    /// <summary>
-    /// 获取是否可写，Nacos 支持通过 API 写入配置，因此始终为 true
-    /// </summary>
+    /// <inheritdoc />
+    public string Type => nameof(NacosCfgSource);
+
+    /// <inheritdoc />
     public bool IsWriteable => true;
 
-    /// <summary>
-    /// 获取是否为主要写入源，用于标识当多个可写源存在时的主要写入目标
-    /// </summary>
+    /// <inheritdoc />
     public bool IsPrimaryWriter { get; }
+
+    /// <inheritdoc />
+    public int KeyCount => GetAllValues().Count();
+
+    /// <inheritdoc />
+    public int TopLevelKeyCount => GetAllValues()
+        .Select(kv => kv.Key.Split(':')[0])
+        .Distinct()
+        .Count();
 
     /// <inheritdoc />
     public IEnumerable<KeyValuePair<string, string?>> GetAllValues()

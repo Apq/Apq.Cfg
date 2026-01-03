@@ -669,23 +669,15 @@ internal sealed class MergedCfgRoot : ICfgRoot
     }
 
     /// <inheritdoc />
-    public IReadOnlyList<ConfigSourceInfo> GetSourceInfos()
+    public IReadOnlyList<ICfgSource> GetSources()
     {
-        var result = new List<ConfigSourceInfo>();
+        var result = new List<ICfgSource>();
         foreach (var level in _levelsAscending)
         {
             var data = _levelData[level];
             foreach (var source in data.Sources)
             {
-                result.Add(new ConfigSourceInfo
-                {
-                    Level = source.Level,
-                    Name = source.Name,
-                    Type = source.GetType().Name,
-                    IsWriteable = source.IsWriteable,
-                    IsPrimaryWriter = source.IsPrimaryWriter,
-                    KeyCount = source.GetAllValues().Count()
-                });
+                result.Add(source);
             }
         }
         return result;
