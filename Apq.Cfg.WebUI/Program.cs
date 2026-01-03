@@ -78,7 +78,7 @@ app.MapWhen(
 
             if (app.Environment.IsDevelopment())
             {
-                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173");
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:38690");
             }
         });
     });
