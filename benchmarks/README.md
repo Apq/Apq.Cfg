@@ -220,7 +220,7 @@ dotnet run -c Release --project benchmarks/Apq.Cfg.Benchmarks -f net10.0 -- --li
 | ComplexTypes | Get_Guid, Get_DateTime, Get_Enum, Get_NullableInt |
 | Batch | Get_*_Multiple（批量转换） |
 | SpecialValues | Get_LongString, Get_Unicode, Get_SpecialChars, Get_EmptyString |
-| Extensions | TryGetValue_Success/Failure, GetRequired_Success, GetOrDefault_ExistingKey/NonExistingKey |
+| Extensions | TryGetValue_Success/Failure, GetRequired_Success, GetValue_WithDefault_ExistingKey/NonExistingKey |
 | Mixed | Get_MixedTypes（混合类型读取） |
 
 ### 9. CacheBenchmarks - 缓存效果测试

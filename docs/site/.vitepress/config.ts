@@ -36,6 +36,13 @@ const zhSidebar = {
       ]
     },
     {
+      text: 'Web 管理',
+      items: [
+        { text: 'Web API', link: '/guide/webapi' },
+        { text: 'Web 管理界面', link: '/guide/webui' }
+      ]
+    },
+    {
       text: '深入',
       items: [
         { text: '架构设计', link: '/guide/architecture' },
@@ -139,6 +146,13 @@ const enSidebar = {
         { text: 'Performance', link: '/en/guide/performance' },
         { text: 'Best Practices', link: '/en/guide/best-practices' },
         { text: 'Extension Development', link: '/en/guide/extension' }
+      ]
+    },
+    {
+      text: 'Web Management',
+      items: [
+        { text: 'Web API', link: '/en/guide/webapi' },
+        { text: 'Web UI', link: '/en/guide/webui' }
       ]
     },
     {

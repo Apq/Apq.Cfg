@@ -247,52 +247,6 @@ foreach (var (key, value) in snapshot)
 
 
 
-  <a id="Apq_Cfg_CfgRootExtensions_GetOrDefault_" data-uid="Apq.Cfg.CfgRootExtensions.GetOrDefault*"></a>
-
-  <h3 id="Apq_Cfg_CfgRootExtensions_GetOrDefault__1_Apq_Cfg_ICfgRoot_System_String___0_" data-uid="Apq.Cfg.CfgRootExtensions.GetOrDefault``1(Apq.Cfg.ICfgRoot,System.String,``0)">
-  GetOrDefault&lt;T&gt;(ICfgRoot, string, T?)
-  
-  </h3>
-
-  <div class="markdown level1 summary"><p>获取配置值，如果不存在则返回默认值</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T? GetOrDefault&lt;T&gt;(this ICfgRoot root, string key, T? defaultValue = default)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>root</code> <a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a></dt>
-    <dd></dd>
-    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">T</span></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <a id="Apq_Cfg_CfgRootExtensions_GetRequired_" data-uid="Apq.Cfg.CfgRootExtensions.GetRequired*"></a>
 
   <h3 id="Apq_Cfg_CfgRootExtensions_GetRequired__1_Apq_Cfg_ICfgRoot_System_String_" data-uid="Apq.Cfg.CfgRootExtensions.GetRequired``1(Apq.Cfg.ICfgRoot,System.String)">
@@ -333,6 +287,56 @@ foreach (var (key, value) in snapshot)
 
 
 
+
+
+
+
+  <a id="Apq_Cfg_CfgRootExtensions_GetValue_" data-uid="Apq.Cfg.CfgRootExtensions.GetValue*"></a>
+
+  <h3 id="Apq_Cfg_CfgRootExtensions_GetValue__1_Apq_Cfg_ICfgRoot_System_String___0_" data-uid="Apq.Cfg.CfgRootExtensions.GetValue``1(Apq.Cfg.ICfgRoot,System.String,``0)">
+  GetValue&lt;T&gt;(ICfgRoot, string, T?)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>获取配置值，如果不存在则返回默认值</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T? GetValue&lt;T&gt;(this ICfgRoot root, string key, T? defaultValue)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>root</code> <a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a></dt>
+    <dd></dd>
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Apq_Cfg_CfgRootExtensions_GetValue__1_Apq_Cfg_ICfgRoot_System_String___0__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>此方法是 <a class="xref" href="Apq.Cfg.ICfgRoot.html#Apq_Cfg_ICfgRoot_GetValue__1_System_String_">GetValue&lt;T&gt;(string)</a> 的重载版本，
+允许指定自定义默认值。命名与 Microsoft.Extensions.Configuration 保持一致。</p>
+</div>
 
 
 

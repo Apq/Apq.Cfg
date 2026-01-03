@@ -87,7 +87,7 @@ var maxSize = cfg.GetValue<int?>("Cache:MaxSize");
 
 ```csharp
 // 带默认值
-var timeout = cfg.GetOrDefault<int>("Database:Timeout", defaultValue: 30);
+var timeout = cfg.GetValue<int>("Database:Timeout", 30);
 
 // 必需的配置（不存在时抛出异常）
 var connectionString = cfg.GetRequired<string>("Database:ConnectionString");

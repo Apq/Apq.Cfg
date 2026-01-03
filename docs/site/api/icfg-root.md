@@ -338,18 +338,18 @@ T GetRequired<T>(this ICfgRoot root, string key)
 var connectionString = cfg.GetRequired<string>("Database:ConnectionString");
 ```
 
-### GetOrDefault
+### GetValue（带默认值）
 
 ```csharp
-T? GetOrDefault<T>(this ICfgRoot root, string key, T? defaultValue = default)
+T? GetValue<T>(this ICfgRoot root, string key, T? defaultValue)
 ```
 
-获取配置值，如果不存在则返回默认值。
+获取配置值，如果不存在则返回默认值。此方法是 `ICfgRoot.GetValue<T>(string)` 的重载版本，命名与 Microsoft.Extensions.Configuration 保持一致。
 
 **示例：**
 ```csharp
-var timeout = cfg.GetOrDefault("Database:Timeout", 30);
-var retryCount = cfg.GetOrDefault<int>("Database:RetryCount", 3);
+var timeout = cfg.GetValue("Database:Timeout", 30);
+var retryCount = cfg.GetValue<int>("Database:RetryCount", 3);
 ```
 
 ### GetMasked
@@ -416,7 +416,7 @@ var connString = $"Host={dbSection["Host"]};Port={dbSection["Port"]}";
 var values = cfg.GetMany(new[] { "App:Name", "App:Version" });
 
 // 使用扩展方法
-var timeout = cfg.GetOrDefault("Database:Timeout", 30);
+var timeout = cfg.GetValue("Database:Timeout", 30);
 var connStr = cfg.GetRequired<string>("Database:ConnectionString");
 
 // 修改配置

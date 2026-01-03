@@ -559,22 +559,6 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgRootExtensions.GetMaskedSnapshot
   nameWithType: CfgRootExtensions.GetMaskedSnapshot
-- uid: Apq.Cfg.CfgRootExtensions.GetOrDefault*
-  name: GetOrDefault
-  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetOrDefault_
-  commentId: Overload:Apq.Cfg.CfgRootExtensions.GetOrDefault
-  isSpec: "True"
-  fullName: Apq.Cfg.CfgRootExtensions.GetOrDefault
-  nameWithType: CfgRootExtensions.GetOrDefault
-- uid: Apq.Cfg.CfgRootExtensions.GetOrDefault``1(Apq.Cfg.ICfgRoot,System.String,``0)
-  name: GetOrDefault<T>(ICfgRoot, string, T?)
-  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetOrDefault__1_Apq_Cfg_ICfgRoot_System_String___0_
-  commentId: M:Apq.Cfg.CfgRootExtensions.GetOrDefault``1(Apq.Cfg.ICfgRoot,System.String,``0)
-  name.vb: GetOrDefault(Of T)(ICfgRoot, String, T)
-  fullName: Apq.Cfg.CfgRootExtensions.GetOrDefault<T>(Apq.Cfg.ICfgRoot, string, T?)
-  fullName.vb: Apq.Cfg.CfgRootExtensions.GetOrDefault(Of T)(Apq.Cfg.ICfgRoot, String, T)
-  nameWithType: CfgRootExtensions.GetOrDefault<T>(ICfgRoot, string, T?)
-  nameWithType.vb: CfgRootExtensions.GetOrDefault(Of T)(ICfgRoot, String, T)
 - uid: Apq.Cfg.CfgRootExtensions.GetRequired*
   name: GetRequired
   href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetRequired_
@@ -591,6 +575,22 @@ references:
   fullName.vb: Apq.Cfg.CfgRootExtensions.GetRequired(Of T)(Apq.Cfg.ICfgRoot, String)
   nameWithType: CfgRootExtensions.GetRequired<T>(ICfgRoot, string)
   nameWithType.vb: CfgRootExtensions.GetRequired(Of T)(ICfgRoot, String)
+- uid: Apq.Cfg.CfgRootExtensions.GetValue*
+  name: GetValue
+  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetValue_
+  commentId: Overload:Apq.Cfg.CfgRootExtensions.GetValue
+  isSpec: "True"
+  fullName: Apq.Cfg.CfgRootExtensions.GetValue
+  nameWithType: CfgRootExtensions.GetValue
+- uid: Apq.Cfg.CfgRootExtensions.GetValue``1(Apq.Cfg.ICfgRoot,System.String,``0)
+  name: GetValue<T>(ICfgRoot, string, T?)
+  href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_GetValue__1_Apq_Cfg_ICfgRoot_System_String___0_
+  commentId: M:Apq.Cfg.CfgRootExtensions.GetValue``1(Apq.Cfg.ICfgRoot,System.String,``0)
+  name.vb: GetValue(Of T)(ICfgRoot, String, T)
+  fullName: Apq.Cfg.CfgRootExtensions.GetValue<T>(Apq.Cfg.ICfgRoot, string, T?)
+  fullName.vb: Apq.Cfg.CfgRootExtensions.GetValue(Of T)(Apq.Cfg.ICfgRoot, String, T)
+  nameWithType: CfgRootExtensions.GetValue<T>(ICfgRoot, string, T?)
+  nameWithType.vb: CfgRootExtensions.GetValue(Of T)(ICfgRoot, String, T)
 - uid: Apq.Cfg.CfgRootExtensions.TryGetValue*
   name: TryGetValue
   href: api/Apq.Cfg.CfgRootExtensions.html#Apq_Cfg_CfgRootExtensions_TryGetValue_

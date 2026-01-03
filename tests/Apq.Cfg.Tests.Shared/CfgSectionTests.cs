@@ -345,10 +345,10 @@ public class CfgSectionTests : IDisposable
 
     #endregion
 
-    #region GetOrDefault 扩展方法
+    #region GetValue 带默认值扩展方法
 
     [Fact]
-    public void GetOrDefault_ExistingKey_ReturnsValue()
+    public void GetValue_WithDefault_ExistingKey_ReturnsValue()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -359,11 +359,11 @@ public class CfgSectionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(42, cfg.GetOrDefault("IntValue", 0));
+        Assert.Equal(42, cfg.GetValue("IntValue", 0));
     }
 
     [Fact]
-    public void GetOrDefault_NonExistingKey_ReturnsDefault()
+    public void GetValue_WithDefault_NonExistingKey_ReturnsDefault()
     {
         // Arrange
         var jsonPath = Path.Combine(_testDir, "config.json");
@@ -374,8 +374,8 @@ public class CfgSectionTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(100, cfg.GetOrDefault("NonExistent", 100));
-        Assert.Equal("DefaultString", cfg.GetOrDefault("NonExistent", "DefaultString"));
+        Assert.Equal(100, cfg.GetValue("NonExistent", 100));
+        Assert.Equal("DefaultString", cfg.GetValue("NonExistent", "DefaultString"));
     }
 
     #endregion

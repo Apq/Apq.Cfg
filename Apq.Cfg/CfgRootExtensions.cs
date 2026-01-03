@@ -38,7 +38,11 @@ public static class CfgRootExtensions
     /// <summary>
     /// 获取配置值，如果不存在则返回默认值
     /// </summary>
-    public static T? GetOrDefault<T>(this ICfgRoot root, string key, T? defaultValue = default)
+    /// <remarks>
+    /// 此方法是 <see cref="ICfgRoot.GetValue{T}(string)"/> 的重载版本，
+    /// 允许指定自定义默认值。命名与 Microsoft.Extensions.Configuration 保持一致。
+    /// </remarks>
+    public static T? GetValue<T>(this ICfgRoot root, string key, T? defaultValue)
     {
         var rawValue = root[key];
         if (rawValue == null)

@@ -71,7 +71,7 @@ var section = cfg.GetSection("Section");
 var port = config.GetValue<int>("Server:Port", 8080);
 
 // After
-var port = cfg.GetOrDefault("Server:Port", 8080);
+var port = cfg.GetValue("Server:Port", 8080);
 ```
 
 ### Safe Reading (TryGetValue)
@@ -201,7 +201,7 @@ cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
 |-----------------------------------|---------|-------|
 | `config["Key"]` | `cfg["Key"]` | Same |
 | `config.GetValue<T>("Key")` | `cfg.GetValue<T>("Key")` | Shorter method name |
-| `config.GetValue<T>("Key", default)` | `cfg.GetOrDefault("Key", default)` | Clearer semantics |
+| `config.GetValue<T>("Key", default)` | `cfg.GetValue("Key", default)` | Same |
 | `config.GetSection("Path")` | `cfg.GetSection("Path")` | Same |
 | `config.GetChildren()` | `cfg.GetChildKeys()` | Returns key names |
 | `config.GetReloadToken()` | `cfg.ConfigChanges` | Rx subscription |

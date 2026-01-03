@@ -57,7 +57,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | BoundaryConditionTests | 25 | 0 | 边界条件测试 |
 | ExceptionHandlingTests | 18 | 0 | 异常处理测试 |
 | ConfigChangesSubscriptionTests | 28 | 0 | 配置变更订阅测试 |
-| CfgSectionTests | 13 | 0 | 配置节（GetSection/GetChildKeys/GetOrDefault）测试 |
+| CfgSectionTests | 13 | 0 | 配置节（GetSection/GetChildKeys/GetValue）测试 |
 | ServiceCollectionExtensionsTests | 21 | 0 | 依赖注入扩展测试（IOptions/IOptionsMonitor/IOptionsSnapshot/嵌套对象/集合绑定）|
 | EncodingTests | 33 | 0 | 编码映射测试 |
 | PerformanceOptimizationTests | 30 | 0 | 性能优化测试（GetMany/SetMany/GetMany回调/缓存）|
@@ -147,7 +147,7 @@ dotnet test --filter "FullyQualifiedName~JsonCfgTests"
 | **CfgRootExtensions** |
 | `TryGetValue<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetRequired<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
-| `GetOrDefault<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| `GetValue<T>()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetMasked()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | `GetMaskedSnapshot()` | ✅ | - | - | - | - | - | - | - | - | - | - | - | - | - | - |
 | **FileCfgSourceBase** |
@@ -329,7 +329,7 @@ CryptoTests 包含 58 个测试，覆盖所有加密脱敏公开功能：
 |--------------|------|
 | ReadWriteBenchmarks | 不同配置源的 Get/Set/Exists 性能对比 |
 | CacheBenchmarks | 缓存效果测试（热路径、缓存命中/未命中）|
-| TypeConversionBenchmarks | 类型转换性能测试（含 TryGetValue/GetRequired/GetOrDefault）|
+| TypeConversionBenchmarks | 类型转换性能测试（含 TryGetValue/GetRequired/GetValue）|
 | ConcurrencyBenchmarks | 并发读写性能测试 |
 | GetSectionBenchmarks | GetSection/GetChildKeys 性能测试 |
 | SaveBenchmarks | SaveAsync 持久化性能测试 |

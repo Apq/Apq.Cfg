@@ -71,7 +71,7 @@ var section = cfg.GetSection("Section");
 var port = config.GetValue<int>("Server:Port", 8080);
 
 // 之后
-var port = cfg.GetOrDefault("Server:Port", 8080);
+var port = cfg.GetValue("Server:Port", 8080);
 ```
 
 ### 安全读取（TryGetValue）
@@ -201,7 +201,7 @@ cfg.GetMany(new[] { "Key1", "Key2", "Key3" }, (key, value) =>
 |-----------------------------------|---------|------|
 | `config["Key"]` | `cfg["Key"]` | 相同 |
 | `config.GetValue<T>("Key")` | `cfg.GetValue<T>("Key")` | 方法名更简洁 |
-| `config.GetValue<T>("Key", default)` | `cfg.GetOrDefault("Key", default)` | 更明确的语义 |
+| `config.GetValue<T>("Key", default)` | `cfg.GetValue("Key", default)` | 相同 |
 | `config.GetSection("Path")` | `cfg.GetSection("Path")` | 相同 |
 | `config.GetChildren()` | `cfg.GetChildKeys()` | 返回键名列表 |
 | `config.GetReloadToken()` | `cfg.ConfigChanges` | Rx 订阅方式 |

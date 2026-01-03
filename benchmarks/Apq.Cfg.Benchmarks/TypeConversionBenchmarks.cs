@@ -317,23 +317,23 @@ public class TypeConversionBenchmarks : IDisposable
     }
 
     /// <summary>
-    /// GetOrDefault 存在键场景
+    /// GetValue 带默认值 - 存在键场景
     /// </summary>
     [Benchmark]
     [BenchmarkCategory("Extensions")]
-    public int GetOrDefault_ExistingKey()
+    public int GetValue_WithDefault_ExistingKey()
     {
-        return _cfg.GetOrDefault("Types:Int", 0);
+        return _cfg.GetValue("Types:Int", 0);
     }
 
     /// <summary>
-    /// GetOrDefault 不存在键场景
+    /// GetValue 带默认值 - 不存在键场景
     /// </summary>
     [Benchmark]
     [BenchmarkCategory("Extensions")]
-    public int GetOrDefault_NonExistingKey()
+    public int GetValue_WithDefault_NonExistingKey()
     {
-        return _cfg.GetOrDefault("Types:NonExistent", 100);
+        return _cfg.GetValue("Types:NonExistent", 100);
     }
 
     #endregion
