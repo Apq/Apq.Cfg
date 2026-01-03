@@ -18,9 +18,12 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': {
+      // 匹配任意虚拟目录下的 /api 请求
+      // 例如: /api/*, /xxx/api/*, /a/b/api/*
+      '^(/[^/]+)*/api': {
         target: 'http://localhost:5000',
-        changeOrigin: true
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^(\/[^/]+)*\/api/, '/api')
       }
     }
   }
