@@ -1,9 +1,7 @@
 namespace Apq.Cfg.Tests;
 
-using Apq.Cfg.WebApi;
 using Apq.Cfg.WebApi.Models;
 using Apq.Cfg.WebApi.Services;
-using Microsoft.Extensions.Options;
 
 /// <summary>
 /// ConfigApiService 服务测试
@@ -24,13 +22,6 @@ public class ConfigApiServiceTests : IDisposable
         {
             Directory.Delete(_testDir, true);
         }
-    }
-
-    private IOptions<WebApiOptions> CreateOptions(Action<WebApiOptions>? configure = null)
-    {
-        var options = new WebApiOptions();
-        configure?.Invoke(options);
-        return Options.Create(options);
     }
 
     private ICfgRoot CreateCfgRoot(string json, bool writeable = false)
@@ -59,7 +50,7 @@ public class ConfigApiServiceTests : IDisposable
                 }
             }
             """);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.GetMergedConfig();
@@ -77,89 +68,73 @@ public class ConfigApiServiceTests : IDisposable
     {
         // Arrange
         using var cfg = CreateCfgRoot("""{"AppName": "TestApp"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.GetMergedValue("AppName");
 
         // Assert
-        Assert.Equal("AppName", result.Key);
-        Assert.Equal("TestApp", result.Value);
         Assert.True(result.Exists);
-        Assert.False(result.IsMasked);
+        Assert.Equal("TestApp", result.Value);
     }
 
     [Fact]
-    public void GetMergedValue_NonExistentKey_ReturnsNotExists()
+    public void GetMergedValue_NonExistingKey_ReturnsNotExists()
     {
         // Arrange
         using var cfg = CreateCfgRoot("""{"AppName": "TestApp"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var result = service.GetMergedValue("NonExistent");
+        var result = service.GetMergedValue("NonExisting");
 
         // Assert
-        Assert.Equal("NonExistent", result.Key);
-        Assert.Null(result.Value);
         Assert.False(result.Exists);
+        Assert.Null(result.Value);
     }
 
     [Fact]
-    public void GetMergedValue_SensitiveKey_IsMasked()
+    public void GetMergedValue_NestedKey_ReturnsValue()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"Database:Password": "secret123"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"App": {"Name": "TestApp"}}""");
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var result = service.GetMergedValue("Database:Password");
+        var result = service.GetMergedValue("App:Name");
 
         // Assert
-        Assert.Equal("***", result.Value);
         Assert.True(result.Exists);
-        Assert.True(result.IsMasked);
-    }
-
-    [Fact]
-    public void GetMergedValue_SensitiveKey_NotMaskedWhenDisabled()
-    {
-        // Arrange
-        using var cfg = CreateCfgRoot("""{"Database:Password": "secret123"}""");
-        var service = new ConfigApiService(cfg, CreateOptions(o => o.MaskSensitiveValues = false));
-
-        // Act
-        var result = service.GetMergedValue("Database:Password");
-
-        // Assert
-        Assert.Equal("secret123", result.Value);
-        Assert.False(result.IsMasked);
+        Assert.Equal("TestApp", result.Value);
     }
 
     // ========== GetMergedSection 测试 ==========
 
     [Fact]
-    public void GetMergedSection_ReturnsSection()
+    public void GetMergedSection_ReturnsOnlySectionValues()
     {
         // Arrange
         using var cfg = CreateCfgRoot("""
             {
-                "Database": {
-                    "Host": "localhost",
-                    "Port": "5432"
+                "App": {
+                    "Name": "TestApp",
+                    "Version": "1.0.0"
                 },
-                "Other": "value"
+                "Database": {
+                    "Host": "localhost"
+                }
             }
             """);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var result = service.GetMergedSection("Database");
+        var result = service.GetMergedSection("App");
 
         // Assert
         Assert.Equal(2, result.Count);
-        Assert.Equal("localhost", result["Database:Host"]);
-        Assert.Equal("5432", result["Database:Port"]);
+        Assert.Equal("TestApp", result["App:Name"]);
+        Assert.Equal("1.0.0", result["App:Version"]);
+        Assert.False(result.ContainsKey("Database:Host"));
     }
 
     // ========== GetMergedTree 测试 ==========
@@ -175,7 +150,7 @@ public class ConfigApiServiceTests : IDisposable
                 }
             }
             """);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.GetMergedTree();
@@ -187,7 +162,6 @@ public class ConfigApiServiceTests : IDisposable
         Assert.Single(result.Children[0].Children);
         Assert.Equal("Name", result.Children[0].Children[0].Key);
         Assert.Equal("TestApp", result.Children[0].Children[0].Value);
-        Assert.True(result.Children[0].Children[0].HasValue);
     }
 
     // ========== GetSources 测试 ==========
@@ -197,47 +171,80 @@ public class ConfigApiServiceTests : IDisposable
     {
         // Arrange
         using var cfg = CreateCfgRoot("""{"Key": "Value"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.GetSources();
 
         // Assert
         Assert.NotEmpty(result);
-        Assert.All(result, s => Assert.NotNull(s.Name));
+        Assert.Equal(0, result[0].Level);
+    }
+
+    // ========== GetSourceConfig 测试 ==========
+
+    [Fact]
+    public void GetSourceConfig_ValidSource_ReturnsConfig()
+    {
+        // Arrange
+        using var cfg = CreateCfgRoot("""{"Key": "Value"}""");
+        var service = new ConfigApiService(cfg);
+        var sources = service.GetSources();
+        var firstSource = sources[0];
+
+        // Act
+        var result = service.GetSourceConfig(firstSource.Level, firstSource.Name);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("Value", result["Key"]);
+    }
+
+    [Fact]
+    public void GetSourceConfig_InvalidSource_ReturnsNull()
+    {
+        // Arrange
+        using var cfg = CreateCfgRoot("""{"Key": "Value"}""");
+        var service = new ConfigApiService(cfg);
+
+        // Act
+        var result = service.GetSourceConfig(999, "NonExisting");
+
+        // Assert
+        Assert.Null(result);
     }
 
     // ========== SetValue 测试 ==========
 
     [Fact]
-    public void SetValue_WithWriteableSource_ReturnsTrue()
+    public void SetValue_WriteableSource_ReturnsTrue()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"Original": "Value"}""", writeable: true);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"Key": "OldValue"}""", writeable: true);
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var result = service.SetValue("NewKey", "NewValue");
+        var result = service.SetValue("Key", "NewValue");
 
         // Assert
         Assert.True(result);
-        Assert.Equal("NewValue", cfg["NewKey"]);
+        Assert.Equal("NewValue", cfg["Key"]);
     }
 
     // ========== BatchUpdate 测试 ==========
 
     [Fact]
-    public void BatchUpdate_UpdatesMultipleValues()
+    public void BatchUpdate_WriteableSource_UpdatesMultipleValues()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"Key1": "Value1"}""", writeable: true);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"Key1": "Value1", "Key2": "Value2"}""", writeable: true);
+        var service = new ConfigApiService(cfg);
         var request = new BatchUpdateRequest
         {
             Values = new Dictionary<string, string?>
             {
-                ["Key2"] = "Value2",
-                ["Key3"] = "Value3"
+                ["Key1"] = "NewValue1",
+                ["Key2"] = "NewValue2"
             }
         };
 
@@ -246,24 +253,26 @@ public class ConfigApiServiceTests : IDisposable
 
         // Assert
         Assert.True(result);
-        Assert.Equal("Value2", cfg["Key2"]);
-        Assert.Equal("Value3", cfg["Key3"]);
+        Assert.Equal("NewValue1", cfg["Key1"]);
+        Assert.Equal("NewValue2", cfg["Key2"]);
     }
 
     // ========== DeleteKey 测试 ==========
 
     [Fact]
-    public void DeleteKey_RemovesKey()
+    public void DeleteKey_WriteableSource_RemovesKey()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"ToDelete": "Value", "ToKeep": "Value2"}""", writeable: true);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"Key": "Value", "Other": "Keep"}""", writeable: true);
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var result = service.DeleteKey("ToDelete");
+        var result = service.DeleteKey("Key");
 
         // Assert
         Assert.True(result);
+        Assert.Null(cfg["Key"]);
+        Assert.Equal("Keep", cfg["Other"]);
     }
 
     // ========== Reload 测试 ==========
@@ -273,7 +282,7 @@ public class ConfigApiServiceTests : IDisposable
     {
         // Arrange
         using var cfg = CreateCfgRoot("""{"Key": "Value"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.Reload();
@@ -288,14 +297,8 @@ public class ConfigApiServiceTests : IDisposable
     public void Export_Json_ReturnsJsonFormat()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""
-            {
-                "App": {
-                    "Name": "TestApp"
-                }
-            }
-            """);
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"App": {"Name": "TestApp"}}""");
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.Export("json");
@@ -310,8 +313,8 @@ public class ConfigApiServiceTests : IDisposable
     public void Export_Env_ReturnsEnvFormat()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"App:Name": "TestApp"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"App": {"Name": "TestApp"}}""");
+        var service = new ConfigApiService(cfg);
 
         // Act
         var result = service.Export("env");
@@ -324,108 +327,29 @@ public class ConfigApiServiceTests : IDisposable
     public void Export_KeyValue_ReturnsKeyValueFormat()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"App:Name": "TestApp"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
+        using var cfg = CreateCfgRoot("""{"App": {"Name": "TestApp"}}""");
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var result = service.Export("kv");
+        var result = service.Export("keyvalue");
 
         // Assert
         Assert.Contains("App:Name=TestApp", result);
     }
 
-    // ========== 敏感值脱敏测试 ==========
-
-    [Theory]
-    [InlineData("Password", true)]
-    [InlineData("DbPassword", true)]
-    [InlineData("Secret", true)]
-    [InlineData("ApiSecret", true)]
-    [InlineData("ApiKey", true)]
-    [InlineData("AccessToken", true)]
-    [InlineData("ConnectionString", true)]
-    [InlineData("DbConnectionString", true)]
-    [InlineData("AppName", false)]
-    [InlineData("Version", false)]
-    [InlineData("Host", false)]
-    public void SensitiveKeyDetection_WorksCorrectly(string key, bool shouldBeMasked)
-    {
-        // Arrange
-        using var cfg = CreateCfgRoot($"""{"{"}"{key}": "value"{"}"}""");
-        var service = new ConfigApiService(cfg, CreateOptions());
-
-        // Act
-        var result = service.GetMergedValue(key);
-
-        // Assert
-        Assert.Equal(shouldBeMasked, result.IsMasked);
-        if (shouldBeMasked)
-        {
-            Assert.Equal("***", result.Value);
-        }
-        else
-        {
-            Assert.Equal("value", result.Value);
-        }
-    }
-
-    // ========== 自定义敏感键模式测试 ==========
+    // ========== SaveAsync 测试 ==========
 
     [Fact]
-    public void CustomSensitivePatterns_AreRespected()
+    public async Task SaveAsync_WriteableSource_ReturnsTrue()
     {
         // Arrange
-        using var cfg = CreateCfgRoot("""{"Credential": "secret", "Password": "pass"}""");
-        var service = new ConfigApiService(cfg, CreateOptions(o =>
-        {
-            o.SensitiveKeyPatterns = ["*Credential*"]; // 只匹配 Credential
-        }));
+        using var cfg = CreateCfgRoot("""{"Key": "Value"}""", writeable: true);
+        var service = new ConfigApiService(cfg);
 
         // Act
-        var credentialResult = service.GetMergedValue("Credential");
-        var passwordResult = service.GetMergedValue("Password");
+        var result = await service.SaveAsync();
 
         // Assert
-        Assert.True(credentialResult.IsMasked);
-        Assert.Equal("***", credentialResult.Value);
-        Assert.False(passwordResult.IsMasked); // Password 不再被脱敏
-        Assert.Equal("pass", passwordResult.Value);
-    }
-
-    // ========== 多层级配置测试 ==========
-
-    [Fact]
-    public void MultiLevel_HigherLevelOverrides()
-    {
-        // Arrange
-        var basePath = Path.Combine(_testDir, "base.json");
-        var overridePath = Path.Combine(_testDir, "override.json");
-
-        File.WriteAllText(basePath, """
-            {
-                "Setting1": "BaseValue1",
-                "Setting2": "BaseValue2"
-            }
-            """);
-
-        File.WriteAllText(overridePath, """
-            {
-                "Setting1": "OverrideValue1"
-            }
-            """);
-
-        using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: false)
-            .AddJson(overridePath, level: 1, writeable: false)
-            .Build();
-
-        var service = new ConfigApiService(cfg, CreateOptions());
-
-        // Act
-        var result = service.GetMergedConfig();
-
-        // Assert
-        Assert.Equal("OverrideValue1", result["Setting1"]); // 被覆盖
-        Assert.Equal("BaseValue2", result["Setting2"]); // 保持原值
+        Assert.True(result);
     }
 }

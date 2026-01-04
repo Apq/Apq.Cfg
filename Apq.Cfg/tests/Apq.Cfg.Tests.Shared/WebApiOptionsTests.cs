@@ -20,11 +20,7 @@ public class WebApiOptionsTests
         Assert.Null(options.ApiKey);
         Assert.Equal("X-Api-Key", options.ApiKeyHeaderName);
         Assert.Null(options.Jwt);
-        Assert.True(options.AllowRead);
-        Assert.False(options.AllowWrite);
-        Assert.False(options.AllowDelete);
-        Assert.True(options.MaskSensitiveValues);
-        Assert.False(options.EnableCors);
+        Assert.True(options.EnableCors);
         Assert.Single(options.CorsOrigins);
         Assert.Equal("*", options.CorsOrigins[0]);
     }
@@ -34,20 +30,6 @@ public class WebApiOptionsTests
     {
         // Assert
         Assert.Equal("ApqCfg:WebApi", WebApiOptions.SectionName);
-    }
-
-    [Fact]
-    public void SensitiveKeyPatterns_HasDefaultPatterns()
-    {
-        // Arrange & Act
-        var options = new WebApiOptions();
-
-        // Assert
-        Assert.Contains("*Password*", options.SensitiveKeyPatterns);
-        Assert.Contains("*Secret*", options.SensitiveKeyPatterns);
-        Assert.Contains("*Key*", options.SensitiveKeyPatterns);
-        Assert.Contains("*Token*", options.SensitiveKeyPatterns);
-        Assert.Contains("*ConnectionString*", options.SensitiveKeyPatterns);
     }
 
     [Fact]
@@ -75,10 +57,7 @@ public class WebApiOptionsTests
         options.RoutePrefix = "/custom/api";
         options.Authentication = AuthenticationType.ApiKey;
         options.ApiKey = "test-key";
-        options.AllowWrite = true;
-        options.AllowDelete = true;
-        options.MaskSensitiveValues = false;
-        options.EnableCors = true;
+        options.EnableCors = false;
         options.CorsOrigins = ["http://localhost:3000", "http://localhost:5000"];
 
         // Assert
@@ -86,10 +65,7 @@ public class WebApiOptionsTests
         Assert.Equal("/custom/api", options.RoutePrefix);
         Assert.Equal(AuthenticationType.ApiKey, options.Authentication);
         Assert.Equal("test-key", options.ApiKey);
-        Assert.True(options.AllowWrite);
-        Assert.True(options.AllowDelete);
-        Assert.False(options.MaskSensitiveValues);
-        Assert.True(options.EnableCors);
+        Assert.False(options.EnableCors);
         Assert.Equal(2, options.CorsOrigins.Length);
     }
 
@@ -120,17 +96,31 @@ public class WebApiOptionsTests
     }
 
     [Fact]
-    public void SensitiveKeyPatterns_CanBeCustomized()
+    public void OpenApiRoutePrefix_HasCorrectDefaultForTargetFramework()
+    {
+        // Arrange & Act
+        var options = new WebApiOptions();
+
+        // Assert - 根据目标框架不同，默认值不同
+#if NET8_0
+        Assert.Equal("swagger", options.OpenApiRoutePrefix);
+#else
+        Assert.Equal("scalar/v1", options.OpenApiRoutePrefix);
+#endif
+    }
+
+    [Fact]
+    public void CorsOrigins_CanBeCustomized()
     {
         // Arrange
         var options = new WebApiOptions
         {
-            SensitiveKeyPatterns = ["*Credential*", "*Private*"]
+            CorsOrigins = ["https://example.com", "https://app.example.com"]
         };
 
         // Assert
-        Assert.Equal(2, options.SensitiveKeyPatterns.Length);
-        Assert.Contains("*Credential*", options.SensitiveKeyPatterns);
-        Assert.Contains("*Private*", options.SensitiveKeyPatterns);
+        Assert.Equal(2, options.CorsOrigins.Length);
+        Assert.Contains("https://example.com", options.CorsOrigins);
+        Assert.Contains("https://app.example.com", options.CorsOrigins);
     }
 }
