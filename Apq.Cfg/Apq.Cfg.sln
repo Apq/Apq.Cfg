@@ -63,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.Tests.Net10", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.WebApi", "Apq.Cfg.WebApi\Apq.Cfg.WebApi.csproj", "{9288BB7B-E0E7-4339-909B-849AF4346F23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.WebApiDemo", "Apq.Cfg.WebApiDemo\Apq.Cfg.WebApiDemo.csproj", "{4A2F8474-45A1-4A84-AA16-1B0417E62F3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apq.Cfg.WebApiDemo", "Samples\Apq.Cfg.WebApiDemo\Apq.Cfg.WebApiDemo.csproj", "{4A2F8474-45A1-4A84-AA16-1B0417E62F3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

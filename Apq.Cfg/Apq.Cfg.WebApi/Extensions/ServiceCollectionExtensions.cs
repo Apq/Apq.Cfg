@@ -98,10 +98,6 @@ public static class ServiceCollectionExtensions
         if (corsOrigins.Length > 0)
             options.CorsOrigins = corsOrigins;
 
-        var sensitivePatterns = ReadArrayConfig(cfgRoot, $"{prefix}:SensitiveKeyPatterns");
-        if (sensitivePatterns.Length > 0)
-            options.SensitiveKeyPatterns = sensitivePatterns;
-
         // OpenAPI 配置
         if (bool.TryParse(cfgRoot[$"{prefix}:OpenApiEnabled"], out var openApiEnabled))
             options.OpenApiEnabled = openApiEnabled;
