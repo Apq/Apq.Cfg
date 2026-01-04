@@ -41,32 +41,6 @@ public sealed class WebApiOptions
     public JwtOptions? Jwt { get; set; }
 
     /// <summary>
-    /// 是否允许读取配置，默认 true
-    /// </summary>
-    public bool AllowRead { get; set; } = true;
-
-    /// <summary>
-    /// 是否允许写入配置，默认 false
-    /// </summary>
-    public bool AllowWrite { get; set; } = false;
-
-    /// <summary>
-    /// 是否允许删除配置，默认 false
-    /// </summary>
-    public bool AllowDelete { get; set; } = false;
-
-    /// <summary>
-    /// 是否脱敏敏感值，默认 true
-    /// </summary>
-    public bool MaskSensitiveValues { get; set; } = true;
-
-    /// <summary>
-    /// 敏感键模式（支持通配符）
-    /// </summary>
-    public string[] SensitiveKeyPatterns { get; set; } =
-        ["*Password*", "*Secret*", "*Key*", "*Token*", "*ConnectionString*"];
-
-    /// <summary>
     /// 是否启用 CORS，默认 true（允许 WebUI 跨域访问）
     /// </summary>
     public bool EnableCors { get; set; } = true;

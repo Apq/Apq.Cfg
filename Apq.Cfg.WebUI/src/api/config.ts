@@ -73,16 +73,16 @@ export function createConfigApi(app: AppEndpoint) {
 
     // ========== 写入操作 ==========
 
-    setValue(key: string, value: string | null): Promise<ApiResponse<boolean>> {
-      return instance.put(`/keys/${encodeURIComponent(key)}`, value)
+    setMergedValue(key: string, value: string | null): Promise<ApiResponse<boolean>> {
+      return instance.put(`/merged/keys/${encodeURIComponent(key)}`, value)
     },
 
     setSourceValue(level: number, name: string, key: string, value: string | null): Promise<ApiResponse<boolean>> {
       return instance.put(`/sources/${level}/${encodeURIComponent(name)}/keys/${encodeURIComponent(key)}`, value)
     },
 
-    deleteKey(key: string): Promise<ApiResponse<boolean>> {
-      return instance.delete(`/keys/${encodeURIComponent(key)}`)
+    deleteMergedKey(key: string): Promise<ApiResponse<boolean>> {
+      return instance.delete(`/merged/keys/${encodeURIComponent(key)}`)
     },
 
     deleteSourceKey(level: number, name: string, key: string): Promise<ApiResponse<boolean>> {
@@ -99,8 +99,8 @@ export function createConfigApi(app: AppEndpoint) {
       return instance.post('/reload')
     },
 
-    export(format: string = 'json'): Promise<string> {
-      return instance.get(`/export/${format}`, {
+    exportMerged(format: string = 'json'): Promise<string> {
+      return instance.get(`/merged/export/${format}`, {
         responseType: 'text'
       })
     },

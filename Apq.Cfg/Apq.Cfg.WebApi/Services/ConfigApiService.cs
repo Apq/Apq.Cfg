@@ -1,9 +1,7 @@
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Apq.Cfg.Sources;
 using Apq.Cfg.WebApi.Models;
-using Microsoft.Extensions.Options;
 
 namespace Apq.Cfg.WebApi.Services;
 
@@ -13,12 +11,10 @@ namespace Apq.Cfg.WebApi.Services;
 public sealed class ConfigApiService : IConfigApiService
 {
     private readonly ICfgRoot _cfgRoot;
-    private readonly WebApiOptions _options;
 
-    public ConfigApiService(ICfgRoot cfgRoot, IOptions<WebApiOptions> options)
+    public ConfigApiService(ICfgRoot cfgRoot)
     {
         _cfgRoot = cfgRoot;
-        _options = options.Value;
     }
 
     // ========== 合并后配置（Merged）==========
@@ -40,13 +36,12 @@ public sealed class ConfigApiService : IConfigApiService
     public ConfigValueResponse GetMergedValue(string key)
     {
         var value = _cfgRoot[key];
-        var isSensitive = IsSensitiveKey(key);
         return new ConfigValueResponse
         {
             Key = key,
-            Value = isSensitive && value != null ? "***" : value,
+            Value = value,
             Exists = value != null,
-            IsMasked = isSensitive && value != null
+            IsMasked = false
         };
     }
 
@@ -74,7 +69,7 @@ public sealed class ConfigApiService : IConfigApiService
         var result = new Dictionary<string, string?>();
         foreach (var kvp in source.GetAllValues())
         {
-            result[kvp.Key] = MaskIfSensitive(kvp.Key, kvp.Value);
+            result[kvp.Key] = kvp.Value;
         }
         return result;
     }
@@ -93,14 +88,13 @@ public sealed class ConfigApiService : IConfigApiService
 
         var values = source.GetAllValues().ToDictionary(x => x.Key, x => x.Value);
         var exists = values.TryGetValue(key, out var value);
-        var isSensitive = IsSensitiveKey(key);
 
         return new ConfigValueResponse
         {
             Key = key,
-            Value = isSensitive && value != null ? "***" : value,
+            Value = value,
             Exists = exists,
-            IsMasked = isSensitive && value != null
+            IsMasked = false
         };
     }
 
@@ -236,26 +230,6 @@ public sealed class ConfigApiService : IConfigApiService
 
     // ========== 辅助方法 ==========
 
-    private bool IsSensitiveKey(string key)
-    {
-        if (!_options.MaskSensitiveValues) return false;
-
-        return _options.SensitiveKeyPatterns.Any(pattern =>
-            MatchWildcard(key, pattern));
-    }
-
-    private string? MaskIfSensitive(string key, string? value)
-    {
-        if (value == null || !IsSensitiveKey(key)) return value;
-        return "***";
-    }
-
-    private static bool MatchWildcard(string text, string pattern)
-    {
-        var regex = "^" + Regex.Escape(pattern).Replace("\\*", ".*") + "$";
-        return Regex.IsMatch(text, regex, RegexOptions.IgnoreCase);
-    }
-
     private ConfigTreeNode BuildTree(Dictionary<string, string?> values)
     {
         var root = new ConfigTreeNode { Key = "" };
@@ -278,10 +252,9 @@ public sealed class ConfigApiService : IConfigApiService
 
                 if (i == parts.Length - 1)
                 {
-                    var isSensitive = IsSensitiveKey(key);
-                    child.Value = isSensitive && value != null ? "***" : value;
+                    child.Value = value;
                     child.HasValue = true;
-                    child.IsMasked = isSensitive && value != null;
+                    child.IsMasked = false;
                 }
 
                 current = child;

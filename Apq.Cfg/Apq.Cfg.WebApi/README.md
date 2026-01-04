@@ -163,21 +163,37 @@ options.Authentication = AuthenticationType.None;
 
 ## API 端点
 
+### 合并配置（Merged）
+
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | GET | `/api/apqcfg/merged` | 获取合并后的所有配置 |
 | GET | `/api/apqcfg/merged/tree` | 获取合并后的配置树 |
-| GET | `/api/apqcfg/merged/keys/{key}` | 获取单个配置值 |
-| GET | `/api/apqcfg/merged/sections/{section}` | 获取配置节 |
+| GET | `/api/apqcfg/merged/keys/{key}` | 获取合并配置的单个值 |
+| GET | `/api/apqcfg/merged/sections/{section}` | 获取合并配置的配置节 |
+| PUT | `/api/apqcfg/merged/keys/{key}` | 设置合并配置值 |
+| PUT | `/api/apqcfg/merged/batch` | 批量更新合并配置 |
+| DELETE | `/api/apqcfg/merged/keys/{key}` | 删除合并配置值 |
+| GET | `/api/apqcfg/merged/export/{format}` | 导出合并配置（json/env/kv） |
+
+### 配置源（Sources）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
 | GET | `/api/apqcfg/sources` | 获取所有配置源信息 |
 | GET | `/api/apqcfg/sources/{level}/{name}` | 获取指定配置源内容 |
 | GET | `/api/apqcfg/sources/{level}/{name}/tree` | 获取指定配置源的配置树 |
-| PUT | `/api/apqcfg/keys/{key}` | 设置配置值 |
-| PUT | `/api/apqcfg/batch` | 批量更新配置 |
-| DELETE | `/api/apqcfg/keys/{key}` | 删除配置值 |
-| POST | `/api/apqcfg/save` | 保存配置 |
-| POST | `/api/apqcfg/reload` | 重新加载配置 |
-| GET | `/api/apqcfg/export/{format}` | 导出配置（json/yaml） |
+| GET | `/api/apqcfg/sources/{level}/{name}/keys/{key}` | 获取指定配置源的单个配置值 |
+| PUT | `/api/apqcfg/sources/{level}/{name}/keys/{key}` | 设置指定配置源的配置值 |
+| DELETE | `/api/apqcfg/sources/{level}/{name}/keys/{key}` | 删除指定配置源的配置值 |
+| GET | `/api/apqcfg/sources/{level}/{name}/export/{format}` | 导出指定配置源（json/env/kv） |
+
+### 管理操作
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | `/api/apqcfg/save` | 保存所有可写配置源 |
+| POST | `/api/apqcfg/reload` | 重新加载所有配置源 |
 
 ## 配置选项
 
@@ -186,11 +202,6 @@ options.Authentication = AuthenticationType.None;
 | `Enabled` | bool | true | 是否启用 API |
 | `RoutePrefix` | string | `/api/apqcfg` | API 路由前缀 |
 | `Authentication` | enum | None | 认证类型 |
-| `AllowRead` | bool | true | 是否允许读取 |
-| `AllowWrite` | bool | false | 是否允许写入 |
-| `AllowDelete` | bool | false | 是否允许删除 |
-| `MaskSensitiveValues` | bool | true | 是否脱敏敏感值 |
-| `SensitiveKeyPatterns` | string[] | `*Password*`, `*Secret*`... | 敏感键模式 |
 | `EnableCors` | bool | true | 是否启用 CORS（允许任意来源） |
 | `CorsOrigins` | string[] | `["*"]` | CORS 允许的来源 |
 | `OpenApiEnabled` | bool | true | 是否启用 API 文档 |

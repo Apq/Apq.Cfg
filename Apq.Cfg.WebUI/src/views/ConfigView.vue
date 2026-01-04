@@ -249,7 +249,7 @@ async function handleUpdateValue() {
   try {
     let res
     if (currentSource.value === 'merged') {
-      res = await configApi.value.setValue(selectedNode.value.fullKey, editValue.value)
+      res = await configApi.value.setMergedValue(selectedNode.value.fullKey, editValue.value)
     } else {
       const [level, name] = currentSource.value.split('/')
       res = await configApi.value.setSourceValue(parseInt(level), name, selectedNode.value.fullKey, editValue.value)
@@ -276,7 +276,7 @@ async function handleDeleteKey() {
 
     let res
     if (currentSource.value === 'merged') {
-      res = await configApi.value.deleteKey(selectedNode.value.fullKey)
+      res = await configApi.value.deleteMergedKey(selectedNode.value.fullKey)
     } else {
       const [level, name] = currentSource.value.split('/')
       res = await configApi.value.deleteSourceKey(parseInt(level), name, selectedNode.value.fullKey)
@@ -334,7 +334,7 @@ async function handleExport(format: string) {
   try {
     let content: string
     if (currentSource.value === 'merged') {
-      content = await configApi.value.export(format)
+      content = await configApi.value.exportMerged(format)
     } else {
       const [level, name] = currentSource.value.split('/')
       content = await configApi.value.exportSource(parseInt(level), name, format)
