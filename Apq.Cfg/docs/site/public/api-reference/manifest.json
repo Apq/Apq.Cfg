@@ -1852,6 +1852,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.WebApi.CfgRootExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.WebApi.CfgRootExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.WebApi.CfgRootExtensions",
+      "Summary": "<p sourcefile=\"api/Apq.Cfg.WebApi.CfgRootExtensions.yml\" sourcestartlinenumber=\"1\">ICfgRoot 扩展方法</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.WebApi.Controllers.ConfigController.yml",
       "output": {
         ".html": {

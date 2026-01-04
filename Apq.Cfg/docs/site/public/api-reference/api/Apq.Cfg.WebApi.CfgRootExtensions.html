@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class ServiceCollectionExtensions | Apq.Cfg API </title>
+      <title>Class CfgRootExtensions | Apq.Cfg API </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class ServiceCollectionExtensions | Apq.Cfg API ">
+      <meta name="title" content="Class CfgRootExtensions | Apq.Cfg API ">
       
-      <meta name="description" content="服务集合扩展方法">
+      <meta name="description" content="ICfgRoot 扩展方法">
       <link rel="icon" href="../favicon.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -84,12 +84,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Apq.Cfg.WebApi.ServiceCollectionExtensions">
+        <article data-uid="Apq.Cfg.WebApi.CfgRootExtensions">
 
 
 
-  <h1 id="Apq_Cfg_WebApi_ServiceCollectionExtensions" data-uid="Apq.Cfg.WebApi.ServiceCollectionExtensions" class="text-break">
-Class ServiceCollectionExtensions  
+  <h1 id="Apq_Cfg_WebApi_CfgRootExtensions" data-uid="Apq.Cfg.WebApi.CfgRootExtensions" class="text-break">
+Class CfgRootExtensions  
   </h1>
 
   <div class="facts text-secondary">
@@ -97,12 +97,12 @@ Class ServiceCollectionExtensions
   <dl><dt>Assembly</dt><dd>Apq.Cfg.WebApi.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>服务集合扩展方法</p>
+  <div class="markdown summary"><p>ICfgRoot 扩展方法</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class ServiceCollectionExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">public static class CfgRootExtensions</code></pre>
   </div>
 
 
@@ -112,7 +112,7 @@ Class ServiceCollectionExtensions
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><span class="xref">ServiceCollectionExtensions</span></div>
+      <div><span class="xref">CfgRootExtensions</span></div>
     </dd>
   </dl>
 
@@ -153,38 +153,38 @@ Class ServiceCollectionExtensions
 </h2>
 
 
-  <a id="Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_" data-uid="Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi*"></a>
+  <a id="Apq_Cfg_WebApi_CfgRootExtensions_AddWebApi_" data-uid="Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi*"></a>
 
-  <h3 id="Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_WebApi_WebApiOptions__" data-uid="Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.WebApi.WebApiOptions})">
-  AddApqCfgWebApi(IServiceCollection, ICfgRoot, Action&lt;WebApiOptions&gt;?)
+  <h3 id="Apq_Cfg_WebApi_CfgRootExtensions_AddWebApi_Apq_Cfg_ICfgRoot_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_WebApi_WebApiOptions__" data-uid="Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi(Apq.Cfg.ICfgRoot,Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})">
+  AddWebApi(ICfgRoot, IServiceCollection, Action&lt;WebApiOptions&gt;?)
   
   </h3>
 
-  <div class="markdown level1 summary"><p>添加 Apq.Cfg Web API 服务</p>
+  <div class="markdown level1 summary"><p>为配置根添加 Web API 支持（链式调用）</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IServiceCollection AddApqCfgWebApi(this IServiceCollection services, ICfgRoot cfgRoot, Action&lt;WebApiOptions&gt;? configure = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ICfgRoot AddWebApi(this ICfgRoot cfgRoot, IServiceCollection services, Action&lt;WebApiOptions&gt;? configure = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
-    <dd><p>服务集合</p>
-</dd>
     <dt><code>cfgRoot</code> <a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a></dt>
     <dd><p>配置根对象</p>
 </dd>
+    <dt><code>services</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
+    <dd><p>服务集合</p>
+</dd>
     <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Apq.Cfg.WebApi.WebApiOptions.html">WebApiOptions</a>&gt;</dt>
-    <dd><p>可选的配置回调，用于覆盖从 cfgRoot 读取的配置</p>
+    <dd><p>可选的配置回调</p>
 </dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection">IServiceCollection</a></dt>
-    <dd><p>服务集合</p>
+    <dt><a class="xref" href="Apq.Cfg.ICfgRoot.html">ICfgRoot</a></dt>
+    <dd><p>配置根对象（支持链式调用）</p>
 </dd>
   </dl>
 
@@ -193,15 +193,17 @@ Class ServiceCollectionExtensions
 
 
 
+  <h4 class="section" id="Apq_Cfg_WebApi_CfgRootExtensions_AddWebApi_Apq_Cfg_ICfgRoot_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_WebApi_WebApiOptions___examples">Examples</h4>
+  <pre><code class="lang-csharp">var cfg = new CfgBuilder()
+    .AddJson("config.json")
+    .Build()
+    .AddWebApi(builder.Services, options =&gt;
+    {
+        options.Authentication = AuthenticationType.ApiKey;
+        options.ApiKey = "your-secret-key";
+    });</code></pre>
 
-  <h4 class="section" id="Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_WebApi_WebApiOptions___remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>配置优先级（从低到高）：</p>
-<ol>
-<li>默认值</li>
-<li>从 cfgRoot 的 &quot;ApqCfg:WebApi&quot; 节读取的配置</li>
-<li>configure 回调中的配置</li>
-</ol>
-</div>
+
 
 
 

@@ -41,7 +41,12 @@
   "build": {
     "content": [
       {
-        "files": ["api/**.yml", "api/index.md"]
+        "files": ["api/**.yml"]
+      },
+      {
+        "files": ["api-index.md"],
+        "src": "articles",
+        "dest": "api"
       },
       {
         "files": ["toc.yml", "*.md"]

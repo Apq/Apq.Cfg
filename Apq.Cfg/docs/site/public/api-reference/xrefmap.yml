@@ -8377,6 +8377,28 @@ references:
   commentId: F:Apq.Cfg.WebApi.AuthenticationType.None
   fullName: Apq.Cfg.WebApi.AuthenticationType.None
   nameWithType: AuthenticationType.None
+- uid: Apq.Cfg.WebApi.CfgRootExtensions
+  name: CfgRootExtensions
+  href: api/Apq.Cfg.WebApi.CfgRootExtensions.html
+  commentId: T:Apq.Cfg.WebApi.CfgRootExtensions
+  fullName: Apq.Cfg.WebApi.CfgRootExtensions
+  nameWithType: CfgRootExtensions
+- uid: Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi(Apq.Cfg.ICfgRoot,Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name: AddWebApi(ICfgRoot, IServiceCollection, Action<WebApiOptions>?)
+  href: api/Apq.Cfg.WebApi.CfgRootExtensions.html#Apq_Cfg_WebApi_CfgRootExtensions_AddWebApi_Apq_Cfg_ICfgRoot_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi(Apq.Cfg.ICfgRoot,Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: AddWebApi(ICfgRoot, IServiceCollection, Action(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi(Apq.Cfg.ICfgRoot, Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Apq.Cfg.WebApi.WebApiOptions>?)
+  fullName.vb: Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi(Apq.Cfg.ICfgRoot, Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: CfgRootExtensions.AddWebApi(ICfgRoot, IServiceCollection, Action<WebApiOptions>?)
+  nameWithType.vb: CfgRootExtensions.AddWebApi(ICfgRoot, IServiceCollection, Action(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi*
+  name: AddWebApi
+  href: api/Apq.Cfg.WebApi.CfgRootExtensions.html#Apq_Cfg_WebApi_CfgRootExtensions_AddWebApi_
+  commentId: Overload:Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi
+  isSpec: "True"
+  fullName: Apq.Cfg.WebApi.CfgRootExtensions.AddWebApi
+  nameWithType: CfgRootExtensions.AddWebApi
 - uid: Apq.Cfg.WebApi.Controllers
   name: Apq.Cfg.WebApi.Controllers
   href: api/Apq.Cfg.WebApi.Controllers.html
@@ -9149,24 +9171,15 @@ references:
   commentId: T:Apq.Cfg.WebApi.ServiceCollectionExtensions
   fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions
   nameWithType: ServiceCollectionExtensions
-- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Apq.Cfg.WebApi.WebApiOptions})
-  name: AddApqCfgWebApi(IServiceCollection, IConfiguration, Action<WebApiOptions>?)
-  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_Microsoft_Extensions_Configuration_IConfiguration_System_Action_Apq_Cfg_WebApi_WebApiOptions__
-  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Apq.Cfg.WebApi.WebApiOptions})
-  name.vb: AddApqCfgWebApi(IServiceCollection, IConfiguration, Action(Of WebApiOptions))
-  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, Microsoft.Extensions.Configuration.IConfiguration, System.Action<Apq.Cfg.WebApi.WebApiOptions>?)
-  fullName.vb: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, Microsoft.Extensions.Configuration.IConfiguration, System.Action(Of Apq.Cfg.WebApi.WebApiOptions))
-  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, IConfiguration, Action<WebApiOptions>?)
-  nameWithType.vb: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, IConfiguration, Action(Of WebApiOptions))
-- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})
-  name: AddApqCfgWebApi(IServiceCollection, Action<WebApiOptions>?)
-  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_WebApi_WebApiOptions__
-  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Apq.Cfg.WebApi.WebApiOptions})
-  name.vb: AddApqCfgWebApi(IServiceCollection, Action(Of WebApiOptions))
-  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action<Apq.Cfg.WebApi.WebApiOptions>?)
-  fullName.vb: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action(Of Apq.Cfg.WebApi.WebApiOptions))
-  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, Action<WebApiOptions>?)
-  nameWithType.vb: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, Action(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name: AddApqCfgWebApi(IServiceCollection, ICfgRoot, Action<WebApiOptions>?)
+  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_ICfgRoot_System_Action_Apq_Cfg_WebApi_WebApiOptions__
+  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.ICfgRoot,System.Action{Apq.Cfg.WebApi.WebApiOptions})
+  name.vb: AddApqCfgWebApi(IServiceCollection, ICfgRoot, Action(Of WebApiOptions))
+  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.ICfgRoot, System.Action<Apq.Cfg.WebApi.WebApiOptions>?)
+  fullName.vb: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.ICfgRoot, System.Action(Of Apq.Cfg.WebApi.WebApiOptions))
+  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, ICfgRoot, Action<WebApiOptions>?)
+  nameWithType.vb: ServiceCollectionExtensions.AddApqCfgWebApi(IServiceCollection, ICfgRoot, Action(Of WebApiOptions))
 - uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi*
   name: AddApqCfgWebApi
   href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApi_
@@ -9174,32 +9187,6 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApi
   nameWithType: ServiceCollectionExtensions.AddApqCfgWebApi
-- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
-  name: AddApqCfgWebApiAuthentication(IServiceCollection, WebApiOptions)
-  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiAuthentication_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_WebApi_WebApiOptions_
-  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
-  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.WebApi.WebApiOptions)
-  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiAuthentication(IServiceCollection, WebApiOptions)
-- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication*
-  name: AddApqCfgWebApiAuthentication
-  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiAuthentication_
-  commentId: Overload:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiAuthentication
-  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiAuthentication
-- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
-  name: AddApqCfgWebApiCors(IServiceCollection, WebApiOptions)
-  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiCors_Microsoft_Extensions_DependencyInjection_IServiceCollection_Apq_Cfg_WebApi_WebApiOptions_
-  commentId: M:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors(Microsoft.Extensions.DependencyInjection.IServiceCollection,Apq.Cfg.WebApi.WebApiOptions)
-  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors(Microsoft.Extensions.DependencyInjection.IServiceCollection, Apq.Cfg.WebApi.WebApiOptions)
-  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiCors(IServiceCollection, WebApiOptions)
-- uid: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors*
-  name: AddApqCfgWebApiCors
-  href: api/Apq.Cfg.WebApi.ServiceCollectionExtensions.html#Apq_Cfg_WebApi_ServiceCollectionExtensions_AddApqCfgWebApiCors_
-  commentId: Overload:Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.ServiceCollectionExtensions.AddApqCfgWebApiCors
-  nameWithType: ServiceCollectionExtensions.AddApqCfgWebApiCors
 - uid: Apq.Cfg.WebApi.Services
   name: Apq.Cfg.WebApi.Services
   href: api/Apq.Cfg.WebApi.Services.html
