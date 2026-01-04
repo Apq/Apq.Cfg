@@ -1,0 +1,19 @@
+{
+  "App": {
+    "Name": "Apq.Cfg WebApi Demo",
+    "Version": "1.0.0",
+    "Description": "演示 Apq.Cfg 配置系统的 Web API 项目"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Apq.Cfg": "Debug"
+    }
+  },
+  "Server": {
+    "Host": "localhost",
+    "Port": 5000,
+    "UseHttps": false
+  }
+}

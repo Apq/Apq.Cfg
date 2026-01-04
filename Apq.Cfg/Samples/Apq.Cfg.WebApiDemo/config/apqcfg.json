@@ -1,0 +1,15 @@
+{
+  "ApqCfg": {
+    "WebApi": {
+      "Enabled": true,
+      "RoutePrefix": "/api/apqcfg",
+      "Authentication": "ApiKey",
+      "ApiKey": "demo-api-key-12345",
+      "EnableCors": true,
+      "CorsOrigins": ["*"],
+      "OpenApiEnabled": true,
+      "OpenApiTitle": "Apq.Cfg WebApi Demo",
+      "OpenApiDescription": "演示多种配置源的 Web API"
+    }
+  }
+}

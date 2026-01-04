@@ -1,0 +1,41 @@
+{
+  "Features": {
+    "NewDashboard": {
+      "Enabled": true,
+      "RolloutPercentage": 100,
+      "Description": "新版仪表盘界面"
+    },
+    "AdvancedSearch": {
+      "Enabled": true,
+      "RolloutPercentage": 50,
+      "Description": "高级搜索功能",
+      "AllowedUsers": ["admin", "tester"]
+    },
+    "DarkMode": {
+      "Enabled": true,
+      "RolloutPercentage": 100,
+      "Description": "深色模式支持"
+    },
+    "ExportToPdf": {
+      "Enabled": false,
+      "RolloutPercentage": 0,
+      "Description": "导出为 PDF 功能（开发中）"
+    },
+    "TwoFactorAuth": {
+      "Enabled": true,
+      "RolloutPercentage": 100,
+      "Description": "双因素认证",
+      "RequiredForRoles": ["Admin", "Manager"]
+    }
+  },
+  "Experiments": {
+    "NewCheckoutFlow": {
+      "Enabled": false,
+      "Variants": {
+        "Control": 50,
+        "VariantA": 25,
+        "VariantB": 25
+      }
+    }
+  }
+}

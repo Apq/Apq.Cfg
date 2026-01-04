@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 外部服务配置 (XML 格式) -->
+<configuration>
+  <Services>
+    <!-- 邮件服务 -->
+    <Email>
+      <Smtp>
+        <Host>smtp.example.com</Host>
+        <Port>587</Port>
+        <UseSsl>true</UseSsl>
+        <Username>noreply@example.com</Username>
+        <Password></Password>
+      </Smtp>
+      <DefaultFrom>noreply@example.com</DefaultFrom>
+      <DefaultFromName>Apq.Cfg Demo</DefaultFromName>
+      <Templates>
+        <Welcome>templates/email/welcome.html</Welcome>
+        <PasswordReset>templates/email/password-reset.html</PasswordReset>
+      </Templates>
+    </Email>
+
+    <!-- 短信服务 -->
+    <Sms>
+      <Provider>Aliyun</Provider>
+      <AccessKeyId></AccessKeyId>
+      <AccessKeySecret></AccessKeySecret>
+      <SignName>ApqCfgDemo</SignName>
+      <Templates>
+        <Verification>SMS_123456789</Verification>
+      </Templates>
+    </Sms>
+
+    <!-- 对象存储 -->
+    <Storage>
+      <Provider>Local</Provider>
+      <BasePath>./uploads</BasePath>
+      <MaxFileSize>10485760</MaxFileSize>
+      <AllowedExtensions>.jpg,.jpeg,.png,.gif,.pdf,.doc,.docx</AllowedExtensions>
+    </Storage>
+  </Services>
+</configuration>

@@ -1,0 +1,26 @@
+# 缓存配置 (TOML 格式)
+
+[Cache]
+Provider = "Memory"
+DefaultExpiration = "00:30:00"
+SlidingExpiration = true
+
+[Cache.Memory]
+SizeLimit = 1024
+CompactionPercentage = 0.25
+
+[Cache.Redis]
+Enabled = false
+ConnectionString = "localhost:6379"
+InstanceName = "ApqCfgDemo:"
+Database = 0
+
+[Cache.Redis.Sentinel]
+Enabled = false
+MasterName = "mymaster"
+Endpoints = ["localhost:26379", "localhost:26380", "localhost:26381"]
+
+[Cache.Distributed]
+SyncTimeout = 5000
+AsyncTimeout = 5000
+ConnectRetry = 3

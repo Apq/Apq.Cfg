@@ -1,0 +1,21 @@
+# 数据库配置 (YAML 格式)
+Database:
+  # 主数据库连接
+  Primary:
+    Provider: SqlServer
+    ConnectionString: "Server=localhost;Database=ApqCfgDemo;Trusted_Connection=True;TrustServerCertificate=True"
+    MaxPoolSize: 100
+    MinPoolSize: 5
+    ConnectionTimeout: 30
+    CommandTimeout: 60
+
+  # 只读副本
+  ReadReplica:
+    Enabled: false
+    ConnectionString: "Server=localhost;Database=ApqCfgDemo_Replica;Trusted_Connection=True;TrustServerCertificate=True"
+    LoadBalancing: RoundRobin
+
+  # 迁移设置
+  Migration:
+    AutoMigrate: true
+    SeedData: true

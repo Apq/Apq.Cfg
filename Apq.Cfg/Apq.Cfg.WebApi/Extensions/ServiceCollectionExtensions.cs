@@ -90,18 +90,6 @@ public static class ServiceCollectionExtensions
         if (!string.IsNullOrEmpty(apiKeyHeaderName))
             options.ApiKeyHeaderName = apiKeyHeaderName;
 
-        if (bool.TryParse(cfgRoot[$"{prefix}:AllowRead"], out var allowRead))
-            options.AllowRead = allowRead;
-
-        if (bool.TryParse(cfgRoot[$"{prefix}:AllowWrite"], out var allowWrite))
-            options.AllowWrite = allowWrite;
-
-        if (bool.TryParse(cfgRoot[$"{prefix}:AllowDelete"], out var allowDelete))
-            options.AllowDelete = allowDelete;
-
-        if (bool.TryParse(cfgRoot[$"{prefix}:MaskSensitiveValues"], out var maskSensitive))
-            options.MaskSensitiveValues = maskSensitive;
-
         if (bool.TryParse(cfgRoot[$"{prefix}:EnableCors"], out var enableCors))
             options.EnableCors = enableCors;
 
