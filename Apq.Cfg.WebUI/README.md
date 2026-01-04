@@ -74,13 +74,11 @@ WebUI 直接从浏览器访问远程应用的配置 API，因此远程应用需�
 2. **暴露配置 API**（`/api/apqcfg/*`）
 
 ```csharp
-// 远程应用 CORS 配置示例
-builder.Services.AddCors(options => {
-    options.AddDefaultPolicy(policy => {
-        policy.WithOrigins("http://your-webui-domain")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+// 添加 WebApi 时配置 CORS
+builder.Services.AddApqCfgWebApi(cfg, options =>
+{
+    options.EnableCors = true;  // 默认已启用
+    options.CorsOrigins = ["http://your-webui-domain"];  // 默认 ["*"]
 });
 ```
 
