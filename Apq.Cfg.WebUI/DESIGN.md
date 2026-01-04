@@ -440,24 +440,92 @@ builder.Services.AddCors(options => {
 
 ### 7.2 数据导出/导入
 
-可添加应用列表的导出/导入功能，方便用户备份和迁移：
+可添加应用列表的导出/导入功能，方便用户备份和迁移。
+
+#### 支持格式
+
+| 格式 | 导出 | 导入 | 说明 |
+|------|------|------|------|
+| JSON | ✅ | ✅ | 默认格式，保留完整结构 |
+| CSV | ✅ | ✅ | 表格格式，Excel/WPS 可直接打开 |
+
+#### 实现示例
 
 ```typescript
-// 导出应用列表
-function exportApps() {
-  const data = localStorage.getItem(STORAGE_KEY)
-  const blob = new Blob([data || '[]'], { type: 'application/json' })
-  // 下载文件...
+// JSON 导出
+function exportAsJson(apps: AppConfig[]) {
+  const blob = new Blob([JSON.stringify(apps, null, 2)], { type: 'application/json' })
+  downloadFile(blob, 'apps.json')
 }
 
-// 导入应用列表
-function importApps(file: File) {
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    const apps = JSON.parse(e.target?.result as string)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(apps))
+// CSV 导出（带 UTF-8 BOM，确保 Excel 正确显示中文）
+function exportAsCsv(apps: AppConfig[]) {
+  const headers = ['name', 'baseUrl', 'authType', 'apiKey']
+  const rows = apps.map(app => headers.map(h => escapeCsvValue(app[h] ?? '')).join(','))
+  const csv = [headers.join(','), ...rows].join('\n')
+  const bom = '\uFEFF' // UTF-8 BOM
+  const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8' })
+  downloadFile(blob, 'apps.csv')
+}
+
+// CSV 值转义（处理逗号、引号、换行）
+function escapeCsvValue(value: string): string {
+  if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+    return `"${value.replace(/"/g, '""')}"`
   }
-  reader.readAsText(file)
+  return value
+}
+
+// 通用下载函数
+function downloadFile(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+// 导入（自动识别格式）
+async function importApps(file: File): Promise<AppConfig[]> {
+  const ext = file.name.split('.').pop()?.toLowerCase()
+  const text = await file.text()
+
+  if (ext === 'json') {
+    return JSON.parse(text)
+  }
+
+  if (ext === 'csv') {
+    const lines = text.replace(/^\uFEFF/, '').trim().split('\n') // 移除 BOM
+    const [header, ...rows] = lines
+    const keys = header.split(',')
+    return rows.map(row => {
+      const values = parseCsvLine(row)
+      return Object.fromEntries(keys.map((k, i) => [k, values[i] ?? '']))
+    }) as AppConfig[]
+  }
+
+  throw new Error(`不支持的文件格式: ${ext}`)
+}
+
+// 解析 CSV 行（处理引号内的逗号）
+function parseCsvLine(line: string): string[] {
+  const result: string[] = []
+  let current = ''
+  let inQuotes = false
+
+  for (const char of line) {
+    if (char === '"') {
+      inQuotes = !inQuotes
+    } else if (char === ',' && !inQuotes) {
+      result.push(current)
+      current = ''
+    } else {
+      current += char
+    }
+  }
+  result.push(current)
+  return result
 }
 ```
 

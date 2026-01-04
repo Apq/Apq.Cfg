@@ -3,19 +3,43 @@
     <div class="page-header">
       <h2>应用管理</h2>
       <div class="header-actions">
-        <el-button @click="handleExport">
-          <el-icon><Download /></el-icon>
-          导出
-        </el-button>
-        <el-button @click="handleImport">
+        <el-dropdown @command="handleExport">
+          <el-button>
+            <el-icon><Download /></el-icon>
+            导出
+            <el-icon class="el-icon--right"><ArrowDown /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="json">导出为 JSON</el-dropdown-item>
+              <el-dropdown-item command="csv">导出为 CSV</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <el-button @click="showDropZone = !showDropZone">
           <el-icon><Upload /></el-icon>
-          导入
+          {{ showDropZone ? '收起' : '导入' }}
         </el-button>
         <el-button type="primary" @click="showAddDialog = true">
           <el-icon><Plus /></el-icon>
           添加应用
         </el-button>
       </div>
+    </div>
+
+    <!-- 拖放区域 -->
+    <div
+      v-if="showDropZone"
+      class="drop-zone"
+      :class="{ 'drop-zone-active': isDragging }"
+      @dragover.prevent="onDragOver"
+      @dragleave.prevent="onDragLeave"
+      @drop.prevent="onDrop"
+      @click="handleImport"
+    >
+      <el-icon :size="32"><Upload /></el-icon>
+      <p>拖放文件到此处导入，或点击选择文件</p>
+      <p class="drop-hint">支持 JSON、CSV 格式</p>
     </div>
 
     <el-row :gutter="20" v-loading="appsStore.loading">
@@ -53,8 +77,15 @@
           </el-card>
         </el-col>
 
-        <el-col :xs="24" :sm="12" :md="8" :lg="6" v-if="appsStore.apps.length === 0 && !appsStore.loading">
-          <el-empty description="暂无应用，点击上方按钮添加" />
+        <!-- 添加应用卡片 -->
+        <el-col :xs="24" :sm="12" :md="8" :lg="6">
+          <el-card class="app-card add-card" shadow="hover" @click="showAddDialog = true">
+            <div class="add-card-content">
+              <el-icon :size="48"><Plus /></el-icon>
+              <p>添加应用</p>
+              <p class="add-hint">或点击上方"导入"按钮批量导入</p>
+            </div>
+          </el-card>
         </el-col>
       </el-row>
 
@@ -99,7 +130,7 @@
     <input
       ref="fileInput"
       type="file"
-      accept=".json"
+      accept=".json,.csv"
       style="display: none"
       @change="handleFileChange"
     />
@@ -110,11 +141,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Plus, MoreFilled, Download, Upload } from '@element-plus/icons-vue'
+import { Plus, MoreFilled, Download, Upload, ArrowDown } from '@element-plus/icons-vue'
 import { useAppsStore } from '@/stores/apps'
 import { AuthType } from '@/types'
 import type { AppEndpoint } from '@/types'
-import { exportApps, importApps } from '@/utils/storage'
+import { exportApps, importApps, type ExportFormat } from '@/utils/storage'
 
 const router = useRouter()
 const appsStore = useAppsStore()
@@ -123,6 +154,8 @@ const showAddDialog = ref(false)
 const editingApp = ref<AppEndpoint | null>(null)
 const saving = ref(false)
 const fileInput = ref<HTMLInputElement | null>(null)
+const isDragging = ref(false)
+const showDropZone = ref(false)
 
 const formData = ref({
   name: '',
@@ -237,9 +270,9 @@ function resetForm() {
   }
 }
 
-function handleExport() {
-  exportApps()
-  ElMessage.success('导出成功')
+function handleExport(format: ExportFormat) {
+  exportApps(format)
+  ElMessage.success(`导出 ${format.toUpperCase()} 成功`)
 }
 
 function handleImport() {
@@ -251,15 +284,45 @@ async function handleFileChange(event: Event) {
   const file = input.files?.[0]
   if (!file) return
 
+  await processImportFile(file)
+  // 清空文件输入
+  input.value = ''
+}
+
+// 拖放事件处理
+function onDragOver(event: DragEvent) {
+  if (event.dataTransfer?.types.includes('Files')) {
+    isDragging.value = true
+  }
+}
+
+function onDragLeave() {
+  isDragging.value = false
+}
+
+async function onDrop(event: DragEvent) {
+  isDragging.value = false
+  const file = event.dataTransfer?.files[0]
+  if (!file) return
+
+  // 检查文件类型
+  const ext = file.name.split('.').pop()?.toLowerCase()
+  if (ext !== 'json' && ext !== 'csv') {
+    ElMessage.warning('仅支持 JSON 和 CSV 格式文件')
+    return
+  }
+
+  await processImportFile(file)
+}
+
+async function processImportFile(file: File) {
   try {
     await importApps(file)
-    // 重新加载应用列表（刷新页面以重新从 localStorage 加载）
+    // 重新加载应用列表
     window.location.reload()
-  } catch (error: any) {
-    ElMessage.error(error.message || '导入失败')
-  } finally {
-    // 清空文件输入
-    input.value = ''
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : '导入失败'
+    ElMessage.error(message)
   }
 }
 </script>
@@ -284,6 +347,42 @@ async function handleFileChange(event: Event) {
 .header-actions {
   display: flex;
   gap: 10px;
+}
+
+.drop-zone {
+  border: 2px dashed #dcdfe6;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  color: #909399;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+
+.drop-zone:hover {
+  border-color: #409eff;
+  color: #409eff;
+}
+
+.drop-zone-active {
+  border-color: #409eff;
+  background: rgba(64, 158, 255, 0.1);
+  color: #409eff;
+}
+
+.drop-zone p {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.drop-zone .drop-hint {
+  font-size: 12px;
+  color: #c0c4cc;
+}
+
+.drop-zone-active .drop-hint {
+  color: #79bbff;
 }
 
 .app-card {
@@ -324,5 +423,44 @@ async function handleFileChange(event: Event) {
 
 .app-actions {
   text-align: center;
+}
+
+.add-card {
+  cursor: pointer;
+  border: 2px dashed #dcdfe6;
+  background: transparent;
+}
+
+.add-card:hover {
+  border-color: #409eff;
+  background: rgba(64, 158, 255, 0.05);
+}
+
+.add-card :deep(.el-card__body) {
+  padding: 0;
+}
+
+.add-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  color: #909399;
+}
+
+.add-card:hover .add-card-content {
+  color: #409eff;
+}
+
+.add-card-content p {
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+
+.add-card-content .add-hint {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #c0c4cc;
 }
 </style>

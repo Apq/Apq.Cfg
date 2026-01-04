@@ -2,7 +2,10 @@
   <el-container class="main-layout">
     <el-header class="header">
       <div class="header-content">
-        <h1 class="title" @click="goHome">Apq.Cfg 配置管理中心</h1>
+        <div class="logo-title" @click="goHome">
+          <img src="/logo.svg" alt="Logo" class="logo" />
+          <h1 class="title">Apq.Cfg 配置管理中心</h1>
+        </div>
       </div>
     </el-header>
     <el-main class="main">
@@ -40,15 +43,27 @@ function goHome() {
   height: 100%;
 }
 
-.title {
-  font-size: 18px;
-  margin: 0;
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   cursor: pointer;
   user-select: none;
 }
 
-.title:hover {
+.logo-title:hover .title {
   color: #409eff;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+}
+
+.title {
+  font-size: 18px;
+  margin: 0;
+  transition: color 0.2s;
 }
 
 .main {
