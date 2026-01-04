@@ -81,7 +81,7 @@ public sealed class WebApiOptions
 #if NET8_0
         "swagger";
 #else
-        "scalar/v1";
+        "/scalar/v1";
 #endif
 
     /// <summary>

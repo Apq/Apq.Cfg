@@ -72,10 +72,13 @@ public static class ApplicationBuilderExtensions
         // .NET 10+: 使用 Scalar UI
         if (options.OpenApiEnabled)
         {
-            endpoints.MapOpenApi();
+            // 映射 OpenAPI 文档端点，使用配置的版本号作为文档名
+            endpoints.MapOpenApi("/openapi/{documentName}.json");
             endpoints.MapScalarApiReference(options.OpenApiRoutePrefix, scalarOptions =>
             {
-                scalarOptions.WithTitle(options.OpenApiTitle);
+                scalarOptions
+                    .WithTitle(options.OpenApiTitle)
+                    .AddDocument(options.OpenApiVersion);
             });
         }
 #endif
