@@ -61,8 +61,17 @@ app.UseApqCfgWebApi();
 // 映射 Apq.Cfg WebApi 端点
 app.MapApqCfgWebApi();
 
+// API 文档链接（根据框架版本不同）
+#if NET8_0
+var apiDocUrl = "/swagger";
+var apiDocName = "Swagger";
+#else
+var apiDocUrl = "/scalar/v1";
+var apiDocName = "Scalar";
+#endif
+
 // 添加一个简单的首页
-app.MapGet("/", () => Results.Content("""
+app.MapGet("/", () => Results.Content($$"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +104,7 @@ app.MapGet("/", () => Results.Content("""
 
     <h2>快速链接</h2>
     <div class="links">
-        <a href="/scalar/v1">📖 API 文档 (Scalar)</a>
+        <a href="{{apiDocUrl}}">📖 API 文档 ({{apiDocName}})</a>
         <a href="/api/apqcfg/merged">📋 查看合并配置</a>
         <a href="/api/apqcfg/merged/tree">🌳 配置树</a>
         <a href="/api/apqcfg/sources">📦 配置源列表</a>
@@ -147,7 +156,7 @@ app.MapGet("/demo/config", () =>
 
 Console.WriteLine($"\n应用已启动！");
 Console.WriteLine($"  首页: http://localhost:5000/");
-Console.WriteLine($"  API 文档: http://localhost:5000/scalar/v1");
+Console.WriteLine($"  API 文档: http://localhost:5000{apiDocUrl}");
 Console.WriteLine($"  配置 API: http://localhost:5000/api/apqcfg/merged");
 
 app.Run();
