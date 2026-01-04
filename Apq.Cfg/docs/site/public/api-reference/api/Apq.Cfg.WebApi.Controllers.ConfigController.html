@@ -677,8 +677,8 @@ public class ConfigController : ControllerBase</code></pre>
 
   <a id="Apq_Cfg_WebApi_Controllers_ConfigController__ctor_" data-uid="Apq.Cfg.WebApi.Controllers.ConfigController.#ctor*"></a>
 
-  <h3 id="Apq_Cfg_WebApi_Controllers_ConfigController__ctor_Apq_Cfg_WebApi_Services_IConfigApiService_Microsoft_Extensions_Options_IOptions_Apq_Cfg_WebApi_WebApiOptions__" data-uid="Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})">
-  ConfigController(IConfigApiService, IOptions&lt;WebApiOptions&gt;)
+  <h3 id="Apq_Cfg_WebApi_Controllers_ConfigController__ctor_Apq_Cfg_WebApi_Services_IConfigApiService_" data-uid="Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService)">
+  ConfigController(IConfigApiService)
   
   </h3>
 
@@ -686,14 +686,12 @@ public class ConfigController : ControllerBase</code></pre>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ConfigController(IConfigApiService service, IOptions&lt;WebApiOptions&gt; options)</code></pre>
+    <pre><code class="lang-csharp hljs">public ConfigController(IConfigApiService service)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>service</code> <a class="xref" href="Apq.Cfg.WebApi.Services.IConfigApiService.html">IConfigApiService</a></dt>
-    <dd></dd>
-    <dt><code>options</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptions-1">IOptions</a>&lt;<a class="xref" href="Apq.Cfg.WebApi.WebApiOptions.html">WebApiOptions</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -719,12 +717,12 @@ public class ConfigController : ControllerBase</code></pre>
   
   </h3>
 
-  <div class="markdown level1 summary"><p>批量更新配置</p>
+  <div class="markdown level1 summary"><p>批量更新合并配置</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[HttpPut(&quot;batch&quot;)]
+    <pre><code class="lang-csharp hljs">[HttpPut(&quot;merged/batch&quot;)]
 public ActionResult&lt;ApiResponse&lt;bool&gt;&gt; BatchUpdate(BatchUpdateRequest request)</code></pre>
   </div>
 
@@ -757,12 +755,12 @@ public ActionResult&lt;ApiResponse&lt;bool&gt;&gt; BatchUpdate(BatchUpdateReques
   
   </h3>
 
-  <div class="markdown level1 summary"><p>删除配置</p>
+  <div class="markdown level1 summary"><p>删除合并配置</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[HttpDelete(&quot;keys/{*key}&quot;)]
+    <pre><code class="lang-csharp hljs">[HttpDelete(&quot;merged/keys/{*key}&quot;)]
 public ActionResult&lt;ApiResponse&lt;bool&gt;&gt; DeleteKey(string key)</code></pre>
   </div>
 
@@ -842,7 +840,7 @@ public ActionResult&lt;ApiResponse&lt;bool&gt;&gt; DeleteSourceKey(int level, st
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[HttpGet(&quot;export/{format}&quot;)]
+    <pre><code class="lang-csharp hljs">[HttpGet(&quot;merged/export/{format}&quot;)]
 public ActionResult Export(string format)</code></pre>
   </div>
 
@@ -1324,12 +1322,12 @@ public ActionResult&lt;ApiResponse&lt;bool&gt;&gt; SetSourceValue(int level, str
   
   </h3>
 
-  <div class="markdown level1 summary"><p>设置配置值</p>
+  <div class="markdown level1 summary"><p>设置合并配置值</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[HttpPut(&quot;keys/{*key}&quot;)]
+    <pre><code class="lang-csharp hljs">[HttpPut(&quot;merged/keys/{*key}&quot;)]
 public ActionResult&lt;ApiResponse&lt;bool&gt;&gt; SetValue(string key, string? value)</code></pre>
   </div>
 

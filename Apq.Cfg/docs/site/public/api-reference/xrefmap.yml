@@ -8411,15 +8411,15 @@ references:
   commentId: T:Apq.Cfg.WebApi.Controllers.ConfigController
   fullName: Apq.Cfg.WebApi.Controllers.ConfigController
   nameWithType: ConfigController
-- uid: Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
-  name: ConfigController(IConfigApiService, IOptions<WebApiOptions>)
-  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController__ctor_Apq_Cfg_WebApi_Services_IConfigApiService_Microsoft_Extensions_Options_IOptions_Apq_Cfg_WebApi_WebApiOptions__
-  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
-  name.vb: New(IConfigApiService, IOptions(Of WebApiOptions))
-  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.ConfigController(Apq.Cfg.WebApi.Services.IConfigApiService, Microsoft.Extensions.Options.IOptions<Apq.Cfg.WebApi.WebApiOptions>)
-  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.New(Apq.Cfg.WebApi.Services.IConfigApiService, Microsoft.Extensions.Options.IOptions(Of Apq.Cfg.WebApi.WebApiOptions))
-  nameWithType: ConfigController.ConfigController(IConfigApiService, IOptions<WebApiOptions>)
-  nameWithType.vb: ConfigController.New(IConfigApiService, IOptions(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService)
+  name: ConfigController(IConfigApiService)
+  href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController__ctor_Apq_Cfg_WebApi_Services_IConfigApiService_
+  commentId: M:Apq.Cfg.WebApi.Controllers.ConfigController.#ctor(Apq.Cfg.WebApi.Services.IConfigApiService)
+  name.vb: New(IConfigApiService)
+  fullName: Apq.Cfg.WebApi.Controllers.ConfigController.ConfigController(Apq.Cfg.WebApi.Services.IConfigApiService)
+  fullName.vb: Apq.Cfg.WebApi.Controllers.ConfigController.New(Apq.Cfg.WebApi.Services.IConfigApiService)
+  nameWithType: ConfigController.ConfigController(IConfigApiService)
+  nameWithType.vb: ConfigController.New(IConfigApiService)
 - uid: Apq.Cfg.WebApi.Controllers.ConfigController.#ctor*
   name: ConfigController
   href: api/Apq.Cfg.WebApi.Controllers.ConfigController.html#Apq_Cfg_WebApi_Controllers_ConfigController__ctor_
@@ -9199,15 +9199,15 @@ references:
   commentId: T:Apq.Cfg.WebApi.Services.ConfigApiService
   fullName: Apq.Cfg.WebApi.Services.ConfigApiService
   nameWithType: ConfigApiService
-- uid: Apq.Cfg.WebApi.Services.ConfigApiService.#ctor(Apq.Cfg.ICfgRoot,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
-  name: ConfigApiService(ICfgRoot, IOptions<WebApiOptions>)
-  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService__ctor_Apq_Cfg_ICfgRoot_Microsoft_Extensions_Options_IOptions_Apq_Cfg_WebApi_WebApiOptions__
-  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.#ctor(Apq.Cfg.ICfgRoot,Microsoft.Extensions.Options.IOptions{Apq.Cfg.WebApi.WebApiOptions})
-  name.vb: New(ICfgRoot, IOptions(Of WebApiOptions))
-  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.ConfigApiService(Apq.Cfg.ICfgRoot, Microsoft.Extensions.Options.IOptions<Apq.Cfg.WebApi.WebApiOptions>)
-  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.New(Apq.Cfg.ICfgRoot, Microsoft.Extensions.Options.IOptions(Of Apq.Cfg.WebApi.WebApiOptions))
-  nameWithType: ConfigApiService.ConfigApiService(ICfgRoot, IOptions<WebApiOptions>)
-  nameWithType.vb: ConfigApiService.New(ICfgRoot, IOptions(Of WebApiOptions))
+- uid: Apq.Cfg.WebApi.Services.ConfigApiService.#ctor(Apq.Cfg.ICfgRoot)
+  name: ConfigApiService(ICfgRoot)
+  href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService__ctor_Apq_Cfg_ICfgRoot_
+  commentId: M:Apq.Cfg.WebApi.Services.ConfigApiService.#ctor(Apq.Cfg.ICfgRoot)
+  name.vb: New(ICfgRoot)
+  fullName: Apq.Cfg.WebApi.Services.ConfigApiService.ConfigApiService(Apq.Cfg.ICfgRoot)
+  fullName.vb: Apq.Cfg.WebApi.Services.ConfigApiService.New(Apq.Cfg.ICfgRoot)
+  nameWithType: ConfigApiService.ConfigApiService(ICfgRoot)
+  nameWithType.vb: ConfigApiService.New(ICfgRoot)
 - uid: Apq.Cfg.WebApi.Services.ConfigApiService.#ctor*
   name: ConfigApiService
   href: api/Apq.Cfg.WebApi.Services.ConfigApiService.html#Apq_Cfg_WebApi_Services_ConfigApiService__ctor_
@@ -9706,45 +9706,6 @@ references:
   commentId: T:Apq.Cfg.WebApi.WebApiOptions
   fullName: Apq.Cfg.WebApi.WebApiOptions
   nameWithType: WebApiOptions
-- uid: Apq.Cfg.WebApi.WebApiOptions.AllowDelete
-  name: AllowDelete
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowDelete
-  commentId: P:Apq.Cfg.WebApi.WebApiOptions.AllowDelete
-  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowDelete
-  nameWithType: WebApiOptions.AllowDelete
-- uid: Apq.Cfg.WebApi.WebApiOptions.AllowDelete*
-  name: AllowDelete
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowDelete_
-  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.AllowDelete
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowDelete
-  nameWithType: WebApiOptions.AllowDelete
-- uid: Apq.Cfg.WebApi.WebApiOptions.AllowRead
-  name: AllowRead
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowRead
-  commentId: P:Apq.Cfg.WebApi.WebApiOptions.AllowRead
-  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowRead
-  nameWithType: WebApiOptions.AllowRead
-- uid: Apq.Cfg.WebApi.WebApiOptions.AllowRead*
-  name: AllowRead
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowRead_
-  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.AllowRead
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowRead
-  nameWithType: WebApiOptions.AllowRead
-- uid: Apq.Cfg.WebApi.WebApiOptions.AllowWrite
-  name: AllowWrite
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowWrite
-  commentId: P:Apq.Cfg.WebApi.WebApiOptions.AllowWrite
-  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowWrite
-  nameWithType: WebApiOptions.AllowWrite
-- uid: Apq.Cfg.WebApi.WebApiOptions.AllowWrite*
-  name: AllowWrite
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_AllowWrite_
-  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.AllowWrite
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.WebApiOptions.AllowWrite
-  nameWithType: WebApiOptions.AllowWrite
 - uid: Apq.Cfg.WebApi.WebApiOptions.ApiKey
   name: ApiKey
   href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_ApiKey
@@ -9836,19 +9797,6 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.WebApi.WebApiOptions.Jwt
   nameWithType: WebApiOptions.Jwt
-- uid: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
-  name: MaskSensitiveValues
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_MaskSensitiveValues
-  commentId: P:Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
-  fullName: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
-  nameWithType: WebApiOptions.MaskSensitiveValues
-- uid: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues*
-  name: MaskSensitiveValues
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_MaskSensitiveValues_
-  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.WebApiOptions.MaskSensitiveValues
-  nameWithType: WebApiOptions.MaskSensitiveValues
 - uid: Apq.Cfg.WebApi.WebApiOptions.OpenApiDescription
   name: OpenApiDescription
   href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_OpenApiDescription
@@ -9946,19 +9894,6 @@ references:
   commentId: F:Apq.Cfg.WebApi.WebApiOptions.SectionName
   fullName: Apq.Cfg.WebApi.WebApiOptions.SectionName
   nameWithType: WebApiOptions.SectionName
-- uid: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
-  name: SensitiveKeyPatterns
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_SensitiveKeyPatterns
-  commentId: P:Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
-  fullName: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
-  nameWithType: WebApiOptions.SensitiveKeyPatterns
-- uid: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns*
-  name: SensitiveKeyPatterns
-  href: api/Apq.Cfg.WebApi.WebApiOptions.html#Apq_Cfg_WebApi_WebApiOptions_SensitiveKeyPatterns_
-  commentId: Overload:Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
-  isSpec: "True"
-  fullName: Apq.Cfg.WebApi.WebApiOptions.SensitiveKeyPatterns
-  nameWithType: WebApiOptions.SensitiveKeyPatterns
 - uid: Apq.Cfg.Xml
   name: Apq.Cfg.Xml
   href: api/Apq.Cfg.Xml.html
