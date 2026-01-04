@@ -102,13 +102,13 @@ cd $repoDir
 echo "正在拉取最新代码..."
 git pull
 
-# 进入 WebUI 解决方案目录
-cd $solutionDir
+# 进入仓库根目录（构建上下文）
+# cd $repoDir 已经在仓库根目录了
 
-# 构建并推送 Docker 镜像（从解决方案目录构建）
+# 构建并推送 Docker 镜像（从仓库根目录构建）
 echo "正在构建并推送 Docker 镜像..."
 echo "使用 Docker 镜像源: $dockerMirror"
-docker buildx build -f src/Apq.Cfg.WebUI/Dockerfile.cn \
+docker buildx build -f Apq.Cfg.WebUI/Apq.Cfg.WebUI/Dockerfile.cn \
     --build-arg DOCKER_MIRROR=$dockerMirror \
     --platform linux/amd64,linux/arm64 \
     $tagParams \
