@@ -67,9 +67,9 @@ public sealed class WebApiOptions
         ["*Password*", "*Secret*", "*Key*", "*Token*", "*ConnectionString*"];
 
     /// <summary>
-    /// 是否启用 CORS，默认 false
+    /// 是否启用 CORS，默认 true（允许 WebUI 跨域访问）
     /// </summary>
-    public bool EnableCors { get; set; } = false;
+    public bool EnableCors { get; set; } = true;
 
     /// <summary>
     /// CORS 允许的源

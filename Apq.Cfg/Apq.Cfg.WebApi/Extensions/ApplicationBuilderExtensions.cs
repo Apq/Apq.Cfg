@@ -42,13 +42,13 @@ public static class ApplicationBuilderExtensions
         // 启用检查中间件
         app.UseMiddleware<ConfigApiMiddleware>();
 
-        // CORS
+        // CORS（在 AddApqCfgWebApi 中已配置策略）
         if (options.EnableCors)
         {
             app.UseCors("ApqCfgWebApiCors");
         }
 
-        // 认证
+        // 认证（在 AddApqCfgWebApi 中已配置）
         if (options.Authentication != AuthenticationType.None)
         {
             app.UseAuthentication();

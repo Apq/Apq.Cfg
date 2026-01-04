@@ -24,6 +24,8 @@ dotnet add package Apq.Cfg.WebApi
 
 ## 快速开始
 
+### 方式一：服务集合扩展
+
 ```csharp
 using Apq.Cfg;
 using Apq.Cfg.WebApi;
@@ -36,9 +38,8 @@ var cfg = new CfgBuilder()
     .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     .Build();
 
-// 添加服务（默认启用 API 文档）
-builder.Services.AddSingleton<ICfgRoot>(cfg);
-builder.Services.AddApqCfgWebApi(options =>
+// 添加服务
+builder.Services.AddApqCfgWebApi(cfg, options =>
 {
     options.Authentication = AuthenticationType.ApiKey;
     options.ApiKey = "your-secret-key";
@@ -46,7 +47,33 @@ builder.Services.AddApqCfgWebApi(options =>
 
 var app = builder.Build();
 
-// 启用中间件（包含 API 文档）
+app.UseApqCfgWebApi();
+app.MapApqCfgWebApi();
+
+app.Run();
+```
+
+### 方式二：链式调用
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.WebApi;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// 构建配置并添加 WebApi（链式调用）
+var cfg = new CfgBuilder()
+    .AddJson("config.json")
+    .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    .Build()
+    .AddWebApi(builder.Services, options =>
+    {
+        options.Authentication = AuthenticationType.ApiKey;
+        options.ApiKey = "your-secret-key";
+    });
+
+var app = builder.Build();
+
 app.UseApqCfgWebApi();
 app.MapApqCfgWebApi();
 
@@ -55,18 +82,61 @@ app.Run();
 
 启动后访问 API 文档 UI 即可查看接口文档。
 
-## OpenAPI 文档配置
+## 配置方式
 
-API 文档默认启用，可通过 `WebApiOptions` 配置：
+WebApi 选项可以通过两种方式配置：
+
+### 1. 从 ICfgRoot 读取（推荐）
+
+在配置文件中添加 `ApqCfg:WebApi` 节：
+
+```json
+{
+  "ApqCfg": {
+    "WebApi": {
+      "Authentication": "ApiKey",
+      "ApiKey": "your-secret-key",
+      "AllowWrite": true,
+      "EnableCors": true,
+      "CorsOrigins": ["*"]
+    }
+  }
+}
+```
+
+然后直接调用：
 
 ```csharp
-builder.Services.AddApqCfgWebApi(options =>
+builder.Services.AddApqCfgWebApi(cfg);
+```
+
+### 2. 代码配置（覆盖配置文件）
+
+```csharp
+builder.Services.AddApqCfgWebApi(cfg, options =>
+{
+    options.Authentication = AuthenticationType.ApiKey;
+    options.ApiKey = "your-secret-key";
+});
+```
+
+**配置优先级**（从低到高）：
+1. 默认值
+2. 从 `ICfgRoot` 的 `ApqCfg:WebApi` 节读取的配置
+3. `configure` 回调中的配置
+
+## OpenAPI 文档配置
+
+API 文档默认启用，可通过配置调整：
+
+```csharp
+builder.Services.AddApqCfgWebApi(cfg, options =>
 {
     options.OpenApiEnabled = true;              // 是否启用 API 文档（默认 true）
     options.OpenApiTitle = "My Config API";     // 文档标题
     options.OpenApiDescription = "配置管理 API"; // 文档描述
     options.OpenApiVersion = "v1";              // API 版本
-    options.OpenApiRoutePrefix = "swagger";     // UI 路由前缀（.NET 8 默认 swagger，.NET 10+ 默认 scalar/v1）
+    options.OpenApiRoutePrefix = "swagger";     // UI 路由前缀
     options.OpenApiShowAuthorizationButton = true; // 显示认证按钮
 });
 ```
@@ -121,7 +191,8 @@ options.Authentication = AuthenticationType.None;
 | `AllowDelete` | bool | false | 是否允许删除 |
 | `MaskSensitiveValues` | bool | true | 是否脱敏敏感值 |
 | `SensitiveKeyPatterns` | string[] | `*Password*`, `*Secret*`... | 敏感键模式 |
-| `EnableCors` | bool | false | 是否启用 CORS |
+| `EnableCors` | bool | true | 是否启用 CORS（允许任意来源） |
+| `CorsOrigins` | string[] | `["*"]` | CORS 允许的来源 |
 | `OpenApiEnabled` | bool | true | 是否启用 API 文档 |
 | `OpenApiTitle` | string | `Apq.Cfg Web API` | API 文档标题 |
 | `OpenApiRoutePrefix` | string | `swagger` / `scalar/v1` | API 文档 UI 路由前缀 |
