@@ -6,6 +6,7 @@
           <img src="/logo.svg" alt="Logo" class="logo" />
           <h1 class="title">Apq.Cfg 配置管理中心</h1>
         </div>
+        <span class="storage-notice">数据仅存于浏览器本地，配置请求直连应用API，不经服务器中转</span>
       </div>
     </el-header>
     <el-main class="main">
@@ -35,6 +36,9 @@ function goHome() {
   padding: 0 20px;
   height: 60px;
   line-height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header-content {
@@ -64,6 +68,12 @@ function goHome() {
   font-size: 18px;
   margin: 0;
   transition: color 0.2s;
+}
+
+.storage-notice {
+  font-size: 12px;
+  color: #c0c4cc;
+  margin-left: 20px;
 }
 
 .main {

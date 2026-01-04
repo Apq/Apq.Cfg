@@ -1,7 +1,9 @@
 <template>
   <div class="home-container">
     <div class="page-header">
-      <h2>应用管理</h2>
+      <div class="page-title">
+        <h2>应用管理</h2>
+      </div>
       <div class="header-actions">
         <el-dropdown @command="handleExport">
           <el-button>
