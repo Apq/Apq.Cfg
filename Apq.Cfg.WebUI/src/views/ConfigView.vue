@@ -15,48 +15,53 @@
     <el-main class="main" v-loading="loading">
       <div class="content-wrapper">
         <!-- 配置源侧边栏 -->
-        <div class="source-sidebar" :class="{ collapsed: sourceCollapsed }">
-          <div class="source-header">
-            <span v-if="!sourceCollapsed" class="source-title">配置源</span>
-            <div class="source-header-actions">
-              <el-button
-                v-if="!sourceCollapsed"
-                text
-                size="small"
-                @click="handleRefreshSources"
-                :loading="refreshingSources"
-              >
-                <el-icon><Refresh /></el-icon>
-                刷新
-              </el-button>
-              <el-button
-                text
-                class="collapse-btn"
-                @click="sourceCollapsed = !sourceCollapsed"
-              >
-                <el-icon><DArrowLeft v-if="!sourceCollapsed" /><DArrowRight v-else /></el-icon>
+        <el-aside class="source-aside" :width="sourceCollapsed ? '64px' : '240px'">
+          <el-menu
+            :default-active="currentSource"
+            :collapse="sourceCollapsed"
+            class="source-menu"
+            @select="handleSourceSelect"
+          >
+            <!-- 顶部操作栏 -->
+            <div class="menu-header">
+              <template v-if="!sourceCollapsed">
+                <span class="menu-title">配置源</span>
+                <el-button text size="small" @click="handleRefreshSources" :loading="refreshingSources">
+                  <el-icon><Refresh /></el-icon>
+                  刷新
+                </el-button>
+              </template>
+              <el-button text @click="sourceCollapsed = !sourceCollapsed">
+                <el-icon><Expand v-if="sourceCollapsed" /><Fold v-else /></el-icon>
               </el-button>
             </div>
-          </div>
-          <div v-if="!sourceCollapsed" class="source-content">
-            <el-tree
-              :data="sourceTreeData"
-              :props="{ label: 'label', children: 'children', disabled: 'disabled' }"
-              node-key="value"
-              default-expand-all
-              highlight-current
-              :current-node-key="currentSource"
-              @node-click="handleSourceClick"
-            >
-              <template #default="{ data }">
-                <span class="source-node">
-                  <span>{{ data.label }}</span>
-                  <el-tag v-if="data.isPrimaryWriter" size="small" type="success" style="margin-left: 8px">主写入</el-tag>
-                </span>
+
+            <!-- 合并后 -->
+            <el-menu-item index="merged">
+              <el-icon><Files /></el-icon>
+              <template #title>合并后</template>
+            </el-menu-item>
+
+            <!-- 按层级分组 -->
+            <el-sub-menu v-for="levelGroup in sourceLevelGroups" :key="levelGroup.level" :index="`level-${levelGroup.level}`">
+              <template #title>
+                <el-icon><Folder /></el-icon>
+                <span>Level {{ levelGroup.level }}</span>
               </template>
-            </el-tree>
-          </div>
-        </div>
+              <el-menu-item
+                v-for="source in levelGroup.sources"
+                :key="source.value"
+                :index="source.value"
+              >
+                <el-icon><Document /></el-icon>
+                <template #title>
+                  <span>{{ source.name }}</span>
+                  <el-tag v-if="source.isPrimaryWriter" size="small" type="success" class="primary-tag">主写入</el-tag>
+                </template>
+              </el-menu-item>
+            </el-sub-menu>
+          </el-menu>
+        </el-aside>
 
         <!-- 主内容区域 -->
         <div class="main-content">
@@ -66,7 +71,11 @@
               <el-card class="tree-card">
                 <template #header>
                   <div class="card-header">
-                    <span>配置树</span>
+                    <div class="card-header-title">
+                      <span>{{ currentSourceInfo.name }}</span>
+                      <el-tag v-if="currentSourceInfo.level !== null" size="small" type="info">Level {{ currentSourceInfo.level }}</el-tag>
+                      <el-tag v-if="currentSourceInfo.isPrimaryWriter" size="small" type="success">主写入</el-tag>
+                    </div>
                     <div class="card-header-actions">
                       <el-input
                         v-model="searchKey"
@@ -164,7 +173,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { ArrowLeft, Refresh, Check, ArrowDown, Search, Lock, DArrowLeft, DArrowRight } from '@element-plus/icons-vue'
+import { ArrowLeft, Refresh, Check, ArrowDown, Search, Lock, Fold, Expand, Files, Folder, Document } from '@element-plus/icons-vue'
 import { useAppsStore } from '@/stores/apps'
 import { createConfigApi } from '@/api/config'
 import type { ConfigTreeNode, ConfigSourceDto } from '@/types'
@@ -204,8 +213,8 @@ const filteredTreeData = computed(() => {
   return filterTree(treeData.value, searchKey.value.toLowerCase())
 })
 
-// 按层级分组配置源（树形结构，合并后作为根节点）
-const sourceTreeData = computed(() => {
+// 按层级分组配置源
+const sourceLevelGroups = computed(() => {
   const levelMap = new Map<number, ConfigSourceDto[]>()
 
   for (const source of sources.value) {
@@ -215,25 +224,30 @@ const sourceTreeData = computed(() => {
     levelMap.get(source.level)!.push(source)
   }
 
-  // 按层级排序，生成树形数据
+  // 按层级排序
   const sortedLevels = Array.from(levelMap.keys()).sort((a, b) => a - b)
-  const levelNodes = sortedLevels.map(level => ({
-    value: `level-${level}`,
-    label: `Level ${level}`,
-    disabled: true,
-    children: levelMap.get(level)!.map(source => ({
+  return sortedLevels.map(level => ({
+    level,
+    sources: levelMap.get(level)!.map(source => ({
       value: `${source.level}/${source.name}`,
-      label: source.name,
+      name: source.name,
       isPrimaryWriter: source.isPrimaryWriter
     }))
   }))
+})
 
-  // 合并后作为根节点
-  return [{
-    value: 'merged',
-    label: '合并后',
-    children: levelNodes
-  }]
+// 当前选中配置源的信息
+const currentSourceInfo = computed(() => {
+  if (currentSource.value === 'merged') {
+    return { name: '合并后', level: null, isPrimaryWriter: false }
+  }
+  const [level, name] = currentSource.value.split('/')
+  const source = sources.value.find(s => s.level === parseInt(level) && s.name === name)
+  return {
+    name: source?.name || name,
+    level: parseInt(level),
+    isPrimaryWriter: source?.isPrimaryWriter || false
+  }
 })
 
 function filterTree(nodes: TreeNodeData[], keyword: string): TreeNodeData[] {
@@ -273,10 +287,13 @@ async function loadSources() {
   }
 }
 
-async function loadConfig() {
+async function loadConfig(keepSelection = false) {
   if (!configApi.value) return
   loading.value = true
-  selectedNode.value = null
+  const previousSelectedKey = keepSelection ? selectedNode.value?.fullKey : null
+  if (!keepSelection) {
+    selectedNode.value = null
+  }
   try {
     let res
     if (currentSource.value === 'merged') {
@@ -288,6 +305,25 @@ async function loadConfig() {
 
     if (res.success && res.data) {
       treeData.value = processTree(res.data.children || [], '')
+
+      // 如果需要保持选中状态，重新查找并选中节点
+      if (previousSelectedKey) {
+        const findNode = (nodes: TreeNodeData[]): TreeNodeData | null => {
+          for (const node of nodes) {
+            if (node.fullKey === previousSelectedKey) return node
+            if (node.children) {
+              const found = findNode(node.children as TreeNodeData[])
+              if (found) return found
+            }
+          }
+          return null
+        }
+        const foundNode = findNode(treeData.value)
+        if (foundNode) {
+          selectedNode.value = foundNode
+          editValue.value = foundNode.value || ''
+        }
+      }
     }
   } catch (e) {
     ElMessage.error('加载配置失败')
@@ -314,10 +350,11 @@ function handleNodeClick(data: TreeNodeData) {
   }
 }
 
-// 点击配置源树节点
-function handleSourceClick(data: { value: string; disabled?: boolean }) {
-  if (data.disabled) return
-  currentSource.value = data.value
+// 选择配置源菜单项
+function handleSourceSelect(index: string) {
+  // 忽略 level 分组项
+  if (index.startsWith('level-')) return
+  currentSource.value = index
   loadConfig()
 }
 
@@ -334,8 +371,14 @@ async function handleUpdateValue() {
     }
 
     if (res.success) {
-      ElMessage.success('更新成功')
-      await loadConfig()
+      // 保存到文件
+      const saveRes = await configApi.value.save()
+      if (saveRes.success) {
+        ElMessage.success('更新成功')
+        await loadConfig(true)
+      } else {
+        ElMessage.error(saveRes.error || '保存失败')
+      }
     } else {
       ElMessage.error(res.error || '更新失败')
     }
@@ -361,9 +404,15 @@ async function handleDeleteKey() {
     }
 
     if (res.success) {
-      ElMessage.success('删除成功')
-      selectedNode.value = null
-      await loadConfig()
+      // 保存到文件
+      const saveRes = await configApi.value.save()
+      if (saveRes.success) {
+        ElMessage.success('删除成功')
+        selectedNode.value = null
+        await loadConfig()
+      } else {
+        ElMessage.error(saveRes.error || '保存失败')
+      }
     } else {
       ElMessage.error(res.error || '删除失败')
     }
@@ -491,58 +540,39 @@ function goBack() {
   height: calc(100vh - 140px);
 }
 
-.source-sidebar {
-  width: 240px;
-  min-width: 240px;
+.source-aside {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  transition: width 0.3s ease, min-width 0.3s ease;
   overflow: hidden;
+  transition: width 0.3s;
 }
 
-.source-sidebar.collapsed {
-  width: 48px;
-  min-width: 48px;
+.source-menu {
+  height: 100%;
+  border-right: none;
 }
 
-.source-header {
+.source-menu:not(.el-menu--collapse) {
+  width: 240px;
+}
+
+.menu-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  border-bottom: 1px solid #ebeef5;
-  min-height: 48px;
-  box-sizing: border-box;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--el-menu-border-color);
 }
 
-.source-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.source-sidebar.collapsed .source-header {
-  justify-content: center;
-  padding: 12px 8px;
-}
-
-.source-title {
+.menu-title {
   font-weight: 500;
   font-size: 14px;
   color: #303133;
 }
 
-.collapse-btn {
-  padding: 4px;
-}
-
-.source-content {
-  flex: 1;
-  overflow: auto;
-  padding: 8px 0;
+.primary-tag {
+  margin-left: 8px;
 }
 
 .main-content {
@@ -555,15 +585,17 @@ function goBack() {
   overflow: auto;
 }
 
-.source-node {
-  display: flex;
-  align-items: center;
-}
-
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.card-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
 }
 
 .card-header-actions {

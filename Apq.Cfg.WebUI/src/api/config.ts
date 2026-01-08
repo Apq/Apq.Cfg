@@ -74,11 +74,15 @@ export function createConfigApi(app: AppEndpoint) {
     // ========== 写入操作 ==========
 
     setMergedValue(key: string, value: string | null): Promise<ApiResponse<boolean>> {
-      return instance.put(`/merged/keys/${encodeURIComponent(key)}`, value)
+      return instance.put(`/merged/keys/${encodeURIComponent(key)}`, JSON.stringify(value), {
+        headers: { 'Content-Type': 'application/json' }
+      })
     },
 
     setSourceValue(level: number, name: string, key: string, value: string | null): Promise<ApiResponse<boolean>> {
-      return instance.put(`/sources/${level}/${encodeURIComponent(name)}/keys/${encodeURIComponent(key)}`, value)
+      return instance.put(`/sources/${level}/${encodeURIComponent(name)}/keys/${encodeURIComponent(key)}`, JSON.stringify(value), {
+        headers: { 'Content-Type': 'application/json' }
+      })
     },
 
     deleteMergedKey(key: string): Promise<ApiResponse<boolean>> {

@@ -1,6 +1,6 @@
 {
   "Local": {
-    "Comment": "本地开发覆盖配置，此文件不应提交到版本控制",
-    "Debug": true
+    "Comment": "\u672C\u5730\u5F00\u53D1\u8986\u76D6\u914D\u7F6E\uFF0C\u6B64\u6587\u4EF6\u4E0D\u5E94\u63D0\u4EA4\u5230\u7248\u672C\u63A7\u5236",
+    "Debug": "true"
   }
 }
