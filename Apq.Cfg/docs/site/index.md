@@ -55,9 +55,9 @@ dotnet add package Apq.Cfg.Consul
 ```
 
 ```xml [PackageReference]
-<PackageReference Include="Apq.Cfg" Version="1.0.*" />
-<PackageReference Include="Apq.Cfg.Yaml" Version="1.0.*" />
-<PackageReference Include="Apq.Cfg.Consul" Version="1.0.*" />
+<PackageReference Include="Apq.Cfg" Version="1.1.*" />
+<PackageReference Include="Apq.Cfg.Yaml" Version="1.1.*" />
+<PackageReference Include="Apq.Cfg.Consul" Version="1.1.*" />
 ```
 
 :::
@@ -69,8 +69,8 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJsonFile("config.json")
-    .AddYamlFile("config.yaml", optional: true)
+    .AddJson("config.json")
+    .AddYaml("config.yaml", optional: true)
     .AddEnvironmentVariables()
     .Build();
 

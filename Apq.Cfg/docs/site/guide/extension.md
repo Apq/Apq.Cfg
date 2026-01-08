@@ -780,7 +780,7 @@ public class HttpApiCfgSourceIntegrationTests : IClassFixture<ConfigServerFixtur
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Apq.Cfg" Version="1.0.*" />
+    <PackageReference Include="Apq.Cfg" Version="1.1.*" />
   </ItemGroup>
   
   <ItemGroup>

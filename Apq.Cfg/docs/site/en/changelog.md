@@ -4,6 +4,45 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.8] - 2026-01-09
+
+### Added
+
+- **WebUI Add Configuration**: Support adding new configuration items in writable sources, including root-level configurations
+- **Read-only Source Indicator**: Display read-only badge in source list to distinguish writable and read-only sources
+
+### Changed
+
+- **Chinese Content Optimization**: JSON files now save Chinese characters directly instead of Unicode escape sequences
+- **WebUI Interface Improvements**:
+  - Configuration source sidebar supports collapse/expand
+  - Separated refresh button for clearer operations
+  - Leaf nodes with values no longer show add button
+- **Authentication Fix**: Fixed WebApi authentication issues
+
+## [1.1.7] - 2026-01-06
+
+### Added
+
+- **CSV Export Format**: Import/export functionality now supports CSV format
+- **Drag & Drop Import**: Support drag and drop files for configuration import
+- **WebApiDemo Sample**: New complete WebApi usage sample project
+
+### Changed
+
+- **Project Structure Reorganization**: Split into two solutions (core library and WebUI) for optimized build process
+- **WebUI Architecture**: Changed to pure static site for simplified deployment
+- **CORS Configuration**: Automatic CORS configuration when adding WebApi
+- **API Documentation**: Automatically select Swagger or Scalar documentation based on framework version
+
+## [1.1.6] - 2026-01-05
+
+### Changed
+
+- **NuGet Package Dependencies Fix**: Fixed dependency version issues, ensuring correct dependency relationships
+- **Build Optimization**: Added `-f net10.0` to specify target framework, optimized build process
+- **Package Management**: Set NuGet package list status
+
 ## [1.1.5] - 2026-01-04
 
 ### Added

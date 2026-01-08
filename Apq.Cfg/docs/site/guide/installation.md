@@ -23,7 +23,7 @@ Install-Package Apq.Cfg
 ### 使用 PackageReference
 
 ```xml
-<PackageReference Include="Apq.Cfg" Version="1.0.*" />
+<PackageReference Include="Apq.Cfg" Version="1.1.*" />
 ```
 
 ## 扩展包安装
@@ -103,18 +103,18 @@ dotnet add package Apq.Cfg.SourceGenerator
 ```xml
 <ItemGroup>
   <!-- 核心包 -->
-  <PackageReference Include="Apq.Cfg" Version="1.0.*" />
+  <PackageReference Include="Apq.Cfg" Version="1.1.*" />
   
   <!-- 本地配置格式 -->
-  <PackageReference Include="Apq.Cfg.Yaml" Version="1.0.*" />
-  <PackageReference Include="Apq.Cfg.Toml" Version="1.0.*" />
+  <PackageReference Include="Apq.Cfg.Yaml" Version="1.1.*" />
+  <PackageReference Include="Apq.Cfg.Toml" Version="1.1.*" />
   
   <!-- 远程配置中心 -->
-  <PackageReference Include="Apq.Cfg.Consul" Version="1.0.*" />
-  <PackageReference Include="Apq.Cfg.Vault" Version="1.0.*" />
+  <PackageReference Include="Apq.Cfg.Consul" Version="1.1.*" />
+  <PackageReference Include="Apq.Cfg.Vault" Version="1.1.*" />
   
   <!-- 源生成器 -->
-  <PackageReference Include="Apq.Cfg.SourceGenerator" Version="1.0.*" />
+  <PackageReference Include="Apq.Cfg.SourceGenerator" Version="1.1.*" />
 </ItemGroup>
 ```
 
