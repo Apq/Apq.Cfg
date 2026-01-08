@@ -8,7 +8,7 @@ ASP.NET Core dependency injection integration.
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json")                        // Uses default level 0
+    .AddJsonFile("config.json")                        // Uses default level 0
     .AddEnvironmentVariables(prefix: "APP_"));    // Uses default level 400
 
 var app = builder.Build();

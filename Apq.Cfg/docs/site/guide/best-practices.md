@@ -28,17 +28,17 @@
 ```csharp
 var cfg = new CfgBuilder()
     // 0层：系统默认值
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
 
     // 1层：环境特定默认值
-    .AddJson($"config.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", 
+    .AddJsonFile($"config.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", 
               level: 1, writeable: false)
 
     // 5层：环境变量
     .AddEnvironmentVariables(level: 5, prefix: "APP_")
 
     // 8层：用户特定配置（可选）
-    .AddJson("user.config.json", level: 8, writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("user.config.json", level: 8, writeable: true, isPrimaryWriter: true)
 
     .Build();
 ```
@@ -52,7 +52,7 @@ var cfg = new CfgBuilder()
 ```csharp
 // 推荐：使用外部配置中心
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new VaultCfgSource("secret/", level: 5, token: vaultToken)) // 从 HashiCorp Vault 加载
     .Build();
 
@@ -71,7 +71,7 @@ var cfg = new CfgBuilder()
 ```csharp
 // 使用自定义加密配置源
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new EncryptedJsonCfgSource("config.encrypted.json", level: 2,
         writeable: false, encryptionKey: encryptionKey))
     .Build();
@@ -162,7 +162,7 @@ public class AppSettings
 
 // 使用
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 var settings = ObjectBinder.Bind<AppSettings>(cfg.GetSection("App"));
@@ -376,7 +376,7 @@ public class ConfigurationDiagnostics
 1. **启用详细日志**
    ```csharp
    var cfg = new CfgBuilder()
-       .AddJson("config.json", level: 0, writeable: false)
+       .AddJsonFile("config.json", level: 0, writeable: false)
        .AddEnvironmentVariables(level: 5, prefix: "APP_")
        .WithEncodingDetectionLogging(result => Console.WriteLine($"编码检测: {result}"))
        .Build();

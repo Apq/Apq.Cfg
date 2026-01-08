@@ -16,10 +16,10 @@ If you don't specify the `level` parameter, the default level will be used:
 
 ```csharp
 // Uses default level 0
-.AddJson("config.json")
+.AddJsonFile("config.json")
 
 // Specify custom level
-.AddJson("config.json", level: 10)
+.AddJsonFile("config.json", level: 10)
 ```
 
 ## Basic Usage
@@ -52,7 +52,7 @@ If you don't specify the `level` parameter, the default level will be used:
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // Uses default level 0
+    .AddJsonFile("config.json")  // Uses default level 0
     .Build();
 
 // Read values
@@ -78,9 +78,9 @@ var debug = cfg.GetValue<bool>("App:Debug");
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                    // Uses default level 0
-    .AddJson($"config.{env}.json", level: 10, optional: true)
-    .AddJson("config.local.json", level: 50, optional: true)
+    .AddJsonFile("config.json")                                    // Uses default level 0
+    .AddJsonFile($"config.{env}.json", level: 10, optional: true)
+    .AddJsonFile("config.local.json", level: 50, optional: true)
     .Build();
 ```
 
@@ -88,7 +88,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Modify values
@@ -103,7 +103,7 @@ await cfg.SaveAsync();
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
+    .AddJsonFile("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 // Subscribe to changes

@@ -16,7 +16,7 @@ public static class CfgBuilderExtensions
     /// <param name="reloadOnChange">文件变更时是否自动重载，默认为true</param>
     /// <param name="isPrimaryWriter">是否为主要写入器，默认为false</param>
     /// <returns>配置构建器实例，支持链式调用</returns>
-    public static CfgBuilder AddXml(this CfgBuilder builder, string path, int level = CfgSourceLevels.Xml, bool writeable = false,
+    public static CfgBuilder AddXmlFile(this CfgBuilder builder, string path, int level = CfgSourceLevels.Xml, bool writeable = false,
         bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false)
     {
         return builder.AddSource(new XmlFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter));

@@ -16,10 +16,10 @@ If you don't specify the `level` parameter, the default level will be used:
 
 ```csharp
 // Uses default level 0
-.AddIni("config.ini")
+.AddIniFile("config.ini")
 
 // Specify custom level
-.AddIni("config.ini", level: 10)
+.AddIniFile("config.ini", level: 10)
 ```
 
 ## Basic Usage
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini")  // Uses default level 0
+    .AddIniFile("config.ini")  // Uses default level 0
     .Build();
 ```
 

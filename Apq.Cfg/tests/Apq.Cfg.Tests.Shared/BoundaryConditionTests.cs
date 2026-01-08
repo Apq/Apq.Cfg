@@ -32,7 +32,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -47,7 +47,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -62,7 +62,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -80,7 +80,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -102,7 +102,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Parent": {"Child": "NestedValue"}}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -117,7 +117,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key-With-Dashes": "Value1", "Key_With_Underscores": "Value2", "Key.With.Dots": "Value3"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -134,7 +134,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"中文键": "中文值", "日本語キー": "日本語値", "한국어키": "한국어값"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -151,7 +151,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"123": "NumericKey", "Key123": "MixedKey", "123Key": "NumericPrefix"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -173,7 +173,7 @@ public class BoundaryConditionTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -198,7 +198,7 @@ public class BoundaryConditionTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -240,7 +240,7 @@ public class BoundaryConditionTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -260,7 +260,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, $"{{\"{longKey}\": \"Value\"}}");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -276,7 +276,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, $"{{\"Key\": \"{longValue}\"}}");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -292,7 +292,7 @@ public class BoundaryConditionTests : IDisposable
         var longValue = new string('V', 10000);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -301,7 +301,7 @@ public class BoundaryConditionTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
         Assert.Equal(longValue, cfg2["LongKey"]);
     }
@@ -318,7 +318,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Items": ["First", "Second", "Third"]}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -342,7 +342,7 @@ public class BoundaryConditionTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -369,9 +369,9 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(level2Path, """{"Key": "Level2"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(level0Path, level: 0, writeable: false)
-            .AddJson(level1Path, level: 1, writeable: false)
-            .AddJson(level2Path, level: 2, writeable: false)
+            .AddJsonFile(level0Path, level: 0, writeable: false)
+            .AddJsonFile(level1Path, level: 1, writeable: false)
+            .AddJsonFile(level2Path, level: 2, writeable: false)
             .Build();
 
         // Act & Assert
@@ -389,8 +389,8 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(zeroPath, """{"Key": "Zero"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(negativePath, level: -1, writeable: false)
-            .AddJson(zeroPath, level: 0, writeable: false)
+            .AddJsonFile(negativePath, level: -1, writeable: false)
+            .AddJsonFile(zeroPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert - level 0 应该覆盖 level -1
@@ -408,8 +408,8 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(level1000Path, """{"Key": "Level1000"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(level0Path, level: 0, writeable: false)
-            .AddJson(level1000Path, level: 1000, writeable: false)
+            .AddJsonFile(level0Path, level: 0, writeable: false)
+            .AddJsonFile(level1000Path, level: 1000, writeable: false)
             .Build();
 
         // Act & Assert
@@ -428,7 +428,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, $"{{\"MaxInt\": {int.MaxValue}}}");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -443,7 +443,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, $"{{\"MinInt\": {int.MinValue}}}");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -458,7 +458,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"True1": true, "True2": "true", "True3": "True", "False1": false, "False2": "false"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -477,7 +477,7 @@ public class BoundaryConditionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Zero": 0.0, "NegativeZero": -0.0, "Small": 0.0000001}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -499,8 +499,8 @@ public class BoundaryConditionTests : IDisposable
 
         // Act - optional: true 不应抛出异常
         using var cfg = new CfgBuilder()
-            .AddJson(existingPath, level: 0, writeable: false, optional: true)
-            .AddJson(missingPath, level: 1, writeable: false, optional: true)
+            .AddJsonFile(existingPath, level: 0, writeable: false, optional: true)
+            .AddJsonFile(missingPath, level: 1, writeable: false, optional: true)
             .Build();
 
         // Assert
@@ -517,7 +517,7 @@ public class BoundaryConditionTests : IDisposable
         var ex = Assert.ThrowsAny<Exception>(() =>
         {
             using var cfg = new CfgBuilder()
-                .AddJson(missingPath, level: 0, writeable: false, optional: false)
+                .AddJsonFile(missingPath, level: 0, writeable: false, optional: false)
                 .Build();
             // 尝试访问配置以触发加载
             cfg.ToMicrosoftConfiguration();

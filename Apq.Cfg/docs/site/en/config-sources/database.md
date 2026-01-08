@@ -234,7 +234,7 @@ await cfg.SaveAsync();
 ```csharp
 var cfg = new CfgBuilder()
     // Local base configuration (uses default level 0)
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // Database configuration (uses default level 100)
     .AddDatabase(options =>
     {

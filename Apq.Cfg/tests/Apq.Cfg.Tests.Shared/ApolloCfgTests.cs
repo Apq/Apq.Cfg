@@ -100,7 +100,7 @@ public class ApolloCfgTests : IAsyncLifetime
             File.WriteAllText(jsonPath, """{"Setting": "JsonValue"}""");
 
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .AddApollo(options =>
                 {
                     options.AppId = TestSettings.ApolloAppId!;

@@ -97,7 +97,7 @@ public class SourceGeneratorBenchmarks
             """);
 
         _cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         _simpleSection = _cfg.GetSection("Simple");

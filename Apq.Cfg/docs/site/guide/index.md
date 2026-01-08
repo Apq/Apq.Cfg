@@ -30,7 +30,7 @@ Apq.Cfg 是一个高性能的 .NET 配置组件库，旨在提供统一、灵活
 
 ```csharp
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 // 使用 IOptions 模式
@@ -60,7 +60,7 @@ public class MyCustomSource : ICfgSource
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddAesGcmEncryptionFromEnv()  // 自动解密 {ENC} 前缀的值
     .AddSensitiveMasking()          // 日志输出时自动脱敏
     .Build();
@@ -80,7 +80,7 @@ logger.LogInfo("密码: {0}", cfg.GetMasked("Database:Password"));
 ```csharp
 // config.json: { "App:Name": "MyApp", "App:LogPath": "${App:Name}/logs" }
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .Build();
 
 // 解析变量引用
@@ -106,7 +106,7 @@ dotnet add package Apq.Cfg
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 // 读取配置

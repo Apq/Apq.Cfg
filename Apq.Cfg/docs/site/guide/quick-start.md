@@ -44,7 +44,7 @@ using Apq.Cfg;
 
 // 1. 创建配置构建器并加载配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 使用默认层级 0
+    .AddJsonFile("config.json")  // 使用默认层级 0
     .Build();
 
 // 2. 使用索引器读取配置
@@ -103,7 +103,7 @@ public class AppConfig
 ```csharp
 // 在 DI 容器中注册
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json"));  // 使用默认层级 0
+    .AddJsonFile("config.json"));  // 使用默认层级 0
 
 services.ConfigureApqCfg<DatabaseConfig>("Database");
 services.ConfigureApqCfg<AppConfig>("App");
@@ -145,9 +145,9 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 var cfg = new CfgBuilder()
     // 基础配置（使用默认层级 0）
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // 环境特定配置（自定义层级 10）
-    .AddJson($"config.{environment}.json", level: 10, optional: true)
+    .AddJsonFile($"config.{environment}.json", level: 10, optional: true)
     // 环境变量（使用默认层级 400，最高优先级）
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();

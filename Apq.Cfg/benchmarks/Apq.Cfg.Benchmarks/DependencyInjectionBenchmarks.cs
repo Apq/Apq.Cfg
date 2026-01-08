@@ -54,7 +54,7 @@ public class DependencyInjectionBenchmarks
         // 预构建一个 ServiceProvider 用于解析测试
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(_jsonPath, level: 0, writeable: false));
+            .AddJsonFile(_jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
         services.ConfigureApqCfg<LoggingOptions>("Logging");
         services.ConfigureApqCfg<AppOptions>("App");
@@ -79,7 +79,7 @@ public class DependencyInjectionBenchmarks
     {
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(_jsonPath, level: 0, writeable: false));
+            .AddJsonFile(_jsonPath, level: 0, writeable: false));
         var provider = services.BuildServiceProvider();
         (provider as IDisposable)?.Dispose();
         return provider;
@@ -90,7 +90,7 @@ public class DependencyInjectionBenchmarks
     {
         var services = new ServiceCollection();
         services.AddApqCfg<DatabaseOptions>(
-            cfg => cfg.AddJson(_jsonPath, level: 0, writeable: false),
+            cfg => cfg.AddJsonFile(_jsonPath, level: 0, writeable: false),
             sectionKey: "Database");
         var provider = services.BuildServiceProvider();
         (provider as IDisposable)?.Dispose();
@@ -104,7 +104,7 @@ public class DependencyInjectionBenchmarks
     {
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(_jsonPath, level: 0, writeable: false));
+            .AddJsonFile(_jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
         var provider = services.BuildServiceProvider();
         (provider as IDisposable)?.Dispose();
@@ -116,7 +116,7 @@ public class DependencyInjectionBenchmarks
     {
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(_jsonPath, level: 0, writeable: false));
+            .AddJsonFile(_jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
         services.ConfigureApqCfg<LoggingOptions>("Logging");
         services.ConfigureApqCfg<AppOptions>("App");

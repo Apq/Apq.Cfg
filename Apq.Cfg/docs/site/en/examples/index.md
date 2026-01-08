@@ -39,7 +39,7 @@ Each configuration source has a default level. If not specified, the default lev
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // Uses default level 0
+    .AddJsonFile("config.json")  // Uses default level 0
     .Build();
 
 var appName = cfg["App:Name"];
@@ -50,8 +50,8 @@ Console.WriteLine($"App Name: {appName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                        // Uses default level 0
-    .AddYaml("config.yaml", level: 10, optional: true)
+    .AddJsonFile("config.json")                        // Uses default level 0
+    .AddYamlFile("config.yaml", level: 10, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")       // Uses default level 400
     .Build();
 ```
@@ -80,7 +80,7 @@ Console.WriteLine($"Database: {dbConfig.Host}:{dbConfig.Port}");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json")                        // Uses default level 0
+    .AddJsonFile("config.json")                        // Uses default level 0
     .AddEnvironmentVariables(prefix: "APP_"));    // Uses default level 400
 
 builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
@@ -90,7 +90,7 @@ builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
+    .AddJsonFile("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -109,7 +109,7 @@ cfg.ConfigChanges.Subscribe(e =>
 using Apq.Cfg.Crypto;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")            // Uses default level 0
+    .AddJsonFile("config.json")            // Uses default level 0
     .AddAesGcmEncryptionFromEnv()      // Read key from environment variable
     .AddSensitiveMasking()             // Add masking support
     .Build();
@@ -127,7 +127,7 @@ Console.WriteLine($"Password: {cfg.GetMasked("Database:Password")}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Modify configuration

@@ -29,7 +29,7 @@ This section provides the complete API reference for Apq.Cfg.
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 

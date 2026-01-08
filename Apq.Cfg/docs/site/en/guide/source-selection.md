@@ -29,9 +29,9 @@ This guide helps you choose the right configuration sources for your application
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
-    .AddJson("config.local.json", level: 2, writeable: true, optional: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.Development.json", level: 1, writeable: false, optional: true)
+    .AddJsonFile("config.local.json", level: 2, writeable: true, optional: true)
     .Build();
 ```
 
@@ -39,7 +39,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddConsul(options =>
     {
         options.Address = "http://consul:8500";
@@ -58,8 +58,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("/app/config/config.json", level: 0, writeable: false)
-    .AddJson("/app/secrets/secrets.json", level: 5, writeable: false, optional: true)
+    .AddJsonFile("/app/config/config.json", level: 0, writeable: false)
+    .AddJsonFile("/app/secrets/secrets.json", level: 5, writeable: false, optional: true)
     .AddEnvironmentVariables(level: 10, prefix: "APP_")
     .Build();
 ```

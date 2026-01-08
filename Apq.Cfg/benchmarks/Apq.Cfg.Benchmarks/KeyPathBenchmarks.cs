@@ -34,7 +34,7 @@ public class KeyPathBenchmarks : IDisposable
         File.WriteAllText(jsonPath, content);
 
         _cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 生成对应深度的键路径

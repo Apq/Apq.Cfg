@@ -39,7 +39,7 @@
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 使用默认层级 0
+    .AddJsonFile("config.json")  // 使用默认层级 0
     .Build();
 
 var appName = cfg["App:Name"];
@@ -50,8 +50,8 @@ Console.WriteLine($"应用名称: {appName}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 默认层级 0
-    .AddYaml("config.yaml", optional: true)  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
+    .AddYamlFile("config.yaml", optional: true)  // 默认层级 0
     .AddEnvironmentVariables(prefix: "APP_")  // 默认层级 400
     .Build();
 ```
@@ -80,7 +80,7 @@ Console.WriteLine($"数据库: {dbConfig.Host}:{dbConfig.Port}");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json")  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
     .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
@@ -90,7 +90,7 @@ builder.Services.ConfigureApqCfg<DatabaseConfig>("Database");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // 默认层级 0
+    .AddJsonFile("config.json", reloadOnChange: true)  // 默认层级 0
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -109,7 +109,7 @@ cfg.ConfigChanges.Subscribe(e =>
 using Apq.Cfg.Crypto;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
     .AddAesGcmEncryptionFromEnv()  // 从环境变量读取密钥
     .AddSensitiveMasking()          // 添加脱敏支持
     .Build();
@@ -127,7 +127,7 @@ Console.WriteLine($"密码: {cfg.GetMasked("Database:Password")}");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // 默认层级 0
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true)  // 默认层级 0
     .Build();
 
 // 修改配置

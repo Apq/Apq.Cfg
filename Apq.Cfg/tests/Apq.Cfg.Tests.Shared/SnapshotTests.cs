@@ -34,7 +34,7 @@ public class SnapshotTests
         try
         {
             return new CfgBuilder()
-                .AddJson(tempFile, level: 0, writeable: false)
+                .AddJsonFile(tempFile, level: 0, writeable: false)
                 .Build();
         }
         finally

@@ -22,10 +22,10 @@ INI 文件配置源扩展包。
 
 ```csharp
 // 使用默认层级 0
-.AddIni("config.ini")
+.AddIniFile("config.ini")
 
 // 指定自定义层级
-.AddIni("config.ini", level: 50)
+.AddIniFile("config.ini", level: 50)
 ```
 
 ## 用法
@@ -35,7 +35,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", level: 0, writeable: true)
+    .AddIniFile("config.ini", level: 0, writeable: true)
     .Build();
 
 // 使用索引器访问

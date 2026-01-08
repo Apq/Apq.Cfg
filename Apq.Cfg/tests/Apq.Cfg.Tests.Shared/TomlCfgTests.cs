@@ -38,7 +38,7 @@ public class TomlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -60,7 +60,7 @@ public class TomlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -80,7 +80,7 @@ public class TomlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddTomlFile(tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -89,7 +89,7 @@ public class TomlCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("NewValue", cfg2["App:NewKey"]);
@@ -107,7 +107,7 @@ public class TomlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -125,7 +125,7 @@ public class TomlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -145,7 +145,7 @@ public class TomlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddTomlFile(tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -154,7 +154,7 @@ public class TomlCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
 
         var removedValue = cfg2["App:ToRemove"];

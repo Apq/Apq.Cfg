@@ -40,7 +40,7 @@ public class PerformanceOptimizationTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         // Act
@@ -61,7 +61,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key1": "Value1"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         // Act
@@ -87,7 +87,7 @@ public class PerformanceOptimizationTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         // Act
@@ -108,7 +108,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key1": "Original"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         cfg.SetValue("Key1", "Modified");
@@ -130,7 +130,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         // Act
@@ -155,7 +155,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, "{}");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         // Act
@@ -190,7 +190,7 @@ public class PerformanceOptimizationTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         var results = new Dictionary<string, string?>();
@@ -216,7 +216,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key1": "Value1"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         var results = new Dictionary<string, string?>();
@@ -241,7 +241,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key1": "Original"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         cfg.SetValue("Key1", "Modified");
@@ -274,7 +274,7 @@ public class PerformanceOptimizationTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         var orderedKeys = new List<string>();
@@ -303,7 +303,7 @@ public class PerformanceOptimizationTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         var results = new Dictionary<string, int?>();
@@ -329,7 +329,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Int1": "42"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         var results = new Dictionary<string, int?>();
@@ -354,7 +354,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Int1": "10"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         cfg.SetValue("Int1", "20");
@@ -381,7 +381,7 @@ public class PerformanceOptimizationTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key1": "Value1"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true)
             .Build();
 
         var callCount = 0;

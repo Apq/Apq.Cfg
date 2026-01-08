@@ -342,7 +342,7 @@ public class EncodingTests : IDisposable
         };
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, encoding: encodingOptions)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, encoding: encodingOptions)
             .Build();
 
         // Act

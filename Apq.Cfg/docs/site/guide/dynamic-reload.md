@@ -8,7 +8,7 @@ Apq.Cfg 支持配置的动态重载，无需重启应用即可更新配置。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false, optional: false, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, writeable: false, optional: false, reloadOnChange: true)
     .Build();
 ```
 
@@ -18,7 +18,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddSource(new ConsulCfgSource(options => {
         options.Address = "http://localhost:8500";
         options.KeyPrefix = "myapp/config";
@@ -148,7 +148,7 @@ public class MyService
 
 ```csharp
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true));
+    .AddJsonFile("config.json", level: 0, writeable: false, reloadOnChange: true));
 
 services.ConfigureApqCfg<DatabaseConfig>("Database", config =>
 {
@@ -177,9 +177,9 @@ var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置不需要热重载
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: false)
+    .AddJsonFile("config.json", level: 0, writeable: false, reloadOnChange: false)
     // 只对需要动态更新的配置启用热重载
-    .AddJson("dynamic-config.json", level: 1, writeable: true, reloadOnChange: true)
+    .AddJsonFile("dynamic-config.json", level: 1, writeable: true, reloadOnChange: true)
     .Build();
 ```
 

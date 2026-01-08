@@ -108,7 +108,7 @@ public class CryptoBenchmarks : IDisposable
             """);
 
         _cfgWithEncryption = new CfgBuilder()
-            .AddJson(encryptedJsonPath, level: 0, writeable: false)
+            .AddJsonFile(encryptedJsonPath, level: 0, writeable: false)
             .AddAesGcmEncryption(_aesKey)
             .Build();
 
@@ -126,7 +126,7 @@ public class CryptoBenchmarks : IDisposable
             """);
 
         _cfgWithMasking = new CfgBuilder()
-            .AddJson(maskingJsonPath, level: 0, writeable: false)
+            .AddJsonFile(maskingJsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -143,7 +143,7 @@ public class CryptoBenchmarks : IDisposable
             """);
 
         _cfgPlain = new CfgBuilder()
-            .AddJson(plainJsonPath, level: 0, writeable: false)
+            .AddJsonFile(plainJsonPath, level: 0, writeable: false)
             .Build();
     }
 

@@ -36,7 +36,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -58,7 +58,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -79,7 +79,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -100,7 +100,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -119,7 +119,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert - 单引号不处理转义
@@ -137,7 +137,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -158,7 +158,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -176,7 +176,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddEnvFile(envPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -185,7 +185,7 @@ public class EnvCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("NewValue", cfg2["NEW_KEY"]);
@@ -200,7 +200,7 @@ public class EnvCfgTests : IDisposable
         File.WriteAllText(envPath, "");
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddEnvFile(envPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -215,7 +215,7 @@ public class EnvCfgTests : IDisposable
 
         // 验证可以正确读取
         using var cfg2 = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("localhost", cfg2["DATABASE:HOST"]);
@@ -232,7 +232,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -251,7 +251,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddEnvFile(envPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -260,7 +260,7 @@ public class EnvCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         var removedValue = cfg2["TO_REMOVE"];
@@ -280,7 +280,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -300,7 +300,7 @@ public class EnvCfgTests : IDisposable
         File.WriteAllText(envPath, "");
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddEnvFile(envPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -315,7 +315,7 @@ public class EnvCfgTests : IDisposable
 
         // 验证可以正确读取
         using var cfg2 = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("Hello World", cfg2["MESSAGE"]);
@@ -330,7 +330,7 @@ public class EnvCfgTests : IDisposable
 
         // Act & Assert - 不应抛出异常
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false, optional: true)
+            .AddEnvFile(envPath, level: 0, writeable: false, optional: true)
             .Build();
 
         Assert.Null(cfg["ANY_KEY"]);
@@ -347,7 +347,7 @@ public class EnvCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -371,7 +371,7 @@ public class EnvCfgTests : IDisposable
         {
             // Act
             using var cfg = new CfgBuilder()
-                .AddEnv(envPath, level: 0, writeable: false, setEnvironmentVariables: true)
+                .AddEnvFile(envPath, level: 0, writeable: false, setEnvironmentVariables: true)
                 .Build();
 
             // Assert - 验证系统环境变量已设置
@@ -398,7 +398,7 @@ public class EnvCfgTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false, setEnvironmentVariables: false)
+            .AddEnvFile(envPath, level: 0, writeable: false, setEnvironmentVariables: false)
             .Build();
 
         // Assert - 验证系统环境变量未设置
@@ -419,7 +419,7 @@ public class EnvCfgTests : IDisposable
 
         // Act - 不指定 setEnvironmentVariables 参数（默认为 false）
         using var cfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: false)
+            .AddEnvFile(envPath, level: 0, writeable: false)
             .Build();
 
         // Assert - 验证系统环境变量未设置
@@ -443,7 +443,7 @@ public class EnvCfgTests : IDisposable
         {
             // Act
             using var cfg = new CfgBuilder()
-                .AddEnv(envPath, level: 0, writeable: false, setEnvironmentVariables: true)
+                .AddEnvFile(envPath, level: 0, writeable: false, setEnvironmentVariables: true)
                 .Build();
 
             // Assert - 环境变量使用原始格式（双下划线）

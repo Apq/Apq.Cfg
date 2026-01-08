@@ -23,8 +23,8 @@ This guide covers best practices for using Apq.Cfg effectively.
 // Level 20+: Overrides
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{env}.json", level: 1, optional: true)
+    .AddJsonFile("config.json", level: 0)
+    .AddJsonFile($"config.{env}.json", level: 1, optional: true)
     .AddConsul(options => { }, level: 10)
     .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
@@ -47,7 +47,7 @@ config/
 
 ```csharp
 // ❌ Wrong
-.AddJson("secrets.json", level: 5)  // Don't commit this file
+.AddJsonFile("secrets.json", level: 5)  // Don't commit this file
 
 // ✅ Correct
 .AddVault(options => { }, level: 15)
@@ -58,7 +58,7 @@ config/
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddAesGcmEncryptionFromEnv()
     .Build();
 ```

@@ -35,7 +35,7 @@ public class ExceptionHandlingTests : IDisposable
         Assert.ThrowsAny<Exception>(() =>
         {
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false, optional: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false, optional: false)
                 .Build();
         });
     }
@@ -51,7 +51,7 @@ public class ExceptionHandlingTests : IDisposable
         Assert.ThrowsAny<Exception>(() =>
         {
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false, optional: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false, optional: false)
                 .Build();
         });
     }
@@ -68,7 +68,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -84,7 +84,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -100,7 +100,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act & Assert - 指定不存在的层级
@@ -116,7 +116,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act & Assert
@@ -136,7 +136,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"NotANumber": "abc"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
@@ -151,7 +151,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"NotABool": "maybe"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
@@ -167,7 +167,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"TooBig": "99999999999999999999"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert - 溢出时返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
@@ -182,7 +182,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -209,7 +209,7 @@ public class ExceptionHandlingTests : IDisposable
         try
         {
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+                .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
                 .Build();
 
             cfg.SetValue("NewKey", "NewValue");
@@ -239,7 +239,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         cfg.Dispose();
@@ -265,7 +265,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         cfg.SetValue("NewKey", "NewValue");
@@ -318,8 +318,8 @@ public class ExceptionHandlingTests : IDisposable
 
         // Act - 同一层级多个 PrimaryWriter
         using var cfg = new CfgBuilder()
-            .AddJson(path1, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(path2, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(path1, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(path2, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Assert - 应该使用最后一个
@@ -338,8 +338,8 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(path2, """{"Key": "Value2"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(path1, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(path2, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(path1, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(path2, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -363,7 +363,7 @@ public class ExceptionHandlingTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         cfg.SetValue("NewKey", "NewValue");
@@ -390,7 +390,7 @@ public class ExceptionHandlingTests : IDisposable
 
         // Act - 使用不存在的前缀不应抛出异常
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddEnvironmentVariables(level: 1, prefix: "NONEXISTENT_PREFIX_12345_")
             .Build();
 

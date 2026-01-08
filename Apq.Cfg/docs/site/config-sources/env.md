@@ -19,11 +19,11 @@ dotnet add package Apq.Cfg
 ```csharp
 // 使用默认层级 400
 .AddEnvironmentVariables(prefix: "APP_")
-.AddEnv(".env")
+.AddEnvFile(".env")
 
 // 指定自定义层级
 .AddEnvironmentVariables(level: 500, prefix: "APP_")
-.AddEnv(".env", level: 450)
+.AddEnvFile(".env", level: 450)
 ```
 
 ## 基本用法
@@ -32,7 +32,7 @@ dotnet add package Apq.Cfg
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 ```
@@ -62,8 +62,8 @@ using Apq.Cfg;
 using Apq.Cfg.Env;
 
 var cfg = new CfgBuilder()
-    .AddEnv(".env")  // 使用默认层级 400
-    .AddEnv(".env.local", level: 401, optional: true)
+    .AddEnvFile(".env")  // 使用默认层级 400
+    .AddEnvFile(".env.local", level: 401, optional: true)
     .Build();
 ```
 
@@ -152,10 +152,10 @@ public static CfgBuilder AddEnv(
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson("config.Development.json", level: 1, optional: true)
-    .AddEnv(".env", level: 2, optional: true)
-    .AddEnv(".env.local", level: 3, optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.Development.json", level: 1, optional: true)
+    .AddEnvFile(".env", level: 2, optional: true)
+    .AddEnvFile(".env.local", level: 3, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 ```
@@ -171,7 +171,7 @@ ENV APP_REDIS__HOST=redis
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 ```
@@ -219,7 +219,7 @@ spec:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddEnv(".env", setEnvironmentVariables: true)  // 使用默认层级 400
+    .AddEnvFile(".env", setEnvironmentVariables: true)  // 使用默认层级 400
     .Build();
 
 // .env 文件中的 DATABASE__HOST=localhost 会：
@@ -235,7 +235,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 400
     .Build();
 

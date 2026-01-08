@@ -38,7 +38,7 @@ public class IniCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
+            .AddIniFile(iniPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -59,7 +59,7 @@ public class IniCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
+            .AddIniFile(iniPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -78,7 +78,7 @@ public class IniCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddIniFile(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -87,7 +87,7 @@ public class IniCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
+            .AddIniFile(iniPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("NewValue", cfg2["App:NewKey"]);
@@ -105,7 +105,7 @@ public class IniCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
+            .AddIniFile(iniPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -125,7 +125,7 @@ public class IniCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddIniFile(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -134,7 +134,7 @@ public class IniCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
+            .AddIniFile(iniPath, level: 0, writeable: false)
             .Build();
 
         var removedValue = cfg2["App:ToRemove"];

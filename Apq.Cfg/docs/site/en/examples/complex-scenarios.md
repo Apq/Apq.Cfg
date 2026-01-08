@@ -7,7 +7,7 @@ Enterprise application configuration patterns.
 ```csharp
 var cfg = new CfgBuilder()
     // Base configuration (uses default level 0)
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
 
     // Service discovery (uses default level 200)
     .AddConsul(options =>

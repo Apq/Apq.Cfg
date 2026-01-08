@@ -8,7 +8,7 @@ Apq.Cfg 提供强大的文件编码检测和处理能力。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false) // 自动检测编码
+    .AddJsonFile("config.json", level: 0, writeable: false) // 自动检测编码
     .Build();
 ```
 
@@ -45,7 +45,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, encoding: options)
+    .AddJsonFile("config.json", level: 0, writeable: true, encoding: options)
     .Build();
 ```
 
@@ -70,12 +70,12 @@ var cfg = new CfgBuilder()
 ```csharp
 // 默认配置：自动检测读取，UTF-8 无 BOM 写入
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, encoding: EncodingOptions.Default)
+    .AddJsonFile("config.json", level: 0, writeable: true, encoding: EncodingOptions.Default)
     .Build();
 
 // PowerShell 脚本配置：UTF-8 带 BOM
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, encoding: EncodingOptions.PowerShell)
+    .AddJsonFile("config.json", level: 0, writeable: true, encoding: EncodingOptions.PowerShell)
     .Build();
 ```
 
@@ -89,7 +89,7 @@ var cfg = new CfgBuilder()
 var cfg = new CfgBuilder()
     .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
     .AddWriteEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -101,7 +101,7 @@ var cfg = new CfgBuilder()
     .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
     // 所有 INI 文件使用 GBK
     .AddReadEncodingMappingWildcard("*.ini", Encoding.GetEncoding("GBK"))
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -111,7 +111,7 @@ var cfg = new CfgBuilder()
 var cfg = new CfgBuilder()
     // 日志文件使用 Unicode
     .AddWriteEncodingMappingRegex(@"logs[/\\].*\.log$", Encoding.Unicode)
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -145,7 +145,7 @@ var cfg = new CfgBuilder()
     {
         Console.WriteLine($"检测到编码: {result}");
     })
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -199,7 +199,7 @@ FileCfgSourceBase.EncodingDetector.InvalidateCache("config.json");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 // 默认写入策略就是 UTF-8 无 BOM
 ```
@@ -213,7 +213,7 @@ var cfg = new CfgBuilder()
     // 遗留 INI 文件使用 GBK
     .AddReadEncodingMappingWildcard("*.ini", Encoding.GetEncoding("GBK"))
     .AddWriteEncodingMappingWildcard("*.ini", Encoding.GetEncoding("GBK"))
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -228,7 +228,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddJson("legacy.json", level: 0, writeable: true, encoding: options)
+    .AddJsonFile("legacy.json", level: 0, writeable: true, encoding: options)
     .Build();
 ```
 

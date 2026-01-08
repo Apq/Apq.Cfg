@@ -69,7 +69,7 @@ public class ConcurrencyBenchmarks : IDisposable
                     }
                     """);
                 _cfg = new CfgBuilder()
-                    .AddJson(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .AddJsonFile(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
                     .Build();
                 break;
 
@@ -103,7 +103,7 @@ public class ConcurrencyBenchmarks : IDisposable
                     Key16=Value16
                     """);
                 _cfg = new CfgBuilder()
-                    .AddIni(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .AddIniFile(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
                     .Build();
                 break;
 
@@ -141,7 +141,7 @@ public class ConcurrencyBenchmarks : IDisposable
                     </configuration>
                     """);
                 _cfg = new CfgBuilder()
-                    .AddXml(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .AddXmlFile(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
                     .Build();
                 break;
 
@@ -173,7 +173,7 @@ public class ConcurrencyBenchmarks : IDisposable
                       Key16: Value16
                     """);
                 _cfg = new CfgBuilder()
-                    .AddYaml(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .AddYamlFile(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
                     .Build();
                 break;
 
@@ -207,7 +207,7 @@ public class ConcurrencyBenchmarks : IDisposable
                     Key16 = "Value16"
                     """);
                 _cfg = new CfgBuilder()
-                    .AddToml(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
+                    .AddTomlFile(_configPath, level: 0, writeable: true, isPrimaryWriter: true)
                     .Build();
                 break;
         }

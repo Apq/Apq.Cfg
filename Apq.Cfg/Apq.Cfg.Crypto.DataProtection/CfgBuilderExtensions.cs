@@ -19,7 +19,7 @@ public static class CfgBuilderExtensions
     /// <code>
     /// var dataProtectionProvider = DataProtectionProvider.Create("MyApp");
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddDataProtectionEncryption(dataProtectionProvider)
     ///     .Build();
     /// </code>
@@ -45,7 +45,7 @@ public static class CfgBuilderExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddDataProtectionEncryption("MyApp")
     ///     .Build();
     /// </code>
@@ -72,7 +72,7 @@ public static class CfgBuilderExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddDataProtectionEncryption(new DirectoryInfo("/keys"), "MyApp")
     ///     .Build();
     /// </code>

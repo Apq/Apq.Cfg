@@ -18,13 +18,13 @@ public static class ConfigurationBuilder
         var builder = new CfgBuilder();
 
         // 层级 0：基础配置，所有环境共享（默认层级）
-        builder.AddJson("config.json", optional: true);
+        builder.AddJsonFile("config.json", optional: true);
 
         // 层级 1：环境特定配置
-        builder.AddJson($"config.{environment}.json", level: 1, optional: true);
+        builder.AddJsonFile($"config.{environment}.json", level: 1, optional: true);
 
         // 层级 4：机器特定配置（可选）
-        builder.AddJson($"config.{environment}.{Environment.MachineName}.json",
+        builder.AddJsonFile($"config.{environment}.{Environment.MachineName}.json",
                      level: 4, optional: true);
 
         // 层级 200：远程配置中心（生产环境，使用默认层级）

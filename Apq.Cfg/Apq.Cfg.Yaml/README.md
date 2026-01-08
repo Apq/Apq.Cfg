@@ -22,10 +22,10 @@ YAML 文件配置源扩展包。
 
 ```csharp
 // 使用默认层级 0
-.AddYaml("config.yaml")
+.AddYamlFile("config.yaml")
 
 // 指定自定义层级
-.AddYaml("config.yaml", level: 50)
+.AddYamlFile("config.yaml", level: 50)
 ```
 
 ## 用法
@@ -35,7 +35,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", level: 0, writeable: true)
+    .AddYamlFile("config.yaml", level: 0, writeable: true)
     .Build();
 
 // 使用索引器访问

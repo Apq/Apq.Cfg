@@ -112,23 +112,23 @@ public class RemoveBenchmarks : IDisposable
     private void CreateCfgInstances()
     {
         _jsonCfg = new CfgBuilder()
-            .AddJson(_jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(_jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         _iniCfg = new CfgBuilder()
-            .AddIni(_iniPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddIniFile(_iniPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         _xmlCfg = new CfgBuilder()
-            .AddXml(_xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddXmlFile(_xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         _yamlCfg = new CfgBuilder()
-            .AddYaml(_yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddYamlFile(_yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         _tomlCfg = new CfgBuilder()
-            .AddToml(_tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddTomlFile(_tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
     }
 

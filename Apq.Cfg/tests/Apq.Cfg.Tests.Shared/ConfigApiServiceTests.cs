@@ -29,7 +29,7 @@ public class ConfigApiServiceTests : IDisposable
         var jsonPath = Path.Combine(_testDir, $"config_{Guid.NewGuid():N}.json");
         File.WriteAllText(jsonPath, json);
         return new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: writeable, isPrimaryWriter: writeable)
+            .AddJsonFile(jsonPath, level: 0, writeable: writeable, isPrimaryWriter: writeable)
             .Build();
     }
 

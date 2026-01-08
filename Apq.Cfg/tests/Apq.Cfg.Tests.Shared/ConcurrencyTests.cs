@@ -40,7 +40,7 @@ public class ConcurrencyTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act - 并发读取
@@ -83,7 +83,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, """{"Initial": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 并发写入（到 Pending）
@@ -126,7 +126,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, """{"Existing": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 并发读写
@@ -194,7 +194,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, """{"Initial": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 先设置一些值
@@ -208,7 +208,7 @@ public class ConcurrencyTests : IDisposable
 
         // Assert - 验证数据完整性
         using var cfg2 = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         for (int i = 0; i < 10; i++)
@@ -225,7 +225,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act - 并发释放
@@ -261,7 +261,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act - 并发异步释放
@@ -297,7 +297,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act - 并发获取 IConfigurationRoot
@@ -333,8 +333,8 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(overridePath, """{"Shared": "Override", "OverrideOnly": "OverrideValue"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(basePath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 并发访问多层级配置
@@ -389,7 +389,7 @@ public class ConcurrencyTests : IDisposable
         File.WriteAllText(jsonPath, json.ToString());
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 并发删除

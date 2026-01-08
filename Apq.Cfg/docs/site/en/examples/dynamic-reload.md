@@ -6,7 +6,7 @@ Configuration hot reload examples.
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
+    .AddJsonFile("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>

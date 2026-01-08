@@ -81,8 +81,8 @@ public ICfgRoot Build()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: true, optional: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.local.json", level: 1, writeable: true, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```

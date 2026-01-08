@@ -37,7 +37,7 @@ public class YamlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -59,7 +59,7 @@ public class YamlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -79,7 +79,7 @@ public class YamlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddYamlFile(yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -88,7 +88,7 @@ public class YamlCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("NewValue", cfg2["App:NewKey"]);
@@ -108,7 +108,7 @@ public class YamlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -126,7 +126,7 @@ public class YamlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -146,7 +146,7 @@ public class YamlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddYamlFile(yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -155,7 +155,7 @@ public class YamlCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         var removedValue = cfg2["App:ToRemove"];

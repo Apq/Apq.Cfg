@@ -16,10 +16,10 @@ dotnet add package Apq.Cfg.Toml
 
 ```csharp
 // 使用默认层级 0
-.AddToml("config.toml")
+.AddTomlFile("config.toml")
 
 // 指定自定义层级
-.AddToml("config.toml", level: 5)
+.AddTomlFile("config.toml", level: 5)
 ```
 
 ## 基本用法
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Toml;
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml")  // 使用默认层级 0
+    .AddTomlFile("config.toml")  // 使用默认层级 0
     .Build();
 ```
 
@@ -37,8 +37,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", reloadOnChange: true)
-    .AddToml("config.local.toml", level: 1, optional: true, reloadOnChange: true)
+    .AddTomlFile("config.toml", reloadOnChange: true)
+    .AddTomlFile("config.local.toml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -46,7 +46,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", writeable: true, isPrimaryWriter: true)
+    .AddTomlFile("config.toml", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -170,7 +170,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", encoding: options)
+    .AddTomlFile("config.toml", encoding: options)
     .Build();
 ```
 
@@ -178,8 +178,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddToml("config.toml", level: 1, optional: true)
+    .AddJsonFile("config.json")
+    .AddTomlFile("config.toml", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```

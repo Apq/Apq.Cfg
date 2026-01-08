@@ -70,7 +70,7 @@ public partial class AppConfig
 
 // 3. 使用生成的绑定方法
 var cfg = new CfgBuilder()
-    .AddJson(""config.json"")
+    .AddJsonFile(""config.json"")
     .Build();
 
 var appConfig = AppConfig.BindFrom(cfg.GetSection(""AppSettings""));
@@ -318,7 +318,7 @@ partial class DatabaseConfig
         
         // 创建一个简单的配置
         var cfg = new CfgBuilder()
-            .AddJson(Path.Combine(baseDir, "config.json"), level: 0, writeable: false, optional: true, reloadOnChange: false)
+            .AddJsonFile(Path.Combine(baseDir, "config.json"), level: 0, writeable: false, optional: true, reloadOnChange: false)
             .Build();
 
         // 由于源生成器需要在编译时生成代码，这里只能展示概念

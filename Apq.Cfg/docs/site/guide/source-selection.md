@@ -40,8 +40,8 @@
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddJsonFile($"config.{env}.json", level: 1, writeable: false, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
@@ -53,7 +53,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new ConsulCfgSource(options => {
         options.Address = "http://consul:8500";
         options.KeyPrefix = $"services/{serviceName}/";
@@ -69,7 +69,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new YamlFileCfgSource("/config/app-config.yaml", level: 1, 
         writeable: false, optional: false, reloadOnChange: true))
     .AddEnvironmentVariables(level: 2)
@@ -83,7 +83,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new NacosCfgSource(options => {
         options.ServerAddresses = "mse-xxx.nacos.mse.aliyuncs.com:8848";
         options.AccessKey = Environment.GetEnvironmentVariable("NACOS_AK");
@@ -101,7 +101,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new ApolloCfgSource(options => {
         options.AppId = "my-app";
         options.MetaServer = "http://apollo-meta:8080";
@@ -119,7 +119,7 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSource(new VaultCfgSource(
         address: "https://vault.example.com:8200",
         roleId: Environment.GetEnvironmentVariable("VAULT_ROLE_ID")!,
@@ -156,8 +156,8 @@ var cfg = new CfgBuilder()
 **推荐配置**：
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.Development.json", level: 1, writeable: false, optional: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.Development.json", level: 1, writeable: false, optional: true)
     .AddSource(new EnvFileCfgSource(".env", level: 2, optional: true))
     .AddSource(new EnvFileCfgSource(".env.local", level: 3, optional: true))
     .AddEnvironmentVariables(level: 4, prefix: "APP_")
@@ -181,13 +181,13 @@ level 20+:   环境变量/命令行（覆盖配置）
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置（打包在应用中）
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     
     // 环境特定配置（可选）
-    .AddJson($"config.{env}.json", level: 1, writeable: false, optional: true)
+    .AddJsonFile($"config.{env}.json", level: 1, writeable: false, optional: true)
     
     // 本地覆盖（开发用，不提交版本控制）
-    .AddJson("config.local.json", level: 2, writeable: true, optional: true, isPrimaryWriter: true)
+    .AddJsonFile("config.local.json", level: 2, writeable: true, optional: true, isPrimaryWriter: true)
     
     // 远程配置中心（生产环境）
     .AddSource(new ConsulCfgSource(options => { /* ... */ }, level: 10))
@@ -242,7 +242,7 @@ Apq.Cfg 兼容 `Microsoft.Extensions.Configuration`，可以通过 `ToMicrosoftC
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 // 转换为 IConfiguration，兼容现有代码

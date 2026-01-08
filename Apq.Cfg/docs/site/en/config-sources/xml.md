@@ -16,10 +16,10 @@ If you don't specify the `level` parameter, the default level will be used:
 
 ```csharp
 // Uses default level 0
-.AddXml("config.xml")
+.AddXmlFile("config.xml")
 
 // Specify custom level
-.AddXml("config.xml", level: 10)
+.AddXmlFile("config.xml", level: 10)
 ```
 
 ## Basic Usage
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Xml;
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml")  // Uses default level 0
+    .AddXmlFile("config.xml")  // Uses default level 0
     .Build();
 ```
 

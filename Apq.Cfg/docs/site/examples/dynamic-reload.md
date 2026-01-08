@@ -8,7 +8,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // 使用默认层级 0
+    .AddJsonFile("config.json", reloadOnChange: true)  // 使用默认层级 0
     .Build();
 
 // 监听变更
@@ -174,8 +174,8 @@ public class DynamicConfigService : BackgroundService
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // 默认层级 0
-    .AddJson("config.local.json", level: 1, reloadOnChange: true)  // 指定层级 1
+    .AddJsonFile("config.json", reloadOnChange: true)  // 默认层级 0
+    .AddJsonFile("config.local.json", level: 1, reloadOnChange: true)  // 指定层级 1
     .Build();
 
 // 假设两个文件都有 "Timeout" 配置
@@ -196,7 +196,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true, reloadOnChange: true)  // 默认层级 0
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true, reloadOnChange: true)  // 默认层级 0
     .Build();
 
 // 修改配置
@@ -214,8 +214,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置动态重载
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", reloadOnChange: true)  // 默认层级 0
-    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true, reloadOnChange: true)
+    .AddJsonFile("config.json", reloadOnChange: true)  // 默认层级 0
+    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true, reloadOnChange: true)
     .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true, optional: true)  // 默认层级 200
     .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 

@@ -433,7 +433,7 @@ public class CryptoTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddAesGcmEncryption(_testKey)
             .Build();
 
@@ -450,7 +450,7 @@ public class CryptoTests : IDisposable
         File.WriteAllText(jsonPath, """{"AppName": "Test"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .AddAesGcmEncryption(_testKey)
             .Build();
 
@@ -482,7 +482,7 @@ public class CryptoTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -511,7 +511,7 @@ public class CryptoTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -541,7 +541,7 @@ public class CryptoTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddAesGcmEncryption(_testKey)
             .AddSensitiveMasking()
             .Build();
@@ -575,7 +575,7 @@ public class CryptoTests : IDisposable
                 """);
 
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .AddAesGcmEncryptionFromEnv(envVarName)
                 .Build();
 
@@ -1000,7 +1000,7 @@ public class CryptoTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddAesCbcEncryption(encKey, hmacKey)
             .Build();
 
@@ -1024,7 +1024,7 @@ public class CryptoTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddChaCha20Encryption(_testKey)
             .Build();
 
@@ -1052,7 +1052,7 @@ public class CryptoTests : IDisposable
 
         // Act
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSm4Encryption(key)
             .Build();
 
@@ -1083,7 +1083,7 @@ public class CryptoTests : IDisposable
         // Act
 #pragma warning disable CS0618
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddTripleDesEncryption(key)
             .Build();
 #pragma warning restore CS0618

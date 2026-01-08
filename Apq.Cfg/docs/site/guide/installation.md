@@ -129,7 +129,7 @@ using Apq.Cfg;
 // { "Test": { "Key": "Hello, Apq.Cfg!" } }
 
 var cfg = new CfgBuilder()
-    .AddJson("test.json", level: 0, writeable: false)
+    .AddJsonFile("test.json", level: 0, writeable: false)
     .Build();
 
 Console.WriteLine(cfg["Test:Key"]);

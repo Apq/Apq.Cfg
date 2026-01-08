@@ -8,7 +8,7 @@ Apq.Cfg 提供了内置的配置验证框架，支持在构建时或运行时验
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v
         .Required("Database:ConnectionString")
         .Range("Database:Port", 1, 65535)
@@ -34,13 +34,13 @@ if (!result.IsValid)
 ```csharp
 // 构建并验证，失败时抛出异常
 var (cfg, result) = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v.Required("Database:ConnectionString"))
     .BuildAndValidate();
 
 // 构建并验证，不抛出异常
 var (cfg2, result2) = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v.Required("Database:ConnectionString"))
     .BuildAndValidate(throwOnError: false);
 
@@ -178,7 +178,7 @@ else
 
 ```csharp
 services.AddApqCfgWithValidation(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v
         .Required("Database:ConnectionString")
         .Range("Database:Port", 1, 65535)));
@@ -187,7 +187,7 @@ services.AddApqCfgWithValidation(cfg => cfg
 ### 注册验证器
 
 ```csharp
-services.AddApqCfg(cfg => cfg.AddJson("config.json", level: 0));
+services.AddApqCfg(cfg => cfg.AddJsonFile("config.json", level: 0));
 services.AddConfigValidator(v => v
     .Required("Database:ConnectionString")
     .Range("Database:Port", 1, 65535));

@@ -8,7 +8,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 使用默认层级 0
+    .AddJsonFile("config.json")  // 使用默认层级 0
     .Build();
 ```
 
@@ -18,8 +18,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                           // 默认层级 0
-    .AddJson("config.local.json", level: 50, writeable: true, optional: true)
+    .AddJsonFile("config.json")                                           // 默认层级 0
+    .AddJsonFile("config.local.json", level: 50, writeable: true, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")                          // 默认层级 400
     .Build();
 ```
@@ -41,8 +41,8 @@ var cfg = new CfgBuilder()
 // config.local.json: { "Key": "value2" }
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                    // 使用默认层级 0
-    .AddJson("config.local.json", level: 50)   // 自定义层级 50
+    .AddJsonFile("config.json")                    // 使用默认层级 0
+    .AddJsonFile("config.local.json", level: 50)   // 自定义层级 50
     .AddEnvironmentVariables()                 // 使用默认层级 400
     .Build();
 

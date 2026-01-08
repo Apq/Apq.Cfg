@@ -16,10 +16,10 @@ If you don't specify the `level` parameter, the default level will be used:
 
 ```csharp
 // Uses default level 0
-.AddToml("config.toml")
+.AddTomlFile("config.toml")
 
 // Specify custom level
-.AddToml("config.toml", level: 10)
+.AddTomlFile("config.toml", level: 10)
 ```
 
 ## Basic Usage
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Toml;
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml")  // Uses default level 0
+    .AddTomlFile("config.toml")  // Uses default level 0
     .Build();
 ```
 

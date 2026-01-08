@@ -174,7 +174,7 @@ public class VaultCfgTests : IAsyncLifetime
             _cfg.SaveAsync().Wait();
 
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .AddVault(options =>
                 {
                     options.Address = TestSettings.VaultAddress!;

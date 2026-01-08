@@ -37,7 +37,7 @@ public static class DependencyInjectionDemo
         // 方式1: 使用 AddApqCfg 注册配置
         Console.WriteLine("7.1 注册 Apq.Cfg 到 DI 容器:");
         services.AddApqCfg(cfg => cfg
-            .AddJson(configPath, level: 0, writeable: true, isPrimaryWriter: true));
+            .AddJsonFile(configPath, level: 0, writeable: true, isPrimaryWriter: true));
         Console.WriteLine("    已注册 ICfgRoot 和 IConfigurationRoot");
 
         // 方式2: 绑定强类型配置

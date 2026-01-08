@@ -17,7 +17,7 @@ Real-time configuration updates without application restart:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, reloadOnChange: true)
     .Build();
 
 cfg.ConfigChanges.Subscribe(e =>
@@ -61,7 +61,7 @@ Built-in configuration encryption and masking to protect sensitive information:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddAesGcmEncryptionFromEnv()  // Auto-decrypt {ENC} prefixed values
     .AddSensitiveMasking()          // Auto-mask in log output
     .Build();
@@ -81,7 +81,7 @@ Support variable references for dynamic configuration composition (`Microsoft.Ex
 ```csharp
 // config.json: { "App:Name": "MyApp", "App:LogPath": "${App:Name}/logs" }
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .Build();
 
 // Resolve variable references
@@ -107,7 +107,7 @@ dotnet add package Apq.Cfg
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 var appName = cfg["App:Name"];

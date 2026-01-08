@@ -11,7 +11,7 @@ using Apq.Cfg;
 using Apq.Cfg.Snapshot;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 // 导出为 JSON（默认格式）

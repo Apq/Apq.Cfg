@@ -35,7 +35,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act & Assert
@@ -50,7 +50,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act
@@ -68,7 +68,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act - 多个订阅者
@@ -90,7 +90,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var eventCount = 0;
@@ -341,7 +341,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act
@@ -364,7 +364,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -386,7 +386,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var options = new DynamicReloadOptions { DebounceMs = 50 };
@@ -407,7 +407,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act
@@ -430,7 +430,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var completed = false;
@@ -454,7 +454,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var completed = false;
@@ -482,7 +482,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions
@@ -506,7 +506,7 @@ public class ConfigChangesSubscriptionTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "OriginalValue"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions

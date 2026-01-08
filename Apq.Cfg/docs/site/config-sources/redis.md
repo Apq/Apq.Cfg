@@ -210,7 +210,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // Redis 远程配置（使用默认层级 100）
     .AddRedis(options =>
     {

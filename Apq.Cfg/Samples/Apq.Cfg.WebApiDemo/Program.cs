@@ -22,23 +22,23 @@ Console.WriteLine($"当前环境: {environment}");
 // ============================================================
 var cfg = new CfgBuilder()
     // === Level 0: 基础配置（多种格式） ===
-    .AddJson("config/base/app.json", level: 0)
-    .AddYaml("config/base/database.yaml", level: 0)
-    .AddToml("config/base/cache.toml", level: 0)
-    .AddXml("config/base/services.xml", level: 0)
-    .AddIni("config/base/security.ini", level: 0)
+    .AddJsonFile("config/base/app.json", level: 0)
+    .AddYamlFile("config/base/database.yaml", level: 0)
+    .AddTomlFile("config/base/cache.toml", level: 0)
+    .AddXmlFile("config/base/services.xml", level: 0)
+    .AddIniFile("config/base/security.ini", level: 0)
 
     // === Level 1: WebApi 配置 ===
-    .AddJson("config/apqcfg.json", level: 1)
+    .AddJsonFile("config/apqcfg.json", level: 1)
 
     // === Level 5: 功能开关配置 ===
-    .AddJson("config/features/feature-flags.json", level: 5)
+    .AddJsonFile("config/features/feature-flags.json", level: 5)
 
     // === Level 10: 环境特定配置 ===
-    .AddEnv($"config/env/{environment.ToLower()}.env", level: 10, optional: true)
+    .AddEnvFile($"config/env/{environment.ToLower()}.env", level: 10, optional: true)
 
     // === Level 15: 本地覆盖配置（可写，作为主写入源） ===
-    .AddJson("config/local.json", level: 15, writeable: true, isPrimaryWriter: true, optional: true)
+    .AddJsonFile("config/local.json", level: 15, writeable: true, isPrimaryWriter: true, optional: true)
 
     .Build();
 

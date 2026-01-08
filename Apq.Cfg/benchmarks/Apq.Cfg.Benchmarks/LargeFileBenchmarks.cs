@@ -167,7 +167,7 @@ public class LargeFileBenchmarks : IDisposable
     public void Json_Load()
     {
         using var cfg = new CfgBuilder()
-            .AddJson(_jsonPath, level: 0, writeable: false)
+            .AddJsonFile(_jsonPath, level: 0, writeable: false)
             .Build();
     }
 
@@ -176,7 +176,7 @@ public class LargeFileBenchmarks : IDisposable
     public void Ini_Load()
     {
         using var cfg = new CfgBuilder()
-            .AddIni(_iniPath, level: 0, writeable: false)
+            .AddIniFile(_iniPath, level: 0, writeable: false)
             .Build();
     }
 
@@ -185,7 +185,7 @@ public class LargeFileBenchmarks : IDisposable
     public void Xml_Load()
     {
         using var cfg = new CfgBuilder()
-            .AddXml(_xmlPath, level: 0, writeable: false)
+            .AddXmlFile(_xmlPath, level: 0, writeable: false)
             .Build();
     }
 
@@ -194,7 +194,7 @@ public class LargeFileBenchmarks : IDisposable
     public void Yaml_Load()
     {
         using var cfg = new CfgBuilder()
-            .AddYaml(_yamlPath, level: 0, writeable: false)
+            .AddYamlFile(_yamlPath, level: 0, writeable: false)
             .Build();
     }
 
@@ -203,7 +203,7 @@ public class LargeFileBenchmarks : IDisposable
     public void Toml_Load()
     {
         using var cfg = new CfgBuilder()
-            .AddToml(_tomlPath, level: 0, writeable: false)
+            .AddTomlFile(_tomlPath, level: 0, writeable: false)
             .Build();
     }
 
@@ -216,7 +216,7 @@ public class LargeFileBenchmarks : IDisposable
     public string? Json_LoadAndRead()
     {
         using var cfg = new CfgBuilder()
-            .AddJson(_jsonPath, level: 0, writeable: false)
+            .AddJsonFile(_jsonPath, level: 0, writeable: false)
             .Build();
         return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
@@ -226,7 +226,7 @@ public class LargeFileBenchmarks : IDisposable
     public string? Ini_LoadAndRead()
     {
         using var cfg = new CfgBuilder()
-            .AddIni(_iniPath, level: 0, writeable: false)
+            .AddIniFile(_iniPath, level: 0, writeable: false)
             .Build();
         return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
@@ -236,7 +236,7 @@ public class LargeFileBenchmarks : IDisposable
     public string? Xml_LoadAndRead()
     {
         using var cfg = new CfgBuilder()
-            .AddXml(_xmlPath, level: 0, writeable: false)
+            .AddXmlFile(_xmlPath, level: 0, writeable: false)
             .Build();
         return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
@@ -246,7 +246,7 @@ public class LargeFileBenchmarks : IDisposable
     public string? Yaml_LoadAndRead()
     {
         using var cfg = new CfgBuilder()
-            .AddYaml(_yamlPath, level: 0, writeable: false)
+            .AddYamlFile(_yamlPath, level: 0, writeable: false)
             .Build();
         return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }
@@ -256,7 +256,7 @@ public class LargeFileBenchmarks : IDisposable
     public string? Toml_LoadAndRead()
     {
         using var cfg = new CfgBuilder()
-            .AddToml(_tomlPath, level: 0, writeable: false)
+            .AddTomlFile(_tomlPath, level: 0, writeable: false)
             .Build();
         return cfg[$"Section{ItemCount / 20}:Key{ItemCount / 2}"];
     }

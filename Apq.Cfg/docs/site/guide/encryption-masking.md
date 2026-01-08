@@ -31,7 +31,7 @@ using Apq.Cfg.Crypto;
 // }
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddAesGcmEncryptionFromEnv()  // 从环境变量读取密钥
     .Build();
 
@@ -43,7 +43,7 @@ var password = cfg["Database:Password"];
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSensitiveMasking()  // 添加脱敏支持
     .Build();
 
@@ -78,13 +78,13 @@ Apq.Cfg.Crypto 基于 BouncyCastle 实现，内置支持以下加密算法：
 ```csharp
 // 方式 1：直接提供 Base64 密钥
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddAesGcmEncryption("your-base64-encoded-key")
     .Build();
 
 // 方式 2：从环境变量读取密钥（推荐）
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddAesGcmEncryptionFromEnv("APQ_CFG_ENCRYPTION_KEY")
     .Build();
 ```
@@ -95,7 +95,7 @@ AES-CBC 需要两个密钥：加密密钥和 HMAC 密钥。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddAesCbcEncryption(
         base64EncryptionKey: "encryption-key-base64",
         base64HmacKey: "hmac-key-base64")
@@ -106,7 +106,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddChaCha20Encryption("your-256-bit-key-base64")
     .Build();
 ```
@@ -116,13 +116,13 @@ var cfg = new CfgBuilder()
 ```csharp
 // 从 PEM 文件加载
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddRsaEncryption("path/to/private.pem")
     .Build();
 
 // 从 PEM 字符串加载
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddRsaEncryptionFromPem(pemString)
     .Build();
 ```
@@ -133,7 +133,7 @@ var cfg = new CfgBuilder()
 using Apq.Cfg.Crypto.Providers;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSm4Encryption("your-128-bit-key-base64", Sm4Mode.CBC)
     .Build();
 ```
@@ -142,7 +142,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddAesGcmEncryption("key", options =>
     {
         // 自定义加密前缀
@@ -190,7 +190,7 @@ public class MyCustomCryptoProvider : ICryptoProvider
 
 // 使用自定义提供者
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddEncryption(new MyCustomCryptoProvider())
     .Build();
 ```
@@ -207,7 +207,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSensitiveMasking()
     .Build();
 
@@ -232,7 +232,7 @@ foreach (var (key, value) in snapshot)
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddSensitiveMasking(options =>
     {
         // 自定义敏感键模式
@@ -276,7 +276,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddAesGcmEncryptionFromEnv()  // 加密支持
     .AddSensitiveMasking()          // 脱敏支持
     .Build();

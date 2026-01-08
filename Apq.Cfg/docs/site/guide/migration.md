@@ -28,8 +28,8 @@ var config = new ConfigurationBuilder()
 
 // 之后 (Apq.Cfg)
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{env}.json", level: 1, optional: true)
+    .AddJsonFile("config.json", level: 0)
+    .AddJsonFile($"config.{env}.json", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
@@ -44,7 +44,7 @@ var config = new ConfigurationBuilder()
 
 // 之后
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, reloadOnChange: true)
     .Build();
 ```
 
@@ -102,7 +102,7 @@ services.Configure<DatabaseOptions>(config.GetSection("Database"));
 
 // 之后
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 services.ConfigureApqCfg<DatabaseOptions>("Database");
@@ -159,7 +159,7 @@ var logPath = cfg.GetResolved("App:LogPath");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .AddAesGcmEncryptionFromEnv()
     .Build();
 
@@ -171,7 +171,7 @@ var password = cfg["Database:Password"];
 
 ```csharp
 var (cfg, result) = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v
         .Required("Database:ConnectionString")
         .Range("Server:Port", 1, 65535))
@@ -219,11 +219,11 @@ Apq.Cfg 推荐使用 `config.json` 而非 `appsettings.json`：
 
 ```csharp
 // 推荐
-.AddJson("config.json", level: 0)
-.AddJson("config.local.json", level: 1)
+.AddJsonFile("config.json", level: 0)
+.AddJsonFile("config.local.json", level: 1)
 
 // 不推荐
-.AddJson("appsettings.json", level: 0)
+.AddJsonFile("appsettings.json", level: 0)
 ```
 
 ### 层级设计
@@ -232,8 +232,8 @@ Apq.Cfg 使用 `level` 参数控制配置优先级，数值越大优先级越高
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)           // 基础配置
-    .AddJson("config.local.json", level: 1)     // 本地覆盖
+    .AddJsonFile("config.json", level: 0)           // 基础配置
+    .AddJsonFile("config.local.json", level: 1)     // 本地覆盖
     .AddEnvironmentVariables(level: 2)          // 环境变量最高
     .Build();
 ```
@@ -245,11 +245,11 @@ Apq.Cfg 的 `ICfgRoot` 实现了 `IDisposable` 和 `IAsyncDisposable`：
 ```csharp
 // 推荐使用 using
 using var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .Build();
 
 // 或在 DI 中自动管理生命周期
-services.AddApqCfg(cfg => cfg.AddJson("config.json", level: 0));
+services.AddApqCfg(cfg => cfg.AddJsonFile("config.json", level: 0));
 ```
 
 ## 下一步

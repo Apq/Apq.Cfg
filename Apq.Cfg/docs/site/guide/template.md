@@ -23,7 +23,7 @@ Apq.Cfg 支持在配置值中使用变量引用，实现配置的动态组合和
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 // 使用 GetResolved 获取解析后的值
@@ -199,7 +199,7 @@ var options = new VariableResolutionOptions
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .ConfigureVariableResolution(options =>
     {
         options.MaxRecursionDepth = 5;
@@ -229,7 +229,7 @@ public class CustomResolver : IVariableResolver
 
 // 注册自定义解析器
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddVariableResolver(new CustomResolver())
     .Build();
 

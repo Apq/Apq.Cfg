@@ -49,7 +49,7 @@ public class ReadWriteBenchmarks : IDisposable
             }
             """);
         _jsonCfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 创建 .env 配置文件
@@ -64,7 +64,7 @@ public class ReadWriteBenchmarks : IDisposable
             APP_ENABLED=true
             """);
         _envCfg = new CfgBuilder()
-            .AddEnv(envPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddEnvFile(envPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 创建 INI 配置文件
@@ -82,7 +82,7 @@ public class ReadWriteBenchmarks : IDisposable
             Enabled=true
             """);
         _iniCfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddIniFile(iniPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 创建 XML 配置文件
@@ -104,7 +104,7 @@ public class ReadWriteBenchmarks : IDisposable
             </configuration>
             """);
         _xmlCfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddXmlFile(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 创建 YAML 配置文件
@@ -121,7 +121,7 @@ public class ReadWriteBenchmarks : IDisposable
               Enabled: true
             """);
         _yamlCfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddYamlFile(yamlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 创建 TOML 配置文件
@@ -139,7 +139,7 @@ public class ReadWriteBenchmarks : IDisposable
             Enabled = true
             """);
         _tomlCfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddTomlFile(tomlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
     }
 

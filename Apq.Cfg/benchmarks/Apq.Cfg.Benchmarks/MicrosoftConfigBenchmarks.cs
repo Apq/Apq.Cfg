@@ -53,7 +53,7 @@ public class MicrosoftConfigBenchmarks : IDisposable
             """);
 
         _cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 预先创建一个 Microsoft Configuration 用于读取测试

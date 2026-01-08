@@ -193,7 +193,7 @@ public class EncodingDetectionTests : IDisposable
         // Act - 使用 CfgBuilder 设置阈值
         using var cfg = new CfgBuilder()
             .WithEncodingConfidenceThreshold(0.7f)
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert - 配置应该能正常读取

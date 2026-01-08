@@ -11,8 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 使用 AddApqCfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json")  // 默认层级 0
-    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
+    .AddJsonFile("config.json")  // 默认层级 0
+    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 var app = builder.Build();
@@ -73,7 +73,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 注册配置
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json")  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
     .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 
 // 绑定选项
@@ -294,8 +294,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 配置 Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json")  // 默认层级 0
-    .AddJson($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
+    .AddJsonFile("config.json")  // 默认层级 0
+    .AddJsonFile($"config.{builder.Environment.EnvironmentName}.json", level: 1, optional: true)
     .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true, optional: true)  // 默认层级 200
     .AddEnvironmentVariables(prefix: "APP_"));  // 默认层级 400
 

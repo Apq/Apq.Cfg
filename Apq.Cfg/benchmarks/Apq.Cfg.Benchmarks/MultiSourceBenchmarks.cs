@@ -56,7 +56,7 @@ public class MultiSourceBenchmarks : IDisposable
             File.WriteAllText(jsonPath, content);
             // 每层只有一个配置源，最高层级设为可写（作为该层的主写入源）
             var isHighestLevel = i == SourceCount - 1;
-            builder.AddJson(jsonPath, level: i, writeable: isHighestLevel, isPrimaryWriter: isHighestLevel);
+            builder.AddJsonFile(jsonPath, level: i, writeable: isHighestLevel, isPrimaryWriter: isHighestLevel);
         }
 
         _cfg = builder.Build();

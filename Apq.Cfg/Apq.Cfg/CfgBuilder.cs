@@ -34,12 +34,12 @@ public sealed class CfgBuilder
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json")  // 使用默认层级 0
-    ///     .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    ///     .AddJsonFile("config.json")  // 使用默认层级 0
+    ///     .AddJsonFile("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     ///     .Build();
     /// </code>
     /// </example>
-    public CfgBuilder AddJson(string path, int level = CfgSourceLevels.Json, bool writeable = false, bool optional = true, bool reloadOnChange = true,
+    public CfgBuilder AddJsonFile(string path, int level = CfgSourceLevels.Json, bool writeable = false, bool optional = true, bool reloadOnChange = true,
         bool isPrimaryWriter = false, EncodingOptions? encoding = null, string? name = null)
     {
         _sources.Add(new JsonFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter, encoding, name));
@@ -56,7 +56,7 @@ public sealed class CfgBuilder
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json")
+    ///     .AddJsonFile("config.json")
     ///     .AddEnvironmentVariables(prefix: "APP_")  // 使用默认层级 20
     ///     .Build();
     /// </code>
@@ -78,7 +78,7 @@ public sealed class CfgBuilder
     /// // 添加自定义配置源
     /// var customSource = new CustomCfgSource();
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddSource(customSource)
     ///     .Build();
     /// </code>
@@ -207,7 +207,7 @@ public sealed class CfgBuilder
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddValueTransformer(new EncryptionTransformer(provider))
     ///     .Build();
     /// </code>
@@ -226,7 +226,7 @@ public sealed class CfgBuilder
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddValueMasker(new SensitiveMasker())
     ///     .Build();
     /// </code>
@@ -245,7 +245,7 @@ public sealed class CfgBuilder
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .ConfigureValueTransformer(options =>
     ///     {
     ///         options.EncryptedPrefix = "[ENCRYPTED]";
@@ -275,7 +275,7 @@ public sealed class CfgBuilder
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddValidation(v => v
     ///         .Required("Database:ConnectionString")
     ///         .Range("Database:Port", 1, 65535)
@@ -343,13 +343,13 @@ public sealed class CfgBuilder
     /// <code>
     /// // 构建并验证，失败时抛出异常
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddValidation(v => v.Required("Database:ConnectionString"))
     ///     .BuildAndValidate();
     ///
     /// // 构建并验证，不抛出异常
     /// var (cfg2, result) = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddValidation(v => v.Required("Database:ConnectionString"))
     ///     .BuildAndValidate(throwOnError: false);
     /// if (!result.IsValid)

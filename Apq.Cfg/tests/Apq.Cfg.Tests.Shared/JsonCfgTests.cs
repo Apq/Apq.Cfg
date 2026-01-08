@@ -34,7 +34,7 @@ public class JsonCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -57,7 +57,7 @@ public class JsonCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -81,7 +81,7 @@ public class JsonCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -98,7 +98,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -114,7 +114,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"Original": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -123,7 +123,7 @@ public class JsonCfgTests : IDisposable
 
         // Assert - 重新读取验证
         using var cfg2 = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("NewValue", cfg2["NewKey"]);
@@ -138,7 +138,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"ToRemove": "Value", "ToKeep": "Value2"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -147,7 +147,7 @@ public class JsonCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // 验证删除后值为 null 或空字符串
@@ -177,8 +177,8 @@ public class JsonCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: false)
-            .AddJson(overridePath, level: 1, writeable: false)
+            .AddJsonFile(basePath, level: 0, writeable: false)
+            .AddJsonFile(overridePath, level: 1, writeable: false)
             .Build();
 
         // Act & Assert
@@ -200,7 +200,7 @@ public class JsonCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -219,7 +219,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"BigNumber": 9223372036854775807}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -234,7 +234,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"Price": 123.456}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -251,7 +251,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"LogLevel": "Warning"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -266,7 +266,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"LogLevel": "warning"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -281,7 +281,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"NotANumber": "abc"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert - 无效值返回默认值（与 Microsoft.Extensions.Configuration 行为一致）
@@ -296,7 +296,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -313,7 +313,7 @@ public class JsonCfgTests : IDisposable
         File.WriteAllText(jsonPath, """{"NullableInt": 42}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert

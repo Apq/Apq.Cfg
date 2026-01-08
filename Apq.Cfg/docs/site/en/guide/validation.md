@@ -8,7 +8,7 @@ Apq.Cfg provides a built-in configuration validation framework that supports val
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v
         .Required("Database:ConnectionString")
         .Range("Database:Port", 1, 65535)
@@ -34,13 +34,13 @@ if (!result.IsValid)
 ```csharp
 // Build and validate, throw exception on failure
 var (cfg, result) = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v.Required("Database:ConnectionString"))
     .BuildAndValidate();
 
 // Build and validate, don't throw exception
 var (cfg2, result2) = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v.Required("Database:ConnectionString"))
     .BuildAndValidate(throwOnError: false);
 
@@ -178,7 +178,7 @@ else
 
 ```csharp
 services.AddApqCfgWithValidation(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v
         .Required("Database:ConnectionString")
         .Range("Database:Port", 1, 65535)));
@@ -187,7 +187,7 @@ services.AddApqCfgWithValidation(cfg => cfg
 ### Register Validator
 
 ```csharp
-services.AddApqCfg(cfg => cfg.AddJson("config.json", level: 0));
+services.AddApqCfg(cfg => cfg.AddJsonFile("config.json", level: 0));
 services.AddConfigValidator(v => v
     .Required("Database:ConnectionString")
     .Range("Database:Port", 1, 65535));

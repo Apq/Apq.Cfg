@@ -17,7 +17,7 @@ public static class CfgRootExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json")
+    ///     .AddJsonFile("config.json")
     ///     .Build()
     ///     .AddWebApi(builder.Services, options =>
     ///     {

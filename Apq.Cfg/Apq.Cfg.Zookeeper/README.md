@@ -36,7 +36,7 @@ using Apq.Cfg;
 using Apq.Cfg.Zookeeper;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddZookeeper(options => {
         options.ConnectionString = "localhost:2181";
         options.RootPath = "/app/config";
@@ -53,7 +53,7 @@ var dbPort = cfg.GetValue<int>("Database:Port");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddZookeeper("localhost:2181", "/app/config", level: 10)
     .Build();
 ```
@@ -172,8 +172,8 @@ cfg.ConfigChanges.Subscribe(change => {
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)                        // 基础配置
-    .AddJson("config.local.json", level: 1, writeable: true) // 本地覆盖
+    .AddJsonFile("config.json", level: 0)                        // 基础配置
+    .AddJsonFile("config.local.json", level: 1, writeable: true) // 本地覆盖
     .AddEnvironmentVariables(level: 2, prefix: "APP_")       // 环境变量
     .AddZookeeper("localhost:2181", "/app/config", level: 10) // Zookeeper 最高优先级
     .Build();

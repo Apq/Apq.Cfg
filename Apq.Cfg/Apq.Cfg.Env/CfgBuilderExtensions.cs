@@ -17,7 +17,7 @@ public static class CfgBuilderExtensions
     /// <param name="isPrimaryWriter">是否为默认写入目标，默认为false</param>
     /// <param name="setEnvironmentVariables">是否将配置写入系统环境变量，默认为false</param>
     /// <returns>配置构建器实例，支持链式调用</returns>
-    public static CfgBuilder AddEnv(this CfgBuilder builder, string path, int level = CfgSourceLevels.Env, bool writeable = false,
+    public static CfgBuilder AddEnvFile(this CfgBuilder builder, string path, int level = CfgSourceLevels.Env, bool writeable = false,
         bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false,
         bool setEnvironmentVariables = false)
     {

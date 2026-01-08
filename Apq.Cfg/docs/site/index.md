@@ -69,8 +69,8 @@ using Apq.Cfg;
 
 // 创建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddYaml("config.yaml", optional: true)
+    .AddJsonFile("config.json")
+    .AddYamlFile("config.yaml", optional: true)
     .AddEnvironmentVariables()
     .Build();
 

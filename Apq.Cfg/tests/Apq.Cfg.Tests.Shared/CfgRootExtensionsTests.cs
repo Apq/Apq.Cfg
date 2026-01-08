@@ -31,7 +31,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"IntValue": 42, "StringValue": "Hello"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -50,7 +50,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -69,7 +69,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"RequiredInt": 100, "RequiredString": "Required"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -85,7 +85,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -103,7 +103,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"Password": "MySecretPassword123"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act - 没有配置脱敏器时，返回原始值
@@ -121,7 +121,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"Database:Password": "MySecretPassword123"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -141,7 +141,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"AppName": "TestApp"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -160,7 +160,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -182,7 +182,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{"AppName": "TestApp", "Version": "1.0.0"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -209,7 +209,7 @@ public class CfgRootExtensionsTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -232,7 +232,7 @@ public class CfgRootExtensionsTests : IDisposable
         File.WriteAllText(jsonPath, """{}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act

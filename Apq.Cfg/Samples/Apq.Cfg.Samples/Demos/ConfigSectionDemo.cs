@@ -36,7 +36,7 @@ public static class ConfigSectionDemo
         """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(configPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(configPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 获取配置节

@@ -16,7 +16,7 @@ public static class CfgBuilderExtensions
     /// <param name="reloadOnChange">文件变更时是否自动重载，默认为true</param>
     /// <param name="isPrimaryWriter">是否为主要写入器，默认为false</param>
     /// <returns>配置构建器实例，支持链式调用</returns>
-    public static CfgBuilder AddToml(this CfgBuilder builder, string path, int level = CfgSourceLevels.Toml, bool writeable = false,
+    public static CfgBuilder AddTomlFile(this CfgBuilder builder, string path, int level = CfgSourceLevels.Toml, bool writeable = false,
         bool optional = true, bool reloadOnChange = true, bool isPrimaryWriter = false)
     {
         builder.AddSource(new TomlFileCfgSource(path, level, writeable, optional, reloadOnChange, isPrimaryWriter));

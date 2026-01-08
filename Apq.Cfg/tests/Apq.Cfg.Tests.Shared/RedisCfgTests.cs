@@ -158,7 +158,7 @@ public class RedisCfgTests : IAsyncLifetime
             _cfg.SaveAsync().Wait();
 
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .AddRedis(options =>
                 {
                     options.ConnectionString = TestSettings.RedisConnectionString;

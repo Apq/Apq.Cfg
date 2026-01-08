@@ -18,10 +18,10 @@ dotnet add package Apq.Cfg
 
 ```csharp
 // 使用默认层级 0
-.AddJson("config.json")
+.AddJsonFile("config.json")
 
 // 指定自定义层级
-.AddJson("config.json", level: 5)
+.AddJsonFile("config.json", level: 5)
 ```
 
 ## 基本用法
@@ -30,7 +30,7 @@ dotnet add package Apq.Cfg
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 使用默认层级 0
+    .AddJsonFile("config.json")  // 使用默认层级 0
     .Build();
 ```
 
@@ -38,8 +38,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson("config.local.json", level: 1, optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", level: 1, optional: true)
     .Build();
 ```
 
@@ -47,7 +47,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)
+    .AddJsonFile("config.json", reloadOnChange: true)
     .Build();
 ```
 
@@ -55,7 +55,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -171,7 +171,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", encoding: options)
+    .AddJsonFile("config.json", encoding: options)
     .Build();
 ```
 
@@ -192,8 +192,8 @@ var cfg = new CfgBuilder()
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson($"config.{environment}.json", level: 1, optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{environment}.json", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```

@@ -30,7 +30,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -63,7 +63,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -92,7 +92,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -128,7 +128,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -157,7 +157,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -183,7 +183,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         var existingConfig = new TestDatabaseConfig
@@ -214,7 +214,7 @@ public class SourceGeneratorTests : IDisposable
         File.WriteAllText(jsonPath, @"{}");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -241,7 +241,7 @@ public class SourceGeneratorTests : IDisposable
         }");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act - 使用生成的扩展方法

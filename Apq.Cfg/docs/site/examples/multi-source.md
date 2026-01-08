@@ -20,7 +20,7 @@
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
     .AddEnvironmentVariables(prefix: "APP_")  // 默认层级 400
     .Build();
 ```
@@ -29,9 +29,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 默认层级 0
-    .AddYaml("config.yaml", optional: true)  // 默认层级 0
-    .AddToml("config.toml", optional: true)  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
+    .AddYamlFile("config.yaml", optional: true)  // 默认层级 0
+    .AddTomlFile("config.toml", optional: true)  // 默认层级 0
     .Build();
 ```
 
@@ -45,11 +45,11 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
 var cfg = new CfgBuilder()
     // 基础配置（默认层级 0）
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // 环境特定配置（指定层级 1）
-    .AddJson($"config.{environment}.json", level: 1, optional: true)
+    .AddJsonFile($"config.{environment}.json", level: 1, optional: true)
     // 本地开发覆盖（不提交到版本控制）
-    .AddJson("config.local.json", level: 2, writeable: true, isPrimaryWriter: true, optional: true)
+    .AddJsonFile("config.local.json", level: 2, writeable: true, isPrimaryWriter: true, optional: true)
     // 环境变量（默认层级 400）
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
@@ -102,7 +102,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置（默认层级 0）
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // 远程动态配置（默认层级 200）
     .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true)
     // 环境变量覆盖（默认层级 400）
@@ -114,7 +114,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // 默认层级 0
+    .AddJsonFile("config.json")  // 默认层级 0
     .AddRedis("localhost:6379", "config:myapp", enableHotReload: true)  // 默认层级 100
     .AddEnvironmentVariables(prefix: "APP_")  // 默认层级 400
     .Build();
@@ -127,7 +127,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 普通配置（默认层级 0）
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // 远程配置（默认层级 200）
     .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true)
     // 敏感配置（默认层级 300）
@@ -165,7 +165,7 @@ Vault (secret/myapp):
 ```csharp
 var cfg = new CfgBuilder()
     // 本地回退（默认层级 0）
-    .AddJson("config.fallback.json")
+    .AddJsonFile("config.fallback.json")
     // 备用配置源（指定层级 5）
     .AddRedis("localhost:6379", "config:myapp", level: 5, optional: true)
     // 主配置源（指定层级 10）
@@ -183,7 +183,7 @@ var cfg = new CfgBuilder()
         options.KeyPrefix = "myapp/config/";
         options.EnableHotReload = true;
     }, optional: true)  // 默认层级 200
-    .AddJson("config.fallback.json")  // 默认层级 0
+    .AddJsonFile("config.fallback.json")  // 默认层级 0
     .Build();
 ```
 
@@ -198,10 +198,10 @@ var cfg = new CfgBuilder()
 // 层级 400: 环境变量 (.env, EnvironmentVariables)
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                                    // 层级 0
-    .AddJson($"config.{env}.json", level: 1, optional: true)                   // 层级 1（自定义）
+    .AddJsonFile("config.json")                                                    // 层级 0
+    .AddJsonFile($"config.{env}.json", level: 1, optional: true)                   // 层级 1（自定义）
     .AddConsul("http://consul:8500", "myapp/config/", enableHotReload: true)   // 层级 200
-    .AddJson("config.local.json", level: 250, writeable: true, isPrimaryWriter: true, optional: true)  // 层级 250（自定义）
+    .AddJsonFile("config.local.json", level: 250, writeable: true, isPrimaryWriter: true, optional: true)  // 层级 250（自定义）
     .AddEnvironmentVariables(prefix: "APP_")                                   // 层级 400
     .Build();
 ```
@@ -218,11 +218,11 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 
 var cfg = new CfgBuilder()
     // 基础配置（默认层级 0）
-    .AddJson("config.json")
-    .AddYaml("config.yaml", optional: true)
+    .AddJsonFile("config.json")
+    .AddYamlFile("config.yaml", optional: true)
 
     // 环境特定（指定层级 2）
-    .AddJson($"config.{environment}.json", level: 2, optional: true)
+    .AddJsonFile($"config.{environment}.json", level: 2, optional: true)
 
     // 远程配置（默认层级 200，生产环境）
     .AddConsul(
@@ -232,7 +232,7 @@ var cfg = new CfgBuilder()
         optional: environment != "Production")
 
     // 本地覆盖（指定层级 250，开发环境）
-    .AddJson("config.local.json", level: 250, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
+    .AddJsonFile("config.local.json", level: 250, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
 
     // 环境变量（默认层级 400）
     .AddEnvironmentVariables(prefix: "APP_")

@@ -17,7 +17,7 @@ public static class CfgBuilderExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddEncryption(new AesGcmCryptoProvider(key), options =>
     ///     {
     ///         options.EncryptedPrefix = "[ENCRYPTED]";
@@ -46,7 +46,7 @@ public static class CfgBuilderExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddSensitiveMasking(options =>
     ///     {
     ///         options.MaskString = "****";

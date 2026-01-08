@@ -22,10 +22,10 @@ XML 文件配置源扩展包。
 
 ```csharp
 // 使用默认层级 0
-.AddXml("config.xml")
+.AddXmlFile("config.xml")
 
 // 指定自定义层级
-.AddXml("config.xml", level: 50)
+.AddXmlFile("config.xml", level: 50)
 ```
 
 ## 用法
@@ -35,7 +35,7 @@ using Apq.Cfg;
 using Apq.Cfg.Xml;
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", level: 0, writeable: true)
+    .AddXmlFile("config.xml", level: 0, writeable: true)
     .Build();
 
 // 使用索引器访问

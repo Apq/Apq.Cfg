@@ -166,7 +166,7 @@ public class ConsulCfgTests : IAsyncLifetime
             _cfg.SaveAsync().Wait();
 
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .AddConsul(options =>
                 {
                     options.Address = TestSettings.ConsulAddress!;

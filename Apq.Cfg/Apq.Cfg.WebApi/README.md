@@ -34,8 +34,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 添加服务
@@ -63,8 +63,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 构建配置并添加 WebApi（链式调用）
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     .Build()
     .AddWebApi(builder.Services, options =>
     {

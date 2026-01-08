@@ -36,7 +36,7 @@ public class TemplateTests
         try
         {
             return new CfgBuilder()
-                .AddJson(tempFile, level: 0, writeable: false)
+                .AddJsonFile(tempFile, level: 0, writeable: false)
                 .Build();
         }
         finally
@@ -206,7 +206,7 @@ public class TemplateTests
         File.WriteAllText(tempFile, json);
 
         using var cfg = new CfgBuilder()
-            .AddJson(tempFile, level: 0, writeable: false)
+            .AddJsonFile(tempFile, level: 0, writeable: false)
             .Build();
 
         try
@@ -237,7 +237,7 @@ public class TemplateTests
         File.WriteAllText(tempFile, json);
 
         using var cfg = new CfgBuilder()
-            .AddJson(tempFile, level: 0, writeable: false)
+            .AddJsonFile(tempFile, level: 0, writeable: false)
             .Build();
 
         try
@@ -313,7 +313,7 @@ public class TemplateTests
         File.WriteAllText(tempFile, json);
 
         using var cfg = new CfgBuilder()
-            .AddJson(tempFile, level: 0, writeable: false)
+            .AddJsonFile(tempFile, level: 0, writeable: false)
             .Build();
 
         try
@@ -346,7 +346,7 @@ public class TemplateTests
         File.WriteAllText(tempFile, json);
 
         using var cfg = new CfgBuilder()
-            .AddJson(tempFile, level: 0, writeable: false)
+            .AddJsonFile(tempFile, level: 0, writeable: false)
             .Build();
 
         var options = new VariableResolutionOptions
@@ -380,7 +380,7 @@ public class TemplateTests
         File.WriteAllText(tempFile, json);
 
         using var cfg = new CfgBuilder()
-            .AddJson(tempFile, level: 0, writeable: false)
+            .AddJsonFile(tempFile, level: 0, writeable: false)
             .Build();
 
         var options = new VariableResolutionOptions

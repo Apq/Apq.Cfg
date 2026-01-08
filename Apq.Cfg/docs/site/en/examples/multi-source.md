@@ -20,9 +20,9 @@ Each configuration source has a default level:
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                    // Uses default level 0
-    .AddJson($"config.{env}.json", level: 10, optional: true)
-    .AddJson("config.local.json", level: 50, writeable: true, optional: true)
+    .AddJsonFile("config.json")                                    // Uses default level 0
+    .AddJsonFile($"config.{env}.json", level: 10, optional: true)
+    .AddJsonFile("config.local.json", level: 50, writeable: true, optional: true)
     .Build();
 ```
 
@@ -31,7 +31,7 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // Local base configuration (uses default level 0)
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
 
     // Remote configuration center (uses default level 200)
     .AddConsul(options =>
@@ -56,9 +56,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                        // Uses default level 0
-    .AddYaml("config.yaml", level: 10, optional: true)
-    .AddToml("config.toml", level: 20, optional: true)
+    .AddJsonFile("config.json")                        // Uses default level 0
+    .AddYamlFile("config.yaml", level: 10, optional: true)
+    .AddTomlFile("config.toml", level: 20, optional: true)
     .Build();
 ```
 

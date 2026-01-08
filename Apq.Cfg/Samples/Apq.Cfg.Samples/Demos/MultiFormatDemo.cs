@@ -69,28 +69,28 @@ public static class MultiFormatDemo
 
         // 分别测试各格式
         Console.WriteLine("2.1 INI 格式:");
-        using (var iniCfg = new CfgBuilder().AddIni(iniPath, level: 0, writeable: true).Build())
+        using (var iniCfg = new CfgBuilder().AddIniFile(iniPath, level: 0, writeable: true).Build())
         {
             Console.WriteLine($"    App:Name = {iniCfg["App:Name"]}");
             Console.WriteLine($"    Database:Port = {iniCfg["Database:Port"]}");
         }
 
         Console.WriteLine("\n2.2 XML 格式:");
-        using (var xmlCfg = new CfgBuilder().AddXml(xmlPath, level: 0, writeable: true).Build())
+        using (var xmlCfg = new CfgBuilder().AddXmlFile(xmlPath, level: 0, writeable: true).Build())
         {
             Console.WriteLine($"    App:Name = {xmlCfg["App:Name"]}");
             Console.WriteLine($"    Database:Port = {xmlCfg["Database:Port"]}");
         }
 
         Console.WriteLine("\n2.3 YAML 格式:");
-        using (var yamlCfg = new CfgBuilder().AddYaml(yamlPath, level: 0, writeable: true).Build())
+        using (var yamlCfg = new CfgBuilder().AddYamlFile(yamlPath, level: 0, writeable: true).Build())
         {
             Console.WriteLine($"    App:Name = {yamlCfg["App:Name"]}");
             Console.WriteLine($"    Database:Port = {yamlCfg["Database:Port"]}");
         }
 
         Console.WriteLine("\n2.4 TOML 格式:");
-        using (var tomlCfg = new CfgBuilder().AddToml(tomlPath, level: 0, writeable: true).Build())
+        using (var tomlCfg = new CfgBuilder().AddTomlFile(tomlPath, level: 0, writeable: true).Build())
         {
             Console.WriteLine($"    App:Name = {tomlCfg["App:Name"]}");
             Console.WriteLine($"    Database:Port = {tomlCfg["Database:Port"]}");
@@ -99,9 +99,9 @@ public static class MultiFormatDemo
         // 混合多种格式
         Console.WriteLine("\n2.5 混合多种格式（层级覆盖）:");
         using var mixedCfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
-            .AddYaml(yamlPath, level: 1, writeable: false)
-            .AddToml(tomlPath, level: 2, writeable: true, isPrimaryWriter: true)
+            .AddIniFile(iniPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 1, writeable: false)
+            .AddTomlFile(tomlPath, level: 2, writeable: true, isPrimaryWriter: true)
             .Build();
 
         Console.WriteLine($"    App:Name = {mixedCfg["App:Name"]} (来自 TOML，最高优先级)");

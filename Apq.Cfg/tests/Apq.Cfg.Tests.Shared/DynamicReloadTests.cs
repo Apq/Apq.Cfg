@@ -33,7 +33,7 @@ public class DynamicReloadTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // 先验证静态配置能正常工作
@@ -60,7 +60,7 @@ public class DynamicReloadTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act
@@ -82,7 +82,7 @@ public class DynamicReloadTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var options = new DynamicReloadOptions { DebounceMs = 50 };
@@ -103,7 +103,7 @@ public class DynamicReloadTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act & Assert
@@ -131,8 +131,8 @@ public class DynamicReloadTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: false, reloadOnChange: true)
-            .AddJson(overridePath, level: 1, writeable: false, reloadOnChange: true)
+            .AddJsonFile(basePath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(overridePath, level: 1, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act
@@ -154,7 +154,7 @@ public class DynamicReloadTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "OriginalValue"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         var msConfig = cfg.ToMicrosoftConfiguration(new DynamicReloadOptions

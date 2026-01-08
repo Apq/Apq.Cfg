@@ -52,8 +52,8 @@ Level 0:   config.json            ─┘
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                              // Uses default level 0
-    .AddJson("config.local.json", level: 50, optional: true)
+    .AddJsonFile("config.json")                              // Uses default level 0
+    .AddJsonFile("config.local.json", level: 50, optional: true)
     .Build();
 
 // Results:
@@ -105,8 +105,8 @@ cfg.SetValue("App:Name", "NewName", targetLevel: 0);
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                    // Uses default level 0
-    .AddJson($"config.{environment}.json", level: 10, optional: true)
+    .AddJsonFile("config.json")                                    // Uses default level 0
+    .AddJsonFile($"config.{environment}.json", level: 10, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")                   // Uses default level 400
     .Build();
 ```
@@ -115,9 +115,9 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                                           // Uses default level 0
-    .AddJson("config.Development.json", level: 10, optional: true)
-    .AddJson("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)  // gitignore
+    .AddJsonFile("config.json")                                                           // Uses default level 0
+    .AddJsonFile("config.Development.json", level: 10, optional: true)
+    .AddJsonFile("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)  // gitignore
     .Build();
 ```
 
@@ -126,11 +126,11 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // Base configuration (uses default level 0)
-    .AddJson("config.json")
-    .AddJson($"config.{env}.json", level: 10, optional: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile($"config.{env}.json", level: 10, optional: true)
 
     // Local override
-    .AddJson("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)
+    .AddJsonFile("config.local.json", level: 50, writeable: true, optional: true, isPrimaryWriter: true)
 
     // Remote configuration (uses default level 200)
     .AddConsul(options => { ... })

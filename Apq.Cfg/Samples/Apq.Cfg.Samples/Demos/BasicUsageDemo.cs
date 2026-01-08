@@ -45,8 +45,8 @@ public static class BasicUsageDemo
         // 构建配置：level 越大优先级越高
         // 注意：环境变量不可写，所以 isPrimaryWriter 设置在 JSON 配置源上
         var cfg = new CfgBuilder()
-            .AddJson(configPath, level: 0, writeable: false)
-            .AddJson(localConfigPath, level: 1, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(configPath, level: 0, writeable: false)
+            .AddJsonFile(localConfigPath, level: 1, writeable: true, isPrimaryWriter: true)
             .AddEnvironmentVariables(level: 2, prefix: "MYAPP_")
             .Build();
 

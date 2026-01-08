@@ -234,7 +234,7 @@ await cfg.SaveAsync();
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // 数据库配置（使用默认层级 100）
     .AddDatabase(options =>
     {

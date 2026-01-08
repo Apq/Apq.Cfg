@@ -228,7 +228,7 @@ foreach (var key in dbSection.GetChildKeys())
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 // 获取配置节
@@ -268,7 +268,7 @@ var timeout = apiSection.GetValue<int>("Timeout");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("config.json", level: 0, writeable: true, isPrimaryWriter: true)
     .Build();
 
 var dbSection = cfg.GetSection("Database");

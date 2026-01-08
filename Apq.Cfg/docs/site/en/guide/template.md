@@ -23,7 +23,7 @@ Apq.Cfg supports variable references in configuration values, enabling dynamic c
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 
 // Use GetResolved to get the resolved value
@@ -199,7 +199,7 @@ var options = new VariableResolutionOptions
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .ConfigureVariableResolution(options =>
     {
         options.MaxRecursionDepth = 5;
@@ -229,7 +229,7 @@ public class CustomResolver : IVariableResolver
 
 // Register custom resolver
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddVariableResolver(new CustomResolver())
     .Build();
 

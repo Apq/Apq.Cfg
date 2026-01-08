@@ -16,10 +16,10 @@ If you don't specify the `level` parameter, the default level will be used:
 
 ```csharp
 // Uses default level 0
-.AddYaml("config.yaml")
+.AddYamlFile("config.yaml")
 
 // Specify custom level
-.AddYaml("config.yaml", level: 10)
+.AddYamlFile("config.yaml", level: 10)
 ```
 
 ## Basic Usage
@@ -45,7 +45,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml")  // Uses default level 0
+    .AddYamlFile("config.yaml")  // Uses default level 0
     .Build();
 
 var appName = cfg["App:Name"];

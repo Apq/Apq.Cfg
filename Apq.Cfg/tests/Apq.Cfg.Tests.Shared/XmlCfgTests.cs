@@ -42,7 +42,7 @@ public class XmlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: false)
+            .AddXmlFile(xmlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -67,7 +67,7 @@ public class XmlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: false)
+            .AddXmlFile(xmlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -90,7 +90,7 @@ public class XmlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddXmlFile(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -99,7 +99,7 @@ public class XmlCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: false)
+            .AddXmlFile(xmlPath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("NewValue", cfg2["App:NewKey"]);
@@ -119,7 +119,7 @@ public class XmlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: false)
+            .AddXmlFile(xmlPath, level: 0, writeable: false)
             .Build();
 
         // Act & Assert
@@ -141,7 +141,7 @@ public class XmlCfgTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddXmlFile(xmlPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -150,7 +150,7 @@ public class XmlCfgTests : IDisposable
 
         // Assert
         using var cfg2 = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: false)
+            .AddXmlFile(xmlPath, level: 0, writeable: false)
             .Build();
 
         var removedValue = cfg2["ToRemove"];

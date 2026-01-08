@@ -21,10 +21,10 @@
 
 ```csharp
 // 使用默认层级 400
-.AddEnv(".env")
+.AddEnvFile(".env")
 
 // 指定自定义层级
-.AddEnv(".env", level: 450)
+.AddEnvFile(".env", level: 450)
 ```
 
 ## 用法
@@ -34,7 +34,7 @@ using Apq.Cfg;
 using Apq.Cfg.Env;
 
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0, writeable: true)
+    .AddEnvFile(".env", level: 0, writeable: true)
     .Build();
 
 // 使用索引器访问（__ 会自动转换为 :）
@@ -122,7 +122,7 @@ export API_KEY=secret123
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddEnv(".env", level: 0, writeable: false, setEnvironmentVariables: true)
+    .AddEnvFile(".env", level: 0, writeable: false, setEnvironmentVariables: true)
     .Build();
 
 // .env 文件中的 DATABASE__HOST=localhost 会：

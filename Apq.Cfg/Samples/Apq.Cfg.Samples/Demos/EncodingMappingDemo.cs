@@ -26,7 +26,7 @@ public static class EncodingMappingDemo
         Console.WriteLine("8.1 编码检测置信度阈值:");
         var cfg1 = new CfgBuilder()
             .WithEncodingConfidenceThreshold(0.7f)
-            .AddJson(configPath, level: 0, writeable: false)
+            .AddJsonFile(configPath, level: 0, writeable: false)
             .Build();
         Console.WriteLine($"    置信度阈值设置为 0.7");
         Console.WriteLine($"    App:Name = {cfg1["App:Name"]}");
@@ -41,7 +41,7 @@ public static class EncodingMappingDemo
                 Console.WriteLine($"               置信度: {result.Confidence:P0}");
                 Console.WriteLine($"               方法: {result.Method}");
             })
-            .AddJson(configPath, level: 0, writeable: false)
+            .AddJsonFile(configPath, level: 0, writeable: false)
             .Build();
         cfg2.Dispose();
 
@@ -57,7 +57,7 @@ public static class EncodingMappingDemo
             .AddReadEncodingMapping(configPath, Encoding.UTF8, priority: 100)
             // 为所有 JSON 文件指定写入编码
             .AddWriteEncodingMappingWildcard("*.json", new UTF8Encoding(false), priority: 50)
-            .AddJson(configPath, level: 0, writeable: false)
+            .AddJsonFile(configPath, level: 0, writeable: false)
             .Build();
         Console.WriteLine("\n    已配置编码映射规则");
         Console.WriteLine($"    App:Description = {cfg3["App:Description"]}");

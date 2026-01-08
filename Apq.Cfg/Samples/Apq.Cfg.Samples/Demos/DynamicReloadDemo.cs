@@ -25,7 +25,7 @@ public static class DynamicReloadDemo
 
         // 启用 reloadOnChange
         var cfg = new CfgBuilder()
-            .AddJson(configPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true)
+            .AddJsonFile(configPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true)
             .Build();
 
         Console.WriteLine("6.1 配置动态重载选项:");

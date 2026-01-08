@@ -217,7 +217,7 @@ public static class CfgBuilderExtensions
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddMyCustomSource(level: 5)
     .Build();
 ```

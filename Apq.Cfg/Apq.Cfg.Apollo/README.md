@@ -34,7 +34,7 @@ using Apq.Cfg;
 using Apq.Cfg.Apollo;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddApollo(options =>
     {
         options.AppId = "my-app";
@@ -120,8 +120,8 @@ Apollo 配置源可以与其他配置源组合使用，通过 `level` 参数控�
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)           // 基础配置
-    .AddJson("config.local.json", level: 1)     // 本地覆盖
+    .AddJsonFile("config.json", level: 0)           // 基础配置
+    .AddJsonFile("config.local.json", level: 1)     // 本地覆盖
     .AddApollo(options =>                        // Apollo 远程配置（最高优先级）
     {
         options.AppId = "my-app";

@@ -159,7 +159,7 @@ using Apq.Cfg;
 
 // 使用 CfgBuilder 创建配置根
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 

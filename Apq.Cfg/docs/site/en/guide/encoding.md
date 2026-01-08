@@ -14,7 +14,7 @@ By default, Apq.Cfg automatically detects file encoding:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, encoding: Encoding.UTF8)
+    .AddJsonFile("config.json", level: 0, encoding: Encoding.UTF8)
     .Build();
 ```
 
@@ -35,7 +35,7 @@ var cfg = new CfgBuilder()
         // Regex pattern
         config.AddReadMapping(@"logs[/\\].*\.log$", EncodingMappingType.Regex, Encoding.Unicode);
     })
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .Build();
 ```
 

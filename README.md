@@ -30,8 +30,8 @@ using Apq.Cfg;
 
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", level: 1, writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 读取配置
@@ -58,8 +58,8 @@ using Apq.Cfg.WebApi;
 var builder = WebApplication.CreateBuilder(args);
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddJson("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
+    .AddJsonFile("config.json")
+    .AddJsonFile("config.local.json", level: 5, writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 注册配置和 API 服务

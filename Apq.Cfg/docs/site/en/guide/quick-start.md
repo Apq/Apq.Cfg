@@ -34,7 +34,7 @@ using Apq.Cfg;
 
 // Build configuration
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // Uses default level 0
+    .AddJsonFile("config.json")  // Uses default level 0
     .Build();
 
 // Read string value
@@ -78,8 +78,8 @@ Each configuration source has a default level. Higher level values override lowe
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                              // Uses default level 0
-    .AddJson("config.local.json", level: 50, optional: true)
+    .AddJsonFile("config.json")                              // Uses default level 0
+    .AddJsonFile("config.local.json", level: 50, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")             // Uses default level 400
     .Build();
 ```
@@ -88,7 +88,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", reloadOnChange: true)  // Uses default level 0
+    .AddJsonFile("config.json", reloadOnChange: true)  // Uses default level 0
     .Build();
 
 // Subscribe to configuration changes
@@ -106,7 +106,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Modify configuration

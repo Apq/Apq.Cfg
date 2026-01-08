@@ -449,8 +449,8 @@ public sealed class ConfigChangeEvent
 ```csharp
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 1, writeable: false, reloadOnChange: true)
-    .AddJson("config.local.json", level: 2, writeable: true, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 1, writeable: false, reloadOnChange: true)
+    .AddJsonFile("config.local.json", level: 2, writeable: true, reloadOnChange: true)
     .AddEnvironmentVariables(level: 3, prefix: "APP_")
     .Build();
 

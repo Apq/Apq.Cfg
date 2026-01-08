@@ -16,10 +16,10 @@ dotnet add package Apq.Cfg.Xml
 
 ```csharp
 // 使用默认层级 0
-.AddXml("config.xml")
+.AddXmlFile("config.xml")
 
 // 指定自定义层级
-.AddXml("config.xml", level: 5)
+.AddXmlFile("config.xml", level: 5)
 ```
 
 ## 基本用法
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Xml;
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml")  // 使用默认层级 0
+    .AddXmlFile("config.xml")  // 使用默认层级 0
     .Build();
 ```
 
@@ -37,8 +37,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", reloadOnChange: true)
-    .AddXml("config.local.xml", level: 1, optional: true, reloadOnChange: true)
+    .AddXmlFile("config.xml", reloadOnChange: true)
+    .AddXmlFile("config.local.xml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -46,7 +46,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", writeable: true, isPrimaryWriter: true)
+    .AddXmlFile("config.xml", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -155,7 +155,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddXml("config.xml", encoding: options)
+    .AddXmlFile("config.xml", encoding: options)
     .Build();
 ```
 
@@ -163,8 +163,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddXml("config.xml", level: 1, optional: true)
+    .AddJsonFile("config.json")
+    .AddXmlFile("config.xml", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```

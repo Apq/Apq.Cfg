@@ -38,7 +38,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         // Act
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
 
         var provider = services.BuildServiceProvider();
 
@@ -59,7 +59,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         // Act
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
 
         var provider = services.BuildServiceProvider();
 
@@ -78,7 +78,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
 
         var provider = services.BuildServiceProvider();
 
@@ -107,7 +107,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
         services.AddApqCfg(sp =>
         {
             return new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .Build();
         });
 
@@ -140,7 +140,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
 
         var provider = services.BuildServiceProvider();
@@ -171,7 +171,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg<AppOptions>(
-            cfg => cfg.AddJson(jsonPath, level: 0, writeable: false),
+            cfg => cfg.AddJsonFile(jsonPath, level: 0, writeable: false),
             sectionKey: "App");
 
         var provider = services.BuildServiceProvider();
@@ -203,7 +203,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<ApiOptions>("Services:Api");
 
         var provider = services.BuildServiceProvider();
@@ -241,7 +241,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<TypeTestOptions>("TypeTest");
 
         var provider = services.BuildServiceProvider();
@@ -274,7 +274,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<LoggingOptions>("Logging");
 
         var provider = services.BuildServiceProvider();
@@ -299,7 +299,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("NonExistent");
 
         var provider = services.BuildServiceProvider();
@@ -325,8 +325,8 @@ public class ServiceCollectionExtensionsTests : IDisposable
         var services = new ServiceCollection();
 
         // Act - 第二次调用应该被忽略（TryAddSingleton）
-        services.AddApqCfg(cfg => cfg.AddJson(jsonPath1, level: 0, writeable: false));
-        services.AddApqCfg(cfg => cfg.AddJson(jsonPath2, level: 0, writeable: false));
+        services.AddApqCfg(cfg => cfg.AddJsonFile(jsonPath1, level: 0, writeable: false));
+        services.AddApqCfg(cfg => cfg.AddJsonFile(jsonPath2, level: 0, writeable: false));
 
         var provider = services.BuildServiceProvider();
         var cfgRoot = provider.GetRequiredService<ICfgRoot>();
@@ -355,7 +355,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
 
         var provider = services.BuildServiceProvider();
@@ -385,7 +385,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
 
         var provider = services.BuildServiceProvider();
@@ -442,7 +442,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DatabaseOptions>("Database");
 
         var provider = services.BuildServiceProvider();
@@ -484,7 +484,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<AppWithNestedOptions>("App");
 
         var provider = services.BuildServiceProvider();
@@ -521,7 +521,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DeepNestedOptions>("Root");
 
         var provider = services.BuildServiceProvider();
@@ -558,7 +558,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<ArrayOptions>("Config");
 
         var provider = services.BuildServiceProvider();
@@ -593,7 +593,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<ListOptions>("Config");
 
         var provider = services.BuildServiceProvider();
@@ -627,7 +627,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<DictionaryOptions>("Config");
 
         var provider = services.BuildServiceProvider();
@@ -666,7 +666,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: false));
+            .AddJsonFile(jsonPath, level: 0, writeable: false));
         services.ConfigureApqCfg<ComplexListOptions>("Config");
 
         var provider = services.BuildServiceProvider();
@@ -701,7 +701,7 @@ public class ServiceCollectionExtensionsTests : IDisposable
 
         var services = new ServiceCollection();
         services.AddApqCfg(cfg => cfg
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true, reloadOnChange: true));
 
         var callbackInvoked = false;
         string? newHost = null;

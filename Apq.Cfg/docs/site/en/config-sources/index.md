@@ -46,8 +46,8 @@ using Apq.Cfg;
 
 var cfg = new CfgBuilder()
     // Local sources (uses default level 0)
-    .AddJson("config.json")
-    .AddYaml("config.yaml", level: 10, optional: true)
+    .AddJsonFile("config.json")
+    .AddYamlFile("config.yaml", level: 10, optional: true)
 
     // Remote sources (uses default level 200)
     .AddConsul(options =>

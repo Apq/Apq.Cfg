@@ -62,8 +62,8 @@ public CfgBuilder AddJson(
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.local.json", level: 1, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -107,7 +107,7 @@ public CfgBuilder WithEncodingConfidenceThreshold(float threshold)
 ```csharp
 var cfg = new CfgBuilder()
     .WithEncodingConfidenceThreshold(0.8f)
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -128,7 +128,7 @@ public CfgBuilder AddReadEncodingMapping(string filePath, Encoding encoding, int
 ```csharp
 var cfg = new CfgBuilder()
     .AddReadEncodingMapping(@"C:\legacy\old.ini", Encoding.GetEncoding("GB2312"))
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -195,7 +195,7 @@ var cfg = new CfgBuilder()
         config.AddWriteMapping("**/*.txt", EncodingMappingType.Wildcard, new UTF8Encoding(true), priority: 10);
         config.ClearWriteMappings();
     })
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -219,7 +219,7 @@ var cfg = new CfgBuilder()
         Console.WriteLine($"检测编码: {result.DetectedEncoding?.EncodingName}");
         Console.WriteLine($"置信度: {result.Confidence}");
     })
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -241,7 +241,7 @@ public CfgBuilder AddValueTransformer(IValueTransformer transformer)
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddValueTransformer(new EncryptionTransformer(cryptoProvider))
     .Build();
 ```
@@ -262,7 +262,7 @@ public CfgBuilder AddValueMasker(IValueMasker masker)
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddValueMasker(new SensitiveMasker())
     .Build();
 ```
@@ -283,7 +283,7 @@ public CfgBuilder ConfigureValueTransformer(Action<ValueTransformerOptions> conf
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .ConfigureValueTransformer(options =>
     {
         options.EncryptedPrefix = "[ENCRYPTED]";
@@ -309,7 +309,7 @@ public ICfgRoot Build()
 **示例：**
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -319,7 +319,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddEnvironmentVariables(level: 1, prefix: "APP_")
     .Build();
 ```
@@ -331,11 +331,11 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     // 环境特定配置
-    .AddJson($"config.{environment}.json", level: 1, writeable: false, optional: true)
+    .AddJsonFile($"config.{environment}.json", level: 1, writeable: false, optional: true)
     // 本地覆盖（可写）
-    .AddJson("config.local.json", level: 2, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
+    .AddJsonFile("config.local.json", level: 2, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
     // 环境变量（最高优先级）
     .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .Build();
@@ -345,7 +345,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     // 配置值转换选项
     .ConfigureValueTransformer(options =>
     {
@@ -373,7 +373,7 @@ Console.WriteLine($"密码: {maskedPassword}"); // 输出: 密码: ***
 ```csharp
 var cfg = new CfgBuilder()
     // 基础配置
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     // 远程配置（需要安装对应的扩展包）
     .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, optional: true))
     // 环境变量（最高优先级）
@@ -396,7 +396,7 @@ var cfg = new CfgBuilder()
         }
     })
     .AddReadEncodingMappingWildcard("*.ini", Encoding.GetEncoding("GB2312"))
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 

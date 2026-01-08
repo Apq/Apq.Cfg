@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 方式一：使用 AddApqCfg 扩展方法
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 // 方式二：使用工厂方法（可访问其他服务）
@@ -19,8 +19,8 @@ builder.Services.AddApqCfg(sp =>
 {
     var env = sp.GetRequiredService<IWebHostEnvironment>();
     return new CfgBuilder()
-        .AddJson("config.json", level: 0)
-        .AddJson($"config.{env.EnvironmentName}.json", level: 1, optional: true)
+        .AddJsonFile("config.json", level: 0)
+        .AddJsonFile($"config.{env.EnvironmentName}.json", level: 1, optional: true)
         .AddEnvironmentVariables(level: 2, prefix: "APP_")
         .Build();
 });
@@ -60,7 +60,7 @@ public class DatabaseOptions
 
 // 注册配置并绑定
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0));
+    .AddJsonFile("config.json", level: 0));
 
 builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```
@@ -69,7 +69,7 @@ builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
 
 ```csharp
 builder.Services.AddApqCfg<DatabaseOptions>(
-    cfg => cfg.AddJson("config.json", level: 0),
+    cfg => cfg.AddJsonFile("config.json", level: 0),
     "Database");
 ```
 
@@ -147,7 +147,7 @@ public class MyService : IDisposable
 
 ```csharp
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false, reloadOnChange: true));
+    .AddJsonFile("config.json", level: 0, writeable: false, reloadOnChange: true));
 
 builder.Services.ConfigureApqCfg<DatabaseOptions>("Database", options =>
 {
@@ -228,7 +228,7 @@ Apq.Cfg 可以转换为 `IConfigurationRoot`，与现有代码无缝集成：
 
 ```csharp
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false));
+    .AddJsonFile("config.json", level: 0, writeable: false));
 
 // AddApqCfg 会自动注册 IConfigurationRoot
 // 可以直接使用 Microsoft.Extensions.Configuration 的 API

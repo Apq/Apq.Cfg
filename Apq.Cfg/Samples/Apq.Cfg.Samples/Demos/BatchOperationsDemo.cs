@@ -24,7 +24,7 @@ public static class BatchOperationsDemo
         """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(configPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(configPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // 批量获取

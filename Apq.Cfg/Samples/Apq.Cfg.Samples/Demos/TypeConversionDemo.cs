@@ -31,7 +31,7 @@ public static class TypeConversionDemo
         """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(configPath, level: 0, writeable: false)
+            .AddJsonFile(configPath, level: 0, writeable: false)
             .Build();
 
         Console.WriteLine("5.1 各种类型转换:");

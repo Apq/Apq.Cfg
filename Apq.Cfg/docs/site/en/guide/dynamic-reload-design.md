@@ -75,7 +75,7 @@ Remote sources (Consul, Nacos, etc.) use different mechanisms:
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, reloadOnChange: true)
     .ConfigureReload(options =>
     {
         options.DebounceMs = 100;  // Debounce window

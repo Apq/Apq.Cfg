@@ -10,7 +10,7 @@ Use `CfgBuilder` to create configuration instances:
 using Apq.Cfg;
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")  // Uses default level 0
+    .AddJsonFile("config.json")  // Uses default level 0
     .Build();
 ```
 
@@ -41,8 +41,8 @@ Each configuration source has a default level. Higher level values override lowe
 // config.local.json: { "Key": "value2" }
 
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                    // Uses default level 0
-    .AddJson("config.local.json", level: 50)   // Custom level 50
+    .AddJsonFile("config.json")                    // Uses default level 0
+    .AddJsonFile("config.local.json", level: 50)   // Custom level 50
     .AddEnvironmentVariables()                 // Uses default level 400
     .Build();
 
@@ -122,7 +122,7 @@ foreach (var key in section.GetChildKeys())
 ```csharp
 // Requires writeable source
 var cfg = new CfgBuilder()
-    .AddJson("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
+    .AddJsonFile("config.json", writeable: true, isPrimaryWriter: true)  // Uses default level 0
     .Build();
 
 // Set value

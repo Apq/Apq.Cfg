@@ -306,7 +306,7 @@ public static IServiceCollection AddApqCfg(
 **示例：**
 ```csharp
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 ```
 
@@ -324,7 +324,7 @@ public static IServiceCollection AddApqCfg(
 ```csharp
 services.AddDataProtection();
 services.AddApqCfg((builder, sp) => builder
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJsonFile("appsettings.json", level: 0, writeable: false)
     .AddDataProtectionEncryption(sp.GetRequiredService<IDataProtectionProvider>())
     .AddSensitiveMasking());
 ```
@@ -344,8 +344,8 @@ public static IServiceCollection AddApqCfg(
 services.AddApqCfg(sp => {
     var env = sp.GetRequiredService<IWebHostEnvironment>();
     return new CfgBuilder()
-        .AddJson("config.json", level: 0, writeable: false)
-        .AddJson($"config.{env.EnvironmentName}.json", level: 1, writeable: false, optional: true)
+        .AddJsonFile("config.json", level: 0, writeable: false)
+        .AddJsonFile($"config.{env.EnvironmentName}.json", level: 1, writeable: false, optional: true)
         .AddEnvironmentVariables(level: 2, prefix: "APP_")
         .Build();
 });
@@ -366,7 +366,7 @@ public static IServiceCollection AddApqCfg<TOptions>(
 **示例：**
 ```csharp
 services.AddApqCfg<DatabaseOptions>(cfg => cfg
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddEnvironmentVariables(level: 2, prefix: "APP_"),
     "Database");
 
@@ -415,8 +415,8 @@ services.ConfigureApqCfg<DatabaseOptions>("Database", options => {
 ```csharp
 // 构建配置
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddYaml("config.yaml", level: 1, writeable: false, optional: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddYamlFile("config.yaml", level: 1, writeable: false, optional: true)
     .AddSource(new ConsulCfgSource("http://consul:8500", "myapp/config", level: 10, writeable: false, watch: true))
     .AddEnvironmentVariables(level: 20, prefix: "APP_")
     .AddWriteEncodingMappingWildcard("*.ps1", new UTF8Encoding(true))
@@ -447,7 +447,7 @@ cfg.ConfigChanges.Subscribe(e =>
 
 // 依赖注入
 services.AddApqCfg(builder => builder
-    .AddJson("config.json", level: 0, writeable: false));
+    .AddJsonFile("config.json", level: 0, writeable: false));
 services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```
 

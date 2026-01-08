@@ -46,7 +46,7 @@ public class TypeConversionBenchmarks : IDisposable
             """);
 
         _cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
     }
 

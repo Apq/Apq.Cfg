@@ -16,10 +16,10 @@ dotnet add package Apq.Cfg.Ini
 
 ```csharp
 // 使用默认层级 0
-.AddIni("config.ini")
+.AddIniFile("config.ini")
 
 // 指定自定义层级
-.AddIni("config.ini", level: 5)
+.AddIniFile("config.ini", level: 5)
 ```
 
 ## 基本用法
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Ini;
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini")  // 使用默认层级 0
+    .AddIniFile("config.ini")  // 使用默认层级 0
     .Build();
 ```
 
@@ -37,8 +37,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", reloadOnChange: true)
-    .AddIni("config.local.ini", level: 1, optional: true, reloadOnChange: true)
+    .AddIniFile("config.ini", reloadOnChange: true)
+    .AddIniFile("config.local.ini", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -46,7 +46,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", writeable: true, isPrimaryWriter: true)
+    .AddIniFile("config.ini", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -135,7 +135,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddIni("config.ini", encoding: options)
+    .AddIniFile("config.ini", encoding: options)
     .Build();
 ```
 
@@ -145,7 +145,7 @@ var cfg = new CfgBuilder()
 var cfg = new CfgBuilder()
     .AddReadEncodingMappingWildcard("*.ini", Encoding.GetEncoding("GBK"))
     .AddWriteEncodingMappingWildcard("*.ini", Encoding.GetEncoding("GBK"))
-    .AddIni("legacy.ini", level: 0, writeable: true)
+    .AddIniFile("legacy.ini", level: 0, writeable: true)
     .Build();
 ```
 
@@ -153,8 +153,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddIni("config.ini", level: 1, optional: true)
+    .AddJsonFile("config.json")
+    .AddIniFile("config.ini", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```

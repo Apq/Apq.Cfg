@@ -28,8 +28,8 @@ var config = new ConfigurationBuilder()
 
 // After (Apq.Cfg)
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{env}.json", level: 1, optional: true)
+    .AddJsonFile("config.json", level: 0)
+    .AddJsonFile($"config.{env}.json", level: 1, optional: true)
     .AddEnvironmentVariables(level: 2, prefix: "APP_")
     .Build();
 ```
@@ -44,7 +44,7 @@ var config = new ConfigurationBuilder()
 
 // After
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, reloadOnChange: true)
     .Build();
 ```
 
@@ -102,7 +102,7 @@ services.Configure<DatabaseOptions>(config.GetSection("Database"));
 
 // After
 services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 services.ConfigureApqCfg<DatabaseOptions>("Database");
@@ -159,7 +159,7 @@ var logPath = cfg.GetResolved("App:LogPath");
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .AddAesGcmEncryptionFromEnv()
     .Build();
 
@@ -171,7 +171,7 @@ var password = cfg["Database:Password"];
 
 ```csharp
 var (cfg, result) = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v => v
         .Required("Database:ConnectionString")
         .Range("Server:Port", 1, 65535))
@@ -219,11 +219,11 @@ Apq.Cfg recommends using `config.json` instead of `appsettings.json`:
 
 ```csharp
 // Recommended
-.AddJson("config.json", level: 0)
-.AddJson("config.local.json", level: 1)
+.AddJsonFile("config.json", level: 0)
+.AddJsonFile("config.local.json", level: 1)
 
 // Not recommended
-.AddJson("appsettings.json", level: 0)
+.AddJsonFile("appsettings.json", level: 0)
 ```
 
 ### Level Design
@@ -232,8 +232,8 @@ Apq.Cfg uses the `level` parameter to control configuration priority. Higher val
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)           // Base config
-    .AddJson("config.local.json", level: 1)     // Local override
+    .AddJsonFile("config.json", level: 0)           // Base config
+    .AddJsonFile("config.local.json", level: 1)     // Local override
     .AddEnvironmentVariables(level: 2)          // Env vars highest
     .Build();
 ```
@@ -245,11 +245,11 @@ Apq.Cfg's `ICfgRoot` implements `IDisposable` and `IAsyncDisposable`:
 ```csharp
 // Recommended: use using
 using var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .Build();
 
 // Or let DI manage the lifecycle
-services.AddApqCfg(cfg => cfg.AddJson("config.json", level: 0));
+services.AddApqCfg(cfg => cfg.AddJsonFile("config.json", level: 0));
 ```
 
 ## Next Steps

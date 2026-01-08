@@ -388,8 +388,8 @@ foreach (var (key, value) in snapshot)
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
-    .AddJson("config.local.json", level: 1, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
+    .AddJsonFile("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.local.json", level: 1, writeable: true, isPrimaryWriter: true, optional: true, reloadOnChange: true)
     .Build();
 
 // 读取配置

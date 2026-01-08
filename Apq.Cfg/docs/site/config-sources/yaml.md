@@ -16,10 +16,10 @@ dotnet add package Apq.Cfg.Yaml
 
 ```csharp
 // 使用默认层级 0
-.AddYaml("config.yaml")
+.AddYamlFile("config.yaml")
 
 // 指定自定义层级
-.AddYaml("config.yaml", level: 5)
+.AddYamlFile("config.yaml", level: 5)
 ```
 
 ## 基本用法
@@ -29,7 +29,7 @@ using Apq.Cfg;
 using Apq.Cfg.Yaml;
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml")  // 使用默认层级 0
+    .AddYamlFile("config.yaml")  // 使用默认层级 0
     .Build();
 ```
 
@@ -37,8 +37,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", reloadOnChange: true)
-    .AddYaml("config.local.yaml", level: 1, optional: true, reloadOnChange: true)
+    .AddYamlFile("config.yaml", reloadOnChange: true)
+    .AddYamlFile("config.local.yaml", level: 1, optional: true, reloadOnChange: true)
     .Build();
 ```
 
@@ -70,7 +70,7 @@ public static CfgBuilder AddYaml(
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", writeable: true, isPrimaryWriter: true)
+    .AddYamlFile("config.yaml", writeable: true, isPrimaryWriter: true)
     .Build();
 
 // 修改配置
@@ -171,7 +171,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddYaml("config.yaml", encoding: options)
+    .AddYamlFile("config.yaml", encoding: options)
     .Build();
 ```
 
@@ -188,8 +188,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")
-    .AddYaml("config.yaml", level: 1, optional: true)
+    .AddJsonFile("config.json")
+    .AddYamlFile("config.yaml", level: 1, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```

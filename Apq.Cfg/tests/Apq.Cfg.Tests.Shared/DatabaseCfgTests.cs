@@ -171,7 +171,7 @@ public class DatabaseCfgTests : IAsyncLifetime
             _cfg.SaveAsync().Wait();
 
             using var cfg = new CfgBuilder()
-                .AddJson(jsonPath, level: 0, writeable: false)
+                .AddJsonFile(jsonPath, level: 0, writeable: false)
                 .AddDatabase(options =>
                 {
                     options.Provider = TestSettings.DatabaseProvider;

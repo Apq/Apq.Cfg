@@ -31,8 +31,8 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath2, """{"App": "Test2"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath1, level: 0)
-            .AddJson(jsonPath2, level: 5, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath1, level: 0)
+            .AddJsonFile(jsonPath2, level: 5, writeable: true, isPrimaryWriter: true)
             .AddEnvironmentVariables(level: 20, prefix: "TEST_")
             .Build();
 
@@ -56,7 +56,7 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath, """{"App": "Test"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0)
+            .AddJsonFile(jsonPath, level: 0)
             .AddEnvironmentVariables(level: 20, prefix: "APP_")
             .Build();
 
@@ -78,8 +78,8 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath2, """{"App": "Test2"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath1, level: 0, writeable: false)
-            .AddJson(jsonPath2, level: 5, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath1, level: 0, writeable: false)
+            .AddJsonFile(jsonPath2, level: 5, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act
@@ -99,7 +99,7 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath, """{"App": "Test"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0)
+            .AddJsonFile(jsonPath, level: 0)
             .AddEnvironmentVariables(level: 20, prefix: "TEST_")
             .Build();
 
@@ -125,7 +125,7 @@ public class ConfigSourceInfoTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0)
+            .AddJsonFile(jsonPath, level: 0)
             .Build();
 
         // Act
@@ -144,7 +144,7 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath, """{"App": "Test"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0)
+            .AddJsonFile(jsonPath, level: 0)
             .Build();
 
         // Act
@@ -164,7 +164,7 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath, """{"App": "Test"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0)
+            .AddJsonFile(jsonPath, level: 0)
             .Build();
 
         // Act
@@ -190,7 +190,7 @@ public class ConfigSourceInfoTests : IDisposable
             """);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0)
+            .AddJsonFile(jsonPath, level: 0)
             .Build();
 
         // Act
@@ -211,7 +211,7 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath, """{"App": "Test"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, name: "custom-config")
+            .AddJsonFile(jsonPath, level: 0, name: "custom-config")
             .Build();
 
         // Act
@@ -267,7 +267,7 @@ public class ConfigSourceInfoTests : IDisposable
         File.WriteAllText(jsonPath, """{"App": "Initial"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, reloadOnChange: false)
+            .AddJsonFile(jsonPath, level: 0, reloadOnChange: false)
             .Build();
 
         Assert.Equal("Initial", cfg["App"]);

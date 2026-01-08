@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Register Apq.Cfg
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(level: 1, prefix: "APP_"));
 
 var app = builder.Build();
@@ -47,7 +47,7 @@ public class DatabaseOptions
 }
 
 builder.Services.AddApqCfg(cfg => cfg
-    .AddJson("config.json", level: 0));
+    .AddJsonFile("config.json", level: 0));
 
 builder.Services.ConfigureApqCfg<DatabaseOptions>("Database");
 ```

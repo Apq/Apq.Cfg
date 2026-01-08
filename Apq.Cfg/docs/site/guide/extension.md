@@ -320,7 +320,7 @@ public static class HttpApiCfgBuilderExtensions
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .AddHttpApi(options =>
     {
         options.BaseUrl = "http://config-server:5000";
@@ -485,7 +485,7 @@ var cfg = new CfgBuilder()
         config.ClearReadMappings();
         config.ClearWriteMappings();
     })
-    .AddJson("config.json", level: 0, writeable: false)
+    .AddJsonFile("config.json", level: 0, writeable: false)
     .Build();
 ```
 
@@ -505,7 +505,7 @@ var cfg = new CfgBuilder()
         Console.WriteLine($"检测方法: {result.DetectionMethod}");
     })
     
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .Build();
 ```
 
@@ -573,9 +573,9 @@ public static class CfgBuilderExtensions
         var path = string.IsNullOrEmpty(basePath) ? "" : basePath + "/";
         
         return builder
-            .AddJson($"{path}config.json", level: 0)
-            .AddJson($"{path}config.{environment}.json", level: 1, optional: true)
-            .AddJson($"{path}config.local.json", level: 2, optional: true, writeable: true)
+            .AddJsonFile($"{path}config.json", level: 0)
+            .AddJsonFile($"{path}config.{environment}.json", level: 1, optional: true)
+            .AddJsonFile($"{path}config.local.json", level: 2, optional: true, writeable: true)
             .AddEnvironmentVariables(prefix: "APP_", level: 10);
     }
     
@@ -585,10 +585,10 @@ public static class CfgBuilderExtensions
     public static CfgBuilder AddDevelopmentConfig(this CfgBuilder builder)
     {
         return builder
-            .AddJson("config.json", level: 0)
-            .AddJson("config.Development.json", level: 1, optional: true)
-            .AddEnv(".env", level: 2, optional: true)
-            .AddEnv(".env.local", level: 3, optional: true)
+            .AddJsonFile("config.json", level: 0)
+            .AddJsonFile("config.Development.json", level: 1, optional: true)
+            .AddEnvFile(".env", level: 2, optional: true)
+            .AddEnvFile(".env.local", level: 3, optional: true)
             .AddEnvironmentVariables(prefix: "APP_", level: 10);
     }
     
@@ -601,8 +601,8 @@ public static class CfgBuilderExtensions
         string serviceName)
     {
         return builder
-            .AddJson("config.json", level: 0)
-            .AddJson("config.Production.json", level: 1, optional: true)
+            .AddJsonFile("config.json", level: 0)
+            .AddJsonFile("config.Production.json", level: 1, optional: true)
             .AddConsul(options =>
             {
                 options.Address = consulAddress;

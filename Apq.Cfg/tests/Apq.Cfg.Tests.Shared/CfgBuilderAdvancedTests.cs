@@ -45,7 +45,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         // Act - 设置不同的阈值不应抛出异常
         using var cfg = new CfgBuilder()
             .WithEncodingConfidenceThreshold(0.8f)
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -62,12 +62,12 @@ public class CfgBuilderAdvancedTests : IDisposable
         // Act - 超出范围的值应被钳制
         using var cfg1 = new CfgBuilder()
             .WithEncodingConfidenceThreshold(1.5f) // 超过 1.0
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         using var cfg2 = new CfgBuilder()
             .WithEncodingConfidenceThreshold(-0.5f) // 小于 0.0
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert - 不应抛出异常
@@ -86,8 +86,8 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(overridePath, """{"Setting": "OverrideValue"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(basePath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 写入到 level 0
@@ -96,7 +96,7 @@ public class CfgBuilderAdvancedTests : IDisposable
 
         // Assert - 验证写入到了正确的文件
         using var cfgBase = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: false)
+            .AddJsonFile(basePath, level: 0, writeable: false)
             .Build();
 
         Assert.Equal("Level0Value", cfgBase["NewKey"]);
@@ -113,8 +113,8 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(overridePath, """{"OverrideKey": "OverrideValue", "SharedKey": "OverrideShared"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(basePath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 从 level 1 删除
@@ -123,7 +123,7 @@ public class CfgBuilderAdvancedTests : IDisposable
 
         // Assert
         using var cfgOverride = new CfgBuilder()
-            .AddJson(overridePath, level: 0, writeable: false)
+            .AddJsonFile(overridePath, level: 0, writeable: false)
             .Build();
 
         var removedValue = cfgOverride["OverrideKey"];
@@ -141,8 +141,8 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(overridePath, """{"Key": "Override"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(basePath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 在两个层级都设置值，但只保存 level 1
@@ -152,12 +152,12 @@ public class CfgBuilderAdvancedTests : IDisposable
 
         // Assert - level 1 应该保存了，level 0 不应该保存
         using var cfgOverride = new CfgBuilder()
-            .AddJson(overridePath, level: 0, writeable: false)
+            .AddJsonFile(overridePath, level: 0, writeable: false)
             .Build();
         Assert.Equal("Value1", cfgOverride["Level1Key"]);
 
         using var cfgBase = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: false)
+            .AddJsonFile(basePath, level: 0, writeable: false)
             .Build();
         Assert.Null(cfgBase["Level0Key"]); // 未保存
     }
@@ -173,8 +173,8 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(overridePath, """{"Key": "Override"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(basePath, level: 0, writeable: true, isPrimaryWriter: true)
-            .AddJson(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(basePath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(overridePath, level: 1, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 不指定 targetLevel，应该写入最高层级
@@ -192,7 +192,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false, reloadOnChange: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: false, reloadOnChange: true)
             .Build();
 
         // Act - 使用 DisposeAsync 释放资源
@@ -210,7 +210,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Act - 先同步释放，再异步释放
@@ -228,7 +228,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false) // 不可写
+            .AddJsonFile(jsonPath, level: 0, writeable: false) // 不可写
             .Build();
 
         // Act & Assert
@@ -244,7 +244,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false) // 不可写
+            .AddJsonFile(jsonPath, level: 0, writeable: false) // 不可写
             .Build();
 
         // Act & Assert
@@ -260,7 +260,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act & Assert - 指定不存在的层级
@@ -277,7 +277,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         var originalContent = File.ReadAllText(jsonPath);
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 不设置任何值，直接保存
@@ -296,7 +296,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Key": "Value"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         // Act - 指定不存在的层级，不应抛出异常
@@ -316,8 +316,8 @@ public class CfgBuilderAdvancedTests : IDisposable
 
         // Act - 使用 AddJson 添加多个源验证 AddSource 间接工作
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
-            .AddJson(jsonPath2, level: 1, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath2, level: 1, writeable: false)
             .Build();
 
         // Assert
@@ -342,7 +342,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, $$"""{"Database:Password": "{{encryptedValue}}"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddAesGcmEncryption(base64Key)
             .Build();
 
@@ -365,7 +365,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"AppName": "TestApp", "Version": "1.0.0"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddAesGcmEncryption(base64Key)
             .Build();
 
@@ -386,7 +386,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .AddAesGcmEncryption(base64Key, options =>
             {
                 options.SensitiveKeyPatterns.Add("*Password*");
@@ -415,7 +415,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"Database:Password": "MySecretPassword123"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -435,7 +435,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"ApiKey": "sk-1234567890abcdef"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking(options =>
             {
                 options.MaskString = "****";
@@ -459,7 +459,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{"AppName": "TestApp"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddSensitiveMasking()
             .Build();
 
@@ -489,7 +489,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, $$"""{"Secret": "{{encryptedValue}}"}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .AddAesGcmEncryption(base64Key, options =>
             {
                 options.EncryptedPrefix = "[ENCRYPTED]";
@@ -515,7 +515,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         File.WriteAllText(jsonPath, """{}""");
 
         using var cfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .AddAesGcmEncryption(base64Key, options =>
             {
                 options.SensitiveKeyPatterns.Clear();
@@ -547,7 +547,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         // Act
         using var cfg = new CfgBuilder()
             .AddReadEncodingMapping(jsonPath, Encoding.UTF8, priority: 100)
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -565,7 +565,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         // Act
         using var cfg = new CfgBuilder()
             .AddReadEncodingMappingWildcard("*.json", Encoding.UTF8)
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -582,7 +582,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         // Act
         using var cfg = new CfgBuilder()
             .AddWriteEncodingMapping(jsonPath, Encoding.UTF8, priority: 100)
-            .AddJson(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
+            .AddJsonFile(jsonPath, level: 0, writeable: true, isPrimaryWriter: true)
             .Build();
 
         cfg.SetValue("Key", "Value");
@@ -604,7 +604,7 @@ public class CfgBuilderAdvancedTests : IDisposable
             {
                 config.AddReadMapping(jsonPath, EncodingMappingType.ExactPath, Encoding.UTF8, 100);
             })
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert
@@ -625,7 +625,7 @@ public class CfgBuilderAdvancedTests : IDisposable
         // Act - 验证可以注册回调而不抛出异常
         using var cfg = new CfgBuilder()
             .WithEncodingDetectionLogging(_ => { })
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // Assert - 配置应该正常构建

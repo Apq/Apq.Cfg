@@ -171,7 +171,7 @@ Apq.Cfg 提供了灵活的编码处理机制，支持：
 ```csharp
 // 默认配置：自动检测读取，UTF-8 无 BOM 写入
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -180,7 +180,7 @@ var cfg = new CfgBuilder()
 ```csharp
 // PowerShell 文件使用 UTF-8 带 BOM
 var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0, writeable: true,
+    .AddJsonFile("config.json", level: 0, writeable: true,
         encoding: EncodingOptions.PowerShell)
     .Build();
 ```
@@ -194,7 +194,7 @@ var options = new EncodingOptions
 };
 
 var cfg = new CfgBuilder()
-    .AddJson("legacy.json", level: 0, writeable: true, encoding: options)
+    .AddJsonFile("legacy.json", level: 0, writeable: true, encoding: options)
     .Build();
 ```
 
@@ -211,7 +211,7 @@ var cfg = new CfgBuilder()
     // 正则匹配
     .AddWriteEncodingMappingRegex(@"logs[/\\].*\.log$", Encoding.Unicode)
 
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 
@@ -235,7 +235,7 @@ var cfg = new CfgBuilder()
     {
         Console.WriteLine($"检测到编码: {result}");
     })
-    .AddJson("config.json", level: 0, writeable: true)
+    .AddJsonFile("config.json", level: 0, writeable: true)
     .Build();
 ```
 

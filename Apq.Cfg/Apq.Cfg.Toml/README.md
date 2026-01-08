@@ -22,10 +22,10 @@ TOML 文件配置源扩展包。
 
 ```csharp
 // 使用默认层级 0
-.AddToml("config.toml")
+.AddTomlFile("config.toml")
 
 // 指定自定义层级
-.AddToml("config.toml", level: 50)
+.AddTomlFile("config.toml", level: 50)
 ```
 
 ## 用法
@@ -35,7 +35,7 @@ using Apq.Cfg;
 using Apq.Cfg.Toml;
 
 var cfg = new CfgBuilder()
-    .AddToml("config.toml", level: 0, writeable: true)
+    .AddTomlFile("config.toml", level: 0, writeable: true)
     .Build();
 
 // 使用索引器访问

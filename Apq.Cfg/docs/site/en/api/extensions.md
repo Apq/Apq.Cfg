@@ -7,31 +7,31 @@ Extension methods for various configuration sources and features.
 ### JSON
 
 ```csharp
-builder.AddJson(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+builder.AddJsonFile(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
 ```
 
 ### YAML (Apq.Cfg.Yaml)
 
 ```csharp
-builder.AddYaml(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+builder.AddYamlFile(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
 ```
 
 ### XML (Apq.Cfg.Xml)
 
 ```csharp
-builder.AddXml(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+builder.AddXmlFile(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
 ```
 
 ### INI (Apq.Cfg.Ini)
 
 ```csharp
-builder.AddIni(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+builder.AddIniFile(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
 ```
 
 ### TOML (Apq.Cfg.Toml)
 
 ```csharp
-builder.AddToml(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
+builder.AddTomlFile(path, level, writeable, optional, reloadOnChange, isPrimaryWriter)
 ```
 
 ### Environment Variables

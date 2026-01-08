@@ -60,7 +60,7 @@ public class GetSectionBenchmarks : IDisposable
             }
             """);
         _jsonCfg = new CfgBuilder()
-            .AddJson(jsonPath, level: 0, writeable: false)
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
             .Build();
 
         // 创建 INI 配置文件
@@ -89,7 +89,7 @@ public class GetSectionBenchmarks : IDisposable
             Output=Console
             """);
         _iniCfg = new CfgBuilder()
-            .AddIni(iniPath, level: 0, writeable: false)
+            .AddIniFile(iniPath, level: 0, writeable: false)
             .Build();
 
         // 创建 XML 配置文件
@@ -124,7 +124,7 @@ public class GetSectionBenchmarks : IDisposable
             </configuration>
             """);
         _xmlCfg = new CfgBuilder()
-            .AddXml(xmlPath, level: 0, writeable: false)
+            .AddXmlFile(xmlPath, level: 0, writeable: false)
             .Build();
 
         // 创建 YAML 配置文件
@@ -150,7 +150,7 @@ public class GetSectionBenchmarks : IDisposable
               Output: Console
             """);
         _yamlCfg = new CfgBuilder()
-            .AddYaml(yamlPath, level: 0, writeable: false)
+            .AddYamlFile(yamlPath, level: 0, writeable: false)
             .Build();
 
         // 创建 TOML 配置文件
@@ -179,7 +179,7 @@ public class GetSectionBenchmarks : IDisposable
             Output = "Console"
             """);
         _tomlCfg = new CfgBuilder()
-            .AddToml(tomlPath, level: 0, writeable: false)
+            .AddTomlFile(tomlPath, level: 0, writeable: false)
             .Build();
     }
 

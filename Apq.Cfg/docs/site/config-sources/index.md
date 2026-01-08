@@ -60,8 +60,8 @@ Apq.Cfg 支持多种配置源，可以灵活组合使用。
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                                    // 使用默认层级 0
-    .AddJson("config.Development.json", level: 10, optional: true)
+    .AddJsonFile("config.json")                                    // 使用默认层级 0
+    .AddJsonFile("config.Development.json", level: 10, optional: true)
     .AddEnvironmentVariables(prefix: "APP_")                   // 使用默认层级 400
     .Build();
 ```
@@ -72,7 +72,7 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("config.json")                    // 使用默认层级 0
+    .AddJsonFile("config.json")                    // 使用默认层级 0
     .AddConsul(options => { ... })             // 使用默认层级 200
     .AddVault(options => { ... })              // 使用默认层级 300
     .Build();
@@ -83,9 +83,9 @@ var cfg = new CfgBuilder()
 ```csharp
 var cfg = new CfgBuilder()
     // 本地基础配置（使用默认层级 0）
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     // 环境特定配置
-    .AddJson($"config.{env}.json", level: 10, optional: true)
+    .AddJsonFile($"config.{env}.json", level: 10, optional: true)
     // 远程配置（使用默认层级 200）
     .AddConsul(options => { ... })
     // 环境变量覆盖（使用默认层级 400）
@@ -110,8 +110,8 @@ var cfg = new CfgBuilder()
 
 ```csharp
 var cfg = new CfgBuilder()
-    .AddJson("base.json", level: 0, writeable: false)           // 优先级 0（最低）
-    .AddYaml("override.yaml", level: 1, writeable: false)       // 优先级 1
+    .AddJsonFile("base.json", level: 0, writeable: false)           // 优先级 0（最低）
+    .AddYamlFile("override.yaml", level: 1, writeable: false)       // 优先级 1
     .AddSource(new ConsulCfgSource(..., level: 10))             // 优先级 10
     .AddEnvironmentVariables(level: 20, prefix: "APP_")         // 优先级 20（最高）
     .Build();

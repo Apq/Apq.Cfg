@@ -20,8 +20,8 @@ public static class ServiceCollectionExtensions
     /// <example>
     /// <code>
     /// services.AddApqCfg(cfg =&gt; cfg
-    ///     .AddJson("config.json", level: 0)
-    ///     .AddJson($"config.{environment}.json", level: 1)
+    ///     .AddJsonFile("config.json", level: 0)
+    ///     .AddJsonFile($"config.{environment}.json", level: 1)
     ///     .AddEnvironmentVariables(prefix: "APP_", level: 2));
     /// </code>
     /// </example>
@@ -57,7 +57,7 @@ public static class ServiceCollectionExtensions
     /// // 使用 Data Protection 加密
     /// services.AddDataProtection();
     /// services.AddApqCfg((builder, sp) =&gt; builder
-    ///     .AddJson("appsettings.json", level: 0, writeable: false)
+    ///     .AddJsonFile("appsettings.json", level: 0, writeable: false)
     ///     .AddDataProtectionEncryption(sp.GetRequiredService&lt;IDataProtectionProvider&gt;())
     ///     .AddSensitiveMasking());
     /// </code>
@@ -93,8 +93,8 @@ public static class ServiceCollectionExtensions
     /// services.AddApqCfg(sp =&gt; {
     ///     var env = sp.GetRequiredService&lt;IWebHostEnvironment&gt;();
     ///     return new CfgBuilder()
-    ///         .AddJson("config.json", level: 0)
-    ///         .AddJson($"config.{env.EnvironmentName}.json", level: 1)
+    ///         .AddJsonFile("config.json", level: 0)
+    ///         .AddJsonFile($"config.{env.EnvironmentName}.json", level: 1)
     ///         .AddEnvironmentVariables(prefix: "APP_", level: 2)
     ///         .Build();
     /// });
@@ -133,7 +133,7 @@ public static class ServiceCollectionExtensions
     /// 
     /// // 注册配置服务并绑定强类型配置
     /// services.AddApqCfg&lt;DatabaseOptions&gt;(cfg =&gt; cfg
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddEnvironmentVariables(prefix: "APP_", level: 2),
     ///     "Database");
     /// 
@@ -182,7 +182,7 @@ public static class ServiceCollectionExtensions
     /// 
     /// // 注册配置服务
     /// services.AddApqCfg(cfg =&gt; cfg
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddEnvironmentVariables(prefix: "APP_", level: 2));
     /// 
     /// // 绑定强类型配置
@@ -296,7 +296,7 @@ public static class ServiceCollectionExtensions
     /// <example>
     /// <code>
     /// services.AddApqCfgWithValidation(cfg => cfg
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddValidation(v => v
     ///         .Required("Database:ConnectionString")
     ///         .Range("Database:Port", 1, 65535)));
@@ -344,7 +344,7 @@ public static class ServiceCollectionExtensions
     /// <returns>服务集合，支持链式调用</returns>
     /// <example>
     /// <code>
-    /// services.AddApqCfg(cfg => cfg.AddJson("config.json", level: 0));
+    /// services.AddApqCfg(cfg => cfg.AddJsonFile("config.json", level: 0));
     /// services.AddConfigValidator(v => v
     ///     .Required("Database:ConnectionString")
     ///     .Range("Database:Port", 1, 65535));

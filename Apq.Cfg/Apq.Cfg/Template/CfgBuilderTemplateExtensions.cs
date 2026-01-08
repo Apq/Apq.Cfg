@@ -20,7 +20,7 @@ public static class CfgBuilderTemplateExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .ConfigureVariableResolution(options =>
     ///     {
     ///         options.MaxRecursionDepth = 5;
@@ -49,7 +49,7 @@ public static class CfgBuilderTemplateExtensions
     /// <example>
     /// <code>
     /// var cfg = new CfgBuilder()
-    ///     .AddJson("config.json", level: 0)
+    ///     .AddJsonFile("config.json", level: 0)
     ///     .AddVariableResolver(new CustomResolver())
     ///     .Build();
     /// </code>
