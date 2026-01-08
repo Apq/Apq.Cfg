@@ -92,6 +92,34 @@ http://example.com/apqcfg/             # 虚拟目录
 http://example.com/admin/config/       # 多级虚拟目录
 ```
 
+## Docker 部署
+
+### 构建镜像
+
+```bash
+cd Apq.Cfg.WebUI
+docker build -t apqcfg-webui .
+```
+
+### 运行容器
+
+```bash
+docker run -d -p 8080:80 --name apqcfg-webui apqcfg-webui
+# 访问 http://localhost:8080
+```
+
+### 使用 docker-compose
+
+```yaml
+version: '3.8'
+services:
+  webui:
+    build: .
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+```
+
 ### Nginx 配置示例
 
 ```nginx
