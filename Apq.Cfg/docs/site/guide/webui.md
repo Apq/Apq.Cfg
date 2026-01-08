@@ -4,12 +4,14 @@ Apq.Cfg.WebUI 提供 Web 管理界面，用于集中管理多个应用的配置�
 
 ## 概述
 
-WebUI 是一个独立的 Web 应用，通过 Docker 镜像部署，可以：
-- 集中管理多个应用的配置
-- 可视化配置编辑
-- 配置版本历史
-- 配置对比和回滚
-- 多环境配置管理
+WebUI 是一个**纯静态** Web 应用，可以部署到任何静态文件托管服务：
+
+- 多应用配置集中管理
+- 配置树形视图展示
+- 实时编辑与自动保存
+- 敏感值脱敏显示
+- 导出为 JSON/ENV/CSV 格式
+- 支持 API Key / JWT Bearer 认证
 
 ## 部署方式
 
@@ -18,10 +20,11 @@ WebUI 是一个独立的 Web 应用，通过 Docker 镜像部署，可以：
 ```bash
 docker run -d \
   --name apqcfg-webui \
-  -p 8080:8080 \
-  -e APQCFG_ADMIN_PASSWORD=your-password \
-  apq/apqcfg-webui:latest
+  -p 8080:80 \
+  amwpfiqvy/apqcfg-webui:latest
 ```
+
+访问 http://localhost:8080
 
 ### Docker Compose
 
@@ -29,86 +32,114 @@ docker run -d \
 version: '3.8'
 services:
   apqcfg-webui:
-    image: apq/apqcfg-webui:latest
+    image: amwpfiqvy/apqcfg-webui:latest
     ports:
-      - "8080:8080"
-    environment:
-      - APQCFG_ADMIN_PASSWORD=your-password
-      - APQCFG_DATABASE_TYPE=sqlite
-      - APQCFG_DATABASE_PATH=/data/apqcfg.db
-    volumes:
-      - apqcfg-data:/data
-
-volumes:
-  apqcfg-data:
+      - "8080:80"
+    restart: unless-stopped
 ```
 
-## 环境变量
+### 静态文件部署
 
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `APQCFG_ADMIN_PASSWORD` | 管理员密码 | (必填) |
-| `APQCFG_DATABASE_TYPE` | 数据库类型 (sqlite/mysql/postgres) | sqlite |
-| `APQCFG_DATABASE_PATH` | SQLite 数据库路径 | /data/apqcfg.db |
-| `APQCFG_DATABASE_CONNECTION` | 数据库连接字符串 | - |
-| `APQCFG_JWT_SECRET` | JWT 密钥 | (自动生成) |
-| `APQCFG_JWT_EXPIRY` | JWT 过期时间（小时） | 24 |
+构建产物是纯静态文件，可部署到：
+
+- Nginx / Apache
+- GitHub Pages / GitLab Pages
+- Vercel / Netlify
+- 阿里云 OSS / 腾讯云 COS
+- 任何 HTTP 服务器
+
+```bash
+# 构建
+cd Apq.Cfg.WebUI
+npm install
+npm run build
+# 输出到 dist/ 目录
+```
+
+### 虚拟目录部署
+
+WebUI 使用相对路径构建（`base: './'`），支持部署到任意虚拟目录：
+
+```
+http://example.com/                    # 根目录
+http://example.com/apqcfg/             # 虚拟目录
+http://example.com/admin/config/       # 多级虚拟目录
+```
+
+## 数据存储
+
+应用端点信息（包括认证凭据）保存在浏览器 **localStorage**，不上传到任何服务器。
+
+```typescript
+interface AppEndpoint {
+  id: string           // 唯一标识
+  name: string         // 应用名称
+  url: string          // API 地址（如 http://localhost:5000/api/apqcfg）
+  authType: AuthType   // 认证方式：None | ApiKey | JwtBearer
+  apiKey?: string      // API Key
+  token?: string       // JWT Token
+  description?: string // 备注
+}
+```
+
+## 远程应用要求
+
+WebUI 直接从浏览器访问远程应用的配置 API，因此远程应用需要：
+
+1. **启用 CORS**，允许 WebUI 的来源访问
+2. **暴露配置 API**（`/api/apqcfg/*`）
+
+```csharp
+// 添加 WebApi 时配置 CORS
+builder.Services.AddApqCfgWebApi(cfg, options =>
+{
+    options.EnableCors = true;  // 默认已启用
+    options.CorsOrigins = ["http://your-webui-domain"];  // 默认 ["*"]
+});
+```
 
 ## 功能特性
 
 ### 应用管理
 
-- 注册和管理多个应用
-- 为每个应用配置独立的配置源
-- 支持应用分组
+- 添加、编辑、删除应用端点
+- 保存前测试连接
+- 支持多种认证方式
 
 ### 配置编辑
 
-- 可视化配置编辑器
-- 支持 JSON/YAML/TOML 格式
-- 语法高亮和验证
-- 配置键搜索
+- 树形视图展示配置层级
+- 实时编辑配置值
+- 添加新配置项
+- 删除配置项
+- 只读配置源标识
 
-### 版本控制
+### 导入导出
 
-- 配置变更历史记录
-- 版本对比
-- 一键回滚
-
-### 多环境支持
-
-- 开发/测试/生产环境隔离
-- 环境间配置复制
-- 环境变量覆盖
+- 导出为 JSON/ENV/CSV/KV 格式
+- 拖放文件导入
+- 批量操作
 
 ### 安全特性
 
-- 基于角色的访问控制
-- 敏感值自动脱敏
-- 操作审计日志
+- 敏感值自动脱敏显示
+- 认证凭据本地存储
+- 支持 API Key / JWT Bearer 认证
 
-## 与 WebApi 集成
+## 支持架构
 
-WebUI 通过 WebApi 与各应用通信。在应用中配置 WebApi：
+Docker 镜像支持以下架构：
 
-```csharp
-builder.Services.AddApqCfgWebApi(options =>
-{
-    options.Authentication = AuthenticationType.ApiKey;
-    options.ApiKey = Environment.GetEnvironmentVariable("APQCFG_API_KEY");
-    options.AllowRead = true;
-    options.AllowWrite = true;
-});
-```
+- `linux/amd64`
+- `linux/arm64`
 
-然后在 WebUI 中注册应用时，填入应用的 WebApi 地址和 API Key。
+## 相关链接
 
-## 截图
-
-> 截图待添加
+- [Docker Hub](https://hub.docker.com/r/amwpfiqvy/apqcfg-webui)
+- [源代码](https://gitee.com/apq/Apq.Cfg/tree/master/Apq.Cfg.WebUI)
 
 ## 注意事项
 
-1. **生产环境安全**：确保使用强密码和 HTTPS
-2. **数据备份**：定期备份 SQLite 数据库或使用外部数据库
-3. **网络隔离**：WebUI 应部署在内网，不直接暴露到公网
+1. **CORS 配置**：确保远程应用正确配置 CORS，允许 WebUI 域名访问
+2. **HTTPS**：生产环境建议使用 HTTPS
+3. **认证安全**：API Key 和 Token 存储在浏览器本地，注意保护
