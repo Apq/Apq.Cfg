@@ -80,9 +80,11 @@ var config = cfgRoot.GetAppConfig();
 
 ### 集合类型
 - `T[]` (数组)
-- `List<T>`
-- `HashSet<T>`
-- `Dictionary<TKey, TValue>`
+- `List<T>`, `IList<T>`, `ICollection<T>`, `IEnumerable<T>`
+- `HashSet<T>`, `ISet<T>`
+- `Dictionary<TKey, TValue>`, `IDictionary<TKey, TValue>`
+- `IReadOnlyList<T>`, `IReadOnlyCollection<T>`
+- `IReadOnlyDictionary<TKey, TValue>`
 
 ### 复杂类型
 - 嵌套的配置类（需要同样标记 `[CfgSection]`）

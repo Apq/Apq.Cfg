@@ -123,6 +123,14 @@ internal static class CodeEmitter
                 EmitDictionaryPropertyBinding(sb, prop, indent);
                 break;
 
+            case TypeKind.ReadOnlyList:
+                EmitReadOnlyListPropertyBinding(sb, prop, indent);
+                break;
+
+            case TypeKind.ReadOnlyDictionary:
+                EmitReadOnlyDictionaryPropertyBinding(sb, prop, indent);
+                break;
+
             case TypeKind.Complex:
                 EmitComplexPropertyBinding(sb, prop, indent);
                 break;
@@ -263,6 +271,75 @@ internal static class CodeEmitter
     /// 生成 Dictionary 属性绑定
     /// </summary>
     private static void EmitDictionaryPropertyBinding(StringBuilder sb, PropertyInfo prop, string indent)
+    {
+        var keyType = prop.KeyTypeName ?? "string";
+        var valueType = prop.ElementTypeName ?? "object";
+
+        sb.AppendLine($"{indent}// {prop.Name}: {prop.TypeName}");
+        sb.AppendLine($"{indent}{{");
+        sb.AppendLine($"{indent}    var __childSection = section.GetSection(\"{prop.Name}\");");
+        sb.AppendLine($"{indent}    var __keys = __childSection.GetChildKeys().ToList();");
+        sb.AppendLine($"{indent}    if (__keys.Count > 0)");
+        sb.AppendLine($"{indent}    {{");
+        sb.AppendLine($"{indent}        var __dict = new global::System.Collections.Generic.Dictionary<{keyType}, {valueType}>();");
+        sb.AppendLine($"{indent}        foreach (var __key in __keys)");
+        sb.AppendLine($"{indent}        {{");
+
+        // 键转换
+        if (keyType == "string")
+        {
+            sb.AppendLine($"{indent}            var __dictKey = __key;");
+        }
+        else
+        {
+            var keyConvert = GetConvertCode(keyType, "__key");
+            sb.AppendLine($"{indent}            var __dictKeyNullable = {keyConvert};");
+            sb.AppendLine($"{indent}            if (__dictKeyNullable == null) continue;");
+            sb.AppendLine($"{indent}            var __dictKey = __dictKeyNullable.Value;");
+        }
+
+        EmitElementBindingForDictionary(sb, valueType, "__childSection", "__key", "__dict", "__dictKey", indent + "            ");
+
+        sb.AppendLine($"{indent}        }}");
+        sb.AppendLine($"{indent}        target.{prop.Name} = __dict;");
+        sb.AppendLine($"{indent}    }}");
+        sb.AppendLine($"{indent}}}");
+        sb.AppendLine();
+    }
+
+    /// <summary>
+    /// 生成 IReadOnlyList 属性绑定
+    /// </summary>
+    private static void EmitReadOnlyListPropertyBinding(StringBuilder sb, PropertyInfo prop, string indent)
+    {
+        var elementType = prop.ElementTypeName ?? "object";
+
+        sb.AppendLine($"{indent}// {prop.Name}: {prop.TypeName}");
+        sb.AppendLine($"{indent}{{");
+        sb.AppendLine($"{indent}    var __childSection = section.GetSection(\"{prop.Name}\");");
+        sb.AppendLine($"{indent}    var __keys = __childSection.GetChildKeys()");
+        sb.AppendLine($"{indent}        .Where(k => int.TryParse(k, out _))");
+        sb.AppendLine($"{indent}        .OrderBy(k => int.Parse(k))");
+        sb.AppendLine($"{indent}        .ToList();");
+        sb.AppendLine($"{indent}    if (__keys.Count > 0)");
+        sb.AppendLine($"{indent}    {{");
+        sb.AppendLine($"{indent}        var __list = new global::System.Collections.Generic.List<{elementType}>(__keys.Count);");
+        sb.AppendLine($"{indent}        foreach (var __key in __keys)");
+        sb.AppendLine($"{indent}        {{");
+
+        EmitElementBindingForCollection(sb, elementType, "__childSection", "__key", "__list", indent + "            ");
+
+        sb.AppendLine($"{indent}        }}");
+        sb.AppendLine($"{indent}        target.{prop.Name} = __list.AsReadOnly();");
+        sb.AppendLine($"{indent}    }}");
+        sb.AppendLine($"{indent}}}");
+        sb.AppendLine();
+    }
+
+    /// <summary>
+    /// 生成 IReadOnlyDictionary 属性绑定
+    /// </summary>
+    private static void EmitReadOnlyDictionaryPropertyBinding(StringBuilder sb, PropertyInfo prop, string indent)
     {
         var keyType = prop.KeyTypeName ?? "string";
         var valueType = prop.ElementTypeName ?? "object";

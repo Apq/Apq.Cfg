@@ -252,6 +252,68 @@ public class SourceGeneratorTests : IDisposable
         Assert.Equal(99, config.Timeout);
     }
 
+    [Fact]
+    public void BindFrom_ReadOnlyList_ShouldBindCorrectly()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "readonly_list.json");
+        File.WriteAllText(jsonPath, @"{
+            ""ReadOnly"": {
+                ""Name"": ""TestReadOnly"",
+                ""Tags"": [""tag1"", ""tag2"", ""tag3""]
+            }
+        }");
+
+        var cfg = new CfgBuilder()
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act
+        var section = cfg.GetSection("ReadOnly");
+        var config = TestReadOnlyConfig.BindFrom(section);
+
+        // Assert
+        Assert.Equal("TestReadOnly", config.Name);
+        Assert.NotNull(config.Tags);
+        Assert.Equal(3, config.Tags.Count);
+        Assert.Equal("tag1", config.Tags[0]);
+        Assert.Equal("tag2", config.Tags[1]);
+        Assert.Equal("tag3", config.Tags[2]);
+    }
+
+    [Fact]
+    public void BindFrom_ReadOnlyDictionary_ShouldBindCorrectly()
+    {
+        // Arrange
+        var jsonPath = Path.Combine(_testDir, "readonly_dict.json");
+        File.WriteAllText(jsonPath, @"{
+            ""ReadOnly"": {
+                ""Name"": ""TestScores"",
+                ""Scores"": {
+                    ""Math"": 95,
+                    ""English"": 88,
+                    ""Science"": 92
+                }
+            }
+        }");
+
+        var cfg = new CfgBuilder()
+            .AddJsonFile(jsonPath, level: 0, writeable: false)
+            .Build();
+
+        // Act
+        var section = cfg.GetSection("ReadOnly");
+        var config = TestReadOnlyConfig.BindFrom(section);
+
+        // Assert
+        Assert.Equal("TestScores", config.Name);
+        Assert.NotNull(config.Scores);
+        Assert.Equal(3, config.Scores.Count);
+        Assert.Equal(95, config.Scores["Math"]);
+        Assert.Equal(88, config.Scores["English"]);
+        Assert.Equal(92, config.Scores["Science"]);
+    }
+
     public void Dispose()
     {
         try
@@ -305,4 +367,12 @@ public partial class TestOptionalConfig
     public string? RequiredValue { get; set; }
     public int? OptionalInt { get; set; }
     public string? OptionalString { get; set; }
+}
+
+[CfgSection("ReadOnly")]
+public partial class TestReadOnlyConfig
+{
+    public string? Name { get; set; }
+    public IReadOnlyList<string>? Tags { get; set; }
+    public IReadOnlyDictionary<string, int>? Scores { get; set; }
 }

@@ -241,6 +241,19 @@ public class CfgSectionGenerator : IIncrementalGenerator
             {
                 return TypeKind.HashSet;
             }
+
+            // IReadOnlyDictionary
+            if (genericDef.StartsWith("System.Collections.Generic.IReadOnlyDictionary<", StringComparison.Ordinal))
+            {
+                return TypeKind.ReadOnlyDictionary;
+            }
+
+            // IReadOnlyList/IReadOnlyCollection
+            if (genericDef.StartsWith("System.Collections.Generic.IReadOnlyList<", StringComparison.Ordinal) ||
+                genericDef.StartsWith("System.Collections.Generic.IReadOnlyCollection<", StringComparison.Ordinal))
+            {
+                return TypeKind.ReadOnlyList;
+            }
         }
 
         // 复杂对象
@@ -268,7 +281,8 @@ public class CfgSectionGenerator : IIncrementalGenerator
             {
                 var genericDef = namedType.OriginalDefinition.ToDisplayString();
                 if (genericDef.StartsWith("System.Collections.Generic.Dictionary<", StringComparison.Ordinal) ||
-                    genericDef.StartsWith("System.Collections.Generic.IDictionary<", StringComparison.Ordinal))
+                    genericDef.StartsWith("System.Collections.Generic.IDictionary<", StringComparison.Ordinal) ||
+                    genericDef.StartsWith("System.Collections.Generic.IReadOnlyDictionary<", StringComparison.Ordinal))
                 {
                     return args.Length >= 2 ? args[1] : null;
                 }
@@ -288,7 +302,8 @@ public class CfgSectionGenerator : IIncrementalGenerator
         {
             var genericDef = namedType.OriginalDefinition.ToDisplayString();
             if ((genericDef.StartsWith("System.Collections.Generic.Dictionary<", StringComparison.Ordinal) ||
-                 genericDef.StartsWith("System.Collections.Generic.IDictionary<", StringComparison.Ordinal)) &&
+                 genericDef.StartsWith("System.Collections.Generic.IDictionary<", StringComparison.Ordinal) ||
+                 genericDef.StartsWith("System.Collections.Generic.IReadOnlyDictionary<", StringComparison.Ordinal)) &&
                 namedType.TypeArguments.Length >= 1)
             {
                 return namedType.TypeArguments[0];
@@ -411,5 +426,7 @@ internal enum TypeKind
     List,
     HashSet,
     Dictionary,
-    Complex
+    Complex,
+    ReadOnlyList,
+    ReadOnlyDictionary
 }
