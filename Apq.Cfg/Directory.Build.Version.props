@@ -1,7 +1,7 @@
 ﻿<Project>
   <!-- 中央版本管理 -->
   <PropertyGroup>
-    <ApqCfgVersion>1.1.7</ApqCfgVersion>
+    <ApqCfgVersion>1.1.8</ApqCfgVersion>
   </PropertyGroup>
 
   <!-- 版本号映射 -->
