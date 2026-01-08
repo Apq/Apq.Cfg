@@ -17,6 +17,7 @@
         <!-- 配置源侧边栏 -->
         <el-aside class="source-aside" :width="sourceCollapsed ? '64px' : '240px'">
           <el-menu
+            ref="sourceMenuRef"
             :default-active="currentSource"
             :collapse="sourceCollapsed"
             class="source-menu"
@@ -170,9 +171,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import type { MenuInstance } from 'element-plus'
 import { ArrowLeft, Refresh, Check, ArrowDown, Search, Lock, Fold, Expand, Files, Folder, Document } from '@element-plus/icons-vue'
 import { useAppsStore } from '@/stores/apps'
 import { createConfigApi } from '@/api/config'
@@ -207,6 +209,7 @@ const searchKey = ref('')
 const selectedNode = ref<TreeNodeData | null>(null)
 const editValue = ref('')
 const sourceCollapsed = ref(false)
+const sourceMenuRef = ref<MenuInstance | null>(null)
 
 const filteredTreeData = computed(() => {
   if (!searchKey.value) return treeData.value
@@ -235,6 +238,17 @@ const sourceLevelGroups = computed(() => {
     }))
   }))
 })
+
+// 展开所有配置源菜单
+function expandAllSourceMenus() {
+  nextTick(() => {
+    if (sourceMenuRef.value) {
+      sourceLevelGroups.value.forEach(group => {
+        sourceMenuRef.value?.open(`level-${group.level}`)
+      })
+    }
+  })
+}
 
 // 当前选中配置源的信息
 const currentSourceInfo = computed(() => {
@@ -281,6 +295,8 @@ async function loadSources() {
     const res = await configApi.value.getSources()
     if (res.success && res.data) {
       sources.value = res.data
+      // 数据加载后展开所有菜单
+      expandAllSourceMenus()
     }
   } catch (e) {
     console.error('Failed to load sources', e)
@@ -544,13 +560,15 @@ function goBack() {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow: auto;
   transition: width 0.3s;
 }
 
 .source-menu {
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   border-right: none;
+  overflow-x: auto;
 }
 
 .source-menu:not(.el-menu--collapse) {
@@ -578,11 +596,17 @@ function goBack() {
 .main-content {
   flex: 1;
   min-width: 0;
+  overflow: auto;
 }
 
 .tree-card, .detail-card {
   height: calc(100vh - 140px);
+}
+
+.tree-card :deep(.el-card__body),
+.detail-card :deep(.el-card__body) {
   overflow: auto;
+  height: calc(100% - 60px);
 }
 
 .card-header {

@@ -260,7 +260,7 @@ async function deleteApp(app: AppEndpoint) {
   }
 }
 
-function handleSave() {
+async function handleSave() {
   if (!formData.value.name || !formData.value.url) {
     ElMessage.warning('请填写必填项')
     return
@@ -268,6 +268,26 @@ function handleSave() {
 
   saving.value = true
   try {
+    // 构造临时应用对象用于测试连接
+    const tempApp: AppEndpoint = {
+      id: editingApp.value?.id || crypto.randomUUID(),
+      name: formData.value.name,
+      url: formData.value.url,
+      authType: formData.value.authType,
+      apiKey: formData.value.apiKey || undefined,
+      token: formData.value.token || undefined,
+      description: formData.value.description || undefined,
+      createdAt: editingApp.value?.createdAt || new Date().toISOString()
+    }
+
+    // 先测试连接
+    const connected = await appsStore.testConnection(tempApp)
+    if (!connected) {
+      ElMessage.error('无法连接到服务，请检查 API 地址和认证信息')
+      return
+    }
+
+    // 连接成功，保存应用
     if (editingApp.value) {
       appsStore.updateApp(editingApp.value.id, formData.value)
       ElMessage.success('更新成功')

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Apq.Cfg.EncodingSupport;
@@ -14,7 +15,11 @@ namespace Apq.Cfg.Sources;
 internal sealed class JsonFileCfgSource : FileCfgSourceBase, IWritableCfgSource, IFileCfgSource
 {
     // 缓存 JsonSerializerOptions，避免每次序列化都创建新实例
-    private static readonly JsonSerializerOptions s_writeOptions = new() { WriteIndented = true };
+    private static readonly JsonSerializerOptions s_writeOptions = new()
+    {
+        WriteIndented = true,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
 
     /// <summary>
     /// 初始化 JsonFileCfgSource 实例
