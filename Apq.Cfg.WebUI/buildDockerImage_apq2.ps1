@@ -1,4 +1,4 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 # 远程构建 Docker 镜像脚本
 # 功能：连接远程服务器，拉取本仓库，构建多架构镜像并推送到 Docker Hub
 
@@ -39,41 +39,24 @@ Write-Host ""
 #endregion
 
 #region 构建远程命令
-# 远程 Shell 命令（多行格式，易读）
-$shellCommands = @(
-    # 1. 克隆仓库（如果不存在）
-    "if [ ! -d ~/$repoDir ]; then"
-    "    cd ~ && git clone $repoUrl"
-    "fi"
-
-    # 2. 进入目录并拉取最新代码
-    "cd ~/$repoDir"
-    "git pull"
-
-    # 3. 创建缓存目录
-    "mkdir -p $cacheDir"
-
-    # 4. 构建多架构镜像并推送
-    "docker buildx build \"
-    "    --platform linux/amd64,linux/arm64 \"
-    "    --cache-from type=local,src=$cacheDir \"
-    "    --cache-to type=local,dest=$cacheDir,mode=max \"
-    "    $tagParams \"
-    "    --push ."
-)
+# 远程 Shell 命令步骤说明：
+# 1. 克隆仓库（如果不存在）
+# 2. 进入目录并拉取最新代码
+# 3. 创建缓存目录
+# 4. 构建多架构镜像并推送
 
 # 合并为单行命令（用 && 连接）
 $buildCmd = @(
-    "if [ ! -d ~/$repoDir ]; then cd ~ && git clone $repoUrl; fi"
-    "cd ~/$repoDir"
-    "git pull"
-    "mkdir -p $cacheDir"
+    "if [ ! -d ~/$repoDir ]; then cd ~ && git clone $repoUrl; fi",
+    "cd ~/$repoDir",
+    "git pull",
+    "mkdir -p $cacheDir",
     "docker buildx build --platform linux/amd64,linux/arm64 --cache-from type=local,src=$cacheDir --cache-to type=local,dest=$cacheDir,mode=max $tagParams --push ."
 ) -join " && "
 
 # tmux 命令：创建会话（如不存在）并发送构建命令
 $tmuxCmd = @(
-    "tmux has-session -t $tmuxSession 2>/dev/null || tmux new-session -d -s $tmuxSession"
+    "tmux has-session -t $tmuxSession 2>/dev/null || tmux new-session -d -s $tmuxSession",
     "tmux send-keys -t $tmuxSession '$buildCmd' Enter"
 ) -join "; "
 #endregion
