@@ -93,10 +93,6 @@
                         <el-icon><Refresh /></el-icon>
                         刷新
                       </el-button>
-                      <el-button size="small" type="primary" @click="handleSave" :loading="saving">
-                        <el-icon><Check /></el-icon>
-                        保存
-                      </el-button>
                       <el-dropdown size="small" @command="handleExport">
                         <el-button size="small">
                           导出
@@ -125,6 +121,16 @@
                     <span class="tree-node">
                       <span>{{ data.key }}</span>
                       <el-icon v-if="data.isMasked" class="masked-icon"><Lock /></el-icon>
+                      <el-button
+                        v-if="currentSourceInfo.isWriteable"
+                        class="add-btn"
+                        type="primary"
+                        circle
+                        size="small"
+                        @click.stop="handleShowAddDialog(data)"
+                      >
+                        <el-icon><Plus /></el-icon>
+                      </el-button>
                     </span>
                   </template>
                 </el-tree>
@@ -171,6 +177,25 @@
         </div>
       </div>
     </el-main>
+
+    <!-- 添加配置对话框 -->
+    <el-dialog v-model="addDialogVisible" title="添加配置" width="500px">
+      <el-form label-width="80px">
+        <el-form-item label="父级键">
+          <el-input :value="addParentKey || '(根级)'" readonly />
+        </el-form-item>
+        <el-form-item label="键名" required>
+          <el-input v-model="addNewKey" placeholder="请输入配置键名" />
+        </el-form-item>
+        <el-form-item label="值">
+          <el-input v-model="addNewValue" type="textarea" :rows="3" placeholder="请输入配置值（可选）" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="addDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleAddConfig" :loading="addLoading">添加</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -179,13 +204,14 @@ import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { MenuInstance } from 'element-plus'
-import { ArrowLeft, Refresh, Check, ArrowDown, Search, Lock, Fold, Expand, Files, Folder, Document } from '@element-plus/icons-vue'
+import { ArrowLeft, Refresh, ArrowDown, Search, Lock, Fold, Expand, Files, Folder, Document, Plus } from '@element-plus/icons-vue'
 import { useAppsStore } from '@/stores/apps'
 import { createConfigApi } from '@/api/config'
 import type { ConfigTreeNode, ConfigSourceDto } from '@/types'
 
 interface TreeNodeData extends ConfigTreeNode {
   fullKey: string
+  isVirtualRoot?: boolean
 }
 
 const route = useRoute()
@@ -201,7 +227,6 @@ const configApi = computed(() => {
 })
 
 const loading = ref(false)
-const saving = ref(false)
 const reloading = ref(false)
 const refreshingSources = ref(false)
 
@@ -215,9 +240,42 @@ const editValue = ref('')
 const sourceCollapsed = ref(false)
 const sourceMenuRef = ref<MenuInstance | null>(null)
 
+// 添加配置对话框
+const addDialogVisible = ref(false)
+const addParentKey = ref('')
+const addNewKey = ref('')
+const addNewValue = ref('')
+const addLoading = ref(false)
+
+// 带虚拟根节点的树数据
+const treeDataWithRoot = computed(() => {
+  const rootNode: TreeNodeData = {
+    key: '(根)',
+    value: null,
+    hasValue: false,
+    isMasked: false,
+    children: treeData.value,
+    fullKey: '',
+    isVirtualRoot: true
+  } as TreeNodeData & { isVirtualRoot: boolean }
+  return [rootNode]
+})
+
 const filteredTreeData = computed(() => {
-  if (!searchKey.value) return treeData.value
-  return filterTree(treeData.value, searchKey.value.toLowerCase())
+  if (!searchKey.value) return treeDataWithRoot.value
+
+  // 搜索时过滤子节点，但保留虚拟根
+  const filtered = filterTree(treeData.value, searchKey.value.toLowerCase())
+  const rootNode: TreeNodeData = {
+    key: '(根)',
+    value: null,
+    hasValue: false,
+    isMasked: false,
+    children: filtered,
+    fullKey: '',
+    isVirtualRoot: true
+  } as TreeNodeData & { isVirtualRoot: boolean }
+  return [rootNode]
 })
 
 // 按层级分组配置源
@@ -443,23 +501,6 @@ async function handleDeleteKey() {
   }
 }
 
-async function handleSave() {
-  if (!configApi.value) return
-  saving.value = true
-  try {
-    const res = await configApi.value.save()
-    if (res.success) {
-      ElMessage.success('保存成功')
-    } else {
-      ElMessage.error(res.error || '保存失败')
-    }
-  } catch {
-    ElMessage.error('保存失败')
-  } finally {
-    saving.value = false
-  }
-}
-
 async function handleReload() {
   if (!configApi.value) return
   reloading.value = true
@@ -511,6 +552,57 @@ async function handleExport(format: string) {
     URL.revokeObjectURL(url)
   } catch {
     ElMessage.error('导出失败')
+  }
+}
+
+// 显示添加配置对话框
+function handleShowAddDialog(node: TreeNodeData) {
+  addParentKey.value = node.fullKey
+  addNewKey.value = ''
+  addNewValue.value = ''
+  addDialogVisible.value = true
+}
+
+// 添加配置
+async function handleAddConfig() {
+  if (!configApi.value) return
+  if (!addNewKey.value.trim()) {
+    ElMessage.warning('请输入配置键名')
+    return
+  }
+
+  // 构建完整的键
+  const fullKey = addParentKey.value
+    ? `${addParentKey.value}:${addNewKey.value.trim()}`
+    : addNewKey.value.trim()
+
+  addLoading.value = true
+  try {
+    let res
+    if (currentSource.value === 'merged') {
+      res = await configApi.value.setMergedValue(fullKey, addNewValue.value)
+    } else {
+      const [level, name] = currentSource.value.split('/')
+      res = await configApi.value.setSourceValue(parseInt(level), name, fullKey, addNewValue.value)
+    }
+
+    if (res.success) {
+      // 保存到文件
+      const saveRes = await configApi.value.save()
+      if (saveRes.success) {
+        ElMessage.success('添加成功')
+        addDialogVisible.value = false
+        await loadConfig(true)
+      } else {
+        ElMessage.error(saveRes.error || '保存失败')
+      }
+    } else {
+      ElMessage.error(res.error || '添加失败')
+    }
+  } catch {
+    ElMessage.error('添加失败')
+  } finally {
+    addLoading.value = false
   }
 }
 
@@ -639,9 +731,27 @@ function goBack() {
 }
 
 .tree-node {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 5px;
+}
+
+.tree-node .add-btn {
+  width: 18px !important;
+  height: 18px !important;
+  padding: 0;
+  font-size: 12px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tree-node:hover .add-btn {
+  opacity: 1;
+}
+
+.tree-node .add-btn .el-icon {
+  font-size: 12px;
 }
 
 .masked-icon {
