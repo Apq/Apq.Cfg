@@ -45,7 +45,6 @@ var cfg = new CfgBuilder()
 // 输出一些配置值
 Console.WriteLine("\n已加载的配置:");
 Console.WriteLine($"  App:Name = {cfg["App:Name"]}");
-Console.WriteLine($"  Database:Primary:Provider = {cfg["Database:Primary:Provider"]}");
 Console.WriteLine($"  Cache:Provider = {cfg["Cache:Provider"]}");
 
 // ============================================================
