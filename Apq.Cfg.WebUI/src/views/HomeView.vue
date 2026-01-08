@@ -140,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus, MoreFilled, Download, Upload, ArrowDown } from '@element-plus/icons-vue'
@@ -166,6 +166,30 @@ const formData = ref({
   apiKey: '',
   token: '',
   description: ''
+})
+
+// 生成不重复的默认应用名称
+function generateDefaultAppName(): string {
+  const baseName = '新应用'
+  const existingNames = new Set(appsStore.apps.map(app => app.name))
+
+  if (!existingNames.has(baseName)) {
+    return baseName
+  }
+
+  let index = 1
+  while (existingNames.has(`${baseName} ${index}`)) {
+    index++
+  }
+  return `${baseName} ${index}`
+}
+
+// 监听对话框打开，设置默认值
+watch(showAddDialog, (visible) => {
+  if (visible && !editingApp.value) {
+    // 新增模式，设置默认应用名称
+    formData.value.name = generateDefaultAppName()
+  }
 })
 
 function getAuthTagType(authType: AuthType) {

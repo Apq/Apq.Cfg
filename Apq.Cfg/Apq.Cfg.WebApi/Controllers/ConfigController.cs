@@ -11,6 +11,7 @@ namespace Apq.Cfg.WebApi.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/apqcfg")]
+[Authorize]
 public class ConfigController : ControllerBase
 {
     private readonly IConfigApiService _service;

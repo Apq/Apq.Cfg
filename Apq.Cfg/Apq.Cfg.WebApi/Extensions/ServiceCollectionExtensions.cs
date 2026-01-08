@@ -1,7 +1,9 @@
 using Apq.Cfg.WebApi.Authentication;
 using Apq.Cfg.WebApi.Controllers;
 using Apq.Cfg.WebApi.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 #if NET8_0
 using Microsoft.OpenApi;
@@ -196,6 +198,16 @@ public static class ServiceCollectionExtensions
     {
         switch (options.Authentication)
         {
+            case AuthenticationType.None:
+                // 无认证模式：添加一个允许匿名访问的授权策略
+                services.AddAuthorization(authOptions =>
+                {
+                    authOptions.DefaultPolicy = new AuthorizationPolicyBuilder()
+                        .RequireAssertion(_ => true) // 始终通过
+                        .Build();
+                });
+                break;
+
             case AuthenticationType.ApiKey:
                 services.AddAuthentication(ApiKeyDefaults.AuthenticationScheme)
                     .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(
@@ -205,6 +217,7 @@ public static class ServiceCollectionExtensions
                             opt.ApiKey = options.ApiKey;
                             opt.HeaderName = options.ApiKeyHeaderName;
                         });
+                services.AddAuthorization();
                 break;
 
             case AuthenticationType.JwtBearer:
@@ -220,6 +233,7 @@ public static class ServiceCollectionExtensions
                             opt.TokenValidationParameters.ValidateAudience = options.Jwt.ValidateAudience;
                         });
                 }
+                services.AddAuthorization();
                 break;
         }
     }

@@ -48,12 +48,12 @@ public static class ApplicationBuilderExtensions
             app.UseCors("ApqCfgWebApiCors");
         }
 
-        // 认证（在 AddApqCfgWebApi 中已配置）
+        // 认证和授权（在 AddApqCfgWebApi 中已配置）
         if (options.Authentication != AuthenticationType.None)
         {
             app.UseAuthentication();
-            app.UseAuthorization();
         }
+        app.UseAuthorization();
 
         return app;
     }
