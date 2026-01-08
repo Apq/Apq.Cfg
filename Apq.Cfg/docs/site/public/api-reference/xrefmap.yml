@@ -213,22 +213,22 @@ references:
   isSpec: "True"
   fullName: Apq.Cfg.CfgBuilder.AddEnvironmentVariables
   nameWithType: CfgBuilder.AddEnvironmentVariables
-- uid: Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
-  name: AddJson(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
-  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJson_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String_
-  commentId: M:Apq.Cfg.CfgBuilder.AddJson(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
-  name.vb: AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
-  fullName: Apq.Cfg.CfgBuilder.AddJson(string, int, bool, bool, bool, bool, Apq.Cfg.EncodingSupport.EncodingOptions?, string?)
-  fullName.vb: Apq.Cfg.CfgBuilder.AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, Apq.Cfg.EncodingSupport.EncodingOptions, String)
-  nameWithType: CfgBuilder.AddJson(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
-  nameWithType.vb: CfgBuilder.AddJson(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
-- uid: Apq.Cfg.CfgBuilder.AddJson*
-  name: AddJson
-  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJson_
-  commentId: Overload:Apq.Cfg.CfgBuilder.AddJson
+- uid: Apq.Cfg.CfgBuilder.AddJsonFile(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
+  name: AddJsonFile(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJsonFile_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_Apq_Cfg_EncodingSupport_EncodingOptions_System_String_
+  commentId: M:Apq.Cfg.CfgBuilder.AddJsonFile(System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,Apq.Cfg.EncodingSupport.EncodingOptions,System.String)
+  name.vb: AddJsonFile(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
+  fullName: Apq.Cfg.CfgBuilder.AddJsonFile(string, int, bool, bool, bool, bool, Apq.Cfg.EncodingSupport.EncodingOptions?, string?)
+  fullName.vb: Apq.Cfg.CfgBuilder.AddJsonFile(String, Integer, Boolean, Boolean, Boolean, Boolean, Apq.Cfg.EncodingSupport.EncodingOptions, String)
+  nameWithType: CfgBuilder.AddJsonFile(string, int, bool, bool, bool, bool, EncodingOptions?, string?)
+  nameWithType.vb: CfgBuilder.AddJsonFile(String, Integer, Boolean, Boolean, Boolean, Boolean, EncodingOptions, String)
+- uid: Apq.Cfg.CfgBuilder.AddJsonFile*
+  name: AddJsonFile
+  href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddJsonFile_
+  commentId: Overload:Apq.Cfg.CfgBuilder.AddJsonFile
   isSpec: "True"
-  fullName: Apq.Cfg.CfgBuilder.AddJson
-  nameWithType: CfgBuilder.AddJson
+  fullName: Apq.Cfg.CfgBuilder.AddJsonFile
+  nameWithType: CfgBuilder.AddJsonFile
 - uid: Apq.Cfg.CfgBuilder.AddReadEncodingMapping(System.String,System.Text.Encoding,System.Int32)
   name: AddReadEncodingMapping(string, Encoding, int)
   href: api/Apq.Cfg.CfgBuilder.html#Apq_Cfg_CfgBuilder_AddReadEncodingMapping_System_String_System_Text_Encoding_System_Int32_
@@ -3613,22 +3613,22 @@ references:
   commentId: T:Apq.Cfg.Env.CfgBuilderExtensions
   fullName: Apq.Cfg.Env.CfgBuilderExtensions
   nameWithType: CfgBuilderExtensions
-- uid: Apq.Cfg.Env.CfgBuilderExtensions.AddEnv(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name: AddEnv(CfgBuilder, string, int, bool, bool, bool, bool, bool)
-  href: api/Apq.Cfg.Env.CfgBuilderExtensions.html#Apq_Cfg_Env_CfgBuilderExtensions_AddEnv_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
-  commentId: M:Apq.Cfg.Env.CfgBuilderExtensions.AddEnv(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name.vb: AddEnv(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean, Boolean)
-  fullName: Apq.Cfg.Env.CfgBuilderExtensions.AddEnv(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool, bool)
-  fullName.vb: Apq.Cfg.Env.CfgBuilderExtensions.AddEnv(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean, Boolean)
-  nameWithType: CfgBuilderExtensions.AddEnv(CfgBuilder, string, int, bool, bool, bool, bool, bool)
-  nameWithType.vb: CfgBuilderExtensions.AddEnv(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean, Boolean)
-- uid: Apq.Cfg.Env.CfgBuilderExtensions.AddEnv*
-  name: AddEnv
-  href: api/Apq.Cfg.Env.CfgBuilderExtensions.html#Apq_Cfg_Env_CfgBuilderExtensions_AddEnv_
-  commentId: Overload:Apq.Cfg.Env.CfgBuilderExtensions.AddEnv
+- uid: Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddEnvFile(CfgBuilder, string, int, bool, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Env.CfgBuilderExtensions.html#Apq_Cfg_Env_CfgBuilderExtensions_AddEnvFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddEnvFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddEnvFile(CfgBuilder, string, int, bool, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddEnvFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile*
+  name: AddEnvFile
+  href: api/Apq.Cfg.Env.CfgBuilderExtensions.html#Apq_Cfg_Env_CfgBuilderExtensions_AddEnvFile_
+  commentId: Overload:Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile
   isSpec: "True"
-  fullName: Apq.Cfg.Env.CfgBuilderExtensions.AddEnv
-  nameWithType: CfgBuilderExtensions.AddEnv
+  fullName: Apq.Cfg.Env.CfgBuilderExtensions.AddEnvFile
+  nameWithType: CfgBuilderExtensions.AddEnvFile
 - uid: Apq.Cfg.Etcd
   name: Apq.Cfg.Etcd
   href: api/Apq.Cfg.Etcd.html
@@ -4268,22 +4268,22 @@ references:
   commentId: T:Apq.Cfg.Ini.CfgBuilderExtensions
   fullName: Apq.Cfg.Ini.CfgBuilderExtensions
   nameWithType: CfgBuilderExtensions
-- uid: Apq.Cfg.Ini.CfgBuilderExtensions.AddIni(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name: AddIni(CfgBuilder, string, int, bool, bool, bool, bool)
-  href: api/Apq.Cfg.Ini.CfgBuilderExtensions.html#Apq_Cfg_Ini_CfgBuilderExtensions_AddIni_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
-  commentId: M:Apq.Cfg.Ini.CfgBuilderExtensions.AddIni(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name.vb: AddIni(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  fullName: Apq.Cfg.Ini.CfgBuilderExtensions.AddIni(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
-  fullName.vb: Apq.Cfg.Ini.CfgBuilderExtensions.AddIni(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  nameWithType: CfgBuilderExtensions.AddIni(CfgBuilder, string, int, bool, bool, bool, bool)
-  nameWithType.vb: CfgBuilderExtensions.AddIni(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-- uid: Apq.Cfg.Ini.CfgBuilderExtensions.AddIni*
-  name: AddIni
-  href: api/Apq.Cfg.Ini.CfgBuilderExtensions.html#Apq_Cfg_Ini_CfgBuilderExtensions_AddIni_
-  commentId: Overload:Apq.Cfg.Ini.CfgBuilderExtensions.AddIni
+- uid: Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddIniFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Ini.CfgBuilderExtensions.html#Apq_Cfg_Ini_CfgBuilderExtensions_AddIniFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddIniFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddIniFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddIniFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile*
+  name: AddIniFile
+  href: api/Apq.Cfg.Ini.CfgBuilderExtensions.html#Apq_Cfg_Ini_CfgBuilderExtensions_AddIniFile_
+  commentId: Overload:Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile
   isSpec: "True"
-  fullName: Apq.Cfg.Ini.CfgBuilderExtensions.AddIni
-  nameWithType: CfgBuilderExtensions.AddIni
+  fullName: Apq.Cfg.Ini.CfgBuilderExtensions.AddIniFile
+  nameWithType: CfgBuilderExtensions.AddIniFile
 - uid: Apq.Cfg.Nacos
   name: Apq.Cfg.Nacos
   href: api/Apq.Cfg.Nacos.html
@@ -6457,22 +6457,22 @@ references:
   commentId: T:Apq.Cfg.Toml.CfgBuilderExtensions
   fullName: Apq.Cfg.Toml.CfgBuilderExtensions
   nameWithType: CfgBuilderExtensions
-- uid: Apq.Cfg.Toml.CfgBuilderExtensions.AddToml(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name: AddToml(CfgBuilder, string, int, bool, bool, bool, bool)
-  href: api/Apq.Cfg.Toml.CfgBuilderExtensions.html#Apq_Cfg_Toml_CfgBuilderExtensions_AddToml_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
-  commentId: M:Apq.Cfg.Toml.CfgBuilderExtensions.AddToml(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name.vb: AddToml(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  fullName: Apq.Cfg.Toml.CfgBuilderExtensions.AddToml(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
-  fullName.vb: Apq.Cfg.Toml.CfgBuilderExtensions.AddToml(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  nameWithType: CfgBuilderExtensions.AddToml(CfgBuilder, string, int, bool, bool, bool, bool)
-  nameWithType.vb: CfgBuilderExtensions.AddToml(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-- uid: Apq.Cfg.Toml.CfgBuilderExtensions.AddToml*
-  name: AddToml
-  href: api/Apq.Cfg.Toml.CfgBuilderExtensions.html#Apq_Cfg_Toml_CfgBuilderExtensions_AddToml_
-  commentId: Overload:Apq.Cfg.Toml.CfgBuilderExtensions.AddToml
+- uid: Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddTomlFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Toml.CfgBuilderExtensions.html#Apq_Cfg_Toml_CfgBuilderExtensions_AddTomlFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddTomlFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddTomlFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddTomlFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile*
+  name: AddTomlFile
+  href: api/Apq.Cfg.Toml.CfgBuilderExtensions.html#Apq_Cfg_Toml_CfgBuilderExtensions_AddTomlFile_
+  commentId: Overload:Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile
   isSpec: "True"
-  fullName: Apq.Cfg.Toml.CfgBuilderExtensions.AddToml
-  nameWithType: CfgBuilderExtensions.AddToml
+  fullName: Apq.Cfg.Toml.CfgBuilderExtensions.AddTomlFile
+  nameWithType: CfgBuilderExtensions.AddTomlFile
 - uid: Apq.Cfg.Validation
   name: Apq.Cfg.Validation
   href: api/Apq.Cfg.Validation.html
@@ -9906,22 +9906,22 @@ references:
   commentId: T:Apq.Cfg.Xml.CfgBuilderExtensions
   fullName: Apq.Cfg.Xml.CfgBuilderExtensions
   nameWithType: CfgBuilderExtensions
-- uid: Apq.Cfg.Xml.CfgBuilderExtensions.AddXml(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name: AddXml(CfgBuilder, string, int, bool, bool, bool, bool)
-  href: api/Apq.Cfg.Xml.CfgBuilderExtensions.html#Apq_Cfg_Xml_CfgBuilderExtensions_AddXml_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
-  commentId: M:Apq.Cfg.Xml.CfgBuilderExtensions.AddXml(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name.vb: AddXml(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  fullName: Apq.Cfg.Xml.CfgBuilderExtensions.AddXml(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
-  fullName.vb: Apq.Cfg.Xml.CfgBuilderExtensions.AddXml(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  nameWithType: CfgBuilderExtensions.AddXml(CfgBuilder, string, int, bool, bool, bool, bool)
-  nameWithType.vb: CfgBuilderExtensions.AddXml(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-- uid: Apq.Cfg.Xml.CfgBuilderExtensions.AddXml*
-  name: AddXml
-  href: api/Apq.Cfg.Xml.CfgBuilderExtensions.html#Apq_Cfg_Xml_CfgBuilderExtensions_AddXml_
-  commentId: Overload:Apq.Cfg.Xml.CfgBuilderExtensions.AddXml
+- uid: Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddXmlFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Xml.CfgBuilderExtensions.html#Apq_Cfg_Xml_CfgBuilderExtensions_AddXmlFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddXmlFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddXmlFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddXmlFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile*
+  name: AddXmlFile
+  href: api/Apq.Cfg.Xml.CfgBuilderExtensions.html#Apq_Cfg_Xml_CfgBuilderExtensions_AddXmlFile_
+  commentId: Overload:Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile
   isSpec: "True"
-  fullName: Apq.Cfg.Xml.CfgBuilderExtensions.AddXml
-  nameWithType: CfgBuilderExtensions.AddXml
+  fullName: Apq.Cfg.Xml.CfgBuilderExtensions.AddXmlFile
+  nameWithType: CfgBuilderExtensions.AddXmlFile
 - uid: Apq.Cfg.Yaml
   name: Apq.Cfg.Yaml
   href: api/Apq.Cfg.Yaml.html
@@ -9934,22 +9934,22 @@ references:
   commentId: T:Apq.Cfg.Yaml.CfgBuilderExtensions
   fullName: Apq.Cfg.Yaml.CfgBuilderExtensions
   nameWithType: CfgBuilderExtensions
-- uid: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name: AddYaml(CfgBuilder, string, int, bool, bool, bool, bool)
-  href: api/Apq.Cfg.Yaml.CfgBuilderExtensions.html#Apq_Cfg_Yaml_CfgBuilderExtensions_AddYaml_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
-  commentId: M:Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
-  name.vb: AddYaml(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  fullName: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
-  fullName.vb: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-  nameWithType: CfgBuilderExtensions.AddYaml(CfgBuilder, string, int, bool, bool, bool, bool)
-  nameWithType.vb: CfgBuilderExtensions.AddYaml(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
-- uid: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml*
-  name: AddYaml
-  href: api/Apq.Cfg.Yaml.CfgBuilderExtensions.html#Apq_Cfg_Yaml_CfgBuilderExtensions_AddYaml_
-  commentId: Overload:Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml
+- uid: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddYamlFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Yaml.CfgBuilderExtensions.html#Apq_Cfg_Yaml_CfgBuilderExtensions_AddYamlFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddYamlFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddYamlFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddYamlFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile*
+  name: AddYamlFile
+  href: api/Apq.Cfg.Yaml.CfgBuilderExtensions.html#Apq_Cfg_Yaml_CfgBuilderExtensions_AddYamlFile_
+  commentId: Overload:Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile
   isSpec: "True"
-  fullName: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYaml
-  nameWithType: CfgBuilderExtensions.AddYaml
+  fullName: Apq.Cfg.Yaml.CfgBuilderExtensions.AddYamlFile
+  nameWithType: CfgBuilderExtensions.AddYamlFile
 - uid: Apq.Cfg.Zookeeper
   name: Apq.Cfg.Zookeeper
   href: api/Apq.Cfg.Zookeeper.html

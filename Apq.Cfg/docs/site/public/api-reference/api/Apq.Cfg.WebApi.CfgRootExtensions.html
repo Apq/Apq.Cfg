@@ -195,7 +195,7 @@ Class CfgRootExtensions
 
   <h4 class="section" id="Apq_Cfg_WebApi_CfgRootExtensions_AddWebApi_Apq_Cfg_ICfgRoot_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_WebApi_WebApiOptions___examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
-    .AddJson("config.json")
+    .AddJsonFile("config.json")
     .Build()
     .AddWebApi(builder.Services, options =&gt;
     {

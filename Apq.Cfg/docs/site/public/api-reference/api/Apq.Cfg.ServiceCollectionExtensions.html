@@ -194,7 +194,7 @@ Class ServiceCollectionExtensions
   <pre><code class="lang-csharp">// 使用 Data Protection 加密
 services.AddDataProtection();
 services.AddApqCfg((builder, sp) =&gt; builder
-    .AddJson("appsettings.json", level: 0, writeable: false)
+    .AddJsonFile("appsettings.json", level: 0, writeable: false)
     .AddDataProtectionEncryption(sp.GetRequiredService&lt;IDataProtectionProvider&gt;())
     .AddSensitiveMasking());</code></pre>
 
@@ -246,8 +246,8 @@ services.AddApqCfg((builder, sp) =&gt; builder
 
   <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfg_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder___examples">Examples</h4>
   <pre><code class="lang-csharp">services.AddApqCfg(cfg =&gt; cfg
-    .AddJson("config.json", level: 0)
-    .AddJson($"config.{environment}.json", level: 1)
+    .AddJsonFile("config.json", level: 0)
+    .AddJsonFile($"config.{environment}.json", level: 1)
     .AddEnvironmentVariables(prefix: "APP_", level: 2));</code></pre>
 
 
@@ -300,8 +300,8 @@ services.AddApqCfg((builder, sp) =&gt; builder
   <pre><code class="lang-csharp">services.AddApqCfg(sp =&gt; {
     var env = sp.GetRequiredService&lt;IWebHostEnvironment&gt;();
     return new CfgBuilder()
-        .AddJson("config.json", level: 0)
-        .AddJson($"config.{env.EnvironmentName}.json", level: 1)
+        .AddJsonFile("config.json", level: 0)
+        .AddJsonFile($"config.{env.EnvironmentName}.json", level: 1)
         .AddEnvironmentVariables(prefix: "APP_", level: 2)
         .Build();
 });</code></pre>
@@ -357,7 +357,7 @@ services.AddApqCfg((builder, sp) =&gt; builder
 
   <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddApqCfgWithValidation_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_CfgBuilder__System_Boolean__examples">Examples</h4>
   <pre><code class="lang-csharp">services.AddApqCfgWithValidation(cfg =&gt; cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddValidation(v =&gt; v
         .Required("Database:ConnectionString")
         .Range("Database:Port", 1, 65535)));</code></pre>
@@ -429,7 +429,7 @@ public class DatabaseOptions
 
 // 注册配置服务并绑定强类型配置
 services.AddApqCfg&lt;DatabaseOptions&gt;(cfg =&gt; cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(prefix: "APP_", level: 2),
     "Database");
 
@@ -525,7 +525,7 @@ var dbOptions = serviceProvider.GetRequiredService&lt;IOptions&lt;DatabaseOption
 
 
   <h4 class="section" id="Apq_Cfg_ServiceCollectionExtensions_AddConfigValidator_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Action_Apq_Cfg_Validation_ConfigValidationBuilder___examples">Examples</h4>
-  <pre><code class="lang-csharp">services.AddApqCfg(cfg =&gt; cfg.AddJson("config.json", level: 0));
+  <pre><code class="lang-csharp">services.AddApqCfg(cfg =&gt; cfg.AddJsonFile("config.json", level: 0));
 services.AddConfigValidator(v =&gt; v
     .Required("Database:ConnectionString")
     .Range("Database:Port", 1, 65535));</code></pre>
@@ -595,7 +595,7 @@ public class RetryOptions
 
 // 注册配置服务
 services.AddApqCfg(cfg =&gt; cfg
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEnvironmentVariables(prefix: "APP_", level: 2));
 
 // 绑定强类型配置

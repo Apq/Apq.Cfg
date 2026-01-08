@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-01-09
+
+### Breaking Changes
+
+- **File Configuration Source Method Renaming**: To align with `Microsoft.Extensions.Configuration` API naming conventions, file-based configuration source methods have been renamed:
+  - `AddJson` → `AddJsonFile`
+  - `AddIni` → `AddIniFile`
+  - `AddXml` → `AddXmlFile`
+  - `AddYaml` → `AddYamlFile`
+  - `AddToml` → `AddTomlFile`
+  - `AddEnv` → `AddEnvFile`
+
+### Migration Guide
+
+```csharp
+// Old code
+var cfg = new CfgBuilder()
+    .AddJson("config.json")
+    .AddYaml("config.yaml")
+    .AddEnv(".env")
+    .Build();
+
+// New code
+var cfg = new CfgBuilder()
+    .AddJsonFile("config.json")
+    .AddYamlFile("config.yaml")
+    .AddEnvFile(".env")
+    .Build();
+```
+
 ## [1.1.8] - 2026-01-09
 
 ### Added

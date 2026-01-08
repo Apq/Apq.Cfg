@@ -361,7 +361,7 @@ Class CfgBuilderExtensions
 
   <h4 class="section" id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddEncryption_Apq_Cfg_CfgBuilder_Apq_Cfg_Crypto_ICryptoProvider_System_Action_Apq_Cfg_Crypto_EncryptionOptions___examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddEncryption(new AesGcmCryptoProvider(key), options =&gt;
     {
         options.EncryptedPrefix = "[ENCRYPTED]";
@@ -494,7 +494,7 @@ Class CfgBuilderExtensions
 
   <h4 class="section" id="Apq_Cfg_Crypto_CfgBuilderExtensions_AddSensitiveMasking_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Crypto_MaskingOptions___examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddSensitiveMasking(options =&gt;
     {
         options.MaskString = "****";

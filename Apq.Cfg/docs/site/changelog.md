@@ -1,5 +1,35 @@
 # 更新日志
 
+## v1.2.0 (2026-01-09)
+
+### 破坏性变更
+
+- **文件类配置源方法重命名**：为与 `Microsoft.Extensions.Configuration` API 保持一致，文件类配置源方法名已更改：
+  - `AddJson` → `AddJsonFile`
+  - `AddIni` → `AddIniFile`
+  - `AddXml` → `AddXmlFile`
+  - `AddYaml` → `AddYamlFile`
+  - `AddToml` → `AddTomlFile`
+  - `AddEnv` → `AddEnvFile`
+
+### 迁移指南
+
+```csharp
+// 旧代码
+var cfg = new CfgBuilder()
+    .AddJson("config.json")
+    .AddYaml("config.yaml")
+    .AddEnv(".env")
+    .Build();
+
+// 新代码
+var cfg = new CfgBuilder()
+    .AddJsonFile("config.json")
+    .AddYamlFile("config.yaml")
+    .AddEnvFile(".env")
+    .Build();
+```
+
 ## v1.1.8 (2026-01-09)
 
 ### 新功能

@@ -192,7 +192,7 @@ Class CfgBuilderTemplateExtensions
 
   <h4 class="section" id="Apq_Cfg_CfgBuilderTemplateExtensions_AddVariableResolver_Apq_Cfg_CfgBuilder_Apq_Cfg_Template_IVariableResolver__examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .AddVariableResolver(new CustomResolver())
     .Build();</code></pre>
 
@@ -240,7 +240,7 @@ Class CfgBuilderTemplateExtensions
 
   <h4 class="section" id="Apq_Cfg_CfgBuilderTemplateExtensions_ConfigureVariableResolution_Apq_Cfg_CfgBuilder_System_Action_Apq_Cfg_Template_VariableResolutionOptions___examples">Examples</h4>
   <pre><code class="lang-csharp">var cfg = new CfgBuilder()
-    .AddJson("config.json", level: 0)
+    .AddJsonFile("config.json", level: 0)
     .ConfigureVariableResolution(options =&gt;
     {
         options.MaxRecursionDepth = 5;
