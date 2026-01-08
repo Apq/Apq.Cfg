@@ -122,7 +122,7 @@
                       <span>{{ data.key }}</span>
                       <el-icon v-if="data.isMasked" class="masked-icon"><Lock /></el-icon>
                       <el-button
-                        v-if="currentSourceInfo.isWriteable"
+                        v-if="currentSourceInfo.isWriteable && !data.hasValue"
                         class="add-btn"
                         type="primary"
                         circle

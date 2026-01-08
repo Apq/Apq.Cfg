@@ -1,6 +1,6 @@
 {
   "Local": {
     "Comment": "本地开发覆盖配置，此文件不应提交到版本控制",
-    "Debug": {}
+    "Debug": "true"
   }
 }
