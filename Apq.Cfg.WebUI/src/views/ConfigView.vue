@@ -58,6 +58,7 @@
                 <template #title>
                   <span>{{ source.name }}</span>
                   <el-tag v-if="source.isPrimaryWriter" size="small" type="success" class="primary-tag">主写入</el-tag>
+                  <el-tag v-else-if="!source.isWriteable" size="small" type="info" class="readonly-tag">只读</el-tag>
                 </template>
               </el-menu-item>
             </el-sub-menu>
@@ -145,18 +146,21 @@
                       v-model="editValue"
                       type="textarea"
                       :rows="4"
-                      :disabled="selectedNode.isMasked"
-                      :placeholder="selectedNode.isMasked ? '敏感值已脱敏' : ''"
+                      :disabled="selectedNode.isMasked || !currentSourceInfo.isWriteable"
+                      :placeholder="selectedNode.isMasked ? '敏感值已脱敏' : (!currentSourceInfo.isWriteable ? '此配置源为只读' : '')"
                     />
                   </el-form-item>
                   <el-form-item v-if="selectedNode.isMasked">
                     <el-tag type="warning">此值已脱敏，无法编辑</el-tag>
                   </el-form-item>
+                  <el-form-item v-else-if="!currentSourceInfo.isWriteable">
+                    <el-tag type="info">此配置源为只读，无法编辑</el-tag>
+                  </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" @click="handleUpdateValue" :disabled="selectedNode.isMasked">
+                    <el-button type="primary" @click="handleUpdateValue" :disabled="selectedNode.isMasked || !currentSourceInfo.isWriteable">
                       更新
                     </el-button>
-                    <el-button type="danger" @click="handleDeleteKey" :disabled="selectedNode.isMasked">
+                    <el-button type="danger" @click="handleDeleteKey" :disabled="selectedNode.isMasked || !currentSourceInfo.isWriteable">
                       删除
                     </el-button>
                   </el-form-item>
@@ -234,7 +238,8 @@ const sourceLevelGroups = computed(() => {
     sources: levelMap.get(level)!.map(source => ({
       value: `${source.level}/${source.name}`,
       name: source.name,
-      isPrimaryWriter: source.isPrimaryWriter
+      isPrimaryWriter: source.isPrimaryWriter,
+      isWriteable: source.isWriteable
     }))
   }))
 })
@@ -253,14 +258,15 @@ function expandAllSourceMenus() {
 // 当前选中配置源的信息
 const currentSourceInfo = computed(() => {
   if (currentSource.value === 'merged') {
-    return { name: '合并后', level: null, isPrimaryWriter: false }
+    return { name: '合并后', level: null, isPrimaryWriter: false, isWriteable: true }
   }
   const [level, name] = currentSource.value.split('/')
   const source = sources.value.find(s => s.level === parseInt(level) && s.name === name)
   return {
     name: source?.name || name,
     level: parseInt(level),
-    isPrimaryWriter: source?.isPrimaryWriter || false
+    isPrimaryWriter: source?.isPrimaryWriter || false,
+    isWriteable: source?.isWriteable || false
   }
 })
 
@@ -590,6 +596,10 @@ function goBack() {
 }
 
 .primary-tag {
+  margin-left: 8px;
+}
+
+.readonly-tag {
   margin-left: 8px;
 }
 
