@@ -99,7 +99,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                     var arr = value.GetArray();
                     for (var i = 0; i < arr.Count; i++)
                     {
-                        Traverse(arr[i], prefix + "." + i);
+                        Traverse(arr[i], prefix + ":" + i);
                     }
                 }
                 else
@@ -134,7 +134,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
             if (kvp.Key.StartsWith(prefix))
             {
                 var relativeKey = prefix.Length > 0 ? kvp.Key.Substring(prefix.Length + 1) : kvp.Key;
-                var parts = relativeKey.Split('.', 2);
+                var parts = relativeKey.Split(':', 2);
 
                 if (parts.Length == 1)
                 {
@@ -146,7 +146,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                     {
                         grouped[parts[0]] = new Dictionary<string, string?>();
                     }
-                    grouped[parts[0]][prefix.Length > 0 ? prefix + "." + parts[0] + "." + parts[1] : parts[0] + "." + parts[1]] = kvp.Value;
+                    grouped[parts[0]][prefix.Length > 0 ? prefix + ":" + parts[0] + ":" + parts[1] : parts[0] + ":" + parts[1]] = kvp.Value;
                 }
             }
         }
@@ -159,7 +159,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
         foreach (var kvp in grouped)
         {
             sb.AppendLine(kvp.Key + " {");
-            WriteDictionaryToHocon(kvp.Value, sb, prefix.Length > 0 ? prefix + "." + kvp.Key : kvp.Key);
+            WriteDictionaryToHocon(kvp.Value, sb, prefix.Length > 0 ? prefix + ":" + kvp.Key : kvp.Key);
             sb.AppendLine("}");
         }
     }

@@ -37,9 +37,17 @@ internal sealed class PropertiesFileCfgSource : FileCfgSourceBase, IWritableCfgS
             var idx = FindKeyValueSeparator(line);
             if (idx > 0)
             {
-                var key = line.Substring(0, idx).Trim();
-                var value = UnescapeValue(line.Substring(idx + 1).Trim());
-                var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}:{key}";
+                var key = line.Substring(0, idx).TrimEnd('\r').Trim();
+                var value = UnescapeValue(line.Substring(idx + 1).TrimEnd('\r').Trim());
+                string configKey;
+                if (string.IsNullOrEmpty(currentSection))
+                {
+                    configKey = key.Replace('.', ':');
+                }
+                else
+                {
+                    configKey = $"{currentSection}:{key}";
+                }
                 data[configKey] = value;
             }
         }
@@ -154,8 +162,8 @@ internal sealed class PropertiesFileCfgSource : FileCfgSourceBase, IWritableCfgS
                 var idx = FindKeyValueSeparator(line);
                 if (idx > 0)
                 {
-                    var key = line.Substring(0, idx).Trim();
-                    var value = UnescapeValue(line.Substring(idx + 1).Trim());
+                    var key = line.Substring(0, idx).TrimEnd('\r').Trim();
+                    var value = UnescapeValue(line.Substring(idx + 1).TrimEnd('\r').Trim());
                     var section = currentSection ?? "";
                     if (!sections.ContainsKey(section))
                         sections[section] = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
@@ -166,13 +174,13 @@ internal sealed class PropertiesFileCfgSource : FileCfgSourceBase, IWritableCfgS
 
         foreach (var (configKey, value) in changes)
         {
-            var colonIdx = configKey.IndexOf(':');
+            var lastColonIdx = configKey.LastIndexOf(':');
             string section, key;
 
-            if (colonIdx > 0)
+            if (lastColonIdx > 0)
             {
-                section = configKey.Substring(0, colonIdx);
-                key = configKey.Substring(colonIdx + 1);
+                section = configKey.Substring(0, lastColonIdx);
+                key = configKey.Substring(lastColonIdx + 1);
             }
             else
             {
@@ -269,9 +277,17 @@ internal sealed class PropertiesFileCfgSource : FileCfgSourceBase, IWritableCfgS
                 var idx = FindKeyValueSeparator(line);
                 if (idx > 0)
                 {
-                    var key = line.Substring(0, idx).Trim();
-                    var value = UnescapeValue(line.Substring(idx + 1).Trim());
-                    var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}:{key}";
+                    var key = line.Substring(0, idx).TrimEnd('\r').Trim();
+                    var value = UnescapeValue(line.Substring(idx + 1).TrimEnd('\r').Trim());
+                    string configKey;
+                    if (string.IsNullOrEmpty(currentSection))
+                    {
+                        configKey = key.Replace('.', ':');
+                    }
+                    else
+                    {
+                        configKey = $"{currentSection}:{key}";
+                    }
                     data[configKey] = value;
                 }
             }

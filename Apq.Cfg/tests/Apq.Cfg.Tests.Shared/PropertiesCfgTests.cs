@@ -29,16 +29,19 @@ public class PropertiesCfgTests : IDisposable
         // Arrange
         var propsPath = Path.Combine(_testDir, "config.properties");
         File.WriteAllText(propsPath, """
-            Database.Host=localhost
-            Database.Port=5432
-            App.Name=TestApp
+            [Database]
+            Host=localhost
+            Port=5432
+
+            [App]
+            Name=TestApp
             """, System.Text.Encoding.UTF8);
 
         using var cfg = new CfgBuilder()
             .AddPropertiesFile(propsPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert - Apq.Cfg uses colon notation for nested paths
+        // Act & Assert
         Assert.Equal("localhost", cfg["Database:Host"]);
         Assert.Equal("5432", cfg["Database:Port"]);
         Assert.Equal("TestApp", cfg["App:Name"]);
@@ -50,8 +53,9 @@ public class PropertiesCfgTests : IDisposable
         // Arrange
         var propsPath = Path.Combine(_testDir, "config.properties");
         File.WriteAllText(propsPath, """
-            Settings.MaxRetries=5
-            Settings.Enabled=true
+            [Settings]
+            MaxRetries=5
+            Enabled=true
             """, System.Text.Encoding.UTF8);
 
         using var cfg = new CfgBuilder()
@@ -69,7 +73,8 @@ public class PropertiesCfgTests : IDisposable
         // Arrange
         var propsPath = Path.Combine(_testDir, "config.properties");
         File.WriteAllText(propsPath, """
-            App.Original=Value
+            [App]
+            Original=Value
             """, System.Text.Encoding.UTF8);
 
         using var cfg = new CfgBuilder()
@@ -131,8 +136,9 @@ public class PropertiesCfgTests : IDisposable
         // Arrange
         var propsPath = Path.Combine(_testDir, "config.properties");
         File.WriteAllText(propsPath, """
-            App.ToRemove=Value
-            App.ToKeep=Value2
+            [App]
+            ToRemove=Value
+            ToKeep=Value2
             """, System.Text.Encoding.UTF8);
 
         using var cfg = new CfgBuilder()
