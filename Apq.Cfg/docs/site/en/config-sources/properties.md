@@ -50,7 +50,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Modify configuration
-cfg["App.Name"] = "NewName";
+cfg["App:Name"] = "NewName";
 await cfg.SaveAsync();
 ```
 
@@ -185,8 +185,8 @@ When reading, sections act as prefixes:
 | Properties Key | Configuration Key |
 |----------------|-------------------|
 | `app.name` (no section) | `app.name` |
-| `name` under `[app]` | `app.name` |
-| `host` under `[database]` | `database.host` |
+| `name` under `[app]` | `app:name` |
+| `host` under `[database]` | `database:host` |
 
 ## Mix with Other Formats
 
@@ -197,17 +197,6 @@ var cfg = new CfgBuilder()
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
-
-## Properties vs Other Formats
-
-| Feature | Properties | JSON | YAML | TOML |
-|---------|-----------|------|------|------|
-| Readability | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| Comments | ✅ | ❌ | ✅ | ✅ |
-| Types | ❌ (string only) | ✅ | ✅ | ✅ |
-| Nesting | Limited | ✅ | ✅ | ✅ |
-| Java ecosystem | ✅✅✅ | ✅ | ✅ | ✅ |
-| Simplicity | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
 
 ## Use Cases
 
@@ -237,8 +226,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // Access configuration
-var dbUrl = cfg["spring.datasource.url"];
-var port = cfg.GetValue<int>("server.port");
+var dbUrl = cfg["spring:datasource:url"];
+var port = cfg.GetValue<int>("server:port");
 ```
 
 ## Dependencies

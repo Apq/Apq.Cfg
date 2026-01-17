@@ -50,7 +50,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg["App.Name"] = "NewName";
+cfg["App:Name"] = "NewName";
 await cfg.SaveAsync();
 ```
 
@@ -190,8 +190,8 @@ level=INFO
 | Properties 键 | 配置键 |
 |---------------|--------|
 | `app.name` (无区段) | `app.name` |
-| `[app]` 下的 `name` | `app.name` |
-| `[database]` 下的 `host` | `database.host` |
+| `[app]` 下的 `name` | `app:name` |
+| `[database]` 下的 `host` | `database:host` |
 
 ## 与其他格式混合使用
 
@@ -202,17 +202,6 @@ var cfg = new CfgBuilder()
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
-
-## Properties vs 其他格式
-
-| 特性 | Properties | JSON | YAML | TOML |
-|------|-----------|------|------|------|
-| 可读性 | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| 注释支持 | ✅ | ❌ | ✅ | ✅ |
-| 类型支持 | ❌ (字符串) | ✅ | ✅ | ✅ |
-| 嵌套结构 | 有限 | ✅ | ✅ | ✅ |
-| Java 生态 | ✅✅✅ | ✅ | ✅ | ✅ |
-| 简单性 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
 
 ## 适用场景
 
@@ -242,8 +231,8 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 访问配置
-var dbUrl = cfg["spring.datasource.url"];
-var port = cfg.GetValue<int>("server.port");
+var dbUrl = cfg["spring:datasource:url"];
+var port = cfg.GetValue<int>("server:port");
 ```
 
 ## 依赖

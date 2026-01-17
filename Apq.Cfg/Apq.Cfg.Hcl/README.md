@@ -28,10 +28,20 @@ var cfg = new CfgBuilder()
     .AddHclFile("config.hcl", level: 0, writeable: true)
     .Build();
 
-var appName = cfg["AppName"];
-var db = cfg.GetSection("Database");
-var connStr = db["ConnectionString"];
+var appName = cfg["app_name"];
+var host = cfg["database:host"];
+var port = cfg.GetValue<int>("database:port");
 ```
+
+## 键路径映射
+
+HOCON 嵌套结构使用冒号分隔的键路径：
+
+| HOCON 路径 | 配置键 |
+|------------|--------|
+| `app_name` | `app_name` |
+| `database.host` | `database:host` |
+| `database.connection.timeout` | `database:connection:timeout` |
 
 ## HOCON/HCL 格式示例
 
@@ -39,8 +49,9 @@ var connStr = db["ConnectionString"];
 app_name = "MyApp"
 
 database {
+    host = "localhost"
+    port = 5432
     connection_string = "Server=localhost;Database=mydb"
-    timeout = 30
 }
 
 [logging]

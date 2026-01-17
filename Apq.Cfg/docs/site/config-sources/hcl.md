@@ -50,7 +50,7 @@ var cfg = new CfgBuilder()
     .Build();
 
 // 修改配置
-cfg["app.name"] = "NewName";
+cfg["app:name"] = "NewName";
 await cfg.SaveAsync();
 ```
 
@@ -215,18 +215,6 @@ var cfg = new CfgBuilder()
     .AddEnvironmentVariables(prefix: "APP_")
     .Build();
 ```
-
-## HOCON vs 其他格式
-
-| 特性 | HOCON | JSON | YAML | TOML |
-|------|-------|------|------|------|
-| 可读性 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| 注释支持 | ✅ | ❌ | ✅ | ✅ |
-| 类型支持 | ✅ | ✅ | ✅ | ✅ |
-| 配置引用 | ✅ | ❌ | ❌ | ❌ |
-| 配置拼接 | ✅ | ❌ | ❌ | ❌ |
-| 包含文件 | ✅ | ❌ | ❌ | ❌ |
-| 嵌套结构 | ✅ | ✅ | ✅ | ✅ |
 
 ## 适用场景
 

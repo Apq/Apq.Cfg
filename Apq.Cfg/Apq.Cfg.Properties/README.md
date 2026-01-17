@@ -28,9 +28,19 @@ var cfg = new CfgBuilder()
     .Build();
 
 var appName = cfg["AppName"];
-var db = cfg.GetSection("Database");
-var connStr = db["ConnectionString"];
+var host = cfg["Database:Host"];
+var port = cfg.GetValue<int>("Database:Port");
 ```
+
+## 键路径映射
+
+Properties 区段使用冒号分隔的键路径：
+
+| Properties 键 | 配置键 |
+|---------------|--------|
+| `AppName` | `AppName` |
+| `[Database] Host` | `Database:Host` |
+| `[Database] Connection.Timeout` | `Database:Connection:Timeout` |
 
 ## Properties 格式示例
 
@@ -39,8 +49,9 @@ var connStr = db["ConnectionString"];
 AppName=MyApp
 
 [Database]
+Host=localhost
+Port=5432
 ConnectionString=Server=localhost;Database=mydb
-Timeout=30
 
 [Logging]
 Level=Information
