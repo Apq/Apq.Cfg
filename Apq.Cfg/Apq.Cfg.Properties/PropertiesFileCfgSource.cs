@@ -39,7 +39,7 @@ internal sealed class PropertiesFileCfgSource : FileCfgSourceBase, IWritableCfgS
             {
                 var key = line.Substring(0, idx).Trim();
                 var value = UnescapeValue(line.Substring(idx + 1).Trim());
-                var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}.{key}";
+                var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}:{key}";
                 data[configKey] = value;
             }
         }
@@ -271,7 +271,7 @@ internal sealed class PropertiesFileCfgSource : FileCfgSourceBase, IWritableCfgS
                 {
                     var key = line.Substring(0, idx).Trim();
                     var value = UnescapeValue(line.Substring(idx + 1).Trim());
-                    var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}.{key}";
+                    var configKey = string.IsNullOrEmpty(currentSection) ? key : $"{currentSection}:{key}";
                     data[configKey] = value;
                 }
             }

@@ -163,14 +163,14 @@ preserves formatting.
 
 ## Key Path Mapping
 
-HOCON structure maps to dot-separated key paths:
+HOCON structure maps to colon-separated key paths:
 
 | HOCON Path | Configuration Key |
 |------------|-------------------|
 | `app_name` | `app_name` |
-| `database.host` | `database.host` |
-| `database.connection.timeout` | `database.connection.timeout` |
-| `services.0.name` | `services.0.name` |
+| `database.host` | `database:host` |
+| `database.connection.timeout` | `database:connection:timeout` |
+| `services.0.name` | `services:0:name` |
 
 ## Advanced Options
 

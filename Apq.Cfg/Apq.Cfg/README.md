@@ -1,4 +1,4 @@
-﻿# Apq.Cfg
+# Apq.Cfg
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -74,7 +74,7 @@ public interface ICfgSection
 
 | 层级 | 用途 | 配置源 |
 |------|------|--------|
-| 0-99 | 本地文件 | Json, Ini, Xml, Yaml, Toml |
+| 0-99 | 本地文件 | Json, Ini, Xml, Yaml, Toml, Hcl, Properties |
 | 100-199 | 远程存储 | Redis, Database |
 | 200-299 | 配置中心 | Consul, Etcd, Nacos, Apollo, Zookeeper |
 | 300-399 | 密钥管理 | Vault |
@@ -88,6 +88,8 @@ public interface ICfgSection
 | `Apq.Cfg.Xml` | XML 格式 |
 | `Apq.Cfg.Yaml` | YAML 格式 |
 | `Apq.Cfg.Toml` | TOML 格式 |
+| `Apq.Cfg.Hcl` | HOCON 格式 (Akka/Play Framework) |
+| `Apq.Cfg.Properties` | Java Properties 格式 |
 | `Apq.Cfg.Env` | .env 文件 |
 | `Apq.Cfg.Redis` | Redis 存储 |
 | `Apq.Cfg.Database` | 数据库存储 |

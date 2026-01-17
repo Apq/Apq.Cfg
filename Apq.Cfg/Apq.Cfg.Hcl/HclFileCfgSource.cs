@@ -32,7 +32,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                 var obj = value.GetObject();
                 foreach (var key in obj.Items.Keys)
                 {
-                    var newPrefix = string.IsNullOrEmpty(prefix) ? key : prefix + "." + key;
+                    var newPrefix = string.IsNullOrEmpty(prefix) ? key : prefix + ":" + key;
                     Traverse(obj.GetKey(key), newPrefix);
                 }
             }
@@ -90,7 +90,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                     var obj = value.GetObject();
                     foreach (var key in obj.Items.Keys)
                     {
-                        var newPrefix = string.IsNullOrEmpty(prefix) ? key : prefix + "." + key;
+                        var newPrefix = string.IsNullOrEmpty(prefix) ? key : prefix + ":" + key;
                         Traverse(obj.GetKey(key), newPrefix);
                     }
                 }
@@ -193,7 +193,7 @@ internal sealed class HclFileCfgSource : FileCfgSourceBase, IWritableCfgSource
                         var obj = value.GetObject();
                         foreach (var key in obj.Items.Keys)
                         {
-                            var newPrefix = string.IsNullOrEmpty(prefix) ? key : prefix + "." + key;
+                            var newPrefix = string.IsNullOrEmpty(prefix) ? key : prefix + ":" + key;
                             Traverse(obj.GetKey(key), newPrefix);
                         }
                     }

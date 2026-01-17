@@ -140,13 +140,13 @@ long_value=This is a very long value that \
 
 ## Key Path Mapping
 
-Properties structure maps to dot-separated key paths:
+Properties structure maps to colon-separated key paths:
 
 | Properties Key | Configuration Key |
 |----------------|-------------------|
-| `App.Name` | `App.Name` |
-| `Database.Host` | `Database.Host` |
-| `Database.Connection.Timeout` | `Database.Connection.Timeout` |
+| `App.Name` | `App:Name` |
+| `Database.Host` | `Database:Host` |
+| `Database.Connection.Timeout` | `Database:Connection:Timeout` |
 
 ## Advanced Options
 

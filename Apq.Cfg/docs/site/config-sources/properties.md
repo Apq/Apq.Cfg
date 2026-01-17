@@ -145,13 +145,13 @@ query=SELECT * FROM users \
 
 ## 键路径映射
 
-Properties 结构映射为点分隔的键路径：
+Properties 结构映射为冒号分隔的键路径：
 
 | Properties 键 | 配置键 |
 |---------------|--------|
-| `App.Name` | `App.Name` |
-| `Database.Host` | `Database.Host` |
-| `Database.Connection.Timeout` | `Database.Connection.Timeout` |
+| `App.Name` | `App:Name` |
+| `Database.Host` | `Database:Host` |
+| `Database.Connection.Timeout` | `Database:Connection:Timeout` |
 
 ## 高级选项
 

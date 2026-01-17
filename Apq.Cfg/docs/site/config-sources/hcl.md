@@ -163,14 +163,14 @@ preserves formatting.
 
 ## 键路径映射
 
-HOCON 结构映射为点分隔的键路径：
+HOCON 结构映射为冒号分隔的键路径：
 
 | HOCON 路径 | 配置键 |
 |------------|--------|
 | `app_name` | `app_name` |
-| `database.host` | `database.host` |
-| `database.connection.timeout` | `database.connection.timeout` |
-| `services.0.name` | `services.0.name` |
+| `database.host` | `database:host` |
+| `database.connection.timeout` | `database:connection:timeout` |
+| `services.0.name` | `services:0:name` |
 
 ## 高级选项
 

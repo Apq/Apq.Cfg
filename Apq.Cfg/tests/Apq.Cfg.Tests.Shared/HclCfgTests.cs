@@ -41,10 +41,10 @@ public class HclCfgTests : IDisposable
             .AddHclFile(hclPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert - HOCON uses dot notation
+        // Act & Assert - Apq.Cfg uses colon notation for nested paths
         Assert.Equal("TestApp", cfg["app_name"]);
-        Assert.Equal("localhost", cfg["database.host"]);
-        Assert.Equal("5432", cfg["database.port"]);
+        Assert.Equal("localhost", cfg["database:host"]);
+        Assert.Equal("5432", cfg["database:port"]);
     }
 
     [Fact]
@@ -65,9 +65,9 @@ public class HclCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(5, cfg.GetValue<int>("settings.max_retries"));
-        Assert.True(cfg.GetValue<bool>("settings.enabled"));
-        Assert.Equal(30.5, cfg.GetValue<double>("settings.timeout"));
+        Assert.Equal(5, cfg.GetValue<int>("settings:max_retries"));
+        Assert.True(cfg.GetValue<bool>("settings:enabled"));
+        Assert.Equal(30.5, cfg.GetValue<double>("settings:timeout"));
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class HclCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.SetValue("app.new_key", "NewValue");
+        cfg.SetValue("app:new_key", "NewValue");
         await cfg.SaveAsync();
 
         // Assert
@@ -94,8 +94,8 @@ public class HclCfgTests : IDisposable
             .AddHclFile(hclPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("NewValue", cfg2["app.new_key"]);
-        Assert.Equal("Value", cfg2["app.original"]);
+        Assert.Equal("NewValue", cfg2["app:new_key"]);
+        Assert.Equal("Value", cfg2["app:original"]);
     }
 
     [Fact]
@@ -118,7 +118,7 @@ public class HclCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal("DeepValue", cfg["level1.level2.level3.value"]);
+        Assert.Equal("DeepValue", cfg["level1:level2:level3:value"]);
     }
 
     [Fact]
@@ -136,8 +136,8 @@ public class HclCfgTests : IDisposable
             .AddHclFile(hclPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert - HOCON uses dot notation
-        Assert.True(cfg.Exists("section.key"));
+        // Act & Assert - Apq.Cfg uses colon notation for nested paths
+        Assert.True(cfg.Exists("section:key"));
         Assert.False(cfg.Exists("nonexistent"));
     }
 
@@ -158,7 +158,7 @@ public class HclCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Remove("app.to_remove");
+        cfg.Remove("app:to_remove");
         await cfg.SaveAsync();
 
         // Assert
@@ -166,8 +166,8 @@ public class HclCfgTests : IDisposable
             .AddHclFile(hclPath, level: 0, writeable: false)
             .Build();
 
-        var removedValue = cfg2["app.to_remove"];
+        var removedValue = cfg2["app:to_remove"];
         Assert.True(string.IsNullOrEmpty(removedValue));
-        Assert.Equal("Value2", cfg2["app.to_keep"]);
+        Assert.Equal("Value2", cfg2["app:to_keep"]);
     }
 }

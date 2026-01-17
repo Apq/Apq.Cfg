@@ -38,10 +38,10 @@ public class PropertiesCfgTests : IDisposable
             .AddPropertiesFile(propsPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert
-        Assert.Equal("localhost", cfg["Database.Host"]);
-        Assert.Equal("5432", cfg["Database.Port"]);
-        Assert.Equal("TestApp", cfg["App.Name"]);
+        // Act & Assert - Apq.Cfg uses colon notation for nested paths
+        Assert.Equal("localhost", cfg["Database:Host"]);
+        Assert.Equal("5432", cfg["Database:Port"]);
+        Assert.Equal("TestApp", cfg["App:Name"]);
     }
 
     [Fact]
@@ -59,8 +59,8 @@ public class PropertiesCfgTests : IDisposable
             .Build();
 
         // Act & Assert
-        Assert.Equal(5, cfg.GetValue<int>("Settings.MaxRetries"));
-        Assert.True(cfg.GetValue<bool>("Settings.Enabled"));
+        Assert.Equal(5, cfg.GetValue<int>("Settings:MaxRetries"));
+        Assert.True(cfg.GetValue<bool>("Settings:Enabled"));
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public class PropertiesCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.SetValue("App.NewKey", "NewValue");
+        cfg.SetValue("App:NewKey", "NewValue");
         await cfg.SaveAsync();
 
         // Assert
@@ -85,8 +85,8 @@ public class PropertiesCfgTests : IDisposable
             .AddPropertiesFile(propsPath, level: 0, writeable: false)
             .Build();
 
-        Assert.Equal("NewValue", cfg2["App.NewKey"]);
-        Assert.Equal("Value", cfg2["App.Original"]);
+        Assert.Equal("NewValue", cfg2["App:NewKey"]);
+        Assert.Equal("Value", cfg2["App:Original"]);
     }
 
     [Fact]
@@ -120,8 +120,8 @@ public class PropertiesCfgTests : IDisposable
             .AddPropertiesFile(propsPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert
-        Assert.True(cfg.Exists("Section.Key"));
+        // Act & Assert - Apq.Cfg uses colon notation for nested paths
+        Assert.True(cfg.Exists("Section:Key"));
         Assert.False(cfg.Exists("NonExistent"));
     }
 
@@ -140,7 +140,7 @@ public class PropertiesCfgTests : IDisposable
             .Build();
 
         // Act
-        cfg.Remove("App.ToRemove");
+        cfg.Remove("App:ToRemove");
         await cfg.SaveAsync();
 
         // Assert
@@ -148,25 +148,25 @@ public class PropertiesCfgTests : IDisposable
             .AddPropertiesFile(propsPath, level: 0, writeable: false)
             .Build();
 
-        var removedValue = cfg2["App.ToRemove"];
+        var removedValue = cfg2["App:ToRemove"];
         Assert.True(string.IsNullOrEmpty(removedValue));
-        Assert.Equal("Value2", cfg2["App.ToKeep"]);
+        Assert.Equal("Value2", cfg2["App:ToKeep"]);
     }
 
     [Fact]
-    public void Get_WithDotSeparator_ReturnsValue()
+    public void Get_WithColonSeparator_ReturnsValue()
     {
         // Arrange
         var propsPath = Path.Combine(_testDir, "config.properties");
         File.WriteAllText(propsPath, """
-            Database.Connection.Timeout=30
+            Database:Connection:Timeout=30
             """, System.Text.Encoding.UTF8);
 
         using var cfg = new CfgBuilder()
             .AddPropertiesFile(propsPath, level: 0, writeable: false)
             .Build();
 
-        // Act & Assert
-        Assert.Equal("30", cfg["Database.Connection.Timeout"]);
+        // Act & Assert - Apq.Cfg uses colon notation for nested paths
+        Assert.Equal("30", cfg["Database:Connection:Timeout"]);
     }
 }
