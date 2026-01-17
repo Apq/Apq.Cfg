@@ -1,4 +1,4 @@
-﻿# Apq.Cfg
+# Apq.Cfg
 
 [![Gitee](https://img.shields.io/badge/Gitee-Apq.Cfg-red)](https://gitee.com/apq/Apq.Cfg)
 [![Documentation](https://img.shields.io/badge/文档-Vercel-blue)](https://apq-cfg.vercel.app/)
@@ -9,7 +9,7 @@
 
 ## 特性
 
-- **多格式支持**：JSON、INI、XML、YAML、TOML、Env
+- **多格式支持**：JSON、INI、XML、YAML、TOML、HCL、Properties、Env
 - **远程配置中心**：Consul、Etcd、Nacos、Apollo、Zookeeper、Vault
 - **配置加密脱敏**：AES-GCM、ChaCha20、RSA、SM4 等多种算法
 - **多层级合并**：高层级覆盖低层级，支持可写配置
@@ -45,6 +45,34 @@ var name = db["Name"];
 // 修改并保存
 cfg["App:LastRun"] = DateTime.Now.ToString();
 await cfg.SaveAsync();
+```
+
+## 多格式支持示例
+
+### HOCON/HCL 格式
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Hcl;
+
+var cfg = new CfgBuilder()
+    .AddHclFile("config.hcl")
+    .Build();
+
+var host = cfg["database:host"];
+```
+
+### Properties 格式
+
+```csharp
+using Apq.Cfg;
+using Apq.Cfg.Properties;
+
+var cfg = new CfgBuilder()
+    .AddPropertiesFile("config.properties")
+    .Build();
+
+var host = cfg["Database:Host"];
 ```
 
 ## Web API 集成
@@ -84,7 +112,7 @@ API 文档 UI 根据目标框架自动选择：
 
 | 层级 | 用途 | 配置源 |
 |------|------|--------|
-| 0-99 | 本地文件 | Json, Ini, Xml, Yaml, Toml |
+| 0-99 | 本地文件 | Json, Ini, Xml, Yaml, Toml, Hcl, Properties |
 | 100-199 | 远程存储 | Redis, Database |
 | 200-299 | 配置中心 | Consul, Etcd, Nacos, Apollo, Zookeeper |
 | 300-399 | 密钥管理 | Vault |
@@ -99,6 +127,8 @@ API 文档 UI 根据目标框架自动选择：
 | `Apq.Cfg.Xml` | XML 格式 |
 | `Apq.Cfg.Yaml` | YAML 格式 |
 | `Apq.Cfg.Toml` | TOML 格式 |
+| `Apq.Cfg.Hcl` | HCL 格式 |
+| `Apq.Cfg.Properties` | Properties 格式 |
 | `Apq.Cfg.Env` | .env 文件 |
 | `Apq.Cfg.Redis` | Redis 存储 |
 | `Apq.Cfg.Database` | 数据库存储 |

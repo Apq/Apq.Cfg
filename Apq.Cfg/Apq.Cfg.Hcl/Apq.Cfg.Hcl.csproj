@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Apq.Cfg.Hcl</RootNamespace>
+        <Description>Apq.Cfg 的 HOCON (Human-Optimized Config Object Notation) 文件配置源扩展，兼容 HCL 格式</Description>
+        <PackageTags>configuration;config;hcl;hocon;hashicorp</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Akka" Version="1.5.58"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Apq.Cfg\Apq.Cfg.csproj"/>
+    </ItemGroup>
+
+</Project>

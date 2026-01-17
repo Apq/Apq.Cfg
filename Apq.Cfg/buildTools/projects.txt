@@ -10,6 +10,8 @@ Apq.Cfg.Ini
 Apq.Cfg.Xml
 Apq.Cfg.Yaml
 Apq.Cfg.Toml
+Apq.Cfg.Hcl
+Apq.Cfg.Properties
 Apq.Cfg.Env
 
 # 远程存储

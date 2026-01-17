@@ -17,8 +17,13 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <!-- 统一使用最新版本 -->
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Xunit.SkippableFact" Version="1.5.61" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+  </ItemGroup>
+<PackageReference Include="Xunit.SkippableFact" Version="1.5.61" />
   </ItemGroup>
 
   <!-- xunit.runner.visualstudio -->
@@ -42,6 +47,8 @@
     <ProjectReference Include="..\..\Apq.Cfg.Xml\Apq.Cfg.Xml.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Yaml\Apq.Cfg.Yaml.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Toml\Apq.Cfg.Toml.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Hcl\Apq.Cfg.Hcl.csproj" />
+    <ProjectReference Include="..\..\Apq.Cfg.Properties\Apq.Cfg.Properties.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Redis\Apq.Cfg.Redis.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Database\Apq.Cfg.Database.csproj" />
     <ProjectReference Include="..\..\Apq.Cfg.Zookeeper\Apq.Cfg.Zookeeper.csproj" />

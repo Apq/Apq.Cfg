@@ -62,6 +62,8 @@ const zhSidebar = {
         { text: 'XML', link: '/config-sources/xml' },
         { text: 'INI', link: '/config-sources/ini' },
         { text: 'TOML', link: '/config-sources/toml' },
+        { text: 'HOCON', link: '/config-sources/hcl' },
+        { text: 'Properties', link: '/config-sources/properties' },
         { text: '环境变量', link: '/config-sources/env' },
         { text: '.env 文件', link: '/config-sources/env#env-文件支持' }
       ]
@@ -175,6 +177,8 @@ const enSidebar = {
         { text: 'XML', link: '/en/config-sources/xml' },
         { text: 'INI', link: '/en/config-sources/ini' },
         { text: 'TOML', link: '/en/config-sources/toml' },
+        { text: 'HOCON', link: '/en/config-sources/hcl' },
+        { text: 'Properties', link: '/en/config-sources/properties' },
         { text: 'Environment Variables', link: '/en/config-sources/env' },
         { text: '.env File', link: '/en/config-sources/env#env-file-support' }
       ]

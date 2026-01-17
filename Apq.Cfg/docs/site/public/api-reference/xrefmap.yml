@@ -700,6 +700,12 @@ references:
   commentId: F:Apq.Cfg.CfgSourceLevels.Etcd
   fullName: Apq.Cfg.CfgSourceLevels.Etcd
   nameWithType: CfgSourceLevels.Etcd
+- uid: Apq.Cfg.CfgSourceLevels.Hcl
+  name: Hcl
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Hcl
+  commentId: F:Apq.Cfg.CfgSourceLevels.Hcl
+  fullName: Apq.Cfg.CfgSourceLevels.Hcl
+  nameWithType: CfgSourceLevels.Hcl
 - uid: Apq.Cfg.CfgSourceLevels.Ini
   name: Ini
   href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Ini
@@ -718,6 +724,12 @@ references:
   commentId: F:Apq.Cfg.CfgSourceLevels.Nacos
   fullName: Apq.Cfg.CfgSourceLevels.Nacos
   nameWithType: CfgSourceLevels.Nacos
+- uid: Apq.Cfg.CfgSourceLevels.Properties
+  name: Properties
+  href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Properties
+  commentId: F:Apq.Cfg.CfgSourceLevels.Properties
+  fullName: Apq.Cfg.CfgSourceLevels.Properties
+  nameWithType: CfgSourceLevels.Properties
 - uid: Apq.Cfg.CfgSourceLevels.Redis
   name: Redis
   href: api/Apq.Cfg.CfgSourceLevels.html#Apq_Cfg_CfgSourceLevels_Redis
@@ -3855,6 +3867,34 @@ references:
   commentId: F:Apq.Cfg.Etcd.EtcdDataFormat.KeyValue
   fullName: Apq.Cfg.Etcd.EtcdDataFormat.KeyValue
   nameWithType: EtcdDataFormat.KeyValue
+- uid: Apq.Cfg.Hcl
+  name: Apq.Cfg.Hcl
+  href: api/Apq.Cfg.Hcl.html
+  commentId: N:Apq.Cfg.Hcl
+  fullName: Apq.Cfg.Hcl
+  nameWithType: Apq.Cfg.Hcl
+- uid: Apq.Cfg.Hcl.CfgBuilderExtensions
+  name: CfgBuilderExtensions
+  href: api/Apq.Cfg.Hcl.CfgBuilderExtensions.html
+  commentId: T:Apq.Cfg.Hcl.CfgBuilderExtensions
+  fullName: Apq.Cfg.Hcl.CfgBuilderExtensions
+  nameWithType: CfgBuilderExtensions
+- uid: Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddHclFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Hcl.CfgBuilderExtensions.html#Apq_Cfg_Hcl_CfgBuilderExtensions_AddHclFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddHclFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddHclFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddHclFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile*
+  name: AddHclFile
+  href: api/Apq.Cfg.Hcl.CfgBuilderExtensions.html#Apq_Cfg_Hcl_CfgBuilderExtensions_AddHclFile_
+  commentId: Overload:Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile
+  isSpec: "True"
+  fullName: Apq.Cfg.Hcl.CfgBuilderExtensions.AddHclFile
+  nameWithType: CfgBuilderExtensions.AddHclFile
 - uid: Apq.Cfg.ICfgRoot
   name: ICfgRoot
   href: api/Apq.Cfg.ICfgRoot.html
@@ -4539,6 +4579,34 @@ references:
   commentId: F:Apq.Cfg.Nacos.NacosDataFormat.Yaml
   fullName: Apq.Cfg.Nacos.NacosDataFormat.Yaml
   nameWithType: NacosDataFormat.Yaml
+- uid: Apq.Cfg.Properties
+  name: Apq.Cfg.Properties
+  href: api/Apq.Cfg.Properties.html
+  commentId: N:Apq.Cfg.Properties
+  fullName: Apq.Cfg.Properties
+  nameWithType: Apq.Cfg.Properties
+- uid: Apq.Cfg.Properties.CfgBuilderExtensions
+  name: CfgBuilderExtensions
+  href: api/Apq.Cfg.Properties.CfgBuilderExtensions.html
+  commentId: T:Apq.Cfg.Properties.CfgBuilderExtensions
+  fullName: Apq.Cfg.Properties.CfgBuilderExtensions
+  nameWithType: CfgBuilderExtensions
+- uid: Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name: AddPropertiesFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  href: api/Apq.Cfg.Properties.CfgBuilderExtensions.html#Apq_Cfg_Properties_CfgBuilderExtensions_AddPropertiesFile_Apq_Cfg_CfgBuilder_System_String_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile(Apq.Cfg.CfgBuilder,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  name.vb: AddPropertiesFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  fullName: Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile(Apq.Cfg.CfgBuilder, string, int, bool, bool, bool, bool)
+  fullName.vb: Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile(Apq.Cfg.CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: CfgBuilderExtensions.AddPropertiesFile(CfgBuilder, string, int, bool, bool, bool, bool)
+  nameWithType.vb: CfgBuilderExtensions.AddPropertiesFile(CfgBuilder, String, Integer, Boolean, Boolean, Boolean, Boolean)
+- uid: Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile*
+  name: AddPropertiesFile
+  href: api/Apq.Cfg.Properties.CfgBuilderExtensions.html#Apq_Cfg_Properties_CfgBuilderExtensions_AddPropertiesFile_
+  commentId: Overload:Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile
+  isSpec: "True"
+  fullName: Apq.Cfg.Properties.CfgBuilderExtensions.AddPropertiesFile
+  nameWithType: CfgBuilderExtensions.AddPropertiesFile
 - uid: Apq.Cfg.Redis
   name: Apq.Cfg.Redis
   href: api/Apq.Cfg.Redis.html

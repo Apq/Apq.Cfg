@@ -49,6 +49,18 @@ public static class CfgSourceLevels
     /// <remarks>基础配置文件</remarks>
     public const int Toml = 0;
 
+    /// <summary>
+    /// HCL 文件默认层级 (0)
+    /// </summary>
+    /// <remarks>基础配置文件，HashiCorp Configuration Language</remarks>
+    public const int Hcl = 0;
+
+    /// <summary>
+    /// Properties 文件默认层级 (0)
+    /// </summary>
+    /// <remarks>基础配置文件，Java Properties 格式</remarks>
+    public const int Properties = 0;
+
     #endregion
 
     #region 远程存储 (100-199)

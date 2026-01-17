@@ -13,6 +13,8 @@
             "Apq.Cfg.Xml/Apq.Cfg.Xml.csproj",
             "Apq.Cfg.Yaml/Apq.Cfg.Yaml.csproj",
             "Apq.Cfg.Toml/Apq.Cfg.Toml.csproj",
+            "Apq.Cfg.Hcl/Apq.Cfg.Hcl.csproj",
+            "Apq.Cfg.Properties/Apq.Cfg.Properties.csproj",
             "Apq.Cfg.Env/Apq.Cfg.Env.csproj",
             "Apq.Cfg.Redis/Apq.Cfg.Redis.csproj",
             "Apq.Cfg.Database/Apq.Cfg.Database.csproj",

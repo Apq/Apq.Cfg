@@ -78,6 +78,8 @@ Apq.Cfg.Ini/               # INI 格式支持
 Apq.Cfg.Xml/               # XML 格式支持
 Apq.Cfg.Yaml/              # YAML 格式支持
 Apq.Cfg.Toml/              # TOML 格式支持
+Apq.Cfg.Hcl/               # HCL 格式支持
+Apq.Cfg.Properties/        # Properties 格式支持
 Apq.Cfg.Env/               # .env 文件格式支持
 Apq.Cfg.Redis/             # Redis 配置源
 Apq.Cfg.Database/          # 数据库配置源

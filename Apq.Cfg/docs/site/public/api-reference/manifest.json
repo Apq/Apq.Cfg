@@ -1,5 +1,5 @@
 {
-  "source_base_path": "C:/ApqGitee/Apq.Cfg/Apq.Cfg/docs/docfx",
+  "source_base_path": "D:/ApqGitee/Apq.Cfg/Apq.Cfg/docs/docfx",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -872,6 +872,34 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Hcl.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Hcl.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Hcl.CfgBuilderExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Hcl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Hcl.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Hcl",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Apq.Cfg.ICfgRoot.yml",
       "output": {
         ".html": {
@@ -980,6 +1008,34 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "Apq.Cfg.Nacos",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Properties.CfgBuilderExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Properties.CfgBuilderExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Properties.CfgBuilderExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Apq.Cfg.Properties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Apq.Cfg.Properties.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Apq.Cfg.Properties",
       "Summary": null
     },
     {

@@ -8,7 +8,7 @@ Each configuration source has a default level. If not specified, the default lev
 
 | Source Type | Default Level |
 |-------------|---------------|
-| Json, Ini, Xml, Yaml, Toml | 0 |
+| Json, Ini, Xml, Yaml, Toml, Hcl, Properties | 0 |
 | Redis, Database | 100 |
 | Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
 | Vault | 300 |
@@ -23,6 +23,8 @@ Each configuration source has a default level. If not specified, the default lev
 | [XML](/en/config-sources/xml) | `Apq.Cfg.Xml` | 0 | XML file configuration |
 | [INI](/en/config-sources/ini) | `Apq.Cfg.Ini` | 0 | INI file configuration |
 | [TOML](/en/config-sources/toml) | `Apq.Cfg.Toml` | 0 | TOML file configuration |
+| [HOCON](/en/config-sources/hcl) | `Apq.Cfg.Hcl` | 0 | HOCON file configuration |
+| [Properties](/en/config-sources/properties) | `Apq.Cfg.Properties` | 0 | Java Properties file configuration |
 | [.env](/en/config-sources/env) | `Apq.Cfg.Env` | 400 | .env file configuration |
 | [Environment Variables](/en/config-sources/env) | `Apq.Cfg` | 400 | Environment variables |
 
@@ -81,5 +83,8 @@ Choose a configuration source to learn more:
 
 - [JSON](/en/config-sources/json) - Most common format
 - [YAML](/en/config-sources/yaml) - Human-readable format
+- [TOML](/en/config-sources/toml) - Modern configuration format
+- [HOCON](/en/config-sources/hcl) - Akka/Play framework format
+- [Properties](/en/config-sources/properties) - Java ecosystem format
 - [Consul](/en/config-sources/consul) - Service discovery and configuration
 - [Vault](/en/config-sources/vault) - Secrets management

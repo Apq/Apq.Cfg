@@ -27,7 +27,7 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"
                           Version="$(MicrosoftAspNetCoreVersion)" />
         <PackageReference Include="Scalar.AspNetCore"
-                          Version="2.11.10" />
+                          Version="2.12.11" />
     </ItemGroup>
 
     <ItemGroup>

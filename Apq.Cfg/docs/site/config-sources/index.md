@@ -8,7 +8,7 @@ Apq.Cfg 支持多种配置源，可以灵活组合使用。
 
 | 配置源类型 | 默认层级 |
 |------------|----------|
-| Json, Ini, Xml, Yaml, Toml | 0 |
+| Json, Ini, Xml, Yaml, Toml, Hcl, Properties | 0 |
 | Redis, Database | 100 |
 | Consul, Etcd, Nacos, Apollo, Zookeeper | 200 |
 | Vault | 300 |
@@ -27,6 +27,8 @@ Apq.Cfg 支持多种配置源，可以灵活组合使用。
 | [XML](/config-sources/xml) | Apq.Cfg.Xml | 0 | XML 格式配置文件 |
 | [INI](/config-sources/ini) | Apq.Cfg.Ini | 0 | INI 格式配置文件 |
 | [TOML](/config-sources/toml) | Apq.Cfg.Toml | 0 | TOML 格式配置文件 |
+| [HOCON](/config-sources/hcl) | Apq.Cfg.Hcl | 0 | HOCON 格式配置文件 |
+| [Properties](/config-sources/properties) | Apq.Cfg.Properties | 0 | Java Properties 格式配置文件 |
 | [.env 文件](/config-sources/env#env-文件支持) | Apq.Cfg.Env | 400 | .env 格式配置文件 |
 | [环境变量](/config-sources/env) | Apq.Cfg (内置) | 400 | 系统环境变量 |
 
@@ -123,5 +125,8 @@ var cfg = new CfgBuilder()
 
 - [JSON 配置源](/config-sources/json)
 - [YAML 配置源](/config-sources/yaml)
+- [TOML 配置源](/config-sources/toml)
+- [HOCON 配置源](/config-sources/hcl)
+- [Properties 配置源](/config-sources/properties)
 - [Consul 配置源](/config-sources/consul)
 - [Redis 配置源](/config-sources/redis)
