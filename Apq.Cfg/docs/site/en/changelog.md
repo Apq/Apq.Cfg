@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] - 2026-01-18
+
+### Added
+
+- **HOCON Configuration Source**: New `Apq.Cfg.Hcl` NuGet package supporting HOCON (Human-Optimized Config Object Notation) format
+- **Properties Configuration Source**: New `Apq.Cfg.Properties` NuGet package supporting Java Properties format
+
+### Changed
+
+- **Unified Key Path Separator**: All configuration sources now use colon `:` as the nested path separator
+  - HOCON format: `database.host` → `cfg["database:host"]`
+  - Properties format: `[Database] Host` → `cfg["Database:Host"]`
+- Updated documentation site with HOCON and Properties configuration source pages
+- Updated build scripts to support new project NuGet packaging
+
+### Documentation
+
+- Added HOCON configuration source documentation
+- Added Properties configuration source documentation
+- Updated README and configuration source index pages
+
 ## [1.2.0] - 2026-01-09
 
 ### Breaking Changes

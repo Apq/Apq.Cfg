@@ -1,5 +1,26 @@
 # 更新日志
 
+## v1.2.1 (2026-01-18)
+
+### 新功能
+
+- **HOCON 配置源支持**：新增 `Apq.Cfg.Hcl` NuGet 包，支持 HOCON (Human-Optimized Config Object Notation) 格式
+- **Properties 配置源支持**：新增 `Apq.Cfg.Properties` NuGet 包，支持 Java Properties 格式
+
+### 改进
+
+- **统一键路径分隔符**：所有配置源现在统一使用冒号 `:` 作为嵌套路径分隔符
+  - HOCON 格式：`database.host` → `cfg["database:host"]`
+  - Properties 格式：`[Database] Host` → `cfg["Database:Host"]`
+- 更新文档站点，添加 HOCON 和 Properties 配置源页面
+- 更新构建脚本，支持新项目的 NuGet 打包
+
+### 文档
+
+- 新增 HOCON 配置源文档
+- 新增 Properties 配置源文档
+- 更新 README 和配置源索引页面
+
 ## v1.2.0 (2026-01-09)
 
 ### 破坏性变更
