@@ -29,7 +29,12 @@ while IFS= read -r line || [ -n "$line" ]; do
     # 去除首尾空格
     project=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
     if [ -n "$project" ]; then
-        PROJECTS="$PROJECTS $project/$project.csproj"
+        # 主项目 Apq.Cfg 使用直接路径，其他项目使用子目录路径
+        if [ "$project" = "Apq.Cfg" ]; then
+            PROJECTS="$PROJECTS $project.csproj"
+        else
+            PROJECTS="$PROJECTS $project/$project.csproj"
+        fi
     fi
 done < "$PROJECTS_FILE"
 
